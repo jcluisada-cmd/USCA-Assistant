@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="USCA">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%23102a43'/%3E%3Ccircle cx='96' cy='96' r='18' fill='%2327ab83'/%3E%3Cpath d='M96 30v16M96 146v16M30 96h16M146 96h16' stroke='%23f0b429' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
-<title>USCA Assistant — Pitié-Salpêtrière</title>
+<title>USCA/ELSA Assistant — Pitié-Salpêtrière</title>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -914,7 +914,7 @@ function App() {
     switch(view) {
       case "home": return <div className="fade-in">
         <div style={{marginBottom:20}}>
-          <h1 style={{fontSize:26,fontWeight:900,color:C.n[900],letterSpacing:"-0.5px"}}>USCA Assistant</h1>
+          <h1 style={{fontSize:26,fontWeight:900,color:C.n[900],letterSpacing:"-0.5px"}}>USCA/ELSA Assistant <span style={{fontSize:13,fontWeight:400,color:C.n[400]}}>version 0.9.01</span></h1>
           <p style={{fontSize:13,color:C.n[400],marginTop:2}}>Pitié-Salpêtrière — Addictologie</p>
         </div>
 
@@ -941,10 +941,6 @@ function App() {
           </div>
         </div>
 
-        <div className="card" style={{padding:14,background:C.t[50]}}>
-          <div style={{fontSize:12,fontWeight:800,color:C.t[700]}}>📌 Protocole tDCS USCA</div>
-          <div style={{fontSize:11,color:C.n[600],marginTop:4}}>5 séances/j × 5j (J5-J9). DLPFC bilatéral, 2 mA. Indication : craving VAS ≥7/10 persistant. Réponse : ↓ ≥30% VAS à J10.</div>
-        </div>
 
         <div className="card card-tap" onClick={()=>nav("feedback")} style={{padding:14,marginTop:12,display:"flex",alignItems:"center",gap:12,borderColor:C.t[300]}}>
           {I.msgSquare(C.t[500],20)}
