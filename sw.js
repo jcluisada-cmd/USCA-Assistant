@@ -1,49 +1,64 @@
-const CACHE_NAME = 'usca-v1.5';
+const CACHE_NAME = 'usca-v2.0';
 
-// Fichiers locaux — pré-cachés à l'installation (fiable)
+// Fichiers locaux uniquement — pré-cachés à l'installation
 const LOCAL_ASSETS = [
   './',
   './index.html',
   './manifest.json'
 ];
 
-// CDN externes — cachés au fil de l'eau (pas dans addAll pour éviter échec global)
-const CDN_ASSETS = [
-  'https://unpkg.com/react@18/umd/react.production.min.js',
-  'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
-  'https://unpkg.com/@babel/standalone/babel.min.js'
-];
-
+// ── INSTALL : cache les fichiers locaux ──
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(async c => {
-      // Fichiers locaux : obligatoires
-      await c.addAll(LOCAL_ASSETS);
-      // CDN : best-effort (on ne bloque pas l'install si un CDN est down)
-      for (const url of CDN_ASSETS) {
-        try { const r = await fetch(url); if (r.ok) await c.put(url, r); }
-        catch(e) { /* CDN indisponible — sera caché au prochain fetch */ }
-      }
-    })
+    caches.open(CACHE_NAME).then(c => c.addAll(LOCAL_ASSETS))
   );
   self.skipWaiting();
 });
 
+// ── ACTIVATE : supprime les anciens caches ──
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-  ));
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
+  );
   self.clients.claim();
 });
 
+// ── FETCH : stratégie différente selon le type de requête ──
 self.addEventListener('fetch', e => {
+
+  // NAVIGATION (lancement PWA, clic sur lien) → Network first, cache fallback
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then(resp => {
+          // Mettre à jour le cache avec la version réseau
+          const clone = resp.clone();
+          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+          return resp;
+        })
+        .catch(() =>
+          // Hors-ligne : servir depuis le cache
+          caches.match(e.request)
+            .then(r => r || caches.match('./index.html'))
+            .then(r => r || caches.match('./'))
+        )
+    );
+    return;
+  }
+
+  // AUTRES REQUÊTES (scripts, CSS, fonts) → Cache first, network fallback
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
-      if (resp.ok && e.request.method === 'GET') {
-        const clone = resp.clone();
-        caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-      }
-      return resp;
-    }).catch(() => caches.match('./index.html')))
+    caches.match(e.request).then(r => {
+      if (r) return r;
+      return fetch(e.request).then(resp => {
+        if (resp.ok && e.request.method === 'GET') {
+          const clone = resp.clone();
+          caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+        }
+        return resp;
+      });
+    })
   );
 });
