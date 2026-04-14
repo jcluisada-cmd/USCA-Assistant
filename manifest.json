@@ -2,7 +2,7 @@
   "name": "USCA Assistant — Pitié-Salpêtrière",
   "short_name": "USCA",
   "description": "Assistant clinique pour psychiatre addictologue — USCA Pitié-Salpêtrière",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#102a43",

@@ -1,17 +1,31 @@
-const CACHE_NAME = 'usca-v1.4';
-const ASSETS = [
+const CACHE_NAME = 'usca-v1.5';
+
+// Fichiers locaux — pré-cachés à l'installation (fiable)
+const LOCAL_ASSETS = [
   './',
   './index.html',
-  './manifest.json',
+  './manifest.json'
+];
+
+// CDN externes — cachés au fil de l'eau (pas dans addAll pour éviter échec global)
+const CDN_ASSETS = [
   'https://unpkg.com/react@18/umd/react.production.min.js',
   'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
-  'https://unpkg.com/@babel/standalone/babel.min.js',
-  'https://unpkg.com/lucide@latest/dist/umd/lucide.min.js',
-  'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'
+  'https://unpkg.com/@babel/standalone/babel.min.js'
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(async c => {
+      // Fichiers locaux : obligatoires
+      await c.addAll(LOCAL_ASSETS);
+      // CDN : best-effort (on ne bloque pas l'install si un CDN est down)
+      for (const url of CDN_ASSETS) {
+        try { const r = await fetch(url); if (r.ok) await c.put(url, r); }
+        catch(e) { /* CDN indisponible — sera caché au prochain fetch */ }
+      }
+    })
+  );
   self.skipWaiting();
 });
 
