@@ -96,114 +96,37 @@
           <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
         <span id="staff-name" class="text-xs text-slate-500 font-medium hidden sm:inline"></span>
-        <a id="btn-dev" href="../staff/" class="text-xs text-amber-500 hover:text-amber-600 font-semibold hidden">Toolbox</a>
         <a id="btn-dev-patient" href="../patient/" class="text-xs text-emerald-500 hover:text-emerald-600 font-semibold hidden">Patient</a>
         <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
       </div>
     </header>
 
-    <!-- Contenu scrollable -->
-    <main class="flex-1 overflow-y-auto p-6 max-w-2xl mx-auto w-full pb-8">
+    <!-- ═══ ONGLET PATIENTS ═══ -->
+    <div id="tab-patients" class="tab-content flex-1 overflow-y-auto">
+      <div class="p-6 max-w-2xl mx-auto w-full pb-24">
 
-      <!-- Dashboard — cartes cliquables -->
-      <h2 class="text-xl font-bold text-slate-800 mb-4">Dashboard</h2>
-      <div class="grid grid-cols-2 gap-3 mb-6">
-        <button id="card-patients" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]">
-          <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
-          </div>
-          <p id="stat-patients" class="text-2xl font-bold text-slate-800">—</p>
-          <p class="text-xs text-slate-500 mt-1">Patients hospitalisés</p>
-        </button>
-        <button id="card-alertes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-red-300 transition-all active:scale-[0.98]">
-          <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mb-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-          </div>
-          <p id="stat-alertes" class="text-2xl font-bold text-slate-800">—</p>
-          <p class="text-xs text-slate-500 mt-1">Alertes non traitées</p>
-        </button>
-        <button id="card-groupes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98]">
-          <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <p id="stat-groupes" class="text-2xl font-bold text-slate-800">—</p>
-          <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
-        </button>
-      </div>
-
-      <!-- Carte Comptes (visible seulement pour admin) -->
-      <div id="admin-only-section" class="mb-6 hidden">
-        <button id="card-comptes" class="w-full bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-slate-400 transition-all active:scale-[0.98] flex items-center gap-4">
-          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="flex-1">
-            <p id="stat-comptes" class="text-lg font-bold text-slate-800">—</p>
-            <p class="text-xs text-slate-500">Comptes soignants</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
-      </div>
-
-      <!-- Section Comptes -->
-      <section id="section-comptes" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-lg font-bold text-slate-800">Comptes soignants</h3>
-          <div class="flex gap-2">
-            <button id="btn-new-compte" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-700 text-white hover:bg-slate-800 transition-colors">+ Nouveau</button>
-            <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
-          </div>
-        </div>
-        <!-- Formulaire nouveau compte -->
-        <div id="form-new-compte" class="bg-white rounded-xl border border-slate-300 p-5 mb-4 hidden">
-          <h4 class="text-sm font-bold text-slate-700 mb-3">Créer un compte</h4>
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Identifiant</label>
-              <input type="text" id="new-staff-id" placeholder="prenom.nom" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Mot de passe</label>
-              <input type="text" id="new-staff-pwd" placeholder="••••••" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Nom affiché</label>
-              <input type="text" id="new-staff-nom" placeholder="Dr Dupont" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Rôle</label>
-              <select id="new-staff-role" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-                <option value="medecin">Médecin</option>
-                <option value="ide">IDE</option>
-                <option value="etudiant">Étudiant / Externe</option>
-                <option value="animateur">Animateur</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <button id="btn-cancel-compte" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
-            <button id="btn-save-compte" class="flex-1 py-2.5 bg-slate-700 text-white font-bold rounded-lg text-sm hover:bg-slate-800 transition-colors">Créer le compte</button>
-          </div>
-          <p id="new-compte-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
-          <p id="new-compte-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
-        </div>
-        <!-- Liste des comptes -->
-        <div id="comptes-list" class="space-y-2"></div>
-      </section>
-
-      <!-- Section Patients -->
-      <section id="section-patients" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-lg font-bold text-slate-800">Patients hospitalisés</h3>
+        <!-- En-tête + bouton nouveau -->
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-slate-800">Patients</h2>
           <div class="flex gap-2">
             <button id="btn-new-patient" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">+ Nouveau</button>
-            <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
+            <button id="btn-comptes" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors hidden">Comptes</button>
           </div>
         </div>
-        <!-- Formulaire nouveau patient (masqué) -->
+
+        <!-- Stats rapides -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-white rounded-xl border border-slate-200 p-3 text-center">
+            <p id="stat-patients" class="text-2xl font-bold text-indigo-600">—</p>
+            <p class="text-[10px] text-slate-500">Hospitalisés</p>
+          </div>
+          <div class="bg-white rounded-xl border border-slate-200 p-3 text-center">
+            <p id="stat-alertes" class="text-2xl font-bold text-red-500">—</p>
+            <p class="text-[10px] text-slate-500">Cravings signalés</p>
+          </div>
+        </div>
+
+        <!-- Formulaire nouveau patient -->
         <div id="form-new-patient" class="bg-white rounded-xl border border-indigo-200 p-5 mb-4 hidden">
           <h4 class="text-sm font-bold text-indigo-700 mb-3">Nouveau patient</h4>
           <div class="grid grid-cols-2 gap-3 mb-3">
@@ -222,51 +145,117 @@
           </div>
           <p id="new-patient-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
         </div>
+
+        <!-- Liste des patients -->
         <div id="patients-list" class="space-y-2"></div>
-      </section>
 
-      <!-- Section Détail Patient -->
-      <section id="section-patient-detail" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 id="detail-patient-title" class="text-lg font-bold text-slate-800"></h3>
-          <button id="btn-back-patients" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">Retour</button>
+        <!-- Section Détail Patient -->
+        <section id="section-patient-detail" class="hidden">
+          <div class="flex items-center justify-between mb-3">
+            <h3 id="detail-patient-title" class="text-lg font-bold text-slate-800"></h3>
+            <button id="btn-back-patients" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">Retour</button>
+          </div>
+          <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
+
+          <!-- Log craving du patient -->
+          <div id="detail-craving-log" class="mb-4"></div>
+
+          <!-- Bouton voir comme patient -->
+          <button id="btn-view-as-patient" class="w-full mb-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            Voir comme patient
+          </button>
+
+          <h4 class="text-sm font-bold text-slate-700 mb-2">Fiches traitements prescrites</h4>
+          <p class="text-xs text-slate-500 mb-3">Cochez les fiches à envoyer au patient.</p>
+          <div id="fiches-checklist" class="space-y-1"></div>
+        </section>
+
+        <!-- Section Comptes (admin seulement) -->
+        <section id="section-comptes" class="hidden">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-lg font-bold text-slate-800">Comptes soignants</h3>
+            <div class="flex gap-2">
+              <button id="btn-new-compte" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-700 text-white hover:bg-slate-800 transition-colors">+ Nouveau</button>
+              <button id="btn-back-comptes" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">Retour</button>
+            </div>
+          </div>
+          <div id="form-new-compte" class="bg-white rounded-xl border border-slate-300 p-5 mb-4 hidden">
+            <h4 class="text-sm font-bold text-slate-700 mb-3">Créer un compte</h4>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Identifiant</label>
+                <input type="text" id="new-staff-id" placeholder="prenom.nom" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Mot de passe</label>
+                <input type="text" id="new-staff-pwd" placeholder="6 car. min" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Nom affiché</label>
+                <input type="text" id="new-staff-nom" placeholder="Dr Dupont" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Rôle</label>
+                <select id="new-staff-role" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                  <option value="medecin">Médecin</option>
+                  <option value="ide">IDE</option>
+                  <option value="etudiant">Étudiant / Externe</option>
+                  <option value="animateur">Animateur</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button id="btn-cancel-compte" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+              <button id="btn-save-compte" class="flex-1 py-2.5 bg-slate-700 text-white font-bold rounded-lg text-sm hover:bg-slate-800 transition-colors">Créer le compte</button>
+            </div>
+            <p id="new-compte-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+            <p id="new-compte-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
+          </div>
+          <div id="comptes-list" class="space-y-2"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ═══ ONGLET GROUPES ═══ -->
+    <div id="tab-groupes" class="tab-content flex-1 overflow-y-auto hidden">
+      <div class="p-6 max-w-2xl mx-auto w-full pb-24">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
+        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+          <div class="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p class="text-sm font-medium text-slate-600">Le planning des groupes sera configurable ici</p>
+          <p class="text-xs text-slate-400 mt-2">Roulement sur 2 semaines, jours et horaires</p>
         </div>
-        <!-- Infos patient -->
-        <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
-        <!-- Bouton voir comme patient -->
-        <button id="btn-view-as-patient" class="w-full mb-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-          Voir comme patient
+      </div>
+    </div>
+
+    <!-- ═══ ONGLET TOOLBOX ═══ -->
+    <div id="tab-toolbox" class="tab-content flex-1 overflow-hidden hidden">
+      <iframe id="admin-toolbox-iframe" class="w-full border-none" style="height:calc(100vh - 120px);height:calc(100dvh - 120px);" title="USCA Toolbox"></iframe>
+    </div>
+
+    <!-- Bottom navigation -->
+    <nav class="sticky bottom-0 bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-50">
+      <div class="flex justify-around max-w-lg mx-auto">
+        <button data-tab="patients" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Patients</span>
         </button>
-
-        <!-- Checklist fiches traitements -->
-        <h4 class="text-sm font-bold text-slate-700 mb-2">Fiches traitements prescrites</h4>
-        <p class="text-xs text-slate-500 mb-3">Cochez les fiches à envoyer au patient. Il les verra dans son espace.</p>
-        <div id="fiches-checklist" class="space-y-1"></div>
-      </section>
-
-      <!-- Section Alertes -->
-      <section id="section-alertes" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-lg font-bold text-slate-800">Alertes</h3>
-          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
-        </div>
-        <div id="alertes-list" class="space-y-2"></div>
-      </section>
-
-      <!-- Section Groupes -->
-      <section id="section-groupes" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-lg font-bold text-slate-800">Groupes thérapeutiques</h3>
-          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
-        </div>
-        <div class="bg-white rounded-xl border border-slate-200 p-6 text-center">
-          <p class="text-sm text-slate-500">La gestion des groupes arrive bientôt</p>
-        </div>
-      </section>
-
-
-    </main>
+        <button data-tab="groupes" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
+        </button>
+        <button data-tab="toolbox" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
+        </button>
+      </div>
+    </nav>
   </div>
 
 <!-- SDK Supabase + modules partagés -->
@@ -284,7 +273,27 @@ function createEl(tag, classes, text) {
   return el;
 }
 
-// ── Login admin ──
+// ══════════════ NAVIGATION ONGLETS ══════════════
+var adminTabs = document.querySelectorAll('.admin-tab');
+var tabContents = document.querySelectorAll('.tab-content');
+var toolboxLoaded = false;
+
+function switchAdminTab(tabId) {
+  tabContents.forEach(function(c) { c.classList.add('hidden'); });
+  adminTabs.forEach(function(t) { t.classList.remove('text-indigo-600'); t.classList.add('text-slate-400'); });
+  var target = document.getElementById('tab-' + tabId);
+  if (target) target.classList.remove('hidden');
+  var btn = document.querySelector('[data-tab="' + tabId + '"]');
+  if (btn) { btn.classList.add('text-indigo-600'); btn.classList.remove('text-slate-400'); }
+  // Lazy load toolbox iframe
+  if (tabId === 'toolbox' && !toolboxLoaded) {
+    document.getElementById('admin-toolbox-iframe').src = '../staff/toolbox.html?embedded=true';
+    toolboxLoaded = true;
+  }
+}
+adminTabs.forEach(function(btn) { btn.addEventListener('click', function() { switchAdminTab(btn.dataset.tab); }); });
+
+// ══════════════ LOGIN ══════════════
 const loginForm = document.getElementById('login-form');
 const loginError = document.getElementById('login-error');
 const btnLogin = document.getElementById('btn-login');
@@ -341,49 +350,44 @@ function showAdminApp(profile) {
 // ── Stats dashboard ──
 async function loadDashboardStats() {
   try {
-    const [patients, alertes, groupes] = await Promise.all([
+    var results = await Promise.all([
       db.getPatients(),
-      db.getAlertesNonTraitees(),
-      db.getGroupesDuJour()
+      db.getAlertesNonTraitees()
     ]);
-    loadedPatients = patients;
-    loadedAlertes = alertes;
-    document.getElementById('stat-patients').textContent = patients.length;
-    document.getElementById('stat-alertes').textContent = alertes.length;
-    document.getElementById('stat-groupes').textContent = groupes.length;
+    loadedPatients = results[0];
+    loadedAlertes = results[1];
+    document.getElementById('stat-patients').textContent = loadedPatients.length;
+    document.getElementById('stat-alertes').textContent = loadedAlertes.length;
+    renderPatients();
   } catch (err) {
     console.warn('Stats indisponibles :', err.message);
   }
 }
 
 // ── Cartes cliquables → ouvrent les sections ──
-document.getElementById('card-patients').addEventListener('click', () => toggleSection('patients', renderPatients));
-document.getElementById('card-alertes').addEventListener('click', () => toggleSection('alertes', renderAlertes));
-document.getElementById('card-groupes').addEventListener('click', () => toggleSection('groupes'));
+// Afficher la liste des patients au chargement de l'onglet
+// (pas besoin de clic sur une carte, c'est automatique)
 
-// Boutons "Fermer"
-document.querySelectorAll('.section-close').forEach(btn => {
-  btn.addEventListener('click', function() {
-    this.closest('section').classList.add('hidden');
-  });
+// Bouton Comptes
+document.getElementById('btn-comptes').addEventListener('click', function() {
+  document.getElementById('patients-list').classList.add('hidden');
+  document.getElementById('section-patient-detail').classList.add('hidden');
+  document.getElementById('section-comptes').classList.remove('hidden');
+  renderComptes();
 });
-
-function toggleSection(name, renderFn) {
-  var section = document.getElementById('section-' + name);
-  var isHidden = section.classList.contains('hidden');
-  // Fermer toutes les sections
-  document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
-  if (isHidden) {
-    section.classList.remove('hidden');
-    if (renderFn) renderFn();
-    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-}
+document.getElementById('btn-back-comptes').addEventListener('click', function() {
+  document.getElementById('section-comptes').classList.add('hidden');
+  document.getElementById('patients-list').classList.remove('hidden');
+});
 
 // ── Rendu patients (cliquables → détail) ──
 function renderPatients() {
   var list = document.getElementById('patients-list');
+  list.classList.remove('hidden');
   list.textContent = '';
+  document.getElementById('section-patient-detail').classList.add('hidden');
+  document.getElementById('section-comptes').classList.add('hidden');
+
   if (loadedPatients.length === 0) {
     var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
     empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun patient hospitalisé'));
@@ -391,21 +395,42 @@ function renderPatients() {
     return;
   }
   loadedPatients.forEach(function(p) {
-    var card = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]');
+    // Vérifier si ce patient a des cravings non traités
+    var patientAlertes = loadedAlertes.filter(function(a) { return a.patient_id === p.id; });
+    var hasCraving = patientAlertes.length > 0;
+
+    var card = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]');
+
+    // Avatar chambre
     var avatar = createEl('div', 'w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0');
     avatar.appendChild(createEl('span', 'text-sm font-bold text-indigo-600', p.numero_chambre));
     card.appendChild(avatar);
-    var info = createEl('div', 'flex-1');
+
+    // Infos
+    var info = createEl('div', 'flex-1 min-w-0');
     info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', 'Chambre ' + p.numero_chambre));
     var details = [];
-    if (p.substance_principale) details.push(p.substance_principale);
     if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
-    info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', details.join(' \u00b7 ')));
+    if (details.length) info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5 truncate', details.join(' \u00b7 ')));
     card.appendChild(info);
-    // Chevron
-    var chev = createEl('span', 'text-slate-400 text-lg', '\u203a');
-    card.appendChild(chev);
-    // Clic → détail
+
+    // Icônes statut
+    var icons = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
+
+    // Icône craving (rouge)
+    if (hasCraving) {
+      var cravingIcon = createEl('div', 'w-7 h-7 bg-red-100 rounded-full flex items-center justify-center');
+      cravingIcon.title = patientAlertes.length + ' craving(s)';
+      cravingIcon.appendChild(createEl('span', 'text-red-500 text-xs font-bold', patientAlertes.length));
+      icons.appendChild(cravingIcon);
+    }
+
+    // Icône permission (bleu-violet) — sera fonctionnel après migration v4
+    // Pour l'instant on ne l'affiche pas
+
+    icons.appendChild(createEl('span', 'text-slate-300 text-lg', '\u203a'));
+    card.appendChild(icons);
+
     (function(patient) {
       card.addEventListener('click', function() { showPatientDetail(patient); });
     })(p);
@@ -461,7 +486,7 @@ var patientPrescriptions = [];
 
 document.getElementById('btn-back-patients').addEventListener('click', function() {
   document.getElementById('section-patient-detail').classList.add('hidden');
-  document.getElementById('section-patients').classList.remove('hidden');
+  renderPatients();
 });
 
 // Voir comme patient — injecte la session et ouvre le module patient
@@ -484,7 +509,7 @@ document.getElementById('btn-view-as-patient').addEventListener('click', functio
 
 async function showPatientDetail(patient) {
   selectedPatientForDetail = patient;
-  document.getElementById('section-patients').classList.add('hidden');
+  document.getElementById('patients-list').classList.add('hidden');
   document.getElementById('section-patient-detail').classList.remove('hidden');
 
   // Titre
@@ -494,9 +519,7 @@ async function showPatientDetail(patient) {
   var infoDiv = document.getElementById('detail-patient-info');
   infoDiv.textContent = '';
   var infos = [
-    ['Substance', patient.substance_principale || '\u2014'],
-    ['Admission', patient.date_admission ? new Date(patient.date_admission).toLocaleDateString('fr-FR') : '\u2014'],
-    ['Sortie pr\u00e9vue', patient.date_sortie_prevue ? new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR') : '\u2014']
+    ['Admission', patient.date_admission ? new Date(patient.date_admission).toLocaleDateString('fr-FR') : '\u2014']
   ];
   infos.forEach(function(item) {
     var row = createEl('div', 'flex justify-between py-1.5');
@@ -504,6 +527,37 @@ async function showPatientDetail(patient) {
     row.appendChild(createEl('span', 'text-xs font-semibold text-slate-800', item[1]));
     infoDiv.appendChild(row);
   });
+
+  // Log craving du patient
+  var cravingLog = document.getElementById('detail-craving-log');
+  cravingLog.textContent = '';
+  try {
+    var cravings = await db.getCravingHistory(patient.id);
+    if (cravings.length > 0) {
+      cravingLog.appendChild(createEl('h4', 'text-sm font-bold text-red-600 mb-2', 'Journal craving (' + cravings.length + ')'));
+      cravings.slice(-10).reverse().forEach(function(c) {
+        var d = new Date(c.horodatage);
+        var row = createEl('div', 'flex items-center gap-2 py-2 border-b border-slate-100');
+        row.appendChild(createEl('span', 'text-[11px] text-slate-500 w-20 flex-shrink-0', d.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})));
+        var barBg = createEl('div', 'flex-1 h-2 bg-slate-100 rounded-full overflow-hidden');
+        var barFill = createEl('div', 'h-full rounded-full');
+        var intensity = c.intensite || 0;
+        barFill.style.width = (intensity * 10) + '%';
+        barFill.style.background = intensity <= 3 ? '#fbbf24' : intensity <= 6 ? '#f97316' : '#ef4444';
+        barBg.appendChild(barFill);
+        row.appendChild(barBg);
+        row.appendChild(createEl('span', 'text-xs font-bold text-slate-700 w-8 text-right', intensity + '/10'));
+        cravingLog.appendChild(row);
+        if (c.declencheur) {
+          cravingLog.appendChild(createEl('p', 'text-[10px] text-slate-400 ml-22 mb-1', c.declencheur));
+        }
+      });
+    } else {
+      cravingLog.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun craving signal\u00e9'));
+    }
+  } catch(e) {
+    cravingLog.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun craving signal\u00e9'));
+  }
 
   // Charger les prescriptions existantes
   try {
@@ -564,84 +618,16 @@ function renderFichesChecklist(patientId) {
   });
 }
 
-// ── Rendu alertes ──
-function renderAlertes() {
-  var list = document.getElementById('alertes-list');
-  list.textContent = '';
-  if (loadedAlertes.length === 0) {
-    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
-    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucune alerte en attente'));
-    list.appendChild(empty);
-    return;
-  }
-  loadedAlertes.forEach(function(a) {
-    var colors = {
-      craving: { bg: 'border-red-200 bg-red-50', badge: 'bg-red-100 text-red-700', icon: 'text-red-500' },
-      effet_indesirable: { bg: 'border-amber-200 bg-amber-50', badge: 'bg-amber-100 text-amber-700', icon: 'text-amber-500' },
-      urgence: { bg: 'border-red-300 bg-red-50', badge: 'bg-red-200 text-red-800', icon: 'text-red-600' },
-      demande: { bg: 'border-indigo-200 bg-indigo-50', badge: 'bg-indigo-100 text-indigo-700', icon: 'text-indigo-500' }
-    };
-    var style = colors[a.type] || colors.demande;
-
-    var card = createEl('div', 'rounded-xl border p-4 ' + style.bg);
-
-    // Ligne du haut : badge type + chambre + heure
-    var top = createEl('div', 'flex items-center justify-between mb-2');
-    var topLeft = createEl('div', 'flex items-center gap-2');
-    topLeft.appendChild(createEl('span', 'text-xs font-bold px-2 py-0.5 rounded-full ' + style.badge, a.type.replace('_', ' ')));
-    if (a.numero_chambre) topLeft.appendChild(createEl('span', 'text-xs font-semibold text-slate-600', 'Ch. ' + a.numero_chambre));
-    top.appendChild(topLeft);
-    var time = a.horodatage ? new Date(a.horodatage).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
-    top.appendChild(createEl('span', 'text-xs text-slate-400', time));
-    card.appendChild(top);
-
-    // Message + intensité
-    if (a.message) card.appendChild(createEl('p', 'text-sm text-slate-700', a.message));
-    if (a.intensite) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', 'Intensité : ' + a.intensite + '/10'));
-
-    // Statut + boutons
-    var bottom = createEl('div', 'flex items-center justify-between mt-3');
-    var statusBadge = createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full ' + (a.statut === 'non_traitee' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'), a.statut === 'non_traitee' ? 'Non traitée' : 'En cours');
-    bottom.appendChild(statusBadge);
-
-    var actions = createEl('div', 'flex gap-2');
-    if (a.statut === 'non_traitee') {
-      var btnPrendre = createEl('button', 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors', 'Prise en charge');
-      btnPrendre.addEventListener('click', function() { updateAlerte(a.id, 'en_cours'); });
-      actions.appendChild(btnPrendre);
-    }
-    var btnTraitee = createEl('button', 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors', 'Traitée');
-    btnTraitee.addEventListener('click', function() { updateAlerte(a.id, 'traitee'); });
-    actions.appendChild(btnTraitee);
-    bottom.appendChild(actions);
-
-    card.appendChild(bottom);
-    list.appendChild(card);
-  });
-}
-
-async function updateAlerte(id, statut) {
-  try {
-    await db.updateAlerteStatut(id, statut, currentProfile ? currentProfile.id : null);
-    await loadDashboardStats();
-    renderAlertes();
-  } catch (err) {
-    console.warn('Erreur mise à jour alerte :', err.message);
-  }
-}
-
 // ── Gestion des comptes (admin seulement) ──
 
 // Afficher la section comptes si admin
 function checkAdminAccess() {
   if (currentProfile && currentProfile.role === 'admin') {
-    document.getElementById('admin-only-section').classList.remove('hidden');
-    document.getElementById('btn-dev').classList.remove('hidden');
+    document.getElementById('btn-comptes').classList.remove('hidden');
     document.getElementById('btn-dev-patient').classList.remove('hidden');
   }
 }
 
-document.getElementById('card-comptes').addEventListener('click', function() { toggleSection('comptes', renderComptes); });
 
 document.getElementById('btn-new-compte').addEventListener('click', function() {
   document.getElementById('form-new-compte').classList.toggle('hidden');

@@ -1,10 +1,11 @@
 -- ══════════════════════════════════════════════════════════
--- USCA Connect — Migration V4 : permissions + rendez-vous
--- À exécuter dans Supabase → SQL Editor LORS DE LA PROCHAINE SESSION
+-- USCA Connect — Migration V4
+-- Permissions, événements/RDV, contenus partagés
+-- À exécuter dans Supabase → SQL Editor
 -- ══════════════════════════════════════════════════════════
 
 -- ──────────────────────────────────────────
--- 1. TABLE : permissions (demandes de sortie patient)
+-- 1. TABLE : permissions (demandes de sortie)
 -- ──────────────────────────────────────────
 CREATE TABLE permissions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -13,46 +14,58 @@ CREATE TABLE permissions (
   date_retour TIMESTAMPTZ NOT NULL,
   motif TEXT,
   statut TEXT DEFAULT 'en_attente' CHECK (statut IN ('en_attente', 'validee', 'refusee', 'annulee')),
+  cree_par UUID REFERENCES profiles(id),
   validee_par UUID REFERENCES profiles(id),
   validee_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
 CREATE INDEX idx_permissions_patient ON permissions(patient_id);
-CREATE INDEX idx_permissions_statut ON permissions(statut);
-
 ALTER TABLE permissions ENABLE ROW LEVEL SECURITY;
-
--- Patients anon peuvent lire leurs propres permissions et en créer
 CREATE POLICY "permissions_select_all" ON permissions FOR SELECT USING (true);
 CREATE POLICY "permissions_insert_all" ON permissions FOR INSERT WITH CHECK (true);
--- Soignants authentifiés peuvent modifier (valider/refuser)
 CREATE POLICY "permissions_update_auth" ON permissions FOR UPDATE USING (auth.role() = 'authenticated');
 
 -- ──────────────────────────────────────────
--- 2. TABLE : rendez_vous (poussés par les soignants)
+-- 2. TABLE : evenements (RDV, entretiens, consultations...)
+-- Remplace la table rendez_vous prévue initialement
 -- ──────────────────────────────────────────
-CREATE TABLE rendez_vous (
+CREATE TABLE evenements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   patient_id UUID REFERENCES patients(id) ON DELETE CASCADE NOT NULL,
-  soignant_id UUID REFERENCES profiles(id),
+  cree_par UUID REFERENCES profiles(id),
   titre TEXT NOT NULL,
   description TEXT,
   date_heure TIMESTAMPTZ NOT NULL,
   duree_minutes INTEGER DEFAULT 30,
   lieu TEXT,
-  type TEXT DEFAULT 'entretien' CHECK (type IN ('entretien', 'medical', 'ide', 'social', 'autre')),
+  type TEXT DEFAULT 'entretien' CHECK (type IN ('entretien', 'consultation', 'familial', 'rdv_externe', 'autre')),
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
-CREATE INDEX idx_rdv_patient ON rendez_vous(patient_id);
-CREATE INDEX idx_rdv_date ON rendez_vous(date_heure);
+CREATE INDEX idx_evenements_patient ON evenements(patient_id);
+CREATE INDEX idx_evenements_date ON evenements(date_heure);
+ALTER TABLE evenements ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "evenements_select_all" ON evenements FOR SELECT USING (true);
+CREATE POLICY "evenements_insert_auth" ON evenements FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "evenements_update_auth" ON evenements FOR UPDATE USING (auth.role() = 'authenticated');
+CREATE POLICY "evenements_delete_auth" ON evenements FOR DELETE USING (auth.role() = 'authenticated');
 
-ALTER TABLE rendez_vous ENABLE ROW LEVEL SECURITY;
+-- ──────────────────────────────────────────
+-- 3. TABLE : contenus_partages (messages, liens, notes du soignant)
+-- ──────────────────────────────────────────
+CREATE TABLE contenus_partages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  patient_id UUID REFERENCES patients(id) ON DELETE CASCADE NOT NULL,
+  cree_par UUID REFERENCES profiles(id),
+  titre TEXT NOT NULL,
+  contenu TEXT NOT NULL,
+  type TEXT DEFAULT 'note' CHECK (type IN ('note', 'lien', 'consigne', 'document')),
+  created_at TIMESTAMPTZ DEFAULT now()
+);
 
--- Lecture publique (patients voient leurs RDV)
-CREATE POLICY "rdv_select_all" ON rendez_vous FOR SELECT USING (true);
--- Création/modification par les soignants
-CREATE POLICY "rdv_insert_auth" ON rendez_vous FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-CREATE POLICY "rdv_update_auth" ON rendez_vous FOR UPDATE USING (auth.role() = 'authenticated');
-CREATE POLICY "rdv_delete_auth" ON rendez_vous FOR DELETE USING (auth.role() = 'authenticated');
+CREATE INDEX idx_contenus_patient ON contenus_partages(patient_id);
+ALTER TABLE contenus_partages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "contenus_select_all" ON contenus_partages FOR SELECT USING (true);
+CREATE POLICY "contenus_insert_auth" ON contenus_partages FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "contenus_delete_auth" ON contenus_partages FOR DELETE USING (auth.role() = 'authenticated');
