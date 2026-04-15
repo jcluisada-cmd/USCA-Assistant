@@ -1167,135 +1167,316 @@ document.getElementById('card-traitements').addEventListener('click', function()
   loadTraitements();
 });
 
-// ══════════════ EXPORT HTML AUTONOME ══════════════
+// ══════════════ EXPORT HTML AUTONOME V2 ══════════════
 
 document.getElementById('btn-export-html').addEventListener('click', async function() {
   if (!currentPatient) return;
   this.disabled = true;
-  var originalText = this.querySelector('.text-sm').textContent;
-  this.querySelector('.text-sm').textContent = 'Génération...';
+  var btnText = this.querySelector('.text-sm');
+  btnText.textContent = 'Chargement des donn\u00e9es...';
 
-  var substance = currentPatient.substance || currentPatient.substance_principale || '';
+  // Collecter toutes les données
   var cravings = [];
   try { cravings = await db.getCravingHistory(currentPatient.id); } catch(e) {}
 
-  // Préparer les fiches traitements prescrites
   var prescriptions = [];
   try { prescriptions = await db.getPrescriptions(currentPatient.id); } catch(e) {}
 
-  // Charger le contenu HTML de chaque fiche prescrite
-  var fichesHtml = [];
+  // Charger les fiches traitements HTML
+  btnText.textContent = 'Chargement des fiches...';
+  var fichesData = [];
   for (var i = 0; i < prescriptions.length; i++) {
     var slug = prescriptions[i].fiche_slug;
     var fiche = FICHES_CATALOGUE.find(function(f) { return f.slug === slug; });
     if (!fiche) continue;
     try {
       var resp = await fetch('../fiches-traitements/fiche_' + slug + '_patient.html');
-      if (resp.ok) {
-        var html = await resp.text();
-        fichesHtml.push({ nom: fiche.nom, slug: slug, html: html });
-      }
+      if (resp.ok) fichesData.push({ nom: fiche.nom, cat: fiche.categorie, slug: slug, html: await resp.text() });
     } catch(e) {}
   }
 
-  // Construire les sections stratégies par catégorie
-  var catMap = { situation: 'Situations \u00e0 risque', emotion: '\u00c9motions d\u00e9clenchantes', pensee: 'Pens\u00e9es pi\u00e8ges', action: 'Actions alternatives', contact: 'Personnes ressources' };
-  var stratSections = '';
-  Object.keys(catMap).forEach(function(cat) {
-    var items = patientStrategies.filter(function(s) { return s.categorie === cat; });
-    if (items.length === 0) return;
-    var catColors = { situation: '#fecaca', emotion: '#bfdbfe', pensee: '#fde68a', action: '#a7f3d0', contact: '#c7d2fe' };
-    stratSections += '<h3 style="margin-top:20px;font-size:14px;color:#334155;">' + catMap[cat] + '</h3>';
-    items.forEach(function(s) {
-      stratSections += '<div style="background:' + (catColors[cat] || '#f1f5f9') + ';padding:10px 14px;border-radius:10px;margin:6px 0;font-size:13px;">' + escapeHtml(s.texte) + '</div>';
+  // Charger le composant craving-agenda.js
+  var agendaJs = '';
+  try { var r = await fetch('../shared/craving-agenda.js'); if (r.ok) agendaJs = await r.text(); } catch(e) {}
+
+  btnText.textContent = 'G\u00e9n\u00e9ration de l\'app...';
+
+  // Données initiales embarquées
+  var initData = {
+    cravings: cravings,
+    strategies: patientStrategies,
+    fiches: fichesData.map(function(f) { return { nom: f.nom, cat: f.cat, slug: f.slug }; }),
+    exportDate: new Date().toISOString()
+  };
+
+  // ── Construction du HTML ──
+  var H = [];
+  H.push('<!DOCTYPE html><html lang="fr"><head>');
+  H.push('<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">');
+  H.push('<meta name="apple-mobile-web-app-capable" content="yes">');
+  H.push('<title>Mon espace USCA Connect</title>');
+  H.push('<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">');
+  H.push('<link rel="manifest" href="data:application/json,' + encodeURIComponent(JSON.stringify({name:"USCA Connect",short_name:"USCA",start_url:".",display:"standalone",background_color:"#f8fafc",theme_color:"#4F46E5"})) + '">');
+
+  // CSS
+  H.push('<style>');
+  H.push('*{box-sizing:border-box;margin:0;padding:0;}');
+  H.push('body{font-family:"DM Sans",system-ui,sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh;}');
+  H.push('.app{max-width:480px;margin:0 auto;padding:16px 16px 32px;}');
+  H.push('.header{background:#4F46E5;color:white;padding:40px 20px 24px;text-align:center;border-radius:0 0 24px 24px;margin:-16px -16px 20px;}');
+  H.push('.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}');
+  H.push('.card-btn{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:16px;text-align:left;cursor:pointer;transition:all .15s;font-family:inherit;}');
+  H.push('.card-btn:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);}');
+  H.push('.card-btn:active{transform:scale(.98);}');
+  H.push('.card-big{grid-column:1/-1;background:#ef4444;color:white;border:none;display:flex;align-items:center;gap:16px;padding:20px;}');
+  H.push('.icon-box{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}');
+  H.push('.panel{display:none;position:fixed;inset:0;z-index:60;background:#f8fafc;overflow-y:auto;}');
+  H.push('.panel.open{display:flex;flex-direction:column;}');
+  H.push('.panel-header{position:sticky;top:0;z-index:10;padding:12px 16px;display:flex;align-items:center;gap:12px;color:white;}');
+  H.push('.panel-body{flex:1;padding:20px;max-width:480px;margin:0 auto;width:100%;}');
+  H.push('.back-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;}');
+  H.push('.strat-card{border-radius:12px;padding:10px 14px;margin:6px 0;font-size:13px;display:flex;justify-content:space-between;align-items:center;}');
+  H.push('.strat-del{background:none;border:none;cursor:pointer;font-size:18px;font-weight:bold;color:#94a3b8;padding:0 4px;}');
+  H.push('.strat-del:hover{color:#ef4444;}');
+  H.push('.input-row{display:flex;gap:8px;margin-bottom:8px;}');
+  H.push('.input-row input{flex:1;padding:10px 12px;border:1px solid #e2e8f0;border-radius:12px;font-size:13px;font-family:inherit;outline:none;}');
+  H.push('.input-row input:focus{border-color:#4F46E5;}');
+  H.push('.input-row button{flex-shrink:0;padding:10px 16px;border:none;border-radius:12px;color:white;font-weight:700;font-size:13px;cursor:pointer;}');
+  H.push('.intensity-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0;}');
+  H.push('.intensity-btn{padding:12px;border-radius:12px;border:2px solid #e2e8f0;font-size:18px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;background:white;}');
+  H.push('.trigger-btn{padding:8px 14px;border-radius:12px;border:2px solid #e2e8f0;background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}');
+  H.push('.trigger-btn.sel{border-color:#ef4444;background:#fef2f2;color:#dc2626;}');
+  H.push('.confirm-box{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:14px;padding:20px;text-align:center;margin-top:16px;}');
+  H.push('.contact-card{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px 16px;margin:8px 0;}');
+  // PIN overlay
+  H.push('.pin-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.95);justify-content:center;align-items:center;flex-direction:column;}');
+  H.push('.pin-overlay.open{display:flex;}');
+  H.push('.pin-input{width:160px;padding:14px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);border-radius:14px;font-size:24px;font-weight:700;color:white;text-align:center;letter-spacing:.5em;outline:none;font-family:inherit;}');
+  // Dark mode
+  H.push('html.dark body{background:#0f172a;color:#e2e8f0;}');
+  H.push('html.dark .card-btn{background:#1e293b;border-color:#334155;color:#e2e8f0;}');
+  H.push('html.dark .panel{background:#0f172a;}');
+  H.push('html.dark .intensity-btn,.dark .trigger-btn{background:#1e293b;border-color:#334155;color:#e2e8f0;}');
+  H.push('html.dark input{background:#1e293b !important;color:#e2e8f0 !important;border-color:#475569 !important;}');
+  H.push('html.dark .contact-card{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);}');
+  H.push('</style></head><body>');
+
+  // PIN overlay
+  H.push('<div id="pin-overlay" class="pin-overlay">');
+  H.push('<p style="color:white;font-weight:700;font-size:18px;margin-bottom:8px;">Espace prot\u00e9g\u00e9</p>');
+  H.push('<p style="color:#94a3b8;font-size:13px;margin-bottom:20px;">Saisissez votre PIN</p>');
+  H.push('<input type="password" id="pin-input" class="pin-input" maxlength="4" inputmode="numeric" placeholder="\u00b7\u00b7\u00b7\u00b7">');
+  H.push('<button id="pin-submit" style="margin-top:16px;padding:12px 32px;background:white;color:#1e293b;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;">D\u00e9verrouiller</button>');
+  H.push('<p id="pin-error" style="color:#fca5a5;font-size:12px;margin-top:8px;display:none;">PIN incorrect</p>');
+  H.push('<button id="pin-setup" style="margin-top:24px;background:none;border:none;color:#64748b;font-size:11px;cursor:pointer;display:none;">Configurer un PIN</button>');
+  H.push('</div>');
+
+  // App
+  H.push('<div class="app">');
+  // Header
+  H.push('<div class="header">');
+  H.push('<div style="display:flex;justify-content:flex-end;margin:-20px -4px 12px 0;">');
+  H.push('<button id="btn-theme" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">');
+  H.push('<span id="icon-moon" style="color:white;font-size:16px;">\u263e</span>');
+  H.push('<span id="icon-sun" style="color:#fbbf24;font-size:16px;display:none;">\u2600</span>');
+  H.push('</button></div>');
+  H.push('<p style="font-size:22px;font-weight:800;">Mon espace USCA</p>');
+  H.push('<p style="font-size:12px;opacity:.7;">Application autonome \u2014 fonctionne hors-ligne</p>');
+  H.push('</div>');
+
+  // Cartes
+  H.push('<div style="margin-bottom:12px;">');
+  H.push('<button class="card-btn card-big" onclick="openPanel(\'craving\')">');
+  H.push('<div class="icon-box" style="background:rgba(255,255,255,.2);"><span style="font-size:20px;">\u26a0</span></div>');
+  H.push('<div><p style="font-size:16px;font-weight:800;">J\'ai un craving</p><p style="font-size:11px;opacity:.8;">Signaler et analyser</p></div>');
+  H.push('</button></div>');
+
+  H.push('<div class="card-grid">');
+  H.push('<button class="card-btn" onclick="openPanel(\'agenda\')"><div class="icon-box" style="background:#fef2f2;"><span style="color:#ef4444;font-size:16px;">\u2197</span></div><p style="font-size:13px;font-weight:700;margin-top:8px;">Mon journal</p><p style="font-size:11px;color:#64748b;">Historique craving</p></button>');
+  H.push('<button class="card-btn" onclick="openPanel(\'strategies\')"><div class="icon-box" style="background:#eef2ff;"><span style="color:#4F46E5;font-size:16px;">\u26e8</span></div><p style="font-size:13px;font-weight:700;margin-top:8px;">Mes strat\u00e9gies</p><p style="font-size:11px;color:#64748b;">Pr\u00e9vention rechute</p></button>');
+  if (fichesData.length > 0) {
+    H.push('<button class="card-btn" onclick="openPanel(\'traitements\')"><div class="icon-box" style="background:#fffbeb;"><span style="color:#f59e0b;font-size:16px;">\ud83d\udc8a</span></div><p style="font-size:13px;font-weight:700;margin-top:8px;">Traitements</p><p style="font-size:11px;color:#64748b;">' + fichesData.length + ' fiche(s)</p></button>');
+  }
+  H.push('<button class="card-btn" onclick="openPanel(\'contacts\')"><div class="icon-box" style="background:#fef2f2;"><span style="color:#ef4444;font-size:16px;">\u260e</span></div><p style="font-size:13px;font-weight:700;margin-top:8px;">Urgences</p><p style="font-size:11px;color:#64748b;">Contacts d\'aide</p></button>');
+  H.push('</div>');
+
+  // Sécurité PIN
+  H.push('<button id="btn-pin-config" onclick="configPin()" style="width:100%;padding:12px;background:white;border:1px solid #e2e8f0;border-radius:14px;font-size:12px;font-weight:600;color:#64748b;cursor:pointer;margin-top:8px;">\ud83d\udd12 Configurer / Modifier le PIN</button>');
+
+  // Boutons sauvegarde
+  H.push('<div style="margin-top:12px;background:white;border:1px solid #e2e8f0;border-radius:14px;padding:14px;">');
+  H.push('<p style="font-size:12px;font-weight:700;color:#334155;margin-bottom:10px;">Mes sauvegardes</p>');
+  H.push('<button onclick="saveApp()" style="width:100%;padding:10px;background:#4F46E5;color:white;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;margin-bottom:6px;font-family:inherit;">\ud83d\udcbe Sauvegarder mon app compl\u00e8te</button>');
+  H.push('<p style="font-size:10px;color:#94a3b8;margin-bottom:10px;text-align:center;">T\u00e9l\u00e9charge l\'app + vos donn\u00e9es en un seul fichier</p>');
+  H.push('<div style="display:flex;gap:6px;">');
+  H.push('<button onclick="exportJson()" style="flex:1;padding:10px;background:white;border:1px solid #e2e8f0;border-radius:10px;font-size:11px;font-weight:600;color:#64748b;cursor:pointer;font-family:inherit;">Exporter donn\u00e9es</button>');
+  H.push('<button onclick="document.getElementById(\\\'import-file\\\').click()" style="flex:1;padding:10px;background:white;border:1px solid #e2e8f0;border-radius:10px;font-size:11px;font-weight:600;color:#64748b;cursor:pointer;font-family:inherit;">Importer donn\u00e9es</button>');
+  H.push('</div>');
+  H.push('<input type="file" id="import-file" accept=".json" style="display:none;">');
+  H.push('</div>');
+
+  H.push('<p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:24px;">USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re</p>');
+  H.push('</div>'); // fin .app
+
+  // ── PANEL CRAVING ──
+  H.push('<div id="panel-craving" class="panel">');
+  H.push('<div class="panel-header" style="background:#ef4444;"><button class="back-btn" onclick="closePanel(\'craving\')"><span style="color:white;font-size:16px;">\u2039</span></button><span style="font-weight:700;font-size:14px;">J\'ai un craving</span></div>');
+  H.push('<div class="panel-body" id="craving-body">');
+  H.push('<p style="font-size:14px;font-weight:700;margin-bottom:8px;">Intensit\u00e9</p>');
+  H.push('<div class="intensity-grid" id="intensity-grid"></div>');
+  H.push('<p style="font-size:14px;font-weight:700;margin:16px 0 8px;">D\u00e9clencheur</p>');
+  H.push('<div id="trigger-area" style="display:flex;flex-wrap:wrap;gap:6px;"></div>');
+  H.push('<p style="font-size:14px;font-weight:700;margin:16px 0 8px;">Depuis combien de temps ?</p>');
+  H.push('<div id="duration-area" style="display:flex;flex-wrap:wrap;gap:6px;"></div>');
+  H.push('<div id="craving-strategies-area" style="margin-top:16px;"></div>');
+  H.push('<button id="btn-send-craving" disabled style="width:100%;margin-top:16px;padding:16px;background:#ef4444;color:white;border:none;border-radius:16px;font-size:14px;font-weight:800;cursor:pointer;opacity:.5;font-family:inherit;">Enregistrer le craving</button>');
+  H.push('<div id="craving-confirm" class="confirm-box" style="display:none;"><p style="font-size:14px;font-weight:700;color:#059669;">Craving enregistr\u00e9</p><p style="font-size:12px;color:#64748b;margin-top:4px;">Ajout\u00e9 \u00e0 votre journal</p></div>');
+  H.push('</div></div>');
+
+  // ── PANEL AGENDA ──
+  H.push('<div id="panel-agenda" class="panel">');
+  H.push('<div class="panel-header" style="background:#ef4444;"><button class="back-btn" onclick="closePanel(\'agenda\')"><span style="color:white;font-size:16px;">\u2039</span></button><span style="font-weight:700;font-size:14px;">Mon journal craving</span></div>');
+  H.push('<div class="panel-body"><div id="agenda-container"></div></div></div>');
+
+  // ── PANEL STRATEGIES ──
+  H.push('<div id="panel-strategies" class="panel">');
+  H.push('<div class="panel-header" style="background:#4F46E5;"><button class="back-btn" onclick="closePanel(\'strategies\')"><span style="color:white;font-size:16px;">\u2039</span></button><span style="font-weight:700;font-size:14px;">Mon plan de pr\u00e9vention</span></div>');
+  H.push('<div class="panel-body" id="strategies-body"></div></div>');
+
+  // ── PANEL TRAITEMENTS ──
+  if (fichesData.length > 0) {
+    H.push('<div id="panel-traitements" class="panel">');
+    H.push('<div class="panel-header" style="background:#f59e0b;"><button class="back-btn" id="btn-back-trait" onclick="backTraitements()"><span style="color:white;font-size:16px;">\u2039</span></button><span id="trait-title" style="font-weight:700;font-size:14px;">Mes traitements</span></div>');
+    H.push('<div class="panel-body" id="traitements-list"></div>');
+    // Fiches embarquées (cachées)
+    fichesData.forEach(function(f, idx) {
+      H.push('<div id="fiche-embed-' + idx + '" style="display:none;flex:1;overflow-y:auto;padding:0;">' + f.html + '</div>');
     });
-  });
-
-  // Construire les cravings
-  var cravingSections = '';
-  if (cravings.length > 0) {
-    cravings.forEach(function(c) {
-      var d = new Date(c.horodatage);
-      var dateStr = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric' });
-      var timeStr = d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
-      var barWidth = Math.max(5, (c.intensite || 5) * 10);
-      var barColor = (c.intensite || 5) <= 3 ? '#fbbf24' : (c.intensite || 5) <= 6 ? '#f97316' : '#ef4444';
-      cravingSections += '<div style="display:flex;align-items:center;gap:10px;margin:6px 0;">';
-      cravingSections += '<span style="font-size:11px;color:#64748b;width:90px;flex-shrink:0;">' + dateStr + ' ' + timeStr + '</span>';
-      cravingSections += '<div style="flex:1;background:#f1f5f9;border-radius:6px;height:20px;overflow:hidden;"><div style="height:100%;width:' + barWidth + '%;background:' + barColor + ';border-radius:6px;"></div></div>';
-      cravingSections += '<span style="font-size:12px;font-weight:700;color:#334155;width:35px;text-align:right;">' + (c.intensite || '?') + '/10</span>';
-      cravingSections += '</div>';
-      if (c.declencheur) {
-        cravingSections += '<p style="font-size:11px;color:#64748b;margin:-2px 0 4px 100px;">' + escapeHtml(c.declencheur) + '</p>';
-      }
-    });
-  } else {
-    cravingSections = '<p style="color:#94a3b8;font-size:13px;">Aucun craving signal\u00e9 pendant le s\u00e9jour.</p>';
+    H.push('</div>');
   }
 
-  // Onglets fiches traitements
-  var fichesTabs = '';
-  var fichesContent = '';
-  fichesHtml.forEach(function(f, idx) {
-    fichesTabs += '<button onclick="showFiche(' + idx + ')" style="padding:8px 14px;border-radius:10px;border:2px solid #e2e8f0;background:white;font-size:12px;font-weight:600;cursor:pointer;" id="fiche-tab-' + idx + '">' + escapeHtml(f.nom) + '</button>';
-    fichesContent += '<div id="fiche-content-' + idx + '" style="display:none;">' + f.html + '</div>';
+  // ── PANEL CONTACTS ──
+  H.push('<div id="panel-contacts" class="panel">');
+  H.push('<div class="panel-header" style="background:#ef4444;"><button class="back-btn" onclick="closePanel(\'contacts\')"><span style="color:white;font-size:16px;">\u2039</span></button><span style="font-weight:700;font-size:14px;">Contacts d\'urgence</span></div>');
+  H.push('<div class="panel-body">');
+  var contacts = [['3114','Pr\u00e9vention du suicide (24h/24)'],['USCA Piti\u00e9-Salp\u00eatri\u00e8re','01 42 16 XX XX'],['Alcool Info Service','0 980 980 930'],['Drogues Info Service','0 800 23 13 13'],['SOS Amiti\u00e9','09 72 39 40 50'],['Joueurs Info Service','09 74 75 13 13']];
+  contacts.forEach(function(c) {
+    H.push('<div class="contact-card"><p style="font-weight:700;font-size:14px;color:#991b1b;">' + c[0] + '</p><p style="font-size:12px;color:#64748b;margin-top:2px;">' + c[1] + '</p></div>');
   });
+  H.push('</div></div>');
 
-  var exportHtml = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mon espace USCA Connect</title>';
-  exportHtml += '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">';
-  exportHtml += '<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"DM Sans",system-ui,sans-serif;background:#f8fafc;color:#1e293b;padding:0;}.container{max-width:480px;margin:0 auto;padding:20px;}h1{font-size:22px;font-weight:800;color:#4F46E5;margin-bottom:4px;}h2{font-size:16px;font-weight:700;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #e2e8f0;}.card{background:white;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin:12px 0;}.tab-bar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}.contacts-grid{display:grid;gap:8px;}.contact-card{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px 14px;}.contact-name{font-weight:700;font-size:13px;color:#991b1b;}.contact-num{font-size:12px;color:#64748b;margin-top:2px;}</style>';
-  exportHtml += '</head><body><div class="container">';
-  exportHtml += '<h1>Mon espace USCA Connect</h1>';
-  exportHtml += '<p style="font-size:13px;color:#64748b;">Mon espace personnel' + (substance ? ' \u2014 ' + escapeHtml(substance) : '') + '</p>';
-  exportHtml += '<p style="font-size:11px;color:#94a3b8;margin-top:4px;">G\u00e9n\u00e9r\u00e9 le ' + new Date().toLocaleDateString('fr-FR') + '</p>';
+  // ── JAVASCRIPT ──
+  H.push('<script>');
 
-  // Section courbe du craving éducative
-  exportHtml += '<h2>Comprendre le craving</h2>';
-  exportHtml += '<div class="card"><p style="font-size:13px;color:#334155;line-height:1.6;">Le craving est une <b>envie intense et temporaire</b>. Il monte, atteint un pic, puis <b>redescend naturellement en 15-30 minutes</b> si vous ne c\u00e9dez pas. Utilisez vos strat\u00e9gies ci-dessous pour traverser ce moment.</p></div>';
+  // Données initiales
+  H.push('var INIT_DATA=' + JSON.stringify(initData) + ';');
 
-  // Évolution craving
-  exportHtml += '<h2>\u00c9volution du craving</h2>';
-  exportHtml += '<div class="card">' + cravingSections + '</div>';
+  // Composant craving-agenda.js (embarqué)
+  H.push(agendaJs);
 
-  // Stratégies
-  exportHtml += '<h2>Mon plan de pr\u00e9vention</h2>';
-  if (stratSections) {
-    exportHtml += '<div class="card">' + stratSections + '</div>';
-  } else {
-    exportHtml += '<div class="card"><p style="color:#94a3b8;font-size:13px;">Aucune strat\u00e9gie renseign\u00e9e.</p></div>';
+  // Fiches catalogue mini (juste pour l'affichage)
+  H.push('var FICHES=[' + fichesData.map(function(f,i){ return '{nom:"' + f.nom.replace(/"/g,'\\"') + '",cat:"' + f.cat.replace(/"/g,'\\"') + '",idx:' + i + '}'; }).join(',') + '];');
+
+  // Storage helpers
+  H.push('var STORE_KEY="usca_export_data";');
+  H.push('function loadData(){var d=localStorage.getItem(STORE_KEY);if(d)return JSON.parse(d);var init={cravings:INIT_DATA.cravings||[],strategies:INIT_DATA.strategies||[]};localStorage.setItem(STORE_KEY,JSON.stringify(init));return init;}');
+  H.push('function saveData(d){localStorage.setItem(STORE_KEY,JSON.stringify(d));}');
+  H.push('var appData=loadData();');
+
+  // Navigation
+  H.push('function openPanel(id){document.getElementById("panel-"+id).classList.add("open");if(id==="agenda")initAgenda();if(id==="strategies")renderStrategies();if(id==="traitements")renderTraitements();}');
+  H.push('function closePanel(id){document.getElementById("panel-"+id).classList.remove("open");}');
+
+  // Theme
+  H.push('function applyTheme(dark){if(dark){document.documentElement.classList.add("dark");document.getElementById("icon-sun").style.display="";document.getElementById("icon-moon").style.display="none";}else{document.documentElement.classList.remove("dark");document.getElementById("icon-sun").style.display="none";document.getElementById("icon-moon").style.display="";}}');
+  H.push('if(localStorage.getItem("usca_theme")==="dark")applyTheme(true);');
+  H.push('document.getElementById("btn-theme").addEventListener("click",function(){var d=document.documentElement.classList.contains("dark");applyTheme(!d);localStorage.setItem("usca_theme",d?"light":"dark");});');
+
+  // PIN
+  H.push('var PIN_KEY="usca_export_pin";');
+  H.push('function hashPin(p){var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return"p"+h;}');
+  H.push('function configPin(){var p=prompt("Choisissez un PIN (4 chiffres) :");if(p&&p.length>=4){localStorage.setItem(PIN_KEY,hashPin(p));alert("PIN configur\u00e9 !");}else if(p!==null){alert("Le PIN doit faire au moins 4 chiffres.");}}');
+  H.push('(function(){var stored=localStorage.getItem(PIN_KEY);if(stored){document.getElementById("pin-overlay").classList.add("open");document.getElementById("pin-submit").addEventListener("click",function(){var v=document.getElementById("pin-input").value;if(hashPin(v)===stored){document.getElementById("pin-overlay").classList.remove("open");}else{document.getElementById("pin-error").style.display="";document.getElementById("pin-input").value="";}});}})();');
+
+  // Craving signal
+  H.push('var selIntensity=null,selTriggers=[],selDuration=null;');
+  H.push('var iGrid=document.getElementById("intensity-grid");');
+  H.push('for(var i=1;i<=10;i++){(function(n){var b=document.createElement("button");b.className="intensity-btn";b.textContent=n;b.style.color=n<=3?"#d97706":n<=6?"#ea580c":"#dc2626";b.style.borderColor=n<=3?"#fde68a":n<=6?"#fed7aa":"#fecaca";b.addEventListener("click",function(){selIntensity=n;iGrid.querySelectorAll("button").forEach(function(x){x.style.borderWidth="2px";x.style.transform="";});b.style.borderWidth="3px";b.style.borderColor="#ef4444";b.style.transform="scale(1.1)";checkReady();});iGrid.appendChild(b);})(i);}');
+
+  // Triggers from strategies + generic
+  H.push('var tArea=document.getElementById("trigger-area");');
+  H.push('var triggerLabels=["Stress","Ennui","Conflit","Insomnie","Douleur","Envie sociale","Humeur basse"];');
+  H.push('var patientTriggers=appData.strategies.filter(function(s){return s.categorie==="situation"||s.categorie==="emotion"||s.categorie==="pensee";}).map(function(s){return s.texte;});');
+  H.push('patientTriggers.concat(triggerLabels).forEach(function(t){var b=document.createElement("button");b.className="trigger-btn";b.textContent=t;b.addEventListener("click",function(){var idx=selTriggers.indexOf(t);if(idx===-1){selTriggers.push(t);b.classList.add("sel");}else{selTriggers.splice(idx,1);b.classList.remove("sel");}checkReady();});tArea.appendChild(b);});');
+
+  // Duration
+  H.push('var dArea=document.getElementById("duration-area");');
+  H.push('["Quelques minutes","Moins d\'1h","1-3 heures","Depuis ce matin","Depuis hier"].forEach(function(d){var b=document.createElement("button");b.className="trigger-btn";b.textContent=d;b.addEventListener("click",function(){selDuration=d;dArea.querySelectorAll("button").forEach(function(x){x.classList.remove("sel");});b.classList.add("sel");checkReady();});dArea.appendChild(b);});');
+
+  H.push('function checkReady(){document.getElementById("btn-send-craving").disabled=!selIntensity;document.getElementById("btn-send-craving").style.opacity=selIntensity?"1":".5";showResponseStrategies();}');
+
+  // Show response strategies (actions + contacts)
+  H.push('function showResponseStrategies(){var area=document.getElementById("craving-strategies-area");area.textContent="";var actions=appData.strategies.filter(function(s){return s.categorie==="action"||s.categorie==="contact";});if(actions.length===0)return;var h=document.createElement("p");h.style.cssText="font-size:14px;font-weight:700;color:#059669;margin-bottom:8px;";h.textContent="Vos strat\u00e9gies";area.appendChild(h);actions.forEach(function(s){var d=document.createElement("div");d.style.cssText="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:10px 14px;margin:4px 0;font-size:13px;color:#064e3b;";d.textContent=s.texte;area.appendChild(d);});}');
+
+  // Send craving
+  H.push('document.getElementById("btn-send-craving").addEventListener("click",function(){if(!selIntensity)return;var c={horodatage:new Date().toISOString(),intensite:selIntensity,declencheur:selTriggers.join(", ")||null,duree:selDuration};appData.cravings.push(c);saveData(appData);document.getElementById("craving-confirm").style.display="";this.disabled=true;this.textContent="Enregistr\u00e9 !";this.style.background="#059669";var self=this;setTimeout(function(){self.disabled=false;self.textContent="Enregistrer le craving";self.style.background="#ef4444";self.style.opacity=".5";document.getElementById("craving-confirm").style.display="none";selIntensity=null;selTriggers=[];selDuration=null;iGrid.querySelectorAll("button").forEach(function(x){x.style.borderWidth="2px";x.style.transform="";});tArea.querySelectorAll("button").forEach(function(x){x.classList.remove("sel");});dArea.querySelectorAll("button").forEach(function(x){x.classList.remove("sel");});document.getElementById("craving-strategies-area").textContent="";},3000);});');
+
+  // Agenda
+  H.push('function initAgenda(){initCravingAgenda("agenda-container",{getData:function(){return Promise.resolve(appData.cravings);}});}');
+
+  // Strategies (editable)
+  H.push('var CAT_CONFIG=[{id:"situation",label:"Situations \u00e0 risque",color:"#fecaca",btnColor:"#ef4444",placeholder:"Ex: Quand je passe devant le bar"},{id:"emotion",label:"\u00c9motions d\u00e9clenchantes",color:"#bfdbfe",btnColor:"#3b82f6",placeholder:"Ex: Quand je me sens seul"},{id:"pensee",label:"Pens\u00e9es pi\u00e8ges",color:"#fde68a",btnColor:"#f59e0b",placeholder:"Ex: Juste un verre..."},{id:"action",label:"Actions alternatives",color:"#a7f3d0",btnColor:"#10b981",placeholder:"Ex: 10 respirations profondes"},{id:"contact",label:"Personnes ressources",color:"#c7d2fe",btnColor:"#4F46E5",placeholder:"Ex: Mon fr\u00e8re Paul"}];');
+
+  H.push('function renderStrategies(){var body=document.getElementById("strategies-body");body.textContent="";');
+  H.push('var edu=document.createElement("div");edu.style.cssText="background:#eef2ff;border:1px solid #c7d2fe;border-radius:16px;padding:20px;margin-bottom:16px;";edu.innerHTML="<p style=\\"font-size:15px;font-weight:700;color:#312e81;margin-bottom:8px;\\">Comprendre le craving</p><p style=\\"font-size:13px;color:#4338ca;line-height:1.6;\\">Le craving est une envie intense et <b>temporaire</b>. Il monte, atteint un pic, puis redescend en 15-30 minutes. Construisez votre plan ci-dessous.</p>";body.appendChild(edu);');
+
+  H.push('CAT_CONFIG.forEach(function(cat){var sec=document.createElement("div");sec.style.cssText="background:white;border:1px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:12px;";');
+  H.push('var title=document.createElement("p");title.style.cssText="font-size:14px;font-weight:700;margin-bottom:8px;";title.textContent=cat.label;sec.appendChild(title);');
+  H.push('var row=document.createElement("div");row.className="input-row";var inp=document.createElement("input");inp.placeholder=cat.placeholder;var btn=document.createElement("button");btn.textContent="+";btn.style.background=cat.btnColor;');
+  H.push('btn.addEventListener("click",function(){var t=inp.value.trim();if(!t)return;appData.strategies.push({categorie:cat.id,texte:t,id:"s"+Date.now()});saveData(appData);inp.value="";renderStrategies();});');
+  H.push('row.appendChild(inp);row.appendChild(btn);sec.appendChild(row);');
+  H.push('var items=appData.strategies.filter(function(s){return s.categorie===cat.id;});');
+  H.push('items.forEach(function(s){var card=document.createElement("div");card.className="strat-card";card.style.background=cat.color;card.textContent=s.texte;var del=document.createElement("button");del.className="strat-del";del.textContent="\\u00d7";del.addEventListener("click",function(){appData.strategies=appData.strategies.filter(function(x){return x.id!==s.id&&x.texte!==s.texte;});saveData(appData);renderStrategies();});card.appendChild(del);sec.appendChild(card);});');
+  H.push('body.appendChild(sec);});');
+  H.push('var counter=document.createElement("div");counter.style.cssText="background:#eef2ff;border:1px solid #c7d2fe;border-radius:12px;padding:12px;text-align:center;";counter.innerHTML="<p style=\\"font-size:13px;font-weight:600;color:#4338ca;\\">"+appData.strategies.length+" strat\u00e9gie(s) dans votre plan</p>";body.appendChild(counter);');
+  H.push('}');
+
+  // Traitements
+  if (fichesData.length > 0) {
+    H.push('var viewingFiche=false;');
+    H.push('function renderTraitements(){viewingFiche=false;document.getElementById("trait-title").textContent="Mes traitements";var list=document.getElementById("traitements-list");list.style.display="";list.textContent="";');
+    // Cacher toutes les fiches
+    H.push('for(var i=0;i<' + fichesData.length + ';i++)document.getElementById("fiche-embed-"+i).style.display="none";');
+    // Grouper par catégorie
+    H.push('var cats={};FICHES.forEach(function(f){if(!cats[f.cat])cats[f.cat]=[];cats[f.cat].push(f);});');
+    H.push('Object.keys(cats).forEach(function(cat){var h=document.createElement("p");h.style.cssText="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;margin:12px 0 6px;";h.textContent=cat;list.appendChild(h);');
+    H.push('cats[cat].forEach(function(f){var btn=document.createElement("button");btn.className="card-btn";btn.style.cssText="width:100%;display:flex;align-items:center;gap:12px;margin-bottom:6px;";btn.innerHTML="<span style=\\"font-size:18px;\\">\ud83d\udc8a</span><span style=\\"font-size:13px;font-weight:700;\\">"+f.nom+"</span>";btn.addEventListener("click",function(){showFiche(f.idx,f.nom);});list.appendChild(btn);});});');
+    H.push('}');
+    H.push('function showFiche(idx,nom){viewingFiche=true;document.getElementById("traitements-list").style.display="none";document.getElementById("fiche-embed-"+idx).style.display="block";document.getElementById("trait-title").textContent=nom;}');
+    H.push('function backTraitements(){if(viewingFiche){renderTraitements();}else{closePanel("traitements");}}');
   }
 
-  // Fiches traitements
-  if (fichesHtml.length > 0) {
-    exportHtml += '<h2>Mes traitements</h2>';
-    exportHtml += '<div class="tab-bar">' + fichesTabs + '</div>';
-    exportHtml += fichesContent;
-    exportHtml += '<script>function showFiche(n){';
-    exportHtml += 'for(var i=0;i<' + fichesHtml.length + ';i++){document.getElementById("fiche-content-"+i).style.display="none";var t=document.getElementById("fiche-tab-"+i);t.style.borderColor="#e2e8f0";t.style.background="white";}';
-    exportHtml += 'document.getElementById("fiche-content-"+n).style.display="block";var t=document.getElementById("fiche-tab-"+n);t.style.borderColor="#4F46E5";t.style.background="#EEF2FF";}';
-    exportHtml += '<\/script>';
-  }
+  // Sauvegarde HTML : re-génère le fichier avec données à jour
+  H.push('function saveApp(){var d=loadData();var html=document.documentElement.outerHTML;');
+  H.push('try{var parts=html.split("var INIT_DATA=");var after=parts[1].split(";var STORE_KEY");');
+  H.push('var newData=JSON.stringify({cravings:d.cravings,strategies:d.strategies,fiches:FICHES,exportDate:new Date().toISOString()});');
+  H.push('var newHtml="<!DOCTYPE html><html lang=\\"fr\\">"+parts[0]+"var INIT_DATA="+newData+";var STORE_KEY"+after[1]+"</html>";');
+  H.push('dl(newHtml,"text/html","usca-connect-mon-espace.html");}catch(e){alert("Erreur de sauvegarde. Utilisez \\"Exporter donn\u00e9es\\" comme alternative.");}}');
 
-  // Contacts d'urgence
-  exportHtml += '<h2>Contacts d\'urgence</h2>';
-  exportHtml += '<div class="contacts-grid">';
-  var urgContacts = [
-    ['3114', 'Pr\u00e9vention du suicide (24h/24)'],
-    ['USCA Piti\u00e9-Salp\u00eatri\u00e8re', '01 42 16 XX XX'],
-    ['Alcool Info Service', '0 980 980 930'],
-    ['Drogues Info Service', '0 800 23 13 13'],
-    ['SOS Amiti\u00e9', '09 72 39 40 50']
-  ];
-  urgContacts.forEach(function(c) {
-    exportHtml += '<div class="contact-card"><div class="contact-name">' + c[0] + '</div><div class="contact-num">' + c[1] + '</div></div>';
-  });
-  exportHtml += '</div>';
+  // Export JSON
+  H.push('function exportJson(){var d=loadData();dl(JSON.stringify(d,null,2),"application/json","usca-donnees-"+new Date().toISOString().split("T")[0]+".json");}');
 
-  exportHtml += '<p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:30px;">USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re \u2014 Ce fichier fonctionne hors-ligne</p>';
-  exportHtml += '</div></body></html>';
+  // Import JSON
+  H.push('document.getElementById("import-file").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(d.cravings&&d.strategies){var existing=loadData();var existingDates=existing.cravings.map(function(c){return c.horodatage;});d.cravings.forEach(function(c){if(existingDates.indexOf(c.horodatage)===-1)existing.cravings.push(c);});existing.strategies=d.strategies;saveData(existing);appData=existing;alert("Donn\u00e9es import\u00e9es !\\n"+d.cravings.length+" cravings + "+d.strategies.length+" strat\u00e9gies");location.reload();}else{alert("Fichier non reconnu.");}}catch(err){alert("Erreur de lecture.");}};r.readAsText(f);this.value="";});');
 
-  // Télécharger le fichier HTML
-  var blob = new Blob([exportHtml], { type: 'text/html;charset=utf-8' });
+  // Helper téléchargement
+  H.push('function dl(content,type,name){var b=new Blob([content],{type:type+";charset=utf-8"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}');
+
+  H.push('<\/script>');
+  H.push('</body></html>');
+
+  // Télécharger
+  var blob = new Blob([H.join('')], { type: 'text/html;charset=utf-8' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.href = url;
@@ -1305,7 +1486,7 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 
-  this.querySelector('.text-sm').textContent = originalText;
+  btnText.textContent = 'Mon app de sortie';
   this.disabled = false;
 });
 
