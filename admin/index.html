@@ -129,13 +129,6 @@
           <p id="stat-groupes" class="text-2xl font-bold text-slate-800">—</p>
           <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
         </button>
-        <button id="card-programmes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]">
-          <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-          </div>
-          <p id="stat-programmes" class="text-2xl font-bold text-slate-800">—</p>
-          <p class="text-xs text-slate-500 mt-1">Programmes templates</p>
-        </button>
       </div>
 
       <!-- Carte Comptes (visible seulement pour admin) -->
@@ -272,14 +265,6 @@
         </div>
       </section>
 
-      <!-- Section Programmes -->
-      <section id="section-programmes" class="mb-6 hidden">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-lg font-bold text-slate-800">Programmes templates</h3>
-          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
-        </div>
-        <div id="programmes-list" class="space-y-2"></div>
-      </section>
 
     </main>
   </div>
@@ -334,7 +319,6 @@ function showLoginError(msg) {
 // ── Données chargées ──
 let loadedPatients = [];
 let loadedAlertes = [];
-let loadedProgrammes = [];
 let currentProfile = null;
 
 // ── Afficher l'app admin ──
