@@ -504,7 +504,7 @@ function BZDCalc({onBack}) {
     <SectionHead icon={I.scale(C.t[300])} title="Convertisseur BZD" sub="Équivalences diazépam"/>
     <div className="card" style={{padding:12,marginBottom:12}}>
       <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>BZD du patient :</div>
-      {BZD_EQ.map((b,i)=><button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:"#fff",marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
+      {BZD_EQ.map((b,i)=><button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:C.bg,marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
         <span style={{fontWeight:600,color:C.n[800]}}>{b.nom}</span>
         <span style={{fontSize:11,color:C.n[400]}}>t½ {b.t}</span>
       </button>)}
@@ -512,7 +512,7 @@ function BZDCalc({onBack}) {
     {sel!==null && <div className="card" style={{padding:12,marginBottom:12}}>
       <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>Dose journalière (mg) :</div>
       <input type="number" value={dose} onChange={e=>setDose(e.target.value)} placeholder="Ex: 30"
-        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],outline:"none"}}/>
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],background:C.bg,outline:"none"}}/>
     </div>}
     {dzp>0 && <div className="card" style={{padding:16,borderWidth:2,borderColor:dzp>40?C.r[500]:C.t[500]}}>
       <div style={{fontSize:12,color:C.n[500]}}>Équivalent diazépam</div>
@@ -531,7 +531,7 @@ function SubDetail({sKey, onBack}) {
   const s = SUBSTANCES[sKey];
   const [open, setOpen] = useState("sevrage");
   const Sec = ({id,title,icon,children}) => <div className="card" style={{marginBottom:10,overflow:"hidden"}}>
-    <button className="section-btn" onClick={()=>setOpen(open===id?null:id)} style={{background:open===id?C.n[50]:"#fff"}}>
+    <button className="section-btn" onClick={()=>setOpen(open===id?null:id)} style={{background:open===id?C.n[50]:C.bg}}>
       <div style={{display:"flex",alignItems:"center",gap:8}}>{icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{title}</span></div>
       {open===id?I.chevD(C.n[400]):I.chevR(C.n[400])}
     </button>
@@ -609,7 +609,7 @@ function InterCheck({onBack}) {
     <SectionHead icon={I.alert(C.t[300])} title="Interactions" sub="Sélectionnez les traitements"/>
     <div style={{position:"relative",marginBottom:10}}>
       <div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)"}}>{I.search(C.n[400])}</div>
-      <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..." style={{width:"100%",paddingLeft:34,paddingRight:12,paddingTop:10,paddingBottom:10,border:`1px solid ${C.bdr}`,borderRadius:10,fontSize:13,outline:"none"}}/>
+      <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..." style={{width:"100%",paddingLeft:34,paddingRight:12,paddingTop:10,paddingBottom:10,border:`1px solid ${C.bdr}`,borderRadius:10,fontSize:13,outline:"none",background:C.bg,color:C.n[900]}}/>
     </div>
     <div className="card" style={{padding:10,marginBottom:14}}>
       <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
@@ -740,7 +740,7 @@ function ComorView({onBack}) {
     <BackBtn onClick={onBack}/>
     <SectionHead icon={I.brain(C.t[300])} title="Comorbidités psy" sub="Double diagnostic"/>
     {secs.map(s=><div key={s.id} className="card" style={{marginBottom:10,overflow:"hidden"}}>
-      <button className="section-btn" onClick={()=>setOp(op===s.id?null:s.id)} style={{background:op===s.id?C.n[50]:"#fff"}}>
+      <button className="section-btn" onClick={()=>setOp(op===s.id?null:s.id)} style={{background:op===s.id?C.n[50]:C.bg}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>{s.icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{s.title}</span></div>
         {op===s.id?I.chevD(C.n[400]):I.chevR(C.n[400])}
       </button>
@@ -983,7 +983,8 @@ function App() {
       </div>;
 
       case "substances": return <div className="fade-in">
-        <SectionHead icon={I.pill(C.t[300])} title="Prescription par substance"/>
+        <BackBtn onClick={()=>nav("home")}/>
+        <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA"/>
         {Object.entries(SUBSTANCES).map(([k,s])=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelSub(k)}>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
             <span style={{fontSize:28}}>{s.icon}</span>
@@ -996,6 +997,7 @@ function App() {
       case "sejour": return <SejourView onBack={()=>nav("home")}/>;
 
       case "scores": return <div className="fade-in">
+        <BackBtn onClick={()=>nav("home")}/>
         <SectionHead icon={I.calc(C.t[300])} title="Scores & Calculateurs"/>
         <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>SEVRAGE</div>
         {["cushman","cows"].map(k=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore(k)}>
@@ -1030,6 +1032,7 @@ function App() {
         </div>
         <iframe src={"../fiches-traitements/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
       </div> : <div className="fade-in">
+        <BackBtn onClick={()=>nav("home")}/>
         <SectionHead icon={I.heart(C.a[300])} title="Fiches Traitements Patients"/>
         <p style={{fontSize:12,color:C.n[400],marginBottom:16}}>Fiches d'information à remettre aux patients. Cliquez pour consulter.</p>
         {[
