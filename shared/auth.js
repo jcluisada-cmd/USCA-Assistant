@@ -25,7 +25,7 @@ window.auth = {
   /**
    * Inscription soignant (admin uniquement en Phase 4 RBAC)
    */
-  async registerStaff(email, password, nom, role) {
+  async registerStaff(email, password, nom, role, isAdmin) {
     const { data, error } = await sb.auth.signUp({ email, password });
     if (error) throw new Error(error.message);
     // Créer le profil dans la table profiles
@@ -34,6 +34,7 @@ window.auth = {
       email,
       nom,
       role,
+      is_admin: isAdmin || false,
       modules_actifs: auth._defaultModules(role)
     });
     if (profileError) throw new Error(profileError.message);

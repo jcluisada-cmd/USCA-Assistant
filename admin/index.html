@@ -395,10 +395,13 @@
                   <option value="secretaire">Secrétaire</option>
                   <option value="externe">Externe</option>
                   <option value="etudiant_ide">Étudiant.e IDE</option>
-                  <option value="admin">Admin</option>
                 </select>
               </div>
             </div>
+            <label class="flex items-center gap-2 mb-3 cursor-pointer">
+              <input type="checkbox" id="new-staff-admin" class="w-4 h-4 rounded border-slate-300">
+              <span class="text-xs font-semibold text-slate-600">Droits administrateur</span>
+            </label>
             <div class="flex gap-2">
               <button id="btn-cancel-compte" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
               <button id="btn-save-compte" class="flex-1 py-2.5 bg-slate-700 text-white font-bold rounded-lg text-sm hover:bg-slate-800 transition-colors">Créer le compte</button>
@@ -527,8 +530,8 @@ function showAdminApp(profile) {
   currentProfile = profile;
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-app').classList.remove('hidden');
-  var rl = { admin:'Admin', medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
-  document.getElementById('badge-role').textContent = rl[profile.role] || profile.role;
+  var rl = { medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
+  document.getElementById('badge-role').textContent = (rl[profile.role] || profile.role) + (profile.is_admin ? ' \u00b7 Admin' : '');
   document.getElementById('staff-name').textContent = profile.nom;
   loadDashboardStats();
   checkAdminAccess();
@@ -1090,7 +1093,7 @@ async function renderPatientPerms(patientId) {
 
 // Afficher la section comptes si admin
 function checkAdminAccess() {
-  if (currentProfile && currentProfile.role === 'admin') {
+  if (currentProfile && currentProfile.is_admin) {
     document.getElementById('btn-comptes').classList.remove('hidden');
     document.getElementById('btn-dev-patient').classList.remove('hidden');
   }
@@ -1130,7 +1133,8 @@ document.getElementById('btn-save-compte').addEventListener('click', async funct
 
   try {
     // Créer le compte Supabase Auth
-    var newUser = await auth.registerStaff(email, pwd, nom, role);
+    var isAdmin = document.getElementById('new-staff-admin').checked;
+    var newUser = await auth.registerStaff(email, pwd, nom, role, isAdmin);
 
     // Re-connecter l'admin (le signUp a changé la session)
     if (adminSession && adminSession.data && adminSession.data.session) {
@@ -1189,8 +1193,10 @@ async function renderComptes() {
       var idDisplay = p.email.replace('@aphp.fr', '');
       info.appendChild(createEl('p', 'text-xs text-slate-500', idDisplay));
       row.appendChild(info);
-      var badge = createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full flex-shrink-0 ' + (roleColors[p.role] || roleColors.externe), roleLabels[p.role] || p.role);
-      row.appendChild(badge);
+      var badges = createEl('div', 'flex items-center gap-1 flex-shrink-0');
+      badges.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full ' + (roleColors[p.role] || roleColors.externe), roleLabels[p.role] || p.role));
+      if (p.is_admin) badges.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-white', 'Admin'));
+      row.appendChild(badges);
       card.appendChild(row);
 
       // Actions (sauf pour soi-même)
@@ -1200,7 +1206,7 @@ async function renderComptes() {
         // Changer le rôle
         var roleSelect = document.createElement('select');
         roleSelect.className = 'flex-1 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs';
-        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide','admin'].forEach(function(r) {
+        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide'].forEach(function(r) {
           var opt = document.createElement('option');
           opt.value = r; opt.textContent = roleLabels[r] || r;
           if (r === p.role) opt.selected = true;
@@ -1208,13 +1214,37 @@ async function renderComptes() {
         });
         (function(profileId) {
           roleSelect.addEventListener('change', async function() {
-            try {
-              await db.updateProfile(profileId, { role: this.value });
-              renderComptes();
-            } catch(e) { console.warn(e); }
+            try { await db.updateProfile(profileId, { role: this.value }); renderComptes(); } catch(e) { console.warn(e); }
           });
         })(p.id);
         actions.appendChild(roleSelect);
+
+        // Modifier le nom
+        var btnEditNom = createEl('button', 'px-2 py-1.5 bg-white border border-slate-200 text-slate-500 font-bold rounded-lg text-[10px] hover:bg-slate-50 transition-colors flex-shrink-0', 'Nom');
+        (function(profileId, currentNom) {
+          btnEditNom.addEventListener('click', async function() {
+            var newNom = prompt('Modifier le nom affich\u00e9 :', currentNom);
+            if (newNom && newNom.trim() && newNom.trim() !== currentNom) {
+              try { await db.updateProfile(profileId, { nom: newNom.trim() }); renderComptes(); } catch(e) { console.warn(e); }
+            }
+          });
+        })(p.id, p.nom);
+        actions.appendChild(btnEditNom);
+
+        // Toggle admin
+        var adminLabel = createEl('label', 'flex items-center gap-1 cursor-pointer flex-shrink-0');
+        var adminCb = document.createElement('input');
+        adminCb.type = 'checkbox';
+        adminCb.checked = p.is_admin || false;
+        adminCb.className = 'w-3.5 h-3.5 rounded';
+        (function(profileId) {
+          adminCb.addEventListener('change', async function() {
+            try { await db.updateProfile(profileId, { is_admin: this.checked }); renderComptes(); } catch(e) { console.warn(e); this.checked = !this.checked; }
+          });
+        })(p.id);
+        adminLabel.appendChild(adminCb);
+        adminLabel.appendChild(createEl('span', 'text-[10px] font-semibold text-slate-500', 'Admin'));
+        actions.appendChild(adminLabel);
 
         // Supprimer
         var btnDel = createEl('button', 'px-3 py-1.5 bg-white border border-red-200 text-red-500 font-bold rounded-lg text-xs hover:bg-red-50 transition-colors', 'Supprimer');
@@ -1235,10 +1265,10 @@ async function renderComptes() {
       } else {
         // Son propre compte : peut changer son rôle mais pas se supprimer
         var selfActions = createEl('div', 'flex items-center gap-2 mt-3 pt-3 border-t border-slate-100');
-        selfActions.appendChild(createEl('span', 'text-[10px] text-slate-400', 'Votre compte \u2014 R\u00f4le :'));
+        selfActions.appendChild(createEl('span', 'text-[10px] text-slate-400', 'Votre compte \u2014'));
         var selfRoleSelect = document.createElement('select');
         selfRoleSelect.className = 'flex-1 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs';
-        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide','admin'].forEach(function(r) {
+        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide'].forEach(function(r) {
           var opt = document.createElement('option');
           opt.value = r; opt.textContent = roleLabels[r] || r;
           if (r === p.role) opt.selected = true;
@@ -1255,6 +1285,17 @@ async function renderComptes() {
           });
         })(p.id);
         selfActions.appendChild(selfRoleSelect);
+        var selfEditNom = createEl('button', 'px-2 py-1.5 bg-white border border-slate-200 text-slate-500 font-bold rounded-lg text-[10px] hover:bg-slate-50 transition-colors flex-shrink-0', 'Nom');
+        (function(profileId, currentNom) {
+          selfEditNom.addEventListener('click', async function() {
+            var newNom = prompt('Modifier votre nom affich\u00e9 :', currentNom);
+            if (newNom && newNom.trim() && newNom.trim() !== currentNom) {
+              try { await db.updateProfile(profileId, { nom: newNom.trim() }); currentProfile.nom = newNom.trim(); document.getElementById('staff-name').textContent = newNom.trim(); renderComptes(); } catch(e) { console.warn(e); }
+            }
+          });
+        })(p.id, p.nom);
+        selfActions.appendChild(selfEditNom);
+        if (p.is_admin) selfActions.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-white flex-shrink-0', 'Admin'));
         card.appendChild(selfActions);
       }
 
