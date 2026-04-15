@@ -390,8 +390,11 @@
                 <select id="new-staff-role" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
                   <option value="medecin">Médecin</option>
                   <option value="ide">IDE</option>
-                  <option value="etudiant">Étudiant / Externe</option>
-                  <option value="animateur">Animateur</option>
+                  <option value="psychologue">Psychologue</option>
+                  <option value="pharmacien">Pharmacien</option>
+                  <option value="secretaire">Secrétaire</option>
+                  <option value="externe">Externe</option>
+                  <option value="etudiant_ide">Étudiant.e IDE</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>
@@ -524,7 +527,8 @@ function showAdminApp(profile) {
   currentProfile = profile;
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-app').classList.remove('hidden');
-  document.getElementById('badge-role').textContent = profile.role.charAt(0).toUpperCase() + profile.role.slice(1);
+  var rl = { admin:'Admin', medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
+  document.getElementById('badge-role').textContent = rl[profile.role] || profile.role;
   document.getElementById('staff-name').textContent = profile.nom;
   loadDashboardStats();
   checkAdminAccess();
@@ -1052,22 +1056,24 @@ async function renderPatientPerms(patientId) {
       }
 
       // Boutons valider/refuser si en attente
-      if (p.statut === 'en_attente') {
+      // Boutons d'action pour tous les statuts
+      {
         var actions = createEl('div', 'flex gap-2 mt-2');
-        var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
-        var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
-        (function(permId) {
-          btnVal.addEventListener('click', async function() {
-            await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
-            renderPatientPerms(patientId);
-            loadDashboardStats();
-          });
-          btnRef.addEventListener('click', async function() {
-            await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
-            renderPatientPerms(patientId);
-            loadDashboardStats();
-          });
-        })(p.id);
+        if (p.statut !== 'validee') {
+          var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
+          (function(permId) { btnVal.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
+          actions.appendChild(btnVal);
+        }
+        if (p.statut !== 'refusee') {
+          var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
+          (function(permId) { btnRef.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
+          actions.appendChild(btnRef);
+        }
+        if (p.statut !== 'annulee') {
+          var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-400 font-bold rounded-lg text-xs transition-colors', 'Annuler');
+          (function(permId) { btnAnn.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'annulee' }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
+          actions.appendChild(btnAnn);
+        }
         actions.appendChild(btnVal);
         actions.appendChild(btnRef);
         card.appendChild(actions);
@@ -1167,19 +1173,91 @@ async function renderComptes() {
       list.appendChild(createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center')).appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun compte'));
       return;
     }
-    var roleColors = { admin: 'bg-slate-100 text-slate-700', medecin: 'bg-indigo-50 text-indigo-700', ide: 'bg-emerald-50 text-emerald-700', etudiant: 'bg-amber-50 text-amber-700', animateur: 'bg-purple-50 text-purple-700' };
+    var roleColors = { admin: 'bg-slate-100 text-slate-700', medecin: 'bg-indigo-50 text-indigo-700', ide: 'bg-emerald-50 text-emerald-700', psychologue: 'bg-purple-50 text-purple-700', pharmacien: 'bg-amber-50 text-amber-700', secretaire: 'bg-pink-50 text-pink-700', externe: 'bg-slate-50 text-slate-600', etudiant_ide: 'bg-teal-50 text-teal-700' };
+    var roleLabels = { admin:'Admin', medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
     profiles.forEach(function(p) {
-      var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3');
+      var isSelf = currentProfile && p.id === currentProfile.id;
+      var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4');
+
+      // Ligne principale
+      var row = createEl('div', 'flex items-center gap-3');
       var avatar = createEl('div', 'w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0');
       avatar.appendChild(createEl('span', 'text-sm font-bold text-slate-600', p.nom.charAt(0).toUpperCase()));
-      card.appendChild(avatar);
-      var info = createEl('div', 'flex-1');
-      info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', p.nom));
+      row.appendChild(avatar);
+      var info = createEl('div', 'flex-1 min-w-0');
+      info.appendChild(createEl('p', 'text-sm font-bold text-slate-800 truncate', p.nom));
       var idDisplay = p.email.replace('@aphp.fr', '');
       info.appendChild(createEl('p', 'text-xs text-slate-500', idDisplay));
-      card.appendChild(info);
-      var badge = createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full ' + (roleColors[p.role] || roleColors.etudiant), p.role);
-      card.appendChild(badge);
+      row.appendChild(info);
+      var badge = createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full flex-shrink-0 ' + (roleColors[p.role] || roleColors.externe), roleLabels[p.role] || p.role);
+      row.appendChild(badge);
+      card.appendChild(row);
+
+      // Actions (sauf pour soi-même)
+      if (!isSelf) {
+        var actions = createEl('div', 'flex gap-2 mt-3 pt-3 border-t border-slate-100');
+
+        // Changer le rôle
+        var roleSelect = document.createElement('select');
+        roleSelect.className = 'flex-1 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs';
+        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide','admin'].forEach(function(r) {
+          var opt = document.createElement('option');
+          opt.value = r; opt.textContent = roleLabels[r] || r;
+          if (r === p.role) opt.selected = true;
+          roleSelect.appendChild(opt);
+        });
+        (function(profileId) {
+          roleSelect.addEventListener('change', async function() {
+            try {
+              await db.updateProfile(profileId, { role: this.value });
+              renderComptes();
+            } catch(e) { console.warn(e); }
+          });
+        })(p.id);
+        actions.appendChild(roleSelect);
+
+        // Supprimer
+        var btnDel = createEl('button', 'px-3 py-1.5 bg-white border border-red-200 text-red-500 font-bold rounded-lg text-xs hover:bg-red-50 transition-colors', 'Supprimer');
+        (function(profileId, nom) {
+          btnDel.addEventListener('click', async function() {
+            if (!confirm('Supprimer le compte de ' + nom + ' ?')) return;
+            try {
+              // Supprimer le profil (le compte Supabase Auth reste mais sans profil il ne peut plus se connecter)
+              var { error } = await sb.from('profiles').delete().eq('id', profileId);
+              if (error) throw error;
+              renderComptes();
+            } catch(e) { console.warn('Erreur suppression :', e); }
+          });
+        })(p.id, p.nom);
+        actions.appendChild(btnDel);
+
+        card.appendChild(actions);
+      } else {
+        // Son propre compte : peut changer son rôle mais pas se supprimer
+        var selfActions = createEl('div', 'flex items-center gap-2 mt-3 pt-3 border-t border-slate-100');
+        selfActions.appendChild(createEl('span', 'text-[10px] text-slate-400', 'Votre compte \u2014 R\u00f4le :'));
+        var selfRoleSelect = document.createElement('select');
+        selfRoleSelect.className = 'flex-1 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs';
+        ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide','admin'].forEach(function(r) {
+          var opt = document.createElement('option');
+          opt.value = r; opt.textContent = roleLabels[r] || r;
+          if (r === p.role) opt.selected = true;
+          selfRoleSelect.appendChild(opt);
+        });
+        (function(profileId) {
+          selfRoleSelect.addEventListener('change', async function() {
+            try {
+              await db.updateProfile(profileId, { role: this.value });
+              currentProfile.role = this.value;
+              document.getElementById('badge-role').textContent = (roleLabels[this.value] || this.value);
+              renderComptes();
+            } catch(e) { console.warn(e); }
+          });
+        })(p.id);
+        selfActions.appendChild(selfRoleSelect);
+        card.appendChild(selfActions);
+      }
+
       list.appendChild(card);
     });
   } catch(e) {
