@@ -14,14 +14,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="shared/theme.css">
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  html.dark .bg-indigo-600 { background-color: #312e81 !important; }
+  html.dark .text-indigo-200 { color: #a5b4fc !important; }
+  html.dark .bg-gradient-to-r { background: linear-gradient(to right, #312e81, #1e293b) !important; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
   <!-- En-tête -->
-  <header class="bg-indigo-600 text-white px-6 pt-12 pb-8 text-center">
+  <header class="bg-indigo-600 text-white px-6 pt-12 pb-8 text-center relative">
+    <!-- Toggle thème -->
+    <button id="btn-theme" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center transition-colors" title="Thème">
+      <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
     <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>
@@ -141,5 +150,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 </script>
+<script src="shared/theme.js"></script>
 </body>
 </html>

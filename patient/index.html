@@ -13,39 +13,12 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="../shared/theme.css">
 <style>
-  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; transition: background-color 0.3s, color 0.3s; }
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
   .panel { display: none; position: fixed; inset: 0; z-index: 60; background: #f8fafc; overflow-y: auto; }
   .panel.open { display: flex; flex-direction: column; }
-  /* Dark mode */
-  html.dark body { background-color: #0f172a; color: #e2e8f0; }
-  html.dark .bg-slate-50 { background-color: #0f172a !important; }
-  html.dark .bg-white { background-color: #1e293b !important; }
-  html.dark .border-slate-200 { border-color: #334155 !important; }
-  html.dark .border-slate-100 { border-color: #1e293b !important; }
-  html.dark .text-slate-800 { color: #e2e8f0 !important; }
-  html.dark .text-slate-700 { color: #cbd5e1 !important; }
-  html.dark .text-slate-500 { color: #94a3b8 !important; }
-  html.dark .text-slate-400 { color: #64748b !important; }
-  html.dark .text-slate-300 { color: #475569 !important; }
-  html.dark .bg-slate-100 { background-color: #1e293b !important; }
-  html.dark .panel { background-color: #0f172a; }
-  html.dark .bg-indigo-50 { background-color: rgba(79,70,229,0.15) !important; }
-  html.dark .bg-emerald-50 { background-color: rgba(16,185,129,0.15) !important; }
-  html.dark .bg-red-50 { background-color: rgba(239,68,68,0.15) !important; }
-  html.dark .bg-amber-50 { background-color: rgba(245,158,11,0.15) !important; }
-  html.dark .bg-blue-50 { background-color: rgba(59,130,246,0.15) !important; }
-  html.dark .bg-purple-50 { background-color: rgba(139,92,246,0.15) !important; }
-  html.dark input, html.dark textarea, html.dark select { background-color: #1e293b !important; color: #e2e8f0 !important; border-color: #475569 !important; }
-  /* Header en dark mode */
-  html.dark .bg-white\/95 { background-color: rgba(15,23,42,0.95) !important; }
-  html.dark header.sticky { background-color: rgba(15,23,42,0.95) !important; border-color: #334155 !important; }
-  /* Ombre bouton craving en dark mode */
-  html.dark .shadow-red-200 { box-shadow: 0 10px 15px -3px rgba(239,68,68,0.15) !important; }
-  html.dark .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3) !important; }
-  html.dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3) !important; }
-  /* Footer en dark mode */
-  html.dark footer { border-color: #1e293b !important; }
+  html.dark .bg-emerald-600 { background-color: #065f46 !important; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -89,7 +62,6 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
         </div>
         <div>
-          <span class="text-sm font-bold text-slate-800">Bonjour</span>
           <span id="patient-name" class="text-sm font-bold text-emerald-600"></span>
         </div>
       </div>
@@ -162,16 +134,27 @@
         </div>
       </div>
 
-      <!-- Bandeau export PDF -->
-      <button id="btn-export" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-2xl p-4 flex items-center gap-4 hover:opacity-95 transition-all active:scale-[0.98] shadow-md">
-        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-        </div>
-        <div class="text-left">
-          <p class="text-sm font-bold">Ma fiche de sortie</p>
-          <p class="text-[11px] text-white/70">Séjour, craving, stratégies, prévention</p>
-        </div>
-      </button>
+      <!-- Bandeau exports -->
+      <div class="space-y-2">
+        <button id="btn-export" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-2xl p-4 flex items-center gap-4 hover:opacity-95 transition-all active:scale-[0.98] shadow-md">
+          <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold">Ma fiche de sortie (PDF)</p>
+            <p class="text-[11px] text-white/70">Craving, stratégies, contacts, suivi</p>
+          </div>
+        </button>
+        <button id="btn-export-html" class="w-full bg-white border-2 border-indigo-200 text-indigo-700 rounded-2xl p-4 flex items-center gap-4 hover:border-indigo-400 transition-all active:scale-[0.98]">
+          <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold">Mon app de sortie</p>
+            <p class="text-[11px] text-slate-500">Application autonome (fonctionne hors-ligne)</p>
+          </div>
+        </button>
+      </div>
 
     </main>
   </div>
@@ -540,7 +523,7 @@ function showError(msg) {
 async function showPatientApp(patient) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('patient-app').classList.remove('hidden');
-  document.getElementById('patient-name').textContent = ' ' + (patient.prenom || 'Chambre ' + (patient.numero_chambre || patient.chambre));
+  document.getElementById('patient-name').textContent = 'Chambre ' + (patient.numero_chambre || patient.chambre);
   var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -947,7 +930,6 @@ document.getElementById('btn-export').addEventListener('click', async function()
   if (!currentPatient) return;
   var jsPDF = window.jspdf.jsPDF;
   var doc = new jsPDF();
-  var prenom = currentPatient.prenom || 'Patient';
   var substance = currentPatient.substance || currentPatient.substance_principale || '';
 
   // Charger historique craving
@@ -963,15 +945,14 @@ document.getElementById('btn-export').addEventListener('click', async function()
   doc.text('USCA Connect', 105, 18, { align: 'center' });
   doc.setFontSize(11);
   doc.setFont(undefined, 'normal');
-  doc.text('Fiche de sortie \u2014 ' + prenom, 105, 28, { align: 'center' });
+  doc.text('Ma fiche de sortie', 105, 28, { align: 'center' });
 
   var y = 50;
   doc.setTextColor(30, 41, 59);
 
-  // Infos patient
+  // Infos
   doc.setFontSize(10);
   doc.setTextColor(100, 116, 139);
-  if (substance) { doc.text('Substance principale : ' + substance, 20, y); y += 7; }
   doc.text('Date : ' + new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }), 20, y);
   y += 14;
 
@@ -1070,7 +1051,7 @@ document.getElementById('btn-export').addEventListener('click', async function()
   doc.setTextColor(148, 163, 184);
   doc.text('USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re \u2014 G\u00e9n\u00e9r\u00e9 le ' + new Date().toLocaleDateString('fr-FR'), 105, 285, { align: 'center' });
 
-  doc.save('fiche-sortie-' + prenom.toLowerCase() + '.pdf');
+  doc.save('fiche-sortie-usca.pdf');
 });
 
 // ══════════════ TRAITEMENTS ══════════════
@@ -1152,29 +1133,154 @@ document.getElementById('card-traitements').addEventListener('click', function()
   loadTraitements();
 });
 
-// ══════════════ THÈME CLAIR/SOMBRE ══════════════
+// ══════════════ EXPORT HTML AUTONOME ══════════════
 
-function applyTheme(dark) {
-  if (dark) {
-    document.documentElement.classList.add('dark');
-    document.getElementById('icon-sun').classList.remove('hidden');
-    document.getElementById('icon-moon').classList.add('hidden');
-  } else {
-    document.documentElement.classList.remove('dark');
-    document.getElementById('icon-sun').classList.add('hidden');
-    document.getElementById('icon-moon').classList.remove('hidden');
+document.getElementById('btn-export-html').addEventListener('click', async function() {
+  if (!currentPatient) return;
+  this.disabled = true;
+  var originalText = this.querySelector('.text-sm').textContent;
+  this.querySelector('.text-sm').textContent = 'Génération...';
+
+  var substance = currentPatient.substance || currentPatient.substance_principale || '';
+  var cravings = [];
+  try { cravings = await db.getCravingHistory(currentPatient.id); } catch(e) {}
+
+  // Préparer les fiches traitements prescrites
+  var prescriptions = [];
+  try { prescriptions = await db.getPrescriptions(currentPatient.id); } catch(e) {}
+
+  // Charger le contenu HTML de chaque fiche prescrite
+  var fichesHtml = [];
+  for (var i = 0; i < prescriptions.length; i++) {
+    var slug = prescriptions[i].fiche_slug;
+    var fiche = FICHES_CATALOGUE.find(function(f) { return f.slug === slug; });
+    if (!fiche) continue;
+    try {
+      var resp = await fetch('../fiches-traitements/fiche_' + slug + '_patient.html');
+      if (resp.ok) {
+        var html = await resp.text();
+        fichesHtml.push({ nom: fiche.nom, slug: slug, html: html });
+      }
+    } catch(e) {}
   }
+
+  // Construire les sections stratégies par catégorie
+  var catMap = { situation: 'Situations \u00e0 risque', emotion: '\u00c9motions d\u00e9clenchantes', pensee: 'Pens\u00e9es pi\u00e8ges', action: 'Actions alternatives', contact: 'Personnes ressources' };
+  var stratSections = '';
+  Object.keys(catMap).forEach(function(cat) {
+    var items = patientStrategies.filter(function(s) { return s.categorie === cat; });
+    if (items.length === 0) return;
+    var catColors = { situation: '#fecaca', emotion: '#bfdbfe', pensee: '#fde68a', action: '#a7f3d0', contact: '#c7d2fe' };
+    stratSections += '<h3 style="margin-top:20px;font-size:14px;color:#334155;">' + catMap[cat] + '</h3>';
+    items.forEach(function(s) {
+      stratSections += '<div style="background:' + (catColors[cat] || '#f1f5f9') + ';padding:10px 14px;border-radius:10px;margin:6px 0;font-size:13px;">' + escapeHtml(s.texte) + '</div>';
+    });
+  });
+
+  // Construire les cravings
+  var cravingSections = '';
+  if (cravings.length > 0) {
+    cravings.forEach(function(c) {
+      var d = new Date(c.horodatage);
+      var dateStr = d.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric' });
+      var timeStr = d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+      var barWidth = Math.max(5, (c.intensite || 5) * 10);
+      var barColor = (c.intensite || 5) <= 3 ? '#fbbf24' : (c.intensite || 5) <= 6 ? '#f97316' : '#ef4444';
+      cravingSections += '<div style="display:flex;align-items:center;gap:10px;margin:6px 0;">';
+      cravingSections += '<span style="font-size:11px;color:#64748b;width:90px;flex-shrink:0;">' + dateStr + ' ' + timeStr + '</span>';
+      cravingSections += '<div style="flex:1;background:#f1f5f9;border-radius:6px;height:20px;overflow:hidden;"><div style="height:100%;width:' + barWidth + '%;background:' + barColor + ';border-radius:6px;"></div></div>';
+      cravingSections += '<span style="font-size:12px;font-weight:700;color:#334155;width:35px;text-align:right;">' + (c.intensite || '?') + '/10</span>';
+      cravingSections += '</div>';
+      if (c.declencheur) {
+        cravingSections += '<p style="font-size:11px;color:#64748b;margin:-2px 0 4px 100px;">' + escapeHtml(c.declencheur) + '</p>';
+      }
+    });
+  } else {
+    cravingSections = '<p style="color:#94a3b8;font-size:13px;">Aucun craving signal\u00e9 pendant le s\u00e9jour.</p>';
+  }
+
+  // Onglets fiches traitements
+  var fichesTabs = '';
+  var fichesContent = '';
+  fichesHtml.forEach(function(f, idx) {
+    fichesTabs += '<button onclick="showFiche(' + idx + ')" style="padding:8px 14px;border-radius:10px;border:2px solid #e2e8f0;background:white;font-size:12px;font-weight:600;cursor:pointer;" id="fiche-tab-' + idx + '">' + escapeHtml(f.nom) + '</button>';
+    fichesContent += '<div id="fiche-content-' + idx + '" style="display:none;">' + f.html + '</div>';
+  });
+
+  var exportHtml = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mon espace USCA Connect</title>';
+  exportHtml += '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">';
+  exportHtml += '<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:"DM Sans",system-ui,sans-serif;background:#f8fafc;color:#1e293b;padding:0;}.container{max-width:480px;margin:0 auto;padding:20px;}h1{font-size:22px;font-weight:800;color:#4F46E5;margin-bottom:4px;}h2{font-size:16px;font-weight:700;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid #e2e8f0;}.card{background:white;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin:12px 0;}.tab-bar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}.contacts-grid{display:grid;gap:8px;}.contact-card{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px 14px;}.contact-name{font-weight:700;font-size:13px;color:#991b1b;}.contact-num{font-size:12px;color:#64748b;margin-top:2px;}</style>';
+  exportHtml += '</head><body><div class="container">';
+  exportHtml += '<h1>Mon espace USCA Connect</h1>';
+  exportHtml += '<p style="font-size:13px;color:#64748b;">Mon espace personnel' + (substance ? ' \u2014 ' + escapeHtml(substance) : '') + '</p>';
+  exportHtml += '<p style="font-size:11px;color:#94a3b8;margin-top:4px;">G\u00e9n\u00e9r\u00e9 le ' + new Date().toLocaleDateString('fr-FR') + '</p>';
+
+  // Section courbe du craving éducative
+  exportHtml += '<h2>Comprendre le craving</h2>';
+  exportHtml += '<div class="card"><p style="font-size:13px;color:#334155;line-height:1.6;">Le craving est une <b>envie intense et temporaire</b>. Il monte, atteint un pic, puis <b>redescend naturellement en 15-30 minutes</b> si vous ne c\u00e9dez pas. Utilisez vos strat\u00e9gies ci-dessous pour traverser ce moment.</p></div>';
+
+  // Évolution craving
+  exportHtml += '<h2>\u00c9volution du craving</h2>';
+  exportHtml += '<div class="card">' + cravingSections + '</div>';
+
+  // Stratégies
+  exportHtml += '<h2>Mon plan de pr\u00e9vention</h2>';
+  if (stratSections) {
+    exportHtml += '<div class="card">' + stratSections + '</div>';
+  } else {
+    exportHtml += '<div class="card"><p style="color:#94a3b8;font-size:13px;">Aucune strat\u00e9gie renseign\u00e9e.</p></div>';
+  }
+
+  // Fiches traitements
+  if (fichesHtml.length > 0) {
+    exportHtml += '<h2>Mes traitements</h2>';
+    exportHtml += '<div class="tab-bar">' + fichesTabs + '</div>';
+    exportHtml += fichesContent;
+    exportHtml += '<script>function showFiche(n){';
+    exportHtml += 'for(var i=0;i<' + fichesHtml.length + ';i++){document.getElementById("fiche-content-"+i).style.display="none";var t=document.getElementById("fiche-tab-"+i);t.style.borderColor="#e2e8f0";t.style.background="white";}';
+    exportHtml += 'document.getElementById("fiche-content-"+n).style.display="block";var t=document.getElementById("fiche-tab-"+n);t.style.borderColor="#4F46E5";t.style.background="#EEF2FF";}';
+    exportHtml += '<\/script>';
+  }
+
+  // Contacts d'urgence
+  exportHtml += '<h2>Contacts d\'urgence</h2>';
+  exportHtml += '<div class="contacts-grid">';
+  var urgContacts = [
+    ['3114', 'Pr\u00e9vention du suicide (24h/24)'],
+    ['USCA Piti\u00e9-Salp\u00eatri\u00e8re', '01 42 16 XX XX'],
+    ['Alcool Info Service', '0 980 980 930'],
+    ['Drogues Info Service', '0 800 23 13 13'],
+    ['SOS Amiti\u00e9', '09 72 39 40 50']
+  ];
+  urgContacts.forEach(function(c) {
+    exportHtml += '<div class="contact-card"><div class="contact-name">' + c[0] + '</div><div class="contact-num">' + c[1] + '</div></div>';
+  });
+  exportHtml += '</div>';
+
+  exportHtml += '<p style="text-align:center;font-size:10px;color:#94a3b8;margin-top:30px;">USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re \u2014 Ce fichier fonctionne hors-ligne</p>';
+  exportHtml += '</div></body></html>';
+
+  // Télécharger le fichier HTML
+  var blob = new Blob([exportHtml], { type: 'text/html;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'usca-connect-mon-espace.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  this.querySelector('.text-sm').textContent = originalText;
+  this.disabled = false;
+});
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// Charger le thème sauvegardé
-var savedTheme = localStorage.getItem('usca_theme');
-if (savedTheme === 'dark') applyTheme(true);
-
-document.getElementById('btn-theme').addEventListener('click', function() {
-  var isDark = document.documentElement.classList.contains('dark');
-  applyTheme(!isDark);
-  localStorage.setItem('usca_theme', isDark ? 'light' : 'dark');
-});
+// Thème géré par ../shared/theme.js (chargé en fin de body)
 
 // ══════════════ DÉCONNEXION ══════════════
 
@@ -1200,5 +1306,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(function(){});
 }
 </script>
+<script src="../shared/theme.js"></script>
 </body>
 </html>

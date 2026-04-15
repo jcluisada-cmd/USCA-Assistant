@@ -12,8 +12,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="../shared/theme.css">
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  html.dark .bg-slate-700 { background-color: #1e293b !important; }
+  html.dark .bg-slate-100 { background-color: #1e293b !important; }
+  html.dark .hover\:bg-slate-50:hover { background-color: #334155 !important; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -87,6 +91,10 @@
         <span id="badge-role" class="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full"></span>
       </div>
       <div class="flex items-center gap-3">
+        <button id="btn-theme" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center transition-colors" title="Thème">
+          <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
         <span id="staff-name" class="text-xs text-slate-500 font-medium hidden sm:inline"></span>
         <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
       </div>
@@ -132,7 +140,60 @@
       <section id="section-patients" class="mb-6 hidden">
         <div class="flex items-center justify-between mb-3">
           <h3 class="text-lg font-bold text-slate-800">Patients hospitalisés</h3>
-          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
+          <div class="flex gap-2">
+            <button id="btn-new-patient" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">+ Nouveau</button>
+            <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
+          </div>
+        </div>
+        <!-- Formulaire nouveau patient (masqué) -->
+        <div id="form-new-patient" class="bg-white rounded-xl border border-indigo-200 p-5 mb-4 hidden">
+          <h4 class="text-sm font-bold text-indigo-700 mb-3">Nouveau patient</h4>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Chambre</label>
+              <input type="text" id="new-chambre" placeholder="312" inputmode="numeric" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom</label>
+              <input type="text" id="new-prenom" placeholder="Jean" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Date de naissance</label>
+              <input type="date" id="new-ddn" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Substance</label>
+              <select id="new-substance" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                <option value="alcool">Alcool</option>
+                <option value="opioides">Opioïdes</option>
+                <option value="cocaine">Cocaïne / Crack</option>
+                <option value="cannabis">Cannabis</option>
+                <option value="benzodiazepines">Benzodiazépines</option>
+                <option value="nps">NPS / Cathinones</option>
+                <option value="ketamine">Kétamine</option>
+                <option value="polysubstances">Polysubstances</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Programme</label>
+              <select id="new-programme" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                <option value="">Aucun</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Sortie prévue</label>
+              <input type="date" id="new-sortie" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button id="btn-cancel-patient" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+            <button id="btn-save-patient" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors">Enregistrer</button>
+          </div>
+          <p id="new-patient-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
         </div>
         <div id="patients-list" class="space-y-2"></div>
       </section>
@@ -320,7 +381,7 @@ function renderPatients() {
     avatar.appendChild(createEl('span', 'text-sm font-bold text-indigo-600', p.numero_chambre));
     card.appendChild(avatar);
     var info = createEl('div', 'flex-1');
-    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', (p.prenom || 'Patient') + ' \u2014 Ch. ' + p.numero_chambre));
+    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', 'Chambre ' + p.numero_chambre));
     var details = [];
     if (p.substance_principale) details.push(p.substance_principale);
     if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
@@ -336,6 +397,76 @@ function renderPatients() {
     list.appendChild(card);
   });
 }
+
+// ── Formulaire nouveau patient ──
+document.getElementById('btn-new-patient').addEventListener('click', function() {
+  var form = document.getElementById('form-new-patient');
+  form.classList.toggle('hidden');
+  // Remplir le select des programmes
+  var select = document.getElementById('new-programme');
+  select.textContent = '';
+  var optNone = document.createElement('option');
+  optNone.value = '';
+  optNone.textContent = 'Aucun';
+  select.appendChild(optNone);
+  loadedProgrammes.forEach(function(p) {
+    var opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.nom;
+    select.appendChild(opt);
+  });
+  // Date de sortie par défaut = aujourd'hui + 12 jours
+  var sortie = new Date();
+  sortie.setDate(sortie.getDate() + 12);
+  document.getElementById('new-sortie').value = sortie.toISOString().split('T')[0];
+});
+
+document.getElementById('btn-cancel-patient').addEventListener('click', function() {
+  document.getElementById('form-new-patient').classList.add('hidden');
+});
+
+document.getElementById('btn-save-patient').addEventListener('click', async function() {
+  var chambre = document.getElementById('new-chambre').value.trim();
+  var prenom = document.getElementById('new-prenom').value.trim();
+  var ddn = document.getElementById('new-ddn').value;
+  var substance = document.getElementById('new-substance').value;
+  var programme = document.getElementById('new-programme').value;
+  var sortie = document.getElementById('new-sortie').value;
+  var errEl = document.getElementById('new-patient-error');
+
+  if (!chambre || !ddn) {
+    errEl.textContent = 'Chambre et date de naissance obligatoires';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  errEl.classList.add('hidden');
+  this.disabled = true;
+  this.textContent = 'Enregistrement...';
+
+  try {
+    await db.createPatient({
+      numero_chambre: chambre,
+      prenom: prenom || null,
+      date_naissance: ddn,
+      substance_principale: substance,
+      programme_id: programme || null,
+      date_sortie_prevue: sortie || null
+    });
+    document.getElementById('form-new-patient').classList.add('hidden');
+    // Reset le formulaire
+    document.getElementById('new-chambre').value = '';
+    document.getElementById('new-prenom').value = '';
+    document.getElementById('new-ddn').value = '';
+    // Rafraîchir
+    await loadDashboardStats();
+    renderPatients();
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+  }
+  this.disabled = false;
+  this.textContent = 'Enregistrer';
+});
 
 // ── Détail patient + checklist fiches ──
 var selectedPatientForDetail = null;
@@ -370,7 +501,7 @@ async function showPatientDetail(patient) {
   document.getElementById('section-patient-detail').classList.remove('hidden');
 
   // Titre
-  document.getElementById('detail-patient-title').textContent = (patient.prenom || 'Patient') + ' \u2014 Chambre ' + patient.numero_chambre;
+  document.getElementById('detail-patient-title').textContent = 'Chambre ' + patient.numero_chambre;
 
   // Infos
   var infoDiv = document.getElementById('detail-patient-info');
@@ -577,5 +708,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
 }
 </script>
+<script src="../shared/theme.js"></script>
 </body>
 </html>
