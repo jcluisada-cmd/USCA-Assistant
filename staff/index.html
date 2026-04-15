@@ -11,119 +11,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <style>
-  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-  .toolbox-frame { width: 100%; border: none; height: calc(100vh - 120px); height: calc(100dvh - 120px); }
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; margin: 0; padding: 0; background: #f8fafc; overflow: hidden; }
+  .top-bar { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .back-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: #4F46E5; border: none; cursor: pointer; transition: background 0.15s; }
+  .back-btn:hover { background: #4338CA; }
+  .toolbox-frame { width: 100%; border: none; height: calc(100vh - 52px); height: calc(100dvh - 52px); display: block; }
 </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
+<body>
 
-  <!-- Top bar -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-2.5">
-      <a href="../" class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors">
+  <!-- Top bar minimaliste -->
+  <header class="top-bar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <a href="../" class="back-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </a>
-      <span class="text-sm font-extrabold text-slate-800">USCA Connect</span>
-      <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Soignant</span>
+      <span style="font-size:14px;font-weight:800;color:#1e293b;">USCA Connect</span>
+      <span style="font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;padding:2px 8px;border-radius:999px;">Soignant</span>
     </div>
-    <span class="text-xs text-slate-400">Pitié-Salpêtrière</span>
+    <span style="font-size:11px;color:#94a3b8;">Pitié-Salpêtrière</span>
   </header>
 
-  <!-- Contenu des onglets -->
-  <main class="flex-1 overflow-hidden">
-
-    <!-- Toolbox (iframe V1) — onglet par défaut -->
-    <div id="panel-toolbox" class="tab-panel active">
-      <iframe id="toolbox-iframe" class="toolbox-frame" src="toolbox.html?embedded=true" title="USCA Toolbox"></iframe>
-    </div>
-
-    <!-- Séjour J1-J12 (placeholder) -->
-    <div id="panel-sejour" class="tab-panel">
-      <div class="p-6 max-w-2xl mx-auto">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Séjour J1-J12</h2>
-        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-          <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-          </div>
-          <p class="text-sm text-slate-600 font-medium">Accessible depuis la Toolbox</p>
-          <p class="text-xs text-slate-400 mt-2">Utilisez l'onglet Toolbox pour accéder au module Séjour</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scores (placeholder) -->
-    <div id="panel-scores" class="tab-panel">
-      <div class="p-6 max-w-2xl mx-auto">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Scores & Calculateurs</h2>
-        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-          <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-          </div>
-          <p class="text-sm text-slate-600 font-medium">Accessible depuis la Toolbox</p>
-          <p class="text-xs text-slate-400 mt-2">Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseur BZD</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ELSA (placeholder) -->
-    <div id="panel-elsa" class="tab-panel">
-      <div class="p-6 max-w-2xl mx-auto">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Fiches ELSA</h2>
-        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-          <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-          </div>
-          <p class="text-sm text-slate-600 font-medium">Accessible depuis la Toolbox</p>
-          <p class="text-xs text-slate-400 mt-2">Fiches réflexes liaison : OH urgences, TSO chirurgie, etc.</p>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Bottom navigation -->
-  <nav class="sticky bottom-0 bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-50">
-    <div class="flex justify-around max-w-lg mx-auto">
-      <button data-tab="toolbox" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
-        <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
-      </button>
-      <button data-tab="sejour" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-        <span class="text-[10px] font-semibold mt-0.5">Séjour</span>
-      </button>
-      <button data-tab="scores" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
-        <span class="text-[10px] font-semibold mt-0.5">Scores</span>
-      </button>
-      <button data-tab="elsa" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-        <span class="text-[10px] font-semibold mt-0.5">ELSA</span>
-      </button>
-    </div>
-  </nav>
+  <!-- Toolbox V1 plein écran -->
+  <iframe class="toolbox-frame" src="toolbox.html?embedded=true" title="USCA Toolbox"></iframe>
 
 <script>
-// ── Navigation par onglets ──
-const tabs = document.querySelectorAll('.nav-tab');
-const panels = document.querySelectorAll('.tab-panel');
-
-function switchTab(tabId) {
-  panels.forEach(p => p.classList.remove('active'));
-  tabs.forEach(t => { t.classList.remove('text-indigo-600'); t.classList.add('text-slate-400'); });
-  const panel = document.getElementById('panel-' + tabId);
-  if (panel) panel.classList.add('active');
-  const btn = document.querySelector(`[data-tab="${tabId}"]`);
-  if (btn) { btn.classList.add('text-indigo-600'); btn.classList.remove('text-slate-400'); }
-}
-
-tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-
-// Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
 }
