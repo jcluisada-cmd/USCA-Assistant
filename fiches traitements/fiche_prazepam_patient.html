@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Lysanxia (Prazépam)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--slate:#6B7B99;--slate-pale:#EDF0F5}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--teal);opacity:.12;border-radius:50%}.header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}
+  .intro-box{background:var(--teal-pale);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--teal)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-slate{background:var(--slate-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#F0F7F6,var(--teal-pale));border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--teal);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* DOSAGE */
+  .dosage-card{background:var(--white);border:2px solid var(--amber);border-radius:14px;padding:1.4rem 1.5rem}.dosage-main{font-size:1.2rem;font-weight:700;line-height:1.2;margin-bottom:.4rem}.dosage-main span{color:var(--amber)}.dosage-detail{font-size:.88rem;color:var(--gray-600);line-height:1.5}.dosage-note{margin-top:.6rem;font-size:.82rem;background:var(--amber-pale);padding:.5rem .8rem;border-radius:8px}
+  /* DEPENDENCE WARNING */
+  .dep-box{background:linear-gradient(135deg,var(--amber-pale),#FDE8D0);border:2px solid var(--amber);border-radius:14px;padding:1.3rem 1.5rem}
+  .dep-title{font-weight:700;font-size:1rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;color:var(--navy)}
+  .dep-timeline{display:flex;align-items:center;gap:0;position:relative;margin-bottom:1rem}
+  .dep-timeline::before{content:'';position:absolute;top:18px;left:10%;right:10%;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--teal) 0%,var(--amber) 50%,var(--red-soft) 100%)}
+  .dep-step{flex:1;text-align:center;position:relative;padding-top:2.5rem}
+  .dep-dot{width:16px;height:16px;border-radius:50%;position:absolute;top:11px;left:50%;transform:translateX(-50%);z-index:1}
+  .dep-dot.green{background:var(--teal);box-shadow:0 0 0 4px var(--teal-pale)}
+  .dep-dot.orange{background:var(--amber);box-shadow:0 0 0 4px var(--amber-pale)}
+  .dep-dot.red{background:var(--red-soft);box-shadow:0 0 0 4px var(--red-pale)}
+  .dep-label{font-size:.78rem;font-weight:600}.dep-desc{font-size:.7rem;color:var(--gray-600);margin-top:.1rem}
+  .dep-note{font-size:.88rem;color:var(--gray-600);line-height:1.55;text-align:center}.dep-note strong{color:var(--navy)}
+  /* TAPER */
+  .taper-box{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}
+  .taper-icon{font-size:2rem;flex-shrink:0}
+  .taper-title{font-weight:700;font-size:.95rem;color:var(--amber-light);margin-bottom:.3rem}
+  .taper-text{font-size:.84rem;opacity:.9;line-height:1.5}
+  /* EFFECTS */
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  /* INFO CARDS */
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.taper-box{flex-direction:column}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-badge">Fiche médicament — Patient</div>
+    <h1>Lysanxia® <span>(Prazépam)</span></h1>
+    <div class="subtitle">Un anxiolytique efficace — mais à durée limitée</div>
+  </div>
+  <div class="content">
+
+    <div class="intro-box">
+      Le <strong>Lysanxia</strong> (prazépam) est un médicament de la famille des <strong>benzodiazépines</strong>, prescrit pour soulager l'<strong>anxiété</strong>. C'est l'un des anxiolytiques les plus prescrits en France. Il est efficace, mais comme toutes les benzodiazépines, il <strong>crée une dépendance</strong> quand il est pris trop longtemps. C'est pourquoi son utilisation doit rester <strong>la plus courte possible</strong>.
+    </div>
+
+    <!-- MECHANISM -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">😰</div><div class="label">Anxiété importante</div><div class="sublabel">Le cerveau est en état d'alerte permanent</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">Le Lysanxia renforce le GABA</div><div class="sublabel">Le « frein » naturel du cerveau</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">🧘</div><div class="label">Apaisement rapide</div><div class="sublabel">Anxiété, tension et agitation diminuent</div></div>
+      </div>
+      <p class="mechanism-caption">
+        Le prazépam se fixe sur les récepteurs GABA-A du cerveau et renforce l'action du GABA, le principal messager chimique « calmant ». L'anxiété diminue rapidement. Sa particularité : il est transformé dans le corps en <strong>nordiazépam</strong>, un métabolite actif à <strong>très longue durée d'action</strong> (jusqu'à 65 heures), ce qui lui confère un effet anxiolytique <strong>régulier et stable</strong> tout au long de la journée, avec peu de pics et de creux.
+      </p>
+    </div>
+
+    <!-- DOSAGE -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">💊</div>Comment le prendre ?</div>
+      <div class="dosage-card">
+        <div class="dosage-main"><span>10 à 40 mg/jour</span> — en 2 à 3 prises</div>
+        <div class="dosage-detail">Comprimés de 10 mg, répartis dans la journée (matin, midi, soir). Aussi disponible en <strong>solution buvable</strong> (gouttes) pour un ajustement plus fin de la dose. Grâce à sa longue durée d'action, l'effet est stable même avec des prises espacées.</div>
+        <div class="dosage-note">ℹ️ &nbsp;Équivalence approximative : <strong>20 mg de prazépam ≈ 10 mg de diazépam</strong> (Valium). Cette équivalence est utilisée par votre médecin pour adapter la dose lors d'un éventuel switch ou d'une décroissance.</div>
+      </div>
+    </div>
+
+    <!-- DEPENDENCE TIMELINE -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon" style="background:var(--amber-pale)">⚠️</div>Efficace, mais attention à la dépendance</div>
+      <div class="dep-box">
+        <div class="dep-title">⏳ Ce qui se passe avec le temps</div>
+        <div class="dep-timeline">
+          <div class="dep-step">
+            <div class="dep-dot green"></div>
+            <div class="dep-label">Premières semaines</div>
+            <div class="dep-desc">Effet anxiolytique net. Le Lysanxia fait bien son travail.</div>
+          </div>
+          <div class="dep-step">
+            <div class="dep-dot orange"></div>
+            <div class="dep-label">Après 4 à 8 semaines</div>
+            <div class="dep-desc">Tolérance : le cerveau s'habitue. La même dose fait moins d'effet.</div>
+          </div>
+          <div class="dep-step">
+            <div class="dep-dot red"></div>
+            <div class="dep-label">Usage prolongé (mois, années)</div>
+            <div class="dep-desc">Dépendance installée. L'arrêt brutal peut provoquer un rebond d'anxiété, des insomnies, voire des convulsions.</div>
+          </div>
+        </div>
+        <p class="dep-note">
+          C'est pourquoi la HAS recommande de <strong>limiter la prescription à 12 semaines maximum</strong> (période de décroissance incluse). Au-delà, le rapport bénéfice/risque devient défavorable.
+        </p>
+      </div>
+      <div class="taper-box">
+        <div class="taper-icon">📉</div>
+        <div>
+          <div class="taper-title">Si vous le prenez depuis longtemps : la décroissance progressive</div>
+          <div class="taper-text">
+            Si vous prenez du Lysanxia depuis plusieurs mois ou années, <strong>ne l'arrêtez jamais brutalement</strong>. L'arrêt se fait <strong>très progressivement</strong>, par paliers de réduction (souvent -10 % tous les 7 à 14 jours), sur plusieurs semaines à plusieurs mois. Votre médecin établira un <strong>calendrier de décroissance personnalisé</strong>. Diminuer la dose — même sans pouvoir arrêter complètement — est déjà un résultat positif.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDE EFFECTS -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Liés à l'effet sédatif et au relâchement musculaire :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Troubles de la mémoire</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la vigilance</div>
+        <div class="effect-item"><span class="dot"></span> Faiblesse musculaire</div>
+        <div class="effect-item"><span class="dot"></span> Vertiges / sensation d'ébriété</div>
+        <div class="effect-item"><span class="dot"></span> Risque de chute (personnes âgées)</div>
+      </div>
+    </div>
+
+    <!-- GOOD TO KNOW -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green">
+          <div class="card-icon">📊</div>
+          <div class="card-title">Longue durée d'action</div>
+          <div class="card-text">Grâce à son métabolite actif (nordiazépam), l'effet dure longtemps. Cela signifie un effet régulier mais aussi un risque d'accumulation — d'où l'importance de respecter les doses prescrites.</div>
+        </div>
+        <div class="info-card green">
+          <div class="card-icon">🚗</div>
+          <div class="card-title">Vigilance et conduite</div>
+          <div class="card-text">Le Lysanxia peut altérer la vigilance et les réflexes. Soyez prudent au volant et en cas de travail nécessitant de l'attention. L'effet peut persister le lendemain.</div>
+        </div>
+        <div class="info-card orange">
+          <div class="card-icon">🍷</div>
+          <div class="card-title">Alcool strictement interdit</div>
+          <div class="card-text">L'association Lysanxia + alcool est dangereuse (sédation excessive, dépression respiratoire). C'est doublement important en contexte de sevrage alcoolique.</div>
+        </div>
+        <div class="info-card orange">
+          <div class="card-icon">🔄</div>
+          <div class="card-title">Des alternatives existent</div>
+          <div class="card-text">Si votre anxiété nécessite un traitement au long cours, des alternatives sans dépendance existent : antidépresseurs (ISRS, IRSNa), buspirone, Tercian à faible dose, psychothérapie (TCC).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div class="section">
+      <div class="alert-box">
+        <div class="alert-title">⚠️ &nbsp;Prévenez l'équipe si…</div>
+        <p>
+          Vous ressentez une <strong>anxiété qui revient fortement</strong> lors de la diminution des doses (possible rebond), une <strong>confusion</strong>, des <strong>troubles de la mémoire importants</strong>, des <strong>chutes</strong>, ou des <strong>envies d'augmenter les doses de vous-même</strong>. Ces situations nécessitent un ajustement du rythme de décroissance — ce n'est pas un échec, c'est normal et prévu.
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+</div>
+</body>
+</html>

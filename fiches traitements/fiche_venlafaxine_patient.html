@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Effexor (Venlafaxine)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--coral:#E8735A;--coral-pale:#FDF0EC;--blue:#3B7DD8;--blue-pale:#EAF1FB}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}
+  .header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--blue);opacity:.12;border-radius:50%}
+  .header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}
+  .header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}
+  .intro-box{background:var(--blue-pale);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--blue)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}
+  .section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-blue{background:var(--blue-pale)}
+  /* DUAL ACTION VISUAL */
+  .dual-visual{background:linear-gradient(135deg,var(--blue-pale),#E0EDFA);border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+  .dual-title{font-weight:700;font-size:1rem;text-align:center;margin-bottom:1rem}
+  .dual-row{display:flex;gap:1rem;align-items:stretch}
+  .dual-box{flex:1;background:var(--white);border-radius:12px;padding:1rem;text-align:center;border:2px solid transparent}
+  .dual-box.sero{border-color:var(--blue)}
+  .dual-box.nora{border-color:var(--coral)}
+  .dual-emoji{font-size:1.8rem;margin-bottom:.3rem}
+  .dual-name{font-weight:700;font-size:.9rem;margin-bottom:.2rem}
+  .dual-name.blue{color:var(--blue)}.dual-name.coral{color:var(--coral)}
+  .dual-desc{font-size:.75rem;color:var(--gray-600);line-height:1.4}
+  .dual-dose{margin-top:.3rem;font-size:.7rem;font-weight:600;padding:.2rem .5rem;border-radius:10px;display:inline-block}
+  .dose-blue{background:var(--blue-pale);color:var(--blue)}.dose-coral{background:var(--coral-pale);color:var(--coral)}
+  .dual-caption{margin-top:1rem;text-align:center;font-size:.88rem;color:var(--gray-600);line-height:1.5}
+  .dual-caption strong{color:var(--navy)}
+  .mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  .indic-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+  .indic-tag{padding:.45rem .9rem;border-radius:20px;font-size:.82rem;font-weight:600;background:var(--blue-pale);border:1.5px solid var(--blue);color:#2A5A9A}
+  .indic-tag.primary{background:var(--blue);color:var(--white);border-color:var(--blue)}
+  /* DOSAGE */
+  .dosage-card{background:var(--white);border:2px solid var(--blue);border-radius:14px;padding:1.4rem 1.5rem}
+  .dosage-main{font-size:1.2rem;font-weight:700;line-height:1.2;margin-bottom:.4rem}.dosage-main span{color:var(--blue)}
+  .dosage-detail{font-size:.88rem;color:var(--gray-600);line-height:1.5}
+  .dosage-note{margin-top:.6rem;font-size:.82rem;background:var(--blue-pale);padding:.5rem .8rem;border-radius:8px}
+  /* WARNING STRIP */
+  .warning-strip{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}
+  .ws-icon{font-size:2rem;flex-shrink:0}
+  .ws-title{font-weight:700;font-size:.95rem;color:var(--coral);margin-bottom:.3rem}
+  .ws-text{font-size:.84rem;opacity:.9;line-height:1.5}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.dual-row{flex-direction:column}.warning-strip{flex-direction:column}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-badge">Fiche médicament — Patient</div>
+    <h1>Effexor® <span>(Venlafaxine)</span></h1>
+    <div class="subtitle">Un antidépresseur à double action contre la dépression et l'anxiété</div>
+  </div>
+  <div class="content">
+    <div class="intro-box">
+      La <strong>venlafaxine</strong> est un <strong>antidépresseur à double action</strong> (IRSNa) : elle agit à la fois sur la sérotonine et la noradrénaline. Elle est prescrite pour traiter la <strong>dépression</strong> et le <strong>trouble anxieux généralisé</strong>, notamment quand ces troubles sont associés à une addiction. Elle est souvent proposée quand un ISRS (comme la sertraline) n'a pas suffi.
+    </div>
+
+    <!-- DUAL MECHANISM -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-blue">🧠</div>Comment ça marche ? Une double action</div>
+      <div class="dual-visual">
+        <div class="dual-title">La venlafaxine agit sur deux systèmes à la fois</div>
+        <div class="dual-row">
+          <div class="dual-box sero">
+            <div class="dual-emoji">💙</div>
+            <div class="dual-name blue">Sérotonine</div>
+            <div class="dual-desc">Régule l'humeur, l'anxiété, le sommeil. Son manque → tristesse, anxiété, ruminations.</div>
+            <div class="dual-dose dose-blue">Activée dès 75 mg</div>
+          </div>
+          <div class="dual-box nora">
+            <div class="dual-emoji">🧡</div>
+            <div class="dual-name coral">Noradrénaline</div>
+            <div class="dual-desc">Régule l'énergie, la motivation, la concentration. Son manque → fatigue, apathie, ralentissement.</div>
+            <div class="dual-dose dose-coral">Activée à partir de ~150 mg</div>
+          </div>
+        </div>
+        <p class="dual-caption">
+          À <strong>faible dose</strong>, la venlafaxine agit surtout sur la sérotonine (comme un ISRS). À <strong>dose plus élevée</strong>, elle recrute aussi la noradrénaline, ce qui renforce l'effet sur l'énergie et la motivation — un avantage pour les dépressions avec fatigue importante.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon" style="background:#E4E8F0">🎯</div>Pour quelles indications ?</div>
+      <div class="indic-tags">
+        <span class="indic-tag primary">😞 Épisode dépressif (y compris résistant)</span>
+        <span class="indic-tag primary">😟 Trouble anxieux généralisé (TAG)</span>
+        <span class="indic-tag">🫨 Trouble panique</span>
+        <span class="indic-tag">😰 Anxiété sociale</span>
+      </div>
+      <p style="font-size:.88rem;color:var(--gray-600);line-height:1.55">La venlafaxine est souvent proposée quand un ISRS n'a pas été suffisant, ou d'emblée dans les dépressions sévères avec fatigue importante ou quand il existe un TAG associé.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">💊</div>Comment le prendre ?</div>
+      <div class="dosage-card">
+        <div class="dosage-main"><span>75 à 225 mg/jour</span> — en 1 prise (forme LP)</div>
+        <div class="dosage-detail">Commencer à <strong>37,5 ou 75 mg/jour</strong> pendant 1 semaine, puis augmenter progressivement. La forme <strong>LP (libération prolongée)</strong> est préférable : une seule prise le matin avec un verre d'eau.</div>
+        <div class="dosage-note">ℹ️ &nbsp;La gélule LP doit être avalée entière, <strong>sans la croquer ni l'ouvrir</strong>. Prenez-la toujours à la même heure, de préférence le matin pendant le petit-déjeuner.</div>
+      </div>
+    </div>
+
+    <!-- DISCONTINUATION WARNING -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon" style="background:var(--red-pale)">⚠️</div>Précautions essentielles</div>
+      <div class="warning-strip">
+        <div class="ws-icon">🚨</div>
+        <div>
+          <div class="ws-title">Jamais d'arrêt brutal — risque de syndrome de sevrage</div>
+          <div class="ws-text">
+            La venlafaxine est l'un des antidépresseurs pour lesquels le <strong>syndrome d'arrêt est le plus marqué</strong>. Un arrêt brutal peut provoquer : vertiges intenses, sensations de « décharges électriques » dans la tête, nausées, irritabilité, cauchemars, syndrome pseudo-grippal.<br><br>
+            <strong>L'arrêt se fait toujours très progressivement</strong>, par paliers de réduction sur plusieurs semaines, sous supervision médicale. <strong>Ne sautez jamais une prise</strong> et ne modifiez jamais la dose sans avis médical.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Nausées (surtout au début)</div>
+        <div class="effect-item"><span class="dot"></span> Transpiration excessive</div>
+        <div class="effect-item"><span class="dot"></span> Insomnie ou somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Maux de tête / vertiges</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la libido / troubles sexuels</div>
+        <div class="effect-item"><span class="dot"></span> Bouche sèche</div>
+        <div class="effect-item"><span class="dot"></span> Constipation</div>
+        <div class="effect-item"><span class="dot"></span> Élévation de la tension artérielle</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">🩺</div><div class="card-title">Surveillance de la tension</div><div class="card-text">À doses élevées (>150 mg), la venlafaxine peut augmenter la tension artérielle. Votre médecin la contrôlera régulièrement, surtout lors des augmentations de dose.</div></div>
+        <div class="info-card green"><div class="card-icon">⏳</div><div class="card-title">Patience : 2 à 4 semaines</div><div class="card-text">Comme tous les antidépresseurs, l'effet complet met 2 à 4 semaines à se manifester. Ne vous découragez pas si les premières semaines sont difficiles.</div></div>
+        <div class="info-card orange"><div class="card-icon">💊</div><div class="card-title">Forme LP = 1 prise/jour</div><div class="card-text">La forme à libération prolongée (Effexor LP) permet une seule prise quotidienne et réduit les effets indésirables digestifs par rapport à la forme immédiate.</div></div>
+        <div class="info-card orange"><div class="card-icon">🍷</div><div class="card-title">Alcool et venlafaxine</div><div class="card-text">L'alcool aggrave la dépression et réduit l'efficacité du traitement. Le sevrage d'alcool et l'antidépresseur travaillent ensemble pour votre rétablissement.</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="alert-box"><div class="alert-title">⚠️ &nbsp;Consultez rapidement si…</div><p>Vous ressentez une <strong>aggravation de la dépression ou des idées suicidaires</strong> (surtout les 2 premières semaines), des <strong>palpitations ou une tension artérielle élevée</strong>, une <strong>agitation anormale</strong>, ou une <strong>euphorie soudaine</strong>. Prévenez immédiatement votre médecin ou l'équipe soignante.</p></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

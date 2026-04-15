@@ -182,5 +182,41 @@ window.db = {
     const { data, error } = await sb.from('programmes').insert(programme).select().single();
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ STRATÉGIES (patient) ════════════════
+
+  /** Récupère les stratégies d'un patient */
+  async getStrategies(patientId) {
+    const { data, error } = await sb.from('strategies').select('*').eq('patient_id', patientId).order('created_at');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Crée une stratégie */
+  async createStrategie(strategie) {
+    const { data, error } = await sb.from('strategies').insert(strategie).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime une stratégie */
+  async deleteStrategie(id) {
+    const { error } = await sb.from('strategies').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  // ════════════════ HISTORIQUE CRAVING ════════════════
+
+  /** Historique des alertes craving d'un patient (pour le PDF et les stats) */
+  async getCravingHistory(patientId) {
+    const { data, error } = await sb
+      .from('alertes')
+      .select('*')
+      .eq('patient_id', patientId)
+      .eq('type', 'craving')
+      .order('horodatage', { ascending: true });
+    if (error) throw error;
+    return data;
   }
 };

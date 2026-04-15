@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Séresta (Oxazépam)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}
+  .header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--teal);opacity:.12;border-radius:50%}
+  .header-badge{display:inline-block;background:var(--amber);color:var(--navy);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}
+  .header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}
+  .header h1 span{color:var(--amber-light)}
+  .header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}
+  .intro-box{background:var(--teal-pale);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}
+  .intro-box strong{color:var(--teal)}
+  .section{margin-bottom:2rem}
+  .section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}
+  .section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-navy{background:#E4E8F0}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#F0F7F6,var(--teal-pale));border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+  .mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}
+  .mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}
+  .mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}
+  .mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}
+  .mechanism-arrow{font-size:1.4rem;color:var(--teal);flex-shrink:0}
+  .mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* LIVER HIGHLIGHT */
+  .liver-box{background:linear-gradient(135deg,#E6F5EE,var(--teal-pale));border:2px solid var(--teal);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:center}
+  .liver-icon{font-size:2.5rem;flex-shrink:0}
+  .liver-text{font-size:.95rem;line-height:1.55}
+  .liver-text strong{color:var(--teal)}
+  /* COMPARE */
+  .compare-table{width:100%;border-collapse:collapse;font-size:.85rem;border-radius:12px;overflow:hidden;border:1px solid var(--gray-200)}
+  .compare-table thead th{background:var(--navy);color:var(--white);padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.82rem}
+  .compare-table tbody td{padding:.55rem 1rem;border-bottom:1px solid var(--gray-100);vertical-align:top}
+  .compare-table tbody tr:last-child td{border-bottom:none}
+  .compare-table tbody tr:nth-child(even){background:var(--gray-50)}
+  .compare-table .highlight{color:var(--teal);font-weight:600}
+  /* EFFECTS */
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}
+  .effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  /* INFO CARDS */
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}
+  .info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}
+  .info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}
+  .info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}
+  .info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}
+  .info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}
+  .alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}
+  .alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+  .footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}
+  .footer-left strong{color:var(--navy)}
+  .footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.liver-box{flex-direction:column;text-align:center}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-badge">🏥 Fiche médicament — Sevrage hospitalier</div>
+    <h1>Séresta® <span>(Oxazépam)</span></h1>
+    <div class="subtitle">Le sevrage en douceur, même avec un foie fragile</div>
+  </div>
+  <div class="content">
+
+    <div class="intro-box">
+      Le <strong>Séresta</strong> (oxazépam) est un médicament de la famille des <strong>benzodiazépines</strong>, comme le Valium. Il joue le même rôle : <strong>protéger votre cerveau</strong> pendant le sevrage d'alcool. Sa particularité : il est <strong>plus sûr pour le foie</strong>, c'est pourquoi il est choisi quand votre foie est fragilisé par l'alcool.
+    </div>
+
+    <!-- MECHANISM -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step">
+          <div class="emoji">🍷</div>
+          <div class="label">L'alcool maintenait le cerveau calme</div>
+          <div class="sublabel">Via le système GABA</div>
+        </div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step">
+          <div class="emoji">⚡</div>
+          <div class="label">À l'arrêt : surexcitation</div>
+          <div class="sublabel">Tremblements, anxiété, risque de convulsions</div>
+        </div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step">
+          <div class="emoji">💊</div>
+          <div class="label">Le Séresta protège</div>
+          <div class="sublabel">Sans surcharger le foie</div>
+        </div>
+      </div>
+      <p class="mechanism-caption">
+        Comme le Valium, le Séresta agit sur les récepteurs GABA pour calmer la surexcitation cérébrale du sevrage. Mais contrairement au Valium, il est <strong>éliminé directement par les reins</strong>, sans transformation complexe par le foie. C'est un avantage majeur quand le foie est déjà abîmé par l'alcool.
+      </p>
+    </div>
+
+    <!-- LIVER HIGHLIGHT -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon" style="background:#E6F5EE">🫀</div>Pourquoi le Séresta plutôt que le Valium ?</div>
+      <div class="liver-box">
+        <div class="liver-icon">🫀</div>
+        <div class="liver-text">
+          Votre médecin a choisi le Séresta car il est <strong>plus sûr pour votre foie</strong>. Contrairement au Valium (qui est transformé en plusieurs étapes par le foie), l'oxazépam suit un chemin simple et court (« glucuroconjugaison ») qui <strong>ne fatigue pas un foie déjà fragilisé</strong>. C'est le choix de référence en cas d'hépatopathie alcoolique.
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARE -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-navy">🔄</div>Séresta vs Valium en pratique</div>
+      <table class="compare-table">
+        <thead><tr><th></th><th>Séresta® (oxazépam)</th><th>Valium® (diazépam)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Métabolisme</strong></td><td class="highlight">Rénal (pas de transformation hépatique complexe)</td><td>Hépatique (plusieurs métabolites actifs)</td></tr>
+          <tr><td><strong>Durée d'action</strong></td><td>Intermédiaire (6-8h)</td><td>Longue (24-48h + métabolites)</td></tr>
+          <tr><td><strong>Foie fragile</strong></td><td class="highlight">Adapté</td><td>À éviter si hépatopathie</td></tr>
+          <tr><td><strong>Fréquence de prise</strong></td><td>3 à 4 fois/jour</td><td>2 à 3 fois/jour</td></tr>
+          <tr><td><strong>Risque d'accumulation</strong></td><td class="highlight">Faible</td><td>Plus élevé (métabolites actifs)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:.85rem;color:var(--gray-600);margin-top:.7rem;line-height:1.55">Les deux sont efficaces pour le sevrage. Le choix dépend de votre état hépatique et de votre profil. Parfois, les deux sont utilisés chez des patients différents dans le même service.</p>
+    </div>
+
+    <!-- SIDE EFFECTS -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">📋</div>Effets ressentis pendant le traitement</div>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Sensation de détente</div>
+        <div class="effect-item"><span class="dot"></span> Légère confusion (premiers jours)</div>
+        <div class="effect-item"><span class="dot"></span> Fatigue</div>
+        <div class="effect-item"><span class="dot"></span> Troubles de l'équilibre</div>
+        <div class="effect-item"><span class="dot"></span> Bouche sèche</div>
+      </div>
+    </div>
+
+    <!-- GOOD TO KNOW -->
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green">
+          <div class="card-icon">⏳</div>
+          <div class="card-title">Traitement court</div>
+          <div class="card-text">Comme le Valium, le Séresta n'est utilisé que pendant le sevrage hospitalier. Il est diminué puis arrêté avant la sortie. Vous ne repartez pas avec.</div>
+        </div>
+        <div class="info-card green">
+          <div class="card-icon">👴</div>
+          <div class="card-title">Adapté aux personnes âgées</div>
+          <div class="card-text">Grâce à son absence de métabolites actifs et son moindre risque d'accumulation, le Séresta est aussi le choix privilégié chez les patients plus âgés.</div>
+        </div>
+        <div class="info-card orange">
+          <div class="card-icon">🔄</div>
+          <div class="card-title">Prises plus fréquentes</div>
+          <div class="card-text">Comme le Séresta agit moins longtemps que le Valium, vous le recevez plus souvent dans la journée (3-4 prises). L'équipe adapte selon vos symptômes.</div>
+        </div>
+        <div class="info-card orange">
+          <div class="card-icon">💧</div>
+          <div class="card-title">Vitamines et hydratation</div>
+          <div class="card-text">En parallèle, vous recevez de la vitamine B1 (thiamine) en perfusion et une réhydratation pour corriger vos électrolytes — essentiel pour votre récupération.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="alert-box">
+        <div class="alert-title">⚠️ &nbsp;Important : prévenez l'équipe si…</div>
+        <p>Vous ressentez des <strong>tremblements qui augmentent</strong>, une <strong>anxiété intense</strong>, des <strong>sueurs profuses</strong>, des <strong>hallucinations</strong>, ou si vous vous sentez <strong>très agité ou confus</strong>. Ce sont des signes que la dose doit être ajustée. N'attendez pas — appelez l'infirmier(e) immédiatement.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+</div>
+</body>
+</html>

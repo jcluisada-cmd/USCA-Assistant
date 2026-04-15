@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Zoloft (Sertraline)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--sky:#4A90D9;--sky-pale:#EBF3FC}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}
+  .header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--sky);opacity:.12;border-radius:50%}
+  .header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}
+  .header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}
+  .intro-box{background:var(--sky-pale);border-left:4px solid var(--sky);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--sky)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}
+  .section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-sky{background:var(--sky-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--sky-pale),#E0EDFA);border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+  .mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--sky);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  .indic-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+  .indic-tag{padding:.45rem .9rem;border-radius:20px;font-size:.82rem;font-weight:600;background:var(--sky-pale);border:1.5px solid var(--sky);color:#2A5A9A}
+  .indic-tag.primary{background:var(--sky);color:var(--white);border-color:var(--sky)}
+  .dosage-card{background:var(--white);border:2px solid var(--sky);border-radius:14px;padding:1.4rem 1.5rem}
+  .dosage-main{font-size:1.2rem;font-weight:700;line-height:1.2;margin-bottom:.4rem}.dosage-main span{color:var(--sky)}
+  .dosage-detail{font-size:.88rem;color:var(--gray-600);line-height:1.5}
+  .dosage-note{margin-top:.6rem;font-size:.82rem;background:var(--sky-pale);padding:.5rem .8rem;border-radius:8px}
+  /* TIMELINE */
+  .patience-box{background:linear-gradient(135deg,var(--amber-pale),#FEF0D5);border:2px solid var(--amber);border-radius:14px;padding:1.3rem 1.5rem;margin-top:.8rem}
+  .patience-title{font-weight:700;font-size:1rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+  .patience-phases{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+  .p-phase{text-align:center;padding:.7rem .5rem;background:var(--white);border-radius:10px}
+  .pp-weeks{font-weight:700;font-size:.85rem;color:var(--amber);margin-bottom:.15rem}
+  .pp-label{font-size:.78rem;font-weight:600;line-height:1.3}
+  .pp-desc{font-size:.7rem;color:var(--gray-600);margin-top:.1rem}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .effects-note{margin-top:.7rem;font-size:.85rem;color:var(--gray-600);line-height:1.55;padding:.7rem 1rem;background:var(--teal-pale);border-radius:10px}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.patience-phases,.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-badge">Fiche médicament — Patient</div>
+    <h1>Zoloft® <span>(Sertraline)</span></h1>
+    <div class="subtitle">Traiter la dépression et l'anxiété pour mieux se rétablir</div>
+  </div>
+  <div class="content">
+    <div class="intro-box">
+      La <strong>sertraline</strong> est un <strong>antidépresseur</strong> de la famille des ISRS (inhibiteurs sélectifs de la recapture de la sérotonine). Elle est prescrite pour traiter la <strong>dépression</strong>, l'<strong>anxiété</strong> ou le <strong>stress post-traumatique</strong> — des troubles très fréquents chez les patients ayant un problème d'addiction. Traiter ces comorbidités est essentiel pour réussir le sevrage.
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-sky">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">😞</div><div class="label">Dépression / anxiété / TSPT</div><div class="sublabel">Manque de sérotonine</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">La sertraline augmente la sérotonine</div><div class="sublabel">En empêchant sa « recapture »</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">🌤️</div><div class="label">L'humeur s'améliore progressivement</div><div class="sublabel">Moins d'anxiété, de tristesse, de cauchemars</div></div>
+      </div>
+      <p class="mechanism-caption">La <strong>sérotonine</strong> est un messager chimique du cerveau impliqué dans la régulation de l'humeur, de l'anxiété et du sommeil. Dans la dépression et le TSPT, son niveau est souvent trop bas. La sertraline empêche les neurones de « réaspirer » la sérotonine trop vite, ce qui <strong>augmente sa disponibilité</strong> dans le cerveau et rétablit progressivement un meilleur équilibre émotionnel.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon" style="background:#E4E8F0">🎯</div>Pour quelles indications ?</div>
+      <div class="indic-tags">
+        <span class="indic-tag primary">😞 Épisode dépressif</span>
+        <span class="indic-tag primary">😰 Stress post-traumatique (TSPT)</span>
+        <span class="indic-tag">🫨 Trouble panique</span>
+        <span class="indic-tag">😟 Anxiété sociale</span>
+        <span class="indic-tag">🔄 Trouble obsessionnel compulsif</span>
+      </div>
+      <p style="font-size:.88rem;color:var(--gray-600);line-height:1.55">La sertraline est l'antidépresseur de <strong>première intention</strong> le plus utilisé en addictologie, notamment pour le TSPT (très fréquent chez les patients addicts) et la dépression. Elle aide à traiter ce qui, souvent, vous poussait à consommer.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">💊</div>Comment le prendre ?</div>
+      <div class="dosage-card">
+        <div class="dosage-main"><span>50 à 200 mg</span> — 1 prise par jour, le matin</div>
+        <div class="dosage-detail">Commencer à <strong>25 ou 50 mg/jour</strong> pendant 1 semaine, puis augmenter progressivement selon la réponse. La dose cible est souvent de <strong>100 à 200 mg/jour</strong>.</div>
+        <div class="dosage-note">ℹ️ &nbsp;Se prend le matin de préférence (peut perturber le sommeil si pris le soir). Avec ou sans nourriture.</div>
+      </div>
+      <div class="patience-box">
+        <div class="patience-title">⏳ Un traitement qui demande de la patience</div>
+        <div class="patience-phases">
+          <div class="p-phase"><div class="pp-weeks">Semaines 1-2</div><div class="pp-label">Adaptation</div><div class="pp-desc">Effets indésirables possibles, pas encore d'effet sur l'humeur.</div></div>
+          <div class="p-phase"><div class="pp-weeks">Semaines 2-4</div><div class="pp-label">Début d'effet</div><div class="pp-desc">Premiers signes d'amélioration (sommeil, énergie, anxiété).</div></div>
+          <div class="p-phase"><div class="pp-weeks">Semaines 4-8</div><div class="pp-label">Effet complet</div><div class="pp-desc">Plein effet antidépresseur. Réévaluation par votre médecin.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Fréquents les 1-2 premières semaines puis s'atténuent :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Nausées (le plus fréquent)</div>
+        <div class="effect-item"><span class="dot"></span> Diarrhée</div>
+        <div class="effect-item"><span class="dot"></span> Insomnie ou somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Maux de tête</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la libido / difficultés sexuelles</div>
+        <div class="effect-item"><span class="dot"></span> Nervosité (début de traitement)</div>
+      </div>
+      <div class="effects-note">💡 &nbsp;Les nausées s'atténuent en général après la première semaine. Si les <strong>troubles sexuels</strong> vous gênent, parlez-en — des solutions existent (ajustement de dose, changement de molécule).</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">🚫</div><div class="card-title">Ce n'est pas un somnifère ni un anxiolytique immédiat</div><div class="card-text">L'effet est progressif (2-4 semaines). La sertraline n'est pas un « calmant » à prendre en cas de crise — c'est un traitement de fond qui agit dans la durée.</div></div>
+        <div class="info-card green"><div class="card-icon">⏳</div><div class="card-title">Durée : au moins 6 à 12 mois</div><div class="card-text">Un premier épisode dépressif nécessite au minimum 6 mois de traitement après l'amélioration. Arrêter trop tôt augmente fortement le risque de rechute.</div></div>
+        <div class="info-card orange"><div class="card-icon">🛑</div><div class="card-title">Ne jamais arrêter brutalement</div><div class="card-text">L'arrêt brutal peut provoquer un « syndrome de sevrage » (vertiges, nausées, sensations de décharges électriques). La diminution se fait toujours progressivement avec votre médecin.</div></div>
+        <div class="info-card orange"><div class="card-icon">🍷</div><div class="card-title">Alcool et sertraline</div><div class="card-text">L'alcool aggrave la dépression et diminue l'efficacité de la sertraline. Le sevrage d'alcool et le traitement antidépresseur se renforcent mutuellement.</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="alert-box"><div class="alert-title">⚠️ &nbsp;Consultez rapidement si…</div><p>Vous ressentez une <strong>aggravation de la tristesse ou des idées noires</strong> (surtout les 2 premières semaines), une <strong>agitation inhabituelle</strong>, une <strong>euphorie soudaine</strong> (possible virage maniaque), ou des <strong>pensées suicidaires</strong>. Prévenez immédiatement votre médecin ou l'équipe soignante — ces situations nécessitent un ajustement rapide.</p></div>
+    </div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

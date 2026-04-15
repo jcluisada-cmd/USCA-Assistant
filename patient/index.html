@@ -15,14 +15,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
-  /* bouton craving — pas d'animation */
+  .panel { display: none; position: fixed; inset: 0; z-index: 60; background: #f8fafc; overflow-y: auto; }
+  .panel.open { display: flex; flex-direction: column; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
   <!-- ════════════════ ÉCRAN DE CONNEXION ════════════════ -->
   <div id="login-screen" class="flex-1 flex flex-col">
-
     <header class="bg-emerald-600 text-white px-6 pt-12 pb-8 text-center">
       <div class="inline-flex items-center justify-center w-14 h-14 bg-white/20 rounded-2xl mb-4 backdrop-blur">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -31,25 +31,19 @@
         </svg>
       </div>
       <h1 class="text-xl font-extrabold">Bienvenue</h1>
-      <p class="text-emerald-200 text-sm mt-1">Identifiez-vous pour accéder à votre programme</p>
+      <p class="text-emerald-200 text-sm mt-1">Identifiez-vous pour accéder à votre espace</p>
     </header>
-
     <main class="flex-1 flex flex-col items-center justify-center px-6 py-8 max-w-sm mx-auto w-full">
       <form id="login-form" class="w-full space-y-4" onsubmit="return false;">
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Numéro de chambre</label>
-          <input type="text" id="input-room" placeholder="Ex : 312" inputmode="numeric"
-            class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors placeholder:text-slate-300">
+          <input type="text" id="input-room" placeholder="Ex : 312" inputmode="numeric" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors placeholder:text-slate-300">
         </div>
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Date de naissance</label>
-          <input type="date" id="input-dob"
-            class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
+          <input type="date" id="input-dob" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
         </div>
-        <button type="submit" id="btn-login"
-          class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
-          Se connecter
-        </button>
+        <button type="submit" id="btn-login" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed">Se connecter</button>
         <p id="login-error" class="text-sm text-red-500 text-center font-medium hidden"></p>
       </form>
       <a href="../" class="mt-8 text-sm text-slate-400 hover:text-slate-600 transition-colors">Retour à l'accueil</a>
@@ -73,68 +67,221 @@
       <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
     </header>
 
-    <!-- Contenu scrollable -->
-    <main class="flex-1 overflow-y-auto px-4 py-5 max-w-lg mx-auto w-full space-y-5 pb-8">
+    <!-- Accueil cartes -->
+    <main class="flex-1 overflow-y-auto px-4 py-5 max-w-lg mx-auto w-full">
 
-      <!-- Timeline du programme -->
-      <section>
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-lg font-bold text-slate-800">Mon programme</h2>
-          <span id="date-label" class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full"></span>
-        </div>
-        <div id="timeline-container" class="space-y-0"></div>
-        <div id="timeline-empty" class="bg-white rounded-xl border border-slate-200 p-8 text-center hidden">
-          <p class="text-sm text-slate-500">Aucun programme configuré</p>
-        </div>
-      </section>
+      <p id="date-label" class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full inline-block mb-4"></p>
 
-      <!-- Bouton Alerte Craving -->
-      <section class="pt-2">
-        <div class="relative">
-          <button id="btn-craving"
-            class="craving-btn relative w-full py-5 bg-red-500 hover:bg-red-600 text-white font-extrabold rounded-2xl transition-all text-base shadow-lg shadow-red-200 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none">
-            J'ai besoin d'aide (craving)
-          </button>
-        </div>
-        <p id="craving-hint" class="text-xs text-slate-400 text-center mt-2">Prévient immédiatement l'équipe soignante</p>
-      </section>
+      <!-- Grille de cartes -->
+      <div class="space-y-3 mb-5">
 
-      <!-- Modal intensité craving -->
-      <div id="craving-modal" class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-end justify-center hidden">
-        <div class="bg-white w-full max-w-lg rounded-t-3xl p-6 pb-10">
-          <h3 class="text-lg font-bold text-slate-800 text-center mb-2">Intensité du craving</h3>
-          <p class="text-sm text-slate-500 text-center mb-5">Évaluez votre envie de consommer de 1 à 10</p>
-          <div id="intensity-grid" class="grid grid-cols-5 gap-2 mb-5"></div>
-          <div class="flex gap-3">
-            <button id="btn-craving-cancel" class="flex-1 py-3 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
-            <button id="btn-craving-send" class="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl text-sm disabled:opacity-50" disabled>Envoyer l'alerte</button>
+        <!-- Carte Craving -->
+        <button id="card-craving" class="w-full bg-red-500 hover:bg-red-600 rounded-2xl p-5 flex items-center gap-4 text-left transition-all active:scale-[0.98] shadow-lg shadow-red-200">
+          <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           </div>
+          <div>
+            <p class="text-base font-extrabold text-white">J'ai un craving</p>
+            <p class="text-xs text-red-100 mt-0.5">Signalez et analysez votre envie de consommer</p>
+          </div>
+        </button>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Carte Programme -->
+          <button id="card-programme" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Programme</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Ma journée</p>
+          </button>
+
+          <!-- Carte Stratégies -->
+          <button id="card-strategies" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Mes stratégies</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Prévention rechute</p>
+          </button>
+
+          <!-- Carte Traitements -->
+          <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
+            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Traitements</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Mes fiches</p>
+            <span class="absolute top-2 right-2 text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">Bientôt</span>
+          </button>
+
+          <!-- Carte Ateliers -->
+          <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
+            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Ateliers</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Groupes & badges</p>
+            <span class="absolute top-2 right-2 text-[9px] font-bold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded-full">Bientôt</span>
+          </button>
         </div>
       </div>
 
-      <!-- Fiche de prévention PDF -->
-      <section>
-        <button id="btn-fiche"
-          class="w-full py-4 bg-white border-2 border-emerald-200 hover:border-emerald-400 text-emerald-700 font-bold rounded-xl transition-all text-sm flex items-center justify-center gap-2 active:scale-[0.98]">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-          Ma fiche de prévention (PDF)
-        </button>
-      </section>
+      <!-- Bandeau export PDF -->
+      <button id="btn-export" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-2xl p-4 flex items-center gap-4 hover:opacity-95 transition-all active:scale-[0.98] shadow-md">
+        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        </div>
+        <div class="text-left">
+          <p class="text-sm font-bold">Ma fiche de sortie</p>
+          <p class="text-[11px] text-white/70">Séjour, craving, stratégies, prévention</p>
+        </div>
+      </button>
 
-      <!-- Message de confirmation alerte -->
-      <div id="alert-confirm" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+    </main>
+  </div>
+
+  <!-- ════════════════ PANEL CRAVING ════════════════ -->
+  <div id="panel-craving" class="panel">
+    <header class="sticky top-0 z-10 bg-red-500 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">J'ai un craving</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-5">
+
+      <!-- Étape 1 : Intensité -->
+      <div>
+        <p class="text-sm font-bold text-slate-800 mb-2">Intensité de l'envie</p>
+        <div id="intensity-grid" class="grid grid-cols-5 gap-2"></div>
+      </div>
+
+      <!-- Étape 2 : Facteur déclenchant -->
+      <div>
+        <p class="text-sm font-bold text-slate-800 mb-2">Qu'est-ce qui a déclenché cette envie ?</p>
+        <div id="trigger-grid" class="flex flex-wrap gap-2"></div>
+        <input type="text" id="trigger-other" placeholder="Autre (précisez)..." class="w-full mt-2 px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm focus:border-red-400 focus:outline-none transition-colors placeholder:text-slate-300 hidden">
+      </div>
+
+      <!-- Étape 3 : Depuis combien de temps -->
+      <div>
+        <p class="text-sm font-bold text-slate-800 mb-2">Depuis combien de temps ?</p>
+        <div id="duration-grid" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Stratégies suggérées -->
+      <div id="craving-strategies" class="hidden">
+        <p class="text-sm font-bold text-emerald-700 mb-2">Vos stratégies</p>
+        <div id="craving-strategies-list" class="space-y-2"></div>
+        <p id="craving-no-strategies" class="text-xs text-slate-400 hidden">Construisez vos stratégies dans la carte "Mes stratégies"</p>
+      </div>
+
+      <!-- Bouton envoyer -->
+      <button id="btn-send-craving" class="w-full py-4 bg-red-500 hover:bg-red-600 text-white font-extrabold rounded-2xl transition-all text-sm active:scale-[0.97] disabled:opacity-50" disabled>
+        Envoyer l'alerte craving
+      </button>
+
+      <!-- Confirmation -->
+      <div id="craving-confirm" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
         <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         </div>
         <p class="text-sm font-semibold text-emerald-700">Alerte envoyée</p>
         <p class="text-xs text-emerald-600 mt-1">L'équipe soignante a été prévenue</p>
       </div>
+    </div>
+  </div>
 
-    </main>
+  <!-- ════════════════ PANEL PROGRAMME ════════════════ -->
+  <div id="panel-programme" class="panel">
+    <header class="sticky top-0 z-10 bg-emerald-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Programme du jour</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full">
+      <div id="timeline-container" class="space-y-0"></div>
+      <div id="timeline-empty" class="bg-white rounded-xl border border-slate-200 p-8 text-center hidden">
+        <p class="text-sm text-slate-500">Aucun programme configuré</p>
+      </div>
+    </div>
+  </div>
 
-    <footer class="text-center py-3 border-t border-slate-100">
-      <p class="text-xs text-slate-300">USCA Connect &middot; Pitié-Salpêtrière</p>
-    </footer>
+  <!-- ════════════════ PANEL STRATÉGIES ════════════════ -->
+  <div id="panel-strategies" class="panel">
+    <header class="sticky top-0 z-10 bg-indigo-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Mes stratégies de prévention</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-4">
+
+      <p class="text-sm text-slate-500">Construisez vos propres stratégies pour faire face aux situations à risque.</p>
+
+      <!-- Formulaire ajout -->
+      <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Catégorie</label>
+          <select id="strat-cat" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            <option value="situation">Situation à risque</option>
+            <option value="emotion">Émotion difficile</option>
+            <option value="pensee">Pensée automatique</option>
+            <option value="action">Action alternative</option>
+            <option value="contact">Personne ressource</option>
+            <option value="general">Autre</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Ma stratégie</label>
+          <textarea id="strat-text" rows="2" placeholder="Ex : Quand je suis stressé, je fais 10 respirations profondes..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-indigo-400 placeholder:text-slate-300"></textarea>
+        </div>
+        <button id="btn-add-strat" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm transition-colors active:scale-[0.98]">Ajouter</button>
+      </div>
+
+      <!-- Liste des stratégies -->
+      <div id="strategies-list" class="space-y-2"></div>
+      <div id="strategies-empty" class="text-center py-4 hidden">
+        <p class="text-sm text-slate-400">Aucune stratégie pour le moment</p>
+        <p class="text-xs text-slate-300 mt-1">Ajoutez-en une ci-dessus</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ PANEL TRAITEMENTS (placeholder) ════════════════ -->
+  <div id="panel-traitements" class="panel">
+    <header class="sticky top-0 z-10 bg-amber-500 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Mes traitements</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full flex flex-col items-center justify-center text-center">
+      <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+      </div>
+      <p class="text-base font-bold text-slate-800 mb-2">En cours de préparation</p>
+      <p class="text-sm text-slate-500">Votre médecin pourra bientôt vous transmettre des fiches sur vos traitements directement ici.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════ PANEL ATELIERS (placeholder) ════════════════ -->
+  <div id="panel-ateliers" class="panel">
+    <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Mes ateliers</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full flex flex-col items-center justify-center text-center">
+      <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-4">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <p class="text-base font-bold text-slate-800 mb-2">En cours de préparation</p>
+      <p class="text-sm text-slate-500">Vous pourrez retrouver ici vos groupes thérapeutiques, les contenus partagés par les animateurs, et vos badges de participation.</p>
+    </div>
   </div>
 
 <!-- SDK Supabase + modules partagés -->
@@ -144,47 +291,45 @@
 
 <script>
 // ── État ──
-let currentPatient = null;
-let selectedIntensity = null;
-let cravingCooldown = false;
+var currentPatient = null;
+var selectedIntensity = null;
+var selectedTrigger = null;
+var selectedDuration = null;
+var patientStrategies = [];
 
-// ── DOM ──
-const loginForm = document.getElementById('login-form');
-const loginError = document.getElementById('login-error');
-const btnLogin = document.getElementById('btn-login');
-const btnCraving = document.getElementById('btn-craving');
-const cravingModal = document.getElementById('craving-modal');
-const btnCravingSend = document.getElementById('btn-craving-send');
-const alertConfirm = document.getElementById('alert-confirm');
+// ── Helpers DOM ──
+function createEl(tag, classes, text) {
+  var el = document.createElement(tag);
+  if (classes) el.className = classes;
+  if (text) el.textContent = text;
+  return el;
+}
 
 // ══════════════ LOGIN ══════════════
 
-loginForm.addEventListener('submit', async () => {
-  const room = document.getElementById('input-room').value.trim();
-  const dob = document.getElementById('input-dob').value;
-  if (!room || !dob) { showError('Veuillez remplir tous les champs'); return; }
+var loginForm = document.getElementById('login-form');
+var btnLogin = document.getElementById('btn-login');
 
+loginForm.addEventListener('submit', async function() {
+  var room = document.getElementById('input-room').value.trim();
+  var dob = document.getElementById('input-dob').value;
+  if (!room || !dob) { showError('Veuillez remplir tous les champs'); return; }
   btnLogin.disabled = true;
   btnLogin.textContent = 'Connexion...';
-  loginError.classList.add('hidden');
-
+  document.getElementById('login-error').classList.add('hidden');
   try {
-    const patient = await auth.loginPatient(room, dob);
+    var patient = await auth.loginPatient(room, dob);
     currentPatient = patient;
     showPatientApp(patient);
-  } catch (err) {
-    showError(err.message);
-  } finally {
-    btnLogin.disabled = false;
-    btnLogin.textContent = 'Se connecter';
-  }
+  } catch (err) { showError(err.message); }
+  finally { btnLogin.disabled = false; btnLogin.textContent = 'Se connecter'; }
 });
-
-btnLogin.addEventListener('click', () => loginForm.dispatchEvent(new Event('submit')));
+btnLogin.addEventListener('click', function() { loginForm.dispatchEvent(new Event('submit')); });
 
 function showError(msg) {
-  loginError.textContent = msg;
-  loginError.classList.remove('hidden');
+  var el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.classList.remove('hidden');
 }
 
 // ══════════════ APP PATIENT ══════════════
@@ -193,160 +338,125 @@ async function showPatientApp(patient) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('patient-app').classList.remove('hidden');
   document.getElementById('patient-name').textContent = ' ' + (patient.prenom || 'Chambre ' + (patient.numero_chambre || patient.chambre));
-
-  const now = new Date();
+  var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
+  // Pré-charger les données
   if (patient.programme_id) {
     try {
-      const prog = await db.getProgrammeById(patient.programme_id);
+      var prog = await db.getProgrammeById(patient.programme_id);
       renderTimeline(prog.activites);
-    } catch (err) {
-      console.warn('Programme indisponible :', err.message);
-      document.getElementById('timeline-empty').classList.remove('hidden');
-    }
-  } else {
-    document.getElementById('timeline-empty').classList.remove('hidden');
-  }
+    } catch (e) { document.getElementById('timeline-empty').classList.remove('hidden'); }
+  } else { document.getElementById('timeline-empty').classList.remove('hidden'); }
+
+  loadStrategies();
 }
 
-// ══════════════ TIMELINE (DOM sûr, pas de innerHTML) ══════════════
+// ══════════════ NAVIGATION PANELS ══════════════
 
-function createEl(tag, classes, textContent) {
-  const el = document.createElement(tag);
-  if (classes) el.className = classes;
-  if (textContent) el.textContent = textContent;
-  return el;
-}
+document.getElementById('card-craving').addEventListener('click', function() { openPanel('craving'); });
+document.getElementById('card-programme').addEventListener('click', function() { openPanel('programme'); });
+document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
+document.getElementById('card-traitements').addEventListener('click', function() { openPanel('traitements'); });
+document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
 
-function createNowMarker() {
-  const now = new Date();
-  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-  const row = createEl('div', 'flex items-center gap-3 py-2');
-  const timeDiv = createEl('div', 'w-14 text-right');
-  timeDiv.appendChild(createEl('span', 'text-[10px] font-bold text-emerald-600', timeStr));
-  row.appendChild(timeDiv);
-  const line = createEl('div', 'flex-1 h-0.5 bg-emerald-500 rounded-full relative');
-  const dot = createEl('div', 'absolute -left-1 -top-1 w-2.5 h-2.5 bg-emerald-500 rounded-full');
-  line.appendChild(dot);
-  row.appendChild(line);
-  return row;
-}
+document.querySelectorAll('.panel-back').forEach(function(btn) {
+  btn.addEventListener('click', function() { this.closest('.panel').classList.remove('open'); });
+});
 
-function renderTimeline(activites) {
-  const container = document.getElementById('timeline-container');
-  container.textContent = ''; // vide le contenu proprement
-
-  if (!activites || activites.length === 0) {
-    document.getElementById('timeline-empty').classList.remove('hidden');
-    return;
-  }
-
-  const now = new Date();
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  let nowLineInserted = false;
-
-  const typeStyles = {
-    soin:     { bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500', text: 'text-indigo-700' },
-    repas:    { bg: 'bg-amber-50',  border: 'border-amber-200',  dot: 'bg-amber-500',  text: 'text-amber-700' },
-    groupe:   { bg: 'bg-emerald-50', border: 'border-emerald-200', dot: 'bg-emerald-500', text: 'text-emerald-700' },
-    activite: { bg: 'bg-purple-50', border: 'border-purple-200', dot: 'bg-purple-500', text: 'text-purple-700' },
-    libre:    { bg: 'bg-slate-50',  border: 'border-slate-200',  dot: 'bg-slate-400',  text: 'text-slate-600' }
-  };
-
-  activites.forEach((act, i) => {
-    const parts = act.heure.split(':');
-    const actMinutes = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-    const isPast = actMinutes + 60 < nowMinutes;
-    const isCurrent = !isPast && actMinutes <= nowMinutes;
-    const style = typeStyles[act.type] || typeStyles.libre;
-
-    // Marqueur "Maintenant"
-    if (!nowLineInserted && actMinutes > nowMinutes) {
-      nowLineInserted = true;
-      container.appendChild(createNowMarker());
-    }
-
-    // Ligne de timeline
-    const row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-50' : ''));
-
-    // Heure
-    const timeCol = createEl('div', 'w-14 pt-3 text-right flex-shrink-0');
-    timeCol.appendChild(createEl('span', 'text-xs font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
-    row.appendChild(timeCol);
-
-    // Ligne verticale + point
-    const lineCol = createEl('div', 'flex flex-col items-center');
-    const dotEl = createEl('div', 'w-3 h-3 rounded-full flex-shrink-0 mt-4 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : ''));
-    lineCol.appendChild(dotEl);
-    if (i < activites.length - 1) {
-      lineCol.appendChild(createEl('div', 'w-0.5 flex-1 bg-slate-200 min-h-4'));
-    }
-    row.appendChild(lineCol);
-
-    // Carte activité
-    const card = createEl('div', style.bg + ' border ' + style.border + ' rounded-xl p-3 flex-1 mb-2' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : ''));
-    card.appendChild(createEl('p', 'text-sm font-bold ' + style.text, act.label));
-    if (act.lieu) {
-      card.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', act.lieu));
-    }
-    row.appendChild(card);
-
-    container.appendChild(row);
-  });
-
-  // Marqueur "Maintenant" en fin si toutes les activités sont passées
-  if (!nowLineInserted) {
-    container.appendChild(createNowMarker());
-  }
+function openPanel(name) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('open'); });
+  document.getElementById('panel-' + name).classList.add('open');
 }
 
 // ══════════════ CRAVING ══════════════
 
-// Boutons d'intensité 1-10
-const intensityGrid = document.getElementById('intensity-grid');
-for (let i = 1; i <= 10; i++) {
-  const btn = document.createElement('button');
-  const color = i <= 3 ? 'bg-amber-100 text-amber-700 border-amber-200' :
-                i <= 6 ? 'bg-orange-100 text-orange-700 border-orange-200' :
-                         'bg-red-100 text-red-700 border-red-200';
-  btn.className = 'py-3 rounded-xl font-bold text-lg border-2 transition-all ' + color;
-  btn.textContent = i;
-  btn.addEventListener('click', () => {
-    selectedIntensity = i;
-    intensityGrid.querySelectorAll('button').forEach(b => { b.classList.remove('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110'); });
-    btn.classList.add('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110');
-    btnCravingSend.disabled = false;
-  });
-  intensityGrid.appendChild(btn);
+// Intensité 1-10
+var intensityGrid = document.getElementById('intensity-grid');
+for (var i = 1; i <= 10; i++) {
+  (function(n) {
+    var btn = document.createElement('button');
+    var color = n <= 3 ? 'bg-amber-100 text-amber-700 border-amber-200' : n <= 6 ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-red-100 text-red-700 border-red-200';
+    btn.className = 'py-3 rounded-xl font-bold text-lg border-2 transition-all ' + color;
+    btn.textContent = n;
+    btn.addEventListener('click', function() {
+      selectedIntensity = n;
+      intensityGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110'); });
+      btn.classList.add('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110');
+      checkCravingReady();
+      showCravingStrategies();
+    });
+    intensityGrid.appendChild(btn);
+  })(i);
 }
 
-// Ouvrir le modal
-btnCraving.addEventListener('click', () => {
-  if (cravingCooldown || !currentPatient) return;
-  selectedIntensity = null;
-  btnCravingSend.disabled = true;
-  intensityGrid.querySelectorAll('button').forEach(b => { b.classList.remove('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110'); });
-  cravingModal.classList.remove('hidden');
+// Facteurs déclenchants
+var triggers = ['Stress', 'Ennui', 'Conflit', 'Insomnie', 'Douleur', 'Envie sociale', 'Lieu familier', 'Humeur basse', 'Autre'];
+var triggerGrid = document.getElementById('trigger-grid');
+triggers.forEach(function(t) {
+  var btn = createEl('button', 'px-3 py-2 rounded-xl text-xs font-semibold border-2 border-slate-200 bg-white text-slate-700 transition-all', t);
+  btn.addEventListener('click', function() {
+    selectedTrigger = t;
+    triggerGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
+    btn.classList.add('border-red-400', 'bg-red-50', 'text-red-700');
+    btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+    document.getElementById('trigger-other').classList.toggle('hidden', t !== 'Autre');
+    checkCravingReady();
+  });
+  triggerGrid.appendChild(btn);
 });
 
-// Annuler
-document.getElementById('btn-craving-cancel').addEventListener('click', () => {
-  cravingModal.classList.add('hidden');
+// Durée
+var durations = ['Quelques minutes', 'Moins d\'1 heure', '1 à 3 heures', 'Depuis ce matin', 'Depuis hier'];
+var durationGrid = document.getElementById('duration-grid');
+durations.forEach(function(d) {
+  var btn = createEl('button', 'px-3 py-2 rounded-xl text-xs font-semibold border-2 border-slate-200 bg-white text-slate-700 transition-all', d);
+  btn.addEventListener('click', function() {
+    selectedDuration = d;
+    durationGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
+    btn.classList.add('border-red-400', 'bg-red-50', 'text-red-700');
+    btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+    checkCravingReady();
+  });
+  durationGrid.appendChild(btn);
 });
 
-// Envoyer l'alerte craving
-btnCravingSend.addEventListener('click', async () => {
+function checkCravingReady() {
+  document.getElementById('btn-send-craving').disabled = !selectedIntensity;
+}
+
+// Montrer les stratégies du patient dans le panel craving
+function showCravingStrategies() {
+  var container = document.getElementById('craving-strategies');
+  var list = document.getElementById('craving-strategies-list');
+  var noStrat = document.getElementById('craving-no-strategies');
+  list.textContent = '';
+  if (patientStrategies.length === 0) {
+    container.classList.remove('hidden');
+    noStrat.classList.remove('hidden');
+    return;
+  }
+  container.classList.remove('hidden');
+  noStrat.classList.add('hidden');
+  patientStrategies.forEach(function(s) {
+    var card = createEl('div', 'bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2.5');
+    card.appendChild(createEl('p', 'text-xs font-semibold text-emerald-700', catLabel(s.categorie)));
+    card.appendChild(createEl('p', 'text-sm text-emerald-800 mt-0.5', s.texte));
+    list.appendChild(card);
+  });
+}
+
+// Envoyer craving
+document.getElementById('btn-send-craving').addEventListener('click', async function() {
   if (!selectedIntensity || !currentPatient) return;
-  cravingModal.classList.add('hidden');
+  this.disabled = true;
+  this.textContent = 'Envoi...';
 
-  cravingCooldown = true;
-  btnCraving.disabled = true;
-  btnCraving.textContent = 'Alerte envoyée !';
-  btnCraving.classList.remove('bg-red-500', 'hover:bg-red-600', 'craving-btn');
-  btnCraving.classList.add('bg-emerald-500');
-  alertConfirm.classList.remove('hidden');
-  document.getElementById('craving-hint').classList.add('hidden');
+  var trigger = selectedTrigger;
+  if (trigger === 'Autre') {
+    var other = document.getElementById('trigger-other').value.trim();
+    if (other) trigger = other;
+  }
 
   try {
     await db.createAlerte({
@@ -354,39 +464,168 @@ btnCravingSend.addEventListener('click', async () => {
       numero_chambre: currentPatient.numero_chambre || currentPatient.chambre,
       type: 'craving',
       intensite: selectedIntensity,
-      message: 'Alerte craving — intensité ' + selectedIntensity + '/10'
+      declencheur: trigger || null,
+      duree: selectedDuration || null,
+      message: 'Craving ' + selectedIntensity + '/10' + (trigger ? ' — ' + trigger : '') + (selectedDuration ? ' — ' + selectedDuration : '')
     });
-  } catch (err) {
-    console.warn('Erreur envoi alerte :', err.message);
-  }
+  } catch (e) { console.warn('Erreur :', e.message); }
 
-  // Cooldown 60 secondes
-  let remaining = 60;
-  const interval = setInterval(() => {
+  document.getElementById('craving-confirm').classList.remove('hidden');
+  this.textContent = 'Alerte envoyée !';
+  this.classList.remove('bg-red-500');
+  this.classList.add('bg-emerald-500');
+
+  // Reset après 60s
+  var btn = this;
+  var remaining = 60;
+  var interval = setInterval(function() {
     remaining--;
-    btnCraving.textContent = 'Nouvelle alerte dans ' + remaining + 's';
+    btn.textContent = 'Nouvelle alerte dans ' + remaining + 's';
     if (remaining <= 0) {
       clearInterval(interval);
-      cravingCooldown = false;
-      btnCraving.disabled = false;
-      btnCraving.textContent = "J'ai besoin d'aide (craving)";
-      btnCraving.classList.add('bg-red-500', 'hover:bg-red-600', 'craving-btn');
-      btnCraving.classList.remove('bg-emerald-500');
-      alertConfirm.classList.add('hidden');
-      document.getElementById('craving-hint').classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = 'Envoyer l\'alerte craving';
+      btn.classList.add('bg-red-500');
+      btn.classList.remove('bg-emerald-500');
+      document.getElementById('craving-confirm').classList.add('hidden');
+      selectedIntensity = null;
+      selectedTrigger = null;
+      selectedDuration = null;
+      intensityGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110'); });
+      triggerGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
+      durationGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
+      document.getElementById('trigger-other').value = '';
+      document.getElementById('trigger-other').classList.add('hidden');
+      document.getElementById('craving-strategies').classList.add('hidden');
     }
   }, 1000);
 });
 
-// ══════════════ PDF FICHE PRÉVENTION ══════════════
+// ══════════════ TIMELINE ══════════════
 
-document.getElementById('btn-fiche').addEventListener('click', () => {
+function renderTimeline(activites) {
+  var container = document.getElementById('timeline-container');
+  container.textContent = '';
+  if (!activites || activites.length === 0) { document.getElementById('timeline-empty').classList.remove('hidden'); return; }
+
+  var now = new Date();
+  var nowMinutes = now.getHours() * 60 + now.getMinutes();
+  var nowInserted = false;
+  var typeStyles = {
+    soin: { bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500', text: 'text-indigo-700' },
+    repas: { bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500', text: 'text-amber-700' },
+    groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', dot: 'bg-emerald-500', text: 'text-emerald-700' },
+    activite: { bg: 'bg-purple-50', border: 'border-purple-200', dot: 'bg-purple-500', text: 'text-purple-700' },
+    libre: { bg: 'bg-slate-50', border: 'border-slate-200', dot: 'bg-slate-400', text: 'text-slate-600' }
+  };
+
+  activites.forEach(function(act, i) {
+    var parts = act.heure.split(':');
+    var actMin = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    var isPast = actMin + 60 < nowMinutes;
+    var isCurrent = !isPast && actMin <= nowMinutes;
+    var style = typeStyles[act.type] || typeStyles.libre;
+
+    if (!nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
+
+    var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-50' : ''));
+    var timeCol = createEl('div', 'w-14 pt-3 text-right flex-shrink-0');
+    timeCol.appendChild(createEl('span', 'text-xs font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
+    row.appendChild(timeCol);
+    var lineCol = createEl('div', 'flex flex-col items-center');
+    lineCol.appendChild(createEl('div', 'w-3 h-3 rounded-full flex-shrink-0 mt-4 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '')));
+    if (i < activites.length - 1) lineCol.appendChild(createEl('div', 'w-0.5 flex-1 bg-slate-200 min-h-4'));
+    row.appendChild(lineCol);
+    var card = createEl('div', style.bg + ' border ' + style.border + ' rounded-xl p-3 flex-1 mb-2' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : ''));
+    card.appendChild(createEl('p', 'text-sm font-bold ' + style.text, act.label));
+    if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', act.lieu));
+    row.appendChild(card);
+    container.appendChild(row);
+  });
+  if (!nowInserted) container.appendChild(makeNowMarker(now));
+}
+
+function makeNowMarker(now) {
+  var row = createEl('div', 'flex items-center gap-3 py-2');
+  var t = createEl('div', 'w-14 text-right');
+  t.appendChild(createEl('span', 'text-[10px] font-bold text-emerald-600', now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0')));
+  row.appendChild(t);
+  var line = createEl('div', 'flex-1 h-0.5 bg-emerald-500 rounded-full relative');
+  line.appendChild(createEl('div', 'absolute -left-1 -top-1 w-2.5 h-2.5 bg-emerald-500 rounded-full'));
+  row.appendChild(line);
+  return row;
+}
+
+// ══════════════ STRATÉGIES ══════════════
+
+var catLabels = { general: 'Autre', situation: 'Situation à risque', emotion: 'Émotion difficile', pensee: 'Pensée automatique', action: 'Action alternative', contact: 'Personne ressource' };
+function catLabel(c) { return catLabels[c] || c; }
+
+async function loadStrategies() {
   if (!currentPatient) return;
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  try {
+    patientStrategies = await db.getStrategies(currentPatient.id);
+  } catch (e) { patientStrategies = []; }
+  renderStrategies();
+}
 
-  const prenom = currentPatient.prenom || 'Patient';
-  const substance = currentPatient.substance || currentPatient.substance_principale || '';
+function renderStrategies() {
+  var list = document.getElementById('strategies-list');
+  var empty = document.getElementById('strategies-empty');
+  list.textContent = '';
+  if (patientStrategies.length === 0) { empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+
+  var catColors = { situation: 'border-red-200 bg-red-50', emotion: 'border-blue-200 bg-blue-50', pensee: 'border-amber-200 bg-amber-50', action: 'border-emerald-200 bg-emerald-50', contact: 'border-indigo-200 bg-indigo-50', general: 'border-slate-200 bg-slate-50' };
+
+  patientStrategies.forEach(function(s) {
+    var card = createEl('div', 'rounded-xl border p-3 flex items-start justify-between gap-2 ' + (catColors[s.categorie] || catColors.general));
+    var left = createEl('div', 'flex-1');
+    left.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase', catLabel(s.categorie)));
+    left.appendChild(createEl('p', 'text-sm text-slate-800 mt-0.5', s.texte));
+    card.appendChild(left);
+    var btnDel = createEl('button', 'flex-shrink-0 w-7 h-7 rounded-lg bg-white/80 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors');
+    btnDel.textContent = '\u00d7';
+    btnDel.style.fontSize = '18px';
+    btnDel.style.fontWeight = 'bold';
+    (function(id) {
+      btnDel.addEventListener('click', async function() {
+        try { await db.deleteStrategie(id); } catch(e) {}
+        loadStrategies();
+      });
+    })(s.id);
+    card.appendChild(btnDel);
+    list.appendChild(card);
+  });
+}
+
+document.getElementById('btn-add-strat').addEventListener('click', async function() {
+  var text = document.getElementById('strat-text').value.trim();
+  if (!text || !currentPatient) return;
+  var cat = document.getElementById('strat-cat').value;
+  this.disabled = true;
+  this.textContent = 'Ajout...';
+  try {
+    await db.createStrategie({ patient_id: currentPatient.id, texte: text, categorie: cat });
+    document.getElementById('strat-text').value = '';
+    await loadStrategies();
+  } catch (e) { console.warn('Erreur :', e.message); }
+  this.disabled = false;
+  this.textContent = 'Ajouter';
+});
+
+// ══════════════ PDF EXPORT ══════════════
+
+document.getElementById('btn-export').addEventListener('click', async function() {
+  if (!currentPatient) return;
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF();
+  var prenom = currentPatient.prenom || 'Patient';
+  var substance = currentPatient.substance || currentPatient.substance_principale || '';
+
+  // Charger historique craving
+  var cravings = [];
+  try { cravings = await db.getCravingHistory(currentPatient.id); } catch(e) {}
 
   // En-tête
   doc.setFillColor(79, 70, 229);
@@ -397,61 +636,82 @@ document.getElementById('btn-fiche').addEventListener('click', () => {
   doc.text('USCA Connect', 105, 18, { align: 'center' });
   doc.setFontSize(11);
   doc.setFont(undefined, 'normal');
-  doc.text('Fiche de prévention personnalisée', 105, 28, { align: 'center' });
+  doc.text('Fiche de sortie \u2014 ' + prenom, 105, 28, { align: 'center' });
+
+  var y = 50;
+  doc.setTextColor(30, 41, 59);
 
   // Infos patient
-  doc.setTextColor(30, 41, 59);
-  doc.setFontSize(14);
-  doc.setFont(undefined, 'bold');
-  doc.text('Bonjour ' + prenom, 20, 55);
-
   doc.setFontSize(10);
-  doc.setFont(undefined, 'normal');
   doc.setTextColor(100, 116, 139);
-  if (substance) doc.text('Substance principale : ' + substance, 20, 63);
-  doc.text('Date : ' + new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }), 20, substance ? 70 : 63);
+  if (substance) { doc.text('Substance principale : ' + substance, 20, y); y += 7; }
+  doc.text('Date : ' + new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }), 20, y);
+  y += 14;
 
-  let y = substance ? 85 : 78;
-
-  // Stratégies de prévention
-  doc.setFontSize(13);
-  doc.setFont(undefined, 'bold');
-  doc.setTextColor(16, 185, 129);
-  doc.text('Stratégies de prévention de la rechute', 20, y);
-  y += 10;
-
-  doc.setFontSize(10);
-  doc.setFont(undefined, 'normal');
-  doc.setTextColor(51, 65, 85);
-  var strategies = [
-    'Identifier vos situations à risque (lieux, personnes, émotions)',
-    'Préparer des alternatives : activité physique, appeler un proche, relaxation',
-    'Utiliser la technique STOP : Stop, Think, Observe, Proceed',
-    'Pratiquer la respiration 4-7-8 en cas de craving intense',
-    'Se rappeler vos motivations (notées pendant le séjour)',
-    'Contacter votre référent si besoin (numéros ci-dessous)'
-  ];
-  strategies.forEach(function(s) { doc.text('\u2022  ' + s, 24, y); y += 7; });
-
-  y += 8;
-
-  // Contacts d'urgence
+  // Évolution du craving
   doc.setFontSize(13);
   doc.setFont(undefined, 'bold');
   doc.setTextColor(239, 68, 68);
-  doc.text("Contacts d'urgence", 20, y);
+  doc.text('\u00c9volution du craving pendant le s\u00e9jour', 20, y);
   y += 10;
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'normal');
+  doc.setTextColor(51, 65, 85);
+  if (cravings.length === 0) {
+    doc.text('Aucun craving signal\u00e9 pendant le s\u00e9jour.', 24, y);
+    y += 7;
+  } else {
+    cravings.forEach(function(c) {
+      var date = new Date(c.horodatage).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+      var time = new Date(c.horodatage).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      var line = date + ' ' + time + ' \u2014 Intensit\u00e9 ' + (c.intensite || '?') + '/10';
+      if (c.declencheur) line += ' \u2014 ' + c.declencheur;
+      doc.text('\u2022  ' + line, 24, y);
+      y += 6;
+      if (y > 270) { doc.addPage(); y = 20; }
+    });
+  }
+  y += 8;
 
+  // Stratégies personnalisées
+  doc.setFontSize(13);
+  doc.setFont(undefined, 'bold');
+  doc.setTextColor(79, 70, 229);
+  doc.text('Mes strat\u00e9gies de pr\u00e9vention', 20, y);
+  y += 10;
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'normal');
+  doc.setTextColor(51, 65, 85);
+  if (patientStrategies.length === 0) {
+    doc.text('Aucune strat\u00e9gie renseign\u00e9e.', 24, y);
+    y += 7;
+  } else {
+    patientStrategies.forEach(function(s) {
+      doc.setFont(undefined, 'bold');
+      doc.text(catLabel(s.categorie) + ' :', 24, y);
+      doc.setFont(undefined, 'normal');
+      var lines = doc.splitTextToSize(s.texte, 150);
+      doc.text(lines, 28, y + 5);
+      y += 5 + lines.length * 5 + 3;
+      if (y > 270) { doc.addPage(); y = 20; }
+    });
+  }
+  y += 8;
+
+  // Contacts d'urgence
+  if (y > 230) { doc.addPage(); y = 20; }
+  doc.setFontSize(13);
+  doc.setFont(undefined, 'bold');
+  doc.setTextColor(239, 68, 68);
+  doc.text('Contacts d\'urgence', 20, y);
+  y += 10;
   doc.setFontSize(10);
   doc.setTextColor(51, 65, 85);
   var contacts = [
-    ['3114', 'Numéro national de prévention du suicide (24h/24)'],
-    ['USCA Pitié-Salpêtrière', '01 42 16 XX XX (secrétariat)'],
-    ['CSAPA / CAARUD', 'Centre de soins addictologie de votre secteur'],
-    ['SOS Amitié', '09 72 39 40 50'],
+    ['3114', 'Pr\u00e9vention du suicide (24h/24)'],
+    ['USCA Piti\u00e9-Salp\u00eatri\u00e8re', '01 42 16 XX XX'],
     ['Alcool Info Service', '0 980 980 930'],
-    ['Drogues Info Service', '0 800 23 13 13'],
-    ['Joueurs Info Service', '09 74 75 13 13']
+    ['Drogues Info Service', '0 800 23 13 13']
   ];
   contacts.forEach(function(c) {
     doc.setFont(undefined, 'bold');
@@ -464,31 +724,31 @@ document.getElementById('btn-fiche').addEventListener('click', () => {
   y += 8;
 
   // Mon suivi
+  if (y > 240) { doc.addPage(); y = 20; }
   doc.setFontSize(13);
   doc.setFont(undefined, 'bold');
-  doc.setTextColor(79, 70, 229);
-  doc.text('Mon suivi après la sortie', 20, y);
+  doc.setTextColor(16, 185, 129);
+  doc.text('Mon suivi apr\u00e8s la sortie', 20, y);
   y += 10;
-
   doc.setFontSize(10);
   doc.setFont(undefined, 'normal');
   doc.setTextColor(51, 65, 85);
   doc.text('RDV post-hospitalisation : ______________________________', 24, y); y += 7;
-  doc.text('Médecin traitant : ______________________________________', 24, y); y += 7;
+  doc.text('M\u00e9decin traitant : ______________________________________', 24, y); y += 7;
   doc.text('Psychiatre / addictologue : ______________________________', 24, y); y += 7;
   doc.text('Groupe de soutien (AA, NA, etc.) : ________________________', 24, y);
 
   // Footer
   doc.setFontSize(8);
   doc.setTextColor(148, 163, 184);
-  doc.text('USCA Connect \u2014 Pitié-Salpêtrière \u2014 Document généré le ' + new Date().toLocaleDateString('fr-FR'), 105, 285, { align: 'center' });
+  doc.text('USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re \u2014 G\u00e9n\u00e9r\u00e9 le ' + new Date().toLocaleDateString('fr-FR'), 105, 285, { align: 'center' });
 
-  doc.save('fiche-prevention-' + prenom.toLowerCase() + '.pdf');
+  doc.save('fiche-sortie-' + prenom.toLowerCase() + '.pdf');
 });
 
 // ══════════════ DÉCONNEXION ══════════════
 
-document.getElementById('btn-logout').addEventListener('click', () => {
+document.getElementById('btn-logout').addEventListener('click', function() {
   auth.logoutPatient();
   currentPatient = null;
   document.getElementById('patient-app').classList.add('hidden');
@@ -496,17 +756,14 @@ document.getElementById('btn-logout').addEventListener('click', () => {
   document.getElementById('input-room').value = '';
   document.getElementById('input-dob').value = '';
   document.getElementById('timeline-container').textContent = '';
-  alertConfirm.classList.add('hidden');
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('open'); });
 });
 
 // ══════════════ AUTO-RESTAURATION ══════════════
 
-(function checkExistingSession() {
+(function() {
   var session = auth.getPatientSession();
-  if (session) {
-    currentPatient = session;
-    showPatientApp(session);
-  }
+  if (session) { currentPatient = session; showPatientApp(session); }
 })();
 
 if ('serviceWorker' in navigator) {
