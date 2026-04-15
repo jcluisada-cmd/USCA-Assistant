@@ -341,19 +341,16 @@ function showAdminApp(profile) {
 // ── Stats dashboard ──
 async function loadDashboardStats() {
   try {
-    const [patients, alertes, groupes, programmes] = await Promise.all([
+    const [patients, alertes, groupes] = await Promise.all([
       db.getPatients(),
       db.getAlertesNonTraitees(),
-      db.getGroupesDuJour(),
-      db.getProgrammes()
+      db.getGroupesDuJour()
     ]);
     loadedPatients = patients;
     loadedAlertes = alertes;
-    loadedProgrammes = programmes;
     document.getElementById('stat-patients').textContent = patients.length;
     document.getElementById('stat-alertes').textContent = alertes.length;
     document.getElementById('stat-groupes').textContent = groupes.length;
-    document.getElementById('stat-programmes').textContent = programmes.length;
   } catch (err) {
     console.warn('Stats indisponibles :', err.message);
   }
@@ -363,7 +360,6 @@ async function loadDashboardStats() {
 document.getElementById('card-patients').addEventListener('click', () => toggleSection('patients', renderPatients));
 document.getElementById('card-alertes').addEventListener('click', () => toggleSection('alertes', renderAlertes));
 document.getElementById('card-groupes').addEventListener('click', () => toggleSection('groupes'));
-document.getElementById('card-programmes').addEventListener('click', () => toggleSection('programmes', renderProgrammes));
 
 // Boutons "Fermer"
 document.querySelectorAll('.section-close').forEach(btn => {
@@ -632,25 +628,6 @@ async function updateAlerte(id, statut) {
   } catch (err) {
     console.warn('Erreur mise à jour alerte :', err.message);
   }
-}
-
-// ── Rendu programmes ──
-function renderProgrammes() {
-  var list = document.getElementById('programmes-list');
-  list.textContent = '';
-  if (loadedProgrammes.length === 0) {
-    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
-    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun programme'));
-    list.appendChild(empty);
-    return;
-  }
-  loadedProgrammes.forEach(function(p) {
-    var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4');
-    card.appendChild(createEl('p', 'text-sm font-bold text-slate-800', p.nom));
-    var count = Array.isArray(p.activites) ? p.activites.length : 0;
-    card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', count + ' activités dans la journée'));
-    list.appendChild(card);
-  });
 }
 
 // ── Gestion des comptes (admin seulement) ──
