@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>USCA Connect — Affiche équipe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap');
+
+  @page { size: A4; margin: 0; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    width: 210mm;
+    height: 297mm;
+    padding: 16mm 18mm;
+    color: #1e293b;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #4F46E5, #312e81);
+    color: white;
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .header-left h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  .header-left p { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+  .header-right { text-align: center; }
+  .header-right img, .header-right canvas { width: 80px; height: 80px; border-radius: 8px; }
+  .header-right p { font-size: 8px; opacity: 0.6; margin-top: 4px; }
+
+  .url-bar {
+    background: #f1f5f9;
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 10px 16px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .url-bar span { font-size: 14px; font-weight: 800; color: #4F46E5; letter-spacing: 0.5px; }
+  .url-bar p { font-size: 9px; color: #64748b; margin-top: 2px; }
+
+  .login-box {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .login-box h2 { font-size: 13px; font-weight: 800; color: #334155; margin-bottom: 10px; }
+  .login-row { display: flex; gap: 12px; margin-bottom: 8px; }
+  .login-field { flex: 1; }
+  .login-field label { font-size: 9px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+  .login-field .value {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 3px;
+  }
+  .login-field .value span { color: #94a3b8; font-weight: 400; }
+  .login-note { font-size: 9px; color: #94a3b8; margin-top: 6px; }
+
+  .content-section { margin-bottom: 12px; }
+  .content-section h2 {
+    font-size: 12px;
+    font-weight: 800;
+    color: #4F46E5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: #f8fafc;
+  }
+  .feature-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .feature-text { font-size: 10px; color: #334155; line-height: 1.4; }
+  .feature-text strong { font-weight: 700; }
+
+  .wip-section {
+    background: #fffbeb;
+    border: 1.5px solid #fde68a;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+  .wip-section h3 { font-size: 11px; font-weight: 700; color: #92400e; margin-bottom: 4px; }
+  .wip-section p { font-size: 9px; color: #a16207; line-height: 1.5; }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .footer p { font-size: 8px; color: #94a3b8; }
+  .footer .contact { font-size: 9px; color: #64748b; font-weight: 600; }
+</style>
+</head>
+<body>
+
+  <!-- En-tête -->
+  <div class="header">
+    <div class="header-left">
+      <h1>USCA Connect</h1>
+      <p>Pitié-Salpêtrière &middot; Addictologie &middot; USCA &amp; ELSA</p>
+    </div>
+    <div class="header-right">
+      <img id="qr" alt="QR Code">
+      <p>Scannez pour accéder</p>
+    </div>
+  </div>
+
+  <!-- URL -->
+  <div class="url-bar">
+    <span>usca-connect.jc-luisada.workers.dev</span>
+    <p>Ouvrez ce lien dans votre navigateur (Chrome ou Safari) &middot; Fonctionne sur téléphone, tablette et PC</p>
+  </div>
+
+  <!-- Connexion -->
+  <div class="login-box">
+    <h2>Votre connexion soignant</h2>
+    <div class="login-row">
+      <div class="login-field">
+        <label>Identifiant</label>
+        <div class="value">prenom.nom</div>
+      </div>
+      <div class="login-field">
+        <label>Mot de passe</label>
+        <div class="value">usca_c15</div>
+      </div>
+    </div>
+    <p class="login-note">Votre identifiant = votre prénom.nom en minuscules (ex : thomas.peyroux). Sélectionnez l'onglet "Soignant" sur la page d'accueil. Votre compte doit avoir été créé par l'administrateur.</p>
+  </div>
+
+  <!-- Fonctionnalités disponibles -->
+  <div class="content-section">
+    <h2>Ce que vous pouvez faire</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon" style="background:#eef2ff;">💊</div>
+        <div class="feature-text"><strong>Toolbox clinique</strong><br>Protocoles par substance, scores (Cushman, COWS, AUDIT, PHQ-9, GAD-7), interactions, convertisseur BZD, fiches ELSA, fiches traitements patients</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#ecfdf5;">👤</div>
+        <div class="feature-text"><strong>Gestion des patients</strong><br>Admission, fiches traitements à prescrire, journal craving, permissions de sortie, événements, partage de contenu, date de sortie</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#fef2f2;">📊</div>
+        <div class="feature-text"><strong>Suivi craving</strong><br>Consultation des logs craving de chaque patient : intensité, déclencheurs, évolution pendant le séjour</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#f0f9ff;">📅</div>
+        <div class="feature-text"><strong>Actions patient</strong><br>Planifier un entretien, annoncer une permission, partager une note ou un lien, annoncer la date de sortie</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#fefce8;">📱</div>
+        <div class="feature-text"><strong>App installable</strong><br>Ajoutez l'app à votre écran d'accueil pour un accès rapide. Fonctionne hors-ligne pour la Toolbox clinique</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" style="background:#faf5ff;">🌙</div>
+        <div class="feature-text"><strong>Mode sombre</strong><br>Toggle clair/sombre disponible dans chaque module pour le confort visuel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- En construction -->
+  <div class="wip-section">
+    <h3>🚧 En cours de développement</h3>
+    <p>
+      <strong>Programme du jour</strong> basé sur le planning des groupes (roulement 2 semaines) &middot;
+      <strong>Ateliers</strong> avec suivi de participation et badges &middot;
+      <strong>Agenda d'équipe</strong> partagé (réunions, staffs) &middot;
+      <strong>Personnalisation</strong> de l'interface par soignant &middot;
+      <strong>App patient de sortie</strong> autonome avec suivi craving post-hospitalisation
+    </p>
+  </div>
+
+  <!-- Pied de page -->
+  <div class="footer">
+    <p>USCA Connect v3 &middot; Avril 2026 &middot; USCA &amp; ELSA &middot; AP-HP Pitié-Salpêtrière</p>
+    <p class="contact">Contact : Dr JC Luisada &middot; jc.luisada@gmail.com</p>
+  </div>
+
+<script>
+// Générer le QR Code en canvas (librairie inline minimaliste)
+// QR Code generator simplifié — utilise l'API Google Charts (nécessite internet pour générer)
+var qrImg = document.getElementById('qr');
+qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent('https://usca-connect.jc-luisada.workers.dev');
+qrImg.onerror = function() {
+  // Fallback si pas d'internet : afficher un placeholder
+  this.style.background = '#e2e8f0';
+  this.style.display = 'flex';
+  this.alt = 'QR';
+};
+
+// Auto-print dialog
+window.onload = function() {
+  // Petit délai pour charger le QR
+  setTimeout(function() { window.print(); }, 1500);
+};
+</script>
+</body>
+</html>
