@@ -145,6 +145,12 @@
         </div>
         <!-- Infos patient -->
         <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
+        <!-- Bouton voir comme patient -->
+        <button id="btn-view-as-patient" class="w-full mb-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Voir comme patient
+        </button>
+
         <!-- Checklist fiches traitements -->
         <h4 class="text-sm font-bold text-slate-700 mb-2">Fiches traitements prescrites</h4>
         <p class="text-xs text-slate-500 mb-3">Cochez les fiches à envoyer au patient. Il les verra dans son espace.</p>
@@ -338,6 +344,24 @@ var patientPrescriptions = [];
 document.getElementById('btn-back-patients').addEventListener('click', function() {
   document.getElementById('section-patient-detail').classList.add('hidden');
   document.getElementById('section-patients').classList.remove('hidden');
+});
+
+// Voir comme patient — injecte la session et ouvre le module patient
+document.getElementById('btn-view-as-patient').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  // Injecter une session patient temporaire dans localStorage
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id,
+    prenom: p.prenom,
+    chambre: p.numero_chambre,
+    programme_id: p.programme_id,
+    substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, // 2h seulement (preview admin)
+    admin_preview: true
+  }));
+  // Ouvrir le module patient dans un nouvel onglet
+  window.open('../patient/', '_blank');
 });
 
 async function showPatientDetail(patient) {

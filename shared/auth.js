@@ -104,28 +104,35 @@ window.auth = {
       throw new Error('Chambre ou date de naissance incorrecte');
     }
 
-    // Succès — reset compteur et stocker en session
+    // Succès — reset compteur et stocker en session persistante (30 jours)
     auth._patientAttempts = 0;
     // On ne stocke que l'ID et le prénom (pas de PII sensible)
-    sessionStorage.setItem('patient_session', JSON.stringify({
+    localStorage.setItem('patient_session', JSON.stringify({
       id: patient.id,
       prenom: patient.prenom,
       chambre: patient.numero_chambre,
       programme_id: patient.programme_id,
-      substance: patient.substance_principale
+      substance: patient.substance_principale,
+      expires: Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 jours
     }));
     return patient;
   },
 
-  /** Récupère la session patient ou null */
+  /** Récupère la session patient ou null (vérifie expiration) */
   getPatientSession() {
-    const cached = sessionStorage.getItem('patient_session');
-    return cached ? JSON.parse(cached) : null;
+    const cached = localStorage.getItem('patient_session');
+    if (!cached) return null;
+    const session = JSON.parse(cached);
+    if (session.expires && Date.now() > session.expires) {
+      localStorage.removeItem('patient_session');
+      return null;
+    }
+    return session;
   },
 
   /** Déconnexion patient */
   logoutPatient() {
-    sessionStorage.removeItem('patient_session');
+    localStorage.removeItem('patient_session');
   },
 
   // ════════════════ PIN LOCK (soignants) ════════════════
