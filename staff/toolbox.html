@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#102a43">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="USCA">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%23102a43'/%3E%3Ccircle cx='96' cy='96' r='18' fill='%2327ab83'/%3E%3Cpath d='M96 30v16M96 146v16M30 96h16M146 96h16' stroke='%23f0b429' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>USCA Toolbox — Pitié-Salpêtrière</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; background: #f8fafc; color: #102a43; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  input[type=number] { -moz-appearance: textfield; }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #bcccdc; border-radius: 4px; }
+  .fade-in { animation: fadeIn .25s ease-out; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
+  .card { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .card-tap { cursor: pointer; transition: box-shadow .15s, transform .1s; }
+  .card-tap:active { transform: scale(.98); }
+  .card-tap:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+  .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .btn-pill { padding: 7px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; transition: all .15s; }
+  .btn-pill.active { border-color: #27ab83; background: #effcf6; color: #147d64; }
+  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,.97); border-top: 1px solid #e2e8f0; padding: 4px 8px calc(env(safe-area-inset-bottom, 4px) + 4px); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 100; }
+  .bottom-nav-inner { display: flex; justify-content: space-around; max-width: 480px; margin: 0 auto; }
+  .nav-btn { display: flex; flex-direction: column; align-items: center; padding: 6px 12px; border: none; background: none; cursor: pointer; border-radius: 12px; transition: color .15s; }
+  .nav-btn span { font-size: 10px; margin-top: 2px; font-weight: 600; }
+  .top-bar { position: sticky; top: 0; z-index: 90; background: rgba(248,250,252,.95); border-bottom: 1px solid #e2e8f0; padding: 10px 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; }
+  .content { padding: 16px 16px 100px; max-width: 640px; margin: 0 auto; }
+  .check-box { width: 18px; height: 18px; border-radius: 5px; border: 2px solid #9fb3c8; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; cursor: pointer; }
+  .check-box.checked { border-color: #27ab83; background: #27ab83; }
+  .section-btn { width: 100%; padding: 12px; display: flex; align-items: center; justify-content: space-between; border: none; background: none; cursor: pointer; text-align: left; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .more-overlay { position: fixed; inset: 0; z-index: 95; }
+  .more-menu { position: absolute; bottom: 70px; right: 16px; left: 16px; max-width: 360px; margin: 0 auto; background: #fff; border-radius: 18px; box-shadow: 0 12px 40px rgba(0,0,0,.15); border: 1px solid #e2e8f0; padding: 8px; }
+  .more-item { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px; border: none; background: none; cursor: pointer; border-radius: 12px; text-align: left; font-size: 14px; font-weight: 500; color: #243b53; }
+  .more-item:hover { background: #f0f4f8; }
+  .install-banner { background: linear-gradient(135deg, #102a43, #243b53); color: white; padding: 12px 16px; border-radius: 14px; margin-bottom: 16px; }
+  .fb-textarea { width: 100%; padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 80px; outline: none; color: #102a43; transition: border-color .15s; }
+  .fb-textarea:focus { border-color: #27ab83; }
+  .fb-input { width: 100%; padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 13px; font-family: inherit; outline: none; color: #102a43; transition: border-color .15s; }
+  .fb-input:focus { border-color: #27ab83; }
+  .fb-submit { width: 100%; padding: 14px; border: none; border-radius: 12px; background: #27ab83; color: white; font-size: 14px; font-weight: 800; font-family: inherit; cursor: pointer; transition: background .15s; }
+  .fb-submit:hover { background: #199473; }
+  .fb-submit:active { transform: scale(.98); }
+  .fb-tag { padding: 7px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; transition: all .15s; }
+  .fb-tag.sel { border-color: #27ab83; background: #effcf6; color: #147d64; }
+  .fb-sent { text-align: center; padding: 40px 20px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useMemo, useCallback, useEffect } = React;
+
+/* ══════════════════════ SVG ICONS ══════════════════════ */
+const I = {
+  home: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>,
+  pill: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>,
+  calendar: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>,
+  calc: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>,
+  menu: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>,
+  brain: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/></svg>,
+  alert: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>,
+  building: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>,
+  steth: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>,
+  scale: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
+  chevR: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
+  chevD: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>,
+  chevL: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
+  check: (c,s=12) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>,
+  checkCircle: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>,
+  alertCircle: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>,
+  activity: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>,
+  reset: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+  search: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
+  heart: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>,
+  star: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  thermo: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>,
+  zap: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>,
+  shield: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>,
+  trend: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+  download: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>,
+  msgSquare: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  send: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>,
+  copy: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>,
+};
+
+/* ══════════════════════ COLORS ══════════════════════ */
+const C = {
+  n: { 50:"#f0f4f8",100:"#d9e2ec",200:"#bcccdc",300:"#9fb3c8",400:"#7b8faa",500:"#627d98",600:"#486581",700:"#334e68",800:"#243b53",900:"#102a43" },
+  t: { 50:"#effcf6",100:"#c6f7e2",200:"#8eedc7",300:"#65d6ad",400:"#3ebd93",500:"#27ab83",600:"#199473",700:"#147d64",800:"#0c6b58",900:"#014d40" },
+  a: { 50:"#fffbea",100:"#fff3c4",200:"#fce588",300:"#fadb5f",400:"#f7c948",500:"#f0b429",600:"#de911d",700:"#cb6e17",800:"#b44d12",900:"#8d2b0b" },
+  r: { 100:"#fee2e2",500:"#ef4444",600:"#dc2626",700:"#b91c1c" },
+  bg:"#f8fafc", bdr:"#e2e8f0"
+};
+
+/* ══════════════════════ CLINICAL DATA ══════════════════════ */
+const SUBSTANCES = {
+  alcool: {
+    name:"Alcool", icon:"🍷", color:C.a[600],
+    critereHosp:"CIWA-Ar ≥ 8 ou PAWSS ≥ 4, comorbidité sévère ou échec ambulatoire",
+    sevrageJ1J4:{ title:"BZD symptom-triggered + Thiamine IV + Correction électrolytique", details:[
+      {label:"Diazépam (Valium)",desc:"10-20 mg PO toutes les 1-2h selon Cushman, max 100 mg/j. Si hépatopathie → Oxazépam (Séresta) 25-50 mg"},
+      {label:"Thiamine (Vitamine B1)",desc:"500 mg IV/j pendant 3-5 jours (prévention Gayet-Wernicke)"},
+      {label:"Hydratation",desc:"Sérum physiologique + correction K+, Mg²⁺, phosphore"},
+      {label:"Surveillance",desc:"Score Cushman ou CIWA-Ar toutes les 4-6h"}
+    ]},
+    decisionJ8:"Choisir naltrexone ou acamprosate ; envisager baclofène si hépatopathie avancée ou échec des antagonistes opioïdes",
+    traitements:[
+      {mol:"Naltrexone",marque:"Revia",poso:"50 mg/j",debut:"J5",ind:"Objectif abstinence, fonction hépatique normale",amm:"AMM",ci:"Hépatite aiguë, IH sévère, traitement opioïde en cours",np:"A"},
+      {mol:"Acamprosate",marque:"Aotal",poso:"666 mg ×3/j (>60kg)",debut:"J5",ind:"Objectif abstinence, modulation glutamatergique",amm:"AMM",ci:"IR sévère (ClCr <30)",np:"A"},
+      {mol:"Nalméfène",marque:"Selincro",poso:"18 mg à la demande, 1-2h avant exposition",debut:"Post-sevrage",ind:"Objectif réduction (pas abstinence)",amm:"AMM",ci:"Traitement opioïde en cours",np:"A"},
+      {mol:"Baclofène",marque:"Baclofène",poso:"15-20 mg/j → +10 mg/3-4j → 30-80 mg/j",debut:"J5-J8",ind:"Hépatopathie avancée, échec NTX/acamprosate",amm:"Hors AMM",ci:"Épilepsie non contrôlée, IR sévère",np:"B"},
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-50 mg/j → 200-300 mg/j",debut:"J8+",ind:"Craving persistant, insomnie, anxiété résiduelle",amm:"Hors AMM",ci:"Lithiase rénale, glaucome angle fermé",np:"B"},
+      {mol:"Disulfirame",marque:"Espéral",poso:"500 mg/j → 250 mg/j",debut:"Après sevrage complet",ind:"Patient très motivé, supervision possible",amm:"AMM",ci:"Hépatopathie sévère, cardiopathie, neuropathie",np:"B"}
+    ],
+    redFlags:["CIWA-Ar ≥ 25","Delirium tremens","Convulsions","Hépatopathie décompensée"],
+    nonPharma:[
+      {type:"Acupuncture NADA",timing:"J1-J3 ++",ind:"Craving, anxiété, insomnie de sevrage"},
+      {type:"Hypnose",timing:"J4-J8",ind:"Automatismes, triggers, gestion émotionnelle"},
+      {type:"Thérapie VR",timing:"J7-J12",ind:"Cue-exposure (environnements festifs/domestiques)"},
+      {type:"tDCS",timing:"J5-J9",ind:"Si craving VAS ≥7/10 persistant malgré tt de fond + TCC"}
+    ]
+  },
+  opioides: {
+    name:"Opioïdes",icon:"💉",color:C.n[700],
+    critereHosp:"COWS ≥ 8 ; grossesse ou comorbidité grave",
+    sevrageJ1J4:{title:"Induction buprénorphine ou méthadone + contrôle symptômes autonomes",details:[
+      {label:"Buprénorphine (Subutex)",desc:"4-8 mg J1 (fractionnée). Attendre COWS ≥ 8 avant induction. ↑ jusqu'à 16 mg/j"},
+      {label:"Méthadone",desc:"10-30 mg J1 ; +10 mg/5j → 60-120 mg/j. Si déjà sous TSO ou refusant BHD"},
+      {label:"Clonidine",desc:"0,1-0,3 mg /6-8h si hyperactivité sympathique ou CI agonistes"},
+      {label:"Symptomatique",desc:"Lopéramide (diarrhées), ibuprofène (myalgies), métopimazine (nausées)"}
+    ]},
+    decisionJ8:"Ajuster la dose TSO ; évaluer éligibilité naltrexone si sevrage complet ≥ 7j",
+    traitements:[
+      {mol:"Buprénorphine",marque:"Subutex / génériques",poso:"2-16 mg/j SL",debut:"J1",ind:"TSO 1ère intention",amm:"AMM",ci:"IR sévère, association agonistes opioïdes purs",np:"A"},
+      {mol:"Méthadone",marque:"Méthadone AP-HP",poso:"60-120 mg/j",debut:"J1",ind:"Forte dépendance, échec BHD, déjà sous TSO",amm:"AMM",ci:"IR sévère (relative), allongement QT",np:"A"},
+      {mol:"Naltrexone",marque:"Revia",poso:"50 mg/j",debut:"Après ≥7j abstinence",ind:"Motivation abstinence totale",amm:"AMM",ci:"⚠️ Patient sous opioïdes (sevrage précipité !)",np:"B"}
+    ],
+    redFlags:["Sevrage précipité","Dépression respiratoire","COWS > 24","Association dépresseurs (BZD/OH)"],
+    nonPharma:[
+      {type:"Acupuncture NADA",timing:"J1-J5",ind:"Douleurs de sevrage, insomnie, syndrome neurovégétatif"},
+      {type:"Hypnose",timing:"J4-J10",ind:"Hypnoanalgésie, gestion du craving"},
+      {type:"Thérapie VR",timing:"J8-J12",ind:"Relaxation, prévention rechute"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant ou échec psychothérapies"}
+    ]
+  },
+  stimulants: {
+    name:"Cocaïne / Crack",icon:"⚡",color:C.r[600],
+    critereHosp:"Intoxication aiguë, complication CV, psychose ou grossesse",
+    sevrageJ1J4:{title:"Sédation BZD + surveillance ECG + refroidissement + halopéridol si psychose",details:[
+      {label:"Diazépam",desc:"5-10 mg IV/PO si agitation, titrer jusqu'à 20 mg"},
+      {label:"Halopéridol",desc:"2-5 mg IM/IV si hallucinations / psychose"},
+      {label:"Monitorage",desc:"ECG systématique, surveillance cardiaque continue"},
+      {label:"Crack : complications respi",desc:"Auscultation, SpO2, radio thorax si dyspnée/hémoptysie"}
+    ]},
+    decisionJ8:"Contingency management + community reinforcement ; envisager topiramate ou disulfiram",
+    traitements:[
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-50 mg/j → progressif",debut:"J5-J8",ind:"Craving persistant",amm:"Hors AMM",ci:"Lithiase rénale, glaucome",np:"C"},
+      {mol:"Disulfirame",marque:"Espéral",poso:"250 mg/j",debut:"Post-sevrage",ind:"Anti-craving cocaïne (inhib. DBH)",amm:"Hors AMM",ci:"IH sévère, cardiopathie",np:"C"},
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200-2400 mg/j",debut:"J1",ind:"Modulation glutamatergique",amm:"Hors AMM",ci:"Allergie (rare)",np:"C"},
+      {mol:"Bupropion",marque:"Zyban",poso:"150 mg bid",debut:"J5",ind:"Craving + sevrage tabagique",amm:"Hors AMM",ci:"Épilepsie, TCA",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Complications CV (SCA, AVC)","Hyperthermie","Grossesse"],
+    nonPharma:[
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Cue-exposure + skills training (++ pertinent sans pharmaco spécifique)"},
+      {type:"Hypnose",timing:"J4-J10",ind:"Craving, impulsivité, automatismes"},
+      {type:"Acupuncture",timing:"J3-J8",ind:"Craving, anxiété, insomnie"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant ou échec psychothérapeutique"}
+    ]
+  },
+  cannabis: {
+    name:"Cannabis",icon:"🌿",color:C.t[600],
+    critereHosp:"Usage quotidien lourd + comorbidité psy grave ou cannabinoïdes de synthèse",
+    sevrageJ1J4:{title:"Soutien psychologique + environnement calme + symptomatique",details:[
+      {label:"Hydroxyzine (Atarax)",desc:"25-50 mg au coucher si insomnie"},
+      {label:"Oxazépam (Séresta)",desc:"10-30 mg/j si anxiété marquée (5-7j max)"},
+      {label:"Cannabinoïdes synthétiques",desc:"BZD si agitation + antipsychotiques atypiques si hallucinations + surv. cardiaque/hépatique"}
+    ]},
+    decisionJ8:"Structurer programme psychothérapie ; envisager NAC ou gabapentine",
+    traitements:[
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J5-J8",ind:"Craving persistant",amm:"Hors AMM",ci:"Allergie",np:"B"},
+      {mol:"Gabapentine",marque:"Neurontin",poso:"300 mg tid",debut:"J5-J8",ind:"Craving + insomnie + anxiété",amm:"Hors AMM",ci:"IR (ajuster poso)",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Hallucinations","Hyperemesis cannabinoïde","Cannabinoïdes de synthèse"],
+    nonPharma:[
+      {type:"Hypnose",timing:"J4-J10",ind:"Irritabilité, sommeil, gestion émotionnelle"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Insomnie, anxiété"},
+      {type:"Thérapie VR",timing:"J6-J12",ind:"Relaxation immersive, gestion stress"},
+      {type:"tDCS",timing:"J5-J9",ind:"Patients résistants aux psychothérapies"}
+    ]
+  },
+  bzd: {
+    name:"Benzodiazépines",icon:"💊",color:C.n[500],
+    critereHosp:"Consommation > 40 mg diazépam-eq/j ou usage prolongé > 3 mois",
+    sevrageJ1J4:{title:"Conversion BZD longue demi-vie + taper hyperbolique + surv. CIWA-B",details:[
+      {label:"Conversion au diazépam",desc:"Calculer dose équivalente. Ex: alprazolam 1 mg ≈ diazépam 10 mg"},
+      {label:"Dose < 50 mg DZP-eq, < 6 mois",desc:"Taper hyperbolique : -10% tous les 3-7 jours"},
+      {label:"Dose > 50 mg ou > 6 mois",desc:"Taper lent : -5%/semaine + carbamazépine ou gabapentine"},
+      {label:"Si hépatopathie",desc:"Préférer oxazépam ou lorazépam (métabolisme non hépatique)"}
+    ]},
+    decisionJ8:"Définir rythme de réduction et adjuvants (carbamazépine/gabapentine)",
+    traitements:[
+      {mol:"Carbamazépine",marque:"Tégrétol",poso:"200-600 mg/j",debut:"J1-J4",ind:"Adjuvant si dose élevée, prévention convulsions",amm:"Hors AMM",ci:"Bloc AV, porphyrie",np:"B"},
+      {mol:"Gabapentine",marque:"Neurontin",poso:"900-1800 mg/j",debut:"J1-J4",ind:"Insomnie, anxiété de sevrage",amm:"Hors AMM",ci:"IR sévère",np:"C"},
+      {mol:"Flumazénil",marque:"Anexate",poso:"Perfusion lente sous surveillance",debut:"J5+",ind:"Innovation : désensibilisation supervisée",amm:"Hors AMM",ci:"Épilepsie, dépendance BZD non stabilisée",np:"C"}
+    ],
+    redFlags:["Convulsions","Delirium","Polydépendance OH/opioïdes","Dose > 50 mg DZP-eq"],
+    nonPharma:[
+      {type:"Acupuncture",timing:"J1-J8",ind:"Anxiété de sevrage, insomnie (++ indiqué)"},
+      {type:"Hypnose",timing:"J4-J12",ind:"Gestion anxiété, autohypnose post-sortie (++ indiqué)"},
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Relaxation immersive en complément du taper"},
+      {type:"tDCS/rTMS",timing:"J5+",ind:"Anxiété résiduelle ou insomnie"}
+    ]
+  },
+  nps: {
+    name:"NPS / Cathinones",icon:"🧪",color:C.a[700],
+    critereHosp:"Complications médicales, comorbidité psy, chemsex avec risque infectieux",
+    sevrageJ1J4:{title:"PEC syndromique (stimulant → protocole stimulants ; sédatif → sédatifs)",details:[
+      {label:"Profil stimulant (3-MMC, cathinones)",desc:"BZD sédatives + ECG + surveillance + refroidissement si hyperthermie"},
+      {label:"Chemsex / slam",desc:"Dépistage VIH, VHC, VHB systématique. TPE si rapport à risque < 48h"},
+      {label:"Bilan infectieux",desc:"Liaison hépatologie si sérologies +. Bilan IST complet"},
+      {label:"Évaluation psy",desc:"Thymie à distance (J7+) : épisode dépressif post-stimulants fréquent"}
+    ]},
+    decisionJ8:"Programme psychothérapie intensive + réinsertion ; topiramate/disulfiram si craving",
+    traitements:[
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-300 mg/j progressif",debut:"J8+",ind:"Craving persistant",amm:"Hors AMM",ci:"Lithiase rénale",np:"C"},
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J1",ind:"Modulation glutamatergique",amm:"Hors AMM",ci:"Allergie",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Hyperthermie sévère","Complication CV","Sérologies VIH/VHC+","Risque suicidaire (post-crash)"],
+    nonPharma:[
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Scénarios chemsex/festifs, compétences de refus"},
+      {type:"Hypnose",timing:"J5-J10",ind:"Gestion impulsivité, triggers"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Anxiété, insomnie post-crash"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant"}
+    ]
+  },
+  ketamine: {
+    name:"Kétamine",icon:"🔮",color:C.t[800],
+    critereHosp:"Complications somatiques (cystite, hépatotoxicité), usage compulsif quotidien",
+    sevrageJ1J4:{title:"Approche symptomatique — pas de protocole standardisé",details:[
+      {label:"Symptomatique",desc:"BZD si anxiété, antalgiques, antiémétiques"},
+      {label:"Bilan somatique",desc:"ECBU + écho vésicale (cystite kétaminique), bilan hépatique/rénal"},
+      {label:"Avis urologique",desc:"Systématique si plaintes urinaires (pollakiurie, hématurie)"},
+      {label:"Paradoxe thérapeutique",desc:"Kétamine/eskétamine = traitement (dépression résistante) ≠ substance addictive"}
+    ]},
+    decisionJ8:"Évaluation psy complète, PEC comorbidités, orientation psychothérapique",
+    traitements:[
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J1",ind:"Protection hépatique + anti-craving",amm:"Hors AMM",ci:"Allergie",np:"D"}
+    ],
+    redFlags:["Cystite kétaminique sévère","Hépatotoxicité","État dissociatif prolongé","Complications rénales"],
+    nonPharma:[
+      {type:"Hypnose",timing:"J4-J10",ind:"Craving, états dissociatifs"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Douleurs pelviennes, anxiété"},
+      {type:"Thérapie VR",timing:"J6-J12",ind:"Relaxation, prévention rechute"},
+      {type:"tDCS",timing:"Au cas par cas",ind:"Données très limitées"}
+    ]
+  }
+};
+
+const SCORES = {
+  cushman:{name:"Score de Cushman",sub:"Sevrage alcoolique",
+    items:[
+      {n:"Fréquence cardiaque",o:["< 80","80-100","101-120","> 120"],s:[0,1,2,3]},
+      {n:"PA systolique",o:["< 135","135-160","161-200","> 200"],s:[0,1,2,3]},
+      {n:"Fréquence respiratoire",o:["< 16","16-25","26-35","> 35"],s:[0,1,2,3]},
+      {n:"Tremblements",o:["Absents","Mains en extension","Membres sup.","Généralisés"],s:[0,1,2,3]},
+      {n:"Sueurs",o:["Absentes","Paumes","Paumes + front","Généralisées"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Absente","Discrète","Généralisée","Incoercible"],s:[0,1,2,3]},
+      {n:"Troubles sensoriels",o:["Absents","Gêne lumière/bruit","Hallucinations critiquées","Hallucinations non critiquées"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=3?{l:"Léger",c:C.t[500],a:"Surveillance simple, pas de BZD systématique"}:s<=7?{l:"Modéré",c:C.a[500],a:"Diazépam 10 mg PO, réévaluer à 1h. Thiamine IV 500 mg/j"}:s<=12?{l:"Sévère",c:C.a[700],a:"Diazépam 10-20 mg PO/IV toutes les 1-2h. Monitoring continu. Lit monitoré"}:{l:"Très sévère",c:C.r[600],a:"⚠️ Risque DT/convulsions. Diazépam IV titré. Phénobarbital si échec. Transfert réa"}
+  },
+  cows:{name:"Score COWS",sub:"Sevrage opioïdes",
+    items:[
+      {n:"FC au repos",o:["≤ 80","81-100","101-120","> 120"],s:[0,1,2,4]},
+      {n:"Sueurs",o:["Absentes","Légères","Front perlé","Ruisselantes"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Aucune","Remuant","Se lève souvent","Marche permanent"],s:[0,1,3,5]},
+      {n:"Mydriase",o:["Normale","Possible","Modérée","Maximale"],s:[0,1,2,5]},
+      {n:"Douleurs ostéo-articulaires",o:["Absentes","Légères","Frictions","Ne tient pas en place"],s:[0,1,2,4]},
+      {n:"Rhinorrhée / larmoiement",o:["Absent","Nez bouché","Nez coule","Ruissellement"],s:[0,1,2,4]},
+      {n:"Troubles digestifs",o:["Absents","Crampes","Nausées/vomiss.","Diarrhées"],s:[0,1,2,3]},
+      {n:"Tremblements",o:["Absents","Légers mains","Bras étendus","Généralisés"],s:[0,1,2,4]},
+      {n:"Bâillements",o:["Absents","1-2","3-4","Multiples"],s:[0,1,2,4]},
+      {n:"Anxiété",o:["Aucune","Légère","Marquée","Sévère"],s:[0,1,2,4]},
+      {n:"Chair de poule",o:["Peau lisse","Palpable","Visible","Majeure"],s:[0,3,5,5]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Pas de sevrage significatif. Réévaluer à 1-2h"}:s<=12?{l:"Léger",c:C.a[400],a:"Sevrage léger. Induction buprénorphine possible si ≥ 8"}:s<=24?{l:"Modéré",c:C.a[600],a:"Induction buprénorphine 4-8 mg + symptomatique"}:s<=36?{l:"Sévère",c:C.r[500],a:"⚠️ BHD 8 mg + symptomatique intensif. Surveillance rapprochée"}:{l:"Très sévère",c:C.r[700],a:"⚠️ COWS > 36 : stabilité hémodynamique. BHD 8-16 mg. Lit monitoré"}
+  },
+  audit:{name:"AUDIT",sub:"Alcool (10 items)",
+    items:[
+      {n:"Fréquence de consommation",o:["Jamais","≤ 1×/mois","2-4×/mois","2-3×/sem","≥ 4×/sem"],s:[0,1,2,3,4]},
+      {n:"Verres/jour de consommation",o:["1-2","3-4","5-6","7-9","≥ 10"],s:[0,1,2,3,4]},
+      {n:"≥ 6 verres en 1 occasion",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Incapacité de s'arrêter",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Activités manquées",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Besoin d'OH le matin",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Culpabilité",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Trous de mémoire",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Blessure liée OH",o:["Non","Oui, pas 12 derniers mois","Oui, 12 derniers mois"],s:[0,2,4]},
+      {n:"Entourage préoccupé",o:["Non","Oui, pas 12 derniers mois","Oui, 12 derniers mois"],s:[0,2,4]}
+    ],
+    interp:(s)=>s<=7?{l:"Usage simple",c:C.t[500],a:"Consommation faible risque. Conseil bref"}:s<=15?{l:"Usage à risque",c:C.a[500],a:"Usage nocif probable. Intervention brève. Rééval 3 mois"}:s<=19?{l:"Usage nocif",c:C.a[700],a:"Consultation spécialisée recommandée (CSAPA/addictologue)"}:{l:"Dépendance probable",c:C.r[600],a:"Orientation PEC spécialisée. Évaluer sevrage"}
+  },
+  phq9:{name:"PHQ-9",sub:"Dépression",
+    items:[
+      {n:"Peu d'intérêt / plaisir",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Triste, déprimé",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficultés de sommeil",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Fatigue",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Appétit modifié",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Mauvaise opinion de soi",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficultés concentration",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Ralentissement / agitation",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Idées suicidaires",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Pas de dépression significative"}:s<=9?{l:"Léger",c:C.a[400],a:"Dépression légère. Psychothérapie de soutien"}:s<=14?{l:"Modéré",c:C.a[600],a:"Envisager antidépresseur (sertraline 50 mg ou vortioxétine 10 mg)"}:s<=19?{l:"Mod. sévère",c:C.a[700],a:"AD recommandé + psychothérapie"}:{l:"Sévère",c:C.r[600],a:"⚠️ AD + psychothérapie. Évaluer risque suicidaire (item 9)"}
+  },
+  gad7:{name:"GAD-7",sub:"Anxiété",
+    items:[
+      {n:"Nervosité, anxiété",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Incapacité contrôler inquiétude",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Inquiétude excessive",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficulté à se détendre",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Irritabilité",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Peur catastrophe",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Anxiété non significative"}:s<=9?{l:"Léger",c:C.a[400],a:"Psychothérapie, hygiène de vie"}:s<=14?{l:"Modéré",c:C.a[600],a:"Psychothérapie + envisager tt (sertraline, venlafaxine)"}:{l:"Sévère",c:C.r[600],a:"Tt pharmacologique recommandé + TCC"}
+  }
+};
+
+const INTERACTIONS = [
+  {d1:"Méthadone",d2:"Benzodiazépines",sev:"grave",desc:"Risque dépression respiratoire. Si inévitable : doses min, surv. SpO2, fractionnement"},
+  {d1:"Méthadone",d2:"Sertraline",sev:"mod",desc:"ISRS peut ↑ taux méthadone (CYP2D6). Surv. ECG (QT additif)"},
+  {d1:"Méthadone",d2:"Venlafaxine",sev:"mod",desc:"Risque QT additif. ECG de contrôle"},
+  {d1:"Méthadone",d2:"Cyamémazine",sev:"mod",desc:"QT additif. ECG systématique. Doses faibles"},
+  {d1:"Méthadone",d2:"Chlorpromazine",sev:"mod",desc:"QT additif. ECG systématique"},
+  {d1:"Buprénorphine",d2:"Benzodiazépines",sev:"grave",desc:"Risque dépression respiratoire (moindre que MTD). Éviter, sinon doses min"},
+  {d1:"Baclofène",d2:"Alcool résiduel",sev:"grave",desc:"Risque sédation majeure, coma. Attendre sevrage stabilisé"},
+  {d1:"Baclofène",d2:"Benzodiazépines",sev:"mod",desc:"Sommation effets sédatifs et myorelaxants"},
+  {d1:"Naltrexone",d2:"Opioïdes",sev:"grave",desc:"⚠️ CI ABSOLUE. Sevrage précipité. Attendre ≥ 7j abstinence"},
+  {d1:"Nalméfène",d2:"Opioïdes",sev:"grave",desc:"⚠️ CI. Même mécanisme (antagoniste opioïde)"},
+  {d1:"Disulfirame",d2:"Alcool",sev:"grave",desc:"Effet antabuse : flush, nausées, tachycardie. Effet recherché mais dangereux si non contrôlé"},
+  {d1:"Disulfirame",d2:"Méthadone",sev:"mod",desc:"Disulfirame peut ↑ taux MTD (inhib. CYP). Surv. clinique"},
+  {d1:"Méthylphénidate",d2:"IMAO",sev:"grave",desc:"⚠️ CI ABSOLUE. Crise hypertensive. Washout 14j"},
+  {d1:"Méthylphénidate",d2:"Cocaïne",sev:"grave",desc:"Effets sympathomimétiques additifs. Risque CV majeur"},
+  {d1:"Topiramate",d2:"Méthadone",sev:"mod",desc:"Topiramate peut ↓ taux MTD (induction CYP3A4). Ajuster poso"},
+  {d1:"Sertraline",d2:"Tramadol",sev:"grave",desc:"Risque syndrome sérotoninergique. Éviter"},
+  {d1:"Vortioxétine",d2:"Tramadol",sev:"mod",desc:"Risque sérotoninergique. Éviter ou surv. étroite"},
+  {d1:"Méthadone",d2:"Méthylphénidate",sev:"mod",desc:"Pas d'interaction PK directe mais surv. CV (FC, TA, ECG)"}
+];
+
+const BZD_EQ = [
+  {nom:"Diazépam (Valium)",eq:10,t:"20-100h"},
+  {nom:"Oxazépam (Séresta)",eq:30,t:"4-15h"},
+  {nom:"Alprazolam (Xanax)",eq:0.5,t:"6-12h"},
+  {nom:"Lorazépam (Témesta)",eq:1,t:"10-20h"},
+  {nom:"Bromazépam (Lexomil)",eq:6,t:"20h"},
+  {nom:"Clonazépam (Rivotril)",eq:0.25,t:"18-50h"},
+  {nom:"Clorazépate (Tranxène)",eq:15,t:"30-150h"},
+  {nom:"Prazépam (Lysanxia)",eq:10,t:"30-150h"},
+  {nom:"Zopiclone (Imovane)",eq:7.5,t:"5h"},
+  {nom:"Zolpidem (Stilnox)",eq:10,t:"2-3h"}
+];
+
+const SEJOUR = [
+  {phase:"SEVRAGE AIGU",jours:"J1-J3",color:C.r[500],items:[
+    {j:"J1",tasks:["Accueil, anamnèse, examen clinique complet","Bilan bio : NFS, iono, BH, BR, Mg²⁺, P, GGT, CDT, VGM","Sérologies VIH/VHB/VHC si FdR","ECG systématique","Score initial (Cushman / COWS)","Initiation protocole sevrage","Thiamine IV 500 mg/j (OH)","Évaluation psy initiale","NADA (acupuncture) si disponible"]},
+    {j:"J2",tasks:["Rééval. score sevrage /4-6h","Ajustement BZD selon score","Hydratation, correction électrolytique","NADA J2","PHQ-9 + GAD-7 (baseline)","Entretien IDE d'accueil"]},
+    {j:"J3",tasks:["Rééval. sevrage","Début stabilisation pharmaco","NADA J3","1er entretien psychologue/TCC","Bilan social (AS si besoin)"]}
+  ]},
+  {phase:"STABILISATION",jours:"J4-J8",color:C.a[500],items:[
+    {j:"J4-J5",tasks:["Stabilisation sevrage (↓ BZD)","Introduction tt de fond anti-craving à J5","Bilan comorbidités psy","Début hypnose si indiquée","Début TCC craving / EM","Atelier psychoéducation (groupe)"]},
+    {j:"J5-J7",tasks:["tDCS si indiquée (5 séances/j × 5j)","TRV : début exposition graduée","Éval. TDAH si suspicion (ASRS) — pas avant J7","Dépistage TSPT (PCL-5), bipolarité (MDQ)","Rééval. bio à J7 si anomalies J1"]},
+    {j:"J8",tasks:["⭐ DÉCISION STAFF : tt de fond définitif","Éval. craving (VAS)","Si TDAH confirmé : discussion MPH/LDX","Discussion orientation : ambulatoire / post-cure / SSR","Lien structures d'aval (dossier pré-admission)"]}
+  ]},
+  {phase:"PRÉPARATION SORTIE",jours:"J9-J12",color:C.t[500],items:[
+    {j:"J9-J10",tasks:["Consolidation tt de fond","TRV : cue-exposure, skills training","Autohypnose : enseignement patient","Rédaction plan prévention rechute","tDCS consolidation si en cours","Préparation ordonnance sortie"]},
+    {j:"J11-J12",tasks:["Finalisation plan sortie","Remise fiche prévention rechute","Ordonnance + calendrier taper BZD si besoin","RDV suivi : addictologue J30, MT J7, psy si comorbidité","Distribution naloxone (opioïdes)","Coordonnées : CSAPA, CAARUD, AA/NA, 3114, ELSA","Courrier sortie → MT, addictologue, psy"]}
+  ]}
+];
+
+const ELSA = [
+  {title:"Sevrage OH aux urgences",motif:"Patient en sevrage alcoolique aux urgences",conduite:["Évaluer : Cushman ou CIWA-Ar","Cushman < 4 : surveillance, hydratation, thiamine PO","Cushman 4-7 : Diazépam 10 mg PO, rééval 1h, thiamine IV","Cushman ≥ 8 : Diazépam 10-20 mg IV, lit monitoré, thiamine IV 500 mg","DT ou convulsions : protocole urgence, avis réa","Systématique : glycémie, iono, Mg²⁺, BH, NFS","Orientation ELSA si hospit > 24h"]},
+  {title:"Patient sous TSO en chirurgie",motif:"Maintien TSO en péri-opératoire",conduite:["NE JAMAIS ARRÊTER LE TSO","Maintenir même posologie pendant hospitalisation","Si BHD : arrêt 8-12h avant chirurgie si morphiniques prévus","Si MTD : maintenir, fractionner, ajuster antalgiques (doses + élevées)","Associer antalgiques non opioïdes systématiquement","Contacter prescripteur TSO","Avis ELSA systématique"]},
+  {title:"Consommation découverte",motif:"Usage repéré en hospitalisation pour autre motif",conduite:["Repérage : AUDIT-C (OH), CAST (cannabis), DAST-10 (drogues)","Si + : intervention brève motivationnelle (5-10 min)","Évaluer substance, quantité, fréquence, ancienneté","Évaluer risque de sevrage si arrêt brutal","Proposer lien ELSA","Si refus : trace ORBIS + coordonnées CSAPA","Remise dépliant ELSA"]},
+  {title:"Gestion douleur + addiction",motif:"Patient douloureux avec ATCD/TUS actif",conduite:["La douleur DOIT être traitée y compris chez patients addicts","Privilégier non opioïdes (paracétamol, AINS, néfopam, ALR)","Si opioïdes nécessaires : doses titrées, fractionnées, durée min","Si sous TSO : cf. fiche TSO en chirurgie","Éviter tramadol/codéine si patient sous BHD","Évaluer craving et risque rechute","Avis ELSA pour co-gestion"]},
+  {title:"Liaison hépatologie",motif:"Patient hépato avec TUS",conduite:["Stéatopathie / hépatite OH : objectif arrêt, éval. addictologique","VHC chez UDIV : dépistage, AAD, RdRD","Pré-greffe : abstinence documentée (6 mois, discutée)","Pharmaco : acamprosate ou baclofène (éviter NTX si IH, éviter disulfiram)","Discussion conjointe hépato-addicto","Lien HAS 2024 : parcours hépatite C"]}
+];
+
+/* ══════════════════════ COMPONENTS ══════════════════════ */
+
+function Badge({children, color=C.t[500]}) {
+  return <span className="badge" style={{background:color+"20",color}}>{children}</span>;
+}
+
+function BackBtn({onClick}) {
+  return <button onClick={onClick} style={{display:"flex",alignItems:"center",gap:4,border:"none",background:"none",cursor:"pointer",color:C.t[600],fontWeight:600,fontSize:13,marginBottom:14,padding:0}}>
+    {I.chevL(C.t[600])} Retour
+  </button>;
+}
+
+function SectionHead({icon,title,sub}) {
+  return <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+    {icon && <div style={{width:40,height:40,borderRadius:12,background:C.n[800],display:"flex",alignItems:"center",justifyContent:"center"}}>{icon}</div>}
+    <div><div style={{fontSize:17,fontWeight:800,color:C.n[900]}}>{title}</div>{sub&&<div style={{fontSize:12,color:C.n[400]}}>{sub}</div>}</div>
+  </div>;
+}
+
+/* ─── SCORE CALCULATOR ─── */
+function ScoreCalc({scoreKey, onBack}) {
+  const sc = SCORES[scoreKey];
+  const [ans, setAns] = useState(Array(sc.items.length).fill(-1));
+  const total = ans.reduce((s,a,i) => s + (a>=0 ? sc.items[i].s[a] : 0), 0);
+  const done = ans.every(a=>a>=0);
+  const res = done ? sc.interp(total) : null;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.calc(C.t[300])} title={sc.name} sub={sc.sub}/>
+    {sc.items.map((it,i) => <div key={i} className="card" style={{padding:12,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>{i+1}. {it.n}</div>
+      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+        {it.o.map((opt,j)=><button key={j} className="btn-pill" onClick={()=>{const n=[...ans];n[i]=j;setAns(n);}}
+          style={ans[i]===j?{borderColor:C.t[500],background:C.t[50],color:C.t[700]}:{}}>
+          {opt} <span style={{opacity:.4,marginLeft:4}}>({it.s[j]})</span>
+        </button>)}
+      </div>
+    </div>)}
+    <div className="card" style={{padding:16,marginTop:12,borderWidth:2,borderColor:res?.c||C.bdr,position:"sticky",bottom:70}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div><div style={{fontSize:12,color:C.n[400]}}>Score total</div>
+        <div style={{fontSize:32,fontWeight:900,color:res?.c||C.n[800]}}>{total}</div></div>
+        {res && <Badge color={res.c}>{res.l}</Badge>}
+      </div>
+      {res && <div style={{fontSize:12,marginTop:8,padding:8,borderRadius:8,background:res.c+"10",color:C.n[800]}}>{res.a}</div>}
+      {!done && <div style={{fontSize:11,marginTop:6,color:C.n[400]}}>Répondez à toutes les questions</div>}
+      {done && <button onClick={()=>setAns(Array(sc.items.length).fill(-1))} style={{display:"flex",alignItems:"center",gap:4,border:"none",background:"none",cursor:"pointer",color:C.t[600],fontSize:12,marginTop:8,padding:0,fontWeight:600}}>
+        {I.reset(C.t[600])} Réinitialiser
+      </button>}
+    </div>
+  </div>;
+}
+
+/* ─── BZD CALCULATOR ─── */
+function BZDCalc({onBack}) {
+  const [sel, setSel] = useState(null);
+  const [dose, setDose] = useState("");
+  const dzp = sel!==null && dose ? (parseFloat(dose)/BZD_EQ[sel].eq)*10 : null;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.scale(C.t[300])} title="Convertisseur BZD" sub="Équivalences diazépam"/>
+    <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>BZD du patient :</div>
+      {BZD_EQ.map((b,i)=><button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:"#fff",marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
+        <span style={{fontWeight:600,color:C.n[800]}}>{b.nom}</span>
+        <span style={{fontSize:11,color:C.n[400]}}>t½ {b.t}</span>
+      </button>)}
+    </div>
+    {sel!==null && <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>Dose journalière (mg) :</div>
+      <input type="number" value={dose} onChange={e=>setDose(e.target.value)} placeholder="Ex: 30"
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],outline:"none"}}/>
+    </div>}
+    {dzp>0 && <div className="card" style={{padding:16,borderWidth:2,borderColor:dzp>40?C.r[500]:C.t[500]}}>
+      <div style={{fontSize:12,color:C.n[500]}}>Équivalent diazépam</div>
+      <div style={{fontSize:40,fontWeight:900,color:dzp>40?C.r[600]:C.t[600]}}>{dzp.toFixed(1)} mg/j</div>
+      {dzp>40 && <Badge color={C.r[600]}>Critère hospitalisation USCA (&gt;40 mg DZP-eq)</Badge>}
+      <div style={{marginTop:10,padding:10,borderRadius:8,background:C.n[50]}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[700]}}>Stratégie de sevrage :</div>
+        <div style={{fontSize:11,color:C.n[600],marginTop:2}}>{dzp<50?"Taper hyperbolique : -10% tous les 3-7 jours":"Taper lent : -5%/semaine + carbamazépine ou gabapentine"}</div>
+      </div>
+    </div>}
+  </div>;
+}
+
+/* ─── SUBSTANCE DETAIL ─── */
+function SubDetail({sKey, onBack}) {
+  const s = SUBSTANCES[sKey];
+  const [open, setOpen] = useState("sevrage");
+  const Sec = ({id,title,icon,children}) => <div className="card" style={{marginBottom:10,overflow:"hidden"}}>
+    <button className="section-btn" onClick={()=>setOpen(open===id?null:id)} style={{background:open===id?C.n[50]:"#fff"}}>
+      <div style={{display:"flex",alignItems:"center",gap:8}}>{icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{title}</span></div>
+      {open===id?I.chevD(C.n[400]):I.chevR(C.n[400])}
+    </button>
+    {open===id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>{children}</div>}
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+      <span style={{fontSize:36}}>{s.icon}</span>
+      <div>
+        <div style={{fontSize:20,fontWeight:900,color:C.n[900]}}>{s.name}</div>
+        <div style={{fontSize:11,padding:"3px 8px",borderRadius:99,background:C.r[100],color:C.r[700],display:"inline-block",marginTop:4}}>Hospit si : {s.critereHosp}</div>
+      </div>
+    </div>
+
+    <Sec id="sevrage" title="Sevrage J1-J4" icon={I.thermo(s.color)}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[700],marginBottom:8}}>{s.sevrageJ1J4.title}</div>
+      {s.sevrageJ1J4.details.map((d,i)=><div key={i} style={{padding:8,borderRadius:8,background:C.n[50],marginBottom:6}}>
+        <div style={{fontSize:11,fontWeight:800,color:s.color}}>{d.label}</div>
+        <div style={{fontSize:11,color:C.n[600]}}>{d.desc}</div>
+      </div>)}
+    </Sec>
+
+    <Sec id="decision" title="Décision J8 (Staff)" icon={I.star(s.color)}>
+      <div style={{padding:10,borderRadius:8,background:C.a[50],border:`1px solid ${C.a[200]}`,fontSize:13,color:C.n[800]}}>{s.decisionJ8}</div>
+    </Sec>
+
+    <Sec id="tt" title="Traitements de fond" icon={I.pill(s.color)}>
+      {s.traitements.map((t,i)=><div key={i} style={{padding:10,borderRadius:10,border:`1px solid ${C.bdr}`,marginBottom:8}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
+          <div><span style={{fontSize:13,fontWeight:800,color:C.n[900]}}>{t.mol}</span><span style={{fontSize:11,color:C.n[400],marginLeft:6}}>({t.marque})</span></div>
+          <Badge color={t.amm==="AMM"?C.t[600]:C.a[600]}>{t.amm}</Badge>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:4}}>
+          <div style={{fontSize:11}}><b style={{color:C.n[600]}}>Poso : </b><span style={{color:C.n[800]}}>{t.poso}</span></div>
+          <div style={{fontSize:11}}><b style={{color:C.n[600]}}>Début : </b><span style={{color:C.n[800]}}>{t.debut}</span></div>
+        </div>
+        <div style={{fontSize:11,marginTop:3}}><b style={{color:C.n[600]}}>Ind : </b>{t.ind}</div>
+        <div style={{fontSize:11,marginTop:2}}><b style={{color:C.r[500]}}>CI : </b><span style={{color:C.n[600]}}>{t.ci}</span></div>
+        <div style={{marginTop:4}}><Badge color={t.np==="A"?C.t[600]:t.np==="B"?C.a[500]:C.n[400]}>Preuve : {t.np}</Badge></div>
+      </div>)}
+    </Sec>
+
+    <Sec id="np" title="Approches non pharmaco" icon={I.heart(s.color)}>
+      {s.nonPharma.map((np,i)=><div key={i} style={{padding:8,borderRadius:8,background:np.type.includes("tDCS")?C.a[50]:C.t[50],marginBottom:6}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+          <span style={{fontSize:11,fontWeight:800,color:np.type.includes("tDCS")?C.a[700]:C.t[700]}}>{np.type.includes("tDCS")?"⚡ ":""}{np.type}</span>
+          <Badge color={C.t[600]}>{np.timing}</Badge>
+        </div>
+        <div style={{fontSize:11,color:C.n[600]}}>{np.ind}</div>
+      </div>)}
+    </Sec>
+
+    <Sec id="rf" title="Red flags" icon={I.alert(C.r[500])}>
+      {s.redFlags.map((rf,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:8,borderRadius:8,background:C.r[100],marginBottom:4}}>
+        {I.alertCircle(C.r[600])}
+        <span style={{fontSize:12,fontWeight:600,color:C.r[700]}}>{rf}</span>
+      </div>)}
+    </Sec>
+  </div>;
+}
+
+/* ─── INTERACTIONS ─── */
+function InterCheck({onBack}) {
+  const allD = [...new Set(INTERACTIONS.flatMap(i=>[i.d1,i.d2]))].sort();
+  const [sel, setSel] = useState([]);
+  const [q, setQ] = useState("");
+  const toggle = d => setSel(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);
+  const found = INTERACTIONS.filter(i=>(sel.includes(i.d1)&&sel.includes(i.d2))||(sel.includes(i.d2)&&sel.includes(i.d1)));
+  const filt = q ? allD.filter(d=>d.toLowerCase().includes(q.toLowerCase())) : allD;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.alert(C.t[300])} title="Interactions" sub="Sélectionnez les traitements"/>
+    <div style={{position:"relative",marginBottom:10}}>
+      <div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)"}}>{I.search(C.n[400])}</div>
+      <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..." style={{width:"100%",paddingLeft:34,paddingRight:12,paddingTop:10,paddingBottom:10,border:`1px solid ${C.bdr}`,borderRadius:10,fontSize:13,outline:"none"}}/>
+    </div>
+    <div className="card" style={{padding:10,marginBottom:14}}>
+      <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+        {filt.map(d=><button key={d} className={`btn-pill ${sel.includes(d)?'active':''}`} onClick={()=>toggle(d)}>
+          {sel.includes(d)&&<span style={{marginRight:3}}>✓</span>}{d}
+        </button>)}
+      </div>
+    </div>
+    {sel.length>=2 && <div>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[700],marginBottom:8}}>{found.length} interaction(s)</div>
+      {found.length===0 && <div className="card" style={{padding:14,borderColor:C.t[400]}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>{I.checkCircle(C.t[500])}<span style={{fontSize:13,color:C.t[700]}}>Pas d'interaction critique identifiée</span></div>
+      </div>}
+      {found.map((inter,i)=><div key={i} className="card" style={{padding:12,marginBottom:8,borderLeftWidth:4,borderLeftColor:inter.sev==="grave"?C.r[500]:C.a[500]}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+          <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{inter.d1} + {inter.d2}</span>
+          <Badge color={inter.sev==="grave"?C.r[600]:C.a[600]}>{inter.sev==="grave"?"⚠️ GRAVE":"Modérée"}</Badge>
+        </div>
+        <div style={{fontSize:12,color:C.n[600]}}>{inter.desc}</div>
+      </div>)}
+    </div>}
+  </div>;
+}
+
+/* ─── SEJOUR ─── */
+function SejourView({onBack}) {
+  const [op, setOp] = useState(0);
+  const [chk, setChk] = useState({});
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.calendar(C.t[300])} title="Séjour J1-J12" sub="Timeline & checklist"/>
+    {SEJOUR.map((ph,pi)=><div key={pi} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+      <button className="section-btn" onClick={()=>setOp(op===pi?-1:pi)} style={{background:ph.color+"15"}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{width:10,height:10,borderRadius:99,background:ph.color}}/>
+          <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{ph.phase}</span>
+          <Badge color={ph.color}>{ph.jours}</Badge>
+        </div>
+        {op===pi?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {op===pi && <div style={{padding:12}}>
+        {ph.items.map((day,di)=><div key={di} style={{marginBottom:12}}>
+          <span style={{fontSize:11,fontWeight:800,padding:"3px 8px",borderRadius:6,background:ph.color+"20",color:ph.color}}>{day.j}</span>
+          <div style={{marginTop:6,marginLeft:4}}>
+            {day.tasks.map((task,ti)=>{
+              const k=`${pi}-${di}-${ti}`;
+              return <div key={ti} onClick={()=>setChk(p=>({...p,[k]:!p[k]}))} style={{display:"flex",alignItems:"flex-start",gap:8,padding:6,borderRadius:6,cursor:"pointer"}}>
+                <div className={`check-box ${chk[k]?'checked':''}`} style={{marginTop:1}}>{chk[k]&&I.check("#fff")}</div>
+                <span style={{fontSize:12,color:C.n[700],textDecoration:chk[k]?"line-through":"none",opacity:chk[k]?.5:1}}>{task}</span>
+              </div>;
+            })}
+          </div>
+        </div>)}
+      </div>}
+    </div>)}
+  </div>;
+}
+
+/* ─── ELSA ─── */
+function ELSAView({onBack}) {
+  const [op, setOp] = useState(null);
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.steth(C.t[300])} title="ELSA — Fiches réflexes" sub="Liaison Addictologie"/>
+    {ELSA.map((f,i)=><div key={i} className="card" style={{marginBottom:8,overflow:"hidden"}}>
+      <button className="section-btn" onClick={()=>setOp(op===i?null:i)}>
+        <div style={{textAlign:"left"}}><div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.title}</div><div style={{fontSize:11,color:C.n[400]}}>{f.motif}</div></div>
+        {op===i?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {op===i && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>
+        {f.conduite.map((c,j)=><div key={j} style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:6}}>
+          <span style={{width:22,height:22,borderRadius:99,background:C.t[100],color:C.t[700],fontSize:11,fontWeight:800,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{j+1}</span>
+          <span style={{fontSize:12,color:C.n[700]}}>{c}</span>
+        </div>)}
+      </div>}
+    </div>)}
+    <div className="card" style={{padding:14,background:C.n[50],marginTop:8}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:6}}>Scores repérage rapide ELSA</div>
+      {[["AUDIT-C","alcool","≥ 4 (H) / ≥ 3 (F) → usage à risque"],["CAST","cannabis","≥ 2 → interv. brève. ≥ 3 → addictologie"],["DAST-10","drogues","≥ 3 → usage problématique. ≥ 6 → dépendance"],["Fagerström","tabac","≥ 7 → dépendance forte"]].map(([n,s,d],i)=>
+        <div key={i} style={{fontSize:12,color:C.n[600],marginBottom:3}}><b>{n}</b> ({s}) : {d}</div>)}
+    </div>
+  </div>;
+}
+
+/* ─── COMORBIDITES ─── */
+function ComorView({onBack}) {
+  const [op, setOp] = useState("diff");
+  const secs = [
+    {id:"diff",title:"Trouble induit vs primaire",icon:I.brain(C.t[600]),content:
+      <div>
+        <div style={{padding:10,borderRadius:8,background:C.t[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.t[700]}}>Trouble INDUIT</div><div style={{fontSize:11,color:C.n[600]}}>Apparaît pendant intoxication/sevrage. Résolution 2-4 sem abstinence. Pas d'ATCD avant consommations</div></div>
+        <div style={{padding:10,borderRadius:8,background:C.a[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>Trouble PRIMAIRE</div><div style={{fontSize:11,color:C.n[600]}}>Précède les consommations. Persiste après 4 sem abstinence. ATCD familiaux. Sémiologie typique</div></div>
+        <div style={{padding:10,borderRadius:8,background:C.n[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.n[700]}}>Pathologie DUALE</div><div style={{fontSize:11,color:C.n[600]}}>Coexistence des deux troubles. Interaction mutuelle. Traitement intégré simultané</div></div>
+        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.a[300]}`,fontSize:11}}><b style={{color:C.a[700]}}>⏱️ Règle pratique :</b> <span style={{color:C.n[600]}}>Réévaluer à 2-4 sem post-sevrage avant diagnostic définitif de trouble primaire</span></div>
+      </div>},
+    {id:"tdah",title:"TDAH + Addiction",icon:I.zap(C.t[600]),content:
+      <div>
+        <div style={{padding:10,borderRadius:8,background:C.a[50],marginBottom:8}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>Quand évaluer ?</div><div style={{fontSize:11,color:C.n[600]}}>Pas avant J7-J14 de sevrage (symptômes miment le TDAH)</div></div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Outils :</div>
+        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>• ASRS v1.1 (dépistage 6 items) • DIVA 2.0 (gold standard) • WURS (enfance) • Anamnèse enfance ++</div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Traitement :</div>
+        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.bdr}`,fontSize:11,color:C.n[600]}}>
+          <b>1ère int :</b> Méthylphénidate LP 18-54 mg/j (titration 4-6 sem)<br/>
+          <b>2ème int :</b> Lisdexamfétamine 30-70 mg/j<br/>
+          <span style={{color:C.r[600]}}><b>Précautions :</b> Risque mésusage (faible avec LP). Surv. CV. CI relative si stimulants actifs. PIH</span>
+        </div>
+      </div>},
+    {id:"tspt",title:"TSPT + Addiction",icon:I.shield(C.t[600]),content:
+      <div>
+        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>Prévalence TSPT chez TUS : 25-50%. Auto-médication fréquente</div>
+        <div style={{padding:10,borderRadius:8,background:C.n[50],marginBottom:8}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[700]}}>Séquençage :</div>
+          <div style={{fontSize:11,color:C.n[600]}}>1. Stabilisation addictologique → 2. Traitement intégré simultané (meilleurs résultats) → 3. Pas d'EMDR en sevrage aigu</div>
+        </div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Pharmaco :</div>
+        <div style={{fontSize:11,color:C.n[600]}}>• Sertraline 50-200 mg — 1ère int TSPT+TUS<br/>• Venlafaxine 75-225 mg — 2ème int<br/>• Prazosine 1-15 mg coucher — cauchemars<br/>• Dépistage : PCL-5 ≥ 33 → TSPT probable</div>
+      </div>},
+    {id:"humeur",title:"Troubles de l'humeur",icon:I.trend(C.t[600]),content:
+      <div>
+        <div style={{padding:8,borderRadius:8,background:C.a[50],marginBottom:8}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>EDC induit vs primaire</div><div style={{fontSize:11,color:C.n[600]}}>PHQ-9 à J1 puis J14. Si ≥ 10 persistant à J14 → EDC probable, AD</div></div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Choix AD :</div>
+        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>• Sertraline 50-200 mg — 1ère int<br/>• Vortioxétine 10-20 mg — profil procognitif<br/>• Venlafaxine 75-225 mg — 2ème int, si TAG<br/>• Éviter tricycliques et IMAO</div>
+        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.r[500]}`,fontSize:11}}><b style={{color:C.r[600]}}>Bipolarité :</b> <span style={{color:C.n[600]}}>Toujours dépister (MDQ) avant AD seul → risque virage maniaque</span></div>
+      </div>}
+  ];
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.brain(C.t[300])} title="Comorbidités psy" sub="Double diagnostic"/>
+    {secs.map(s=><div key={s.id} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+      <button className="section-btn" onClick={()=>setOp(op===s.id?null:s.id)} style={{background:op===s.id?C.n[50]:"#fff"}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>{s.icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{s.title}</span></div>
+        {op===s.id?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {op===s.id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>{s.content}</div>}
+    </div>)}
+  </div>;
+}
+
+/* ─── ADMISSION ─── */
+function AdmView({onBack}) {
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.building(C.t[300])} title="Admission & Orientation"/>
+    <div className="card" style={{padding:14,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:8}}>Critères admission USCA</div>
+      {["Sevrage nécessitant surveillance médicale","Échec sevrage ambulatoire","Comorbidités psy intégrées","Polyconsommations complexes","Introduction tt sous surveillance","Bilan addictologique (TDAH…)","Préparation orientation post-cure"].map((c,i)=>
+        <div key={i} style={{display:"flex",alignItems:"flex-start",gap:6,marginBottom:4}}>{I.checkCircle(C.t[500])}<span style={{fontSize:12,color:C.n[700]}}>{c}</span></div>)}
+    </div>
+    <div className="card" style={{padding:14}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:10}}>Orientation post-sortie</div>
+      {[{t:"Ambulatoire",d:"CSAPA, CMP, addictologue ville, HDJ",c:"Autonome, soutien social, objectif clair"},
+        {t:"Post-cure (SSR addictologie)",d:"Épinettes, Montevideo, G. Raby, CALME, Concorde, Abbaye",c:"Rechute précoce, vulnérabilité sociale → app pré-admission"},
+        {t:"SSR polyvalent",d:"SSR non spécialisé",c:"Comorbidité somatique + suivi addicto"},
+        {t:"HDJ addictologie",d:"Hôpital de jour",c:"Suivi intensif ambulatoire, TCC, prévention rechute"},
+        {t:"Réhospitalisation USCA",d:"Nouveau séjour programmé",c:"Rechute installée, réajustement thérapeutique"}
+      ].map((o,i)=><div key={i} style={{padding:10,borderRadius:10,border:`1px solid ${C.bdr}`,marginBottom:8}}>
+        <div style={{fontSize:13,fontWeight:800,color:C.t[700]}}>{o.t}</div>
+        <div style={{fontSize:11,color:C.n[500]}}>{o.d}</div>
+        <div style={{fontSize:11,color:C.n[700],marginTop:3}}><b>Critères :</b> {o.c}</div>
+      </div>)}
+    </div>
+  </div>;
+}
+
+/* ─── FEEDBACK ─── */
+function FeedbackView({onBack}) {
+  const MODULES = ["Prescription/Substance","Séjour J1-J12","Scores","Interactions","Comorbidités psy","ELSA","Admission/Orientation","Convertisseur BZD","Général / Autre"];
+  const TYPES = [{id:"bug",label:"🐛 Bug / Erreur",desc:"Quelque chose ne marche pas"},{id:"content",label:"📝 Correction contenu",desc:"Posologie, protocole, CI inexacte"},{id:"feature",label:"💡 Suggestion",desc:"Nouvelle fonctionnalité ou amélioration"},{id:"ux",label:"🎨 Ergonomie",desc:"Navigation, lisibilité, design"}];
+  const PRIORITIES = ["Faible","Normale","Haute","Urgente"];
+
+  const [type, setType] = useState(null);
+  const [mod, setMod] = useState(null);
+  const [prio, setPrio] = useState(1);
+  const [desc, setDesc] = useState("");
+  const [from, setFrom] = useState("");
+  const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const buildFeedback = () => {
+    const lines = [
+      "═══ USCA FEEDBACK ═══",
+      `Date: ${new Date().toLocaleDateString('fr-FR')} ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`,
+      `Type: ${TYPES.find(t=>t.id===type)?.label || "—"}`,
+      `Module: ${mod || "—"}`,
+      `Priorité: ${PRIORITIES[prio]}`,
+      `De: ${from || "Anonyme"}`,
+      "───────────────────",
+      desc,
+      "═══════════════════"
+    ];
+    return lines.join("\n");
+  };
+
+  const feedbackText = buildFeedback();
+
+  const handleEmail = () => {
+    const subject = encodeURIComponent(`Feedback USCA Toolbox — ${TYPES.find(t=>t.id===type)?.label||""} — ${mod||"Général"}`);
+    const body = encodeURIComponent(feedbackText);
+    window.location.href = `mailto:jc.luisada@gmail.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(feedbackText).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}).catch(()=>{
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = feedbackText;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      setCopied(true);setTimeout(()=>setCopied(false),2000);
+    });
+  };
+
+  if (sent) return <div className="fade-in">
+    <BackBtn onClick={()=>{setSent(false);onBack();}}/>
+    <div className="fb-sent">
+      <div style={{fontSize:48,marginBottom:12}}>✅</div>
+      <div style={{fontSize:18,fontWeight:800,color:C.n[900],marginBottom:8}}>Merci pour votre retour !</div>
+      <div style={{fontSize:13,color:C.n[500],marginBottom:20}}>Votre feedback sera traité pour améliorer l'application.</div>
+      <button onClick={()=>{setSent(false);setType(null);setMod(null);setDesc("");setFrom("");}} style={{padding:"10px 20px",border:`2px solid ${C.t[500]}`,borderRadius:10,background:"transparent",color:C.t[600],fontWeight:700,fontSize:13,cursor:"pointer"}}>Envoyer un autre feedback</button>
+    </div>
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.msgSquare(C.t[300])} title="Feedback" sub="Aidez-nous à améliorer l'app"/>
+
+    {/* Type */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Type de retour</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+        {TYPES.map(t=><button key={t.id} className={`fb-tag ${type===t.id?'sel':''}`} onClick={()=>setType(t.id)} style={{textAlign:"left",padding:10}}>
+          <div style={{fontSize:13,fontWeight:700}}>{t.label}</div>
+          <div style={{fontSize:10,color:C.n[500],marginTop:2}}>{t.desc}</div>
+        </button>)}
+      </div>
+    </div>
+
+    {/* Module */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Module concerné</div>
+      <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+        {MODULES.map(m=><button key={m} className={`fb-tag ${mod===m?'sel':''}`} onClick={()=>setMod(m)}>{m}</button>)}
+      </div>
+    </div>
+
+    {/* Priority */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Priorité</div>
+      <div style={{display:"flex",gap:5}}>
+        {PRIORITIES.map((p,i)=><button key={p} className={`fb-tag ${prio===i?'sel':''}`} onClick={()=>setPrio(i)}
+          style={prio===i&&i===3?{borderColor:C.r[500],background:C.r[100],color:C.r[700]}:{}}>
+          {i===3?"🔴 ":""}{p}
+        </button>)}
+      </div>
+    </div>
+
+    {/* Description */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Description</div>
+      <textarea className="fb-textarea" value={desc} onChange={e=>setDesc(e.target.value)}
+        placeholder="Décrivez le bug, l'erreur de contenu, ou votre suggestion...&#10;&#10;Si correction de contenu : précisez la molécule, la posologie actuelle et la correction proposée."/>
+    </div>
+
+    {/* From */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Votre nom <span style={{fontWeight:400,color:C.n[400]}}>(optionnel)</span></div>
+      <input className="fb-input" value={from} onChange={e=>setFrom(e.target.value)} placeholder="Dr. Dupont, Interne X..."/>
+    </div>
+
+    {/* Preview */}
+    {(type && desc.length > 5) && <div className="card" style={{padding:14,marginBottom:10,background:C.n[50]}}>
+      <div style={{fontSize:11,fontWeight:700,color:C.n[500],marginBottom:6}}>APERÇU DU FEEDBACK</div>
+      <pre style={{fontSize:11,color:C.n[700],whiteSpace:"pre-wrap",fontFamily:"inherit",lineHeight:1.5}}>{feedbackText}</pre>
+    </div>}
+
+    {/* Actions */}
+    <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
+      <button className="fb-submit" onClick={handleEmail}
+        disabled={!type||!desc.trim()}
+        style={{opacity:(!type||!desc.trim())?0.4:1,cursor:(!type||!desc.trim())?"not-allowed":"pointer"}}>
+        {I.send("#fff")} &nbsp;Envoyer par email
+      </button>
+      {(type && desc.length > 5) && <button onClick={handleCopy}
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[500]}`,borderRadius:12,background:"transparent",color:C.t[600],fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"inherit",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+        {copied ? <span>✅ Copié !</span> : <span>{I.copy(C.t[600])} Copier le texte (pour WhatsApp, Slack…)</span>}
+      </button>}
+    </div>
+
+    {/* Help */}
+    <div className="card" style={{padding:12,background:C.a[50]}}>
+      <div style={{fontSize:11,fontWeight:700,color:C.a[700],marginBottom:4}}>💡 Comment est traité votre feedback</div>
+      <div style={{fontSize:11,color:C.n[600]}}>
+        Votre retour est envoyé par email structuré. Il sera directement utilisé pour mettre à jour l'application (correction de contenu, ajout de fonctionnalité, correction de bug). Les mises à jour sont déployées en quelques minutes.
+      </div>
+    </div>
+  </div>;
+}
+
+/* ══════════════════════ MAIN APP ══════════════════════ */
+function App() {
+  const [view, setView] = useState("home");
+  const [selSub, setSelSub] = useState(null);
+  const [selScore, setSelScore] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setInstallPrompt(e); };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const nav = (v) => { setView(v); setSelSub(null); setSelScore(null); setMenuOpen(false); window.scrollTo(0,0); };
+
+  const navItems = [
+    {id:"home",label:"Accueil",icon:I.home},
+    {id:"substances",label:"Prescription",icon:I.pill},
+    {id:"sejour",label:"Séjour",icon:I.calendar},
+    {id:"scores",label:"Scores",icon:I.calc},
+    {id:"more",label:"Plus",icon:I.menu}
+  ];
+
+  const moreItems = [
+    {id:"comorbidites",label:"Comorbidités psy",icon:I.brain},
+    {id:"interactions",label:"Interactions",icon:I.alert},
+    {id:"admission",label:"Admission & Orientation",icon:I.building},
+    {id:"elsa",label:"ELSA",icon:I.steth},
+    {id:"bzdcalc",label:"Convertisseur BZD",icon:I.scale},
+    {id:"feedback",label:"💬 Feedback",icon:I.msgSquare}
+  ];
+
+  const renderContent = () => {
+    if (selSub) return <SubDetail sKey={selSub} onBack={()=>setSelSub(null)}/>;
+    if (selScore) return <ScoreCalc scoreKey={selScore} onBack={()=>setSelScore(null)}/>;
+    switch(view) {
+      case "home": return <div className="fade-in">
+        <div style={{marginBottom:20}}>
+          <h1 style={{fontSize:26,fontWeight:900,color:C.n[900],letterSpacing:"-0.5px"}}>USCA Assistant <span style={{fontSize:13,fontWeight:400,color:C.n[400]}}>v 0.9.01</span></h1>
+          <p style={{fontSize:13,color:C.n[400],marginTop:2}}>Pitié-Salpêtrière — Addictologie</p>
+        </div>
+
+        {installPrompt && <div className="install-banner">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div><div style={{fontSize:12,fontWeight:700,opacity:.7}}>📱 INSTALLER L'APP</div><div style={{fontSize:13,marginTop:4}}>Ajouter à l'écran d'accueil pour un accès hors-ligne</div></div>
+            <button onClick={()=>{installPrompt.prompt();setInstallPrompt(null);}} style={{padding:"8px 16px",borderRadius:10,border:"none",background:C.t[500],color:"#fff",fontWeight:700,fontSize:12,cursor:"pointer"}}>Installer</button>
+          </div>
+        </div>}
+
+        <div className="grid-2" style={{marginBottom:20}}>
+          {[{l:"Prescription",i:I.pill,v:"substances",c:C.t[600]},{l:"Séjour J1-J12",i:I.calendar,v:"sejour",c:C.a[600]},{l:"Scores",i:I.calc,v:"scores",c:C.n[600]},{l:"Interactions",i:I.alert,v:"interactions",c:C.r[500]},{l:"Comorbidités",i:I.brain,v:"comorbidites",c:C.t[700]},{l:"ELSA",i:I.steth,v:"elsa",c:C.n[500]}].map(item=>
+            <div key={item.v} className="card card-tap" style={{padding:14}} onClick={()=>nav(item.v)}>
+              {item.i(item.c, 24)}
+              <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginTop:8}}>{item.l}</div>
+            </div>)}
+        </div>
+
+        <div className="card" style={{padding:16,marginBottom:14,background:`linear-gradient(135deg,${C.n[800]},${C.n[900]})`}}>
+          <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,.6)"}}>DÉCISION RAPIDE — MATRICE TRANSVERSALE</div>
+          <div style={{fontSize:13,color:"#fff",marginTop:8}}>Sélectionnez une substance pour le protocole complet</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
+            {Object.entries(SUBSTANCES).map(([k,s])=><button key={k} onClick={()=>{setView("substances");setSelSub(k);}} style={{padding:"6px 10px",borderRadius:8,border:"none",background:"rgba(255,255,255,.15)",color:"#fff",fontSize:12,fontWeight:600,cursor:"pointer"}}>{s.icon} {s.name}</button>)}
+          </div>
+        </div>
+
+
+        <div className="card card-tap" onClick={()=>nav("feedback")} style={{padding:14,marginTop:12,display:"flex",alignItems:"center",gap:12,borderColor:C.t[300]}}>
+          {I.msgSquare(C.t[500],20)}
+          <div>
+            <div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>Feedback</div>
+            <div style={{fontSize:11,color:C.n[400]}}>Bug, suggestion, correction → aidez-nous à améliorer l'app</div>
+          </div>
+          {I.chevR(C.n[300])}
+        </div>
+      </div>;
+
+      case "substances": return <div className="fade-in">
+        <SectionHead icon={I.pill(C.t[300])} title="Prescription par substance"/>
+        {Object.entries(SUBSTANCES).map(([k,s])=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelSub(k)}>
+          <div style={{display:"flex",alignItems:"center",gap:12}}>
+            <span style={{fontSize:28}}>{s.icon}</span>
+            <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{s.name}</div><div style={{fontSize:11,color:C.n[400]}}>{s.traitements.length} tt de fond</div></div>
+          </div>
+          {I.chevR(C.n[300])}
+        </div>)}
+      </div>;
+
+      case "sejour": return <SejourView onBack={()=>nav("home")}/>;
+
+      case "scores": return <div className="fade-in">
+        <SectionHead icon={I.calc(C.t[300])} title="Scores & Calculateurs"/>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>SEVRAGE</div>
+        {["cushman","cows"].map(k=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore(k)}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{SCORES[k].name}</div><div style={{fontSize:11,color:C.n[400]}}>{SCORES[k].sub}</div></div>
+          {I.chevR(C.n[300])}
+        </div>)}
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>REPÉRAGE</div>
+        <div className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore("audit")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>AUDIT</div><div style={{fontSize:11,color:C.n[400]}}>Alcool (10 items)</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>PSYCHIATRIE</div>
+        {["phq9","gad7"].map(k=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore(k)}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{SCORES[k].name}</div><div style={{fontSize:11,color:C.n[400]}}>{SCORES[k].sub}</div></div>
+          {I.chevR(C.n[300])}
+        </div>)}
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>OUTILS</div>
+        <div className="card card-tap" style={{padding:12,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("bzdcalc")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Convertisseur BZD</div><div style={{fontSize:11,color:C.n[400]}}>Équivalences diazépam + stratégie taper</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+      </div>;
+
+      case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
+      case "comorbidites": return <ComorView onBack={()=>nav("home")}/>;
+      case "elsa": return <ELSAView onBack={()=>nav("home")}/>;
+      case "admission": return <AdmView onBack={()=>nav("home")}/>;
+      case "bzdcalc": return <BZDCalc onBack={()=>nav("scores")}/>;
+      case "feedback": return <FeedbackView onBack={()=>nav("home")}/>;
+    }
+  };
+
+  return <div>
+    {/* Top bar */}
+    <div className="top-bar">
+      <div style={{display:"flex",alignItems:"center",gap:8}}>
+        <div style={{width:30,height:30,borderRadius:8,background:C.n[800],display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[300])}</div>
+        <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>USCA</span>
+      </div>
+      <span style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière</span>
+    </div>
+
+    {/* Content */}
+    <div className="content">{renderContent()}</div>
+
+    {/* More menu */}
+    {menuOpen && <div className="more-overlay" onClick={()=>setMenuOpen(false)}>
+      <div className="more-menu" onClick={e=>e.stopPropagation()}>
+        {moreItems.map(item=><button key={item.id} className="more-item" onClick={()=>nav(item.id)}>
+          {item.icon(C.t[600],18)}<span>{item.label}</span>
+        </button>)}
+      </div>
+    </div>}
+
+    {/* Bottom nav */}
+    <div className="bottom-nav">
+      <div className="bottom-nav-inner">
+        {navItems.map(item=>{
+          const act = item.id==="more"?menuOpen:(item.id===view||(item.id==="substances"&&selSub));
+          return <button key={item.id} className="nav-btn" onClick={()=>item.id==="more"?setMenuOpen(!menuOpen):nav(item.id)} style={{color:act?C.t[600]:C.n[400]}}>
+            {item.icon(act?C.t[600]:C.n[400])}
+            <span>{item.label}</span>
+          </button>;
+        })}
+      </div>
+    </div>
+  </div>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+<script>
+// Mode embarqué : masquer la navigation V1 quand chargé dans l'iframe staff
+if (new URLSearchParams(window.location.search).has('embedded')) {
+  const style = document.createElement('style');
+  style.textContent = '.bottom-nav, .top-bar { display: none !important; } .content { padding-top: 8px; padding-bottom: 16px; }';
+  document.head.appendChild(style);
+}
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
+}
+</script>
+</body>
+</html>

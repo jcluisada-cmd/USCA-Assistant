@@ -1,10 +1,21 @@
 const CACHE_NAME = 'usca-v2.0';
 
-// Fichiers locaux uniquement — pré-cachés à l'installation
+// Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
   './',
   './index.html',
+  './staff/',
+  './staff/index.html',
+  './staff/toolbox.html',
+  './patient/',
+  './patient/index.html',
   './manifest.json'
+];
+
+// Domaines à ne jamais cacher (API, temps réel)
+const NETWORK_ONLY = [
+  'supabase.co',
+  '/api/slack'
 ];
 
 // ── INSTALL : cache les fichiers locaux ──
@@ -27,19 +38,24 @@ self.addEventListener('activate', e => {
 
 // ── FETCH : stratégie différente selon le type de requête ──
 self.addEventListener('fetch', e => {
+  const url = e.request.url;
 
-  // NAVIGATION (lancement PWA, clic sur lien) → Network first, cache fallback
+  // Requêtes API/Realtime → toujours réseau, jamais de cache
+  if (NETWORK_ONLY.some(domain => url.includes(domain))) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+
+  // NAVIGATION (pages HTML) → Network first, cache fallback
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request)
         .then(resp => {
-          // Mettre à jour le cache avec la version réseau
           const clone = resp.clone();
           caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
           return resp;
         })
         .catch(() =>
-          // Hors-ligne : servir depuis le cache
           caches.match(e.request)
             .then(r => r || caches.match('./index.html'))
             .then(r => r || caches.match('./'))
@@ -48,7 +64,7 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // AUTRES REQUÊTES (scripts, CSS, fonts) → Cache first, network fallback
+  // AUTRES REQUÊTES (scripts, CSS, fonts, CDN) → Cache first, network fallback
   e.respondWith(
     caches.match(e.request).then(r => {
       if (r) return r;

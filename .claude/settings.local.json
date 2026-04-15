@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\staff\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\patient\")",
+      "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\shared\")"
+    ]
+  }
+}

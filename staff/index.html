@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="../manifest.json">
+<title>USCA Connect — Espace Soignant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .toolbox-frame { width: 100%; border: none; height: calc(100vh - 120px); height: calc(100dvh - 120px); }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- Top bar -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2.5">
+      <a href="../" class="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </a>
+      <span class="text-sm font-extrabold text-slate-800">USCA Connect</span>
+      <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">Staff</span>
+    </div>
+    <span class="text-xs text-slate-400">Pitié-Salpêtrière</span>
+  </header>
+
+  <!-- Contenu des onglets -->
+  <main class="flex-1 overflow-hidden">
+
+    <!-- Dashboard -->
+    <div id="panel-dashboard" class="tab-panel active">
+      <div class="p-6 max-w-2xl mx-auto">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Dashboard</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Carte chambres -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+            <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-slate-800">—</p>
+            <p class="text-xs text-slate-500 mt-1">Patients hospitalisés</p>
+          </div>
+          <!-- Carte alertes -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+            <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-slate-800">—</p>
+            <p class="text-xs text-slate-500 mt-1">Alertes non traitées</p>
+          </div>
+          <!-- Carte groupes -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+            <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-slate-800">—</p>
+            <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
+          </div>
+          <!-- Carte config -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-slate-800">—</p>
+            <p class="text-xs text-slate-500 mt-1">Séjours en cours</p>
+          </div>
+        </div>
+        <div class="mt-6 bg-indigo-50 border border-indigo-100 rounded-xl p-4 text-center">
+          <p class="text-sm text-indigo-700 font-medium">Phase 1 — Fondation</p>
+          <p class="text-xs text-indigo-500 mt-1">Le dashboard sera connecté à Supabase en Phase 3</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toolbox (iframe V1) -->
+    <div id="panel-toolbox" class="tab-panel">
+      <iframe id="toolbox-iframe" class="toolbox-frame" title="USCA Toolbox"></iframe>
+    </div>
+
+    <!-- Alertes -->
+    <div id="panel-alertes" class="tab-panel">
+      <div class="p-6 max-w-2xl mx-auto">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Alertes</h2>
+        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+          <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          </div>
+          <p class="text-sm text-slate-500">Les alertes temps réel seront disponibles en Phase 7</p>
+          <p class="text-xs text-slate-400 mt-2">Supabase Realtime + notifications</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Groupes -->
+    <div id="panel-groupes" class="tab-panel">
+      <div class="p-6 max-w-2xl mx-auto">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
+        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+          <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p class="text-sm text-slate-500">La gestion des groupes sera disponible en Phase 6</p>
+          <p class="text-xs text-slate-400 mt-2">Présence, horaires, participants</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Config -->
+    <div id="panel-config" class="tab-panel">
+      <div class="p-6 max-w-2xl mx-auto">
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Configuration patients</h2>
+        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+          <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <p class="text-sm text-slate-500">La configuration sera disponible en Phase 6</p>
+          <p class="text-xs text-slate-400 mt-2">Programmes, chambres, templates</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom navigation -->
+  <nav class="sticky bottom-0 bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-50">
+    <div class="flex justify-around max-w-lg mx-auto">
+      <button data-tab="dashboard" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Dashboard</span>
+      </button>
+      <button data-tab="toolbox" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
+      </button>
+      <button data-tab="alertes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Alertes</span>
+      </button>
+      <button data-tab="groupes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
+      </button>
+      <button data-tab="config" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Config</span>
+      </button>
+    </div>
+  </nav>
+
+<script>
+// Navigation par onglets
+const tabs = document.querySelectorAll('.nav-tab');
+const panels = document.querySelectorAll('.tab-panel');
+let toolboxLoaded = false;
+
+function switchTab(tabId) {
+  // Masquer tous les panels
+  panels.forEach(p => p.classList.remove('active'));
+  // Désactiver tous les boutons
+  tabs.forEach(t => {
+    t.classList.remove('text-indigo-600');
+    t.classList.add('text-slate-400');
+  });
+  // Activer le panel cible
+  const panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+  // Activer le bouton
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  if (btn) {
+    btn.classList.add('text-indigo-600');
+    btn.classList.remove('text-slate-400');
+  }
+  // Charger l'iframe Toolbox au premier clic (lazy loading)
+  if (tabId === 'toolbox' && !toolboxLoaded) {
+    document.getElementById('toolbox-iframe').src = 'toolbox.html?embedded=true';
+    toolboxLoaded = true;
+  }
+}
+
+tabs.forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
+}
+</script>
+</body>
+</html>
