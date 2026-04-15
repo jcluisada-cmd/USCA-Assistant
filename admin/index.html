@@ -1117,7 +1117,7 @@ document.getElementById('btn-save-compte').addEventListener('click', async funct
   this.disabled = true;
   this.textContent = 'Création...';
 
-  var email = id.includes('@') ? id : id + '@usca.local';
+  var email = id.includes('@') ? id : id + '@aphp.fr';
 
   // Sauvegarder les credentials admin pour se re-connecter après
   var adminSession = await sb.auth.getSession();
@@ -1174,7 +1174,7 @@ async function renderComptes() {
       card.appendChild(avatar);
       var info = createEl('div', 'flex-1');
       info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', p.nom));
-      var idDisplay = p.email.replace('@usca.local', '');
+      var idDisplay = p.email.replace('@aphp.fr', '');
       info.appendChild(createEl('p', 'text-xs text-slate-500', idDisplay));
       card.appendChild(info);
       var badge = createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full ' + (roleColors[p.role] || roleColors.etudiant), p.role);

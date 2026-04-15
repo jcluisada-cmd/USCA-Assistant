@@ -192,7 +192,7 @@ formStaff.addEventListener('submit', async function() {
   loginError.classList.add('hidden');
 
   // Transformer l'identifiant en faux email
-  var email = id.includes('@') ? id : id + '@usca.local';
+  var email = id.includes('@') ? id : id + '@aphp.fr';
 
   try {
     var profile = await auth.loginStaff(email, pwd);
