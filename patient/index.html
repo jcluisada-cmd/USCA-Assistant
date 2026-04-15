@@ -95,6 +95,15 @@
         </button>
 
         <div class="grid grid-cols-2 gap-3">
+          <!-- Carte Journal craving -->
+          <button id="card-agenda" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-red-200 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Mon journal</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Historique craving</p>
+          </button>
+
           <!-- Carte Programme -->
           <button id="card-programme" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98]">
             <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center mb-3">
@@ -271,6 +280,19 @@
         <p class="text-sm font-semibold text-emerald-700">Alerte envoyée</p>
         <p class="text-xs text-emerald-600 mt-1">L'équipe soignante a été prévenue</p>
       </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ PANEL AGENDA CRAVING ════════════════ -->
+  <div id="panel-agenda" class="panel">
+    <header class="sticky top-0 z-10 bg-red-500 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Mon journal craving</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full">
+      <div id="craving-agenda-container"></div>
     </div>
   </div>
 
@@ -474,6 +496,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../shared/supabase.js"></script>
 <script src="../shared/auth.js"></script>
+<script src="../shared/craving-agenda.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
 
 <script>
@@ -542,6 +565,17 @@ async function showPatientApp(patient) {
 
 document.getElementById('card-craving').addEventListener('click', function() { openPanel('craving'); buildTriggerButtons(); showCravingStrategies(); });
 document.getElementById('card-programme').addEventListener('click', function() { openPanel('programme'); });
+document.getElementById('card-agenda').addEventListener('click', function() {
+  openPanel('agenda');
+  if (currentPatient && !window._agendaInitialized) {
+    window._agendaInitialized = true;
+    window._agendaInstance = initCravingAgenda('craving-agenda-container', {
+      getData: function() { return db.getCravingHistory(currentPatient.id); }
+    });
+  } else if (window._agendaInstance) {
+    window._agendaInstance.refresh();
+  }
+});
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
 document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
 

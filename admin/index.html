@@ -154,40 +154,13 @@
               <input type="text" id="new-chambre" placeholder="312" inputmode="numeric" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom</label>
-              <input type="text" id="new-prenom" placeholder="Jean" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">Date de naissance</label>
               <input type="date" id="new-ddn" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
             </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Substance</label>
-              <select id="new-substance" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-                <option value="alcool">Alcool</option>
-                <option value="opioides">Opioïdes</option>
-                <option value="cocaine">Cocaïne / Crack</option>
-                <option value="cannabis">Cannabis</option>
-                <option value="benzodiazepines">Benzodiazépines</option>
-                <option value="nps">NPS / Cathinones</option>
-                <option value="ketamine">Kétamine</option>
-                <option value="polysubstances">Polysubstances</option>
-              </select>
-            </div>
           </div>
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Programme</label>
-              <select id="new-programme" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-                <option value="">Aucun</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Sortie prévue</label>
-              <input type="date" id="new-sortie" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            </div>
+          <div class="mb-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Sortie prévue</label>
+            <input type="date" id="new-sortie" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
           </div>
           <div class="flex gap-2">
             <button id="btn-cancel-patient" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
@@ -402,19 +375,6 @@ function renderPatients() {
 document.getElementById('btn-new-patient').addEventListener('click', function() {
   var form = document.getElementById('form-new-patient');
   form.classList.toggle('hidden');
-  // Remplir le select des programmes
-  var select = document.getElementById('new-programme');
-  select.textContent = '';
-  var optNone = document.createElement('option');
-  optNone.value = '';
-  optNone.textContent = 'Aucun';
-  select.appendChild(optNone);
-  loadedProgrammes.forEach(function(p) {
-    var opt = document.createElement('option');
-    opt.value = p.id;
-    opt.textContent = p.nom;
-    select.appendChild(opt);
-  });
   // Date de sortie par défaut = aujourd'hui + 12 jours
   var sortie = new Date();
   sortie.setDate(sortie.getDate() + 12);
@@ -427,10 +387,7 @@ document.getElementById('btn-cancel-patient').addEventListener('click', function
 
 document.getElementById('btn-save-patient').addEventListener('click', async function() {
   var chambre = document.getElementById('new-chambre').value.trim();
-  var prenom = document.getElementById('new-prenom').value.trim();
   var ddn = document.getElementById('new-ddn').value;
-  var substance = document.getElementById('new-substance').value;
-  var programme = document.getElementById('new-programme').value;
   var sortie = document.getElementById('new-sortie').value;
   var errEl = document.getElementById('new-patient-error');
 
@@ -446,16 +403,11 @@ document.getElementById('btn-save-patient').addEventListener('click', async func
   try {
     await db.createPatient({
       numero_chambre: chambre,
-      prenom: prenom || null,
       date_naissance: ddn,
-      substance_principale: substance,
-      programme_id: programme || null,
       date_sortie_prevue: sortie || null
     });
     document.getElementById('form-new-patient').classList.add('hidden');
-    // Reset le formulaire
     document.getElementById('new-chambre').value = '';
-    document.getElementById('new-prenom').value = '';
     document.getElementById('new-ddn').value = '';
     // Rafraîchir
     await loadDashboardStats();
