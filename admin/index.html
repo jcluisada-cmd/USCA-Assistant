@@ -96,6 +96,8 @@
           <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
         <span id="staff-name" class="text-xs text-slate-500 font-medium hidden sm:inline"></span>
+        <a id="btn-dev" href="../staff/" class="text-xs text-amber-500 hover:text-amber-600 font-semibold hidden">Toolbox</a>
+        <a id="btn-dev-patient" href="../patient/" class="text-xs text-emerald-500 hover:text-emerald-600 font-semibold hidden">Patient</a>
         <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
       </div>
     </header>
@@ -673,6 +675,8 @@ function renderProgrammes() {
 function checkAdminAccess() {
   if (currentProfile && currentProfile.role === 'admin') {
     document.getElementById('admin-only-section').classList.remove('hidden');
+    document.getElementById('btn-dev').classList.remove('hidden');
+    document.getElementById('btn-dev-patient').classList.remove('hidden');
   }
 }
 
