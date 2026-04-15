@@ -926,7 +926,7 @@ function App() {
         </div>}
 
         <div className="grid-2" style={{marginBottom:20}}>
-          {[{l:"Protocoles USCA",i:I.pill,v:"substances",c:C.t[600]},{l:"Séjour J1-J12",i:I.calendar,v:"sejour",c:C.a[600]},{l:"Scores",i:I.calc,v:"scores",c:C.n[600]},{l:"Interactions",i:I.alert,v:"interactions",c:C.r[500]},{l:"Comorbidités",i:I.brain,v:"comorbidites",c:C.t[700]},{l:"ELSA",i:I.steth,v:"elsa",c:C.n[500]},{l:"Admission",i:I.building,v:"admission",c:C.n[700]}].map(item=>
+          {[{l:"Protocoles USCA",i:I.pill,v:"substances",c:C.t[600]},{l:"Séjour J1-J12",i:I.calendar,v:"sejour",c:C.a[600]},{l:"Scores",i:I.calc,v:"scores",c:C.n[600]},{l:"Interactions",i:I.alert,v:"interactions",c:C.r[500]},{l:"Comorbidités",i:I.brain,v:"comorbidites",c:C.t[700]},{l:"ELSA",i:I.steth,v:"elsa",c:C.n[500]},{l:"Admission",i:I.building,v:"admission",c:C.n[700]},{l:"Fiches Traitements",i:I.heart,v:"fiches_traitements",c:C.a[700]}].map(item=>
             <div key={item.v} className="card card-tap" style={{padding:14}} onClick={()=>nav(item.v)}>
               {item.i(item.c, 24)}
               <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginTop:8}}>{item.l}</div>
@@ -985,6 +985,26 @@ function App() {
       case "comorbidites": return <ComorView onBack={()=>nav("home")}/>;
       case "elsa": return <ELSAView onBack={()=>nav("home")}/>;
       case "admission": return <AdmView onBack={()=>nav("home")}/>;
+      case "fiches_traitements": return <div className="fade-in">
+        <SectionHead icon={I.heart(C.a[300])} title="Fiches Traitements Patients"/>
+        <p style={{fontSize:12,color:C.n[400],marginBottom:16}}>Fiches d'information à remettre aux patients. Cliquez pour consulter.</p>
+        {[
+          {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
+          {cat:"TSO",fiches:[{s:"buprenorphine",n:"Buprénorphine (Subutex)"},{s:"methadone",n:"Méthadone"},{s:"naloxone",n:"Naloxone (kit d'urgence)"}]},
+          {cat:"Benzodiazépines",fiches:[{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"}]},
+          {cat:"Psychotropes",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"},{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"},{s:"aripiprazole",n:"Aripiprazole (Abilify)"}]},
+          {cat:"Hypnotiques / Sédatifs",fiches:[{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"}]}
+        ].map(group=><div key={group.cat} style={{marginBottom:16}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:4}}>{group.cat.toUpperCase()}</div>
+          {group.fiches.map(f=><a key={f.s} href={"../fiches-traitements/fiche_"+f.s+"_patient.html"} target="_blank" rel="noopener" className="card card-tap" style={{padding:12,marginBottom:6,display:"flex",alignItems:"center",justifyContent:"space-between",textDecoration:"none",color:"inherit"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>💊</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            {I.chevR(C.n[300])}
+          </a>)}
+        </div>)}
+      </div>;
       case "bzdcalc": return <BZDCalc onBack={()=>nav("scores")}/>;
       case "feedback": return <FeedbackView onBack={()=>nav("home")}/>;
     }
