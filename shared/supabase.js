@@ -218,5 +218,31 @@ window.db = {
       .order('horodatage', { ascending: true });
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ PRESCRIPTIONS (fiches traitements) ════════════════
+
+  /** Récupère les prescriptions d'un patient */
+  async getPrescriptions(patientId) {
+    const { data, error } = await sb.from('prescriptions').select('*').eq('patient_id', patientId).order('created_at');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Ajoute une fiche prescrite à un patient */
+  async addPrescription(patientId, ficheSlug, prescritPar) {
+    const { data, error } = await sb.from('prescriptions').insert({
+      patient_id: patientId,
+      fiche_slug: ficheSlug,
+      prescrit_par: prescritPar
+    }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Retire une fiche prescrite */
+  async removePrescription(patientId, ficheSlug) {
+    const { error } = await sb.from('prescriptions').delete().eq('patient_id', patientId).eq('fiche_slug', ficheSlug);
+    if (error) throw error;
   }
 };

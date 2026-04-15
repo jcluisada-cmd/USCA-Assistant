@@ -106,13 +106,12 @@
           </button>
 
           <!-- Carte Traitements -->
-          <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
+          <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]">
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
             </div>
             <p class="text-sm font-bold text-slate-800">Traitements</p>
             <p class="text-[11px] text-slate-500 mt-0.5">Mes fiches</p>
-            <span class="absolute top-2 right-2 text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded-full">Bientôt</span>
           </button>
 
           <!-- Carte Ateliers -->
@@ -379,21 +378,27 @@
     </div>
   </div>
 
-  <!-- ════════════════ PANEL TRAITEMENTS (placeholder) ════════════════ -->
+  <!-- ════════════════ PANEL TRAITEMENTS ════════════════ -->
   <div id="panel-traitements" class="panel">
     <header class="sticky top-0 z-10 bg-amber-500 text-white px-4 py-3 flex items-center gap-3">
-      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center" id="btn-back-traitements">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <span class="text-sm font-bold">Mes traitements</span>
+      <span id="traitements-header-text" class="text-sm font-bold">Mes traitements</span>
     </header>
-    <div class="flex-1 p-5 max-w-lg mx-auto w-full flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+    <!-- Liste des fiches prescrites -->
+    <div id="traitements-list-view" class="flex-1 p-5 max-w-lg mx-auto w-full space-y-3">
+      <div id="traitements-list"></div>
+      <div id="traitements-empty" class="flex flex-col items-center justify-center text-center py-12 hidden">
+        <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+        </div>
+        <p class="text-base font-bold text-slate-800 mb-2">Aucun traitement prescrit</p>
+        <p class="text-sm text-slate-500">Votre médecin ajoutera vos fiches traitements ici.</p>
       </div>
-      <p class="text-base font-bold text-slate-800 mb-2">En cours de préparation</p>
-      <p class="text-sm text-slate-500">Votre médecin pourra bientôt vous transmettre des fiches sur vos traitements directement ici.</p>
     </div>
+    <!-- Iframe pour afficher une fiche -->
+    <iframe id="fiche-iframe" class="flex-1 w-full border-none hidden" title="Fiche traitement"></iframe>
   </div>
 
   <!-- ════════════════ PANEL ATELIERS (placeholder) ════════════════ -->
@@ -417,6 +422,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../shared/supabase.js"></script>
 <script src="../shared/auth.js"></script>
+<script src="../shared/fiches-catalogue.js"></script>
 
 <script>
 // ── État ──
@@ -486,7 +492,6 @@ async function showPatientApp(patient) {
 document.getElementById('card-craving').addEventListener('click', function() { openPanel('craving'); });
 document.getElementById('card-programme').addEventListener('click', function() { openPanel('programme'); });
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
-document.getElementById('card-traitements').addEventListener('click', function() { openPanel('traitements'); });
 document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
 
 document.querySelectorAll('.panel-back').forEach(function(btn) {
@@ -940,6 +945,85 @@ document.getElementById('btn-export').addEventListener('click', async function()
   doc.text('USCA Connect \u2014 Piti\u00e9-Salp\u00eatri\u00e8re \u2014 G\u00e9n\u00e9r\u00e9 le ' + new Date().toLocaleDateString('fr-FR'), 105, 285, { align: 'center' });
 
   doc.save('fiche-sortie-' + prenom.toLowerCase() + '.pdf');
+});
+
+// ══════════════ TRAITEMENTS ══════════════
+
+var ficheIframe = document.getElementById('fiche-iframe');
+var traitListView = document.getElementById('traitements-list-view');
+var traitHeaderText = document.getElementById('traitements-header-text');
+var viewingFiche = false;
+
+// Bouton retour dans le panel traitements — gère le retour iframe → liste → accueil
+document.getElementById('btn-back-traitements').addEventListener('click', function() {
+  if (viewingFiche) {
+    // Retour à la liste des fiches
+    ficheIframe.classList.add('hidden');
+    ficheIframe.src = '';
+    traitListView.classList.remove('hidden');
+    traitHeaderText.textContent = 'Mes traitements';
+    viewingFiche = false;
+  } else {
+    // Retour à l'accueil
+    document.getElementById('panel-traitements').classList.remove('open');
+  }
+});
+
+async function loadTraitements() {
+  if (!currentPatient) return;
+  var list = document.getElementById('traitements-list');
+  var empty = document.getElementById('traitements-empty');
+  list.textContent = '';
+
+  var prescriptions = [];
+  try { prescriptions = await db.getPrescriptions(currentPatient.id); } catch(e) { prescriptions = []; }
+
+  if (prescriptions.length === 0) {
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  // Résoudre les slugs en noms via le catalogue
+  var slugToFiche = {};
+  FICHES_CATALOGUE.forEach(function(f) { slugToFiche[f.slug] = f; });
+
+  // Grouper par catégorie
+  var categories = {};
+  prescriptions.forEach(function(p) {
+    var fiche = slugToFiche[p.fiche_slug];
+    if (!fiche) return;
+    if (!categories[fiche.categorie]) categories[fiche.categorie] = [];
+    categories[fiche.categorie].push(fiche);
+  });
+
+  Object.keys(categories).forEach(function(cat) {
+    list.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase mt-3 mb-1.5', cat));
+    categories[cat].forEach(function(fiche) {
+      var btn = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]');
+      var icon = createEl('div', 'w-9 h-9 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0');
+      icon.appendChild(createEl('span', 'text-amber-600 text-lg', '\ud83d\udc8a'));
+      btn.appendChild(icon);
+      btn.appendChild(createEl('span', 'text-sm font-semibold text-slate-800 flex-1', fiche.nom));
+      btn.appendChild(createEl('span', 'text-slate-400 text-lg', '\u203a'));
+      (function(slug, nom) {
+        btn.addEventListener('click', function() {
+          traitListView.classList.add('hidden');
+          ficheIframe.src = '../fiches-traitements/fiche_' + slug + '_patient.html';
+          ficheIframe.classList.remove('hidden');
+          traitHeaderText.textContent = nom;
+          viewingFiche = true;
+        });
+      })(fiche.slug, fiche.nom);
+      list.appendChild(btn);
+    });
+  });
+}
+
+// Charger les traitements quand on ouvre le panel
+document.getElementById('card-traitements').addEventListener('click', function() {
+  openPanel('traitements');
+  loadTraitements();
 });
 
 // ══════════════ DÉCONNEXION ══════════════
