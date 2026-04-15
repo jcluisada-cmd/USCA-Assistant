@@ -242,5 +242,71 @@ window.db = {
   async removePrescription(patientId, ficheSlug) {
     const { error } = await sb.from('prescriptions').delete().eq('patient_id', patientId).eq('fiche_slug', ficheSlug);
     if (error) throw error;
+  },
+
+  // ════════════════ ÉVÉNEMENTS (RDV, entretiens, consultations) ════════════════
+
+  async getEvenements(patientId) {
+    const { data, error } = await sb.from('evenements').select('*').eq('patient_id', patientId).order('date_heure', { ascending: true });
+    if (error) throw error;
+    return data;
+  },
+
+  async createEvenement(evt) {
+    const { data, error } = await sb.from('evenements').insert(evt).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  async deleteEvenement(id) {
+    const { error } = await sb.from('evenements').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  // ════════════════ PERMISSIONS ════════════════
+
+  async getPermissions(patientId) {
+    const { data, error } = await sb.from('permissions').select('*').eq('patient_id', patientId).order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  async createPermission(perm) {
+    const { data, error } = await sb.from('permissions').insert(perm).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  async updatePermission(id, updates) {
+    const { data, error } = await sb.from('permissions').update(updates).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  // ════════════════ CONTENUS PARTAGÉS ════════════════
+
+  async getContenus(patientId) {
+    const { data, error } = await sb.from('contenus_partages').select('*').eq('patient_id', patientId).order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  async createContenu(contenu) {
+    const { data, error } = await sb.from('contenus_partages').insert(contenu).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  async deleteContenu(id) {
+    const { error } = await sb.from('contenus_partages').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  // ════════════════ DATE DE SORTIE ════════════════
+
+  async updatePatientSortie(patientId, dateSortie) {
+    const { data, error } = await sb.from('patients').update({ date_sortie_prevue: dateSortie }).eq('id', patientId).select().single();
+    if (error) throw error;
+    return data;
   }
 };
