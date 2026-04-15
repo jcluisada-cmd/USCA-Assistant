@@ -277,6 +277,12 @@ window.db = {
     return data;
   },
 
+  async getAllPermissionsEnAttente() {
+    const { data, error } = await sb.from('permissions').select('*').eq('statut', 'en_attente').order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
   async updatePermission(id, updates) {
     const { data, error } = await sb.from('permissions').update(updates).eq('id', id).select().single();
     if (error) throw error;

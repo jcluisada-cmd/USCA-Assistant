@@ -186,6 +186,21 @@
             <div id="fiches-checklist" class="space-y-1"></div>
           </div>
 
+          <!-- Accordion : Permissions -->
+          <button id="acc-perms" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <div id="perm-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-slate-700">Permissions</span>
+              <span id="perm-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
+            </div>
+            <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div id="acc-perms-content" class="hidden mb-2 pl-2">
+            <div id="detail-perms-list"></div>
+          </div>
+
           <!-- Actions -->
           <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
           <div class="space-y-2 mb-4">
@@ -215,11 +230,36 @@
             </button>
           </div>
 
-          <button id="btn-view-as-patient" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
+          <button id="btn-view-as-patient" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 mb-3">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             Voir comme patient
           </button>
+
+          <!-- Supprimer le séjour -->
+          <button id="btn-delete-patient" class="w-full py-3 bg-white border-2 border-red-200 hover:border-red-400 text-red-500 font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            Supprimer ce séjour
+          </button>
         </section>
+
+        <!-- Modal confirmation suppression -->
+        <div id="modal-delete" class="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center hidden">
+          <div class="bg-white w-full max-w-sm mx-4 rounded-2xl p-5">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              </div>
+              <h3 class="text-base font-bold text-slate-800">Supprimer ce séjour ?</h3>
+              <p class="text-sm text-slate-500 mt-2">Les données du patient ont-elles été exportées ?</p>
+              <p class="text-xs text-slate-400 mt-1">Cette action supprimera le patient et toutes ses données (cravings, stratégies, permissions, prescriptions).</p>
+            </div>
+            <div class="space-y-2">
+              <button id="btn-export-then-delete" class="w-full py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm transition-colors">Sauvegarder les données puis supprimer</button>
+              <button id="btn-confirm-delete" class="w-full py-2.5 bg-red-500 text-white font-bold rounded-xl text-sm transition-colors">Confirmer la suppression</button>
+              <button id="btn-cancel-delete" class="w-full py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+            </div>
+          </div>
+        </div>
 
         <!-- ═══ MODALS ═══ -->
 
@@ -476,6 +516,7 @@ function showLoginError(msg) {
 // ── Données chargées ──
 let loadedPatients = [];
 let loadedAlertes = [];
+let loadedPermissions = [];
 let currentProfile = null;
 
 // ── Afficher l'app admin ──
@@ -500,10 +541,12 @@ async function loadDashboardStats() {
   try {
     var results = await Promise.all([
       db.getPatients(),
-      db.getAlertesNonTraitees()
+      db.getAlertesNonTraitees(),
+      db.getAllPermissionsEnAttente()
     ]);
     loadedPatients = results[0];
     loadedAlertes = results[1];
+    loadedPermissions = results[2];
     document.getElementById('stat-patients').textContent = loadedPatients.length;
     document.getElementById('stat-alertes').textContent = loadedAlertes.length;
     renderPatients();
@@ -573,8 +616,14 @@ function renderPatients() {
       icons.appendChild(cravingIcon);
     }
 
-    // Icône permission (bleu-violet) — sera fonctionnel après migration v4
-    // Pour l'instant on ne l'affiche pas
+    // Icône permission (cyan) si demande en attente
+    var patientPerms = loadedPermissions.filter(function(pm) { return pm.patient_id === p.id; });
+    if (patientPerms.length > 0) {
+      var permIcon = createEl('div', 'w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center');
+      permIcon.title = patientPerms.length + ' permission(s) en attente';
+      permIcon.appendChild(createEl('span', 'text-cyan-600 text-xs font-bold', patientPerms.length));
+      icons.appendChild(permIcon);
+    }
 
     icons.appendChild(createEl('span', 'text-slate-300 text-lg', '\u203a'));
     card.appendChild(icons);
@@ -663,6 +712,11 @@ document.getElementById('acc-craving').addEventListener('click', function() {
 });
 document.getElementById('acc-fiches').addEventListener('click', function() {
   var content = document.getElementById('acc-fiches-content');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+});
+document.getElementById('acc-perms').addEventListener('click', function() {
+  var content = document.getElementById('acc-perms-content');
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
@@ -831,8 +885,10 @@ async function showPatientDetail(patient) {
   try {
     patientPrescriptions = await db.getPrescriptions(patient.id);
   } catch(e) { patientPrescriptions = []; }
-
   renderFichesChecklist(patient.id);
+
+  // Charger les permissions
+  renderPatientPerms(patient.id);
 }
 
 function renderFichesChecklist(patientId) {
@@ -884,6 +940,144 @@ function renderFichesChecklist(patientId) {
       container.appendChild(row);
     });
   });
+}
+
+// ── Suppression séjour patient ──
+document.getElementById('btn-delete-patient').addEventListener('click', function() {
+  document.getElementById('modal-delete').classList.remove('hidden');
+});
+document.getElementById('btn-cancel-delete').addEventListener('click', function() {
+  document.getElementById('modal-delete').classList.add('hidden');
+});
+
+// Export JSON puis suppression
+document.getElementById('btn-export-then-delete').addEventListener('click', async function() {
+  if (!selectedPatientForDetail) return;
+  this.disabled = true; this.textContent = 'Export...';
+  try {
+    var pid = selectedPatientForDetail.id;
+    var data = {
+      patient: selectedPatientForDetail,
+      cravings: await db.getCravingHistory(pid),
+      strategies: await db.getStrategies(pid),
+      prescriptions: await db.getPrescriptions(pid),
+      permissions: await db.getPermissions(pid),
+      evenements: await db.getEvenements(pid),
+      contenus: await db.getContenus(pid),
+      exportDate: new Date().toISOString()
+    };
+    var json = JSON.stringify(data, null, 2);
+    var blob = new Blob([json], {type:'application/json;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'sejour-ch' + selectedPatientForDetail.numero_chambre + '-' + new Date().toISOString().split('T')[0] + '.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    // Puis supprimer
+    await deletePatientData(pid);
+  } catch(e) { console.warn('Erreur :', e); }
+  this.disabled = false; this.textContent = 'Sauvegarder les donn\u00e9es puis supprimer';
+});
+
+// Suppression directe
+document.getElementById('btn-confirm-delete').addEventListener('click', async function() {
+  if (!selectedPatientForDetail) return;
+  this.disabled = true; this.textContent = 'Suppression...';
+  try {
+    await deletePatientData(selectedPatientForDetail.id);
+  } catch(e) { console.warn('Erreur :', e); }
+  this.disabled = false; this.textContent = 'Confirmer la suppression';
+});
+
+async function deletePatientData(patientId) {
+  // Supabase CASCADE sur patient_id supprime automatiquement :
+  // alertes, strategies, prescriptions, permissions, evenements, contenus_partages
+  var { error } = await sb.from('patients').delete().eq('id', patientId);
+  if (error) throw error;
+  document.getElementById('modal-delete').classList.add('hidden');
+  document.getElementById('section-patient-detail').classList.add('hidden');
+  await loadDashboardStats();
+}
+
+// ── Rendu permissions dans le détail patient ──
+async function renderPatientPerms(patientId) {
+  var list = document.getElementById('detail-perms-list');
+  var permIcon = document.getElementById('perm-icon');
+  var permBadge = document.getElementById('perm-count-badge');
+  list.textContent = '';
+
+  try {
+    var perms = await db.getPermissions(patientId);
+    var enAttente = perms.filter(function(p) { return p.statut === 'en_attente'; });
+
+    if (enAttente.length > 0) {
+      permIcon.className = 'w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center';
+      permIcon.querySelector('svg').setAttribute('stroke', '#0891b2');
+      permBadge.textContent = enAttente.length;
+      permBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-100 text-cyan-700';
+    } else {
+      permIcon.className = 'w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center';
+      permBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden';
+    }
+
+    if (perms.length === 0) {
+      list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucune permission'));
+      return;
+    }
+
+    perms.forEach(function(p) {
+      var debut = new Date(p.date_debut);
+      var retour = new Date(p.date_retour);
+      var statutStyles = {
+        en_attente: { bg: 'bg-cyan-50 border-cyan-200', badge: 'bg-cyan-100 text-cyan-700', label: 'En attente' },
+        validee: { bg: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', label: 'Valid\u00e9e' },
+        refusee: { bg: 'bg-red-50 border-red-200', badge: 'bg-red-100 text-red-700', label: 'Refus\u00e9e' },
+        annulee: { bg: 'bg-slate-50 border-slate-200', badge: 'bg-slate-100 text-slate-500', label: 'Annul\u00e9e' }
+      };
+      var style = statutStyles[p.statut] || statutStyles.en_attente;
+
+      var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + style.bg);
+      var header = createEl('div', 'flex items-center justify-between mb-1');
+      header.appendChild(createEl('span', 'text-xs font-semibold text-slate-700',
+        debut.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'}) + ' ' +
+        debut.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) + ' \u2192 ' +
+        retour.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})
+      ));
+      header.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full ' + style.badge, style.label));
+      card.appendChild(header);
+
+      if (debut.toDateString() !== retour.toDateString()) {
+        card.appendChild(createEl('p', 'text-[10px] text-slate-500', 'Retour : ' + retour.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})));
+      }
+
+      // Boutons valider/refuser si en attente
+      if (p.statut === 'en_attente') {
+        var actions = createEl('div', 'flex gap-2 mt-2');
+        var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
+        var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
+        (function(permId) {
+          btnVal.addEventListener('click', async function() {
+            await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+            renderPatientPerms(patientId);
+            loadDashboardStats();
+          });
+          btnRef.addEventListener('click', async function() {
+            await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+            renderPatientPerms(patientId);
+            loadDashboardStats();
+          });
+        })(p.id);
+        actions.appendChild(btnVal);
+        actions.appendChild(btnRef);
+        card.appendChild(actions);
+      }
+
+      list.appendChild(card);
+    });
+  } catch(e) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
+  }
 }
 
 // ── Gestion des comptes (admin seulement) ──

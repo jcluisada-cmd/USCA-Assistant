@@ -131,6 +131,15 @@
             <p class="text-[11px] text-slate-500 mt-0.5">Mes fiches</p>
           </button>
 
+          <!-- Carte Permission -->
+          <button id="card-permission" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-cyan-300 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-cyan-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Permission</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Demander une sortie</p>
+          </button>
+
           <!-- Carte Ateliers -->
           <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
@@ -475,6 +484,61 @@
     <iframe id="fiche-iframe" class="flex-1 w-full border-none hidden" title="Fiche traitement"></iframe>
   </div>
 
+  <!-- ════════════════ PANEL PERMISSION ════════════════ -->
+  <div id="panel-permission" class="panel">
+    <header class="sticky top-0 z-10 bg-cyan-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Demande de permission</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-5 pb-8">
+
+      <!-- Mes permissions -->
+      <div id="perm-list-section">
+        <h3 class="text-sm font-bold text-slate-800 mb-3">Mes permissions</h3>
+        <div id="perm-list"></div>
+        <div id="perm-empty" class="bg-white rounded-xl border border-slate-200 p-6 text-center hidden">
+          <p class="text-sm text-slate-500">Aucune permission pour le moment</p>
+        </div>
+      </div>
+
+      <!-- Nouvelle demande -->
+      <div class="bg-white rounded-2xl border border-cyan-200 p-5">
+        <h3 class="text-sm font-bold text-cyan-700 mb-3">Nouvelle demande</h3>
+
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Date de départ</label>
+            <input type="date" id="perm-p-date-debut" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Heure de départ</label>
+            <input type="time" id="perm-p-heure-debut" value="09:00" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Date de retour</label>
+            <input type="date" id="perm-p-date-retour" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Heure de retour</label>
+            <input type="time" id="perm-p-heure-retour" value="18:00" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+          </div>
+        </div>
+
+        <button id="btn-send-perm" class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] disabled:opacity-50" disabled>
+          Envoyer la demande
+        </button>
+        <p id="perm-p-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+        <p id="perm-p-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ════════════════ PANEL ATELIERS (placeholder) ════════════════ -->
   <div id="panel-ateliers" class="panel">
     <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3">
@@ -578,6 +642,140 @@ document.getElementById('card-agenda').addEventListener('click', function() {
 });
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
 document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
+
+// ══════════════ PERMISSIONS ══════════════
+
+document.getElementById('card-permission').addEventListener('click', function() {
+  openPanel('permission');
+  loadPermissions();
+  // Pré-remplir les dates
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('perm-p-date-debut').value = today;
+  document.getElementById('perm-p-date-retour').value = today;
+  validatePermForm();
+});
+
+// Valider le formulaire quand les champs changent
+['perm-p-date-debut', 'perm-p-heure-debut', 'perm-p-date-retour', 'perm-p-heure-retour'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', validatePermForm);
+});
+
+function validatePermForm() {
+  var dateDebut = document.getElementById('perm-p-date-debut').value;
+  var dateRetour = document.getElementById('perm-p-date-retour').value;
+  var heureRetour = document.getElementById('perm-p-heure-retour').value;
+  var btn = document.getElementById('btn-send-perm');
+  var errEl = document.getElementById('perm-p-error');
+  errEl.classList.add('hidden');
+
+  if (!dateDebut || !dateRetour) { btn.disabled = true; return; }
+
+  var heureDebut = document.getElementById('perm-p-heure-debut').value || '09:00';
+  var debut = new Date(dateDebut + 'T' + heureDebut);
+  var retour = new Date(dateRetour + 'T' + (heureRetour || '18:00'));
+  var diffH = (retour - debut) / (1000 * 60 * 60);
+
+  // Validation silencieuse (pas de message sur les limites)
+  if (diffH <= 0) { btn.disabled = true; errEl.textContent = 'La date de retour doit \u00eatre apr\u00e8s le d\u00e9part'; errEl.classList.remove('hidden'); return; }
+  if (diffH > 48) { btn.disabled = true; errEl.textContent = 'Dur\u00e9e trop longue'; errEl.classList.remove('hidden'); return; }
+
+  var retourH = parseInt((heureRetour || '18:00').split(':')[0]);
+  if (retourH > 20) { btn.disabled = true; errEl.textContent = 'Heure de retour trop tardive'; errEl.classList.remove('hidden'); return; }
+
+  // Semaine : retour même jour
+  var jourDebut = debut.getDay();
+  if (jourDebut >= 1 && jourDebut <= 5 && dateRetour !== dateDebut) {
+    btn.disabled = true;
+    errEl.textContent = 'En semaine, le retour doit \u00eatre le m\u00eame jour';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = false;
+}
+
+// Envoyer la demande
+document.getElementById('btn-send-perm').addEventListener('click', async function() {
+  if (!currentPatient) return;
+  var dateDebut = document.getElementById('perm-p-date-debut').value;
+  var heureDebut = document.getElementById('perm-p-heure-debut').value || '09:00';
+  var dateRetour = document.getElementById('perm-p-date-retour').value;
+  var heureRetour = document.getElementById('perm-p-heure-retour').value || '18:00';
+  var errEl = document.getElementById('perm-p-error');
+  var successEl = document.getElementById('perm-p-success');
+  errEl.classList.add('hidden');
+  successEl.classList.add('hidden');
+
+  this.disabled = true;
+  this.textContent = 'Envoi...';
+
+  try {
+    await db.createPermission({
+      patient_id: currentPatient.id,
+      date_debut: dateDebut + 'T' + heureDebut + ':00',
+      date_retour: dateRetour + 'T' + heureRetour + ':00',
+      statut: 'en_attente'
+    });
+    successEl.textContent = 'Demande envoy\u00e9e ! En attente de validation.';
+    successEl.classList.remove('hidden');
+    loadPermissions();
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+  }
+  this.disabled = false;
+  this.textContent = 'Envoyer la demande';
+});
+
+// Charger les permissions du patient
+async function loadPermissions() {
+  if (!currentPatient) return;
+  var list = document.getElementById('perm-list');
+  var empty = document.getElementById('perm-empty');
+  list.textContent = '';
+
+  try {
+    var perms = await db.getPermissions(currentPatient.id);
+    if (perms.length === 0) {
+      empty.classList.remove('hidden');
+      return;
+    }
+    empty.classList.add('hidden');
+
+    perms.forEach(function(p) {
+      var debut = new Date(p.date_debut);
+      var retour = new Date(p.date_retour);
+      var statutColors = {
+        en_attente: { bg: 'bg-cyan-50 border-cyan-200', badge: 'bg-cyan-100 text-cyan-700', label: 'En attente' },
+        validee: { bg: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', label: 'Valid\u00e9e' },
+        refusee: { bg: 'bg-red-50 border-red-200', badge: 'bg-red-100 text-red-700', label: 'Refus\u00e9e' },
+        annulee: { bg: 'bg-slate-50 border-slate-200', badge: 'bg-slate-100 text-slate-500', label: 'Annul\u00e9e' }
+      };
+      var style = statutColors[p.statut] || statutColors.en_attente;
+
+      var card = createEl('div', 'rounded-xl border p-4 mb-2 ' + style.bg);
+
+      // En-tête : dates + badge statut
+      var header = createEl('div', 'flex items-center justify-between mb-2');
+      var dates = createEl('div', '');
+      dates.appendChild(createEl('p', 'text-sm font-bold text-slate-800',
+        debut.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }) +
+        ' ' + debut.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      ));
+      dates.appendChild(createEl('p', 'text-xs text-slate-500',
+        'Retour : ' + retour.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }) +
+        ' ' + retour.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      ));
+      header.appendChild(dates);
+      header.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full ' + style.badge, style.label));
+      card.appendChild(header);
+
+      list.appendChild(card);
+    });
+  } catch(e) {
+    empty.classList.remove('hidden');
+  }
+}
 
 document.querySelectorAll('.panel-back').forEach(function(btn) {
   btn.addEventListener('click', function() { this.closest('.panel').classList.remove('open'); });
