@@ -140,6 +140,15 @@
             <p class="text-[11px] text-slate-500 mt-0.5">Demander une sortie</p>
           </button>
 
+          <!-- Carte Messages -->
+          <button id="card-messages" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
+            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Messages</p>
+            <p id="messages-count" class="text-[11px] text-slate-500 mt-0.5">De l'équipe soignante</p>
+          </button>
+
           <!-- Carte Ateliers -->
           <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
@@ -539,6 +548,25 @@
     </div>
   </div>
 
+  <!-- ════════════════ PANEL MESSAGES ════════════════ -->
+  <div id="panel-messages" class="panel">
+    <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Messages de l'équipe</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full">
+      <div id="messages-list" class="space-y-3"></div>
+      <div id="messages-empty" class="text-center py-12 hidden">
+        <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+        </div>
+        <p class="text-sm text-slate-500">Aucun message pour le moment</p>
+      </div>
+    </div>
+  </div>
+
   <!-- ════════════════ PANEL ATELIERS (placeholder) ════════════════ -->
   <div id="panel-ateliers" class="panel">
     <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3">
@@ -614,13 +642,65 @@ async function showPatientApp(patient) {
   var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
-  // Pré-charger les données
+  // Charger le programme + événements + permissions
+  var activites = [];
+
+  // Programme template (si existant)
   if (patient.programme_id) {
     try {
       var prog = await db.getProgrammeById(patient.programme_id);
-      renderTimeline(prog.activites);
-    } catch (e) { document.getElementById('timeline-empty').classList.remove('hidden'); }
-  } else { document.getElementById('timeline-empty').classList.remove('hidden'); }
+      if (prog.activites) activites = prog.activites;
+    } catch(e) {}
+  }
+
+  // Événements du jour (pushés par le soignant)
+  var todayStr = now.toISOString().split('T')[0];
+  try {
+    var evts = await db.getEvenements(patient.id);
+    evts.forEach(function(evt) {
+      if (!evt.date_heure) return;
+      var evtDate = evt.date_heure.split('T')[0];
+      if (evtDate === todayStr) {
+        var evtTime = new Date(evt.date_heure);
+        var typeLabels = { entretien:'Entretien', consultation:'Consultation', familial:'Entretien familial', rdv_externe:'RDV externe', autre:'Événement' };
+        activites.push({
+          heure: evtTime.getHours().toString().padStart(2,'0') + ':' + evtTime.getMinutes().toString().padStart(2,'0'),
+          label: evt.titre || typeLabels[evt.type] || 'Événement',
+          type: 'entretien',
+          lieu: evt.lieu || '',
+          isEvent: true
+        });
+      }
+    });
+  } catch(e) {}
+
+  // Permissions du jour
+  try {
+    var perms = await db.getPermissions(patient.id);
+    perms.forEach(function(p) {
+      if (p.statut !== 'validee') return;
+      var permDebut = new Date(p.date_debut);
+      var permRetour = new Date(p.date_retour);
+      if (permDebut.toISOString().split('T')[0] === todayStr || permRetour.toISOString().split('T')[0] === todayStr) {
+        activites.push({
+          heure: permDebut.toISOString().split('T')[0] === todayStr ? permDebut.getHours().toString().padStart(2,'0') + ':' + permDebut.getMinutes().toString().padStart(2,'0') : permRetour.getHours().toString().padStart(2,'0') + ':' + permRetour.getMinutes().toString().padStart(2,'0'),
+          label: permDebut.toISOString().split('T')[0] === todayStr ? 'Permission (d\u00e9part)' : 'Permission (retour)',
+          type: 'permission',
+          lieu: '',
+          isPermission: true
+        });
+      }
+    });
+  } catch(e) {}
+
+  // Trier par heure
+  activites.sort(function(a, b) { return a.heure.localeCompare(b.heure); });
+
+  if (activites.length > 0) {
+    renderTimeline(activites);
+  } else {
+    document.getElementById('timeline-empty').classList.remove('hidden');
+  }
 
   loadStrategies();
 }
@@ -642,6 +722,63 @@ document.getElementById('card-agenda').addEventListener('click', function() {
 });
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
 document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
+
+// ══════════════ MESSAGES (contenus partagés) ══════════════
+
+document.getElementById('card-messages').addEventListener('click', function() {
+  openPanel('messages');
+  loadMessages();
+});
+
+async function loadMessages() {
+  if (!currentPatient) return;
+  var list = document.getElementById('messages-list');
+  var empty = document.getElementById('messages-empty');
+  list.textContent = '';
+
+  try {
+    var contenus = await db.getContenus(currentPatient.id);
+    if (contenus.length === 0) { empty.classList.remove('hidden'); return; }
+    empty.classList.add('hidden');
+    document.getElementById('messages-count').textContent = contenus.length + ' message(s)';
+
+    var typeIcons = {
+      note: { bg: 'bg-purple-50 border-purple-200', icon: '\ud83d\udcdd', label: 'Note' },
+      lien: { bg: 'bg-indigo-50 border-indigo-200', icon: '\ud83d\udd17', label: 'Lien' },
+      consigne: { bg: 'bg-amber-50 border-amber-200', icon: '\u26a0\ufe0f', label: 'Consigne' },
+      document: { bg: 'bg-slate-50 border-slate-200', icon: '\ud83d\udcc4', label: 'Document' }
+    };
+
+    contenus.forEach(function(c) {
+      var style = typeIcons[c.type] || typeIcons.note;
+      var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4');
+
+      var header = createEl('div', 'flex items-center justify-between mb-2');
+      var left = createEl('div', 'flex items-center gap-2');
+      left.appendChild(createEl('span', 'text-lg', style.icon));
+      left.appendChild(createEl('span', 'text-sm font-bold text-slate-800', c.titre));
+      header.appendChild(left);
+      var date = new Date(c.created_at);
+      header.appendChild(createEl('span', 'text-[10px] text-slate-400', date.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'})));
+      card.appendChild(header);
+
+      // Contenu
+      if (c.type === 'lien') {
+        var link = createEl('a', 'text-sm text-indigo-600 underline break-all', c.contenu);
+        link.href = c.contenu.startsWith('http') ? c.contenu : 'https://' + c.contenu;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        card.appendChild(link);
+      } else {
+        card.appendChild(createEl('p', 'text-sm text-slate-600 leading-relaxed', c.contenu));
+      }
+
+      list.appendChild(card);
+    });
+  } catch(e) {
+    empty.classList.remove('hidden');
+  }
+}
 
 // ══════════════ PERMISSIONS ══════════════
 
@@ -1037,7 +1174,9 @@ function renderTimeline(activites) {
     repas: { bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500', text: 'text-amber-700' },
     groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', dot: 'bg-emerald-500', text: 'text-emerald-700' },
     activite: { bg: 'bg-purple-50', border: 'border-purple-200', dot: 'bg-purple-500', text: 'text-purple-700' },
-    libre: { bg: 'bg-slate-50', border: 'border-slate-200', dot: 'bg-slate-400', text: 'text-slate-600' }
+    libre: { bg: 'bg-slate-50', border: 'border-slate-200', dot: 'bg-slate-400', text: 'text-slate-600' },
+    entretien: { bg: 'bg-indigo-100', border: 'border-indigo-300', dot: 'bg-indigo-600', text: 'text-indigo-800' },
+    permission: { bg: 'bg-cyan-100', border: 'border-cyan-300', dot: 'bg-cyan-600', text: 'text-cyan-800' }
   };
 
   activites.forEach(function(act, i) {
@@ -1049,18 +1188,38 @@ function renderTimeline(activites) {
 
     if (!nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
 
-    var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-50' : ''));
+    // Mise en valeur : événements et groupes = importants, repas/soins = discrets
+    var isImportant = act.isEvent || act.isPermission || act.type === 'groupe' || act.type === 'entretien' || act.type === 'permission';
+    var isRoutine = act.type === 'repas' || act.type === 'soin' || act.type === 'libre';
+
+    var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-40' : '') + (isRoutine && !isCurrent ? ' opacity-70' : ''));
     var timeCol = createEl('div', 'w-14 pt-3 text-right flex-shrink-0');
-    timeCol.appendChild(createEl('span', 'text-xs font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
+    timeCol.appendChild(createEl('span', (isRoutine ? 'text-[10px]' : 'text-xs') + ' font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
     row.appendChild(timeCol);
     var lineCol = createEl('div', 'flex flex-col items-center');
-    lineCol.appendChild(createEl('div', 'w-3 h-3 rounded-full flex-shrink-0 mt-4 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '')));
+    var dotSize = isImportant ? 'w-4 h-4' : 'w-2.5 h-2.5';
+    lineCol.appendChild(createEl('div', dotSize + ' rounded-full flex-shrink-0 mt-4 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '')));
     if (i < activites.length - 1) lineCol.appendChild(createEl('div', 'w-0.5 flex-1 bg-slate-200 min-h-4'));
     row.appendChild(lineCol);
-    var card = createEl('div', style.bg + ' border ' + style.border + ' rounded-xl p-3 flex-1 mb-2' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : ''));
-    card.appendChild(createEl('p', 'text-sm font-bold ' + style.text, act.label));
-    if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', act.lieu));
-    row.appendChild(card);
+
+    if (isRoutine && !isCurrent) {
+      // Activité de routine : juste une ligne simple
+      var simpleLabel = createEl('div', 'flex-1 mb-2 pt-3');
+      simpleLabel.appendChild(createEl('p', 'text-xs text-slate-400', act.label));
+      row.appendChild(simpleLabel);
+    } else {
+      // Activité importante ou en cours : carte complète
+      var cardClasses = style.bg + ' border ' + style.border + ' rounded-xl flex-1 mb-2' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '');
+      if (isImportant) cardClasses += ' shadow-sm';
+      var card = createEl('div', cardClasses);
+      card.style.padding = isImportant ? '14px' : '10px 12px';
+      card.appendChild(createEl('p', (isImportant ? 'text-sm font-extrabold' : 'text-sm font-bold') + ' ' + style.text, act.label));
+      if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', act.lieu));
+      if (act.isEvent) card.appendChild(createEl('span', 'inline-block mt-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-200 text-indigo-700', 'RDV'));
+      if (act.isPermission) card.appendChild(createEl('span', 'inline-block mt-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-200 text-cyan-700', 'Permission'));
+      row.appendChild(card);
+    }
+
     container.appendChild(row);
   });
   if (!nowInserted) container.appendChild(makeNowMarker(now));

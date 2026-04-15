@@ -1161,7 +1161,8 @@ async function renderComptes() {
   list.textContent = '';
   try {
     var profiles = await db.getAllProfiles();
-    document.getElementById('stat-comptes').textContent = profiles.length;
+    var statEl = document.getElementById('stat-comptes');
+    if (statEl) statEl.textContent = profiles.length;
     if (profiles.length === 0) {
       list.appendChild(createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center')).appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun compte'));
       return;
@@ -1182,7 +1183,11 @@ async function renderComptes() {
       list.appendChild(card);
     });
   } catch(e) {
-    list.appendChild(createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center')).appendChild(createEl('p', 'text-sm text-slate-500', 'Erreur de chargement'));
+    console.warn('Erreur chargement comptes :', e);
+    var errCard = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
+    errCard.appendChild(createEl('p', 'text-sm text-slate-500', 'Erreur de chargement'));
+    errCard.appendChild(createEl('p', 'text-xs text-red-400 mt-1', e.message || 'Session expir\u00e9e ?'));
+    list.appendChild(errCard);
   }
 }
 
