@@ -57,6 +57,42 @@
   .fb-tag { padding: 7px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; transition: all .15s; }
   .fb-tag.sel { border-color: #27ab83; background: #effcf6; color: #147d64; }
   .fb-sent { text-align: center; padding: 40px 20px; }
+  /* ── Dark mode (Toolbox V1) ── */
+  html.dark body { background: #0f172a; color: #e2e8f0; }
+  html.dark .card { background: #1e293b; border-color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  html.dark .card-tap:hover { box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+  html.dark .top-bar { background: rgba(15,23,42,.95); border-color: #334155; }
+  html.dark .bottom-nav { background: rgba(15,23,42,.97); border-color: #334155; }
+  html.dark .more-menu { background: #1e293b; border-color: #334155; box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+  html.dark .more-item { color: #e2e8f0; }
+  html.dark .more-item:hover { background: #334155; }
+  html.dark .btn-pill { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+  html.dark .btn-pill.active { background: rgba(16,185,129,.15); border-color: #27ab83; color: #6ee7b7; }
+  html.dark .check-box { border-color: #475569; }
+  html.dark .section-btn { color: #e2e8f0; }
+  html.dark .fb-textarea, html.dark .fb-input { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+  html.dark .fb-tag { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+  html.dark .fb-tag.sel { background: rgba(16,185,129,.15); border-color: #27ab83; color: #6ee7b7; }
+  html.dark ::-webkit-scrollbar-thumb { background: #475569; }
+  html.dark .install-banner { background: linear-gradient(135deg, #1e293b, #0f172a); }
+  /* Override inline styles des composants React */
+  html.dark .content { color: #e2e8f0; }
+  html.dark .content h1, html.dark .content h2, html.dark .content h3 { color: #f1f5f9 !important; }
+  html.dark .content p { color: #cbd5e1; }
+  html.dark .content [style*="color:#102a43"], html.dark .content [style*="color: #102a43"] { color: #e2e8f0 !important; }
+  html.dark .content [style*="color:#243b53"], html.dark .content [style*="color: #243b53"] { color: #e2e8f0 !important; }
+  html.dark .content [style*="color:#334e68"], html.dark .content [style*="color: #334e68"] { color: #cbd5e1 !important; }
+  html.dark .content [style*="color:#486581"], html.dark .content [style*="color: #486581"] { color: #94a3b8 !important; }
+  html.dark .content [style*="color:#627d98"], html.dark .content [style*="color: #627d98"] { color: #94a3b8 !important; }
+  html.dark .content [style*="color:#7b8faa"], html.dark .content [style*="color: #7b8faa"] { color: #64748b !important; }
+  html.dark .content [style*="color:#9fb3c8"], html.dark .content [style*="color: #9fb3c8"] { color: #64748b !important; }
+  html.dark .content [style*="color:#bcccdc"], html.dark .content [style*="color: #bcccdc"] { color: #475569 !important; }
+  html.dark .content [style*="background:#fff"], html.dark .content [style*="background: #fff"],
+  html.dark .content [style*="background:#ffffff"], html.dark .content [style*="background: #ffffff"] { background: #1e293b !important; }
+  html.dark .content [style*="background:#f0f4f8"], html.dark .content [style*="background: #f0f4f8"],
+  html.dark .content [style*="background:#f8fafc"], html.dark .content [style*="background: #f8fafc"] { background: #0f172a !important; }
+  html.dark .content [style*="border-color:#e2e8f0"], html.dark .content [style*="border: 1px solid #e2e8f0"],
+  html.dark .content [style*="border:1px solid #e2e8f0"] { border-color: #334155 !important; }
 </style>
 </head>
 <body>
@@ -1064,6 +1100,30 @@ if (new URLSearchParams(window.location.search).has('embedded')) {
   style.textContent = '.bottom-nav, .top-bar { display: none !important; } .content { padding-top: 8px; padding-bottom: 16px; }';
   document.head.appendChild(style);
 }
+
+// Dark mode : l'iframe lit le localStorage partagé (même domaine)
+(function() {
+  function applyToolboxDark(dark) {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+  // Appliquer au chargement
+  if (localStorage.getItem('usca_theme') === 'dark') applyToolboxDark(true);
+
+  // Écouter les changements depuis le parent via postMessage
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'usca-theme') {
+      applyToolboxDark(e.data.dark);
+    }
+  });
+  // Aussi écouter les changements localStorage (autres onglets)
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'usca_theme') applyToolboxDark(e.newValue === 'dark');
+  });
+})();
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
