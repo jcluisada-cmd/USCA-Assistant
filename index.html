@@ -14,12 +14,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="stylesheet" href="shared/theme.css">
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
   html.dark .bg-indigo-600 { background-color: #312e81 !important; }
   html.dark .text-indigo-200 { color: #a5b4fc !important; }
-  html.dark .bg-gradient-to-r { background: linear-gradient(to right, #312e81, #1e293b) !important; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -31,7 +31,8 @@
       <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
       <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
     </button>
-    <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur">
+    <!-- Logo (triple-tap = mode dev) -->
+    <div id="logo" class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur cursor-default">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>
       </svg>
@@ -50,104 +51,230 @@
         <p class="text-sm font-bold">Installer USCA Connect</p>
         <p class="text-xs text-indigo-200 mt-0.5">Accès rapide depuis l'écran d'accueil</p>
       </div>
-      <button id="btn-install" class="flex-shrink-0 px-4 py-2 bg-white text-indigo-700 text-xs font-bold rounded-lg hover:bg-indigo-50 transition-colors">
-        Installer
-      </button>
+      <button id="btn-install" class="flex-shrink-0 px-4 py-2 bg-white text-indigo-700 text-xs font-bold rounded-lg hover:bg-indigo-50 transition-colors">Installer</button>
       <button id="btn-dismiss-install" class="flex-shrink-0 text-indigo-300 hover:text-white transition-colors">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- Contenu principal -->
-  <main class="flex-1 flex flex-col items-center px-6 py-8 gap-4 max-w-md mx-auto w-full">
+  <!-- ════════════════ ÉCRAN DE LOGIN ════════════════ -->
+  <main id="login-screen" class="flex-1 flex flex-col items-center px-6 py-8 gap-4 max-w-md mx-auto w-full">
 
-    <p class="text-slate-500 text-sm font-medium text-center mb-1">Sélectionnez votre profil</p>
+    <!-- Sélection du profil -->
+    <p class="text-slate-500 text-sm font-medium text-center mb-1">Connectez-vous</p>
 
-    <!-- Carte Soignant -->
-    <a href="staff/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all p-5 flex items-center gap-4 group active:scale-[0.98]">
-      <div class="flex-shrink-0 w-13 h-13 bg-indigo-50 rounded-xl flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
-          <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/>
-        </svg>
-      </div>
-      <div class="flex-1">
-        <h2 class="text-base font-bold text-slate-800">Soignant</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Toolbox clinique, protocoles, scores, interactions</p>
-      </div>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
-    </a>
+    <!-- Onglets Patient / Soignant -->
+    <div class="flex w-full bg-slate-100 rounded-xl p-1 mb-2">
+      <button id="tab-patient" class="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-emerald-600 shadow-sm">Patient</button>
+      <button id="tab-staff" class="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-500">Soignant</button>
+    </div>
 
-    <!-- Carte Patient -->
-    <a href="patient/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-5 flex items-center gap-4 group active:scale-[0.98]">
-      <div class="flex-shrink-0 w-13 h-13 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M19 8v6"/><path d="M22 11h-6"/>
-        </svg>
+    <!-- Formulaire Patient -->
+    <form id="form-patient" class="w-full space-y-3" onsubmit="return false;">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Numéro de chambre</label>
+        <input type="text" id="patient-room" placeholder="Ex : 312" inputmode="numeric" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors placeholder:text-slate-300">
       </div>
-      <div class="flex-1">
-        <h2 class="text-base font-bold text-slate-800">Patient</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Programme du jour, alertes, fiches</p>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Date de naissance</label>
+        <input type="date" id="patient-dob" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
       </div>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
-    </a>
+      <button type="submit" id="btn-patient-login" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed">Se connecter</button>
+    </form>
 
-    <!-- Carte Admin -->
-    <a href="admin/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-400 transition-all p-5 flex items-center gap-4 group active:scale-[0.98]">
-      <div class="flex-shrink-0 w-13 h-13 bg-slate-100 rounded-xl flex items-center justify-center group-hover:bg-slate-200 transition-colors">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
+    <!-- Formulaire Soignant -->
+    <form id="form-staff" class="w-full space-y-3 hidden" onsubmit="return false;">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Identifiant</label>
+        <input type="text" id="staff-id" placeholder="prenom.nom" autocomplete="username" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-indigo-500 focus:outline-none transition-colors placeholder:text-slate-300">
       </div>
-      <div class="flex-1">
-        <h2 class="text-base font-bold text-slate-800">Administration</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Dashboard, alertes, groupes, configuration</p>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Mot de passe</label>
+        <input type="password" id="staff-pwd" placeholder="••••••••" autocomplete="current-password" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-indigo-500 focus:outline-none transition-colors placeholder:text-slate-300">
       </div>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    </a>
+      <button type="submit" id="btn-staff-login" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed">Se connecter</button>
+    </form>
+
+    <!-- Erreur -->
+    <p id="login-error" class="text-sm text-red-500 text-center font-medium hidden"></p>
 
   </main>
+
+  <!-- ════════════════ MODE DEV (masqué par défaut) ════════════════ -->
+  <div id="dev-mode" class="flex-1 flex flex-col items-center px-6 py-6 gap-3 max-w-md mx-auto w-full hidden">
+    <div class="w-full bg-amber-50 border border-amber-200 rounded-xl p-3 text-center mb-2">
+      <p class="text-xs font-bold text-amber-700">Mode développeur</p>
+    </div>
+    <a href="staff/" class="w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-md transition-all active:scale-[0.98]">
+      <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
+      </div>
+      <div class="flex-1"><p class="text-sm font-bold text-slate-800">Toolbox Soignant</p></div>
+    </a>
+    <a href="patient/" class="w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-md transition-all active:scale-[0.98]">
+      <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+      </div>
+      <div class="flex-1"><p class="text-sm font-bold text-slate-800">Module Patient</p></div>
+    </a>
+    <a href="admin/" class="w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 hover:shadow-md transition-all active:scale-[0.98]">
+      <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="flex-1"><p class="text-sm font-bold text-slate-800">Administration</p></div>
+    </a>
+    <button id="btn-exit-dev" class="text-xs text-slate-400 hover:text-slate-600 mt-2">Quitter le mode dev</button>
+  </div>
 
   <!-- Pied de page -->
   <footer class="text-center py-5 px-6">
     <p class="text-xs text-slate-400">USCA &middot; ELSA &middot; AP-HP Pitié-Salpêtrière</p>
-    <p class="text-xs text-slate-300 mt-1">v2.2</p>
+    <p class="text-xs text-slate-300 mt-1">v3.0</p>
   </footer>
 
+<script src="shared/supabase.js"></script>
+<script src="shared/auth.js"></script>
 <script>
-// ── Installation PWA ──
-let deferredPrompt;
+// ── Onglets Patient / Soignant ──
+var tabPatient = document.getElementById('tab-patient');
+var tabStaff = document.getElementById('tab-staff');
+var formPatient = document.getElementById('form-patient');
+var formStaff = document.getElementById('form-staff');
+var loginError = document.getElementById('login-error');
 
-window.addEventListener('beforeinstallprompt', (e) => {
+tabPatient.addEventListener('click', function() {
+  tabPatient.className = 'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-emerald-600 shadow-sm';
+  tabStaff.className = 'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-500';
+  formPatient.classList.remove('hidden');
+  formStaff.classList.add('hidden');
+  loginError.classList.add('hidden');
+});
+
+tabStaff.addEventListener('click', function() {
+  tabStaff.className = 'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-indigo-600 shadow-sm';
+  tabPatient.className = 'flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-500';
+  formStaff.classList.remove('hidden');
+  formPatient.classList.add('hidden');
+  loginError.classList.add('hidden');
+});
+
+// ── Login Patient ──
+formPatient.addEventListener('submit', async function() {
+  var room = document.getElementById('patient-room').value.trim();
+  var dob = document.getElementById('patient-dob').value;
+  if (!room || !dob) { showError('Veuillez remplir tous les champs'); return; }
+
+  var btn = document.getElementById('btn-patient-login');
+  btn.disabled = true; btn.textContent = 'Connexion...';
+  loginError.classList.add('hidden');
+
+  try {
+    var patient = await auth.loginPatient(room, dob);
+    // Rediriger vers le module patient (qui détectera la session)
+    window.location.href = 'patient/';
+  } catch(err) {
+    showError(err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Se connecter';
+  }
+});
+document.getElementById('btn-patient-login').addEventListener('click', function() { formPatient.dispatchEvent(new Event('submit')); });
+
+// ── Login Soignant ──
+formStaff.addEventListener('submit', async function() {
+  var id = document.getElementById('staff-id').value.trim();
+  var pwd = document.getElementById('staff-pwd').value;
+  if (!id || !pwd) { showError('Veuillez remplir tous les champs'); return; }
+
+  var btn = document.getElementById('btn-staff-login');
+  btn.disabled = true; btn.textContent = 'Connexion...';
+  loginError.classList.add('hidden');
+
+  // Transformer l'identifiant en faux email
+  var email = id.includes('@') ? id : id + '@usca.local';
+
+  try {
+    var profile = await auth.loginStaff(email, pwd);
+    // Stocker la session unifiée
+    localStorage.setItem('usca_session', JSON.stringify({
+      type: 'staff',
+      profile: profile
+    }));
+    // Rediriger : admin a accès à tout, les autres à la toolbox + admin
+    window.location.href = 'admin/';
+  } catch(err) {
+    showError(err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Se connecter';
+  }
+});
+document.getElementById('btn-staff-login').addEventListener('click', function() { formStaff.dispatchEvent(new Event('submit')); });
+
+function showError(msg) {
+  loginError.textContent = msg;
+  loginError.classList.remove('hidden');
+}
+
+// ── Auto-redirect si session existante ──
+(async function checkSession() {
+  // Patient ?
+  var patientSession = auth.getPatientSession();
+  if (patientSession) {
+    window.location.href = 'patient/';
+    return;
+  }
+  // Staff ?
+  var staffSession = await auth.getStaffSession();
+  if (staffSession) {
+    window.location.href = 'admin/';
+    return;
+  }
+})();
+
+// ── Mode dev : triple-tap sur le logo ──
+var tapCount = 0;
+var tapTimer = null;
+document.getElementById('logo').addEventListener('click', function() {
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(function() { tapCount = 0; }, 600);
+  if (tapCount >= 3) {
+    tapCount = 0;
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('dev-mode').classList.remove('hidden');
+  }
+});
+
+document.getElementById('btn-exit-dev').addEventListener('click', function() {
+  document.getElementById('dev-mode').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+});
+
+// ── Installation PWA ──
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   deferredPrompt = e;
   document.getElementById('install-banner').classList.remove('hidden');
 });
-
-document.getElementById('btn-install').addEventListener('click', async () => {
+document.getElementById('btn-install').addEventListener('click', async function() {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
+  await deferredPrompt.userChoice;
   deferredPrompt = null;
   document.getElementById('install-banner').classList.add('hidden');
 });
-
-document.getElementById('btn-dismiss-install').addEventListener('click', () => {
+document.getElementById('btn-dismiss-install').addEventListener('click', function() {
   document.getElementById('install-banner').classList.add('hidden');
 });
-
-// Masquer le bandeau si déjà installé en standalone
 if (window.matchMedia('(display-mode: standalone)').matches) {
   document.getElementById('install-banner').classList.add('hidden');
 }
 
-// Register Service Worker
+// Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
+  navigator.serviceWorker.register('sw.js').catch(function(){});
 }
 </script>
 <script src="shared/theme.js"></script>

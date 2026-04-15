@@ -136,6 +136,69 @@
         </button>
       </div>
 
+      <!-- Carte Comptes (visible seulement pour admin) -->
+      <div id="admin-only-section" class="mb-6 hidden">
+        <button id="card-comptes" class="w-full bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-slate-400 transition-all active:scale-[0.98] flex items-center gap-4">
+          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="flex-1">
+            <p id="stat-comptes" class="text-lg font-bold text-slate-800">—</p>
+            <p class="text-xs text-slate-500">Comptes soignants</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Section Comptes -->
+      <section id="section-comptes" class="mb-6 hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-slate-800">Comptes soignants</h3>
+          <div class="flex gap-2">
+            <button id="btn-new-compte" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-700 text-white hover:bg-slate-800 transition-colors">+ Nouveau</button>
+            <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
+          </div>
+        </div>
+        <!-- Formulaire nouveau compte -->
+        <div id="form-new-compte" class="bg-white rounded-xl border border-slate-300 p-5 mb-4 hidden">
+          <h4 class="text-sm font-bold text-slate-700 mb-3">Créer un compte</h4>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Identifiant</label>
+              <input type="text" id="new-staff-id" placeholder="prenom.nom" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Mot de passe</label>
+              <input type="text" id="new-staff-pwd" placeholder="••••••" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nom affiché</label>
+              <input type="text" id="new-staff-nom" placeholder="Dr Dupont" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Rôle</label>
+              <select id="new-staff-role" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                <option value="medecin">Médecin</option>
+                <option value="ide">IDE</option>
+                <option value="etudiant">Étudiant / Externe</option>
+                <option value="animateur">Animateur</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button id="btn-cancel-compte" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+            <button id="btn-save-compte" class="flex-1 py-2.5 bg-slate-700 text-white font-bold rounded-lg text-sm hover:bg-slate-800 transition-colors">Créer le compte</button>
+          </div>
+          <p id="new-compte-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+          <p id="new-compte-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
+        </div>
+        <!-- Liste des comptes -->
+        <div id="comptes-list" class="space-y-2"></div>
+      </section>
+
       <!-- Section Patients -->
       <section id="section-patients" class="mb-6 hidden">
         <div class="flex items-center justify-between mb-3">
@@ -157,10 +220,6 @@
               <label class="block text-xs font-semibold text-slate-600 mb-1">Date de naissance</label>
               <input type="date" id="new-ddn" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
             </div>
-          </div>
-          <div class="mb-3">
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Sortie prévue</label>
-            <input type="date" id="new-sortie" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
           </div>
           <div class="flex gap-2">
             <button id="btn-cancel-patient" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
@@ -284,6 +343,7 @@ function showAdminApp(profile) {
   document.getElementById('badge-role').textContent = profile.role.charAt(0).toUpperCase() + profile.role.slice(1);
   document.getElementById('staff-name').textContent = profile.nom;
   loadDashboardStats();
+  checkAdminAccess();
 
   if (auth.hasPin()) {
     auth.setupInactivityLock(60 * 60 * 1000, () => {
@@ -373,12 +433,7 @@ function renderPatients() {
 
 // ── Formulaire nouveau patient ──
 document.getElementById('btn-new-patient').addEventListener('click', function() {
-  var form = document.getElementById('form-new-patient');
-  form.classList.toggle('hidden');
-  // Date de sortie par défaut = aujourd'hui + 12 jours
-  var sortie = new Date();
-  sortie.setDate(sortie.getDate() + 12);
-  document.getElementById('new-sortie').value = sortie.toISOString().split('T')[0];
+  document.getElementById('form-new-patient').classList.toggle('hidden');
 });
 
 document.getElementById('btn-cancel-patient').addEventListener('click', function() {
@@ -388,7 +443,6 @@ document.getElementById('btn-cancel-patient').addEventListener('click', function
 document.getElementById('btn-save-patient').addEventListener('click', async function() {
   var chambre = document.getElementById('new-chambre').value.trim();
   var ddn = document.getElementById('new-ddn').value;
-  var sortie = document.getElementById('new-sortie').value;
   var errEl = document.getElementById('new-patient-error');
 
   if (!chambre || !ddn) {
@@ -403,8 +457,7 @@ document.getElementById('btn-save-patient').addEventListener('click', async func
   try {
     await db.createPatient({
       numero_chambre: chambre,
-      date_naissance: ddn,
-      date_sortie_prevue: sortie || null
+      date_naissance: ddn
     });
     document.getElementById('form-new-patient').classList.add('hidden');
     document.getElementById('new-chambre').value = '';
@@ -614,14 +667,119 @@ function renderProgrammes() {
   });
 }
 
+// ── Gestion des comptes (admin seulement) ──
+
+// Afficher la section comptes si admin
+function checkAdminAccess() {
+  if (currentProfile && currentProfile.role === 'admin') {
+    document.getElementById('admin-only-section').classList.remove('hidden');
+  }
+}
+
+document.getElementById('card-comptes').addEventListener('click', function() { toggleSection('comptes', renderComptes); });
+
+document.getElementById('btn-new-compte').addEventListener('click', function() {
+  document.getElementById('form-new-compte').classList.toggle('hidden');
+  document.getElementById('new-compte-error').classList.add('hidden');
+  document.getElementById('new-compte-success').classList.add('hidden');
+});
+
+document.getElementById('btn-cancel-compte').addEventListener('click', function() {
+  document.getElementById('form-new-compte').classList.add('hidden');
+});
+
+document.getElementById('btn-save-compte').addEventListener('click', async function() {
+  var id = document.getElementById('new-staff-id').value.trim();
+  var pwd = document.getElementById('new-staff-pwd').value;
+  var nom = document.getElementById('new-staff-nom').value.trim();
+  var role = document.getElementById('new-staff-role').value;
+  var errEl = document.getElementById('new-compte-error');
+  var successEl = document.getElementById('new-compte-success');
+  errEl.classList.add('hidden');
+  successEl.classList.add('hidden');
+
+  if (!id || !pwd || !nom) { errEl.textContent = 'Tous les champs sont obligatoires'; errEl.classList.remove('hidden'); return; }
+  if (pwd.length < 6) { errEl.textContent = 'Le mot de passe doit faire au moins 6 caractères'; errEl.classList.remove('hidden'); return; }
+
+  this.disabled = true;
+  this.textContent = 'Création...';
+
+  var email = id.includes('@') ? id : id + '@usca.local';
+
+  // Sauvegarder les credentials admin pour se re-connecter après
+  var adminSession = await sb.auth.getSession();
+
+  try {
+    // Créer le compte Supabase Auth
+    var newUser = await auth.registerStaff(email, pwd, nom, role);
+
+    // Re-connecter l'admin (le signUp a changé la session)
+    if (adminSession && adminSession.data && adminSession.data.session) {
+      await sb.auth.setSession({
+        access_token: adminSession.data.session.access_token,
+        refresh_token: adminSession.data.session.refresh_token
+      });
+    }
+
+    // Succès
+    successEl.textContent = 'Compte créé ! Identifiant : ' + id;
+    successEl.classList.remove('hidden');
+    document.getElementById('new-staff-id').value = '';
+    document.getElementById('new-staff-pwd').value = '';
+    document.getElementById('new-staff-nom').value = '';
+    renderComptes();
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+    // Re-connecter l'admin en cas d'erreur aussi
+    if (adminSession && adminSession.data && adminSession.data.session) {
+      await sb.auth.setSession({
+        access_token: adminSession.data.session.access_token,
+        refresh_token: adminSession.data.session.refresh_token
+      });
+    }
+  }
+  this.disabled = false;
+  this.textContent = 'Créer le compte';
+});
+
+async function renderComptes() {
+  var list = document.getElementById('comptes-list');
+  list.textContent = '';
+  try {
+    var profiles = await db.getAllProfiles();
+    document.getElementById('stat-comptes').textContent = profiles.length;
+    if (profiles.length === 0) {
+      list.appendChild(createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center')).appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun compte'));
+      return;
+    }
+    var roleColors = { admin: 'bg-slate-100 text-slate-700', medecin: 'bg-indigo-50 text-indigo-700', ide: 'bg-emerald-50 text-emerald-700', etudiant: 'bg-amber-50 text-amber-700', animateur: 'bg-purple-50 text-purple-700' };
+    profiles.forEach(function(p) {
+      var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3');
+      var avatar = createEl('div', 'w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0');
+      avatar.appendChild(createEl('span', 'text-sm font-bold text-slate-600', p.nom.charAt(0).toUpperCase()));
+      card.appendChild(avatar);
+      var info = createEl('div', 'flex-1');
+      info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', p.nom));
+      var idDisplay = p.email.replace('@usca.local', '');
+      info.appendChild(createEl('p', 'text-xs text-slate-500', idDisplay));
+      card.appendChild(info);
+      var badge = createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full ' + (roleColors[p.role] || roleColors.etudiant), p.role);
+      card.appendChild(badge);
+      list.appendChild(card);
+    });
+  } catch(e) {
+    list.appendChild(createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center')).appendChild(createEl('p', 'text-sm text-slate-500', 'Erreur de chargement'));
+  }
+}
+
 // ── Déconnexion ──
 document.getElementById('btn-logout').addEventListener('click', async () => {
   auth.clearInactivityLock();
   await auth.logoutStaff();
-  document.getElementById('admin-app').classList.add('hidden');
-  document.getElementById('login-screen').classList.remove('hidden');
-  document.getElementById('input-email').value = '';
-  document.getElementById('input-password').value = '';
+  localStorage.removeItem('usca_session');
+  // Retour à l'accueil unifié
+  window.location.href = '../';
 });
 
 // ── PIN Lock ──

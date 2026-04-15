@@ -47,18 +47,16 @@ window.db = {
       .select('id, prenom, programme_id, numero_chambre, substance_principale, date_admission, date_sortie_prevue')
       .eq('numero_chambre', room)
       .eq('date_naissance', dob)
-      .gte('date_sortie_prevue', new Date().toISOString().split('T')[0])
       .single();
     if (error) return null; // Pas trouvé = login échoué
     return data;
   },
 
-  /** Liste tous les patients hospitalisés (staff) */
+  /** Liste tous les patients (staff) */
   async getPatients() {
     const { data, error } = await sb
       .from('patients')
       .select('*')
-      .gte('date_sortie_prevue', new Date().toISOString().split('T')[0])
       .order('numero_chambre');
     if (error) throw error;
     return data;
