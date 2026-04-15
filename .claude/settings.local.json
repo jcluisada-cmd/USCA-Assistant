@@ -4,7 +4,10 @@
       "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\staff\")",
       "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\patient\")",
       "Bash(mkdir -p \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\shared\")",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(identify \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\icon-512.png\")",
+      "Bash(python3 -c \"from PIL import Image; img=Image.open\\(r'C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\icon-512.png'\\); print\\(img.size\\)\")",
+      "Bash(python3:*)"
     ]
   }
 }

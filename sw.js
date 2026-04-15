@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.16';
+const CACHE_NAME = 'usca-v3.17';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -17,6 +17,8 @@ const LOCAL_ASSETS = [
   './shared/theme.css',
   './shared/theme.js',
   './shared/craving-agenda.js',
+  './icon-512.png',
+  './splash.png',
   './manifest.json'
 ];
 

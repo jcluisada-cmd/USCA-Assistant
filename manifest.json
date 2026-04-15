@@ -6,10 +6,9 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#4F46E5",
+  "background_color": "#f0f4f8",
   "theme_color": "#4F46E5",
   "icons": [
-    { "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%234F46E5'/%3E%3Ccircle cx='256' cy='256' r='48' fill='%2310B981'/%3E%3Cpath d='M256 80v40M256 392v40M80 256h40M392 256h40' stroke='white' stroke-width='12' stroke-linecap='round'/%3E%3C/svg%3E", "sizes": "512x512", "type": "image/svg+xml" },
-    { "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%234F46E5'/%3E%3Ccircle cx='96' cy='96' r='18' fill='%2310B981'/%3E%3Cpath d='M96 30v16M96 146v16M30 96h16M146 96h16' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E", "sizes": "192x192", "type": "image/svg+xml" }
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }

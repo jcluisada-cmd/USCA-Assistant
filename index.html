@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="USCA Connect">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%234F46E5'/%3E%3Ccircle cx='96' cy='96' r='18' fill='%2310B981'/%3E%3Cpath d='M96 30v16M96 146v16M30 96h16M146 96h16' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-512.png">
 <title>USCA Connect — Pitié-Salpêtrière</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +23,11 @@
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- Splash screen -->
+  <div id="splash" class="fixed inset-0 z-[999] flex flex-col items-center justify-center" style="background:#f0f4f8;">
+    <img src="splash.png" alt="USCA Connect" style="max-width:70%;max-height:70%;object-fit:contain;">
+  </div>
 
   <!-- En-tête -->
   <header class="bg-indigo-600 text-white px-6 pt-12 pb-8 text-center relative">
@@ -230,7 +235,20 @@ function showError(msg) {
     window.location.href = 'admin/';
     return;
   }
+  // Pas de session → masquer le splash et montrer le login
+  hideSplash();
 })();
+
+function hideSplash() {
+  var splash = document.getElementById('splash');
+  if (splash) {
+    splash.style.transition = 'opacity 0.4s';
+    splash.style.opacity = '0';
+    setTimeout(function() { splash.remove(); }, 400);
+  }
+}
+// Fallback : masquer le splash après 3s max (au cas où le JS bloque)
+setTimeout(hideSplash, 3000);
 
 // ── Mode dev : triple-tap sur le logo ──
 var tapCount = 0;

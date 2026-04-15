@@ -147,7 +147,7 @@
 
   <!-- URL -->
   <div class="url-bar">
-    <span>usca-connect.jc-luisada.workers.dev</span>
+    <span>usca-connect.pages.dev</span>
     <p>Ouvrez ce lien dans votre navigateur (Chrome ou Safari) &middot; Fonctionne sur téléphone, tablette et PC</p>
   </div>
 
@@ -164,7 +164,7 @@
         <div class="value">usca_c15</div>
       </div>
     </div>
-    <p class="login-note">Votre identifiant = votre prénom.nom en minuscules (ex : thomas.peyroux). Sélectionnez l'onglet "Soignant" sur la page d'accueil. Votre compte doit avoir été créé par l'administrateur.</p>
+    <p class="login-note">Votre identifiant = votre prénom.nom en minuscules. Sélectionnez l'onglet "Soignant" sur la page d'accueil. Votre compte doit avoir été créé par l'administrateur.</p>
   </div>
 
   <!-- Fonctionnalités disponibles -->
@@ -220,7 +220,7 @@
 // Générer le QR Code en canvas (librairie inline minimaliste)
 // QR Code generator simplifié — utilise l'API Google Charts (nécessite internet pour générer)
 var qrImg = document.getElementById('qr');
-qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent('https://usca-connect.jc-luisada.workers.dev');
+qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent('https://usca-connect.pages.dev');
 qrImg.onerror = function() {
   // Fallback si pas d'internet : afficher un placeholder
   this.style.background = '#e2e8f0';
