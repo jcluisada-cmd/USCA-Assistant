@@ -154,7 +154,51 @@
       <!-- Étape 1 : Intensité -->
       <div>
         <p class="text-sm font-bold text-slate-800 mb-2">Intensité de l'envie</p>
-        <div id="intensity-grid" class="grid grid-cols-5 gap-2"></div>
+        <div id="intensity-grid" class="grid grid-cols-5 gap-2 mb-4"></div>
+      </div>
+
+      <!-- Courbe du craving — exercice d'insight indépendant -->
+      <div>
+        <p class="text-sm font-bold text-slate-800 mb-1">Où en êtes-vous sur la courbe du craving ?</p>
+        <p class="text-xs text-slate-500 mb-3">Le craving monte, atteint un pic, puis redescend. Tapez là où vous pensez être.</p>
+        <div class="bg-white rounded-2xl border border-slate-200 p-4">
+          <div class="relative">
+            <svg id="craving-curve" viewBox="0 0 300 130" class="w-full cursor-pointer" style="touch-action: none;">
+              <!-- Axes -->
+              <line x1="30" y1="100" x2="290" y2="100" stroke="#cbd5e1" stroke-width="1"/>
+              <line x1="30" y1="10" x2="30" y2="100" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Flèches axes -->
+              <polygon points="290,97 290,103 298,100" fill="#cbd5e1"/>
+              <polygon points="27,10 33,10 30,2" fill="#cbd5e1"/>
+              <!-- Labels axes -->
+              <text x="160" y="125" text-anchor="middle" fill="#64748b" font-size="10" font-weight="600" font-family="DM Sans">Temps</text>
+              <text x="14" y="55" text-anchor="middle" fill="#64748b" font-size="10" font-weight="600" font-family="DM Sans" transform="rotate(-90, 14, 55)">Intensit\u00e9</text>
+              <!-- Courbe -->
+              <path d="M30,100 C60,98 80,85 110,55 C130,35 145,15 160,12 C175,15 195,35 220,55 C245,75 265,92 290,98" fill="none" stroke="url(#curveGrad)" stroke-width="3" stroke-linecap="round"/>
+              <!-- Zone sous la courbe (remplissage léger) -->
+              <path d="M30,100 C60,98 80,85 110,55 C130,35 145,15 160,12 C175,15 195,35 220,55 C245,75 265,92 290,98 L290,100 Z" fill="url(#curveFill)" opacity="0.15"/>
+              <defs>
+                <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fbbf24"/>
+                  <stop offset="35%" stop-color="#f97316"/>
+                  <stop offset="50%" stop-color="#ef4444"/>
+                  <stop offset="65%" stop-color="#f97316"/>
+                  <stop offset="100%" stop-color="#10b981"/>
+                </linearGradient>
+                <linearGradient id="curveFill" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fbbf24"/>
+                  <stop offset="50%" stop-color="#ef4444"/>
+                  <stop offset="100%" stop-color="#10b981"/>
+                </linearGradient>
+              </defs>
+              <!-- Zone cliquable -->
+              <rect x="30" y="0" width="260" height="110" fill="transparent"/>
+              <!-- Point sélectionné -->
+              <circle id="curve-dot" cx="0" cy="0" r="8" fill="#4F46E5" stroke="white" stroke-width="2.5" style="display:none"/>
+            </svg>
+          </div>
+          <p id="curve-feedback" class="text-center text-sm font-bold text-slate-400 mt-2">Tapez sur la courbe pour vous situer</p>
+        </div>
       </div>
 
       <!-- Étape 2 : Facteur déclenchant -->
@@ -215,37 +259,122 @@
       <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <span class="text-sm font-bold">Mes stratégies de prévention</span>
+      <span class="text-sm font-bold">Mon plan de prévention</span>
     </header>
-    <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-4">
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-5 pb-8">
 
-      <p class="text-sm text-slate-500">Construisez vos propres stratégies pour faire face aux situations à risque.</p>
-
-      <!-- Formulaire ajout -->
-      <div class="bg-white rounded-xl border border-slate-200 p-4">
-        <div class="mb-3">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Catégorie</label>
-          <select id="strat-cat" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-            <option value="situation">Situation à risque</option>
-            <option value="emotion">Émotion difficile</option>
-            <option value="pensee">Pensée automatique</option>
-            <option value="action">Action alternative</option>
-            <option value="contact">Personne ressource</option>
-            <option value="general">Autre</option>
-          </select>
+      <!-- ── Section éducative : Comprendre le craving ── -->
+      <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
+        <h3 class="text-base font-bold text-indigo-800 mb-3">Comprendre le craving</h3>
+        <p class="text-sm text-indigo-700 leading-relaxed mb-3">
+          Le craving est une <strong>envie intense et temporaire</strong> de consommer. C'est une réaction normale du cerveau pendant le sevrage.
+        </p>
+        <div class="bg-white rounded-xl p-4 mb-3">
+          <p class="text-xs font-bold text-indigo-600 mb-2">LA COURBE DU CRAVING</p>
+          <div class="flex items-end gap-1 h-16 mb-2">
+            <div class="w-3 bg-amber-200 rounded-t" style="height:20%"></div>
+            <div class="w-3 bg-amber-300 rounded-t" style="height:40%"></div>
+            <div class="w-3 bg-orange-400 rounded-t" style="height:70%"></div>
+            <div class="w-3 bg-red-400 rounded-t" style="height:95%"></div>
+            <div class="w-3 bg-red-500 rounded-t" style="height:100%"></div>
+            <div class="w-3 bg-red-400 rounded-t" style="height:85%"></div>
+            <div class="w-3 bg-orange-400 rounded-t" style="height:60%"></div>
+            <div class="w-3 bg-amber-300 rounded-t" style="height:35%"></div>
+            <div class="w-3 bg-amber-200 rounded-t" style="height:20%"></div>
+            <div class="w-3 bg-emerald-200 rounded-t" style="height:10%"></div>
+            <div class="w-3 bg-emerald-200 rounded-t" style="height:5%"></div>
+          </div>
+          <p class="text-xs text-slate-500">L'envie monte, atteint un pic, puis <strong>redescend naturellement en 15-30 minutes</strong> si vous ne cédez pas.</p>
         </div>
-        <div class="mb-3">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Ma stratégie</label>
-          <textarea id="strat-text" rows="2" placeholder="Ex : Quand je suis stressé, je fais 10 respirations profondes..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-indigo-400 placeholder:text-slate-300"></textarea>
-        </div>
-        <button id="btn-add-strat" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm transition-colors active:scale-[0.98]">Ajouter</button>
+        <p class="text-sm text-indigo-700 leading-relaxed">
+          Construisez votre plan ci-dessous. Ces stratégies vous seront rappelées quand vous signalerez un craving.
+        </p>
       </div>
 
-      <!-- Liste des stratégies -->
-      <div id="strategies-list" class="space-y-2"></div>
-      <div id="strategies-empty" class="text-center py-4 hidden">
-        <p class="text-sm text-slate-400">Aucune stratégie pour le moment</p>
-        <p class="text-xs text-slate-300 mt-1">Ajoutez-en une ci-dessus</p>
+      <!-- ── 1. Mes situations à risque ── -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">Mes situations à risque</h4>
+        </div>
+        <p class="text-xs text-slate-500 mb-3">Quels lieux, moments ou personnes déclenchent votre envie de consommer ?</p>
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="input-situation" placeholder="Ex : Quand je passe devant le bar en bas de chez moi" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-red-400 placeholder:text-slate-300">
+          <button data-cat="situation" class="btn-add-strat flex-shrink-0 px-4 py-2.5 bg-red-500 text-white font-bold rounded-xl text-xs hover:bg-red-600 transition-colors">+</button>
+        </div>
+        <div id="list-situation" class="space-y-1.5"></div>
+      </div>
+
+      <!-- ── 2. Mes émotions déclenchantes ── -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">Mes émotions déclenchantes</h4>
+        </div>
+        <p class="text-xs text-slate-500 mb-3">Quelles émotions vous donnent envie de consommer ? (stress, colère, ennui, tristesse...)</p>
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="input-emotion" placeholder="Ex : Quand je me sens seul le soir" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-400 placeholder:text-slate-300">
+          <button data-cat="emotion" class="btn-add-strat flex-shrink-0 px-4 py-2.5 bg-blue-500 text-white font-bold rounded-xl text-xs hover:bg-blue-600 transition-colors">+</button>
+        </div>
+        <div id="list-emotion" class="space-y-1.5"></div>
+      </div>
+
+      <!-- ── 3. Mes pensées pièges ── -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/></svg>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">Mes pensées pièges</h4>
+        </div>
+        <p class="text-xs text-slate-500 mb-3">Quelles pensées vous piègent ? (ex : "Juste une fois", "Je gère", "C'est la dernière"...)</p>
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="input-pensee" placeholder="Ex : « Juste un verre, je contrôle »" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-amber-400 placeholder:text-slate-300">
+          <button data-cat="pensee" class="btn-add-strat flex-shrink-0 px-4 py-2.5 bg-amber-500 text-white font-bold rounded-xl text-xs hover:bg-amber-600 transition-colors">+</button>
+        </div>
+        <div id="list-pensee" class="space-y-1.5"></div>
+      </div>
+
+      <!-- ── 4. Mes actions alternatives ── -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">Ce que je fais quand l'envie monte</h4>
+        </div>
+        <p class="text-xs text-slate-500 mb-3">Quelles actions concrètes vous aident ? (marcher, appeler quelqu'un, respirer, boire un verre d'eau...)</p>
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="input-action" placeholder="Ex : Je fais 10 respirations profondes (4-7-8)" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-400 placeholder:text-slate-300">
+          <button data-cat="action" class="btn-add-strat flex-shrink-0 px-4 py-2.5 bg-emerald-500 text-white font-bold rounded-xl text-xs hover:bg-emerald-600 transition-colors">+</button>
+        </div>
+        <div id="list-action" class="space-y-1.5"></div>
+      </div>
+
+      <!-- ── 5. Mes personnes ressources ── -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">Mes personnes ressources</h4>
+        </div>
+        <p class="text-xs text-slate-500 mb-3">Qui pouvez-vous appeler en cas de difficulté ? (famille, ami, soignant, parrain AA/NA...)</p>
+        <div class="flex gap-2 mb-2">
+          <input type="text" id="input-contact" placeholder="Ex : Mon frère Paul — 06 12 34 56 78" class="flex-1 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-400 placeholder:text-slate-300">
+          <button data-cat="contact" class="btn-add-strat flex-shrink-0 px-4 py-2.5 bg-indigo-500 text-white font-bold rounded-xl text-xs hover:bg-indigo-600 transition-colors">+</button>
+        </div>
+        <div id="list-contact" class="space-y-1.5"></div>
+      </div>
+
+      <!-- Compteur de stratégies -->
+      <div id="strat-counter" class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center">
+        <p class="text-sm font-semibold text-indigo-700"><span id="strat-count">0</span> stratégie(s) dans votre plan</p>
+        <p class="text-xs text-indigo-500 mt-1">Elles apparaissent quand vous signalez un craving</p>
       </div>
     </div>
   </div>
@@ -371,7 +500,7 @@ function openPanel(name) {
 
 // ══════════════ CRAVING ══════════════
 
-// Intensité 1-10
+// Intensité 1-10 (grille de boutons)
 var intensityGrid = document.getElementById('intensity-grid');
 for (var i = 1; i <= 10; i++) {
   (function(n) {
@@ -389,6 +518,48 @@ for (var i = 1; i <= 10; i++) {
     intensityGrid.appendChild(btn);
   })(i);
 }
+
+// Courbe du craving — exercice d'insight INDÉPENDANT de l'intensité
+var cravingSvg = document.getElementById('craving-curve');
+var curveDot = document.getElementById('curve-dot');
+var curveFeedback = document.getElementById('curve-feedback');
+var selectedCurvePhase = null;
+
+// La courbe suit y = gaussienne centrée sur x=160
+function curveYAtX(x) {
+  var normalized = (x - 160) / 60;
+  return 100 - 88 * Math.exp(-0.5 * normalized * normalized);
+}
+
+// Phases de la courbe selon la position X
+function getPhase(x) {
+  if (x < 70) return { label: 'D\u00e9but — l\u2019envie commence', color: '#fbbf24', phase: 'debut' };
+  if (x < 130) return { label: 'Mont\u00e9e — l\u2019envie augmente', color: '#f97316', phase: 'montee' };
+  if (x < 190) return { label: 'Pic — l\u2019envie est maximale', color: '#ef4444', phase: 'pic' };
+  if (x < 250) return { label: 'Descente — l\u2019envie diminue', color: '#f97316', phase: 'descente' };
+  return { label: 'Fin — l\u2019envie passe', color: '#10b981', phase: 'fin' };
+}
+
+function handleCurveClick(evt) {
+  var rect = cravingSvg.getBoundingClientRect();
+  var clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+  var svgX = ((clientX - rect.left) / rect.width) * 300;
+  svgX = Math.max(35, Math.min(288, svgX));
+
+  var dotY = curveYAtX(svgX);
+  curveDot.setAttribute('cx', svgX);
+  curveDot.setAttribute('cy', dotY);
+  curveDot.style.display = '';
+
+  var phase = getPhase(svgX);
+  selectedCurvePhase = phase.phase;
+  curveDot.setAttribute('fill', phase.color);
+  curveFeedback.textContent = phase.label;
+  curveFeedback.style.color = phase.color;
+}
+
+cravingSvg.addEventListener('click', handleCurveClick);
+cravingSvg.addEventListener('touchstart', function(e) { e.preventDefault(); handleCurveClick(e); }, { passive: false });
 
 // Facteurs déclenchants
 var triggers = ['Stress', 'Ennui', 'Conflit', 'Insomnie', 'Douleur', 'Envie sociale', 'Lieu familier', 'Humeur basse', 'Autre'];
@@ -466,7 +637,7 @@ document.getElementById('btn-send-craving').addEventListener('click', async func
       intensite: selectedIntensity,
       declencheur: trigger || null,
       duree: selectedDuration || null,
-      message: 'Craving ' + selectedIntensity + '/10' + (trigger ? ' — ' + trigger : '') + (selectedDuration ? ' — ' + selectedDuration : '')
+      message: 'Craving ' + selectedIntensity + '/10' + (selectedCurvePhase ? ' [' + selectedCurvePhase + ']' : '') + (trigger ? ' — ' + trigger : '') + (selectedDuration ? ' — ' + selectedDuration : '')
     });
   } catch (e) { console.warn('Erreur :', e.message); }
 
@@ -491,7 +662,11 @@ document.getElementById('btn-send-craving').addEventListener('click', async func
       selectedIntensity = null;
       selectedTrigger = null;
       selectedDuration = null;
+      selectedCurvePhase = null;
       intensityGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('ring-2', 'ring-offset-1', 'ring-red-500', 'scale-110'); });
+      curveDot.style.display = 'none';
+      curveFeedback.textContent = 'Tapez sur la courbe pour vous situer';
+      curveFeedback.style.color = '#94a3b8';
       triggerGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
       durationGrid.querySelectorAll('button').forEach(function(b) { b.classList.remove('border-red-400', 'bg-red-50', 'text-red-700'); b.classList.add('border-slate-200', 'bg-white', 'text-slate-700'); });
       document.getElementById('trigger-other').value = '';
@@ -558,60 +733,81 @@ function makeNowMarker(now) {
 
 // ══════════════ STRATÉGIES ══════════════
 
-var catLabels = { general: 'Autre', situation: 'Situation à risque', emotion: 'Émotion difficile', pensee: 'Pensée automatique', action: 'Action alternative', contact: 'Personne ressource' };
+var catLabels = { general: 'Autre', situation: 'Situation \u00e0 risque', emotion: '\u00c9motion d\u00e9clenchante', pensee: 'Pens\u00e9e pi\u00e8ge', action: 'Action alternative', contact: 'Personne ressource' };
 function catLabel(c) { return catLabels[c] || c; }
+
+var catColors = {
+  situation: 'border-red-200 bg-red-50 text-red-800',
+  emotion: 'border-blue-200 bg-blue-50 text-blue-800',
+  pensee: 'border-amber-200 bg-amber-50 text-amber-800',
+  action: 'border-emerald-200 bg-emerald-50 text-emerald-800',
+  contact: 'border-indigo-200 bg-indigo-50 text-indigo-800',
+  general: 'border-slate-200 bg-slate-50 text-slate-800'
+};
 
 async function loadStrategies() {
   if (!currentPatient) return;
   try {
     patientStrategies = await db.getStrategies(currentPatient.id);
-  } catch (e) { patientStrategies = []; }
-  renderStrategies();
+  } catch (e) {
+    console.warn('Erreur chargement strat\u00e9gies :', e);
+    patientStrategies = [];
+  }
+  renderStrategiesByCategory();
 }
 
-function renderStrategies() {
-  var list = document.getElementById('strategies-list');
-  var empty = document.getElementById('strategies-empty');
-  list.textContent = '';
-  if (patientStrategies.length === 0) { empty.classList.remove('hidden'); return; }
-  empty.classList.add('hidden');
-
-  var catColors = { situation: 'border-red-200 bg-red-50', emotion: 'border-blue-200 bg-blue-50', pensee: 'border-amber-200 bg-amber-50', action: 'border-emerald-200 bg-emerald-50', contact: 'border-indigo-200 bg-indigo-50', general: 'border-slate-200 bg-slate-50' };
-
-  patientStrategies.forEach(function(s) {
-    var card = createEl('div', 'rounded-xl border p-3 flex items-start justify-between gap-2 ' + (catColors[s.categorie] || catColors.general));
-    var left = createEl('div', 'flex-1');
-    left.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase', catLabel(s.categorie)));
-    left.appendChild(createEl('p', 'text-sm text-slate-800 mt-0.5', s.texte));
-    card.appendChild(left);
-    var btnDel = createEl('button', 'flex-shrink-0 w-7 h-7 rounded-lg bg-white/80 flex items-center justify-center text-slate-400 hover:text-red-500 transition-colors');
-    btnDel.textContent = '\u00d7';
-    btnDel.style.fontSize = '18px';
-    btnDel.style.fontWeight = 'bold';
-    (function(id) {
-      btnDel.addEventListener('click', async function() {
-        try { await db.deleteStrategie(id); } catch(e) {}
-        loadStrategies();
-      });
-    })(s.id);
-    card.appendChild(btnDel);
-    list.appendChild(card);
+function renderStrategiesByCategory() {
+  var cats = ['situation', 'emotion', 'pensee', 'action', 'contact'];
+  cats.forEach(function(cat) {
+    var list = document.getElementById('list-' + cat);
+    if (!list) return;
+    list.textContent = '';
+    var items = patientStrategies.filter(function(s) { return s.categorie === cat; });
+    items.forEach(function(s) {
+      var row = createEl('div', 'flex items-center gap-2 rounded-lg px-3 py-2 ' + (catColors[cat] || ''));
+      row.appendChild(createEl('p', 'flex-1 text-sm', s.texte));
+      var btnDel = createEl('button', 'flex-shrink-0 text-slate-400 hover:text-red-500 font-bold text-lg transition-colors', '\u00d7');
+      (function(id) {
+        btnDel.addEventListener('click', async function() {
+          try { await db.deleteStrategie(id); } catch(e) {}
+          await loadStrategies();
+        });
+      })(s.id);
+      row.appendChild(btnDel);
+      list.appendChild(row);
+    });
   });
+  // Compteur
+  var counter = document.getElementById('strat-count');
+  if (counter) counter.textContent = patientStrategies.length;
 }
 
-document.getElementById('btn-add-strat').addEventListener('click', async function() {
-  var text = document.getElementById('strat-text').value.trim();
-  if (!text || !currentPatient) return;
-  var cat = document.getElementById('strat-cat').value;
-  this.disabled = true;
-  this.textContent = 'Ajout...';
-  try {
-    await db.createStrategie({ patient_id: currentPatient.id, texte: text, categorie: cat });
-    document.getElementById('strat-text').value = '';
-    await loadStrategies();
-  } catch (e) { console.warn('Erreur :', e.message); }
-  this.disabled = false;
-  this.textContent = 'Ajouter';
+// Boutons d'ajout par catégorie
+document.querySelectorAll('.btn-add-strat').forEach(function(btn) {
+  btn.addEventListener('click', async function() {
+    var cat = this.getAttribute('data-cat');
+    var input = document.getElementById('input-' + cat);
+    var text = input ? input.value.trim() : '';
+    if (!text || !currentPatient) return;
+
+    this.disabled = true;
+    var originalText = this.textContent;
+    this.textContent = '...';
+    try {
+      await db.createStrategie({ patient_id: currentPatient.id, texte: text, categorie: cat });
+      input.value = '';
+      await loadStrategies();
+    } catch (e) {
+      console.warn('Erreur ajout strat\u00e9gie :', e);
+      // Feedback visuel en cas d'erreur
+      this.textContent = '!';
+      this.classList.add('bg-red-600');
+      var self = this;
+      setTimeout(function() { self.textContent = originalText; self.classList.remove('bg-red-600'); }, 2000);
+    }
+    this.disabled = false;
+    this.textContent = originalText;
+  });
 });
 
 // ══════════════ PDF EXPORT ══════════════
