@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v2.0';
+const CACHE_NAME = 'usca-v2.1';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -9,6 +9,8 @@ const LOCAL_ASSETS = [
   './staff/toolbox.html',
   './patient/',
   './patient/index.html',
+  './shared/supabase.js',
+  './shared/auth.js',
   './manifest.json'
 ];
 

@@ -99,7 +99,7 @@
           class="w-full py-5 bg-red-500 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-extrabold rounded-2xl transition-all text-base shadow-lg shadow-red-200 active:scale-[0.97]">
           Alerte Craving
         </button>
-        <p class="text-xs text-slate-400 text-center mt-2">Sera connecté à l'équipe soignante en Phase 5</p>
+        <p class="text-xs text-slate-400 text-center mt-2">Prévient l'équipe soignante en temps réel</p>
       </section>
 
       <!-- Fiche de prévention -->
@@ -121,31 +121,120 @@
 
   </div>
 
+<!-- SDK Supabase + modules partagés -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../shared/supabase.js"></script>
+<script src="../shared/auth.js"></script>
+
 <script>
-// Simulation login patient (sera remplacé par Supabase en Phase 2)
-document.getElementById('login-form').addEventListener('submit', function() {
+// ── Éléments DOM ──
+const loginForm = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+const btnLogin = document.getElementById('btn-login');
+const btnCraving = document.getElementById('btn-craving');
+
+// ── Session patient en cours ──
+let currentPatient = null;
+
+// ── Login patient via Supabase ──
+loginForm.addEventListener('submit', async () => {
   const room = document.getElementById('input-room').value.trim();
   const dob = document.getElementById('input-dob').value;
-  if (!room || !dob) {
-    document.getElementById('login-error').classList.remove('hidden');
-    return;
+  if (!room || !dob) { showError('Veuillez remplir tous les champs'); return; }
+
+  btnLogin.disabled = true;
+  btnLogin.textContent = 'Connexion...';
+  loginError.classList.add('hidden');
+
+  try {
+    const patient = await auth.loginPatient(room, dob);
+    currentPatient = patient;
+    showPatientApp(patient);
+  } catch (err) {
+    showError(err.message);
+  } finally {
+    btnLogin.disabled = false;
+    btnLogin.textContent = 'Se connecter';
   }
-  // Phase 1 : simulation — accepter tout login pour montrer l'interface
+});
+
+btnLogin.addEventListener('click', () => loginForm.dispatchEvent(new Event('submit')));
+
+function showError(msg) {
+  loginError.textContent = msg;
+  loginError.classList.remove('hidden');
+}
+
+// ── Afficher l'app patient ──
+function showPatientApp(patient) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('patient-app').classList.remove('hidden');
-  document.getElementById('patient-name').textContent = ' (Chambre ' + room + ')';
-});
+  const name = patient.prenom || 'Chambre ' + patient.numero_chambre;
+  document.getElementById('patient-name').textContent = ' ' + name;
+  // Activer le bouton craving
+  btnCraving.disabled = false;
+}
 
-document.getElementById('btn-login').addEventListener('click', function() {
-  document.getElementById('login-form').dispatchEvent(new Event('submit'));
-});
-
-document.getElementById('btn-logout').addEventListener('click', function() {
+// ── Déconnexion ──
+document.getElementById('btn-logout').addEventListener('click', () => {
+  auth.logoutPatient();
+  currentPatient = null;
   document.getElementById('patient-app').classList.add('hidden');
   document.getElementById('login-screen').classList.remove('hidden');
   document.getElementById('input-room').value = '';
   document.getElementById('input-dob').value = '';
+  btnCraving.disabled = true;
 });
+
+// ── Bouton Alerte Craving ──
+let cravingCooldown = false;
+
+btnCraving.addEventListener('click', async () => {
+  if (cravingCooldown || !currentPatient) return;
+
+  // Cooldown 30s pour éviter le spam
+  cravingCooldown = true;
+  btnCraving.disabled = true;
+  btnCraving.textContent = 'Alerte envoyée !';
+  btnCraving.classList.remove('bg-red-500', 'hover:bg-red-600');
+  btnCraving.classList.add('bg-emerald-500');
+
+  try {
+    await db.createAlerte({
+      patient_id: currentPatient.id,
+      numero_chambre: currentPatient.numero_chambre,
+      type: 'craving',
+      intensite: 7,
+      message: 'Alerte craving depuis l\'interface patient'
+    });
+  } catch (err) {
+    console.warn('Erreur envoi alerte :', err.message);
+  }
+
+  // Cooldown 30 secondes
+  let remaining = 30;
+  const interval = setInterval(() => {
+    remaining--;
+    btnCraving.textContent = `Attendre ${remaining}s`;
+    if (remaining <= 0) {
+      clearInterval(interval);
+      cravingCooldown = false;
+      btnCraving.disabled = false;
+      btnCraving.textContent = 'Alerte Craving';
+      btnCraving.classList.add('bg-red-500', 'hover:bg-red-600');
+      btnCraving.classList.remove('bg-emerald-500');
+    }
+  }, 1000);
+});
+
+// ── Auto-restauration de session ──
+(function checkExistingSession() {
+  const session = auth.getPatientSession();
+  if (session) {
+    currentPatient = session;
+    showPatientApp(session);
+  }
+})();
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
