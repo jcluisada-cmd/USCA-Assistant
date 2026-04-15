@@ -57,7 +57,9 @@
   .fb-tag { padding: 7px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; border: 2px solid #e2e8f0; background: #fff; cursor: pointer; transition: all .15s; }
   .fb-tag.sel { border-color: #27ab83; background: #effcf6; color: #147d64; }
   .fb-sent { text-align: center; padding: 40px 20px; }
-  /* ── Dark mode (Toolbox V1) ── */
+  /* ── Dark mode (Toolbox V1) ──
+     Les couleurs inline sont gérées par le swap de l'objet C dans le JS.
+     Ici on ne gère que les classes CSS statiques. */
   html.dark body { background: #0f172a; color: #e2e8f0; }
   html.dark .card { background: #1e293b; border-color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
   html.dark .card-tap:hover { box-shadow: 0 4px 12px rgba(0,0,0,.3); }
@@ -73,26 +75,9 @@
   html.dark .fb-textarea, html.dark .fb-input { background: #1e293b; border-color: #475569; color: #e2e8f0; }
   html.dark .fb-tag { background: #1e293b; border-color: #334155; color: #e2e8f0; }
   html.dark .fb-tag.sel { background: rgba(16,185,129,.15); border-color: #27ab83; color: #6ee7b7; }
+  html.dark .fb-submit { background: #27ab83; }
   html.dark ::-webkit-scrollbar-thumb { background: #475569; }
   html.dark .install-banner { background: linear-gradient(135deg, #1e293b, #0f172a); }
-  /* Override inline styles des composants React */
-  html.dark .content { color: #e2e8f0; }
-  html.dark .content h1, html.dark .content h2, html.dark .content h3 { color: #f1f5f9 !important; }
-  html.dark .content p { color: #cbd5e1; }
-  html.dark .content [style*="color:#102a43"], html.dark .content [style*="color: #102a43"] { color: #e2e8f0 !important; }
-  html.dark .content [style*="color:#243b53"], html.dark .content [style*="color: #243b53"] { color: #e2e8f0 !important; }
-  html.dark .content [style*="color:#334e68"], html.dark .content [style*="color: #334e68"] { color: #cbd5e1 !important; }
-  html.dark .content [style*="color:#486581"], html.dark .content [style*="color: #486581"] { color: #94a3b8 !important; }
-  html.dark .content [style*="color:#627d98"], html.dark .content [style*="color: #627d98"] { color: #94a3b8 !important; }
-  html.dark .content [style*="color:#7b8faa"], html.dark .content [style*="color: #7b8faa"] { color: #64748b !important; }
-  html.dark .content [style*="color:#9fb3c8"], html.dark .content [style*="color: #9fb3c8"] { color: #64748b !important; }
-  html.dark .content [style*="color:#bcccdc"], html.dark .content [style*="color: #bcccdc"] { color: #475569 !important; }
-  html.dark .content [style*="background:#fff"], html.dark .content [style*="background: #fff"],
-  html.dark .content [style*="background:#ffffff"], html.dark .content [style*="background: #ffffff"] { background: #1e293b !important; }
-  html.dark .content [style*="background:#f0f4f8"], html.dark .content [style*="background: #f0f4f8"],
-  html.dark .content [style*="background:#f8fafc"], html.dark .content [style*="background: #f8fafc"] { background: #0f172a !important; }
-  html.dark .content [style*="border-color:#e2e8f0"], html.dark .content [style*="border: 1px solid #e2e8f0"],
-  html.dark .content [style*="border:1px solid #e2e8f0"] { border-color: #334155 !important; }
 </style>
 </head>
 <body>
@@ -142,6 +127,22 @@ const C = {
   r: { 100:"#fee2e2",500:"#ef4444",600:"#dc2626",700:"#b91c1c" },
   bg:"#f8fafc", bdr:"#e2e8f0"
 };
+
+/* ══════════ DARK MODE : swap palette si actif ══════════ */
+if (localStorage.getItem('usca_theme') === 'dark') {
+  // Navy : les tons clairs deviennent sombres, les sombres deviennent clairs
+  C.n[50]="#0f172a"; C.n[100]="#1e293b"; C.n[200]="#334155"; C.n[300]="#475569";
+  C.n[400]="#64748b"; C.n[500]="#94a3b8"; C.n[600]="#cbd5e1"; C.n[700]="#e2e8f0";
+  C.n[800]="#f1f5f9"; C.n[900]="#f8fafc";
+  // Teal : garder les tons moyens lisibles, assombrir les fonds
+  C.t[50]="rgba(16,185,129,0.1)"; C.t[100]="rgba(16,185,129,0.15)"; C.t[200]="#6ee7b7";
+  // Amber : assombrir les fonds
+  C.a[50]="rgba(245,158,11,0.1)"; C.a[100]="rgba(245,158,11,0.15)"; C.a[200]="#fcd34d";
+  // Red : assombrir les fonds
+  C.r[100]="rgba(239,68,68,0.15)";
+  // Backgrounds et bordures
+  C.bg="#0f172a"; C.bdr="#334155";
+}
 
 /* ══════════════════════ CLINICAL DATA ══════════════════════ */
 const SUBSTANCES = {
@@ -1114,14 +1115,16 @@ if (new URLSearchParams(window.location.search).has('embedded')) {
   if (localStorage.getItem('usca_theme') === 'dark') applyToolboxDark(true);
 
   // Écouter les changements depuis le parent via postMessage
+  // Recharger l'iframe pour que le swap de C soit appliqué
   window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'usca-theme') {
-      applyToolboxDark(e.data.dark);
+      // Le swap de C se fait au chargement, donc on recharge
+      window.location.reload();
     }
   });
   // Aussi écouter les changements localStorage (autres onglets)
   window.addEventListener('storage', function(e) {
-    if (e.key === 'usca_theme') applyToolboxDark(e.newValue === 'dark');
+    if (e.key === 'usca_theme') window.location.reload();
   });
 })();
 // Register Service Worker
