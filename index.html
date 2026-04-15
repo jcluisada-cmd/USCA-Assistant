@@ -21,8 +21,7 @@
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
   <!-- En-tête -->
-  <header class="pt-safe-top bg-indigo-600 text-white px-6 pt-12 pb-8 text-center">
-    <!-- Logo -->
+  <header class="bg-indigo-600 text-white px-6 pt-12 pb-8 text-center">
     <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl mb-4 backdrop-blur">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>
@@ -32,51 +31,112 @@
     <p class="text-indigo-200 text-sm mt-1">Pitié-Salpêtrière &middot; Addictologie</p>
   </header>
 
-  <!-- Contenu principal -->
-  <main class="flex-1 flex flex-col items-center justify-center px-6 py-10 gap-5 max-w-md mx-auto w-full">
+  <!-- Bandeau installation PWA -->
+  <div id="install-banner" class="mx-6 mt-6 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-5 py-4 rounded-2xl shadow-lg hidden">
+    <div class="flex items-center gap-4">
+      <div class="flex-shrink-0 w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+      </div>
+      <div class="flex-1">
+        <p class="text-sm font-bold">Installer USCA Connect</p>
+        <p class="text-xs text-indigo-200 mt-0.5">Accès rapide depuis l'écran d'accueil</p>
+      </div>
+      <button id="btn-install" class="flex-shrink-0 px-4 py-2 bg-white text-indigo-700 text-xs font-bold rounded-lg hover:bg-indigo-50 transition-colors">
+        Installer
+      </button>
+      <button id="btn-dismiss-install" class="flex-shrink-0 text-indigo-300 hover:text-white transition-colors">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <p class="text-slate-500 text-sm font-medium text-center mb-2">Sélectionnez votre profil pour continuer</p>
+  <!-- Contenu principal -->
+  <main class="flex-1 flex flex-col items-center px-6 py-8 gap-4 max-w-md mx-auto w-full">
+
+    <p class="text-slate-500 text-sm font-medium text-center mb-1">Sélectionnez votre profil</p>
 
     <!-- Carte Soignant -->
-    <a href="staff/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all p-6 flex items-center gap-5 group active:scale-[0.98]">
-      <div class="flex-shrink-0 w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a href="staff/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all p-5 flex items-center gap-4 group active:scale-[0.98]">
+      <div class="flex-shrink-0 w-13 h-13 bg-indigo-50 rounded-xl flex items-center justify-center group-hover:bg-indigo-100 transition-colors">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/>
           <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/>
         </svg>
       </div>
       <div class="flex-1">
-        <h2 class="text-lg font-bold text-slate-800">Je suis soignant</h2>
-        <p class="text-sm text-slate-500 mt-0.5">Toolbox, dashboard, alertes, groupes</p>
+        <h2 class="text-base font-bold text-slate-800">Soignant</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Toolbox clinique, protocoles, scores, interactions</p>
       </div>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
     </a>
 
     <!-- Carte Patient -->
-    <a href="patient/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-6 flex items-center gap-5 group active:scale-[0.98]">
-      <div class="flex-shrink-0 w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a href="patient/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-5 flex items-center gap-4 group active:scale-[0.98] relative overflow-hidden">
+      <div class="flex-shrink-0 w-13 h-13 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
           <circle cx="9" cy="7" r="4"/>
           <path d="M19 8v6"/><path d="M22 11h-6"/>
         </svg>
       </div>
       <div class="flex-1">
-        <h2 class="text-lg font-bold text-slate-800">Je suis patient</h2>
-        <p class="text-sm text-slate-500 mt-0.5">Programme du jour, alertes, fiches</p>
+        <h2 class="text-base font-bold text-slate-800">Patient</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Programme du jour, alertes, fiches</p>
       </div>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
+      <span class="absolute top-3 right-3 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">Bientôt</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+
+    <!-- Carte Admin -->
+    <a href="admin/" class="w-full bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-400 transition-all p-5 flex items-center gap-4 group active:scale-[0.98]">
+      <div class="flex-shrink-0 w-13 h-13 bg-slate-100 rounded-xl flex items-center justify-center group-hover:bg-slate-200 transition-colors">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <h2 class="text-base font-bold text-slate-800">Administration</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Dashboard, alertes, groupes, configuration</p>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
     </a>
 
   </main>
 
   <!-- Pied de page -->
-  <footer class="text-center py-6 px-6">
+  <footer class="text-center py-5 px-6">
     <p class="text-xs text-slate-400">USCA &middot; ELSA &middot; AP-HP Pitié-Salpêtrière</p>
-    <p class="text-xs text-slate-300 mt-1">v2.0</p>
+    <p class="text-xs text-slate-300 mt-1">v2.2</p>
   </footer>
 
 <script>
+// ── Installation PWA ──
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('install-banner').classList.remove('hidden');
+});
+
+document.getElementById('btn-install').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('install-banner').classList.add('hidden');
+});
+
+document.getElementById('btn-dismiss-install').addEventListener('click', () => {
+  document.getElementById('install-banner').classList.add('hidden');
+});
+
+// Masquer le bandeau si déjà installé en standalone
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  document.getElementById('install-banner').classList.add('hidden');
+}
+
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(()=>{});

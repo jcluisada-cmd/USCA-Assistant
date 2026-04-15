@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="../manifest.json">
+<title>USCA Connect — Administration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- ════════════════ ÉCRAN DE CONNEXION ════════════════ -->
+  <div id="login-screen" class="flex-1 flex flex-col">
+    <header class="bg-slate-700 text-white px-6 pt-12 pb-8 text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-white/20 rounded-2xl mb-4 backdrop-blur">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <h1 class="text-xl font-extrabold">Administration</h1>
+      <p class="text-slate-300 text-sm mt-1">Accès réservé aux responsables de l'unité</p>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center px-6 py-8 max-w-sm mx-auto w-full">
+      <form id="login-form" class="w-full space-y-4" onsubmit="return false;">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+          <input type="email" id="input-email" placeholder="prenom.nom@aphp.fr" autocomplete="email"
+            class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-indigo-500 focus:outline-none transition-colors placeholder:text-slate-300">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Mot de passe</label>
+          <input type="password" id="input-password" placeholder="••••••••" autocomplete="current-password"
+            class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-indigo-500 focus:outline-none transition-colors placeholder:text-slate-300">
+        </div>
+        <button type="submit" id="btn-login"
+          class="w-full py-3.5 bg-slate-700 hover:bg-slate-800 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+          Se connecter
+        </button>
+        <p id="login-error" class="text-sm text-red-500 text-center font-medium hidden"></p>
+      </form>
+      <a href="../" class="mt-8 text-sm text-slate-400 hover:text-slate-600 transition-colors">Retour à l'accueil</a>
+    </main>
+  </div>
+
+  <!-- ════════════════ OVERLAY PIN LOCK ════════════════ -->
+  <div id="pin-overlay" class="fixed inset-0 z-[200] bg-slate-900/95 backdrop-blur flex flex-col items-center justify-center px-6 hidden">
+    <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <p class="text-white font-bold text-lg mb-1">Session verrouillée</p>
+    <p class="text-slate-300 text-sm mb-6">Saisissez votre PIN pour continuer</p>
+    <input type="password" id="pin-input" maxlength="4" inputmode="numeric" pattern="[0-9]*"
+      class="w-40 px-4 py-3 bg-white/10 border-2 border-white/30 rounded-xl text-2xl font-bold text-center text-white tracking-[0.5em] focus:border-white focus:outline-none placeholder:text-white/30 mb-4"
+      placeholder="····">
+    <button id="btn-pin-submit" class="px-8 py-3 bg-white text-slate-700 font-bold rounded-xl text-sm hover:bg-slate-50 transition-colors">
+      Déverrouiller
+    </button>
+    <p id="pin-error" class="text-red-300 text-sm mt-3 hidden"></p>
+    <button id="btn-pin-logout" class="mt-6 text-slate-400 text-xs hover:text-white transition-colors">
+      Se reconnecter avec email
+    </button>
+  </div>
+
+  <!-- ════════════════ APP ADMIN (masquée avant login) ════════════════ -->
+  <div id="admin-app" class="flex-1 flex flex-col hidden">
+
+    <!-- Top bar -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <a href="../" class="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-800 transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </a>
+        <span class="text-sm font-extrabold text-slate-800">USCA Connect</span>
+        <span id="badge-role" class="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="staff-name" class="text-xs text-slate-500 font-medium hidden sm:inline"></span>
+        <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
+      </div>
+    </header>
+
+    <!-- Contenu des onglets -->
+    <main class="flex-1 overflow-hidden">
+
+      <!-- Dashboard -->
+      <div id="panel-dashboard" class="tab-panel active">
+        <div class="p-6 max-w-2xl mx-auto">
+          <h2 class="text-xl font-bold text-slate-800 mb-4">Dashboard</h2>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+              <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+              </div>
+              <p id="stat-patients" class="text-2xl font-bold text-slate-800">—</p>
+              <p class="text-xs text-slate-500 mt-1">Patients hospitalisés</p>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+              <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              </div>
+              <p id="stat-alertes" class="text-2xl font-bold text-slate-800">—</p>
+              <p class="text-xs text-slate-500 mt-1">Alertes non traitées</p>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+              <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <p id="stat-groupes" class="text-2xl font-bold text-slate-800">—</p>
+              <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+              <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+              </div>
+              <p id="stat-sejours" class="text-2xl font-bold text-slate-800">—</p>
+              <p class="text-xs text-slate-500 mt-1">Séjours en cours</p>
+            </div>
+          </div>
+          <div class="mt-6 bg-slate-100 border border-slate-200 rounded-xl p-4 text-center">
+            <p class="text-sm text-slate-600 font-medium">Connexion Supabase active</p>
+            <p class="text-xs text-slate-400 mt-1">Les compteurs se mettent à jour automatiquement</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alertes -->
+      <div id="panel-alertes" class="tab-panel">
+        <div class="p-6 max-w-2xl mx-auto">
+          <h2 class="text-xl font-bold text-slate-800 mb-4">Alertes</h2>
+          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </div>
+            <p class="text-sm text-slate-500">Aucune alerte en attente</p>
+            <p class="text-xs text-slate-400 mt-2">Les alertes craving des patients apparaîtront ici</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Groupes -->
+      <div id="panel-groupes" class="tab-panel">
+        <div class="p-6 max-w-2xl mx-auto">
+          <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
+          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+            <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p class="text-sm text-slate-500">La gestion des groupes arrive bientôt</p>
+            <p class="text-xs text-slate-400 mt-2">Présence, horaires, participants</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Config -->
+      <div id="panel-config" class="tab-panel">
+        <div class="p-6 max-w-2xl mx-auto">
+          <h2 class="text-xl font-bold text-slate-800 mb-4">Configuration</h2>
+          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
+            <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <p class="text-sm text-slate-500">Gestion des patients, programmes et comptes</p>
+            <p class="text-xs text-slate-400 mt-2">Arrive bientôt</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom navigation -->
+    <nav class="sticky bottom-0 bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-50">
+      <div class="flex justify-around max-w-lg mx-auto">
+        <button data-tab="dashboard" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Dashboard</span>
+        </button>
+        <button data-tab="alertes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Alertes</span>
+        </button>
+        <button data-tab="groupes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
+        </button>
+        <button data-tab="config" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Config</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+<!-- SDK Supabase + modules partagés -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../shared/supabase.js"></script>
+<script src="../shared/auth.js"></script>
+
+<script>
+// ── Navigation par onglets ──
+const tabs = document.querySelectorAll('.nav-tab');
+const panels = document.querySelectorAll('.tab-panel');
+
+function switchTab(tabId) {
+  panels.forEach(p => p.classList.remove('active'));
+  tabs.forEach(t => { t.classList.remove('text-indigo-600'); t.classList.add('text-slate-400'); });
+  const panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  if (btn) { btn.classList.add('text-indigo-600'); btn.classList.remove('text-slate-400'); }
+}
+
+tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+// ── Login admin ──
+const loginForm = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+const btnLogin = document.getElementById('btn-login');
+
+loginForm.addEventListener('submit', async () => {
+  const email = document.getElementById('input-email').value.trim();
+  const password = document.getElementById('input-password').value;
+  if (!email || !password) { showLoginError('Veuillez remplir tous les champs'); return; }
+
+  btnLogin.disabled = true;
+  btnLogin.textContent = 'Connexion...';
+  loginError.classList.add('hidden');
+
+  try {
+    const profile = await auth.loginStaff(email, password);
+    showAdminApp(profile);
+  } catch (err) {
+    showLoginError(err.message);
+  } finally {
+    btnLogin.disabled = false;
+    btnLogin.textContent = 'Se connecter';
+  }
+});
+
+btnLogin.addEventListener('click', () => loginForm.dispatchEvent(new Event('submit')));
+
+function showLoginError(msg) {
+  loginError.textContent = msg;
+  loginError.classList.remove('hidden');
+}
+
+// ── Afficher l'app admin ──
+function showAdminApp(profile) {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('admin-app').classList.remove('hidden');
+  document.getElementById('badge-role').textContent = profile.role.charAt(0).toUpperCase() + profile.role.slice(1);
+  document.getElementById('staff-name').textContent = profile.nom;
+  loadDashboardStats();
+
+  // PIN lock après inactivité (1h)
+  if (auth.hasPin()) {
+    auth.setupInactivityLock(60 * 60 * 1000, () => {
+      document.getElementById('pin-overlay').classList.remove('hidden');
+    });
+  }
+}
+
+// ── Stats dashboard ──
+async function loadDashboardStats() {
+  try {
+    const [patients, alertes, groupes] = await Promise.all([
+      db.getPatients(),
+      db.getAlertesNonTraitees(),
+      db.getGroupesDuJour()
+    ]);
+    document.getElementById('stat-patients').textContent = patients.length;
+    document.getElementById('stat-alertes').textContent = alertes.length;
+    document.getElementById('stat-groupes').textContent = groupes.length;
+    document.getElementById('stat-sejours').textContent = patients.length;
+  } catch (err) {
+    console.warn('Stats indisponibles :', err.message);
+  }
+}
+
+// ── Déconnexion ──
+document.getElementById('btn-logout').addEventListener('click', async () => {
+  auth.clearInactivityLock();
+  await auth.logoutStaff();
+  document.getElementById('admin-app').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('input-email').value = '';
+  document.getElementById('input-password').value = '';
+});
+
+// ── PIN Lock ──
+document.getElementById('btn-pin-submit').addEventListener('click', async () => {
+  const pin = document.getElementById('pin-input').value;
+  const valid = await auth.verifyPin(pin);
+  if (valid) {
+    document.getElementById('pin-overlay').classList.add('hidden');
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-error').classList.add('hidden');
+  } else {
+    document.getElementById('pin-error').textContent = 'PIN incorrect';
+    document.getElementById('pin-error').classList.remove('hidden');
+    document.getElementById('pin-input').value = '';
+  }
+});
+
+document.getElementById('btn-pin-logout').addEventListener('click', async () => {
+  auth.clearInactivityLock();
+  await auth.logoutStaff();
+  document.getElementById('pin-overlay').classList.add('hidden');
+  document.getElementById('admin-app').classList.add('hidden');
+  document.getElementById('login-screen').classList.remove('hidden');
+});
+
+// ── Auto-login si session existante ──
+(async function checkExistingSession() {
+  try {
+    const profile = await auth.getStaffSession();
+    if (profile) showAdminApp(profile);
+  } catch { /* pas de session */ }
+})();
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
+}
+</script>
+</body>
+</html>
