@@ -14,8 +14,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -94,115 +92,81 @@
       </div>
     </header>
 
-    <!-- Contenu des onglets -->
-    <main class="flex-1 overflow-hidden">
+    <!-- Contenu scrollable -->
+    <main class="flex-1 overflow-y-auto p-6 max-w-2xl mx-auto w-full pb-8">
 
-      <!-- Dashboard -->
-      <div id="panel-dashboard" class="tab-panel active">
-        <div class="p-6 max-w-2xl mx-auto">
-          <h2 class="text-xl font-bold text-slate-800 mb-4">Dashboard</h2>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-              <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
-              </div>
-              <p id="stat-patients" class="text-2xl font-bold text-slate-800">—</p>
-              <p class="text-xs text-slate-500 mt-1">Patients hospitalisés</p>
-            </div>
-            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-              <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-              </div>
-              <p id="stat-alertes" class="text-2xl font-bold text-slate-800">—</p>
-              <p class="text-xs text-slate-500 mt-1">Alertes non traitées</p>
-            </div>
-            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-              <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <p id="stat-groupes" class="text-2xl font-bold text-slate-800">—</p>
-              <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
-            </div>
-            <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-              <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-              </div>
-              <p id="stat-sejours" class="text-2xl font-bold text-slate-800">—</p>
-              <p class="text-xs text-slate-500 mt-1">Séjours en cours</p>
-            </div>
+      <!-- Dashboard — cartes cliquables -->
+      <h2 class="text-xl font-bold text-slate-800 mb-4">Dashboard</h2>
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <button id="card-patients" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]">
+          <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
           </div>
-          <div class="mt-6 bg-slate-100 border border-slate-200 rounded-xl p-4 text-center">
-            <p class="text-sm text-slate-600 font-medium">Connexion Supabase active</p>
-            <p class="text-xs text-slate-400 mt-1">Les compteurs se mettent à jour automatiquement</p>
+          <p id="stat-patients" class="text-2xl font-bold text-slate-800">—</p>
+          <p class="text-xs text-slate-500 mt-1">Patients hospitalisés</p>
+        </button>
+        <button id="card-alertes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-red-300 transition-all active:scale-[0.98]">
+          <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           </div>
-        </div>
+          <p id="stat-alertes" class="text-2xl font-bold text-slate-800">—</p>
+          <p class="text-xs text-slate-500 mt-1">Alertes non traitées</p>
+        </button>
+        <button id="card-groupes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98]">
+          <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p id="stat-groupes" class="text-2xl font-bold text-slate-800">—</p>
+          <p class="text-xs text-slate-500 mt-1">Groupes aujourd'hui</p>
+        </button>
+        <button id="card-programmes" class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]">
+          <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+          </div>
+          <p id="stat-programmes" class="text-2xl font-bold text-slate-800">—</p>
+          <p class="text-xs text-slate-500 mt-1">Programmes templates</p>
+        </button>
       </div>
 
-      <!-- Alertes -->
-      <div id="panel-alertes" class="tab-panel">
-        <div class="p-6 max-w-2xl mx-auto">
-          <h2 class="text-xl font-bold text-slate-800 mb-4">Alertes</h2>
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-            </div>
-            <p class="text-sm text-slate-500">Aucune alerte en attente</p>
-            <p class="text-xs text-slate-400 mt-2">Les alertes craving des patients apparaîtront ici</p>
-          </div>
+      <!-- Section Patients -->
+      <section id="section-patients" class="mb-6 hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-slate-800">Patients hospitalisés</h3>
+          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
         </div>
-      </div>
+        <div id="patients-list" class="space-y-2"></div>
+      </section>
 
-      <!-- Groupes -->
-      <div id="panel-groupes" class="tab-panel">
-        <div class="p-6 max-w-2xl mx-auto">
-          <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-            <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <p class="text-sm text-slate-500">La gestion des groupes arrive bientôt</p>
-            <p class="text-xs text-slate-400 mt-2">Présence, horaires, participants</p>
-          </div>
+      <!-- Section Alertes -->
+      <section id="section-alertes" class="mb-6 hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-slate-800">Alertes</h3>
+          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
         </div>
-      </div>
+        <div id="alertes-list" class="space-y-2"></div>
+      </section>
 
-      <!-- Config -->
-      <div id="panel-config" class="tab-panel">
-        <div class="p-6 max-w-2xl mx-auto">
-          <h2 class="text-xl font-bold text-slate-800 mb-4">Configuration</h2>
-          <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-            <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <p class="text-sm text-slate-500">Gestion des patients, programmes et comptes</p>
-            <p class="text-xs text-slate-400 mt-2">Arrive bientôt</p>
-          </div>
+      <!-- Section Groupes -->
+      <section id="section-groupes" class="mb-6 hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-slate-800">Groupes thérapeutiques</h3>
+          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
         </div>
-      </div>
+        <div class="bg-white rounded-xl border border-slate-200 p-6 text-center">
+          <p class="text-sm text-slate-500">La gestion des groupes arrive bientôt</p>
+        </div>
+      </section>
+
+      <!-- Section Programmes -->
+      <section id="section-programmes" class="mb-6 hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-lg font-bold text-slate-800">Programmes templates</h3>
+          <button class="section-close text-xs text-slate-400 hover:text-slate-600 font-semibold">Fermer</button>
+        </div>
+        <div id="programmes-list" class="space-y-2"></div>
+      </section>
 
     </main>
-
-    <!-- Bottom navigation -->
-    <nav class="sticky bottom-0 bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-50">
-      <div class="flex justify-around max-w-lg mx-auto">
-        <button data-tab="dashboard" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Dashboard</span>
-        </button>
-        <button data-tab="alertes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Alertes</span>
-        </button>
-        <button data-tab="groupes" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
-        </button>
-        <button data-tab="config" class="nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Config</span>
-        </button>
-      </div>
-    </nav>
   </div>
 
 <!-- SDK Supabase + modules partagés -->
@@ -211,20 +175,13 @@
 <script src="../shared/auth.js"></script>
 
 <script>
-// ── Navigation par onglets ──
-const tabs = document.querySelectorAll('.nav-tab');
-const panels = document.querySelectorAll('.tab-panel');
-
-function switchTab(tabId) {
-  panels.forEach(p => p.classList.remove('active'));
-  tabs.forEach(t => { t.classList.remove('text-indigo-600'); t.classList.add('text-slate-400'); });
-  const panel = document.getElementById('panel-' + tabId);
-  if (panel) panel.classList.add('active');
-  const btn = document.querySelector(`[data-tab="${tabId}"]`);
-  if (btn) { btn.classList.add('text-indigo-600'); btn.classList.remove('text-slate-400'); }
+// ── Helpers DOM sûrs ──
+function createEl(tag, classes, text) {
+  var el = document.createElement(tag);
+  if (classes) el.className = classes;
+  if (text) el.textContent = text;
+  return el;
 }
-
-tabs.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
 // ── Login admin ──
 const loginForm = document.getElementById('login-form');
@@ -258,15 +215,21 @@ function showLoginError(msg) {
   loginError.classList.remove('hidden');
 }
 
+// ── Données chargées ──
+let loadedPatients = [];
+let loadedAlertes = [];
+let loadedProgrammes = [];
+let currentProfile = null;
+
 // ── Afficher l'app admin ──
 function showAdminApp(profile) {
+  currentProfile = profile;
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-app').classList.remove('hidden');
   document.getElementById('badge-role').textContent = profile.role.charAt(0).toUpperCase() + profile.role.slice(1);
   document.getElementById('staff-name').textContent = profile.nom;
   loadDashboardStats();
 
-  // PIN lock après inactivité (1h)
   if (auth.hasPin()) {
     auth.setupInactivityLock(60 * 60 * 1000, () => {
       document.getElementById('pin-overlay').classList.remove('hidden');
@@ -277,18 +240,158 @@ function showAdminApp(profile) {
 // ── Stats dashboard ──
 async function loadDashboardStats() {
   try {
-    const [patients, alertes, groupes] = await Promise.all([
+    const [patients, alertes, groupes, programmes] = await Promise.all([
       db.getPatients(),
       db.getAlertesNonTraitees(),
-      db.getGroupesDuJour()
+      db.getGroupesDuJour(),
+      db.getProgrammes()
     ]);
+    loadedPatients = patients;
+    loadedAlertes = alertes;
+    loadedProgrammes = programmes;
     document.getElementById('stat-patients').textContent = patients.length;
     document.getElementById('stat-alertes').textContent = alertes.length;
     document.getElementById('stat-groupes').textContent = groupes.length;
-    document.getElementById('stat-sejours').textContent = patients.length;
+    document.getElementById('stat-programmes').textContent = programmes.length;
   } catch (err) {
     console.warn('Stats indisponibles :', err.message);
   }
+}
+
+// ── Cartes cliquables → ouvrent les sections ──
+document.getElementById('card-patients').addEventListener('click', () => toggleSection('patients', renderPatients));
+document.getElementById('card-alertes').addEventListener('click', () => toggleSection('alertes', renderAlertes));
+document.getElementById('card-groupes').addEventListener('click', () => toggleSection('groupes'));
+document.getElementById('card-programmes').addEventListener('click', () => toggleSection('programmes', renderProgrammes));
+
+// Boutons "Fermer"
+document.querySelectorAll('.section-close').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.closest('section').classList.add('hidden');
+  });
+});
+
+function toggleSection(name, renderFn) {
+  var section = document.getElementById('section-' + name);
+  var isHidden = section.classList.contains('hidden');
+  // Fermer toutes les sections
+  document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+  if (isHidden) {
+    section.classList.remove('hidden');
+    if (renderFn) renderFn();
+    section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// ── Rendu patients ──
+function renderPatients() {
+  var list = document.getElementById('patients-list');
+  list.textContent = '';
+  if (loadedPatients.length === 0) {
+    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
+    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun patient hospitalisé'));
+    list.appendChild(empty);
+    return;
+  }
+  loadedPatients.forEach(function(p) {
+    var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4');
+    var avatar = createEl('div', 'w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0');
+    avatar.appendChild(createEl('span', 'text-sm font-bold text-indigo-600', p.numero_chambre));
+    card.appendChild(avatar);
+    var info = createEl('div', 'flex-1');
+    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', (p.prenom || 'Patient') + ' — Ch. ' + p.numero_chambre));
+    var details = [];
+    if (p.substance_principale) details.push(p.substance_principale);
+    if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
+    info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', details.join(' · ')));
+    card.appendChild(info);
+    list.appendChild(card);
+  });
+}
+
+// ── Rendu alertes ──
+function renderAlertes() {
+  var list = document.getElementById('alertes-list');
+  list.textContent = '';
+  if (loadedAlertes.length === 0) {
+    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
+    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucune alerte en attente'));
+    list.appendChild(empty);
+    return;
+  }
+  loadedAlertes.forEach(function(a) {
+    var colors = {
+      craving: { bg: 'border-red-200 bg-red-50', badge: 'bg-red-100 text-red-700', icon: 'text-red-500' },
+      effet_indesirable: { bg: 'border-amber-200 bg-amber-50', badge: 'bg-amber-100 text-amber-700', icon: 'text-amber-500' },
+      urgence: { bg: 'border-red-300 bg-red-50', badge: 'bg-red-200 text-red-800', icon: 'text-red-600' },
+      demande: { bg: 'border-indigo-200 bg-indigo-50', badge: 'bg-indigo-100 text-indigo-700', icon: 'text-indigo-500' }
+    };
+    var style = colors[a.type] || colors.demande;
+
+    var card = createEl('div', 'rounded-xl border p-4 ' + style.bg);
+
+    // Ligne du haut : badge type + chambre + heure
+    var top = createEl('div', 'flex items-center justify-between mb-2');
+    var topLeft = createEl('div', 'flex items-center gap-2');
+    topLeft.appendChild(createEl('span', 'text-xs font-bold px-2 py-0.5 rounded-full ' + style.badge, a.type.replace('_', ' ')));
+    if (a.numero_chambre) topLeft.appendChild(createEl('span', 'text-xs font-semibold text-slate-600', 'Ch. ' + a.numero_chambre));
+    top.appendChild(topLeft);
+    var time = a.horodatage ? new Date(a.horodatage).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
+    top.appendChild(createEl('span', 'text-xs text-slate-400', time));
+    card.appendChild(top);
+
+    // Message + intensité
+    if (a.message) card.appendChild(createEl('p', 'text-sm text-slate-700', a.message));
+    if (a.intensite) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', 'Intensité : ' + a.intensite + '/10'));
+
+    // Statut + boutons
+    var bottom = createEl('div', 'flex items-center justify-between mt-3');
+    var statusBadge = createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full ' + (a.statut === 'non_traitee' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'), a.statut === 'non_traitee' ? 'Non traitée' : 'En cours');
+    bottom.appendChild(statusBadge);
+
+    var actions = createEl('div', 'flex gap-2');
+    if (a.statut === 'non_traitee') {
+      var btnPrendre = createEl('button', 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors', 'Prise en charge');
+      btnPrendre.addEventListener('click', function() { updateAlerte(a.id, 'en_cours'); });
+      actions.appendChild(btnPrendre);
+    }
+    var btnTraitee = createEl('button', 'text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors', 'Traitée');
+    btnTraitee.addEventListener('click', function() { updateAlerte(a.id, 'traitee'); });
+    actions.appendChild(btnTraitee);
+    bottom.appendChild(actions);
+
+    card.appendChild(bottom);
+    list.appendChild(card);
+  });
+}
+
+async function updateAlerte(id, statut) {
+  try {
+    await db.updateAlerteStatut(id, statut, currentProfile ? currentProfile.id : null);
+    await loadDashboardStats();
+    renderAlertes();
+  } catch (err) {
+    console.warn('Erreur mise à jour alerte :', err.message);
+  }
+}
+
+// ── Rendu programmes ──
+function renderProgrammes() {
+  var list = document.getElementById('programmes-list');
+  list.textContent = '';
+  if (loadedProgrammes.length === 0) {
+    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
+    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun programme'));
+    list.appendChild(empty);
+    return;
+  }
+  loadedProgrammes.forEach(function(p) {
+    var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4');
+    card.appendChild(createEl('p', 'text-sm font-bold text-slate-800', p.nom));
+    var count = Array.isArray(p.activites) ? p.activites.length : 0;
+    card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', count + ' activités dans la journée'));
+    list.appendChild(card);
+  });
 }
 
 // ── Déconnexion ──

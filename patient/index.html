@@ -15,8 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
-  @keyframes pulse-ring { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
-  .craving-pulse::before { content: ''; position: absolute; inset: -8px; border-radius: 24px; background: rgba(239,68,68,0.3); animation: pulse-ring 1.5s ease-out infinite; }
+  /* bouton craving — pas d'animation */
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -93,7 +92,7 @@
       <section class="pt-2">
         <div class="relative">
           <button id="btn-craving"
-            class="craving-pulse relative w-full py-5 bg-red-500 hover:bg-red-600 text-white font-extrabold rounded-2xl transition-all text-base shadow-lg shadow-red-200 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none">
+            class="craving-btn relative w-full py-5 bg-red-500 hover:bg-red-600 text-white font-extrabold rounded-2xl transition-all text-base shadow-lg shadow-red-200 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none">
             J'ai besoin d'aide (craving)
           </button>
         </div>
@@ -344,7 +343,7 @@ btnCravingSend.addEventListener('click', async () => {
   cravingCooldown = true;
   btnCraving.disabled = true;
   btnCraving.textContent = 'Alerte envoyée !';
-  btnCraving.classList.remove('bg-red-500', 'hover:bg-red-600', 'craving-pulse');
+  btnCraving.classList.remove('bg-red-500', 'hover:bg-red-600', 'craving-btn');
   btnCraving.classList.add('bg-emerald-500');
   alertConfirm.classList.remove('hidden');
   document.getElementById('craving-hint').classList.add('hidden');
@@ -371,7 +370,7 @@ btnCravingSend.addEventListener('click', async () => {
       cravingCooldown = false;
       btnCraving.disabled = false;
       btnCraving.textContent = "J'ai besoin d'aide (craving)";
-      btnCraving.classList.add('bg-red-500', 'hover:bg-red-600', 'craving-pulse');
+      btnCraving.classList.add('bg-red-500', 'hover:bg-red-600', 'craving-btn');
       btnCraving.classList.remove('bg-emerald-500');
       alertConfirm.classList.add('hidden');
       document.getElementById('craving-hint').classList.remove('hidden');
