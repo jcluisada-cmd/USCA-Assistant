@@ -319,6 +319,10 @@
               </div>
               <div><p class="text-sm font-semibold text-slate-700">Dossier post-cure</p><p class="text-[11px] text-slate-400">Volet médical pré-admission</p></div>
             </button>
+            <!-- Statut post-cure -->
+            <div id="postcure-statut-zone" class="hidden bg-teal-50 dark:bg-teal-950 rounded-xl border border-teal-200 dark:border-teal-800 p-3 space-y-2">
+              <div id="postcure-checks" class="space-y-1.5"></div>
+            </div>
 
             <!-- Exports de sortie -->
             <div id="sortie-exports" class="hidden space-y-2">
@@ -1155,6 +1159,55 @@ document.getElementById('acc-perms').addEventListener('click', function() {
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
 
+// ── Statut post-cure ──
+function renderPostcureStatut(patient) {
+  var zone = document.getElementById('postcure-statut-zone');
+  var checks = document.getElementById('postcure-checks');
+  if (!zone || !checks) return;
+  var statut = patient.postcure_statut || {};
+  zone.classList.remove('hidden');
+  checks.textContent = '';
+
+  var items = [
+    { key: 'patient_usca', label: 'Volet patient envoy\u00e9 \u00e0 l\u2019USCA', icon: '\ud83d\udce8' },
+    { key: 'patient_structure', label: 'Volet patient envoy\u00e9 \u00e0 la structure', icon: '\ud83c\udfe5' },
+    { key: 'medecin_rempli', label: 'Volet m\u00e9dical rempli', icon: '\ud83e\ude7a' },
+    { key: 'medecin_envoye', label: 'Volet m\u00e9dical envoy\u00e9 \u00e0 la structure', icon: '\ud83d\udce4' }
+  ];
+
+  items.forEach(function(item) {
+    var isChecked = !!statut[item.key];
+    var row = createEl('div', 'flex items-center gap-2.5');
+
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = isChecked;
+    cb.className = 'w-4 h-4 rounded accent-teal-600 cursor-pointer flex-shrink-0';
+    (function(k) {
+      cb.addEventListener('change', async function() {
+        try {
+          await db.updatePostcureStatut(patient.id, k, this.checked);
+          patient.postcure_statut = patient.postcure_statut || {};
+          if (this.checked) {
+            patient.postcure_statut[k] = new Date().toISOString().split('T')[0];
+          } else {
+            delete patient.postcure_statut[k];
+          }
+          renderPostcureStatut(patient);
+        } catch(e) { console.warn(e); this.checked = !this.checked; }
+      });
+    })(item.key);
+    row.appendChild(cb);
+
+    var label = createEl('span', 'text-xs ' + (isChecked ? 'text-teal-700 dark:text-teal-300 font-semibold' : 'text-slate-600 dark:text-slate-400'), item.icon + ' ' + item.label);
+    if (isChecked && statut[item.key]) {
+      label.appendChild(document.createTextNode(' \u2014 ' + statut[item.key]));
+    }
+    row.appendChild(label);
+    checks.appendChild(row);
+  });
+}
+
 // ── Modals ──
 document.getElementById('btn-action-event').addEventListener('click', function() { document.getElementById('modal-event').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('evt-date').value = today; });
 document.getElementById('evt-cancel').addEventListener('click', function() { document.getElementById('modal-event').classList.add('hidden'); });
@@ -1297,6 +1350,9 @@ async function showPatientDetail(patient) {
   // Afficher les boutons d'export si une date de sortie est définie
   var exportsDiv = document.getElementById('sortie-exports');
   if (exportsDiv) exportsDiv.classList.toggle('hidden', !patient.date_sortie_prevue);
+
+  // Statut post-cure
+  renderPostcureStatut(patient);
 
   // Log craving
   var cravingLog = document.getElementById('detail-craving-log');

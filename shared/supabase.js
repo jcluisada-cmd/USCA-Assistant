@@ -542,5 +542,20 @@ window.db = {
   async deleteListeAttente(id) {
     const { error } = await sb.from('liste_attente').delete().eq('id', id);
     if (error) throw error;
+  },
+
+  // ── Statut post-cure (workflow, pas de données patient) ──
+
+  /** Met à jour un flag du statut post-cure */
+  async updatePostcureStatut(patientId, key, value) {
+    const { data: patient } = await sb.from('patients').select('postcure_statut').eq('id', patientId).single();
+    const statut = patient?.postcure_statut || {};
+    if (value) {
+      statut[key] = new Date().toISOString().split('T')[0];
+    } else {
+      delete statut[key];
+    }
+    const { error } = await sb.from('patients').update({ postcure_statut: statut }).eq('id', patientId);
+    if (error) throw error;
   }
 };
