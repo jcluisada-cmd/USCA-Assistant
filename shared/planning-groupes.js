@@ -7,18 +7,19 @@
  * Les groupes identiques entre A et B partagent le même slug.
  */
 
-// ── Date de référence : cette semaine (13 avril 2026) = semaine A ──
-var _SEMAINE_A_REF = new Date(2026, 3, 13); // lundi 13 avril 2026
-
 /**
  * Détermine si une date donnée est en semaine A ou B
- * Basé sur la parité du nombre de semaines écoulées depuis la référence
+ * Semaine paire (ISO) = A, semaine impaire = B
  */
 window.getWeekType = function(date) {
   var d = date || new Date();
-  var diff = d.getTime() - _SEMAINE_A_REF.getTime();
-  var weeks = Math.floor(diff / (7 * 24 * 60 * 60 * 1000));
-  return (weeks % 2 === 0) ? 'A' : 'B';
+  // Calcul du numéro de semaine ISO 8601
+  var tmp = new Date(d.getTime());
+  tmp.setHours(0, 0, 0, 0);
+  tmp.setDate(tmp.getDate() + 3 - ((tmp.getDay() + 6) % 7));
+  var week1 = new Date(tmp.getFullYear(), 0, 4);
+  var weekNum = 1 + Math.round(((tmp.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7);
+  return (weekNum % 2 === 0) ? 'A' : 'B';
 };
 
 // ── Planning semaine A ──
