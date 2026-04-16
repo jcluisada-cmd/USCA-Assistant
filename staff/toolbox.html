@@ -722,6 +722,76 @@ function ELSAFichesView({onBack}) {
 const DEFAULT_SERVICES = ["Urgences (Circuit court)","Hépatologie","Cardiologie","Maladies infectieuses (MIT)","Neurologie"];
 const ORIENTATIONS = ["Réévaluation","Pré-admission","CSAPA","Addictologue","Hospitalisation"];
 
+function WaitlistForm({item, onAdded}) {
+  const [age, setAge] = useState("");
+  const [ddn, setDdn] = useState("");
+  const [dateEntree, setDateEntree] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const onDdnChange = (val) => {
+    setDdn(val);
+    if (val) {
+      const birth = new Date(val);
+      const today = new Date();
+      let a = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) a--;
+      setAge(String(a));
+    }
+  };
+
+  const submit = async () => {
+    const ageNum = parseInt(age);
+    if (!ageNum || ageNum < 1) { setError("Âge requis"); return; }
+    setError(""); setSending(true);
+    try {
+      const parentDb = window.parent && window.parent.db;
+      if (parentDb && parentDb.addListeAttente) {
+        await parentDb.addListeAttente({ age: ageNum, date_entree_prevue: dateEntree || null, addressage: item.service, commentaire: item.details || '' });
+        onAdded();
+      } else {
+        setError("Ouvrir la Toolbox depuis le dashboard");
+      }
+    } catch(e) { setError(e.message || "Erreur"); }
+    setSending(false);
+  };
+
+  return <div style={{marginBottom:12,padding:12,borderRadius:10,background:C.a[50],border:`1px solid ${C.a[200]}`}}>
+    <div style={{fontSize:11,fontWeight:800,color:C.a[700],marginBottom:8}}>AJOUTER EN LISTE D'ATTENTE</div>
+
+    {/* Âge */}
+    <div style={{marginBottom:8}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.n[600],marginBottom:3}}>Âge du patient *</div>
+      <input type="number" min="18" max="100" placeholder="65" value={age} onChange={e=>setAge(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.a[200]}`,borderRadius:8,fontSize:13,fontWeight:700,background:"#fff",color:C.n[900]}}/>
+    </div>
+
+    {/* DDN optionnelle — calcule l'âge */}
+    <div style={{marginBottom:8}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.n[400],marginBottom:3}}>ou Date de naissance (calcule l'âge)</div>
+      <input type="date" value={ddn} onChange={e=>onDdnChange(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`1px dashed ${C.n[300]}`,borderRadius:8,fontSize:12,background:C.n[50],color:C.n[700]}}/>
+    </div>
+
+    <div style={{height:1,background:C.a[200],margin:"10px 0"}}/>
+
+    {/* Date d'entrée prévue */}
+    <div style={{marginBottom:10}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.t[700],marginBottom:3}}>📅 Date d'entrée prévue</div>
+      <input type="date" value={dateEntree} onChange={e=>setDateEntree(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.t[400]}`,borderRadius:8,fontSize:13,fontWeight:600,background:C.t[50],color:C.t[800]}}/>
+    </div>
+
+    {error && <div style={{fontSize:11,color:C.r[500],marginBottom:6,fontWeight:600}}>{error}</div>}
+
+    <button onClick={submit} disabled={sending}
+      style={{width:"100%",padding:"10px",borderRadius:10,border:"none",background:C.a[600],color:"#fff",fontWeight:800,fontSize:12,cursor:"pointer",opacity:sending?.6:1}}>
+      {sending ? "Ajout en cours..." : "Ajouter à la liste d'attente"}
+    </button>
+  </div>;
+}
+
 function LiaisonsView({onBack}) {
   const loadData = () => { try { return JSON.parse(localStorage.getItem('elsa_liaisons')) || []; } catch { return []; } };
   const loadServices = () => { try { const s = JSON.parse(localStorage.getItem('elsa_services_custom')); return s || []; } catch { return []; } };
@@ -821,43 +891,9 @@ function LiaisonsView({onBack}) {
           </div>
         </div>
         {/* Ajouter en liste d'attente */}
-        {item.checklist.indication === "Oui" && !item._addedToWaitlist && <div style={{marginBottom:12,padding:10,borderRadius:8,background:C.a[50],border:`1px solid ${C.a[200]}`}}>
-          <div style={{fontSize:11,fontWeight:800,color:C.a[700],marginBottom:6}}>AJOUTER EN LISTE D'ATTENTE</div>
-          <div style={{display:"flex",gap:6,marginBottom:6}}>
-            <input type="number" min="18" max="100" placeholder="Âge" id={`wl-age-${item.id}`} style={{flex:1,padding:"6px 8px",border:`1px solid ${C.bdr}`,borderRadius:8,fontSize:12,background:C.bg,color:C.n[900]}} onChange={(e)=>{
-              document.getElementById(`wl-age-${item.id}`).value = e.target.value;
-            }}/>
-            <input type="date" id={`wl-date-${item.id}`} placeholder="Entrée prévue" style={{flex:1,padding:"6px 8px",border:`1px solid ${C.bdr}`,borderRadius:8,fontSize:12,background:C.bg,color:C.n[900]}}/>
-          </div>
-          <div style={{marginBottom:6}}>
-            <input type="date" id={`wl-ddn-${item.id}`} placeholder="DDN (optionnel)" style={{width:"100%",padding:"6px 8px",border:`1px solid ${C.bdr}`,borderRadius:8,fontSize:12,background:C.bg,color:C.n[900]}} onChange={(e)=>{
-              if (e.target.value) {
-                var birth = new Date(e.target.value);
-                var today = new Date();
-                var age = today.getFullYear() - birth.getFullYear();
-                var m = today.getMonth() - birth.getMonth();
-                if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-                document.getElementById(`wl-age-${item.id}`).value = age;
-              }
-            }}/>
-            <div style={{fontSize:10,color:C.n[400],marginTop:2}}>Date de naissance (optionnel — calcule l'âge)</div>
-          </div>
-          <button onClick={async ()=>{
-            const age = parseInt(document.getElementById(`wl-age-${item.id}`).value);
-            const date = document.getElementById(`wl-date-${item.id}`).value;
-            if (!age) { alert("Veuillez saisir l'âge"); return; }
-            try {
-              const parentDb = window.parent && window.parent.db;
-              if (parentDb && parentDb.addListeAttente) {
-                await parentDb.addListeAttente({ age, date_entree_prevue: date || null, addressage: item.service, commentaire: item.details || '' });
-                save(items.map(i=>i.id===item.id?{...i,_addedToWaitlist:true}:i));
-                alert("Patient ajouté à la liste d'attente !");
-              } else {
-                alert("Fonction indisponible hors du dashboard");
-              }
-            } catch(e) { alert("Erreur : " + e.message); }
-          }} style={{width:"100%",padding:"8px",borderRadius:8,border:"none",background:C.a[600],color:"#fff",fontWeight:700,fontSize:12,cursor:"pointer"}}>Ajouter à la liste d'attente</button>
-        </div>}
+        {item.checklist.indication === "Oui" && !item._addedToWaitlist && <WaitlistForm item={item} onAdded={()=>{
+          save(items.map(i=>i.id===item.id?{...i,_addedToWaitlist:true}:i));
+        }}/>}
         {item._addedToWaitlist && <div style={{padding:8,borderRadius:8,background:C.t[50],marginBottom:12}}>
           <span style={{fontSize:11,fontWeight:700,color:C.t[700]}}>✓ Ajouté à la liste d'attente</span>
         </div>}

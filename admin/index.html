@@ -308,14 +308,18 @@
             </button>
 
             <!-- Exports de sortie -->
-            <div id="sortie-exports" class="hidden space-y-2 mt-1 pl-11">
-              <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                <div><p class="text-xs font-bold">Fiche de sortie (PDF)</p><p class="text-[10px] text-white/70">Craving, stratégies, contacts</p></div>
+            <div id="sortie-exports" class="hidden space-y-2">
+              <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3.5 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
+                <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                </div>
+                <div><p class="text-sm font-semibold">Fiche de sortie (PDF)</p><p class="text-[11px] text-white/70">Craving, stratégies, contacts</p></div>
               </button>
-              <button id="btn-export-html-admin" class="w-full bg-white border-2 border-indigo-200 text-indigo-700 rounded-xl p-3 flex items-center gap-3 hover:border-indigo-400 transition-all active:scale-[0.98] text-left">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
-                <div><p class="text-xs font-bold">App de sortie (HTML)</p><p class="text-[10px] text-slate-500">Application autonome hors-ligne</p></div>
+              <button id="btn-export-html-admin" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-all active:scale-[0.98] text-left">
+                <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+                </div>
+                <div><p class="text-sm font-semibold text-slate-700">App de sortie (HTML)</p><p class="text-[11px] text-slate-400">Application autonome hors-ligne</p></div>
               </button>
             </div>
           </div>
