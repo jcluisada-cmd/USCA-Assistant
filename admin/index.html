@@ -279,6 +279,19 @@
             <div id="detail-perms-list"></div>
           </div>
 
+          <!-- Accordion : Dossier post-cure -->
+          <button id="acc-postcure" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 bg-teal-50 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-slate-700">Dossier post-cure</span>
+              <span id="postcure-status-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
+            </div>
+            <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div id="acc-postcure-content" class="hidden mb-2 pl-2"></div>
+
           <!-- Actions -->
           <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
           <div class="space-y-2 mb-4">
@@ -614,6 +627,7 @@
 <script src="../shared/auth.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
+<script src="../shared/postcure-structures.js"></script>
 
 <script>
 // ── Helpers DOM sûrs ──
@@ -1148,6 +1162,87 @@ document.getElementById('acc-perms').addEventListener('click', function() {
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
 
+document.getElementById('acc-postcure').addEventListener('click', async function() {
+  var content = document.getElementById('acc-postcure-content');
+  var wasHidden = content.classList.contains('hidden');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+  if (wasHidden && selectedPatientForDetail) {
+    renderPostcureDossier(selectedPatientForDetail);
+  }
+});
+
+async function renderPostcureDossier(patient) {
+  var container = document.getElementById('acc-postcure-content');
+  container.textContent = '';
+  var badge = document.getElementById('postcure-status-badge');
+
+  var dossier = null;
+  try { dossier = await db.getDossierPostcure(patient.id); } catch(e) {}
+
+  var hasPatient = dossier && dossier.volet_patient_date;
+  var hasMedecin = dossier && dossier.volet_medecin_date;
+  var count = (hasPatient ? 1 : 0) + (hasMedecin ? 1 : 0);
+
+  // Badge sur l'accordion
+  if (badge) {
+    if (count > 0) {
+      badge.textContent = count + '/2';
+      badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full ' + (count === 2 ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700');
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  // Statut volet patient
+  var statusP = createEl('div', 'flex items-center gap-2 py-2');
+  if (hasPatient) {
+    statusP.appendChild(createEl('span', 'text-emerald-600 text-sm', '\u2705'));
+    statusP.appendChild(createEl('span', 'text-xs text-slate-700', 'Volet patient rempli le ' + new Date(dossier.volet_patient_date).toLocaleDateString('fr-FR')));
+  } else {
+    statusP.appendChild(createEl('span', 'text-slate-400 text-sm', '\u274c'));
+    statusP.appendChild(createEl('span', 'text-xs text-slate-500', 'Volet patient : en attente'));
+  }
+  container.appendChild(statusP);
+
+  // Statut volet médecin
+  var statusM = createEl('div', 'flex items-center gap-2 py-2');
+  if (hasMedecin) {
+    statusM.appendChild(createEl('span', 'text-emerald-600 text-sm', '\u2705'));
+    var mText = 'Volet m\u00e9dical rempli le ' + new Date(dossier.volet_medecin_date).toLocaleDateString('fr-FR');
+    if (dossier.volet_medecin_par) mText += ' par ' + dossier.volet_medecin_par;
+    statusM.appendChild(createEl('span', 'text-xs text-slate-700', mText));
+  } else {
+    statusM.appendChild(createEl('span', 'text-slate-400 text-sm', '\u274c'));
+    statusM.appendChild(createEl('span', 'text-xs text-slate-500', 'Volet m\u00e9dical : en attente'));
+  }
+  container.appendChild(statusM);
+
+  // Structure
+  if (dossier && dossier.structure_key) {
+    var structs = window.POSTCURE_STRUCTS || {};
+    var st = structs[dossier.structure_key];
+    if (st) {
+      var structInfo = createEl('div', 'text-xs text-teal-700 bg-teal-50 rounded-lg px-3 py-2 mb-2', '\ud83c\udfe5 ' + st.nom + ' \u2014 ' + st.ville);
+      container.appendChild(structInfo);
+    }
+  }
+
+  // Bouton remplir volet médecin
+  var btnMed = createEl('button', 'w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg text-xs transition-colors mt-2', hasMedecin ? '\u270f\ufe0f Modifier le volet m\u00e9dical' : '\ud83e\ude7a Remplir le volet m\u00e9dical');
+  btnMed.addEventListener('click', function() {
+    var p = selectedPatientForDetail;
+    var params = new URLSearchParams();
+    params.set('patient_id', p.id);
+    params.set('patient_nom', p.numero_chambre || '');
+    if (p.date_naissance) params.set('patient_ddn', p.date_naissance);
+    if (dossier && dossier.structure_key) params.set('structure', dossier.structure_key);
+    window.open('../postcure/medecin.html?' + params.toString(), '_blank');
+  });
+  container.appendChild(btnMed);
+}
+
 // ── Modals ──
 document.getElementById('btn-action-event').addEventListener('click', function() { document.getElementById('modal-event').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('evt-date').value = today; });
 document.getElementById('evt-cancel').addEventListener('click', function() { document.getElementById('modal-event').classList.add('hidden'); });
@@ -1267,6 +1362,8 @@ async function showPatientDetail(patient) {
   // Fermer les accordions
   document.getElementById('acc-craving-content').classList.add('hidden');
   document.getElementById('acc-fiches-content').classList.add('hidden');
+  document.getElementById('acc-postcure-content').classList.add('hidden');
+  document.getElementById('postcure-status-badge').classList.add('hidden');
   document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
 
   // Titre
@@ -1662,6 +1759,30 @@ async function renderComptes() {
         })(p.id, p.nom);
         actions.appendChild(btnEditNom);
 
+        // Jours de présence
+        var btnJours = createEl('button', 'px-2 py-1.5 bg-white border border-slate-200 text-slate-500 font-bold rounded-lg text-[10px] hover:bg-slate-50 transition-colors flex-shrink-0', 'Jours');
+        if (p.jours_presence && p.jours_presence.length > 0 && p.jours_presence.length < 5) {
+          var jourLabels = {1:'L',2:'Ma',3:'Me',4:'J',5:'V'};
+          var joursStr = p.jours_presence.map(function(j) { return jourLabels[j] || j; }).join('');
+          btnJours.textContent = joursStr;
+          btnJours.className = 'px-2 py-1.5 bg-amber-50 border border-amber-200 text-amber-700 font-bold rounded-lg text-[10px] hover:bg-amber-100 transition-colors flex-shrink-0';
+        }
+        (function(profileId, currentJours) {
+          btnJours.addEventListener('click', async function() {
+            var joursNoms = ['','Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+            var msg = 'Jours de pr\u00e9sence (entrez les num\u00e9ros s\u00e9par\u00e9s par des virgules) :\n1=Lundi, 2=Mardi, 3=Mercredi, 4=Jeudi, 5=Vendredi\n\nVide = tous les jours\nActuel : ' + (currentJours && currentJours.length > 0 ? currentJours.map(function(j) { return joursNoms[j]; }).join(', ') : 'Tous les jours');
+            var input = prompt(msg, currentJours && currentJours.length > 0 ? currentJours.join(',') : '');
+            if (input === null) return;
+            var newJours = null;
+            if (input.trim()) {
+              newJours = input.split(',').map(function(s) { return parseInt(s.trim()); }).filter(function(n) { return n >= 1 && n <= 5; });
+              if (newJours.length === 0) newJours = null;
+            }
+            try { await db.updateProfile(profileId, { jours_presence: newJours }); renderComptes(); } catch(e) { console.warn(e); }
+          });
+        })(p.id, p.jours_presence);
+        actions.appendChild(btnJours);
+
         // Toggle admin
         var adminLabel = createEl('label', 'flex items-center gap-1 cursor-pointer flex-shrink-0');
         var adminCb = document.createElement('input');
@@ -1949,7 +2070,15 @@ async function renderGroupesTab() {
             try {
               var presences = await db.getPresencesReunion(slug, todayStr);
               var profiles = await db.getAllProfiles();
-              var medecins = profiles.filter(function(p) { return p.role === 'medecin'; });
+              var reuJour = reu.jour; // jour de la réunion (1=lun..5=ven)
+              var medecins = profiles.filter(function(p) {
+                if (p.role !== 'medecin') return false;
+                // Filtrer par jours de présence si défini
+                if (p.jours_presence && p.jours_presence.length > 0) {
+                  return p.jours_presence.indexOf(reuJour) !== -1;
+                }
+                return true; // null = présent tous les jours
+              });
               var presMap = {};
               presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
               medecins.forEach(function(med) {

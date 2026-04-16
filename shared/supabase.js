@@ -542,5 +542,48 @@ window.db = {
   async deleteListeAttente(id) {
     const { error } = await sb.from('liste_attente').delete().eq('id', id);
     if (error) throw error;
+  },
+
+  // ── Dossiers post-cure ──
+
+  /** Récupère le dossier post-cure d'un patient (ou null) */
+  async getDossierPostcure(patientId) {
+    const { data, error } = await sb.from('dossiers_postcure').select('*').eq('patient_id', patientId).maybeSingle();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Sauvegarde le volet patient via RPC (fonctionne en anon) */
+  async saveVoletPatient(patientId, structureKey, data) {
+    const { error } = await sb.rpc('save_volet_patient', {
+      p_patient_id: patientId,
+      p_structure_key: structureKey || '',
+      p_data: data
+    });
+    if (error) throw error;
+  },
+
+  /** Sauvegarde le volet médecin (authentifié uniquement) */
+  async upsertVoletMedecin(patientId, structureKey, data, parQui) {
+    const existing = await this.getDossierPostcure(patientId);
+    if (existing) {
+      const { error } = await sb.from('dossiers_postcure').update({
+        volet_medecin: data,
+        volet_medecin_date: new Date().toISOString(),
+        volet_medecin_par: parQui || '',
+        structure_key: structureKey || existing.structure_key || '',
+        updated_at: new Date().toISOString()
+      }).eq('patient_id', patientId);
+      if (error) throw error;
+    } else {
+      const { error } = await sb.from('dossiers_postcure').insert({
+        patient_id: patientId,
+        structure_key: structureKey || '',
+        volet_medecin: data,
+        volet_medecin_date: new Date().toISOString(),
+        volet_medecin_par: parQui || ''
+      });
+      if (error) throw error;
+    }
   }
 };
