@@ -1238,9 +1238,9 @@ function App() {
         </div>}
 
         {/* 3 grandes cartes mises en valeur */}
-        {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, #fff)`},
-          {l:"ELSA",desc:"Liaisons, admission, fiches réflexes",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, #fff)`},
-          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, #fff)`}
+        {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
+          {l:"ELSA",desc:"Liaisons, admission, fiches réflexes",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
+          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`}
         ].map(item=>
           <div key={item.v} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>item.v==='postcure_medecin'?window.open('../postcure/medecin.html','_blank'):nav(item.v)}>
             <div style={{width:48,height:48,borderRadius:14,background:item.c+"20",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.i(item.c,26)}</div>

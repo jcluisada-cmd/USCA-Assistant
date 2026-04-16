@@ -1733,7 +1733,7 @@ async function renderComptes() {
 
         // Changer le rôle
         var roleSelect = document.createElement('select');
-        roleSelect.className = 'flex-1 px-2 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs';
+        roleSelect.className = 'px-1.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] max-w-[90px]';
         ['medecin','ide','psychologue','pharmacien','secretaire','externe','etudiant_ide'].forEach(function(r) {
           var opt = document.createElement('option');
           opt.value = r; opt.textContent = roleLabels[r] || r;

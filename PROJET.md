@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 16 avril 2026 (session soir)
+> Dernière mise à jour : 17 avril 2026 (session nuit)
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md
 
 ---
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.39 |
+| **Service Worker** | usca-v3.53 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -62,17 +62,22 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 USCA-Assistant/
 ├── index.html                  ← Login unifié Patient / Soignant
 ├── patient/
-│   └── index.html              ← Interface patient (8 cartes)
+│   └── index.html              ← Interface patient (9 cartes + post-cure)
 ├── admin/
 │   └── index.html              ← Dashboard soignant (Patients, Toolbox, Planning)
 ├── staff/
-│   ├── index.html              ← Dashboard staff (redirige vers admin pour l'instant)
-│   └── toolbox.html            ← V1 Toolbox extraite (iframe dans admin)
+│   └── toolbox.html            ← V1 Toolbox React (iframe dans admin)
+├── postcure/                   ← Module post-cure (volets séparés)
+│   ├── patient.html            ← Formulaire patient (6 étapes, standalone)
+│   ├── medecin.html            ← Formulaire médecin (standalone ou lié patient)
+│   ├── logo_web.txt            ← Logo USCA base64 (affichage)
+│   └── logo_pdf.txt            ← Logo USCA base64 (PDF)
 ├── shared/
 │   ├── supabase.js             ← Client Supabase + CRUD helpers
 │   ├── auth.js                 ← Gestion session, login/logout
-│   ├── planning-groupes.js     ← Planning semaine A+B + réunions (source unique patient/soignant)
-│   ├── craving-agenda.js       ← Composant agenda craving (vues semaine/mois/3mois/1an)
+│   ├── planning-groupes.js     ← Planning semaine A+B + réunions
+│   ├── postcure-structures.js  ← 14 structures post-cure (engagements, checklists)
+│   ├── craving-agenda.js       ← Composant agenda craving
 │   ├── fiches-catalogue.js     ← Catalogue des 20 fiches traitements
 │   ├── theme.css               ← Variables CSS dark mode
 │   └── theme.js                ← Toggle dark mode
@@ -81,12 +86,16 @@ USCA-Assistant/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
 │   └── fiche_*.html            ← 20 fiches patient par médicament
+├── migrations/                 ← Scripts SQL (v1 à v13)
+│   ├── supabase-schema.sql     ← Schéma initial
+│   └── supabase-migration-v*.sql
+├── assets/                     ← Images sources
+│   ├── icon-source.png         ← Source icône (Gemini)
+│   └── splash-source.png       ← Source splash (Gemini)
 ├── affiche-equipe.html         ← Affiche A4 imprimable avec QR code
-├── icon-512.png                ← Icône app (phénix + poignée de main)
-├── splash.png                  ← Splash screen
+├── icon-512.png, splash.png    ← Images servies par l'app
 ├── manifest.json               ← Manifeste PWA
-├── sw.js                       ← Service Worker multi-pages
-└── supabase-migration-v*.sql   ← Scripts migrations (v1 à v11, toutes exécutées)
+└── sw.js                       ← Service Worker multi-pages
 ```
 
 ---
@@ -115,7 +124,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 ## 5. BASE DE DONNÉES SUPABASE
 
 ### Tables principales
-- `profiles` — Profils soignants (id, email, nom, role, is_admin, modules_actifs)
+- `profiles` — Profils soignants (id, email, nom, role, is_admin, modules_actifs, jours_presence)
 - `patients` — Patients hospitalisés (chambre, DDN, admission, sortie prévue)
 - `alertes` — Alertes craving/effet_indesirable/urgence/demande (patient_id, type, intensité, statut)
 - `strategies` — Stratégies de prévention patient (5 catégories Marlatt)
@@ -137,6 +146,11 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `device_tokens` — Appareils de confiance soignants (auto-login 90j)
 - `presences_reunions` — Présences aux réunions staff (médecins)
 
+### Tables gestion lits et post-cure (migrations v12-v13)
+- `liste_attente` — Patients en attente d'admission (age, addressage, date_entree_prevue, commentaire)
+- `dossiers_postcure` — Dossiers post-cure (patient_id, volet_patient JSONB, volet_medecin JSONB, structure_key, dates)
+- Fonction RPC `save_volet_patient` — SECURITY DEFINER pour sauvegarde anon du volet patient
+
 ### Migrations exécutées
 - v1 : Schéma initial (profiles, patients, alertes, programmes, groupes)
 - v2 : Stratégies, permissions, messages, fiches traitements
@@ -149,6 +163,8 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v9 : Participations aux groupes
 - v10 : Demandes de séances thérapies complémentaires
 - v11 : Événements d'équipe (patient_id nullable) + présences réunions
+- v12 : Liste d'attente (table liste_attente)
+- v13 : Dossiers post-cure + jours de présence soignants + RPC save_volet_patient
 
 ---
 
@@ -162,27 +178,31 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - ✅ Date de naissance patient : auto-formatage JJ/MM/AAAA (clavier numérique)
 - ✅ Messages d'erreur auth précis (réseau/identifiants/rate-limit)
 
-### Module Patient — 9 cartes + feedback
-- ✅ **J'ai un craving** : intensité 1-10, courbe d'insight, déclencheurs, durée, stratégies
+### Module Patient — 9 cartes + post-cure
+Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements, Ateliers, Stratégies, Permission, Messages, Mon avis
+- ✅ **J'ai un craving** : bouton pleine largeur rouge (en haut)
+- ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels, boutons Présent/Absent, "Demander une séance"
 - ✅ **Mon journal** : agenda craving (semaine/mois/3mois/1an), courbe tendance, stats
-- ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels, boutons Présent/Absent sur chaque groupe, bouton "Demander une séance" sur thérapies complémentaires
-- ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Traitements** : fiches prescrites, 20 fiches HTML, navigation par catégorie
+- ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance, historique, stats, animateur/lieu affichés
+- ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
 - ✅ **Messages** : contenus partagés par le soignant
-- ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance (thérapies complémentaires), historique, stats, animateur/lieu affichés
 - ✅ **Mon avis** : feedback structuré sur l'application (email ou copie)
-- ✅ **Badges notification** : ronds rouges sur Messages, Traitements, Programme, Ateliers quand il y a du nouveau
+- ✅ **Faire une demande de post-cure** : lien vers formulaire patient standalone
+- ✅ **Badges notification** : ronds rouges sur Messages, Traitements, Programme, Ateliers
 
 ### Module Soignant — 3 onglets
-- ✅ **Patients** : liste avec badges craving/permission, admission, détail patient (journal craving avec marquage auto traité, fiches traitements, permissions valider/refuser/annuler, événements, voir comme patient, supprimer séjour, export JSON), bouton app vierge
+- ✅ **Patients** : liste avec badges craving/permission, admission, détail patient (journal craving, fiches traitements, permissions, événements, voir comme patient, dossier post-cure accordion, export PDF/HTML depuis le dashboard, supprimer séjour), bouton app vierge
+- ✅ **Entrées/Sorties** : sorties prévues (auto depuis date_sortie_prevue, triées par date), liste d'attente (CRUD Supabase, adressage, date entrée, bouton Admettre → crée patient)
 - ✅ **Toolbox** : iframe V1 avec dark mode
-- ✅ **Planning** (ex-Groupes) : planning semaine A+B avec toggle, groupes thérapeutiques + animateurs + actions, réunions d'équipe récurrentes (mardi, jeudi), Staff Psychiatrie lundi (médecins, Présent/Absent), événements ponctuels (ajout texte libre + date/heure), badge demandes séances en attente, demandes de séances thérapies complémentaires (accepter/refuser/programmer)
+- ✅ **Planning** : navigation semaine ← → avec dates et badge Semaine A/B centré, groupes dynamiques (seuls les groupes restants s'affichent), réunions de la semaine (masquées si heure passée), section "Historique de la semaine" dépliable, thérapies complémentaires masquées après 17h, Staff Psychiatrie filtré par jours de présence
 
 ### Gestion comptes (admin)
 - ✅ Création, modification rôle/nom, toggle admin
+- ✅ Jours de présence par soignant (bouton "Jours", array [1-5], filtre Staff Psy)
 - ✅ Suppression complète (profil + compte Auth via Cloudflare Function)
-- ✅ Désignation animateurs pour les groupes (admin peut désigner/retirer n'importe qui)
+- ✅ Désignation animateurs pour les groupes
 
 ### App exportée HTML autonome
 - ✅ Signal craving + agenda + stratégies modifiables
@@ -191,13 +211,23 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - ✅ Tutoriel au premier lancement
 - ✅ Génération version vierge depuis l'admin (consultation)
 
+### Module Post-cure (P8)
+- ✅ **Volet patient** (`postcure/patient.html`) : 6 étapes (identité, couverture, social, contacts, engagement+signature, récap), génération ZIP+PDF, sauvegarde Supabase si patient connecté (RPC anon)
+- ✅ **Volet médecin** (`postcure/medecin.html`) : formulaire médical complet (addictologie, ATCD, état actuel, traitements), uploads documents, génération ZIP+PDF, sauvegarde Supabase si lié à un patient
+- ✅ **Données partagées** (`shared/postcure-structures.js`) : 14 structures post-cure (engagements, checklists, contacts)
+- ✅ **Dashboard** : accordion "Dossier post-cure" dans Chambre XX (statuts volet patient/médecin, bouton remplir volet médical)
+- ✅ **Toolbox** : grande carte "Dossier post-cure" (même format que Protocoles USCA et ELSA)
+
 ### Auth avancée
 - ✅ Client Supabase robuste (safeStorage, PKCE, autoRefresh)
 - ✅ Appareils de confiance (device tokens 90j, max 5, auto-register/révocation)
 - ✅ Cloudflare Function suppression compte (`functions/api/delete-user.js`)
 
-### Toolbox Soignant V1
-- ✅ 8 modules cliniques : Protocoles, Séjour J1-J12, Scores, Interactions, Comorbidités, ELSA, Admission, Fiches Traitements
+### Toolbox Soignant V1 — réorganisée
+- ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
+- ✅ **Protocoles USCA** → hub : Substances, Checklist Séjour J1-J12, Comorbidités psy
+- ✅ **ELSA** → hub : Liaisons en cours (ToDo list avec checklist, drag-and-drop, ajout liste d'attente), Admission & Orientation, Fiches réflexes
+- ✅ **Barre nav** : Accueil, Protocoles, ELSA, Scores, Plus
 - ✅ Dark mode complet (swap palette C)
 
 ---
@@ -225,14 +255,31 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - [x] Carte Feedback patient ("Mon avis sur l'application")
 - [x] Désignation animateurs par l'admin + accès actions animateur pour l'admin
 - [x] Animateur/lieu affichés dans les ateliers patient
+- [x] Fix bug export app vierge — v3.38
+
+### Fait — Session 16-17/04 nuit (v3.39 → v3.53)
+- [x] Réorganisation cartes patient (Programme, Journal, Traitements, Ateliers, Stratégies, Permission, Messages, Mon avis)
+- [x] Réorganisation Toolbox : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions)
+- [x] Protocoles USCA → hub (Substances, Checklist Séjour, Comorbidités)
+- [x] ELSA → hub (Liaisons en cours + ToDo list, Admission, Fiches réflexes)
+- [x] Liaisons ELSA : formulaire, drag-and-drop, checklist (indication, motivation, orientation), ajout liste d'attente
+- [x] Entrées/Sorties dans dashboard : sorties prévues auto + liste d'attente Supabase (CRUD, adressage, admission)
+- [x] Planning dynamique : navigation ← semaine →, groupes à venir/historique, réunions filtrées, Staff filtré par jours de présence
+- [x] Exports PDF/HTML depuis dashboard patient (Chambre XX → fiche sortie + app sortie)
+- [x] **P7** — Ménage technique : suppression staff/index.html, migrations dans `migrations/`, images sources dans `assets/`
+- [x] **P8** — Post-cure : séparation en volet patient + volet médecin + structures partagées
+- [x] P8/P2 — Supabase : table dossiers_postcure, RPC save_volet_patient (anon), CRUD helpers
+- [x] P8 — Accordion dossier post-cure dans dashboard Chambre XX (statuts, bouton remplir volet médical)
+- [x] Jours de présence soignants (profiles.jours_presence, config depuis Comptes, filtre Staff Psy)
+- [x] Bug fix : synchro sorties prévues après mise à jour date sortie
 
 ### À faire
+- [ ] **P3 (PDF)** — Amélioration mise en page PDFs post-cure (9-10pt, sections colorées, tables substances, smart page breaks)
 - [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
-- [ ] **P7** — Ménage technique : supprimer `/staff/index.html` inutile (5 min, zéro impact)
-- [ ] **P8** — Post-cure (module HTML de JC) + Annuaire patients
+- [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email)
+- [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] Tester toutes les nouvelles features en conditions réelles
-- [x] Fix bug export app vierge — v3.38 (généré directement dans l'admin, onglet Toolbox)
 
 ---
 
