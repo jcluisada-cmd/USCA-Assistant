@@ -114,6 +114,7 @@ html.dark .sub-table th{background:var(--accent-light);color:var(--accent)}
 html.dark .sub-table td{border-color:var(--border)}
 html.dark .engagement-text{background:var(--surface);border-color:var(--border);color:var(--ink-soft)}
 html.dark input,html.dark textarea,html.dark select{background:var(--surface)!important;color:var(--ink)!important;border-color:var(--border)!important}
+html.dark .security{background:#134e4a;color:#6ee7b7}
 /* Theme toggle button */
 .theme-toggle{position:fixed;bottom:1rem;right:1rem;width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:200;transition:.2s;box-shadow:var(--shadow)}
 .theme-toggle:hover{background:var(--accent-bg)}
@@ -604,7 +605,7 @@ function buildReview() {
   var reviewEl = document.getElementById('patient-review');
   reviewEl.textContent = '';
   reviewEl.insertAdjacentHTML('afterbegin',
-    rvHTML('Identité', [['Nom', p.nom + ' ' + p.prenom], ['DDN', p.ddn], ['Sexe', p.sexe], ['Adresse', p.adresse + ', ' + p.cp + ' ' + p.ville], ['Tél', p.tel]]) +
+    rvHTML('Identité', [['Nom', p.prenom + ' ' + p.nom], ['DDN', p.ddn ? new Date(p.ddn).toLocaleDateString('fr-FR') : ''], ['Sexe', p.sexe], ['Adresse', p.adresse + ', ' + p.cp + ' ' + p.ville], ['Tél', p.tel]]) +
     rvHTML('Couverture', [['SS', p.ss], ['Caisse', p.caisse], ['ALD', p.ald], ['Mutuelle', p.mut_type + ' ' + p.mut_nom]]) +
     rvHTML('Social', [['Famille', p.fam], ['Emploi', p.emploi], ['Ressources', p.ress], ['Logement', p.log]]) +
     rvHTML('Personnes', [['Prévenir', p.pp_nom + ' ' + p.pp_prenom + ' (' + p.pp_lien + ')'], ['Confiance', p.pc_nom]]) +
@@ -635,7 +636,7 @@ function buildReview() {
   checkEl.insertAdjacentHTML('afterbegin', checkHtml);
 
   // Mailto links
-  var nom = p.nom + ' ' + p.prenom;
+  var nom = p.prenom + ' ' + p.nom;
   var subj = encodeURIComponent('Dossier post-cure — ' + nom + ' — ' + s.nom);
   var body = encodeURIComponent('Bonjour,\n\nVeuillez trouver ci-joint le dossier post-cure.\n\nCordialement,\n' + nom);
 
@@ -671,9 +672,9 @@ function mkDoc(title, subtitle) {
   d.setFillColor(255, 255, 255); d.roundedRect(ML-2, 2, 32, 18, 2, 2, 'F');
   try { if (LOGO_PDF) d.addImage(LOGO_PDF, 'JPEG', ML-1, 2.5, 30, 17); } catch(e) {}
   // Title
-  d.setTextColor(255, 255, 255); d.setFontSize(13); d.setFont('helvetica', 'bold');
+  d.setTextColor(255, 255, 255); d.setFontSize(14); d.setFont('helvetica', 'bold');
   d.text(title, WP/2 + 14, 10, {align:'center'});
-  d.setFontSize(8); d.setFont('helvetica', 'normal'); d.setTextColor(180, 210, 215);
+  d.setFontSize(10); d.setFont('helvetica', 'normal'); d.setTextColor(200, 225, 230);
   d.text(subtitle, WP/2 + 14, 17, {align:'center'});
   d.setTextColor(DK[0], DK[1], DK[2]);
   return d;
@@ -784,8 +785,9 @@ function generatePatient() {
   var d1 = mkDoc('VOLET ADMINISTRATIF', p.date + ' \u2014 ' + st.nom);
   var y = 32;
   y = sec(d1, 'Identité', y);
-  y = fl(d1, 'Nom / Prénom', p.nom + ' ' + p.prenom, y);
-  y = fl(d1, 'DDN / Lieu', p.ddn + ' — ' + p.lieu, y);
+  y = fl(d1, 'Prénom Nom', p.prenom + ' ' + p.nom, y);
+  var ddnFmt = p.ddn ? new Date(p.ddn).toLocaleDateString('fr-FR') : '';
+  y = fl(d1, 'DDN / Lieu', ddnFmt + ' — ' + p.lieu, y);
   y = fl(d1, 'Sexe', p.sexe, y);
   y = fl(d1, 'Adresse', p.adresse + ', ' + p.cp + ' ' + p.ville, y);
   y = fl(d1, 'Tél / Email', p.tel + ' — ' + p.email, y); y += 1.5;

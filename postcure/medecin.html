@@ -84,6 +84,7 @@ html.dark .upload-zone{background:var(--surface-alt);border-color:var(--border)}
 html.dark .sub-table th{background:var(--accent-light);color:var(--accent)}
 html.dark .sub-table td{border-color:var(--border)}
 html.dark input,html.dark textarea,html.dark select{background:var(--surface)!important;color:var(--ink)!important;border-color:var(--border)!important}
+html.dark .security{background:#134e4a;color:#6ee7b7}
 .theme-toggle{position:fixed;bottom:1rem;right:1rem;width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:200;transition:.2s;box-shadow:var(--shadow)}
 .theme-toggle:hover{background:var(--accent-bg)}
 </style>
@@ -401,9 +402,9 @@ function mkDoc(title,subtitle){
   d.setFillColor(TL[0],TL[1],TL[2]);d.rect(0,22,WP,3,'F');
   d.setFillColor(255,255,255);d.roundedRect(ML-2,2,32,18,2,2,'F');
   try{if(LOGO_PDF)d.addImage(LOGO_PDF,'JPEG',ML-1,2.5,30,17);}catch(e){}
-  d.setTextColor(255,255,255);d.setFontSize(13);d.setFont('helvetica','bold');
+  d.setTextColor(255,255,255);d.setFontSize(14);d.setFont('helvetica','bold');
   d.text(title,WP/2+14,10,{align:'center'});
-  d.setFontSize(8);d.setFont('helvetica','normal');d.setTextColor(180,210,215);
+  d.setFontSize(10);d.setFont('helvetica','normal');d.setTextColor(200,225,230);
   d.text(subtitle,WP/2+14,17,{align:'center'});
   d.setTextColor(DK[0],DK[1],DK[2]);return d;
 }
@@ -498,7 +499,8 @@ function generateMedecin(){
   d2.setFontSize(11);d2.setFont('helvetica','bold');d2.setTextColor(DK[0],DK[1],DK[2]);
   d2.text(p.prenom+' '+p.nom,ML+4,y+3);
   d2.setFontSize(8);d2.setFont('helvetica','normal');d2.setTextColor(GR[0],GR[1],GR[2]);
-  d2.text('N\u00e9(e) le '+p.ddn,ML+4,y+8);
+  var ddnFmt=p.ddn?new Date(p.ddn).toLocaleDateString('fr-FR'):'';
+  d2.text('N\u00e9(e) le '+ddnFmt,ML+4,y+8);
   d2.setFont('helvetica','bold');d2.setTextColor(TL[0],TL[1],TL[2]);
   d2.text(st.nom,WP-MR-2,y+3,{align:'right'});
   d2.setFont('helvetica','normal');d2.setFontSize(8);d2.setTextColor(GR[0],GR[1],GR[2]);
@@ -538,7 +540,7 @@ function generateMedecin(){
   footer(d2);
   zip.file('01_Medical_'+p.nom+'_CONFIDENTIEL.pdf',d2.output('blob'));
   var idx=2;idx=addToZip(zip,['ordo','bio','crh'],idx);idx=addMulti(zip,'medecin_autres',idx);
-  dlZip(zip,'Medical_'+p.nom+'_'+p.prenom+'_'+m.date.replace(/\//g,'-')+'.zip');
+  dlZip(zip,'Medical_'+p.prenom+'_'+p.nom+'_'+m.date.replace(/\//g,'-')+'.zip');
 }
 
 // ============================================================
@@ -572,7 +574,7 @@ function sendPatientForm() {
 function updateMailtos() {
   var p = collectP();
   var st = STRUCTS[p.postcure] || {nom:'Non pr\u00e9cis\u00e9e'};
-  var nom = (p.nom + ' ' + p.prenom).trim() || 'Patient';
+  var nom = (p.prenom + ' ' + p.nom).trim() || 'Patient';
   var subj = encodeURIComponent('Pr\u00e9-admission (volet m\u00e9dical) \u2014 ' + nom + ' \u2014 ' + st.nom);
   var body = encodeURIComponent('Bonjour,\n\nVeuillez trouver ci-joint le dossier m\u00e9dical de pr\u00e9-admission.\n\nCordialement,\nDr ' + V('m_nom') + ' ' + V('m_prenom'));
   var uscaLink = document.getElementById('mailto-usca');
