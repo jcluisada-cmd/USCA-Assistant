@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.60 |
+| **Service Worker** | usca-v3.61 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -215,7 +215,8 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - ✅ **Volet patient** (`postcure/patient.html`) : 6 étapes (identité, couverture, social, contacts, engagement+signature, récap), génération ZIP+PDF, envoi par email (USCA obligatoire + structure optionnel)
 - ✅ **Volet médecin** (`postcure/medecin.html`) : formulaire médical complet (addictologie, ATCD, état actuel, traitements), uploads documents, génération ZIP+PDF, envoi par email, pré-remplissage patient depuis le dashboard
 - ✅ **Données partagées** (`shared/postcure-structures.js`) : 14 structures post-cure (engagements, checklists, contacts)
-- ✅ **Dashboard** : bouton "Dossier post-cure" dans Actions Chambre XX, checkboxes statut workflow (envoyé USCA/structure, volet médical rempli/envoyé)
+- ✅ **Dashboard** : accordion "Dossier post-cure" dans Chambre XX avec structure (dropdown 14 cliniques ou texte libre), date post-cure, 4 checkboxes statut workflow, bouton volet médical
+- ✅ **Module patient** : carte dynamique — affiche la structure + date si renseignées, sinon "Faire une demande de post-cure"
 - ✅ **Toolbox** : grande carte "Dossier post-cure" (même format que Protocoles USCA et ELSA)
 - ✅ **Dark mode** : complet sur les deux formulaires, synchronisé avec l'app, toggle en bas à droite
 - ✅ **PDFs améliorés** : police 9pt, titre 14pt, sous-titre 10pt, sections barre colorée latérale, marges 20mm, smart page breaks, footer USCA, format Prénom Nom, DDN jj/mm/aaaa

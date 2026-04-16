@@ -67,7 +67,7 @@ window.db = {
   async getPatientByRoom(room, dob) {
     const { data, error } = await sb
       .from('patients')
-      .select('id, prenom, programme_id, numero_chambre, substance_principale, date_admission, date_sortie_prevue')
+      .select('id, prenom, programme_id, numero_chambre, substance_principale, date_admission, date_sortie_prevue, postcure_statut')
       .eq('numero_chambre', room)
       .eq('date_naissance', dob)
       .single();

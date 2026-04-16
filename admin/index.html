@@ -313,15 +313,23 @@
               <div><p class="text-sm font-semibold text-slate-700">Annoncer la date de sortie</p><p id="sortie-current" class="text-[11px] text-slate-400">Non définie</p></div>
             </button>
 
-            <button id="btn-action-postcure" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
-              <div class="w-8 h-8 bg-teal-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+            <!-- Accordion Dossier post-cure -->
+            <div class="w-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+              <button id="btn-action-postcure" class="w-full p-3.5 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left">
+                <div class="w-8 h-8 bg-teal-50 dark:bg-teal-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                </div>
+                <div class="flex-1"><p class="text-sm font-semibold text-slate-700 dark:text-slate-200">Dossier post-cure</p><p id="postcure-subtitle" class="text-[11px] text-slate-400">Volet médical, statut, structure</p></div>
+                <svg id="postcure-chevron" class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div id="postcure-statut-zone" class="hidden border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3 space-y-3">
+                <!-- Structure + date -->
+                <div id="postcure-meta" class="space-y-2"></div>
+                <!-- Checkboxes statut -->
+                <div id="postcure-checks" class="space-y-1.5"></div>
+                <!-- Bouton volet médecin -->
+                <button id="btn-open-medecin" class="w-full py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg text-xs transition-colors">Remplir le volet médical</button>
               </div>
-              <div><p class="text-sm font-semibold text-slate-700">Dossier post-cure</p><p class="text-[11px] text-slate-400">Volet médical pré-admission</p></div>
-            </button>
-            <!-- Statut post-cure -->
-            <div id="postcure-statut-zone" class="hidden bg-teal-50 dark:bg-teal-950 rounded-xl border border-teal-200 dark:border-teal-800 p-3 space-y-2">
-              <div id="postcure-checks" class="space-y-1.5"></div>
             </div>
 
             <!-- Exports de sortie -->
@@ -1161,13 +1169,67 @@ document.getElementById('acc-perms').addEventListener('click', function() {
 
 // ── Statut post-cure ──
 function renderPostcureStatut(patient) {
-  var zone = document.getElementById('postcure-statut-zone');
+  var meta = document.getElementById('postcure-meta');
   var checks = document.getElementById('postcure-checks');
-  if (!zone || !checks) return;
+  if (!meta || !checks) return;
   var statut = patient.postcure_statut || {};
-  zone.classList.remove('hidden');
+  meta.textContent = '';
   checks.textContent = '';
 
+  // ── Structure + date ──
+  var structs = window.POSTCURE_STRUCTS || {};
+  var structKeys = Object.keys(structs);
+
+  // Select structure
+  var structRow = createEl('div', '');
+  structRow.appendChild(createEl('label', 'text-[10px] font-semibold text-slate-500 dark:text-slate-400 block mb-1', 'Structure de post-cure'));
+  var sel = document.createElement('select');
+  sel.className = 'w-full px-2.5 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-teal-400';
+  var optEmpty = document.createElement('option');
+  optEmpty.value = ''; optEmpty.textContent = '\u2014 Non d\u00e9finie \u2014';
+  sel.appendChild(optEmpty);
+  structKeys.forEach(function(k) {
+    var opt = document.createElement('option');
+    opt.value = k; opt.textContent = structs[k].nom + ' \u2014 ' + structs[k].ville;
+    if (statut.structure === k) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  // Option texte libre
+  var optAutre = document.createElement('option');
+  optAutre.value = '__autre'; optAutre.textContent = 'Autre (texte libre)';
+  if (statut.structure && !structs[statut.structure] && statut.structure !== '') optAutre.selected = true;
+  sel.appendChild(optAutre);
+  sel.addEventListener('change', async function() {
+    if (this.value === '__autre') {
+      var nom = prompt('Nom de la structure :');
+      if (nom && nom.trim()) {
+        await savePostcureMeta(patient, 'structure', nom.trim());
+      } else { renderPostcureStatut(patient); }
+    } else {
+      await savePostcureMeta(patient, 'structure', this.value);
+    }
+  });
+  structRow.appendChild(sel);
+  // Afficher le nom si texte libre
+  if (statut.structure && !structs[statut.structure] && statut.structure !== '') {
+    structRow.appendChild(createEl('p', 'text-[10px] text-teal-600 dark:text-teal-400 mt-1 font-semibold', statut.structure));
+  }
+  meta.appendChild(structRow);
+
+  // Date post-cure
+  var dateRow = createEl('div', '');
+  dateRow.appendChild(createEl('label', 'text-[10px] font-semibold text-slate-500 dark:text-slate-400 block mb-1', 'Date d\u2019entr\u00e9e pr\u00e9vue'));
+  var dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.value = statut.date_postcure || '';
+  dateInput.className = 'w-full px-2.5 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-teal-400';
+  dateInput.addEventListener('change', async function() {
+    await savePostcureMeta(patient, 'date_postcure', this.value || null);
+  });
+  meta.appendChild(dateRow);
+  dateRow.appendChild(dateInput);
+
+  // ── Checkboxes statut ──
   var items = [
     { key: 'patient_usca', label: 'Volet patient envoy\u00e9 \u00e0 l\u2019USCA', icon: '\ud83d\udce8' },
     { key: 'patient_structure', label: 'Volet patient envoy\u00e9 \u00e0 la structure', icon: '\ud83c\udfe5' },
@@ -1178,35 +1240,72 @@ function renderPostcureStatut(patient) {
   items.forEach(function(item) {
     var isChecked = !!statut[item.key];
     var row = createEl('div', 'flex items-center gap-2.5');
-
     var cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.checked = isChecked;
+    cb.type = 'checkbox'; cb.checked = isChecked;
     cb.className = 'w-4 h-4 rounded accent-teal-600 cursor-pointer flex-shrink-0';
     (function(k) {
       cb.addEventListener('change', async function() {
         try {
           await db.updatePostcureStatut(patient.id, k, this.checked);
           patient.postcure_statut = patient.postcure_statut || {};
-          if (this.checked) {
-            patient.postcure_statut[k] = new Date().toISOString().split('T')[0];
-          } else {
-            delete patient.postcure_statut[k];
-          }
+          if (this.checked) { patient.postcure_statut[k] = new Date().toISOString().split('T')[0]; }
+          else { delete patient.postcure_statut[k]; }
           renderPostcureStatut(patient);
         } catch(e) { console.warn(e); this.checked = !this.checked; }
       });
     })(item.key);
     row.appendChild(cb);
-
-    var label = createEl('span', 'text-xs ' + (isChecked ? 'text-teal-700 dark:text-teal-300 font-semibold' : 'text-slate-600 dark:text-slate-400'), item.icon + ' ' + item.label);
-    if (isChecked && statut[item.key]) {
-      label.appendChild(document.createTextNode(' \u2014 ' + statut[item.key]));
-    }
-    row.appendChild(label);
+    var lbl = createEl('span', 'text-xs ' + (isChecked ? 'text-teal-700 dark:text-teal-300 font-semibold' : 'text-slate-600 dark:text-slate-400'), item.icon + ' ' + item.label);
+    if (isChecked && statut[item.key]) lbl.appendChild(document.createTextNode(' \u2014 ' + statut[item.key]));
+    row.appendChild(lbl);
     checks.appendChild(row);
   });
+
+  // Sous-titre dynamique
+  var sub = document.getElementById('postcure-subtitle');
+  if (sub) {
+    var parts = [];
+    if (statut.structure) {
+      var sn = structs[statut.structure] ? structs[statut.structure].nom : statut.structure;
+      parts.push(sn);
+    }
+    if (statut.date_postcure) parts.push(new Date(statut.date_postcure).toLocaleDateString('fr-FR'));
+    var nbChecked = items.filter(function(i) { return !!statut[i.key]; }).length;
+    if (nbChecked > 0) parts.push(nbChecked + '/4');
+    sub.textContent = parts.length > 0 ? parts.join(' \u2014 ') : 'Volet m\u00e9dical, statut, structure';
+  }
 }
+
+async function savePostcureMeta(patient, key, value) {
+  try {
+    await db.updatePostcureStatut(patient.id, key, value);
+    patient.postcure_statut = patient.postcure_statut || {};
+    if (value) { patient.postcure_statut[key] = value; }
+    else { delete patient.postcure_statut[key]; }
+    renderPostcureStatut(patient);
+  } catch(e) { console.warn(e); }
+}
+
+// Accordion toggle
+document.getElementById('btn-action-postcure').addEventListener('click', function() {
+  var zone = document.getElementById('postcure-statut-zone');
+  var chevron = document.getElementById('postcure-chevron');
+  zone.classList.toggle('hidden');
+  chevron.style.transform = zone.classList.contains('hidden') ? '' : 'rotate(180deg)';
+});
+
+// Bouton volet médecin
+document.getElementById('btn-open-medecin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  var statut = p.postcure_statut || {};
+  var params = new URLSearchParams();
+  params.set('patient_id', p.id);
+  params.set('patient_nom', p.numero_chambre);
+  if (p.date_naissance) params.set('patient_ddn', p.date_naissance);
+  if (statut.structure) params.set('structure', statut.structure);
+  window.open('../postcure/medecin.html?' + params.toString(), '_blank');
+});
 
 // ── Modals ──
 document.getElementById('btn-action-event').addEventListener('click', function() { document.getElementById('modal-event').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('evt-date').value = today; });
@@ -1217,17 +1316,6 @@ document.getElementById('btn-action-contenu').addEventListener('click', function
 document.getElementById('contenu-cancel').addEventListener('click', function() { document.getElementById('modal-contenu').classList.add('hidden'); });
 document.getElementById('btn-action-sortie').addEventListener('click', function() { document.getElementById('modal-sortie').classList.remove('hidden'); });
 document.getElementById('sortie-cancel').addEventListener('click', function() { document.getElementById('modal-sortie').classList.add('hidden'); });
-
-// ── Dossier post-cure ──
-document.getElementById('btn-action-postcure').addEventListener('click', function() {
-  if (!selectedPatientForDetail) return;
-  var p = selectedPatientForDetail;
-  var params = new URLSearchParams();
-  params.set('patient_id', p.id);
-  params.set('patient_nom', p.numero_chambre);
-  params.set('patient_prenom', '');
-  if (p.date_naissance) params.set('patient_ddn', p.date_naissance);
-  window.open('../postcure/medecin.html?' + params.toString(), '_blank');
 });
 
 // ── Save événement ──
@@ -1327,6 +1415,7 @@ async function showPatientDetail(patient) {
   // Fermer les accordions
   document.getElementById('acc-craving-content').classList.add('hidden');
   document.getElementById('acc-fiches-content').classList.add('hidden');
+  document.getElementById('postcure-statut-zone').classList.add('hidden');
   document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
 
   // Titre

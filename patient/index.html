@@ -183,17 +183,8 @@
         </div>
       </div>
 
-      <!-- Carte Dossier post-cure -->
-      <a href="../postcure/patient.html" target="_blank" class="block w-full bg-white rounded-2xl border-2 border-teal-200 p-4 flex items-center gap-4 hover:shadow-md hover:border-teal-400 transition-all active:scale-[0.98] mb-4">
-        <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center flex-shrink-0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
-        </div>
-        <div class="flex-1">
-          <p class="text-sm font-bold text-teal-800">Faire une demande de post-cure</p>
-          <p class="text-[11px] text-teal-600">Remplir le dossier d'admission</p>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </a>
+      <!-- Carte Dossier post-cure (dynamique) -->
+      <div id="postcure-patient-card" class="mb-4"></div>
 
       <!-- Bandeau exports -->
       <div class="space-y-2">
@@ -739,6 +730,7 @@
 <script src="../shared/craving-agenda.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
+<script src="../shared/postcure-structures.js"></script>
 
 <script>
 // ── État ──
@@ -815,6 +807,9 @@ async function showPatientApp(patient) {
 
   // Rafraîchir les badges de notification
   refreshBadges();
+
+  // Carte post-cure dynamique
+  renderPostcureCard(patient);
 
   // Navigation jour précédent / suivant
   document.getElementById('prog-prev').addEventListener('click', function() {
@@ -2535,6 +2530,76 @@ document.getElementById('btn-logout').addEventListener('click', function() {
   auth.logoutPatient();
   window.location.href = '../';
 });
+
+// ══════════════ CARTE POST-CURE DYNAMIQUE ══════════════
+
+function renderPostcureCard(patient) {
+  var container = document.getElementById('postcure-patient-card');
+  if (!container) return;
+  container.textContent = '';
+  var statut = patient.postcure_statut || {};
+  var structs = window.POSTCURE_STRUCTS || {};
+  var hasDate = !!statut.date_postcure;
+  var hasStruct = !!statut.structure;
+
+  if (hasDate || hasStruct) {
+    // Post-cure prévue → afficher les infos
+    var card = document.createElement('div');
+    card.className = 'bg-teal-50 dark:bg-teal-950 rounded-2xl border-2 border-teal-200 dark:border-teal-800 p-4';
+    var title = document.createElement('p');
+    title.className = 'text-sm font-bold text-teal-800 dark:text-teal-200 mb-2';
+    title.textContent = 'Post-cure prévue';
+    card.appendChild(title);
+
+    if (hasStruct) {
+      var structName = structs[statut.structure] ? structs[statut.structure].nom : statut.structure;
+      var structVille = structs[statut.structure] ? structs[statut.structure].ville : '';
+      var sLine = document.createElement('p');
+      sLine.className = 'text-xs text-teal-700 dark:text-teal-300 font-semibold';
+      sLine.textContent = structName + (structVille ? ' — ' + structVille : '');
+      card.appendChild(sLine);
+    }
+    if (hasDate) {
+      var dLine = document.createElement('p');
+      dLine.className = 'text-xs text-teal-600 dark:text-teal-400 mt-1';
+      dLine.textContent = 'Entrée prévue : ' + new Date(statut.date_postcure).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      card.appendChild(dLine);
+    }
+
+    // Lien vers le formulaire quand même
+    var link = document.createElement('a');
+    link.href = '../postcure/patient.html';
+    link.target = '_blank';
+    link.className = 'inline-block mt-3 text-[11px] font-semibold text-teal-600 dark:text-teal-400 underline';
+    link.textContent = 'Remplir le dossier d\'admission';
+    card.appendChild(link);
+    container.appendChild(card);
+  } else {
+    // Pas de post-cure prévue → bouton d'action
+    var link = document.createElement('a');
+    link.href = '../postcure/patient.html';
+    link.target = '_blank';
+    link.className = 'block w-full bg-white dark:bg-slate-800 rounded-2xl border-2 border-teal-200 dark:border-teal-700 p-4 flex items-center gap-4 hover:shadow-md hover:border-teal-400 transition-all active:scale-[0.98]';
+
+    var icon = document.createElement('div');
+    icon.className = 'w-10 h-10 bg-teal-50 dark:bg-teal-900 rounded-xl flex items-center justify-center flex-shrink-0';
+    icon.textContent = '\ud83d\udccb';
+    link.appendChild(icon);
+
+    var txt = document.createElement('div');
+    txt.className = 'flex-1';
+    var t1 = document.createElement('p');
+    t1.className = 'text-sm font-bold text-teal-800 dark:text-teal-200';
+    t1.textContent = 'Faire une demande de post-cure';
+    var t2 = document.createElement('p');
+    t2.className = 'text-[11px] text-teal-600 dark:text-teal-400';
+    t2.textContent = 'Remplir le dossier d\'admission';
+    txt.appendChild(t1);
+    txt.appendChild(t2);
+    link.appendChild(txt);
+    container.appendChild(link);
+  }
+}
 
 // ══════════════ AUTO-RESTAURATION ══════════════
 
