@@ -98,7 +98,17 @@
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Date de naissance</label>
-        <input type="date" id="patient-dob" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-lg font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
+        <div class="flex gap-2" id="patient-dob-group">
+          <select id="dob-day" class="flex-1 px-2 py-3 bg-white border-2 border-slate-200 rounded-xl text-base font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
+            <option value="">Jour</option>
+          </select>
+          <select id="dob-month" class="flex-1 px-2 py-3 bg-white border-2 border-slate-200 rounded-xl text-base font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
+            <option value="">Mois</option>
+          </select>
+          <select id="dob-year" class="flex-[1.2] px-2 py-3 bg-white border-2 border-slate-200 rounded-xl text-base font-bold text-center text-slate-800 focus:border-emerald-500 focus:outline-none transition-colors">
+            <option value="">Année</option>
+          </select>
+        </div>
       </div>
       <button type="submit" id="btn-patient-login" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed">Se connecter</button>
     </form>
@@ -156,6 +166,41 @@
 <script src="shared/supabase.js"></script>
 <script src="shared/auth.js"></script>
 <script>
+// ── Peupler les sélecteurs date de naissance ──
+(function() {
+  var daySelect = document.getElementById('dob-day');
+  var monthSelect = document.getElementById('dob-month');
+  var yearSelect = document.getElementById('dob-year');
+  var mois = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  for (var d = 1; d <= 31; d++) {
+    var opt = document.createElement('option');
+    opt.value = d < 10 ? '0' + d : '' + d;
+    opt.textContent = d;
+    daySelect.appendChild(opt);
+  }
+  mois.forEach(function(m, i) {
+    var opt = document.createElement('option');
+    opt.value = (i + 1) < 10 ? '0' + (i + 1) : '' + (i + 1);
+    opt.textContent = m;
+    monthSelect.appendChild(opt);
+  });
+  var currentYear = new Date().getFullYear();
+  for (var y = currentYear - 18; y >= currentYear - 100; y--) {
+    var opt = document.createElement('option');
+    opt.value = '' + y;
+    opt.textContent = y;
+    yearSelect.appendChild(opt);
+  }
+})();
+
+function getPatientDob() {
+  var d = document.getElementById('dob-day').value;
+  var m = document.getElementById('dob-month').value;
+  var y = document.getElementById('dob-year').value;
+  if (!d || !m || !y) return '';
+  return y + '-' + m + '-' + d;
+}
+
 // ── Onglets Patient / Soignant ──
 var tabPatient = document.getElementById('tab-patient');
 var tabStaff = document.getElementById('tab-staff');
@@ -182,7 +227,7 @@ tabStaff.addEventListener('click', function() {
 // ── Login Patient ──
 formPatient.addEventListener('submit', async function() {
   var room = document.getElementById('patient-room').value.trim();
-  var dob = document.getElementById('patient-dob').value;
+  var dob = getPatientDob();
   if (!room || !dob) { showError('Veuillez remplir tous les champs'); return; }
 
   var btn = document.getElementById('btn-patient-login');
