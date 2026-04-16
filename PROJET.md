@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 17 avril 2026 (session nuit)
+> Dernière mise à jour : 17 avril 2026
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md
 
 ---
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.59 |
+| **Service Worker** | usca-v3.60 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -218,7 +218,7 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - ✅ **Dashboard** : bouton "Dossier post-cure" dans Actions Chambre XX, checkboxes statut workflow (envoyé USCA/structure, volet médical rempli/envoyé)
 - ✅ **Toolbox** : grande carte "Dossier post-cure" (même format que Protocoles USCA et ELSA)
 - ✅ **Dark mode** : complet sur les deux formulaires, synchronisé avec l'app, toggle en bas à droite
-- ✅ **PDFs améliorés** : police 9pt, sections avec barre colorée latérale, marges 20mm, smart page breaks, footer USCA
+- ✅ **PDFs améliorés** : police 9pt, titre 14pt, sous-titre 10pt, sections barre colorée latérale, marges 20mm, smart page breaks, footer USCA, format Prénom Nom, DDN jj/mm/aaaa
 - ✅ **Sécurité** : aucune donnée patient stockée sur serveur — seuls des flags workflow dans `patients.postcure_statut`
 - ✅ **Bandeau** : "Aucune donnée personnelle n'est enregistrée sur un serveur — tout reste sur votre appareil"
 
