@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.24 |
+| **Service Worker** | usca-v3.25 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -134,6 +134,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v5 : CASCADE sur alertes et stratégies (suppression patient)
 - v6 : Tables groupes (animateurs, modifications, rappels)
 - v7 : Horaires individuels (JSONB dans groupe_modifications)
+- v8 : Appareils de confiance (device_tokens) — **À EXÉCUTER**
 
 ---
 
@@ -176,19 +177,19 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 
 ## 7. BUGS CONNUS
 
-| Bug | Sévérité | Notes |
+| Bug | Sévérité | Statut |
 |---|---|---|
-| Modals admin ne se ferment pas au clic fond noir | Moyenne | UI uniquement |
-| Déconnexion patient ne redirige pas vers l'accueil | Basse | UX |
-| Suppression de compte Supabase Auth impossible | Haute | Nécessite Cloudflare Function + service_role key (voir section 11) |
+| ~~Modals admin ne se ferment pas au clic fond noir~~ | ~~Moyenne~~ | ✅ Corrigé v3.25 |
+| ~~Déconnexion patient ne redirige pas vers l'accueil~~ | ~~Basse~~ | ✅ Corrigé v3.25 |
+| ~~Suppression de compte Supabase Auth impossible~~ | ~~Haute~~ | ✅ Cloudflare Function créée v3.25 |
 
 ---
 
 ## 8. PLAN DE DÉVELOPPEMENT — CE QUI RESTE
 
 ### Priorité 1 — Tests et corrections de bugs
-- [ ] Corriger : modals admin (fermeture au clic fond noir)
-- [ ] Corriger : déconnexion patient → redirection accueil
+- [x] Corriger : modals admin (fermeture au clic fond noir) — v3.25
+- [x] Corriger : déconnexion patient → redirection accueil — v3.25
 - [ ] Tester : suppression de séjour patient (migration v5 déjà exécutée)
 - [ ] Tester : création de compte soignant (@aphp.fr)
 - [ ] Tester : planifier événement → vérifier côté patient
@@ -239,12 +240,16 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - [ ] Annuaire patients (liste, filtres, accès — à définir avec JC)
 
 ### Priorité 9 — Auth avancée
-- [ ] Cloudflare Pages Function : `functions/api/delete-user.js` (proxy suppression compte via service_role key)
-- [ ] Table `device_tokens` (appareils de confiance, auto-login 90 jours)
-- [ ] Gestion appareils dans les paramètres du compte
-- [ ] Détection WebView iOS → bannière "Ouvrir dans Safari"
-- [ ] Messages d'erreur auth précis (réseau vs identifiants vs rate-limit)
-- [ ] Variable env Cloudflare : `SUPABASE_SERVICE_ROLE_KEY`
+- [x] Cloudflare Pages Function : `functions/api/delete-user.js` — v3.25
+- [x] Table `device_tokens` : migration v8 créée (à exécuter dans Supabase)
+- [x] Enregistrement automatique appareil de confiance au login — v3.25
+- [x] Révocation token à la déconnexion — v3.25
+- [x] Détection WebView iOS → bannière "Ouvrir dans Safari" — v3.25
+- [x] Messages d'erreur auth précis (réseau/identifiants/rate-limit/serveur) — v3.25
+- [x] Client Supabase robuste (safeStorage, PKCE, autoRefresh) — v3.25
+- [ ] Gestion appareils dans les paramètres du compte (UI "Mes appareils")
+- [ ] Variable env Cloudflare : `SUPABASE_SERVICE_ROLE_KEY` (action manuelle)
+- [ ] Exécuter migration v8 dans Supabase SQL Editor
 
 ---
 

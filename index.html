@@ -24,6 +24,21 @@
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
+  <!-- Bannière WebView iOS (QR code scanné depuis l'app caméra) -->
+  <script>
+  (function() {
+    var ua = navigator.userAgent;
+    var isiOS = /iPhone|iPad|iPod/.test(ua);
+    var isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+    if (isiOS && !isSafari) {
+      document.body.insertAdjacentHTML('afterbegin',
+        '<div style="background:#f0b429;padding:14px 16px;text-align:center;font-size:13px;font-weight:700;font-family:system-ui,sans-serif;position:relative;z-index:9999">' +
+        'Pour utiliser l\'app correctement :<br>Appui long sur le lien \u2192 <strong>Ouvrir dans Safari</strong></div>'
+      );
+    }
+  })();
+  </script>
+
   <!-- Splash screen -->
   <div id="splash" class="fixed inset-0 z-[999] flex flex-col items-center justify-center" style="background:#f0f4f8;">
     <img src="splash.png" alt="USCA Connect" style="max-width:92%;max-height:92%;object-fit:contain;">

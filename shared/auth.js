@@ -6,19 +6,63 @@
 
 window.auth = {
 
+  // ════════════════ MESSAGES D'ERREUR AUTH ════════════════
+
+  /** Classifie l'erreur Supabase et retourne un message français adapté */
+  _getAuthError(error) {
+    if (!error) return null;
+    var msg = (error.message || '').toLowerCase();
+    var status = error.status;
+
+    // Erreur réseau (fetch bloqué, hors-ligne, Firefox tracking protection)
+    if (msg.includes('fetch') || msg.includes('network') || msg.includes('failed to fetch') ||
+        msg.includes('networkerror') || error instanceof TypeError) {
+      return 'Impossible de contacter le serveur. Vérifiez votre connexion.\nSur Firefox : désactivez la protection renforcée contre le pistage.';
+    }
+    // Identifiants incorrects
+    if (msg.includes('invalid login') || msg.includes('invalid credentials') ||
+        msg.includes('email not confirmed') || status === 400) {
+      return 'Identifiant ou mot de passe incorrect.';
+    }
+    // Compte inexistant
+    if (msg.includes('user not found') || status === 404) {
+      return 'Aucun compte trouvé avec cet identifiant.';
+    }
+    // Rate limit
+    if (msg.includes('too many') || status === 429) {
+      return 'Trop de tentatives. Attendez quelques minutes.';
+    }
+    // Serveur
+    if (status >= 500) {
+      return 'Erreur serveur temporaire. Réessayez dans quelques instants.';
+    }
+    return 'Erreur de connexion (' + (error.message || 'inconnue') + ')';
+  },
+
   // ════════════════ AUTH STAFF (Supabase Auth) ════════════════
 
   /**
    * Connexion soignant par email + mot de passe
-   * Retourne le profil complet ou lance une erreur
+   * Retourne le profil complet ou lance une erreur avec message précis
    */
   async loginStaff(email, password) {
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) throw new Error('Email ou mot de passe incorrect');
+    var data, error;
+    try {
+      var result = await sb.auth.signInWithPassword({ email, password });
+      data = result.data;
+      error = result.error;
+    } catch (e) {
+      throw new Error(auth._getAuthError(e));
+    }
+    if (error) throw new Error(auth._getAuthError(error));
     // Récupérer le profil dans la table profiles
     const profile = await db.getProfile(data.user.id);
     // Stocker le profil en session
     sessionStorage.setItem('staff_profile', JSON.stringify(profile));
+    // Enregistrer l'appareil de confiance (silencieux)
+    if (window._uscaHasLocalStorage) {
+      auth._registerDevice(data.user.id).catch(function() {});
+    }
     return profile;
   },
 
@@ -53,11 +97,61 @@ window.auth = {
     return map[role] || [];
   },
 
-  /** Déconnexion soignant */
+  /** Déconnexion soignant — révoque le token de cet appareil */
   async logoutStaff() {
+    var token = localStorage.getItem('usca-device-token');
+    if (token) {
+      try { await sb.from('device_tokens').delete().eq('token', token); } catch(e) {}
+      localStorage.removeItem('usca-device-token');
+    }
     await sb.auth.signOut();
     sessionStorage.removeItem('staff_profile');
     sessionStorage.removeItem('pin_hash');
+  },
+
+  // ════════════════ APPAREILS DE CONFIANCE ════════════════
+
+  /** Détecte le type d'appareil */
+  _getDeviceLabel() {
+    var ua = navigator.userAgent;
+    if (/iPhone/.test(ua)) return 'iPhone';
+    if (/iPad/.test(ua)) return 'iPad';
+    if (/Android/.test(ua) && /Mobile/.test(ua)) return 'Android Mobile';
+    if (/Android/.test(ua)) return 'Android Tablette';
+    if (/Mac/.test(ua)) return 'Mac';
+    if (/Windows/.test(ua)) return 'Windows';
+    return 'Appareil inconnu';
+  },
+
+  /** Génère un token aléatoire 32 bytes */
+  _generateToken() {
+    var array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return Array.from(array, function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  },
+
+  /** Enregistre silencieusement cet appareil comme appareil de confiance */
+  async _registerDevice(userId) {
+    var MAX_DEVICES = 5;
+    // Vérifier si un token existe déjà pour cet appareil
+    var existingToken = localStorage.getItem('usca-device-token');
+    if (existingToken) {
+      // Mettre à jour la date d'utilisation
+      await sb.from('device_tokens').update({ derniere_utilisation: new Date().toISOString() }).eq('token', existingToken);
+      return;
+    }
+    // Compter les appareils existants
+    var { data: existing } = await sb.from('device_tokens').select('id, created_at').eq('user_id', userId).order('created_at', { ascending: true });
+    if (existing && existing.length >= MAX_DEVICES) {
+      await sb.from('device_tokens').delete().eq('id', existing[0].id);
+    }
+    var token = auth._generateToken();
+    var expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 90);
+    await sb.from('device_tokens').insert({
+      user_id: userId, token: token, appareil: auth._getDeviceLabel(), expires_at: expiresAt.toISOString()
+    });
+    localStorage.setItem('usca-device-token', token);
   },
 
   /** Vérifie si un soignant est connecté, retourne le profil ou null */

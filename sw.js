@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.24';
+const CACHE_NAME = 'usca-v3.25';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -26,7 +26,8 @@ const LOCAL_ASSETS = [
 // Domaines à ne jamais cacher (API, temps réel)
 const NETWORK_ONLY = [
   'supabase.co',
-  '/api/slack'
+  '/api/slack',
+  '/api/delete-user'
 ];
 
 // ── INSTALL : cache les fichiers locaux ──

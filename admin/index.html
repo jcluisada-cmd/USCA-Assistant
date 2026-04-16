@@ -1247,17 +1247,28 @@ async function renderComptes() {
         adminLabel.appendChild(createEl('span', 'text-[10px] font-semibold text-slate-500', 'Admin'));
         actions.appendChild(adminLabel);
 
-        // Supprimer
+        // Supprimer (profil + compte Auth via Cloudflare Function)
         var btnDel = createEl('button', 'px-3 py-1.5 bg-white border border-red-200 text-red-500 font-bold rounded-lg text-xs hover:bg-red-50 transition-colors', 'Supprimer');
         (function(profileId, nom) {
           btnDel.addEventListener('click', async function() {
-            if (!confirm('Supprimer le compte de ' + nom + ' ?')) return;
+            if (!confirm('Supprimer définitivement le compte de ' + nom + ' ?\n\nCette action supprime le profil ET le compte de connexion.')) return;
             try {
-              // Supprimer le profil (le compte Supabase Auth reste mais sans profil il ne peut plus se connecter)
+              // 1. Supprimer le profil dans la table profiles
               var { error } = await sb.from('profiles').delete().eq('id', profileId);
               if (error) throw error;
+              // 2. Supprimer le compte Auth via la Cloudflare Function
+              var session = await sb.auth.getSession();
+              var token = session.data.session ? session.data.session.access_token : null;
+              if (token) {
+                var res = await fetch('/api/delete-user', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                  body: JSON.stringify({ userId: profileId })
+                });
+                if (!res.ok) console.warn('Compte Auth non supprimé (configurer SUPABASE_SERVICE_ROLE_KEY dans Cloudflare)');
+              }
               renderComptes();
-            } catch(e) { console.warn('Erreur suppression :', e); }
+            } catch(e) { alert('Erreur : ' + e.message); }
           });
         })(p.id, p.nom);
         actions.appendChild(btnDel);
@@ -1660,6 +1671,14 @@ document.getElementById('modal-groupe-close').addEventListener('click', function
 });
 document.getElementById('modal-groupe-actions').addEventListener('click', function(e) {
   if (e.target === this) this.classList.add('hidden');
+});
+
+// Fermeture modals au clic sur le fond noir
+['modal-delete', 'modal-event', 'modal-perm', 'modal-contenu', 'modal-sortie'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.add('hidden');
+  });
 });
 
 // ── Auto-login si session existante ──

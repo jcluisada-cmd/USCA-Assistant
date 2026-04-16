@@ -8,8 +8,31 @@
 const SUPABASE_URL = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZHhmb3F4Z3ZibWtuemp6ZWNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTgyNTEsImV4cCI6MjA5MTY5NDI1MX0.8Q8-wJUiOLHdf3vtMAvXMQ4JaylTGE-lm5viPWeVfZU';
 
+// ── Storage robuste (fallback sessionStorage si Safari restrictif / navigation privée) ──
+const safeStorage = (() => {
+  try {
+    localStorage.setItem('_usca_test', '1');
+    localStorage.removeItem('_usca_test');
+    return localStorage;
+  } catch {
+    console.warn('[USCA] localStorage inaccessible — fallback sessionStorage');
+    return sessionStorage;
+  }
+})();
+const hasLocalStorage = safeStorage === localStorage;
+window._uscaHasLocalStorage = hasLocalStorage;
+
 // ── Init client Supabase ──
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    storage: safeStorage,
+    storageKey: 'usca-auth-v2',
+    flowType: 'pkce',
+    persistSession: true,
+    detectSessionInUrl: true,
+    autoRefreshToken: true
+  }
+});
 window.sb = sb;
 
 // ── CRUD Helpers ──

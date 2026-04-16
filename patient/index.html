@@ -1974,13 +1974,7 @@ function escapeHtml(str) {
 
 document.getElementById('btn-logout').addEventListener('click', function() {
   auth.logoutPatient();
-  currentPatient = null;
-  document.getElementById('patient-app').classList.add('hidden');
-  document.getElementById('login-screen').classList.remove('hidden');
-  document.getElementById('input-room').value = '';
-  document.getElementById('input-dob').value = '';
-  document.getElementById('timeline-container').textContent = '';
-  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('open'); });
+  window.location.href = '../';
 });
 
 // ══════════════ AUTO-RESTAURATION ══════════════
