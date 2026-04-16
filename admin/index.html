@@ -418,7 +418,10 @@
     <div id="tab-groupes" class="tab-content flex-1 overflow-y-auto hidden">
       <div class="p-6 max-w-2xl mx-auto w-full pb-24">
         <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
-        <p class="text-xs text-slate-400 mb-4">Semaine A — Planning récurrent</p>
+        <div class="flex items-center gap-2 mb-4">
+          <span id="groupes-semaine-label" class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">Semaine A</span>
+          <button id="btn-toggle-semaine" class="text-xs text-slate-400 hover:text-indigo-600 font-semibold transition-colors">Voir l'autre semaine</button>
+        </div>
         <div id="groupes-list" class="space-y-3"></div>
       </div>
 
@@ -1371,13 +1374,22 @@ async function renderGroupesTab() {
     mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
   } catch(e) { groupeModifications = {}; }
 
-  var planning = window.PLANNING_GROUPES || [];
+  var weekType = window._groupesViewWeek || window.getWeekType(new Date());
+  var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
+  var labelEl = document.getElementById('groupes-semaine-label');
+  if (labelEl) {
+    labelEl.textContent = 'Semaine ' + weekType;
+    var isCurrentWeek = weekType === window.getWeekType(new Date());
+    labelEl.className = 'text-xs font-bold px-2 py-0.5 rounded-full ' +
+      (isCurrentWeek ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500');
+  }
   var jours = window.JOURS_SEMAINE || [];
   var typeColors = {
     groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' },
     atelier: { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700', dot: 'bg-violet-500' },
     groupe_jeu: { bg: 'bg-teal-50', border: 'border-teal-200', text: 'text-teal-700', dot: 'bg-teal-500' },
-    therapie: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', dot: 'bg-rose-500' }
+    therapie: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', dot: 'bg-rose-500' },
+    seances: { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-700', dot: 'bg-cyan-500' }
   };
 
   var parJour = {};
@@ -1664,6 +1676,13 @@ function openGroupeActionModal(slug, actionType, groupe) {
     content.appendChild(btnSend);
   }
 }
+
+// Toggle semaine A/B dans l'onglet groupes
+document.getElementById('btn-toggle-semaine').addEventListener('click', function() {
+  var current = window._groupesViewWeek || window.getWeekType(new Date());
+  window._groupesViewWeek = (current === 'A') ? 'B' : 'A';
+  renderGroupesTab();
+});
 
 // Fermeture modal groupes
 document.getElementById('modal-groupe-close').addEventListener('click', function() {

@@ -330,7 +330,10 @@
         </button>
         <div class="text-center">
           <p id="prog-date-label" class="text-sm font-bold text-slate-800"></p>
-          <p id="prog-date-badge" class="text-[10px] text-emerald-600 font-semibold hidden">Aujourd'hui</p>
+          <div class="flex items-center justify-center gap-2">
+            <p id="prog-date-badge" class="text-[10px] text-emerald-600 font-semibold hidden">Aujourd'hui</p>
+            <p id="prog-week-badge" class="text-[10px] text-indigo-500 font-semibold"></p>
+          </div>
         </div>
         <button id="prog-next" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors disabled:opacity-30">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -1166,6 +1169,8 @@ async function loadProgrammeForDate(date) {
   document.getElementById('prog-date-label').textContent = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
   var badge = document.getElementById('prog-date-badge');
   if (isToday) { badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+  var weekBadge = document.getElementById('prog-week-badge');
+  if (weekBadge && window.getWeekType) { weekBadge.textContent = 'Semaine ' + window.getWeekType(date); }
 
   // Désactiver le bouton précédent si on est à la date d'admission
   var btnPrev = document.getElementById('prog-prev');
@@ -1190,8 +1195,7 @@ async function loadProgrammeForDate(date) {
   } catch(e) {}
 
   var bandeauxGroupes = [];
-  (window.PLANNING_GROUPES || []).forEach(function(g) {
-    if (g.jour !== dow) return;
+  (window.getGroupesForDay ? window.getGroupesForDay(date) : []).forEach(function(g) {
     var mod = groupeMods[g.slug];
     if (mod && mod.annule) return;
     if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
@@ -1292,6 +1296,7 @@ function renderTimeline(activites, isToday) {
     atelier: { bg: 'bg-violet-50', border: 'border-violet-200', dot: 'bg-violet-500', text: 'text-violet-700' },
     groupe_jeu: { bg: 'bg-teal-50', border: 'border-teal-200', dot: 'bg-teal-500', text: 'text-teal-700' },
     therapie: { bg: 'bg-rose-50', border: 'border-rose-200', dot: 'bg-rose-500', text: 'text-rose-700' },
+    seances: { bg: 'bg-cyan-50', border: 'border-cyan-200', dot: 'bg-cyan-500', text: 'text-cyan-700' },
     activite: { bg: 'bg-purple-50', border: 'border-purple-200', dot: 'bg-purple-500', text: 'text-purple-700' },
     libre: { bg: 'bg-slate-50', border: 'border-slate-200', dot: 'bg-slate-400', text: 'text-slate-600' },
     entretien: { bg: 'bg-indigo-100', border: 'border-indigo-300', dot: 'bg-indigo-600', text: 'text-indigo-800' },
@@ -1307,7 +1312,7 @@ function renderTimeline(activites, isToday) {
 
     if (showNow && !nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
 
-    var isImportant = act.isEvent || act.isPermission || act.isGroupe || act.type === 'groupe' || act.type === 'atelier' || act.type === 'groupe_jeu' || act.type === 'therapie' || act.type === 'entretien' || act.type === 'permission';
+    var isImportant = act.isEvent || act.isPermission || act.isGroupe || act.type === 'groupe' || act.type === 'atelier' || act.type === 'groupe_jeu' || act.type === 'therapie' || act.type === 'seances' || act.type === 'entretien' || act.type === 'permission';
     var isRoutine = act.type === 'repas' || act.type === 'soin' || act.type === 'libre';
 
     var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-40' : '') + (isRoutine && !isCurrent ? ' opacity-70' : ''));

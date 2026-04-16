@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.25 |
+| **Service Worker** | usca-v3.26 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -201,10 +201,12 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - [ ] Tester : "Voir comme patient" depuis l'admin
 
 ### Priorité 2 — Planning semaine B
-**Prérequis : JC fournit le planning type semaine B**
-- [ ] Ajouter semaine B dans `shared/planning-groupes.js`
-- [ ] Logique semaine A/B (calcul basé sur numéro de semaine ISO ou date de référence)
-- [ ] Tester l'alternance dans le programme patient et l'onglet Groupes admin
+- [x] Ajouter semaine B dans `shared/planning-groupes.js` — v3.26
+- [x] Logique semaine A/B (référence : semaine du 13/04/2026 = A) — v3.26
+- [x] Badge semaine A/B dans le programme patient — v3.26
+- [x] Bouton "Voir l'autre semaine" dans l'onglet Groupes admin — v3.26
+- [x] Type `seances` (sophrologie) avec couleur cyan — v3.26
+- [ ] Tester l'alternance en conditions réelles (vérifier que la bonne semaine s'affiche)
 
 ### Priorité 3 — Carte Ateliers patient
 - [ ] Liste des groupes auxquels le patient a participé
