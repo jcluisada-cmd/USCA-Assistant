@@ -731,7 +731,7 @@ document.getElementById('acc-craving').addEventListener('click', async function(
   var wasHidden = content.classList.contains('hidden');
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
-  // Marquer les alertes craving comme traitées à l'ouverture
+  // Marquer les alertes craving comme traitées à l'ouverture (en arrière-plan)
   if (wasHidden && selectedPatientForDetail && currentProfile) {
     var patientAlertes = loadedAlertes.filter(function(a) { return a.patient_id === selectedPatientForDetail.id; });
     if (patientAlertes.length > 0) {
@@ -739,7 +739,8 @@ document.getElementById('acc-craving').addEventListener('click', async function(
         await Promise.all(patientAlertes.map(function(a) {
           return db.updateAlerteStatut(a.id, 'traitee', currentProfile.id);
         }));
-        await loadDashboardStats();
+        // Rafraîchir les données sans re-rendre la liste (sinon ça ferme le détail)
+        loadedAlertes = await db.getAlertesNonTraitees();
       } catch(e) { console.warn(e); }
     }
   }
@@ -1085,29 +1086,24 @@ async function renderPatientPerms(patientId) {
         card.appendChild(createEl('p', 'text-[10px] text-slate-500', 'Retour : ' + retour.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})));
       }
 
-      // Boutons valider/refuser si en attente
-      // Boutons d'action pour tous les statuts
-      {
-        var actions = createEl('div', 'flex gap-2 mt-2');
-        if (p.statut !== 'validee') {
-          var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
-          (function(permId) { btnVal.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
-          actions.appendChild(btnVal);
-        }
-        if (p.statut !== 'refusee') {
-          var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
-          (function(permId) { btnRef.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
-          actions.appendChild(btnRef);
-        }
-        if (p.statut !== 'annulee') {
-          var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-400 font-bold rounded-lg text-xs transition-colors', 'Annuler');
-          (function(permId) { btnAnn.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'annulee' }); renderPatientPerms(patientId); loadDashboardStats(); }); })(p.id);
-          actions.appendChild(btnAnn);
-        }
+      // Boutons d'action selon le statut
+      var actions = createEl('div', 'flex gap-2 mt-2');
+      if (p.statut !== 'validee') {
+        var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
+        (function(pid, permId) { btnVal.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
         actions.appendChild(btnVal);
-        actions.appendChild(btnRef);
-        card.appendChild(actions);
       }
+      if (p.statut !== 'refusee') {
+        var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
+        (function(pid, permId) { btnRef.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
+        actions.appendChild(btnRef);
+      }
+      if (p.statut !== 'annulee') {
+        var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-400 font-bold rounded-lg text-xs transition-colors', 'Annuler');
+        (function(pid, permId) { btnAnn.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'annulee' }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
+        actions.appendChild(btnAnn);
+      }
+      card.appendChild(actions);
 
       list.appendChild(card);
     });
