@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.61 |
+| **Service Worker** | usca-v3.64 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -280,6 +280,12 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [x] Jours de présence soignants (profiles.jours_presence, config depuis Comptes, filtre Staff Psy)
 - [x] Dark mode : fix lisibilité indigo (patient, admin, planning, Toolbox dégradés)
 - [x] Bug fix : synchro sorties prévues après mise à jour date sortie
+
+### Fait — Session 17/04 soir (v3.62 → v3.64)
+- [x] **Fix critique** — accolade `});` orpheline dans `admin/index.html` (commit cd32ca3) qui cassait tout le script inline : module admin figé, page vide après déconnexion, redirection erratique vers module patient. Cache SW bumped pour forcer refresh.
+- [x] **Fix closure var+async dans Staff Psychiatrie** — `reu.jour` était capturé par closure dans une IIFE async → après la boucle `for`, il pointait vers la dernière réunion (jeudi). Conséquence : Dr Fatout (jours_presence=[4]) apparaissait dans le Staff du lundi. Passage de `reu.jour` en paramètre explicite.
+- [x] **Fix post-cure patient** — bouton « Faire une demande de post-cure » disparaissait dès qu'une structure (et pas seulement une date) était définie. Condition simplifiée à `if (hasDate)` : le bouton réapparaît automatiquement si la date est retirée.
+- [x] **Fix DB post-cure** — `updatePostcureStatut` écrasait systématiquement `structure` et `date_postcure` par la date du jour (fonction conçue pour checkboxes, détournée pour valeurs libres). Distinction `value === true` (workflow → date du jour) vs `value` string (→ valeur brute). `shared/supabase.js:549`.
 
 ### À faire
 - [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
