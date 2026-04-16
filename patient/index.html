@@ -2248,11 +2248,18 @@ async function loadAteliers() {
       var card = createEl('div', 'border rounded-xl p-4 ' + colors);
       var info = createEl('div', 'mb-3');
       info.appendChild(createEl('p', 'text-sm font-bold', g.nom));
-      if (isTherapie) {
-        info.appendChild(createEl('p', 'text-xs opacity-70', 'Acupuncture, Auriculoth\u00e9rapie, Hypnose'));
-        info.appendChild(createEl('p', 'text-xs opacity-70', 'Dr Fatout'));
-      } else if (heure) {
+      // Horaire
+      if (heure) {
         info.appendChild(createEl('p', 'text-xs opacity-70', heure + (g.fin ? ' - ' + ((mod && mod.nouvelle_fin) || g.fin) : '')));
+      }
+      // Lieu (depuis g.detail)
+      if (g.detail) {
+        info.appendChild(createEl('p', 'text-xs opacity-70', g.detail));
+      }
+      // Animateur (depuis _progAnimateurs)
+      var animNames = window._progAnimateurs && window._progAnimateurs[g.slug];
+      if (animNames && animNames.length > 0) {
+        info.appendChild(createEl('p', 'text-xs opacity-70', animNames.join(', ')));
       }
       card.appendChild(info);
 
