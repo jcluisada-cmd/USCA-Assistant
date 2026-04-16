@@ -155,8 +155,7 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <p class="text-sm font-bold text-slate-800">Ateliers</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">Groupes & badges</p>
-            <span class="absolute top-2 right-2 text-[9px] font-bold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded-full">Bientôt</span>
+            <p id="ateliers-subtitle" class="text-[11px] text-slate-500 mt-0.5">Participation aux groupes</p>
           </button>
         </div>
       </div>
@@ -586,7 +585,7 @@
     </div>
   </div>
 
-  <!-- ════════════════ PANEL ATELIERS (placeholder) ════════════════ -->
+  <!-- ════════════════ PANEL ATELIERS ════════════════ -->
   <div id="panel-ateliers" class="panel">
     <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3">
       <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
@@ -594,12 +593,26 @@
       </button>
       <span class="text-sm font-bold">Mes ateliers</span>
     </header>
-    <div class="flex-1 p-5 max-w-lg mx-auto w-full flex flex-col items-center justify-center text-center">
-      <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-4">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-24">
+      <!-- Stats -->
+      <div class="flex gap-3 mb-5">
+        <div class="flex-1 bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center">
+          <p id="ateliers-stat-present" class="text-2xl font-bold text-emerald-700">-</p>
+          <p class="text-[10px] text-emerald-600 font-semibold">Présences</p>
+        </div>
+        <div class="flex-1 bg-slate-50 border border-slate-200 rounded-xl p-3 text-center">
+          <p id="ateliers-stat-absent" class="text-2xl font-bold text-slate-500">-</p>
+          <p class="text-[10px] text-slate-500 font-semibold">Absences</p>
+        </div>
       </div>
-      <p class="text-base font-bold text-slate-800 mb-2">En cours de préparation</p>
-      <p class="text-sm text-slate-500">Vous pourrez retrouver ici vos groupes thérapeutiques, les contenus partagés par les animateurs, et vos badges de participation.</p>
+
+      <!-- Groupes du jour — cocher participation -->
+      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Aujourd'hui</h3>
+      <div id="ateliers-today" class="space-y-2 mb-6"></div>
+
+      <!-- Historique -->
+      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Historique</h3>
+      <div id="ateliers-history" class="space-y-2"></div>
     </div>
   </div>
 
@@ -719,7 +732,10 @@ document.getElementById('card-agenda').addEventListener('click', function() {
   }
 });
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
-document.getElementById('card-ateliers').addEventListener('click', function() { openPanel('ateliers'); });
+document.getElementById('card-ateliers').addEventListener('click', function() {
+  openPanel('ateliers');
+  loadAteliers();
+});
 
 // ══════════════ MESSAGES (contenus partagés) ══════════════
 
@@ -1974,6 +1990,128 @@ function escapeHtml(str) {
 }
 
 // Thème géré par ../shared/theme.js (chargé en fin de body)
+
+// ══════════════ ATELIERS (participations) ══════════════
+
+var _ateliersTypeColors = {
+  groupe: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+  atelier: 'bg-violet-50 border-violet-200 text-violet-700',
+  groupe_jeu: 'bg-teal-50 border-teal-200 text-teal-700',
+  therapie: 'bg-rose-50 border-rose-200 text-rose-700',
+  seances: 'bg-cyan-50 border-cyan-200 text-cyan-700'
+};
+
+async function loadAteliers() {
+  if (!currentPatient) return;
+  var todayContainer = document.getElementById('ateliers-today');
+  var historyContainer = document.getElementById('ateliers-history');
+  todayContainer.textContent = '';
+  historyContainer.textContent = '';
+
+  var todayStr = new Date().toISOString().split('T')[0];
+  var todayGroupes = window.getGroupesForDay ? window.getGroupesForDay(new Date()) : [];
+
+  // Récupérer les participations existantes du patient
+  var participations = [];
+  try { participations = await db.getParticipationsPatient(currentPatient.id); } catch(e) {}
+  var partMap = {};
+  participations.forEach(function(p) { partMap[p.groupe_slug + '_' + p.date_groupe] = p; });
+
+  // Stats
+  var nbPresent = participations.filter(function(p) { return p.present; }).length;
+  var nbAbsent = participations.filter(function(p) { return !p.present; }).length;
+  document.getElementById('ateliers-stat-present').textContent = nbPresent;
+  document.getElementById('ateliers-stat-absent').textContent = nbAbsent;
+
+  // Groupes du jour — avec boutons présent/absent
+  if (todayGroupes.length === 0) {
+    todayContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Pas de groupe prévu aujourd\'hui'));
+  } else {
+    // Récupérer les modifications du jour
+    var todayMods = {};
+    try {
+      var mods = await db.getGroupeModifications(todayStr);
+      mods.forEach(function(m) { todayMods[m.groupe_slug] = m; });
+    } catch(e) {}
+
+    todayGroupes.forEach(function(g) {
+      var mod = todayMods[g.slug];
+      if (mod && mod.annule) return;
+      if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
+
+      var key = g.slug + '_' + todayStr;
+      var existing = partMap[key];
+      var colors = _ateliersTypeColors[g.type] || _ateliersTypeColors.groupe;
+      var heure = (mod && mod.nouvelle_heure) || g.debut;
+
+      var card = createEl('div', 'border rounded-xl p-4 ' + colors);
+      var top = createEl('div', 'flex items-center justify-between mb-3');
+      var info = createEl('div', '');
+      info.appendChild(createEl('p', 'text-sm font-bold', g.nom));
+      if (heure) info.appendChild(createEl('p', 'text-xs opacity-70', heure + (g.fin ? ' - ' + ((mod && mod.nouvelle_fin) || g.fin) : '')));
+      top.appendChild(info);
+      card.appendChild(top);
+
+      // Boutons Présent / Absent
+      var btns = createEl('div', 'flex gap-2');
+
+      var btnPresent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
+        (existing && existing.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600 hover:bg-emerald-50'),
+        existing && existing.present ? '\u2713 Présent' : 'Présent');
+
+      var btnAbsent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
+        (existing && existing.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500 hover:bg-slate-50'),
+        existing && existing.present === false ? '\u2713 Absent' : 'Absent');
+
+      (function(slug, nom) {
+        btnPresent.addEventListener('click', async function() {
+          try {
+            await db.upsertParticipation(currentPatient.id, slug, nom, todayStr, true, 'patient');
+            loadAteliers();
+          } catch(e) { console.warn(e); }
+        });
+        btnAbsent.addEventListener('click', async function() {
+          try {
+            await db.upsertParticipation(currentPatient.id, slug, nom, todayStr, false, 'patient');
+            loadAteliers();
+          } catch(e) { console.warn(e); }
+        });
+      })(g.slug, g.nom);
+
+      btns.appendChild(btnPresent);
+      btns.appendChild(btnAbsent);
+      card.appendChild(btns);
+      todayContainer.appendChild(card);
+    });
+  }
+
+  // Historique — grouper par date
+  var parDate = {};
+  participations.forEach(function(p) {
+    if (p.date_groupe === todayStr) return; // pas dans l'historique
+    if (!parDate[p.date_groupe]) parDate[p.date_groupe] = [];
+    parDate[p.date_groupe].push(p);
+  });
+
+  var dates = Object.keys(parDate).sort().reverse();
+  if (dates.length === 0) {
+    historyContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucune participation enregistrée'));
+  } else {
+    dates.forEach(function(dateStr) {
+      var d = new Date(dateStr + 'T12:00:00');
+      var dayLabel = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+      var section = createEl('div', 'mb-3');
+      section.appendChild(createEl('p', 'text-xs font-bold text-slate-500 mb-1.5', dayLabel));
+      parDate[dateStr].forEach(function(p) {
+        var row = createEl('div', 'flex items-center justify-between bg-white border border-slate-200 rounded-lg px-3 py-2 mb-1');
+        row.appendChild(createEl('span', 'text-xs text-slate-700', p.groupe_nom));
+        row.appendChild(createEl('span', 'text-xs font-bold ' + (p.present ? 'text-emerald-600' : 'text-slate-400'), p.present ? 'Présent' : 'Absent'));
+        section.appendChild(row);
+      });
+      historyContainer.appendChild(section);
+    });
+  }
+}
 
 // ══════════════ DÉCONNEXION ══════════════
 

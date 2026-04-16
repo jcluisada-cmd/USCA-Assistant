@@ -405,5 +405,31 @@ window.db = {
     const { data, error } = await sb.from('groupe_rappels').select('*').eq('date_effet', dateStr).order('created_at', { ascending: false });
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ PARTICIPATIONS AUX GROUPES ════════════════
+
+  /** Upsert une participation (patient ou animateur) */
+  async upsertParticipation(patientId, groupeSlug, groupeNom, dateStr, present, cochePar) {
+    const { data, error } = await sb.from('participations')
+      .upsert({ patient_id: patientId, groupe_slug: groupeSlug, groupe_nom: groupeNom, date_groupe: dateStr, present: present, coche_par: cochePar },
+        { onConflict: 'patient_id,groupe_slug,date_groupe' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Participations d'un patient (historique) */
+  async getParticipationsPatient(patientId) {
+    const { data, error } = await sb.from('participations').select('*').eq('patient_id', patientId).order('date_groupe', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  /** Participations pour un groupe à une date (animateur) */
+  async getParticipationsGroupe(groupeSlug, dateStr) {
+    const { data, error } = await sb.from('participations').select('*').eq('groupe_slug', groupeSlug).eq('date_groupe', dateStr);
+    if (error) throw error;
+    return data;
   }
 };

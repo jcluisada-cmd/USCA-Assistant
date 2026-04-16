@@ -726,10 +726,23 @@ document.getElementById('btn-view-as-patient').addEventListener('click', functio
 });
 
 // ── Accordions ──
-document.getElementById('acc-craving').addEventListener('click', function() {
+document.getElementById('acc-craving').addEventListener('click', async function() {
   var content = document.getElementById('acc-craving-content');
+  var wasHidden = content.classList.contains('hidden');
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+  // Marquer les alertes craving comme traitées à l'ouverture
+  if (wasHidden && selectedPatientForDetail && currentProfile) {
+    var patientAlertes = loadedAlertes.filter(function(a) { return a.patient_id === selectedPatientForDetail.id; });
+    if (patientAlertes.length > 0) {
+      try {
+        await Promise.all(patientAlertes.map(function(a) {
+          return db.updateAlerteStatut(a.id, 'traitee', currentProfile.id);
+        }));
+        await loadDashboardStats();
+      } catch(e) { console.warn(e); }
+    }
+  }
 });
 document.getElementById('acc-fiches').addEventListener('click', function() {
   var content = document.getElementById('acc-fiches-content');
@@ -1477,11 +1490,13 @@ async function renderGroupesTab() {
         var actionsRow = createEl('div', 'mt-3 pt-2 border-t border-slate-200/60 flex flex-wrap gap-2');
         var hasFixedTime = !!g.debut;
         var actions = hasFixedTime ? [
+          { label: 'Participation', icon: '\ud83d\udccb', action: 'participation' },
           { label: 'Modifier heure', icon: '\ud83d\udd50', action: 'heure' },
           { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
           { label: 'Exclure patient', icon: '\ud83d\udeab', action: 'exclure' },
           { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
         ] : [
+          { label: 'Participation', icon: '\ud83d\udccb', action: 'participation' },
           { label: 'Planifier horaires', icon: '\ud83d\udcc5', action: 'horaires_individuels' },
           { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
           { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
@@ -1653,6 +1668,60 @@ function openGroupeActionModal(slug, actionType, groupe) {
           } catch(e) { console.warn(e); }
         });
       } catch(e) { patListH.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement patients')); }
+    })();
+
+  } else if (actionType === 'participation') {
+    title.textContent = 'Participation \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Cochez la pr\u00e9sence ou l\'absence de chaque patient'));
+    var patListP = createEl('div', 'space-y-2');
+    content.appendChild(patListP);
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var existingParts = await db.getParticipationsGroupe(slug, todayStr);
+        var partMap = {};
+        existingParts.forEach(function(p) { partMap[p.patient_id] = p; });
+
+        if (patients.length === 0) {
+          patListP.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucun patient hospitalis\u00e9'));
+          return;
+        }
+        patients.forEach(function(pat) {
+          var existing = partMap[pat.id];
+          var row = createEl('div', 'flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5');
+          var info = createEl('div', '');
+          info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre));
+          row.appendChild(info);
+
+          var btns = createEl('div', 'flex gap-1.5');
+          var btnP = createEl('button', 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all ' +
+            (existing && existing.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+            existing && existing.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+          var btnA = createEl('button', 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all ' +
+            (existing && existing.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
+            existing && existing.present === false ? '\u2713 Absent' : 'Absent');
+
+          (function(patId, patPrenom) {
+            btnP.addEventListener('click', async function() {
+              try {
+                await db.upsertParticipation(patId, slug, groupe.nom, todayStr, true, 'animateur');
+                openGroupeActionModal(slug, 'participation', groupe);
+              } catch(e) { console.warn(e); }
+            });
+            btnA.addEventListener('click', async function() {
+              try {
+                await db.upsertParticipation(patId, slug, groupe.nom, todayStr, false, 'animateur');
+                openGroupeActionModal(slug, 'participation', groupe);
+              } catch(e) { console.warn(e); }
+            });
+          })(pat.id, pat.prenom);
+
+          btns.appendChild(btnP);
+          btns.appendChild(btnA);
+          row.appendChild(btns);
+          patListP.appendChild(row);
+        });
+      } catch(e) { patListP.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement')); }
     })();
 
   } else if (actionType === 'rappel') {
