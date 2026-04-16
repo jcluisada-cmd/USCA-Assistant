@@ -95,16 +95,7 @@
         </button>
 
         <div class="grid grid-cols-2 gap-3">
-          <!-- Carte Journal craving -->
-          <button id="card-agenda" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-red-200 transition-all active:scale-[0.98]">
-            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-            </div>
-            <p class="text-sm font-bold text-slate-800">Mon journal</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">Historique craving</p>
-          </button>
-
-          <!-- Carte Programme -->
+          <!-- 1. Carte Programme -->
           <button id="card-programme" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98] relative">
             <span id="badge-programme" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center mb-3">
@@ -114,16 +105,16 @@
             <p class="text-[11px] text-slate-500 mt-0.5">Ma journée</p>
           </button>
 
-          <!-- Carte Stratégies -->
-          <button id="card-strategies" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]">
-            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+          <!-- 2. Carte Journal craving -->
+          <button id="card-agenda" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-red-200 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
             </div>
-            <p class="text-sm font-bold text-slate-800">Mes stratégies</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">Prévention rechute</p>
+            <p class="text-sm font-bold text-slate-800">Mon journal</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Historique craving</p>
           </button>
 
-          <!-- Carte Traitements -->
+          <!-- 3. Carte Traitements -->
           <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
             <span id="badge-traitements" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
@@ -133,7 +124,26 @@
             <p class="text-[11px] text-slate-500 mt-0.5">Mes fiches</p>
           </button>
 
-          <!-- Carte Permission -->
+          <!-- 4. Carte Ateliers -->
+          <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
+            <span id="badge-ateliers" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
+            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Ateliers</p>
+            <p id="ateliers-subtitle" class="text-[11px] text-slate-500 mt-0.5">Participation aux groupes</p>
+          </button>
+
+          <!-- 5. Carte Stratégies -->
+          <button id="card-strategies" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]">
+            <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Mes stratégies</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Prévention rechute</p>
+          </button>
+
+          <!-- 6. Carte Permission -->
           <button id="card-permission" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-cyan-300 transition-all active:scale-[0.98]">
             <div class="w-10 h-10 bg-cyan-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -142,7 +152,7 @@
             <p class="text-[11px] text-slate-500 mt-0.5">Demander une sortie</p>
           </button>
 
-          <!-- Carte Messages -->
+          <!-- 7. Carte Messages -->
           <button id="card-messages" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
             <span id="badge-messages" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
@@ -152,16 +162,7 @@
             <p id="messages-count" class="text-[11px] text-slate-500 mt-0.5">De l'équipe soignante</p>
           </button>
 
-          <!-- Carte Ateliers -->
-          <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
-            <span id="badge-ateliers" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
-            <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <p class="text-sm font-bold text-slate-800">Ateliers</p>
-            <p id="ateliers-subtitle" class="text-[11px] text-slate-500 mt-0.5">Participation aux groupes</p>
-          </button>
-          <!-- Carte Feedback -->
+          <!-- 8. Carte Feedback -->
           <button id="card-feedback" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
