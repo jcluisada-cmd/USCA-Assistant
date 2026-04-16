@@ -76,6 +76,19 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent-dark);color:#fff;padding:.55rem 1.1rem;border-radius:8px;font-size:.8rem;font-weight:500;transition:.3s;z-index:1000}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .conditional{display:none}.conditional.visible{display:block}
+/* Dark mode */
+html.dark{--bg:#0f172a;--surface:#1e293b;--surface-alt:#1a2332;--ink:#e2e8f0;--ink-soft:#cbd5e1;--ink-muted:#94a3b8;--accent:#6ee7b7;--accent-dark:#e2e8f0;--accent-light:rgba(16,185,129,0.15);--accent-bg:rgba(16,185,129,0.08);--teal:#5eead4;--border:#334155;--shadow:0 1px 3px rgba(0,0,0,.2);--red:#f87171}
+html.dark .header{background:linear-gradient(135deg,#0f172a 0%,#134e4a 50%,#1e3a5f 100%)}
+html.dark .chip{background:var(--surface);color:var(--ink)}
+html.dark .chip:has(input:checked){background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+html.dark .btn-primary{background:#10b981}
+html.dark .btn-secondary{color:var(--accent);border-color:var(--accent)}
+html.dark .upload-zone{background:var(--surface-alt);border-color:var(--border)}
+html.dark .sub-table th{background:var(--accent-light);color:var(--accent)}
+html.dark .sub-table td{border-color:var(--border)}
+html.dark input,html.dark textarea,html.dark select{background:var(--surface)!important;color:var(--ink)!important;border-color:var(--border)!important}
+.theme-toggle{position:fixed;bottom:1rem;right:1rem;width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:200;transition:.2s;box-shadow:var(--shadow)}
+.theme-toggle:hover{background:var(--accent-bg)}
 </style>
 </head>
 <body>
@@ -659,6 +672,25 @@ window.addEventListener('beforeunload', function(e) {
   if (V('p_nom') || V('m_nom')) { e.preventDefault(); e.returnValue = ''; }
 });
 document.addEventListener('DOMContentLoaded', init);
+
+// ── Dark mode : sync avec l'app principale ──
+(function() {
+  var isDark = localStorage.getItem('usca_theme') === 'dark';
+  if (isDark) document.documentElement.classList.add('dark');
+  var btn = document.createElement('button');
+  btn.className = 'theme-toggle';
+  btn.title = 'Changer le th\u00e8me';
+  function updateIcon() {
+    btn.textContent = document.documentElement.classList.contains('dark') ? '\u2600\ufe0f' : '\ud83c\udf19';
+  }
+  updateIcon();
+  btn.addEventListener('click', function() {
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('usca_theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    updateIcon();
+  });
+  document.body.appendChild(btn);
+})();
 </script>
 </body>
 </html>

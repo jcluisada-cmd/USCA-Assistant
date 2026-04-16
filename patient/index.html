@@ -19,6 +19,16 @@
   .panel { display: none; position: fixed; inset: 0; z-index: 60; background: #f8fafc; overflow-y: auto; }
   .panel.open { display: flex; flex-direction: column; }
   html.dark .bg-emerald-600 { background-color: #065f46 !important; }
+  /* Dark mode — indigo readability fixes */
+  html.dark .text-indigo-600 { color: #a5b4fc !important; }
+  html.dark .text-indigo-700 { color: #a5b4fc !important; }
+  html.dark .text-indigo-800 { color: #c7d2fe !important; }
+  html.dark .bg-indigo-50 { background-color: rgba(79,70,229,0.1) !important; }
+  html.dark .bg-indigo-100 { background-color: rgba(79,70,229,0.15) !important; }
+  html.dark .bg-indigo-200 { background-color: rgba(79,70,229,0.2) !important; }
+  html.dark .border-indigo-200 { border-color: rgba(79,70,229,0.3) !important; }
+  html.dark .border-indigo-300 { border-color: rgba(79,70,229,0.4) !important; }
+  html.dark .panel { background: #0f172a; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -384,13 +394,13 @@
     <div class="flex-1 p-5 max-w-lg mx-auto w-full space-y-5 pb-8">
 
       <!-- ── Section éducative : Comprendre le craving ── -->
-      <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
-        <h3 class="text-base font-bold text-indigo-800 mb-3">Comprendre le craving</h3>
-        <p class="text-sm text-indigo-700 leading-relaxed mb-3">
+      <div class="bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 rounded-2xl p-5">
+        <h3 class="text-base font-bold text-indigo-800 dark:text-indigo-200 mb-3">Comprendre le craving</h3>
+        <p class="text-sm text-indigo-700 dark:text-indigo-300 leading-relaxed mb-3">
           Le craving est une <strong>envie intense et temporaire</strong> de consommer. C'est une réaction normale du cerveau pendant le sevrage.
         </p>
-        <div class="bg-white rounded-xl p-4 mb-3">
-          <p class="text-xs font-bold text-indigo-600 mb-2">LA COURBE DU CRAVING</p>
+        <div class="bg-white dark:bg-slate-800 rounded-xl p-4 mb-3">
+          <p class="text-xs font-bold text-indigo-600 dark:text-indigo-300 mb-2">LA COURBE DU CRAVING</p>
           <div class="flex items-end gap-1 h-16 mb-2">
             <div class="w-3 bg-amber-200 rounded-t" style="height:20%"></div>
             <div class="w-3 bg-amber-300 rounded-t" style="height:40%"></div>
@@ -406,7 +416,7 @@
           </div>
           <p class="text-xs text-slate-500">L'envie monte, atteint un pic, puis <strong>redescend naturellement en 15-30 minutes</strong> si vous ne cédez pas.</p>
         </div>
-        <p class="text-sm text-indigo-700 leading-relaxed">
+        <p class="text-sm text-indigo-700 dark:text-indigo-300 leading-relaxed">
           Construisez votre plan ci-dessous. Ces stratégies vous seront rappelées quand vous signalerez un craving.
         </p>
       </div>

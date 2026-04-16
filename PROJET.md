@@ -453,7 +453,8 @@ localStorage.setItem('usca_session', JSON.stringify({
 1. Lire le fichier avec Read
 2. Modifier chirurgicalement avec Edit (pas de réécriture complète)
 3. Incrémenter `CACHE_NAME` dans `sw.js` à chaque modif
-4. Push via GitHub Desktop → Cloudflare Pages redéploie (~30 sec)
+4. **Faire un commit** et dire **"Push !"** quand c'est prêt
+5. Push via GitHub Desktop → Cloudflare Pages redéploie (~30 sec)
 
 ### Règles absolues
 - ❌ Ne jamais réécrire un fichier en entier
