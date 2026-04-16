@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.37 |
+| **Service Worker** | usca-v3.39 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -165,7 +165,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 ### Module Patient — 9 cartes + feedback
 - ✅ **J'ai un craving** : intensité 1-10, courbe d'insight, déclencheurs, durée, stratégies
 - ✅ **Mon journal** : agenda craving (semaine/mois/3mois/1an), courbe tendance, stats
-- ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels
+- ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels, boutons Présent/Absent sur chaque groupe, bouton "Demander une séance" sur thérapies complémentaires
 - ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Traitements** : fiches prescrites, 20 fiches HTML, navigation par catégorie
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
@@ -232,7 +232,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - [ ] **P8** — Post-cure (module HTML de JC) + Annuaire patients
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] Tester toutes les nouvelles features en conditions réelles
-- [ ] Fix bug export app vierge (crash après téléchargement)
+- [x] Fix bug export app vierge — v3.38 (généré directement dans l'admin, onglet Toolbox)
 
 ---
 
