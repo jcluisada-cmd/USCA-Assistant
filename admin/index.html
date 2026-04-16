@@ -23,7 +23,8 @@
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
   <!-- ════════════════ ÉCRAN DE CONNEXION ════════════════ -->
-  <div id="login-screen" class="flex-1 flex flex-col">
+  <!-- Masqué par défaut : checkExistingSession le montre si pas de session -->
+  <div id="login-screen" class="flex-1 flex flex-col hidden">
     <header class="bg-slate-700 text-white px-6 pt-12 pb-8 text-center">
       <div class="inline-flex items-center justify-center w-14 h-14 bg-white/20 rounded-2xl mb-4 backdrop-blur">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1704,8 +1705,13 @@ document.getElementById('modal-groupe-actions').addEventListener('click', functi
 (async function checkExistingSession() {
   try {
     const profile = await auth.getStaffSession();
-    if (profile) showAdminApp(profile);
+    if (profile) {
+      showAdminApp(profile);
+      return;
+    }
   } catch { /* pas de session */ }
+  // Pas de session → afficher le login
+  document.getElementById('login-screen').classList.remove('hidden');
 })();
 
 // Register Service Worker
