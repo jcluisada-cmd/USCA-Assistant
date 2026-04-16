@@ -307,6 +307,13 @@
               <div><p class="text-sm font-semibold text-slate-700">Annoncer la date de sortie</p><p id="sortie-current" class="text-[11px] text-slate-400">Non définie</p></div>
             </button>
 
+            <button id="btn-action-postcure" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+              <div class="w-8 h-8 bg-teal-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+              </div>
+              <div><p class="text-sm font-semibold text-slate-700">Dossier post-cure</p><p class="text-[11px] text-slate-400">Volet médical pré-admission</p></div>
+            </button>
+
             <!-- Exports de sortie -->
             <div id="sortie-exports" class="hidden space-y-2">
               <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3.5 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
@@ -1151,6 +1158,18 @@ document.getElementById('contenu-cancel').addEventListener('click', function() {
 document.getElementById('btn-action-sortie').addEventListener('click', function() { document.getElementById('modal-sortie').classList.remove('hidden'); });
 document.getElementById('sortie-cancel').addEventListener('click', function() { document.getElementById('modal-sortie').classList.add('hidden'); });
 
+// ── Dossier post-cure ──
+document.getElementById('btn-action-postcure').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  var params = new URLSearchParams();
+  params.set('patient_id', p.id);
+  params.set('patient_nom', p.numero_chambre);
+  params.set('patient_prenom', '');
+  if (p.date_naissance) params.set('patient_ddn', p.date_naissance);
+  window.open('../postcure/medecin.html?' + params.toString(), '_blank');
+});
+
 // ── Save événement ──
 document.getElementById('evt-save').addEventListener('click', async function() {
   var date = document.getElementById('evt-date').value;
@@ -1880,30 +1899,43 @@ async function renderGroupesTab() {
       (isCurrentWeek ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500');
   }
 
-  // ── Réunions (seulement semaine courante) ──
+  // ── Réunions de la semaine ──
   var reunionsList = document.getElementById('reunions-list');
   reunionsList.textContent = '';
-  if (isCurrentWeek) {
+  {
     var role = currentProfile ? currentProfile.role : null;
-    var reunions = window.getReunionsForDay ? window.getReunionsForDay(todayDate, role) : [];
+    var allReunions = weekType === 'A' ? (window.REUNIONS_A || []) : (window.REUNIONS_B || []);
     var now = new Date();
-    // Filtrer les réunions passées
-    reunions = reunions.filter(function(r) {
-      if (!r.fin) return true;
-      var parts = r.fin.split(':');
-      var endTime = new Date(todayDate);
-      endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
-      return endTime > now;
+    var todayDow = todayDate.getDay();
+    // Filtrer par rôle et ne garder que les réunions à venir (jour futur ou aujourd'hui non passée)
+    var reunions = allReunions.filter(function(r) {
+      if (r.roles && role && r.roles.indexOf(role) === -1) return false;
+      if (isCurrentWeek) {
+        if (r.jour < todayDow) return false; // jour passé
+        if (r.jour === todayDow && r.fin) {
+          var parts = r.fin.split(':');
+          var endTime = new Date(todayDate);
+          endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+          if (endTime <= now) return false; // réunion terminée aujourd'hui
+        }
+      }
+      return true;
     });
 
     if (reunions.length > 0) {
-      reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions du jour'));
+      reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions'));
       for (var ri = 0; ri < reunions.length; ri++) {
         var reu = reunions[ri];
         var rCard = createEl('div', 'bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-2');
         var rTop = createEl('div', 'flex items-center justify-between');
         var rInfo = createEl('div', '');
-        rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom));
+        // Calculer la date réelle de cette réunion
+        var reuDate = new Date(viewedMonday);
+        reuDate.setDate(reuDate.getDate() + (reu.jour - 1));
+        var reuDayLabel = reuDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+        reuDayLabel = reuDayLabel.charAt(0).toUpperCase() + reuDayLabel.slice(1);
+        var isReuToday = isCurrentWeek && reu.jour === todayDow;
+        rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom + (isReuToday ? '' : ' — ' + reuDayLabel)));
         rInfo.appendChild(createEl('p', 'text-xs text-indigo-500', reu.debut + (reu.fin ? ' - ' + reu.fin : '')));
         if (reu.roles) rInfo.appendChild(createEl('p', 'text-[10px] text-indigo-400 mt-0.5', 'R\u00e9serv\u00e9 : ' + reu.roles.join(', ')));
         rTop.appendChild(rInfo);
@@ -2040,7 +2072,14 @@ async function renderGroupesTab() {
               upGroups.push(g);
             }
           } else {
-            upGroups.push(g); // Horaire variable → toujours à venir
+            // Horaire variable (ex: thérapies complémentaires) → passé après 17h
+            var cutoff = new Date(todayDate);
+            cutoff.setHours(17, 0, 0, 0);
+            if (nowTime >= cutoff) {
+              histGroups.push(g);
+            } else {
+              upGroups.push(g);
+            }
           }
         } else {
           upGroups.push(g);
@@ -2107,8 +2146,6 @@ async function renderGroupesTab() {
       }
       if (heure) {
         titleDiv.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', heure + (fin ? ' - ' + fin : '')));
-      } else {
-        titleDiv.appendChild(createEl('p', 'text-xs text-slate-400 mt-0.5 italic', 'Horaire variable'));
       }
       if (g.detail) titleDiv.appendChild(createEl('p', 'text-xs text-slate-400 mt-0.5', g.detail));
       topRow.appendChild(titleDiv);
