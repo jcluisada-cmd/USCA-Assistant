@@ -1286,6 +1286,20 @@ async function loadProgrammeForDate(date) {
   var weekBadge = document.getElementById('prog-week-badge');
   if (weekBadge && window.getWeekType) { weekBadge.textContent = 'Semaine ' + window.getWeekType(date); }
 
+  // Charger participations et demandes pour cette date
+  var _progParticipations = {};
+  var _progDemandes = {};
+  if (currentPatient) {
+    try {
+      var parts = await db.getParticipationsPatient(currentPatient.id);
+      parts.forEach(function(p) { _progParticipations[p.groupe_slug + '_' + p.date_groupe] = p; });
+    } catch(e) {}
+    try {
+      var dems = await db.getDemandesPatient(currentPatient.id);
+      dems.forEach(function(d) { _progDemandes[d.groupe_slug + '_' + d.date_demande] = d; });
+    } catch(e) {}
+  }
+
   // Désactiver le bouton précédent si on est à la date d'admission
   var btnPrev = document.getElementById('prog-prev');
   if (window._progAdmission) {
@@ -1320,9 +1334,9 @@ async function loadProgrammeForDate(date) {
     var debut = individuel ? individuel.heure : ((mod && mod.nouvelle_heure) || g.debut);
     var fin = individuel ? individuel.fin : ((mod && mod.nouvelle_fin) || g.fin);
     if (debut) {
-      activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
+      activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true, groupeSlug: g.slug, groupeNom: g.nom });
     } else {
-      bandeauxGroupes.push({ nom: g.nom, detail: lieu });
+      bandeauxGroupes.push({ nom: g.nom, detail: lieu, slug: g.slug });
     }
   });
 
@@ -1369,6 +1383,27 @@ async function loadProgrammeForDate(date) {
     var sub = 'Horaire \u00e0 confirmer';
     if (bg.detail) sub += ' \u2014 ' + bg.detail;
     banner.appendChild(createEl('p', 'text-xs text-rose-500 mt-0.5', sub));
+    // Bouton demander une séance (thérapies complémentaires)
+    if (bg.slug === 'therapies-complementaires' && currentPatient) {
+      var dKey = bg.slug + '_' + dateStr;
+      var dExisting = _progDemandes[dKey];
+      if (dExisting && dExisting.statut === 'acceptee') {
+        var accMsg = createEl('div', 'bg-emerald-100 border border-emerald-300 rounded-lg p-2 mt-2 text-center');
+        accMsg.appendChild(createEl('p', 'text-xs font-bold text-emerald-700', '\u2713 S\u00e9ance accept\u00e9e'));
+        if (dExisting.heure_debut) accMsg.appendChild(createEl('p', 'text-[11px] text-emerald-600', dExisting.heure_debut + (dExisting.heure_fin ? ' - ' + dExisting.heure_fin : '')));
+        banner.appendChild(accMsg);
+      } else if (dExisting && dExisting.statut === 'en_attente') {
+        banner.appendChild(createEl('p', 'text-xs font-bold text-amber-600 mt-2', '\u23f3 Demande envoy\u00e9e'));
+      } else if (!dExisting || dExisting.statut === 'refusee') {
+        var btnDem = createEl('button', 'w-full mt-2 py-2 bg-rose-600 text-white font-bold rounded-lg text-xs hover:bg-rose-700 transition-colors', '\ud83d\ude4f Demander une s\u00e9ance');
+        (function(slug, ds) {
+          btnDem.addEventListener('click', async function() {
+            try { await db.upsertDemandeSeance(currentPatient.id, ds, slug); loadProgrammeForDate(date); } catch(e) { console.warn(e); }
+          });
+        })(bg.slug, dateStr);
+        banner.appendChild(btnDem);
+      }
+    }
     rappelContainer.appendChild(banner);
   });
   try {
@@ -1450,6 +1485,25 @@ function renderTimeline(activites, isToday) {
       card.style.padding = isImportant ? '16px' : '12px 14px';
       card.appendChild(createEl('p', (isImportant ? 'text-base font-extrabold' : 'text-sm font-bold') + ' ' + style.text, act.label));
       if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', act.lieu));
+      // Boutons participation (groupes avec heure fixe)
+      if (act.groupeSlug && act.groupeSlug !== 'therapies-complementaires') {
+        var pKey = act.groupeSlug + '_' + dateStr;
+        var pExisting = _progParticipations[pKey];
+        var pBtns = createEl('div', 'flex gap-2 mt-2');
+        var pBtnP = createEl('button', 'flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ' +
+          (pExisting && pExisting.present ? 'bg-emerald-600 text-white' : 'bg-white/80 border border-emerald-300 text-emerald-600'),
+          pExisting && pExisting.present ? '\u2713 Présent' : 'Présent');
+        var pBtnA = createEl('button', 'flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all ' +
+          (pExisting && pExisting.present === false ? 'bg-slate-600 text-white' : 'bg-white/80 border border-slate-300 text-slate-500'),
+          pExisting && pExisting.present === false ? '\u2713 Absent' : 'Absent');
+        (function(slug, nom, ds) {
+          pBtnP.addEventListener('click', async function(e) { e.stopPropagation(); try { await db.upsertParticipation(currentPatient.id, slug, nom, ds, true, 'patient'); loadProgrammeForDate(date); } catch(err) { console.warn(err); } });
+          pBtnA.addEventListener('click', async function(e) { e.stopPropagation(); try { await db.upsertParticipation(currentPatient.id, slug, nom, ds, false, 'patient'); loadProgrammeForDate(date); } catch(err) { console.warn(err); } });
+        })(act.groupeSlug, act.groupeNom, dateStr);
+        pBtns.appendChild(pBtnP);
+        pBtns.appendChild(pBtnA);
+        card.appendChild(pBtns);
+      }
       if (act.isEvent) card.appendChild(createEl('span', 'inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-700', 'RDV'));
       if (act.isPermission) card.appendChild(createEl('span', 'inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-200 text-cyan-700', 'Permission'));
       row.appendChild(card);
