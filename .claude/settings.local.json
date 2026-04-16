@@ -8,7 +8,8 @@
       "Bash(identify \"C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\icon-512.png\")",
       "Bash(python3 -c \"from PIL import Image; img=Image.open\\(r'C:\\\\Users\\\\jclui\\\\OneDrive\\\\Documents\\\\GitHub\\\\USCA-Assistant\\\\icon-512.png'\\); print\\(img.size\\)\")",
       "Bash(python3:*)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(node *)"
     ]
   }
 }
