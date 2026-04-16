@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.53 |
+| **Service Worker** | usca-v3.59 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -146,10 +146,9 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `device_tokens` — Appareils de confiance soignants (auto-login 90j)
 - `presences_reunions` — Présences aux réunions staff (médecins)
 
-### Tables gestion lits et post-cure (migrations v12-v13)
+### Tables gestion lits (migrations v12-v14)
 - `liste_attente` — Patients en attente d'admission (age, addressage, date_entree_prevue, commentaire)
-- `dossiers_postcure` — Dossiers post-cure (patient_id, volet_patient JSONB, volet_medecin JSONB, structure_key, dates)
-- Fonction RPC `save_volet_patient` — SECURITY DEFINER pour sauvegarde anon du volet patient
+- `patients.postcure_statut` — JSONB workflow post-cure (flags d'envoi, pas de données patient)
 
 ### Migrations exécutées
 - v1 : Schéma initial (profiles, patients, alertes, programmes, groupes)
@@ -164,7 +163,8 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v10 : Demandes de séances thérapies complémentaires
 - v11 : Événements d'équipe (patient_id nullable) + présences réunions
 - v12 : Liste d'attente (table liste_attente)
-- v13 : Dossiers post-cure + jours de présence soignants + RPC save_volet_patient
+- v13 : Jours de présence soignants (profiles.jours_presence)
+- v14 : Statut post-cure workflow (patients.postcure_statut JSONB)
 
 ---
 
@@ -211,12 +211,16 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - ✅ Tutoriel au premier lancement
 - ✅ Génération version vierge depuis l'admin (consultation)
 
-### Module Post-cure (P8)
-- ✅ **Volet patient** (`postcure/patient.html`) : 6 étapes (identité, couverture, social, contacts, engagement+signature, récap), génération ZIP+PDF, sauvegarde Supabase si patient connecté (RPC anon)
-- ✅ **Volet médecin** (`postcure/medecin.html`) : formulaire médical complet (addictologie, ATCD, état actuel, traitements), uploads documents, génération ZIP+PDF, sauvegarde Supabase si lié à un patient
+### Module Post-cure (P8) — 100% local, conforme non-HDS
+- ✅ **Volet patient** (`postcure/patient.html`) : 6 étapes (identité, couverture, social, contacts, engagement+signature, récap), génération ZIP+PDF, envoi par email (USCA obligatoire + structure optionnel)
+- ✅ **Volet médecin** (`postcure/medecin.html`) : formulaire médical complet (addictologie, ATCD, état actuel, traitements), uploads documents, génération ZIP+PDF, envoi par email, pré-remplissage patient depuis le dashboard
 - ✅ **Données partagées** (`shared/postcure-structures.js`) : 14 structures post-cure (engagements, checklists, contacts)
-- ✅ **Dashboard** : accordion "Dossier post-cure" dans Chambre XX (statuts volet patient/médecin, bouton remplir volet médical)
+- ✅ **Dashboard** : bouton "Dossier post-cure" dans Actions Chambre XX, checkboxes statut workflow (envoyé USCA/structure, volet médical rempli/envoyé)
 - ✅ **Toolbox** : grande carte "Dossier post-cure" (même format que Protocoles USCA et ELSA)
+- ✅ **Dark mode** : complet sur les deux formulaires, synchronisé avec l'app, toggle en bas à droite
+- ✅ **PDFs améliorés** : police 9pt, sections avec barre colorée latérale, marges 20mm, smart page breaks, footer USCA
+- ✅ **Sécurité** : aucune donnée patient stockée sur serveur — seuls des flags workflow dans `patients.postcure_statut`
+- ✅ **Bandeau** : "Aucune donnée personnelle n'est enregistrée sur un serveur — tout reste sur votre appareil"
 
 ### Auth avancée
 - ✅ Client Supabase robuste (safeStorage, PKCE, autoRefresh)
@@ -267,16 +271,18 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [x] Planning dynamique : navigation ← semaine →, groupes à venir/historique, réunions filtrées, Staff filtré par jours de présence
 - [x] Exports PDF/HTML depuis dashboard patient (Chambre XX → fiche sortie + app sortie)
 - [x] **P7** — Ménage technique : suppression staff/index.html, migrations dans `migrations/`, images sources dans `assets/`
-- [x] **P8** — Post-cure : séparation en volet patient + volet médecin + structures partagées
-- [x] P8/P2 — Supabase : table dossiers_postcure, RPC save_volet_patient (anon), CRUD helpers
-- [x] P8 — Accordion dossier post-cure dans dashboard Chambre XX (statuts, bouton remplir volet médical)
+- [x] **P8** — Post-cure : séparation volet patient + volet médecin + structures partag��es, 100% local (non HDS)
+- [x] P8 — PDFs améliorés (police 9pt, sections colorées, barre latérale, smart page breaks, footer)
+- [x] P8 — Dark mode formulaires post-cure (sync app, toggle)
+- [x] P8 — Bouton "Dossier post-cure" dans Actions Chambre XX + checkboxes statut workflow
+- [x] P8 — Retrait stockage Supabase post-cure (conformité non-HDS) — tout 100% local
 - [x] Jours de présence soignants (profiles.jours_presence, config depuis Comptes, filtre Staff Psy)
+- [x] Dark mode : fix lisibilité indigo (patient, admin, planning, Toolbox dégradés)
 - [x] Bug fix : synchro sorties prévues après mise à jour date sortie
 
 ### À faire
-- [ ] **P3 (PDF)** — Amélioration mise en page PDFs post-cure (9-10pt, sections colorées, tables substances, smart page breaks)
 - [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
-- [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email)
+- [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] Tester toutes les nouvelles features en conditions réelles
@@ -285,17 +291,17 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 
 ## 9. MODULES CLINIQUES V1 (TOOLBOX)
 
-### Contenu intégré dans staff/toolbox.html (iframe)
+### Accueil Toolbox (staff/toolbox.html, iframe dans admin)
 
-| # | Module | Contenu |
+| Carte | Type | Contenu |
 |---|---|---|
-| M1 | **Protocoles par substance** | 7 substances (alcool, opioïdes, cocaïne/crack, cannabis, BZD, NPS/cathinones, kétamine). Protocoles sevrage, traitements de fond, non pharmaco, red flags |
-| M2 | **Séjour J1-J12** | Timeline 3 phases, checklist cochable par jour |
-| M3 | **Comorbidités psy** | Diagnostic différentiel, TDAH+addiction, TSPT+addiction |
-| M4 | **Interactions** | 18 interactions critiques, sélection multiple |
-| M5 | **Admission & Orientation** | Critères USCA + 5 filières de sortie |
-| M6 | **ELSA** | 5 fiches réflexes + scores repérage |
-| M9 | **Scores** | Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseur BZD |
+| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles), Checklist Séjour J1-J12, Comorbidités psy |
+| **ELSA** | Hub (grande carte) | → Liaisons en cours (ToDo), Admission & Orientation, Fiches réflexes (5) + scores repérage |
+| **Dossier post-cure** | Grande carte | → Ouvre le volet médecin (postcure/medecin.html) |
+| **Traitements** | Petite carte | 20 fiches patient par médicament |
+| **Scores** | Petite carte | Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseur BZD |
+| **Interactions** | Petite carte | 18 interactions critiques, sélection multiple |
+| **Feedback** | Barre en bas | Bug, suggestion, correction → email |
 
 ### Pharmacopée
 - **Sevrage/maintien** : diazépam, oxazépam, baclofène, acamprosate, naltrexone, nalméfène, topiramate, NAC, méthadone, buprénorphine, disulfirame
