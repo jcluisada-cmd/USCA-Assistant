@@ -674,6 +674,7 @@ async function showPatientApp(patient) {
     });
   } catch(e) {}
 
+  var bandeauxGroupes = []; // Groupes sans heure → bandeau informatif
   (window.PLANNING_GROUPES || []).forEach(function(g) {
     if (g.jour !== todayDow) return;
     var mod = groupeMods[g.slug];
@@ -681,15 +682,20 @@ async function showPatientApp(patient) {
     if (mod && mod.annule) return;
     // Exclu pour ce patient ?
     if (mod && mod.exclusions && mod.exclusions.indexOf(patient.id) !== -1) return;
-    var debut = (mod && mod.nouvelle_heure) || g.debut;
-    var fin = (mod && mod.nouvelle_fin) || g.fin;
     var animLabel = animateurs[g.slug] ? animateurs[g.slug].join(', ') : '';
     var lieu = g.detail || '';
-    if (animLabel) lieu = lieu ? lieu + ' — ' + animLabel : animLabel;
+    if (animLabel) lieu = lieu ? lieu + ' \u2014 ' + animLabel : animLabel;
+
+    // Vérifier si horaire individuel pour ce patient
+    var individuel = mod && mod.horaires_individuels && mod.horaires_individuels[patient.id];
+    var debut = individuel ? individuel.heure : ((mod && mod.nouvelle_heure) || g.debut);
+    var fin = individuel ? individuel.fin : ((mod && mod.nouvelle_fin) || g.fin);
+
     if (debut) {
       activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
     } else {
-      activites.push({ heure: '10:00', label: g.nom, type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
+      // Pas d'heure → bandeau informatif (pas dans la timeline)
+      bandeauxGroupes.push({ nom: g.nom, detail: lieu });
     }
   });
 
@@ -740,11 +746,23 @@ async function showPatientApp(patient) {
     });
   } catch(e) {}
 
-  // Charger les rappels de groupe
+  // Afficher les bandeaux : rappels + groupes sans heure
+  var rappelContainer = document.getElementById('rappels-container');
+  rappelContainer.textContent = '';
+
+  // Bandeaux pour les groupes sans horaire défini (ex: thérapies complémentaires)
+  bandeauxGroupes.forEach(function(bg) {
+    var banner = createEl('div', 'bg-rose-50 border border-rose-200 rounded-xl px-4 py-3');
+    banner.appendChild(createEl('p', 'text-sm font-semibold text-rose-700', bg.nom));
+    var sub = 'Horaire \u00e0 confirmer';
+    if (bg.detail) sub += ' \u2014 ' + bg.detail;
+    banner.appendChild(createEl('p', 'text-xs text-rose-500 mt-0.5', sub));
+    rappelContainer.appendChild(banner);
+  });
+
+  // Rappels envoyés par les animateurs
   try {
     var rappels = await db.getGroupeRappels(todayStr);
-    var rappelContainer = document.getElementById('rappels-container');
-    rappelContainer.textContent = '';
     rappels.forEach(function(r) {
       var banner = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2');
       banner.appendChild(createEl('span', 'text-amber-600 text-lg flex-shrink-0', '\ud83d\udce2'));
