@@ -428,44 +428,65 @@ function collectM() {
 // ============================================================
 // PDF HELPERS
 // ============================================================
-var DK=[16,39,67],TL=[26,107,106],GR=[100,120,135],LT=[230,242,242],WP=210;
+var DK=[16,39,67],TL=[26,107,106],GR=[120,140,155],LT=[230,242,242],WP=210;
+var ML=20,MR=20,TW=WP-ML-MR;
 
 function mkDoc(title,subtitle){
   var jsPDFClass=window.jspdf.jsPDF;var d=new jsPDFClass({unit:'mm',format:'a4'});
-  d.setFillColor(DK[0],DK[1],DK[2]);d.rect(0,0,WP,20,'F');
-  d.setFillColor(255,255,255);d.roundedRect(3,1.5,30,17,1.5,1.5,'F');
-  try{if(LOGO_PDF)d.addImage(LOGO_PDF,'JPEG',4,2,28,15);}catch(e){}
-  d.setTextColor(255,255,255);d.setFontSize(10);d.setFont('helvetica','bold');
-  d.text(title,WP/2+12,8,{align:'center'});
-  d.setFontSize(7);d.setFont('helvetica','normal');d.setTextColor(200,220,225);
-  d.text(subtitle,WP/2+12,14,{align:'center'});
+  d.setFillColor(DK[0],DK[1],DK[2]);d.rect(0,0,WP,24,'F');
+  d.setFillColor(TL[0],TL[1],TL[2]);d.rect(0,22,WP,3,'F');
+  d.setFillColor(255,255,255);d.roundedRect(ML-2,2,32,18,2,2,'F');
+  try{if(LOGO_PDF)d.addImage(LOGO_PDF,'JPEG',ML-1,2.5,30,17);}catch(e){}
+  d.setTextColor(255,255,255);d.setFontSize(13);d.setFont('helvetica','bold');
+  d.text(title,WP/2+14,10,{align:'center'});
+  d.setFontSize(8);d.setFont('helvetica','normal');d.setTextColor(180,210,215);
+  d.text(subtitle,WP/2+14,17,{align:'center'});
   d.setTextColor(DK[0],DK[1],DK[2]);return d;
 }
 
+function pageCheck(d,y,need){
+  if(y+need>272){footer(d);d.addPage();return 32;}
+  return y;
+}
+
 function sec(d,t,y){
-  d.setFillColor(230,242,242);d.rect(15,y-3,WP-30,5,'F');
-  d.setDrawColor(TL[0],TL[1],TL[2]);d.setLineWidth(0.4);d.line(15,y+2,WP-15,y+2);
-  d.setTextColor(TL[0],TL[1],TL[2]);d.setFontSize(7);d.setFont('helvetica','bold');
-  d.text(t.toUpperCase(),17,y);d.setTextColor(DK[0],DK[1],DK[2]);return y+5;
+  y=pageCheck(d,y,12);
+  d.setFillColor(240,248,248);d.roundedRect(ML,y-1,TW,8,1.5,1.5,'F');
+  d.setFillColor(TL[0],TL[1],TL[2]);d.rect(ML,y-1,3,8,'F');
+  d.setTextColor(TL[0],TL[1],TL[2]);d.setFontSize(9);d.setFont('helvetica','bold');
+  d.text(t.toUpperCase(),ML+6,y+4);
+  d.setTextColor(DK[0],DK[1],DK[2]);return y+12;
 }
 
 function fl(d,l,v,y){
-  d.setFontSize(6.8);d.setFont('helvetica','normal');d.setTextColor(GR[0],GR[1],GR[2]);d.text(l,17,y);
-  d.setFont('helvetica','bold');d.setTextColor(DK[0],DK[1],DK[2]);
+  y=pageCheck(d,y,6);
+  d.setFontSize(8);d.setFont('helvetica','normal');d.setTextColor(GR[0],GR[1],GR[2]);
+  d.text(l,ML+2,y);
+  d.setFont('helvetica','bold');d.setTextColor(DK[0],DK[1],DK[2]);d.setFontSize(9);
   var val=Array.isArray(v)?v.join(', '):(v||'\u2014');
-  d.text(val.substring(0,90),50,y);return y+3.8;
+  var lines=d.splitTextToSize(val,TW-42);
+  d.text(lines,ML+40,y);
+  d.setDrawColor(220,230,235);d.setLineWidth(0.15);
+  var lineY=y+(lines.length>1?lines.length*3.5:1.5);
+  d.line(ML+2,lineY,ML+TW-2,lineY);
+  return lineY+3;
 }
 
 function ml(d,l,t,y){
-  if(l){d.setFontSize(6.8);d.setFont('helvetica','normal');d.setTextColor(GR[0],GR[1],GR[2]);d.text(l,17,y);y+=3.2;}
-  d.setFont('helvetica','normal');d.setFontSize(6.8);d.setTextColor(DK[0],DK[1],DK[2]);
-  var ls=d.splitTextToSize(t||'\u2014',WP-36);d.text(ls,17,y);return y+ls.length*3+1.5;
+  y=pageCheck(d,y,10);
+  if(l){d.setFontSize(8);d.setFont('helvetica','bold');d.setTextColor(TL[0],TL[1],TL[2]);d.text(l,ML+2,y);y+=4;}
+  d.setFont('helvetica','normal');d.setFontSize(9);d.setTextColor(DK[0],DK[1],DK[2]);
+  var ls=d.splitTextToSize(t||'\u2014',TW-4);
+  if(y+ls.length*3.8>272){footer(d);d.addPage();y=32;}
+  d.text(ls,ML+2,y);return y+ls.length*3.8+3;
 }
 
 function footer(d){
-  d.setDrawColor(TL[0],TL[1],TL[2]);d.setLineWidth(0.3);d.line(15,286,WP-15,286);
-  d.setFontSize(5.5);d.setTextColor(GR[0],GR[1],GR[2]);
-  d.text('USCA / ELSA \u2014 Piti\u00e9-Salp\u00eatri\u00e8re (AP-HP) \u2014 addicto.psl@aphp.fr \u2014 '+new Date().toLocaleDateString('fr-FR'),WP/2,290,{align:'center'});
+  d.setDrawColor(TL[0],TL[1],TL[2]);d.setLineWidth(0.3);
+  d.line(ML,282,WP-MR,282);
+  d.setFontSize(6.5);d.setTextColor(GR[0],GR[1],GR[2]);
+  d.text('USCA / ELSA \u2014 Piti\u00e9-Salp\u00eatri\u00e8re (AP-HP) \u2014 addicto.psl@aphp.fr',ML,287);
+  d.text(new Date().toLocaleDateString('fr-FR'),WP-MR,287,{align:'right'});
 }
 
 function addToZip(zip,keys,idx){
@@ -506,16 +527,19 @@ function dlZip(zip,name){
 function generateMedecin(){
   var p=collectP(), m=collectM(), zip=new JSZip(), st=STRUCTS[p.postcure]||{nom:'Non pr\u00e9cis\u00e9e'};
   var d2=mkDoc('VOLET M\u00c9DICAL \u2014 CONFIDENTIEL',m.date+' \u2014 '+st.nom);
-  var y=25;
-  // Patient identity header
-  d2.setFillColor(245,249,249);d2.roundedRect(15,y-2,WP-30,10,2,2,'F');
-  d2.setFontSize(9);d2.setFont('helvetica','bold');d2.setTextColor(DK[0],DK[1],DK[2]);
-  d2.text(p.prenom+' '+p.nom,20,y+2);
-  d2.setFontSize(7);d2.setFont('helvetica','normal');d2.setTextColor(GR[0],GR[1],GR[2]);
-  d2.text('N\u00e9(e) le '+p.ddn,20,y+6);
-  d2.text(st.nom,WP-20,y+2,{align:'right'});
-  d2.text('Date souhait\u00e9e: '+(m.date_adm||'\u2014'),WP-20,y+6,{align:'right'});
-  y+=12;
+  var y=32;
+  // Patient identity header — encadré arrondi
+  d2.setFillColor(240,248,248);d2.roundedRect(ML,y-2,TW,14,2,2,'F');
+  d2.setDrawColor(TL[0],TL[1],TL[2]);d2.setLineWidth(0.5);d2.roundedRect(ML,y-2,TW,14,2,2,'S');
+  d2.setFontSize(11);d2.setFont('helvetica','bold');d2.setTextColor(DK[0],DK[1],DK[2]);
+  d2.text(p.prenom+' '+p.nom,ML+4,y+3);
+  d2.setFontSize(8);d2.setFont('helvetica','normal');d2.setTextColor(GR[0],GR[1],GR[2]);
+  d2.text('N\u00e9(e) le '+p.ddn,ML+4,y+8);
+  d2.setFont('helvetica','bold');d2.setTextColor(TL[0],TL[1],TL[2]);
+  d2.text(st.nom,WP-MR-2,y+3,{align:'right'});
+  d2.setFont('helvetica','normal');d2.setFontSize(8);d2.setTextColor(GR[0],GR[1],GR[2]);
+  d2.text('Entr\u00e9e souhait\u00e9e : '+(m.date_adm||'\u2014'),WP-MR-2,y+8,{align:'right'});
+  y+=18;
   // Médecin
   y=sec(d2,'M\u00e9decin adresseur',y);
   y=fl(d2,'Dr',m.nom+' '+m.prenom+' \u2014 '+m.spe,y);

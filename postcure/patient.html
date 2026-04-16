@@ -335,7 +335,7 @@ function detectPatientSession() {
     var secBanner = document.querySelector('.security');
     if (secBanner) {
       var label = session.prenom ? session.prenom : 'Chambre ' + (session.chambre || '');
-      secBanner.textContent = '\u2705 Connect\u00e9 : ' + label + ' \u2014 vos r\u00e9ponses seront sauvegard\u00e9es';
+      secBanner.textContent = '\u2705 ' + label + ' \u2014 votre dossier sera transmis \u00e0 l\'\u00e9quipe soignante';
       secBanner.style.background = '#d1fae5';
       secBanner.style.color = '#065f46';
     }
@@ -704,46 +704,82 @@ function buildReview() {
 // ============================================================
 // PDF HELPERS
 // ============================================================
-var DK = [16,39,67], TL = [26,107,106], GR = [100,120,135], LT = [230,242,242], WP = 210;
+var DK = [16,39,67], TL = [26,107,106], GR = [120,140,155], LT = [230,242,242], WP = 210;
+var ML = 20; // marge gauche
+var MR = 20; // marge droite
+var TW = WP - ML - MR; // largeur utile
 
 function mkDoc(title, subtitle) {
   var jsPDF = window.jspdf.jsPDF;
   var d = new jsPDF({unit:'mm', format:'a4'});
-  d.setFillColor(DK[0], DK[1], DK[2]); d.rect(0, 0, WP, 20, 'F');
-  d.setFillColor(255, 255, 255); d.roundedRect(3, 1.5, 30, 17, 1.5, 1.5, 'F');
-  try { if (LOGO_PDF) d.addImage(LOGO_PDF, 'JPEG', 4, 2, 28, 15); } catch(e) {}
-  d.setTextColor(255, 255, 255); d.setFontSize(10); d.setFont('helvetica', 'bold');
-  d.text(title, WP/2 + 12, 8, {align:'center'});
-  d.setFontSize(7); d.setFont('helvetica', 'normal'); d.setTextColor(200, 220, 225);
-  d.text(subtitle, WP/2 + 12, 14, {align:'center'});
+  // Header band — gradient effect
+  d.setFillColor(DK[0], DK[1], DK[2]); d.rect(0, 0, WP, 24, 'F');
+  d.setFillColor(TL[0], TL[1], TL[2]); d.rect(0, 22, WP, 3, 'F');
+  // Logo
+  d.setFillColor(255, 255, 255); d.roundedRect(ML-2, 2, 32, 18, 2, 2, 'F');
+  try { if (LOGO_PDF) d.addImage(LOGO_PDF, 'JPEG', ML-1, 2.5, 30, 17); } catch(e) {}
+  // Title
+  d.setTextColor(255, 255, 255); d.setFontSize(13); d.setFont('helvetica', 'bold');
+  d.text(title, WP/2 + 14, 10, {align:'center'});
+  d.setFontSize(8); d.setFont('helvetica', 'normal'); d.setTextColor(180, 210, 215);
+  d.text(subtitle, WP/2 + 14, 17, {align:'center'});
   d.setTextColor(DK[0], DK[1], DK[2]);
   return d;
 }
 
+function pageCheck(d, y, need) {
+  if (y + need > 272) { footer(d); d.addPage(); return 32; }
+  return y;
+}
+
 function sec(d, t, y) {
-  d.setFillColor(230, 242, 242); d.rect(15, y-3, WP-30, 5, 'F');
-  d.setDrawColor(TL[0], TL[1], TL[2]); d.setLineWidth(0.4); d.line(15, y+2, WP-15, y+2);
-  d.setTextColor(TL[0], TL[1], TL[2]); d.setFontSize(7); d.setFont('helvetica', 'bold');
-  d.text(t.toUpperCase(), 17, y); d.setTextColor(DK[0], DK[1], DK[2]); return y + 5;
+  y = pageCheck(d, y, 12);
+  // Barre colorée à gauche + fond léger
+  d.setFillColor(240, 248, 248); d.roundedRect(ML, y-1, TW, 8, 1.5, 1.5, 'F');
+  d.setFillColor(TL[0], TL[1], TL[2]); d.rect(ML, y-1, 3, 8, 'F');
+  d.setTextColor(TL[0], TL[1], TL[2]); d.setFontSize(9); d.setFont('helvetica', 'bold');
+  d.text(t.toUpperCase(), ML + 6, y + 4);
+  d.setTextColor(DK[0], DK[1], DK[2]);
+  return y + 12;
 }
 
 function fl(d, l, v, y) {
-  d.setFontSize(6.8); d.setFont('helvetica', 'normal'); d.setTextColor(GR[0], GR[1], GR[2]); d.text(l, 17, y);
-  d.setFont('helvetica', 'bold'); d.setTextColor(DK[0], DK[1], DK[2]);
-  var val = Array.isArray(v) ? v.join(', ') : (v || '—');
-  d.text(val.substring(0, 90), 50, y); return y + 3.8;
+  y = pageCheck(d, y, 6);
+  // Label en gris
+  d.setFontSize(8); d.setFont('helvetica', 'normal'); d.setTextColor(GR[0], GR[1], GR[2]);
+  d.text(l, ML + 2, y);
+  // Valeur en noir gras, alignée à droite du label
+  d.setFont('helvetica', 'bold'); d.setTextColor(DK[0], DK[1], DK[2]); d.setFontSize(9);
+  var val = Array.isArray(v) ? v.join(', ') : (v || '\u2014');
+  var lines = d.splitTextToSize(val, TW - 42);
+  d.text(lines, ML + 40, y);
+  // Ligne pointillée subtile
+  d.setDrawColor(220, 230, 235); d.setLineWidth(0.15);
+  var lineY = y + (lines.length > 1 ? lines.length * 3.5 : 1.5);
+  d.line(ML + 2, lineY, ML + TW - 2, lineY);
+  return lineY + 3;
 }
 
 function ml(d, l, t, y) {
-  if (l) { d.setFontSize(6.8); d.setFont('helvetica', 'normal'); d.setTextColor(GR[0], GR[1], GR[2]); d.text(l, 17, y); y += 3.2; }
-  d.setFont('helvetica', 'normal'); d.setFontSize(6.8); d.setTextColor(DK[0], DK[1], DK[2]);
-  var ls = d.splitTextToSize(t || '—', WP - 36); d.text(ls, 17, y); return y + ls.length * 3 + 1.5;
+  y = pageCheck(d, y, 10);
+  if (l) {
+    d.setFontSize(8); d.setFont('helvetica', 'bold'); d.setTextColor(TL[0], TL[1], TL[2]);
+    d.text(l, ML + 2, y); y += 4;
+  }
+  d.setFont('helvetica', 'normal'); d.setFontSize(9); d.setTextColor(DK[0], DK[1], DK[2]);
+  var ls = d.splitTextToSize(t || '\u2014', TW - 4);
+  // Vérifier saut de page pour le texte
+  if (y + ls.length * 3.8 > 272) { footer(d); d.addPage(); y = 32; }
+  d.text(ls, ML + 2, y);
+  return y + ls.length * 3.8 + 3;
 }
 
 function footer(d) {
-  d.setDrawColor(TL[0], TL[1], TL[2]); d.setLineWidth(0.3); d.line(15, 286, WP-15, 286);
-  d.setFontSize(5.5); d.setTextColor(GR[0], GR[1], GR[2]);
-  d.text('USCA / ELSA — Pitié-Salpêtrière (AP-HP) — addicto.psl@aphp.fr — ' + new Date().toLocaleDateString('fr-FR'), WP/2, 290, {align:'center'});
+  d.setDrawColor(TL[0], TL[1], TL[2]); d.setLineWidth(0.3);
+  d.line(ML, 282, WP - MR, 282);
+  d.setFontSize(6.5); d.setTextColor(GR[0], GR[1], GR[2]);
+  d.text('USCA / ELSA \u2014 Piti\u00e9-Salp\u00eatri\u00e8re (AP-HP) \u2014 addicto.psl@aphp.fr', ML, 287);
+  d.text(new Date().toLocaleDateString('fr-FR'), WP - MR, 287, {align:'right'});
 }
 
 function addToZip(zip, keys, idx) {
@@ -793,8 +829,8 @@ function generatePatient() {
   var st = STRUCTS[p.postcure] || {nom: 'Non précisée', ville: '', engagement: ''};
 
   // PDF 1 — Administratif
-  var d1 = mkDoc('VOLET ADMINISTRATIF', p.date + ' — ' + st.nom);
-  var y = 25;
+  var d1 = mkDoc('VOLET ADMINISTRATIF', p.date + ' \u2014 ' + st.nom);
+  var y = 32;
   y = sec(d1, 'Identité', y);
   y = fl(d1, 'Nom / Prénom', p.nom + ' ' + p.prenom, y);
   y = fl(d1, 'DDN / Lieu', p.ddn + ' — ' + p.lieu, y);
@@ -824,16 +860,37 @@ function generatePatient() {
   // PDF 2 — Engagement (if signed)
   var sigE = getSigData('engagement');
   if (sigE) {
-    var d3 = mkDoc('ENGAGEMENT THÉRAPEUTIQUE', p.date + ' — ' + st.nom);
-    var y3 = 25;
-    d3.setFontSize(7); d3.setFont('helvetica', 'normal'); d3.setTextColor(DK[0], DK[1], DK[2]);
+    var d3 = mkDoc('ENGAGEMENT TH\u00c9RAPEUTIQUE', p.date + ' \u2014 ' + st.nom);
+    var y3 = 32;
+    d3.setFontSize(9); d3.setFont('helvetica', 'normal'); d3.setTextColor(DK[0], DK[1], DK[2]);
     var eng = st.engagement || DEFAULT_ENGAGEMENT;
-    var ls = d3.splitTextToSize(eng, WP - 34);
-    d3.text(ls, 17, y3); y3 += ls.length * 3 + 6;
-    d3.setFont('helvetica', 'bold');
-    d3.text(p.prenom + ' ' + p.nom, 17, y3); y3 += 4;
-    d3.text('Le ' + p.date, 17, y3); y3 += 6;
-    try { d3.addImage(sigE, 'PNG', 17, y3, 50, 20); } catch(e) {}
+    var ls = d3.splitTextToSize(eng, TW - 4);
+    // Smart page break : si le texte + signature débordent, couper intelligemment
+    var textHeight = ls.length * 3.8;
+    var sigBlock = 35; // espace pour nom + date + signature
+    if (y3 + textHeight + sigBlock > 272) {
+      // Texte sur première page, signature sur la suivante si nécessaire
+      var linesPerPage = Math.floor((272 - y3) / 3.8);
+      d3.text(ls.slice(0, linesPerPage), ML + 2, y3);
+      if (ls.length > linesPerPage) {
+        footer(d3); d3.addPage(); y3 = 32;
+        d3.setFontSize(9); d3.setFont('helvetica', 'normal'); d3.setTextColor(DK[0], DK[1], DK[2]);
+        d3.text(ls.slice(linesPerPage), ML + 2, y3);
+        y3 += (ls.length - linesPerPage) * 3.8 + 8;
+      }
+    } else {
+      d3.text(ls, ML + 2, y3);
+      y3 += textHeight + 8;
+    }
+    // Signature sur la même page si possible
+    y3 = pageCheck(d3, y3, sigBlock);
+    d3.setDrawColor(TL[0], TL[1], TL[2]); d3.setLineWidth(0.3);
+    d3.line(ML, y3, ML + TW, y3); y3 += 6;
+    d3.setFont('helvetica', 'bold'); d3.setFontSize(10);
+    d3.text(p.prenom + ' ' + p.nom, ML + 2, y3); y3 += 5;
+    d3.setFont('helvetica', 'normal'); d3.setFontSize(9);
+    d3.text('Le ' + p.date, ML + 2, y3); y3 += 8;
+    try { d3.addImage(sigE, 'PNG', ML + 2, y3, 50, 22); } catch(e) {}
     footer(d3);
     zip.file('02_Engagement_' + p.nom + '.pdf', d3.output('blob'));
   }
