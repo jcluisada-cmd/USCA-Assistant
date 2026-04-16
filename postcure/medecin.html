@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dossier post-cure — Volet Médical</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="../shared/postcure-structures.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+:root{--bg:#f0f5f5;--surface:#fff;--surface-alt:#f5f9f9;--ink:#102743;--ink-soft:#3a5568;--ink-muted:#7a8e9e;--accent:#1a6b6a;--accent-dark:#102743;--accent-light:#d5ecec;--accent-bg:#e8f4f4;--teal:#407a91;--border:#cddde0;--radius:10px;--shadow:0 1px 3px rgba(16,39,67,.06),0 4px 12px rgba(16,39,67,.04);--red:#a03030}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.header{background:linear-gradient(135deg,#102743 0%,#1a5c5a 50%,#407a91 100%);color:#fff;padding:1rem 1.2rem .7rem;position:sticky;top:0;z-index:100}
+.header-inner{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:.8rem}
+.header img{height:48px;border-radius:6px}
+.header-text h1{font-family:'Instrument Serif',serif;font-size:1.2rem;font-weight:400}
+.header-text p{font-size:.7rem;opacity:.7}
+.security{background:#d5ecec;color:var(--accent);text-align:center;padding:.35rem;font-size:.7rem;font-weight:600}
+/* Structure selector bar */
+.struct-bar{max-width:880px;margin:.6rem auto 0;padding:0 1rem}
+.struct-bar label{font-size:.78rem;font-weight:600;color:var(--ink-soft);margin-bottom:.25rem;display:block}
+.struct-bar select{width:100%;padding:.5rem .7rem;border:2px solid var(--accent);border-radius:8px;font-family:inherit;font-size:.85rem;color:var(--accent-dark);background:#fff;font-weight:600}
+.struct-bar select:focus{outline:none;box-shadow:0 0 0 3px var(--accent-light)}
+.struct-info{font-size:.72rem;color:var(--ink-muted);margin-top:.25rem}
+.struct-info strong{color:var(--accent)}
+.container{max-width:880px;margin:0 auto;padding:.5rem 1rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);min-height:50vh}
+/* Cards & Fields */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;margin-bottom:.8rem}
+.card h3{font-size:.85rem;font-weight:700;color:var(--accent-dark);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid var(--accent-light)}
+.field{margin-bottom:.8rem}
+.field label{display:block;font-size:.78rem;font-weight:600;margin-bottom:.2rem}
+.field .hint{font-size:.68rem;color:var(--ink-muted);margin-bottom:.2rem}
+.field input[type="text"],.field input[type="number"],.field input[type="email"],.field input[type="tel"],.field input[type="date"],.field textarea,.field select{width:100%;padding:.5rem .65rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:.84rem;color:var(--ink);background:#fff;transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.field textarea{resize:vertical;min-height:50px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+@media(max-width:560px){.row,.row3{grid-template-columns:1fr}.header img{height:36px}}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem}
+.chip{display:flex;align-items:center;gap:.25rem;padding:.3rem .6rem;border:1.5px solid var(--border);border-radius:20px;font-size:.73rem;font-weight:500;cursor:pointer;transition:.15s;user-select:none;background:#fff}
+.chip:hover{border-color:var(--accent)}
+.chip input{display:none}
+.chip:has(input:checked){background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+/* Upload */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:1rem;text-align:center;cursor:pointer;transition:.2s;background:var(--surface-alt);position:relative;min-height:70px}
+.upload-zone:hover{border-color:var(--accent);background:var(--accent-bg)}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-zone .icon{font-size:1.3rem}
+.upload-zone p{font-size:.72rem;color:var(--ink-muted)}
+.upload-zone.has-file{border-color:var(--accent);background:var(--accent-bg)}
+.upload-preview{max-width:100px;max-height:65px;border-radius:4px;margin-top:.3rem;border:1px solid var(--border)}
+/* Substance table */
+.sub-table{width:100%;border-collapse:collapse;font-size:.76rem;margin:.4rem 0}
+.sub-table th{background:var(--accent-light);color:var(--accent-dark);padding:.35rem .4rem;text-align:left;font-weight:600;font-size:.68rem}
+.sub-table td{padding:.35rem .4rem;border-bottom:1px solid var(--border)}
+.sub-table input[type="checkbox"]{width:16px;height:16px;accent-color:var(--accent)}
+.sub-table input[type="text"]{padding:.2rem .35rem;font-size:.73rem;border:1px solid var(--border);border-radius:4px;width:100%}
+.sub-table select{padding:.2rem;font-size:.73rem;border:1px solid var(--border);border-radius:4px}
+/* Buttons */
+.btn{padding:.5rem 1.1rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#145a59}
+.btn-secondary{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}.btn-secondary:hover{background:var(--accent-light)}
+.btn-sm{padding:.3rem .6rem;font-size:.72rem}
+.btn:disabled{opacity:.4;cursor:default}
+/* Output */
+.output-box{background:var(--accent-bg);border:2px solid var(--accent);border-radius:var(--radius);padding:1.3rem;text-align:center;margin-top:1rem}
+.output-box h3{font-size:1rem;margin-bottom:.3rem;color:var(--accent-dark)}
+.output-box p{font-size:.78rem;color:var(--ink-soft);margin-bottom:.8rem}
+.mailto-box{background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem;margin-top:.8rem}
+.mailto-box p{font-size:.76rem;color:var(--ink-soft);margin-bottom:.4rem}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent-dark);color:#fff;padding:.55rem 1.1rem;border-radius:8px;font-size:.8rem;font-weight:500;transition:.3s;z-index:1000}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.conditional{display:none}.conditional.visible{display:block}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+<img id="header-logo" alt="USCA">
+<div class="header-text"><h1>Dossier post-cure — Volet Médical</h1><p>USCA / ELSA — Pitié-Salpêtrière (AP-HP)</p></div>
+</div></div>
+<div class="security">🔒 Données confidentielles — rien n'est envoyé à un serveur</div>
+
+<!-- STRUCTURE SELECTOR -->
+<div class="struct-bar">
+<label>Post-cure souhaitée</label>
+<select id="struct_select" onchange="onStructureChange()">
+<option value="">— Choisir la structure de post-cure —</option>
+</select>
+<div class="struct-info" id="struct-info"></div>
+</div>
+
+<div class="container">
+<div style="padding:.5rem 0">
+
+<!-- PATIENT IDENTITY (minimal — for PDF header) -->
+<div class="card"><h3>👤 Identité du patient</h3>
+<div class="row"><div class="field"><label>Nom</label><input type="text" id="p_nom" placeholder="NOM"></div>
+<div class="field"><label>Prénom</label><input type="text" id="p_prenom" placeholder="Prénom"></div></div>
+<div class="field"><label>Date de naissance</label><input type="date" id="p_ddn"></div>
+</div>
+
+<!-- MÉDECIN ADRESSEUR -->
+<div class="card"><h3>🩺 Médecin adresseur</h3>
+<div class="field"><label>Spécialité</label><div class="chips">
+<label class="chip"><input type="radio" name="m_spe" value="Psychiatre"><span>Psychiatre</span></label>
+<label class="chip"><input type="radio" name="m_spe" value="Addictologue"><span>Addictologue</span></label>
+<label class="chip"><input type="radio" name="m_spe" value="Généraliste"><span>Généraliste</span></label>
+</div></div>
+<div class="row"><div class="field"><label>Nom</label><input type="text" id="m_nom"></div>
+<div class="field"><label>Prénom</label><input type="text" id="m_prenom"></div></div>
+<div class="field"><label>Établissement</label><input type="text" id="m_etab" value="USCA — Pitié-Salpêtrière (AP-HP)"></div>
+<div class="row"><div class="field"><label>Tél</label><input type="tel" id="m_tel" value="01 42 17 85 10"></div>
+<div class="field"><label>Email</label><input type="email" id="m_email" value="addicto.psl@aphp.fr"></div></div>
+</div>
+
+<!-- MÉDECIN TRAITANT -->
+<div class="card"><h3>Médecin traitant (si différent)</h3>
+<div class="row"><div class="field"><label>Nom</label><input type="text" id="mt_nom"></div>
+<div class="field"><label>Tél</label><input type="tel" id="mt_tel"></div></div>
+</div>
+
+<!-- DEMANDE -->
+<div class="card"><h3>Demande</h3>
+<div class="field"><div class="chips">
+<label class="chip"><input type="radio" name="m_mode" value="HC"><span>Hospitalisation complète</span></label>
+<label class="chip"><input type="radio" name="m_mode" value="HDJ"><span>Hôpital de jour</span></label>
+</div></div>
+<div class="field"><label>Objectif</label><textarea id="m_obj" rows="2" placeholder="Sevrage + consolidation, travail motivationnel…"></textarea></div>
+</div>
+
+<!-- SITUATION ADDICTOLOGIQUE -->
+<div class="card"><h3>Situation addictologique</h3>
+<div class="field"><label>Statut addictologique actuel</label><div class="chips">
+<label class="chip"><input type="radio" name="m_statut" value="Consommation active"><span>Consommation active</span></label>
+<label class="chip"><input type="radio" name="m_statut" value="Sevrage en cours"><span>Sevrage en cours</span></label>
+<label class="chip"><input type="radio" name="m_statut" value="Sevré — ttt équilibré"><span>Sevré — ttt équilibré</span></label>
+<label class="chip"><input type="radio" name="m_statut" value="Sevré — PEC comorbidités psy"><span>Sevré — PEC comorbidités psy</span></label>
+</div></div>
+<div class="field"><label>Motifs thérapeutiques</label><div class="chips">
+<label class="chip"><input type="checkbox" name="m_th" value="Tr. Usage de Substances"><span>Tr. Usage de Substances</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Épisode Dépressif"><span>Épisode Dépressif</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Tr. anxieux"><span>Tr. anxieux</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Tr. humeur (bipolaire)"><span>Tr. humeur (bipolaire)</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Psychose"><span>Psychose</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Tr. personnalité"><span>Tr. personnalité</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="TCA"><span>TCA</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Tr. sommeil"><span>Tr. sommeil</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="TSPT"><span>TSPT</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="TDAH"><span>TDAH</span></label>
+<label class="chip"><input type="checkbox" name="m_th" value="Autre"><span>Autre</span></label>
+</div></div>
+<table class="sub-table"><thead><tr><th>Substance</th><th>Actuel</th><th>Détail / quantité</th><th>Changement</th></tr></thead><tbody id="sub-tbody"></tbody></table>
+<div class="field"><label>Idées suicidaires</label><div class="chips">
+<label class="chip"><input type="radio" name="m_is" value="Oui" onchange="document.getElementById('is_comment').style.display='block'"><span>Oui</span></label>
+<label class="chip"><input type="radio" name="m_is" value="Non" onchange="document.getElementById('is_comment').style.display='none'"><span>Non</span></label>
+</div><div id="is_comment" style="display:none;margin-top:.4rem"><input type="text" id="m_is_detail" placeholder="Précisez : actives/passives, plan, urgence…" style="border-color:var(--red)"></div></div>
+<div class="field"><label>Troubles du comportement (agressivité, hétéro-agressivité)</label><div class="chips">
+<label class="chip"><input type="radio" name="m_tc" value="Oui" onchange="document.getElementById('tc_comment').style.display='block'"><span>Oui</span></label>
+<label class="chip"><input type="radio" name="m_tc" value="Non" onchange="document.getElementById('tc_comment').style.display='none'"><span>Non</span></label>
+</div><div id="tc_comment" style="display:none;margin-top:.4rem"><input type="text" id="m_tc_detail" placeholder="Précisez : contexte, type, fréquence…"></div></div>
+</div>
+
+<!-- ATCD & ÉTAT CLINIQUE -->
+<div class="card"><h3>Antécédents & état clinique</h3>
+<div class="field"><label>ATCD addictologiques</label><textarea id="m_atcd_a" rows="2"></textarea></div>
+<div class="field"><label>ATCD somatiques</label><div class="hint">Dont complications sevrage : DT, crises comitiales</div><textarea id="m_atcd_s" rows="2"></textarea></div>
+<div class="field"><label>ATCD psychiatriques</label><textarea id="m_atcd_p" rows="2"></textarea></div>
+<div class="field"><label>Histoire de la maladie</label><div class="hint">Chronologie des consommations, événements déclencheurs, parcours de soins, évolution récente</div><textarea id="m_histoire" rows="4" placeholder="Résumez ici l'histoire de la maladie addictive et/ou psychiatrique…"></textarea></div>
+<div class="field"><label>État psychique actuel</label><textarea id="m_etat_p" rows="2"></textarea></div>
+<div class="field"><label>État somatique actuel</label><textarea id="m_etat_s" rows="2"></textarea></div>
+<div class="field"><label>Traitements en cours</label><div class="hint">Joindre la dernière ordonnance</div><textarea id="m_ttt" rows="2"></textarea></div>
+<div class="field"><label>Allergies</label><input type="text" id="m_allergies" value="Aucune connue"></div>
+</div>
+
+<!-- RECOMMANDATIONS -->
+<div class="card"><h3>Recommandations pour la continuité de la prise en charge</h3>
+<div class="field"><label>Recommandations</label><textarea id="m_recos" rows="3"></textarea></div>
+</div>
+
+<!-- DOCUMENTS MÉDICAUX -->
+<div class="card"><h3>📎 Documents médicaux</h3>
+<div class="row3">
+<div class="field"><label>Ordonnance</label><div class="upload-zone"><input type="file" accept="image/*,application/pdf" onchange="onUpload(this,'ordo')"><div class="icon">📋</div><p>Import</p></div></div>
+<div class="field"><label>Bilan bio</label><div class="upload-zone"><input type="file" accept="image/*,application/pdf" onchange="onUpload(this,'bio')"><div class="icon">🔬</div><p>Import</p></div></div>
+<div class="field"><label>Compte rendu</label><div class="upload-zone"><input type="file" accept="image/*,application/pdf" onchange="onUpload(this,'crh')"><div class="icon">📄</div><p>Import</p></div></div>
+</div>
+<div class="field"><label>Autres documents médicaux</label><div class="hint">Courrier spécialiste, imagerie, ECG, résultats complémentaires…</div><div class="upload-zone"><input type="file" accept="image/*,application/pdf" multiple onchange="onMultiUpload(this,'medecin_autres')"><div class="icon">📁</div><p>Ajouter un ou plusieurs fichiers</p></div><div id="medecin_autres_list"></div></div>
+</div>
+
+<!-- DATE ADMISSION -->
+<div class="field"><label>Date d'admission souhaitée</label><input type="date" id="m_date_adm"></div>
+
+<!-- ACTION BUTTONS -->
+<div class="output-box" style="border-color:var(--teal)">
+<h3>🩺 Dossier médical</h3>
+<p>PDF médical confidentiel + ordonnance + bilan bio + CRH + documents médicaux</p>
+<button class="btn btn-primary" onclick="generateMedecin()" style="font-size:.9rem;padding:.7rem 1.8rem">📥 Télécharger le dossier médical (ZIP)</button>
+</div>
+
+<div class="mailto-box">
+<p><strong>Envoyer le formulaire patient :</strong></p>
+<p style="font-size:.72rem;color:var(--ink-muted);margin-bottom:.5rem">Génère un e-mail pré-rempli avec un lien vers le formulaire patient, pour que le patient remplisse son volet de façon autonome.</p>
+<button class="btn btn-secondary" onclick="sendPatientForm()" style="margin-bottom:.4rem">📧 Envoyer le formulaire patient</button>
+</div>
+
+<div class="mailto-box">
+<p><strong>Transmettre le dossier :</strong></p>
+<div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.4rem">
+<a id="mailto-usca" href="#" class="btn btn-secondary btn-sm" style="text-decoration:none">📧 Envoyer à l'USCA</a>
+<a id="mailto-struct" href="#" class="btn btn-secondary btn-sm" style="text-decoration:none">📧 Envoyer à la structure</a>
+<button class="btn btn-sm btn-secondary" onclick="copyEmail('addicto.psl@aphp.fr')">📋 Copier email USCA</button>
+</div>
+<p style="font-size:.7rem;color:var(--ink-muted)">Joignez le fichier ZIP à votre email.</p>
+</div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// LOGOS — loaded from external files (base64)
+// ============================================================
+var LOGO_WEB = '';
+var LOGO_PDF = '';
+
+(async function loadLogos() {
+  try {
+    var basePath = window.location.href.replace(/[^/]*$/, '');
+    var results = await Promise.all([
+      fetch(basePath + 'logo_web.txt'),
+      fetch(basePath + 'logo_pdf.txt')
+    ]);
+    if (results[0].ok) LOGO_WEB = (await results[0].text()).trim();
+    if (results[1].ok) LOGO_PDF = (await results[1].text()).trim();
+    var logoEl = document.getElementById('header-logo');
+    if (logoEl && LOGO_WEB) logoEl.src = LOGO_WEB;
+  } catch(e) { console.warn('Logos non chargés:', e); }
+})();
+
+// ============================================================
+// EMBEDDED DETECTION
+// ============================================================
+if (new URLSearchParams(window.location.search).has('embedded')) {
+  document.querySelector('.header').style.display = 'none';
+  document.querySelector('.security').style.display = 'none';
+}
+
+// ============================================================
+// STATE
+// ============================================================
+var uploads = {};
+var multiUploads = {};
+
+// ============================================================
+// ALIASES — use shared structures
+// ============================================================
+var STRUCTS = window.POSTCURE_STRUCTS || {};
+var SUBS = window.POSTCURE_SUBS || [];
+
+// ============================================================
+// UPLOADS
+// ============================================================
+function onUpload(input, key) {
+  var file = input.files[0]; if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    uploads[key] = {data:e.target.result, name:file.name, type:file.type};
+    var zone = input.parentElement;
+    zone.classList.add('has-file');
+    if (file.type.startsWith('image/')) {
+      var img = zone.querySelector('.upload-preview');
+      if (!img) { img=document.createElement('img'); img.className='upload-preview'; zone.appendChild(img); }
+      img.src = e.target.result;
+    }
+    zone.querySelector('p').textContent = '\u2713 '+file.name.substring(0,22);
+  };
+  reader.readAsDataURL(file);
+}
+
+function onMultiUpload(input, key) {
+  if (!input.files.length) return;
+  if (!multiUploads[key]) multiUploads[key] = [];
+  Array.from(input.files).forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      multiUploads[key].push({data:e.target.result, name:file.name, type:file.type});
+      renderMultiList(key);
+      input.parentElement.querySelector('p').textContent = multiUploads[key].length + ' fichier(s) ajout\u00e9(s)';
+      input.parentElement.classList.add('has-file');
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function removeMulti(key, idx) {
+  multiUploads[key].splice(idx, 1);
+  renderMultiList(key);
+}
+
+function renderMultiList(key) {
+  var listEl = document.getElementById(key+'_list');
+  if (!listEl) return;
+  while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+  multiUploads[key].forEach(function(f, i) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:.4rem;padding:.2rem 0;font-size:.73rem;color:var(--accent)';
+    var check = document.createElement('span');
+    check.style.cssText = 'width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;background:var(--accent-light);color:var(--accent)';
+    check.textContent = '\u2713';
+    row.appendChild(check);
+    var nameSpan = document.createTextNode(f.name.substring(0,30));
+    row.appendChild(nameSpan);
+    var btn = document.createElement('button');
+    btn.className = 'btn btn-sm';
+    btn.style.cssText = 'color:var(--red);border:none;padding:0 .3rem;font-size:.7rem';
+    btn.textContent = '\u2715';
+    btn.setAttribute('data-key', key);
+    btn.setAttribute('data-idx', i);
+    btn.addEventListener('click', function() { removeMulti(this.getAttribute('data-key'), parseInt(this.getAttribute('data-idx'))); });
+    row.appendChild(btn);
+    listEl.appendChild(row);
+  });
+}
+
+// ============================================================
+// DATA COLLECTION
+// ============================================================
+var V = function(id) { return (document.getElementById(id)?.value||'').trim(); };
+var R = function(name) { var r=document.querySelector('input[name="'+name+'"]:checked'); return r?r.value:''; };
+var C = function(name) { return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(c){return c.value;}); };
+
+function collectP() {
+  return {
+    nom: V('p_nom'),
+    prenom: V('p_prenom'),
+    ddn: V('p_ddn'),
+    postcure: V('struct_select'),
+    date: new Date().toLocaleDateString('fr-FR')
+  };
+}
+
+function collectM() {
+  var subs=[];
+  document.querySelectorAll('input[name="sub_a"]:checked').forEach(function(cb){
+    var s=cb.value, k=s.replace(/[^a-zA-Z]/g,'');
+    subs.push({sub:s, det:(document.querySelector('input[name="sub_d_'+k+'"]')||{}).value||'', chg:(document.querySelector('select[name="sub_c_'+k+'"]')||{}).value||''});
+  });
+  return {spe:R('m_spe'),nom:V('m_nom'),prenom:V('m_prenom'),etab:V('m_etab'),tel:V('m_tel'),email:V('m_email'),
+    mt_nom:V('mt_nom'),mt_tel:V('mt_tel'),mode:R('m_mode'),obj:V('m_obj'),
+    statut:R('m_statut'),th:C('m_th'),subs:subs,is:R('m_is'),is_detail:V('m_is_detail'),tc:R('m_tc'),tc_detail:V('m_tc_detail'),
+    atcd_a:V('m_atcd_a'),atcd_s:V('m_atcd_s'),atcd_p:V('m_atcd_p'),
+    histoire:V('m_histoire'),
+    etat_p:V('m_etat_p'),etat_s:V('m_etat_s'),ttt:V('m_ttt'),
+    allergies:V('m_allergies'),recos:V('m_recos'),
+    date_adm:V('m_date_adm'),date:new Date().toLocaleDateString('fr-FR')};
+}
+
+// ============================================================
+// PDF HELPERS
+// ============================================================
+var DK=[16,39,67],TL=[26,107,106],GR=[100,120,135],LT=[230,242,242],WP=210;
+
+function mkDoc(title,subtitle){
+  var jsPDFClass=window.jspdf.jsPDF;var d=new jsPDFClass({unit:'mm',format:'a4'});
+  d.setFillColor(DK[0],DK[1],DK[2]);d.rect(0,0,WP,20,'F');
+  d.setFillColor(255,255,255);d.roundedRect(3,1.5,30,17,1.5,1.5,'F');
+  try{if(LOGO_PDF)d.addImage(LOGO_PDF,'JPEG',4,2,28,15);}catch(e){}
+  d.setTextColor(255,255,255);d.setFontSize(10);d.setFont('helvetica','bold');
+  d.text(title,WP/2+12,8,{align:'center'});
+  d.setFontSize(7);d.setFont('helvetica','normal');d.setTextColor(200,220,225);
+  d.text(subtitle,WP/2+12,14,{align:'center'});
+  d.setTextColor(DK[0],DK[1],DK[2]);return d;
+}
+
+function sec(d,t,y){
+  d.setFillColor(230,242,242);d.rect(15,y-3,WP-30,5,'F');
+  d.setDrawColor(TL[0],TL[1],TL[2]);d.setLineWidth(0.4);d.line(15,y+2,WP-15,y+2);
+  d.setTextColor(TL[0],TL[1],TL[2]);d.setFontSize(7);d.setFont('helvetica','bold');
+  d.text(t.toUpperCase(),17,y);d.setTextColor(DK[0],DK[1],DK[2]);return y+5;
+}
+
+function fl(d,l,v,y){
+  d.setFontSize(6.8);d.setFont('helvetica','normal');d.setTextColor(GR[0],GR[1],GR[2]);d.text(l,17,y);
+  d.setFont('helvetica','bold');d.setTextColor(DK[0],DK[1],DK[2]);
+  var val=Array.isArray(v)?v.join(', '):(v||'\u2014');
+  d.text(val.substring(0,90),50,y);return y+3.8;
+}
+
+function ml(d,l,t,y){
+  if(l){d.setFontSize(6.8);d.setFont('helvetica','normal');d.setTextColor(GR[0],GR[1],GR[2]);d.text(l,17,y);y+=3.2;}
+  d.setFont('helvetica','normal');d.setFontSize(6.8);d.setTextColor(DK[0],DK[1],DK[2]);
+  var ls=d.splitTextToSize(t||'\u2014',WP-36);d.text(ls,17,y);return y+ls.length*3+1.5;
+}
+
+function footer(d){
+  d.setDrawColor(TL[0],TL[1],TL[2]);d.setLineWidth(0.3);d.line(15,286,WP-15,286);
+  d.setFontSize(5.5);d.setTextColor(GR[0],GR[1],GR[2]);
+  d.text('USCA / ELSA \u2014 Piti\u00e9-Salp\u00eatri\u00e8re (AP-HP) \u2014 addicto.psl@aphp.fr \u2014 '+new Date().toLocaleDateString('fr-FR'),WP/2,290,{align:'center'});
+}
+
+function addToZip(zip,keys,idx){
+  var entries = Object.entries(uploads);
+  for(var i=0;i<entries.length;i++){
+    var k=entries[i][0], f=entries[i][1];
+    if(!f||keys.indexOf(k)===-1)continue;
+    var ext=f.type.indexOf('pdf')!==-1?'.pdf':f.type.indexOf('png')!==-1?'.png':'.jpg';
+    var bin=atob(f.data.split(',')[1]);var arr=new Uint8Array(bin.length);
+    for(var j=0;j<bin.length;j++)arr[j]=bin.charCodeAt(j);
+    zip.file('0'+idx+'_'+k+ext,arr);idx++;
+  }
+  return idx;
+}
+
+function addMulti(zip,key,idx){
+  var files=multiUploads[key];if(!files||!files.length)return idx;
+  files.forEach(function(f,i){
+    var ext=f.type.indexOf('pdf')!==-1?'.pdf':f.type.indexOf('png')!==-1?'.png':'.jpg';
+    var bin=atob(f.data.split(',')[1]);var arr=new Uint8Array(bin.length);
+    for(var j=0;j<bin.length;j++)arr[j]=bin.charCodeAt(j);
+    zip.file('0'+idx+'_'+key+'_'+(i+1)+ext,arr);idx++;
+  });
+  return idx;
+}
+
+function dlZip(zip,name){
+  zip.generateAsync({type:'blob'}).then(function(blob){
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=name;a.click();URL.revokeObjectURL(a.href);
+    showToast('\u2713 ZIP t\u00e9l\u00e9charg\u00e9 !');
+  });
+}
+
+// ============================================================
+// GENERATE MEDECIN PDF + ZIP
+// ============================================================
+function generateMedecin(){
+  var p=collectP(), m=collectM(), zip=new JSZip(), st=STRUCTS[p.postcure]||{nom:'Non pr\u00e9cis\u00e9e'};
+  var d2=mkDoc('VOLET M\u00c9DICAL \u2014 CONFIDENTIEL',m.date+' \u2014 '+st.nom);
+  var y=25;
+  // Patient identity header
+  d2.setFillColor(245,249,249);d2.roundedRect(15,y-2,WP-30,10,2,2,'F');
+  d2.setFontSize(9);d2.setFont('helvetica','bold');d2.setTextColor(DK[0],DK[1],DK[2]);
+  d2.text(p.prenom+' '+p.nom,20,y+2);
+  d2.setFontSize(7);d2.setFont('helvetica','normal');d2.setTextColor(GR[0],GR[1],GR[2]);
+  d2.text('N\u00e9(e) le '+p.ddn,20,y+6);
+  d2.text(st.nom,WP-20,y+2,{align:'right'});
+  d2.text('Date souhait\u00e9e: '+(m.date_adm||'\u2014'),WP-20,y+6,{align:'right'});
+  y+=12;
+  // Médecin
+  y=sec(d2,'M\u00e9decin adresseur',y);
+  y=fl(d2,'Dr',m.nom+' '+m.prenom+' \u2014 '+m.spe,y);
+  y=fl(d2,'\u00c9tablissement',m.etab,y);
+  y=fl(d2,'MT',m.mt_nom+(m.mt_tel?' \u2014 '+m.mt_tel:''),y);
+  y=fl(d2,'Demande',m.mode+' \u2014 '+(m.obj?m.obj.substring(0,70):'\u2014'),y);y+=1.5;
+  // Addictologie
+  y=sec(d2,'Situation addictologique',y);
+  y=fl(d2,'Statut',m.statut,y);
+  y=fl(d2,'Motifs',m.th,y);
+  if(m.subs.length){y=fl(d2,'Substances',m.subs.map(function(s){return s.sub+(s.det?' ('+s.det+')':'');}),y);}
+  var isText=m.is==='Oui'?'Oui'+(m.is_detail?' \u2014 '+m.is_detail:''):m.is;
+  var tcText=m.tc==='Oui'?'Oui'+(m.tc_detail?' \u2014 '+m.tc_detail:''):m.tc;
+  y=fl(d2,'Id\u00e9es suicidaires',isText,y);
+  y=fl(d2,'Tr. comportement',tcText,y);y+=1.5;
+  // ATCD
+  y=sec(d2,'Ant\u00e9c\u00e9dents',y);
+  if(m.atcd_a){y=ml(d2,'Addicto :',m.atcd_a,y);}
+  if(m.atcd_s){y=ml(d2,'Somato :',m.atcd_s,y);}
+  if(m.atcd_p){y=ml(d2,'Psy :',m.atcd_p,y);}
+  // Histoire
+  if(m.histoire){if(y>235){d2.addPage();y=20;}y=sec(d2,'Histoire de la maladie',y);y=ml(d2,'',m.histoire,y);}
+  // État actuel
+  if(y>245){d2.addPage();y=20;}
+  y=sec(d2,'\u00c9tat actuel',y);
+  if(m.etat_p){y=ml(d2,'Psychique :',m.etat_p,y);}
+  if(m.etat_s){y=ml(d2,'Somatique :',m.etat_s,y);}
+  if(m.ttt){y=ml(d2,'Traitements :',m.ttt,y);}
+  y=fl(d2,'Allergies',m.allergies,y);
+  // Recos
+  if(m.recos){if(y>250){d2.addPage();y=20;}y=sec(d2,'Recommandations \u2014 continuit\u00e9 PEC',y);y=ml(d2,'',m.recos,y);}
+  footer(d2);
+  zip.file('01_Medical_'+p.nom+'_CONFIDENTIEL.pdf',d2.output('blob'));
+  var idx=2;idx=addToZip(zip,['ordo','bio','crh'],idx);idx=addMulti(zip,'medecin_autres',idx);
+  dlZip(zip,'Medical_'+p.nom+'_'+p.prenom+'_'+m.date.replace(/\//g,'-')+'.zip');
+}
+
+// ============================================================
+// SEND PATIENT FORM
+// ============================================================
+function sendPatientForm() {
+  var p = collectP();
+  var st = STRUCTS[p.postcure] || {nom:'Non pr\u00e9cis\u00e9e'};
+  var patientUrl = window.location.href.replace('medecin.html','patient.html');
+  var subj = encodeURIComponent('Formulaire de pr\u00e9-admission post-cure \u2014 ' + st.nom);
+  var body = encodeURIComponent(
+    'Bonjour,\n\n' +
+    'Dans le cadre de votre demande de pr\u00e9-admission en post-cure (' + st.nom + '), ' +
+    'je vous invite \u00e0 remplir le formulaire patient en ligne :\n\n' +
+    patientUrl + '\n\n' +
+    'Ce formulaire recueille vos informations administratives (identit\u00e9, couverture sociale, situation, personne de confiance) ' +
+    'et vous permet de signer l\u2019engagement th\u00e9rapeutique.\n\n' +
+    'Vos donn\u00e9es restent sur votre appareil et ne sont envoy\u00e9es \u00e0 aucun serveur.\n\n' +
+    'Une fois compl\u00e9t\u00e9, t\u00e9l\u00e9chargez le ZIP g\u00e9n\u00e9r\u00e9 et transmettez-le par retour de mail.\n\n' +
+    'Cordialement,\n' +
+    'Dr ' + V('m_nom') + ' ' + V('m_prenom') + '\n' +
+    V('m_etab') + '\n' +
+    V('m_tel')
+  );
+  window.location.href = 'mailto:?subject=' + subj + '&body=' + body;
+}
+
+// ============================================================
+// MAILTO HELPERS
+// ============================================================
+function updateMailtos() {
+  var p = collectP();
+  var st = STRUCTS[p.postcure] || {nom:'Non pr\u00e9cis\u00e9e'};
+  var nom = (p.nom + ' ' + p.prenom).trim() || 'Patient';
+  var subj = encodeURIComponent('Pr\u00e9-admission (volet m\u00e9dical) \u2014 ' + nom + ' \u2014 ' + st.nom);
+  var body = encodeURIComponent('Bonjour,\n\nVeuillez trouver ci-joint le dossier m\u00e9dical de pr\u00e9-admission.\n\nCordialement,\nDr ' + V('m_nom') + ' ' + V('m_prenom'));
+  var uscaLink = document.getElementById('mailto-usca');
+  if (uscaLink) uscaLink.href = 'mailto:addicto.psl@aphp.fr?subject=' + subj + '&body=' + body;
+  var structLink = document.getElementById('mailto-struct');
+  if (structLink) {
+    if (st.email) {
+      structLink.href = 'mailto:' + st.email + '?subject=' + subj + '&body=' + body;
+      structLink.style.display = '';
+    } else {
+      structLink.style.display = 'none';
+    }
+  }
+}
+
+function copyEmail(e) {
+  navigator.clipboard.writeText(e).then(function(){ showToast('\u2713 Copi\u00e9 : '+e); });
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+
+// ============================================================
+// STRUCTURE CHANGE
+// ============================================================
+function onStructureChange() {
+  var key = document.getElementById('struct_select').value;
+  var s = STRUCTS[key];
+  var info = document.getElementById('struct-info');
+  if (s) {
+    info.textContent = '';
+    var strong = document.createElement('strong');
+    strong.textContent = s.nom;
+    info.appendChild(strong);
+    info.appendChild(document.createTextNode(' \u2014 ' + s.ville + (s.tel ? ' \u2014 T\u00e9l: '+s.tel : '') + (s.email ? ' \u2014 '+s.email : '')));
+  } else {
+    info.textContent = '';
+  }
+  updateMailtos();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // Populate structure dropdown from POSTCURE_STRUCTS
+  var sel = document.getElementById('struct_select');
+  var entries = Object.entries(STRUCTS);
+  for (var i = 0; i < entries.length; i++) {
+    var k = entries[i][0], v = entries[i][1];
+    var confirmed = v.engagement || (v.checklist && v.checklist.length > 0);
+    var opt = document.createElement('option'); opt.value = k;
+    opt.textContent = confirmed ? v.nom + ' \u2014 ' + v.ville : v.nom + ' \u2014 ' + v.ville + ' (Infos \u00e0 confirmer)';
+    sel.appendChild(opt);
+  }
+  // Build substance table from POSTCURE_SUBS
+  var tbody = document.getElementById('sub-tbody');
+  SUBS.forEach(function(s) {
+    var k = s.replace(/[^a-zA-Z]/g,'');
+    var tr = document.createElement('tr');
+    var td1 = document.createElement('td'); td1.textContent = s; tr.appendChild(td1);
+    var td2 = document.createElement('td');
+    var cb = document.createElement('input'); cb.type='checkbox'; cb.name='sub_a'; cb.value=s; td2.appendChild(cb); tr.appendChild(td2);
+    var td3 = document.createElement('td');
+    var inp = document.createElement('input'); inp.type='text'; inp.name='sub_d_'+k; td3.appendChild(inp); tr.appendChild(td3);
+    var td4 = document.createElement('td');
+    var selSub = document.createElement('select'); selSub.name='sub_c_'+k;
+    ['\u2014','Oui','Non'].forEach(function(o){ var opt=document.createElement('option'); opt.textContent=o; selSub.appendChild(opt); });
+    td4.appendChild(selSub); tr.appendChild(td4);
+    tbody.appendChild(tr);
+  });
+  // Initial mailto update
+  updateMailtos();
+}
+
+window.addEventListener('beforeunload', function(e) {
+  if (V('p_nom') || V('m_nom')) { e.preventDefault(); e.returnValue = ''; }
+});
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

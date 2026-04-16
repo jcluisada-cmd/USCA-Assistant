@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.48';
+const CACHE_NAME = 'usca-v3.49';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -9,6 +9,8 @@ const LOCAL_ASSETS = [
   './patient/index.html',
   './admin/',
   './admin/index.html',
+  './postcure/patient.html',
+  './postcure/medecin.html',
   './shared/supabase.js',
   './shared/auth.js',
   './shared/fiches-catalogue.js',
@@ -16,6 +18,7 @@ const LOCAL_ASSETS = [
   './shared/theme.js',
   './shared/craving-agenda.js',
   './shared/planning-groupes.js',
+  './shared/postcure-structures.js',
   './icon-512.png',
   './splash.png',
   './manifest.json'

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dossier post-cure — Volet Patient</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<script src="../shared/postcure-structures.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+:root{--bg:#f0f5f5;--surface:#fff;--surface-alt:#f5f9f9;--ink:#102743;--ink-soft:#3a5568;--ink-muted:#7a8e9e;--accent:#1a6b6a;--accent-dark:#102743;--accent-light:#d5ecec;--accent-bg:#e8f4f4;--teal:#407a91;--border:#cddde0;--radius:10px;--shadow:0 1px 3px rgba(16,39,67,.06),0 4px 12px rgba(16,39,67,.04);--red:#a03030}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.header{background:linear-gradient(135deg,#102743 0%,#1a5c5a 50%,#407a91 100%);color:#fff;padding:1rem 1.2rem .7rem;position:sticky;top:0;z-index:100}
+.header-inner{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:.8rem}
+.header img{height:48px;border-radius:6px}
+.header-text h1{font-family:'Instrument Serif',serif;font-size:1.2rem;font-weight:400}
+.header-text p{font-size:.7rem;opacity:.7}
+.security{background:#d5ecec;color:var(--accent);text-align:center;padding:.35rem;font-size:.7rem;font-weight:600}
+/* Structure selector bar */
+.struct-bar{max-width:880px;margin:.6rem auto 0;padding:0 1rem}
+.struct-bar label{font-size:.78rem;font-weight:600;color:var(--ink-soft);margin-bottom:.25rem;display:block}
+.struct-bar select{width:100%;padding:.5rem .7rem;border:2px solid var(--accent);border-radius:8px;font-family:inherit;font-size:.85rem;color:var(--accent-dark);background:#fff;font-weight:600}
+.struct-bar select:focus{outline:none;box-shadow:0 0 0 3px var(--accent-light)}
+.struct-info{font-size:.72rem;color:var(--ink-muted);margin-top:.25rem}
+.struct-info strong{color:var(--accent)}
+.container{max-width:880px;margin:0 auto;padding:.5rem 1rem 2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);min-height:50vh}
+.panel{display:none}.panel.active{display:block}
+/* Progress */
+.progress{display:flex;gap:.2rem;padding:.6rem 0;overflow-x:auto;position:sticky;top:82px;z-index:50;background:var(--surface);margin:0 -1rem;padding-left:1rem;padding-right:1rem;border-bottom:1px solid var(--border)}
+.prog-step{flex:1;text-align:center;padding:.4rem .2rem;border-radius:6px;font-size:.67rem;font-weight:500;color:var(--ink-muted);background:var(--surface-alt);cursor:pointer;white-space:nowrap;transition:.2s;border:1.5px solid transparent}
+.prog-step.active{background:var(--accent);color:#fff}
+.prog-step.done{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}
+.step-panel{display:block;scroll-margin-top:180px}
+/* Cards & Fields */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;margin-bottom:.8rem}
+.card h3{font-size:.85rem;font-weight:700;color:var(--accent-dark);margin-bottom:.7rem;padding-bottom:.4rem;border-bottom:2px solid var(--accent-light)}
+.field{margin-bottom:.8rem}
+.field label{display:block;font-size:.78rem;font-weight:600;margin-bottom:.2rem}
+.field .hint{font-size:.68rem;color:var(--ink-muted);margin-bottom:.2rem}
+.field input[type="text"],.field input[type="number"],.field input[type="email"],.field input[type="tel"],.field input[type="date"],.field textarea,.field select{width:100%;padding:.5rem .65rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:.84rem;color:var(--ink);background:#fff;transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.field textarea{resize:vertical;min-height:50px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem}
+@media(max-width:560px){.row,.row3{grid-template-columns:1fr}.header img{height:36px}}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem}
+.chip{display:flex;align-items:center;gap:.25rem;padding:.3rem .6rem;border:1.5px solid var(--border);border-radius:20px;font-size:.73rem;font-weight:500;cursor:pointer;transition:.15s;user-select:none;background:#fff}
+.chip:hover{border-color:var(--accent)}
+.chip input{display:none}
+.chip:has(input:checked){background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+/* Upload */
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:1rem;text-align:center;cursor:pointer;transition:.2s;background:var(--surface-alt);position:relative;min-height:70px}
+.upload-zone:hover{border-color:var(--accent);background:var(--accent-bg)}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-zone .icon{font-size:1.3rem}
+.upload-zone p{font-size:.72rem;color:var(--ink-muted)}
+.upload-zone.has-file{border-color:var(--accent);background:var(--accent-bg)}
+.upload-preview{max-width:100px;max-height:65px;border-radius:4px;margin-top:.3rem;border:1px solid var(--border)}
+/* Signature */
+.sig-block{border:1px solid var(--border);border-radius:var(--radius);padding:.8rem;margin:.5rem 0;background:var(--surface-alt)}
+.sig-block h4{font-size:.8rem;font-weight:600;margin-bottom:.4rem}
+.sig-tabs{display:flex;gap:.3rem;margin-bottom:.5rem}
+.sig-tab{padding:.3rem .7rem;border:1px solid var(--border);border-radius:6px;font-size:.72rem;cursor:pointer;background:#fff;font-family:inherit;font-weight:500}
+.sig-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sig-canvas-wrap{background:#fff;border:2px solid var(--border);border-radius:8px;padding:2px}
+.sig-canvas-wrap canvas{width:100%;height:110px;display:block;cursor:crosshair}
+.sig-upload{display:none}
+.sig-upload.active{display:block}
+.sig-draw{display:none}
+.sig-draw.active{display:block}
+.sig-img-preview{max-height:80px;border-radius:6px;border:1px solid var(--border);margin-top:.3rem}
+/* Buttons */
+.btn{padding:.5rem 1.1rem;border:none;border-radius:8px;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#145a59}
+.btn-secondary{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}.btn-secondary:hover{background:var(--accent-light)}
+.btn-sm{padding:.3rem .6rem;font-size:.72rem}
+.btn:disabled{opacity:.4;cursor:default}
+.nav-row{display:flex;justify-content:space-between;margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border)}
+/* Review */
+.review-section{margin-bottom:.8rem;padding:.8rem;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border)}
+.review-section h4{font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:.4rem}
+.review-row{display:flex;justify-content:space-between;padding:.2rem 0;font-size:.76rem;border-bottom:1px solid #edf2f4}
+.review-row .rl{color:var(--ink-muted)}.review-row .rv{font-weight:500;text-align:right;max-width:60%}
+/* Output */
+.output-box{background:var(--accent-bg);border:2px solid var(--accent);border-radius:var(--radius);padding:1.3rem;text-align:center;margin-top:1rem}
+.output-box h3{font-size:1rem;margin-bottom:.3rem;color:var(--accent-dark)}
+.output-box p{font-size:.78rem;color:var(--ink-soft);margin-bottom:.8rem}
+.mailto-box{background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem;margin-top:.8rem}
+.mailto-box p{font-size:.76rem;color:var(--ink-soft);margin-bottom:.4rem}
+.checklist-item{display:flex;align-items:center;gap:.4rem;padding:.3rem 0;font-size:.78rem}
+.check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0}
+.check-ok{background:var(--accent-light);color:var(--accent)}.check-miss{background:#fde8e8;color:var(--red)}
+.engagement-text{max-height:180px;overflow-y:auto;padding:.7rem;background:#fff;border:1px solid var(--border);border-radius:8px;font-size:.76rem;line-height:1.6;color:var(--ink-soft);margin-bottom:.6rem}
+.engagement-text strong{color:var(--ink)}
+.accept-check{display:flex;align-items:center;gap:.5rem;padding:.5rem .7rem;background:var(--accent-bg);border-radius:8px;margin-bottom:.6rem;font-size:.8rem;font-weight:500;cursor:pointer}
+.accept-check input{width:18px;height:18px;accent-color:var(--accent)}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent-dark);color:#fff;padding:.55rem 1.1rem;border-radius:8px;font-size:.8rem;font-weight:500;transition:.3s;z-index:1000}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.conditional{display:none}.conditional.visible{display:block}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+<img id="header-logo" alt="USCA">
+<div class="header-text"><h1>Dossier post-cure — Volet Patient</h1><p>USCA / ELSA — Pitié-Salpêtrière (AP-HP)</p></div>
+</div></div>
+<div class="security">🔒 Vos données restent sur votre appareil — rien n'est envoyé à un serveur</div>
+
+<!-- STRUCTURE SELECTOR -->
+<div class="struct-bar">
+<label>Post-cure souhaitée</label>
+<select id="struct_select" onchange="onStructureChange()">
+<option value="">— Choisir la structure de post-cure —</option>
+</select>
+<div class="struct-info" id="struct-info"></div>
+</div>
+
+<div class="container">
+
+<div id="role-patient" class="panel active">
+<div class="progress" id="prog-patient"></div>
+
+<!-- P1: Identité -->
+<div id="p1" class="step-panel active"><div class="card"><h3>① Identité</h3>
+<div class="row"><div class="field"><label>Nom</label><input type="text" id="p_nom" placeholder="NOM"></div>
+<div class="field"><label>Prénom</label><input type="text" id="p_prenom" placeholder="Prénom"></div></div>
+<div class="row"><div class="field"><label>Nom de jeune fille</label><input type="text" id="p_njf" placeholder="(optionnel)"></div>
+<div class="field"><label>Date de naissance</label><input type="date" id="p_ddn"></div></div>
+<div class="row"><div class="field"><label>Lieu de naissance</label><input type="text" id="p_lieu_naiss"></div>
+<div class="field"><label>Sexe</label><div class="chips">
+<label class="chip"><input type="radio" name="p_sexe" value="F"><span>F</span></label>
+<label class="chip"><input type="radio" name="p_sexe" value="H"><span>H</span></label>
+</div></div></div>
+<div class="field"><label>Adresse</label><input type="text" id="p_adresse"></div>
+<div class="row3"><div class="field"><label>CP</label><input type="text" id="p_cp" maxlength="5"></div>
+<div class="field"><label>Ville</label><input type="text" id="p_ville"></div>
+<div class="field"><label>Portable</label><input type="tel" id="p_tel" placeholder="06..."></div></div>
+<div class="field"><label>E-mail</label><input type="email" id="p_email"></div>
+</div></div>
+
+<!-- P2: Couverture + uploads -->
+<div id="p2" class="step-panel"><div class="card"><h3>② Couverture sociale</h3>
+<div class="row"><div class="field"><label>N° Sécurité Sociale</label><input type="text" id="p_ss" maxlength="15"></div>
+<div class="field"><label>Caisse</label><div class="chips">
+<label class="chip"><input type="radio" name="p_caisse" value="CPAM" checked><span>CPAM</span></label>
+<label class="chip"><input type="radio" name="p_caisse" value="MSA"><span>MSA</span></label>
+<label class="chip"><input type="radio" name="p_caisse" value="Autre"><span>Autre</span></label>
+</div></div></div>
+<div class="row"><div class="field"><label>ALD</label><div class="chips">
+<label class="chip"><input type="radio" name="p_ald" value="Oui"><span>Oui</span></label>
+<label class="chip"><input type="radio" name="p_ald" value="Non"><span>Non</span></label>
+<label class="chip"><input type="radio" name="p_ald" value="En cours"><span>En cours</span></label>
+</div></div>
+<div class="field"><label>Complémentaire</label><div class="chips">
+<label class="chip"><input type="radio" name="p_mut_type" value="Mutuelle"><span>Mutuelle</span></label>
+<label class="chip"><input type="radio" name="p_mut_type" value="CSS"><span>CSS</span></label>
+<label class="chip"><input type="radio" name="p_mut_type" value="Aucune"><span>Aucune</span></label>
+</div></div></div>
+<div class="row"><div class="field"><label>Nom mutuelle</label><input type="text" id="p_mut_nom"></div>
+<div class="field"><label>N° adhérent</label><input type="text" id="p_mut_num"></div></div>
+</div>
+<div class="card"><h3>📎 Documents</h3>
+<div class="row">
+<div class="field"><label>Pièce d'identité recto</label><div class="upload-zone" id="z_idr"><input type="file" accept="image/*" capture="environment" onchange="onUpload(this,'id_r')"><div class="icon">📷</div><p>Photo / import</p></div></div>
+<div class="field"><label>Pièce d'identité verso</label><div class="upload-zone" id="z_idv"><input type="file" accept="image/*" capture="environment" onchange="onUpload(this,'id_v')"><div class="icon">📷</div><p>Photo / import</p></div></div></div>
+<div class="field"><label>Carte de mutuelle</label>
+<div class="row">
+<div><div class="upload-zone" id="z_mr"><input type="file" accept="image/*" capture="environment" onchange="onUpload(this,'mut_r')"><div class="icon">📷</div><p>Photo / import</p></div></div>
+<div id="mut_verso_wrap" style="display:none"><div class="upload-zone" id="z_mv"><input type="file" accept="image/*" capture="environment" onchange="onUpload(this,'mut_v')"><div class="icon">📷</div><p>Verso</p></div></div>
+</div>
+<label style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:var(--ink-muted);margin-top:.3rem;cursor:pointer"><input type="checkbox" onchange="document.getElementById('mut_verso_wrap').style.display=this.checked?'block':'none'" style="width:16px;height:16px;accent-color:var(--accent)"> Ma carte a un verso à photographier</label>
+</div>
+<div class="field"><label>Autres documents</label><div class="hint">Attestation de droits, justificatif de domicile, lettre de motivation…</div><div class="upload-zone"><input type="file" accept="image/*,application/pdf" multiple onchange="onMultiUpload(this,'patient_autres')"><div class="icon">📁</div><p>Ajouter un ou plusieurs fichiers</p></div><div id="patient_autres_list"></div></div>
+</div>
+</div>
+
+<!-- P3: Situation sociale -->
+<div id="p3" class="step-panel"><div class="card"><h3>③ Situation sociale</h3>
+<div class="field"><label>Situation familiale</label><div class="chips">
+<label class="chip"><input type="radio" name="p_fam" value="Célibataire"><span>Célibataire</span></label>
+<label class="chip"><input type="radio" name="p_fam" value="Marié(e)"><span>Marié(e)</span></label>
+<label class="chip"><input type="radio" name="p_fam" value="Pacsé(e)"><span>Pacsé(e)</span></label>
+<label class="chip"><input type="radio" name="p_fam" value="Divorcé(e)"><span>Divorcé(e)</span></label>
+<label class="chip"><input type="radio" name="p_fam" value="Veuf(ve)"><span>Veuf(ve)</span></label>
+</div></div>
+<div class="row"><div class="field"><label>Enfants</label><input type="number" id="p_enfants" min="0" value="0"></div>
+<div class="field"><label>À charge</label><input type="number" id="p_charge" min="0" value="0"></div></div>
+<div class="field"><label>Emploi</label><div class="chips">
+<label class="chip"><input type="radio" name="p_emploi" value="En activité"><span>En activité</span></label>
+<label class="chip"><input type="radio" name="p_emploi" value="Demandeur d'emploi"><span>Dem. emploi</span></label>
+<label class="chip"><input type="radio" name="p_emploi" value="Arrêt"><span>Arrêt</span></label>
+<label class="chip"><input type="radio" name="p_emploi" value="Invalidité"><span>Invalidité</span></label>
+<label class="chip"><input type="radio" name="p_emploi" value="Retraité"><span>Retraité</span></label>
+<label class="chip"><input type="radio" name="p_emploi" value="Sans activité"><span>Sans activité</span></label>
+</div></div>
+<div class="field"><label>Ressources</label><div class="chips">
+<label class="chip"><input type="checkbox" name="p_ress" value="Salaire"><span>Salaire</span></label>
+<label class="chip"><input type="checkbox" name="p_ress" value="IJ"><span>IJ</span></label>
+<label class="chip"><input type="checkbox" name="p_ress" value="Pôle Emploi"><span>France Travail</span></label>
+<label class="chip"><input type="checkbox" name="p_ress" value="AAH"><span>AAH</span></label>
+<label class="chip"><input type="checkbox" name="p_ress" value="RSA"><span>RSA</span></label>
+<label class="chip"><input type="checkbox" name="p_ress" value="Sans"><span>Sans</span></label>
+</div></div>
+<div class="field"><label>Logement</label><div class="chips">
+<label class="chip"><input type="radio" name="p_log" value="Propriétaire"><span>Propriétaire</span></label>
+<label class="chip"><input type="radio" name="p_log" value="Locataire"><span>Locataire</span></label>
+<label class="chip"><input type="radio" name="p_log" value="Hébergé"><span>Hébergé</span></label>
+<label class="chip"><input type="radio" name="p_log" value="Foyer"><span>Foyer</span></label>
+<label class="chip"><input type="radio" name="p_log" value="SDF"><span>SDF</span></label>
+</div></div>
+<div class="field"><label>Protection juridique</label><div class="chips">
+<label class="chip"><input type="radio" name="p_prot" value="Aucune"><span>Aucune</span></label>
+<label class="chip"><input type="radio" name="p_prot" value="Tutelle"><span>Tutelle</span></label>
+<label class="chip"><input type="radio" name="p_prot" value="Curatelle"><span>Curatelle</span></label>
+</div></div>
+</div>
+</div>
+
+<!-- P4: Personnes de confiance -->
+<div id="p4" class="step-panel">
+<div class="card"><h3>④ Personne à prévenir</h3>
+<div class="row"><div class="field"><label>Nom</label><input type="text" id="pp_nom"></div>
+<div class="field"><label>Prénom</label><input type="text" id="pp_prenom"></div></div>
+<div class="row"><div class="field"><label>Téléphone</label><input type="tel" id="pp_tel"></div>
+<div class="field"><label>Lien</label><input type="text" id="pp_lien" placeholder="conjoint, parent…"></div></div>
+</div>
+<div class="card"><h3>④ Personne de confiance <span style="font-weight:400;font-size:.72rem;color:var(--ink-muted)">(art. L.1111-6 CSP)</span></h3>
+<div style="font-size:.74rem;color:var(--ink-soft);margin-bottom:.6rem;padding:.6rem;background:var(--accent-bg);border-radius:6px;line-height:1.55">
+<strong style="color:var(--accent)">Qu'est-ce qu'une personne de confiance ?</strong><br>
+Il vous est possible de désigner une personne librement choisie dans votre entourage pour vous accompagner tout au long des soins et des décisions à prendre. Cette personne pourra, si vous le souhaitez, assister aux entretiens médicaux et vous aider à formuler vos souhaits.<br><br>
+<strong style="color:var(--accent)">Dans quels cas est-ce utile ?</strong><br>
+Si votre état de santé ne vous permet pas d'exprimer votre volonté, votre personne de confiance sera consultée par l'équipe soignante pour guider les décisions thérapeutiques. Cette désignation n'est pas obligatoire, est valable pour la durée de l'hospitalisation et peut être révoquée à tout moment.
+</div>
+<div class="row"><div class="field"><label>Nom, prénoms</label><input type="text" id="pc_nom"></div>
+<div class="field"><label>Téléphone</label><input type="tel" id="pc_tel"></div></div>
+<div class="field"><label>E-mail</label><input type="email" id="pc_email"></div>
+<div class="field"><label>Directives anticipées communiquées ?</label><div class="chips">
+<label class="chip"><input type="radio" name="pc_dir" value="Oui"><span>Oui</span></label>
+<label class="chip"><input type="radio" name="pc_dir" value="Non"><span>Non</span></label>
+</div></div>
+</div>
+</div>
+
+<!-- P5: Engagement / Règlement -->
+<div id="p5" class="step-panel">
+<div class="card"><h3>⑤ Engagement thérapeutique / Règlement intérieur</h3>
+<div id="engagement-container"></div>
+<div id="sig-engagement-block"></div>
+</div>
+</div>
+
+<!-- P6: Review + Generate -->
+<div id="p6" class="step-panel">
+<div id="patient-review"></div>
+<div id="patient-checklist"></div>
+<div id="generate-patient"></div>
+</div>
+</div>
+
+</div><!-- .container -->
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ============================================================
+// LOGOS — loaded from external files (base64)
+// ============================================================
+let LOGO_WEB = '';
+let LOGO_PDF = '';
+
+(function loadLogos() {
+  fetch('logo_web.txt').then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
+    LOGO_WEB = t.trim();
+    var img = document.getElementById('header-logo');
+    if (img && LOGO_WEB) img.src = LOGO_WEB;
+  }).catch(function(){});
+  fetch('logo_pdf.txt').then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
+    LOGO_PDF = t.trim();
+  }).catch(function(){});
+})();
+
+// ============================================================
+// SHARED DATA (from postcure-structures.js)
+// ============================================================
+var STRUCTS = window.POSTCURE_STRUCTS || {};
+var DEFAULT_ENGAGEMENT = window.POSTCURE_DEFAULT_ENGAGEMENT || '';
+
+// ============================================================
+// STATE
+// ============================================================
+var uploads = {}, sigPads = {}, sigImages = {};
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  if (LOGO_WEB) document.getElementById('header-logo').src = LOGO_WEB;
+
+  // Populate structure dropdown from shared data
+  var sel = document.getElementById('struct_select');
+  var entries = Object.entries(STRUCTS);
+  for (var i = 0; i < entries.length; i++) {
+    var k = entries[i][0], v = entries[i][1];
+    var confirmed = v.engagement || (v.checklist && v.checklist.length > 0);
+    var opt = document.createElement('option');
+    opt.value = k;
+    opt.textContent = confirmed ? v.nom + ' — ' + v.ville : v.nom + ' — ' + v.ville + ' (Infos à confirmer)';
+    sel.appendChild(opt);
+  }
+
+  // Build progress bar
+  var steps = ['Identité','Couverture','Situation','Personnes','Engagement','Finaliser'];
+  var progHtml = '';
+  for (var j = 0; j < steps.length; j++) {
+    progHtml += '<div class="prog-step ' + (j === 0 ? 'active' : '') + '" onclick="goP(' + (j+1) + ')">' + (j+1) + '. ' + steps[j] + '</div>';
+  }
+  document.getElementById('prog-patient').textContent = '';
+  document.getElementById('prog-patient').insertAdjacentHTML('afterbegin', progHtml);
+
+  // Build signature block
+  buildSigBlock('sig-engagement-block','engagement',"Signature d'engagement");
+
+  // Build generate zone (step 6)
+  var genEl = document.getElementById('generate-patient');
+  genEl.textContent = '';
+  genEl.insertAdjacentHTML('afterbegin',
+    '<div class="output-box">' +
+      '<h3>📦 Volet administratif</h3>' +
+      '<p>PDF administratif + personne de confiance + engagement + vos pièces jointes</p>' +
+      '<button class="btn btn-primary" onclick="generatePatient()" style="font-size:.9rem;padding:.7rem 1.8rem">📥 Télécharger le dossier patient (ZIP)</button>' +
+    '</div>' +
+    '<div class="mailto-box">' +
+      '<p><strong>Puis envoyez par email :</strong></p>' +
+      '<div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:.4rem">' +
+        '<a id="mailto-usca" href="#" class="btn btn-secondary btn-sm" style="text-decoration:none">📧 Envoyer à l\'USCA</a>' +
+        '<a id="mailto-struct" href="#" class="btn btn-secondary btn-sm" style="text-decoration:none">📧 Envoyer à la structure</a>' +
+        '<button class="btn btn-sm btn-secondary" onclick="copyEmail(\'addicto.psl@aphp.fr\')">📋 Copier adresse USCA</button>' +
+      '</div>' +
+      '<p style="font-size:.7rem;color:var(--ink-muted)">Joignez le fichier ZIP à votre email.</p>' +
+    '</div>');
+
+  // Init sig pad after render
+  setTimeout(function(){ initSigPad('engagement'); }, 500);
+
+  // Init engagement text
+  updateEngagement(null);
+
+  // Scroll spy for progress bar
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var n = parseInt(e.target.id.replace('p',''));
+        var allSteps = document.querySelectorAll('#prog-patient .prog-step');
+        for (var x = 0; x < allSteps.length; x++) {
+          allSteps[x].classList.remove('active','done');
+          if (x+1 === n) allSteps[x].classList.add('active');
+          else if (x+1 < n) allSteps[x].classList.add('done');
+        }
+      }
+    });
+  }, {rootMargin:'-180px 0px -60% 0px'});
+  for (var p = 1; p <= 6; p++) {
+    var el = document.getElementById('p'+p);
+    if (el) observer.observe(el);
+  }
+}
+
+// ============================================================
+// SIGNATURE BLOCK (draw + upload)
+// ============================================================
+function buildSigBlock(containerId, name, title) {
+  var container = document.getElementById(containerId);
+  container.textContent = '';
+  container.insertAdjacentHTML('afterbegin',
+    '<div class="sig-block">' +
+      '<h4>' + title + '</h4>' +
+      '<label class="accept-check"><input type="checkbox" id="accept_' + name + '"> J\'ai lu et j\'accepte les termes ci-dessus</label>' +
+      '<div class="sig-tabs">' +
+        '<button class="sig-tab active" onclick="switchSigMode(\'' + name + '\',\'draw\',this)">✍ Dessiner</button>' +
+        '<button class="sig-tab" onclick="switchSigMode(\'' + name + '\',\'upload\',this)">📷 Importer image</button>' +
+      '</div>' +
+      '<div class="sig-draw active" id="sig-draw-' + name + '">' +
+        '<div class="sig-canvas-wrap"><canvas id="sig_' + name + '"></canvas></div>' +
+        '<button class="btn btn-sm btn-secondary" onclick="clearSig(\'' + name + '\')" style="margin-top:.3rem">Effacer</button>' +
+      '</div>' +
+      '<div class="sig-upload" id="sig-upload-' + name + '">' +
+        '<div class="upload-zone" style="padding:.6rem"><input type="file" accept="image/*" onchange="onSigUpload(this,\'' + name + '\')"><div class="icon">📷</div><p>Photo de votre signature</p></div>' +
+        '<img class="sig-img-preview" id="sig-img-' + name + '" style="display:none">' +
+      '</div>' +
+    '</div>');
+}
+
+function switchSigMode(name, mode, btn) {
+  var tabs = btn.parentElement.querySelectorAll('.sig-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  btn.classList.add('active');
+  document.getElementById('sig-draw-' + name).classList.toggle('active', mode === 'draw');
+  document.getElementById('sig-upload-' + name).classList.toggle('active', mode === 'upload');
+  if (mode === 'draw') setTimeout(function(){ initSigPad(name); }, 100);
+}
+
+function onSigUpload(input, name) {
+  var file = input.files[0]; if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    sigImages[name] = e.target.result;
+    var img = document.getElementById('sig-img-' + name);
+    img.src = e.target.result; img.style.display = 'block';
+    input.parentElement.querySelector('p').textContent = '✓ ' + file.name.substring(0, 20);
+    input.parentElement.classList.add('has-file');
+  };
+  reader.readAsDataURL(file);
+}
+
+function initSigPad(name) {
+  var canvas = document.getElementById('sig_' + name);
+  if (!canvas || sigPads[name]) return;
+  var w = canvas.parentElement.offsetWidth - 6;
+  if (w < 50) return;
+  canvas.width = w; canvas.height = 110;
+  sigPads[name] = new SignaturePad(canvas, {backgroundColor:'rgb(255,255,255)', penColor:'rgb(16,39,67)'});
+}
+
+function clearSig(name) { if (sigPads[name]) sigPads[name].clear(); }
+
+function getSigData(name) {
+  if (sigImages[name]) return sigImages[name];
+  if (sigPads[name] && !sigPads[name].isEmpty()) return sigPads[name].toDataURL('image/png');
+  return null;
+}
+
+// ============================================================
+// STRUCTURE CHANGE
+// ============================================================
+function onStructureChange() {
+  var key = document.getElementById('struct_select').value;
+  var s = STRUCTS[key];
+  var info = document.getElementById('struct-info');
+  if (s) {
+    info.textContent = '';
+    info.insertAdjacentHTML('afterbegin',
+      '<strong>' + s.nom + '</strong> — ' + s.ville +
+      (s.tel ? ' — Tél: ' + s.tel : '') +
+      (s.email ? ' — ' + s.email : ''));
+    updateEngagement(key);
+  } else {
+    info.textContent = '';
+    updateEngagement(null);
+  }
+}
+
+function updateEngagement(key) {
+  var s = key ? STRUCTS[key] : null;
+  var text = (s && s.engagement) ? s.engagement : DEFAULT_ENGAGEMENT;
+  var container = document.getElementById('engagement-container');
+  var structName = s ? s.nom : "la structure d'accueil";
+  container.textContent = '';
+  container.insertAdjacentHTML('afterbegin',
+    '<p style="font-size:.78rem;color:var(--accent);font-weight:600;margin-bottom:.4rem">Règlement — ' + structName + '</p>' +
+    '<div class="engagement-text">' + text.replace(/\n/g, '<br>') + '</div>');
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goP(n) {
+  var allSteps = document.querySelectorAll('#prog-patient .prog-step');
+  for (var i = 0; i < allSteps.length; i++) {
+    allSteps[i].classList.remove('active','done');
+    if (i+1 === n) allSteps[i].classList.add('active');
+    else if (i+1 < n) allSteps[i].classList.add('done');
+  }
+  if (n === 6) buildReview();
+  document.getElementById('p'+n).scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============================================================
+// UPLOADS
+// ============================================================
+function onUpload(input, key) {
+  var file = input.files[0]; if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    uploads[key] = {data: e.target.result, name: file.name, type: file.type};
+    var zone = input.parentElement;
+    zone.classList.add('has-file');
+    if (file.type.startsWith('image/')) {
+      var img = zone.querySelector('.upload-preview');
+      if (!img) { img = document.createElement('img'); img.className = 'upload-preview'; zone.appendChild(img); }
+      img.src = e.target.result;
+    }
+    zone.querySelector('p').textContent = '✓ ' + file.name.substring(0, 22);
+  };
+  reader.readAsDataURL(file);
+}
+
+var multiUploads = {};
+function onMultiUpload(input, key) {
+  if (!input.files.length) return;
+  if (!multiUploads[key]) multiUploads[key] = [];
+  for (var fi = 0; fi < input.files.length; fi++) {
+    (function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        multiUploads[key].push({data: e.target.result, name: file.name, type: file.type});
+        var listEl = document.getElementById(key + '_list');
+        if (listEl) {
+          listEl.textContent = '';
+          var html = '';
+          for (var m = 0; m < multiUploads[key].length; m++) {
+            html += '<div style="display:flex;align-items:center;gap:.4rem;padding:.2rem 0;font-size:.73rem;color:var(--accent)">' +
+              '<span class="check check-ok">✓</span>' + multiUploads[key][m].name.substring(0, 30) +
+              '<button class="btn btn-sm" style="color:var(--red);border:none;padding:0 .3rem;font-size:.7rem" onclick="removeMulti(\'' + key + '\',' + m + ')">✕</button>' +
+            '</div>';
+          }
+          listEl.insertAdjacentHTML('afterbegin', html);
+        }
+        input.parentElement.querySelector('p').textContent = multiUploads[key].length + ' fichier(s) ajouté(s)';
+        input.parentElement.classList.add('has-file');
+      };
+      reader.readAsDataURL(file);
+    })(input.files[fi]);
+  }
+}
+
+function removeMulti(key, idx) {
+  multiUploads[key].splice(idx, 1);
+  var listEl = document.getElementById(key + '_list');
+  if (listEl) {
+    listEl.textContent = '';
+    var html = '';
+    for (var m = 0; m < multiUploads[key].length; m++) {
+      html += '<div style="display:flex;align-items:center;gap:.4rem;padding:.2rem 0;font-size:.73rem;color:var(--accent)">' +
+        '<span class="check check-ok">✓</span>' + multiUploads[key][m].name.substring(0, 30) +
+        '<button class="btn btn-sm" style="color:var(--red);border:none;padding:0 .3rem;font-size:.7rem" onclick="removeMulti(\'' + key + '\',' + m + ')">✕</button>' +
+      '</div>';
+    }
+    listEl.insertAdjacentHTML('afterbegin', html);
+  }
+}
+
+// ============================================================
+// DATA HELPERS
+// ============================================================
+function V(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function R(name) { var r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; }
+function C(name) { var checked = document.querySelectorAll('input[name="' + name + '"]:checked'); var arr = []; for (var i = 0; i < checked.length; i++) arr.push(checked[i].value); return arr; }
+
+function collectP() {
+  return {
+    nom: V('p_nom'), prenom: V('p_prenom'), njf: V('p_njf'), ddn: V('p_ddn'),
+    lieu: V('p_lieu_naiss'), sexe: R('p_sexe'),
+    adresse: V('p_adresse'), cp: V('p_cp'), ville: V('p_ville'), tel: V('p_tel'), email: V('p_email'),
+    ss: V('p_ss'), caisse: R('p_caisse'), ald: R('p_ald'),
+    mut_type: R('p_mut_type'), mut_nom: V('p_mut_nom'), mut_num: V('p_mut_num'),
+    fam: R('p_fam'), enfants: V('p_enfants'), charge: V('p_charge'),
+    emploi: R('p_emploi'), ress: C('p_ress'), log: R('p_log'), prot: R('p_prot'),
+    pp_nom: V('pp_nom'), pp_prenom: V('pp_prenom'), pp_tel: V('pp_tel'), pp_lien: V('pp_lien'),
+    pc_nom: V('pc_nom'), pc_tel: V('pc_tel'), pc_email: V('pc_email'), pc_dir: R('pc_dir'),
+    postcure: V('struct_select'), date: new Date().toLocaleDateString('fr-FR')
+  };
+}
+
+// ============================================================
+// REVIEW (step 6)
+// ============================================================
+function rvHTML(title, rows) {
+  var html = '<div class="review-section"><h4>' + title + '</h4>';
+  for (var i = 0; i < rows.length; i++) {
+    var l = rows[i][0], v = rows[i][1];
+    var val = Array.isArray(v) ? (v.length ? v.join(', ') : '—') : (v || '—');
+    html += '<div class="review-row"><span class="rl">' + l + '</span><span class="rv">' + val + '</span></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function buildReview() {
+  var p = collectP();
+  var s = STRUCTS[p.postcure] || {nom: 'Non précisée', email: '', ville: '', checklist: []};
+
+  // Review sections
+  var reviewEl = document.getElementById('patient-review');
+  reviewEl.textContent = '';
+  reviewEl.insertAdjacentHTML('afterbegin',
+    rvHTML('Identité', [['Nom', p.nom + ' ' + p.prenom], ['DDN', p.ddn], ['Sexe', p.sexe], ['Adresse', p.adresse + ', ' + p.cp + ' ' + p.ville], ['Tél', p.tel]]) +
+    rvHTML('Couverture', [['SS', p.ss], ['Caisse', p.caisse], ['ALD', p.ald], ['Mutuelle', p.mut_type + ' ' + p.mut_nom]]) +
+    rvHTML('Social', [['Famille', p.fam], ['Emploi', p.emploi], ['Ressources', p.ress], ['Logement', p.log]]) +
+    rvHTML('Personnes', [['Prévenir', p.pp_nom + ' ' + p.pp_prenom + ' (' + p.pp_lien + ')'], ['Confiance', p.pc_nom]]) +
+    rvHTML('Post-cure', [['Structure', s.nom], ['Ville', s.ville || '']]));
+
+  // Checklist
+  var items = [
+    ['Pièce identité (R)', !!uploads.id_r],
+    ['Pièce identité (V)', !!uploads.id_v],
+    ['Carte mutuelle', !!uploads.mut_r],
+    ['Engagement signé', !!getSigData('engagement')]
+  ];
+  if (s.checklist && s.checklist.length) {
+    for (var ci = 0; ci < s.checklist.length; ci++) {
+      var found = false;
+      for (var cj = 0; cj < items.length; cj++) { if (items[cj][0] === s.checklist[ci]) { found = true; break; } }
+      if (!found) items.push([s.checklist[ci], false]);
+    }
+  }
+  var checkHtml = '<div class="card"><h3>✅ Checklist</h3>';
+  for (var ck = 0; ck < items.length; ck++) {
+    var ok = items[ck][1];
+    checkHtml += '<div class="checklist-item"><span class="check ' + (ok ? 'check-ok' : 'check-miss') + '">' + (ok ? '✓' : '✗') + '</span>' + items[ck][0] + '</div>';
+  }
+  checkHtml += '</div>';
+  var checkEl = document.getElementById('patient-checklist');
+  checkEl.textContent = '';
+  checkEl.insertAdjacentHTML('afterbegin', checkHtml);
+
+  // Mailto links
+  var nom = p.nom + ' ' + p.prenom;
+  var subj = encodeURIComponent('Dossier post-cure — ' + nom + ' — ' + s.nom);
+  var body = encodeURIComponent('Bonjour,\n\nVeuillez trouver ci-joint le dossier post-cure.\n\nCordialement,\n' + nom);
+
+  var mailtoUsca = document.getElementById('mailto-usca');
+  if (mailtoUsca) mailtoUsca.href = 'mailto:addicto.psl@aphp.fr?subject=' + subj + '&body=' + body;
+
+  var mailtoStruct = document.getElementById('mailto-struct');
+  if (mailtoStruct) {
+    if (s.email) {
+      mailtoStruct.href = 'mailto:' + s.email + '?subject=' + subj + '&body=' + body;
+      mailtoStruct.style.display = '';
+    } else {
+      mailtoStruct.style.display = 'none';
+    }
+  }
+}
+
+// ============================================================
+// PDF HELPERS
+// ============================================================
+var DK = [16,39,67], TL = [26,107,106], GR = [100,120,135], LT = [230,242,242], WP = 210;
+
+function mkDoc(title, subtitle) {
+  var jsPDF = window.jspdf.jsPDF;
+  var d = new jsPDF({unit:'mm', format:'a4'});
+  d.setFillColor(DK[0], DK[1], DK[2]); d.rect(0, 0, WP, 20, 'F');
+  d.setFillColor(255, 255, 255); d.roundedRect(3, 1.5, 30, 17, 1.5, 1.5, 'F');
+  try { if (LOGO_PDF) d.addImage(LOGO_PDF, 'JPEG', 4, 2, 28, 15); } catch(e) {}
+  d.setTextColor(255, 255, 255); d.setFontSize(10); d.setFont('helvetica', 'bold');
+  d.text(title, WP/2 + 12, 8, {align:'center'});
+  d.setFontSize(7); d.setFont('helvetica', 'normal'); d.setTextColor(200, 220, 225);
+  d.text(subtitle, WP/2 + 12, 14, {align:'center'});
+  d.setTextColor(DK[0], DK[1], DK[2]);
+  return d;
+}
+
+function sec(d, t, y) {
+  d.setFillColor(230, 242, 242); d.rect(15, y-3, WP-30, 5, 'F');
+  d.setDrawColor(TL[0], TL[1], TL[2]); d.setLineWidth(0.4); d.line(15, y+2, WP-15, y+2);
+  d.setTextColor(TL[0], TL[1], TL[2]); d.setFontSize(7); d.setFont('helvetica', 'bold');
+  d.text(t.toUpperCase(), 17, y); d.setTextColor(DK[0], DK[1], DK[2]); return y + 5;
+}
+
+function fl(d, l, v, y) {
+  d.setFontSize(6.8); d.setFont('helvetica', 'normal'); d.setTextColor(GR[0], GR[1], GR[2]); d.text(l, 17, y);
+  d.setFont('helvetica', 'bold'); d.setTextColor(DK[0], DK[1], DK[2]);
+  var val = Array.isArray(v) ? v.join(', ') : (v || '—');
+  d.text(val.substring(0, 90), 50, y); return y + 3.8;
+}
+
+function ml(d, l, t, y) {
+  if (l) { d.setFontSize(6.8); d.setFont('helvetica', 'normal'); d.setTextColor(GR[0], GR[1], GR[2]); d.text(l, 17, y); y += 3.2; }
+  d.setFont('helvetica', 'normal'); d.setFontSize(6.8); d.setTextColor(DK[0], DK[1], DK[2]);
+  var ls = d.splitTextToSize(t || '—', WP - 36); d.text(ls, 17, y); return y + ls.length * 3 + 1.5;
+}
+
+function footer(d) {
+  d.setDrawColor(TL[0], TL[1], TL[2]); d.setLineWidth(0.3); d.line(15, 286, WP-15, 286);
+  d.setFontSize(5.5); d.setTextColor(GR[0], GR[1], GR[2]);
+  d.text('USCA / ELSA — Pitié-Salpêtrière (AP-HP) — addicto.psl@aphp.fr — ' + new Date().toLocaleDateString('fr-FR'), WP/2, 290, {align:'center'});
+}
+
+function addToZip(zip, keys, idx) {
+  var entries = Object.entries(uploads);
+  for (var i = 0; i < entries.length; i++) {
+    var k = entries[i][0], f = entries[i][1];
+    if (!f || keys.indexOf(k) === -1) continue;
+    var ext = f.type.indexOf('pdf') !== -1 ? '.pdf' : f.type.indexOf('png') !== -1 ? '.png' : '.jpg';
+    var bin = atob(f.data.split(',')[1]);
+    var arr = new Uint8Array(bin.length);
+    for (var j = 0; j < bin.length; j++) arr[j] = bin.charCodeAt(j);
+    zip.file('0' + idx + '_' + k + ext, arr); idx++;
+  }
+  return idx;
+}
+
+function addMulti(zip, key, idx) {
+  var files = multiUploads[key];
+  if (!files || !files.length) return idx;
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    var ext = f.type.indexOf('pdf') !== -1 ? '.pdf' : f.type.indexOf('png') !== -1 ? '.png' : '.jpg';
+    var bin = atob(f.data.split(',')[1]);
+    var arr = new Uint8Array(bin.length);
+    for (var j = 0; j < bin.length; j++) arr[j] = bin.charCodeAt(j);
+    zip.file('0' + idx + '_' + key + '_' + (i+1) + ext, arr); idx++;
+  }
+  return idx;
+}
+
+function dlZip(zip, name) {
+  zip.generateAsync({type:'blob'}).then(function(blob) {
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast('✓ ZIP téléchargé !');
+  });
+}
+
+// ============================================================
+// GENERATE PATIENT ZIP
+// ============================================================
+function generatePatient() {
+  var p = collectP(), zip = new JSZip();
+  var st = STRUCTS[p.postcure] || {nom: 'Non précisée', ville: '', engagement: ''};
+
+  // PDF 1 — Administratif
+  var d1 = mkDoc('VOLET ADMINISTRATIF', p.date + ' — ' + st.nom);
+  var y = 25;
+  y = sec(d1, 'Identité', y);
+  y = fl(d1, 'Nom / Prénom', p.nom + ' ' + p.prenom, y);
+  y = fl(d1, 'DDN / Lieu', p.ddn + ' — ' + p.lieu, y);
+  y = fl(d1, 'Sexe', p.sexe, y);
+  y = fl(d1, 'Adresse', p.adresse + ', ' + p.cp + ' ' + p.ville, y);
+  y = fl(d1, 'Tél / Email', p.tel + ' — ' + p.email, y); y += 1.5;
+  y = sec(d1, 'Couverture sociale', y);
+  y = fl(d1, 'N° SS', p.ss, y);
+  y = fl(d1, 'Caisse / ALD', p.caisse + ' — ALD: ' + p.ald, y);
+  y = fl(d1, 'Complémentaire', p.mut_type + ' ' + p.mut_nom + ' (' + p.mut_num + ')', y); y += 1.5;
+  y = sec(d1, 'Situation sociale', y);
+  y = fl(d1, 'Famille', p.fam + ' — ' + p.enfants + ' enfant(s)', y);
+  y = fl(d1, 'Emploi', p.emploi, y);
+  y = fl(d1, 'Ressources', p.ress, y);
+  y = fl(d1, 'Logement', p.log, y);
+  y = fl(d1, 'Protection', p.prot, y); y += 1.5;
+  y = sec(d1, 'Personne à prévenir', y);
+  y = fl(d1, 'Nom', p.pp_nom + ' ' + p.pp_prenom + ' (' + p.pp_lien + ') — ' + p.pp_tel, y); y += 1.5;
+  y = sec(d1, 'Personne de confiance', y);
+  y = fl(d1, 'Nom', p.pc_nom, y);
+  y = fl(d1, 'Contact', p.pc_tel + ' — ' + p.pc_email, y); y += 1.5;
+  y = sec(d1, 'Post-cure souhaitée', y);
+  y = fl(d1, 'Structure', st.nom + ' — ' + (st.ville || ''), y);
+  footer(d1);
+  zip.file('01_Administratif_' + p.nom + '.pdf', d1.output('blob'));
+
+  // PDF 2 — Engagement (if signed)
+  var sigE = getSigData('engagement');
+  if (sigE) {
+    var d3 = mkDoc('ENGAGEMENT THÉRAPEUTIQUE', p.date + ' — ' + st.nom);
+    var y3 = 25;
+    d3.setFontSize(7); d3.setFont('helvetica', 'normal'); d3.setTextColor(DK[0], DK[1], DK[2]);
+    var eng = st.engagement || DEFAULT_ENGAGEMENT;
+    var ls = d3.splitTextToSize(eng, WP - 34);
+    d3.text(ls, 17, y3); y3 += ls.length * 3 + 6;
+    d3.setFont('helvetica', 'bold');
+    d3.text(p.prenom + ' ' + p.nom, 17, y3); y3 += 4;
+    d3.text('Le ' + p.date, 17, y3); y3 += 6;
+    try { d3.addImage(sigE, 'PNG', 17, y3, 50, 20); } catch(e) {}
+    footer(d3);
+    zip.file('02_Engagement_' + p.nom + '.pdf', d3.output('blob'));
+  }
+
+  // Add uploaded files
+  var idx = 3;
+  idx = addToZip(zip, ['id_r', 'id_v', 'mut_r', 'mut_v'], idx);
+  idx = addMulti(zip, 'patient_autres', idx);
+  dlZip(zip, 'Patient_' + p.nom + '_' + p.prenom + '_' + p.date.replace(/\//g, '-') + '.zip');
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function copyEmail(e) {
+  navigator.clipboard.writeText(e).then(function() { showToast('✓ Copié : ' + e); });
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+window.addEventListener('beforeunload', function(e) {
+  if (V('p_nom')) { e.preventDefault(); e.returnValue = ''; }
+});
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
