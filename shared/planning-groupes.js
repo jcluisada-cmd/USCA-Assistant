@@ -69,3 +69,35 @@ window.PLANNING_A = PLANNING_A;
 window.PLANNING_B = PLANNING_B;
 
 window.JOURS_SEMAINE = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+// ── Réunions d'équipe récurrentes ──
+var REUNIONS_A = [
+  { jour: 1, slug: 'staff-psychiatrie', nom: 'Staff Psychiatrie', debut: '11:00', fin: '12:00', roles: ['medecin'], presence: true },
+  { jour: 2, slug: 'reunion-equipe-mardi', nom: 'R\u00e9union d\'\u00e9quipe', debut: '11:00', fin: '12:00', roles: null },
+  { jour: 4, slug: 'reunion-equipe-jeudi', nom: 'R\u00e9union d\'\u00e9quipe', debut: '10:00', fin: '11:00', roles: null }
+];
+
+var REUNIONS_B = [
+  { jour: 1, slug: 'staff-psychiatrie', nom: 'Staff Psychiatrie', debut: '11:00', fin: '12:00', roles: ['medecin'], presence: true },
+  { jour: 2, slug: 'reunion-equipe-mardi', nom: 'R\u00e9union d\'\u00e9quipe', debut: '10:00', fin: '11:00', roles: null },
+  { jour: 4, slug: 'reunion-equipe-jeudi', nom: 'R\u00e9union d\'\u00e9quipe', debut: '10:00', fin: '11:00', roles: null }
+];
+
+window.REUNIONS_A = REUNIONS_A;
+window.REUNIONS_B = REUNIONS_B;
+
+/**
+ * Retourne les réunions d'un jour, filtrées par rôle si nécessaire
+ * @param {Date} date
+ * @param {string} [role] — rôle du soignant (pour filtrer staff psy)
+ * @returns {Array}
+ */
+window.getReunionsForDay = function(date, role) {
+  var reunions = getWeekType(date) === 'A' ? REUNIONS_A : REUNIONS_B;
+  var dayOfWeek = date.getDay();
+  return reunions.filter(function(r) {
+    if (r.jour !== dayOfWeek) return false;
+    if (r.roles && role && r.roles.indexOf(role) === -1) return false;
+    return true;
+  });
+};

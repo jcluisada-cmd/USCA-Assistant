@@ -418,11 +418,37 @@
     <!-- ═══ ONGLET GROUPES ═══ -->
     <div id="tab-groupes" class="tab-content flex-1 overflow-y-auto hidden">
       <div class="p-6 max-w-2xl mx-auto w-full pb-24">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Planning</h2>
         <div class="flex items-center gap-2 mb-4">
           <span id="groupes-semaine-label" class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">Semaine A</span>
           <button id="btn-toggle-semaine" class="text-xs text-slate-400 hover:text-indigo-600 font-semibold transition-colors">Voir l'autre semaine</button>
+          <button id="btn-add-event-equipe" class="ml-auto text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">+ \u00c9v\u00e9nement</button>
         </div>
+
+        <!-- Formulaire ajout événement ponctuel (caché par défaut) -->
+        <div id="form-event-equipe" class="bg-white border border-indigo-200 rounded-xl p-4 mb-4 hidden">
+          <h4 class="text-sm font-bold text-slate-700 mb-3">Ajouter un \u00e9v\u00e9nement</h4>
+          <input type="text" id="evt-eq-titre" placeholder="Objet (ex: Labo, R\u00e9union CLUD...)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2">
+          <input type="date" id="evt-eq-date" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2">
+          <div class="flex gap-2 mb-3">
+            <input type="time" id="evt-eq-debut" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm" placeholder="D\u00e9but">
+            <input type="time" id="evt-eq-fin" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm" placeholder="Fin">
+          </div>
+          <div class="flex gap-2">
+            <button id="btn-cancel-evt-eq" class="flex-1 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+            <button id="btn-save-evt-eq" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors">Ajouter</button>
+          </div>
+          <p id="evt-eq-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+        </div>
+
+        <!-- Réunions d'équipe du jour -->
+        <div id="reunions-list" class="space-y-2 mb-4"></div>
+
+        <!-- Événements ponctuels du jour -->
+        <div id="events-equipe-list" class="space-y-2 mb-6"></div>
+
+        <!-- Groupes thérapeutiques -->
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Groupes th\u00e9rapeutiques</h3>
         <div id="groupes-list" class="space-y-3"></div>
       </div>
 
@@ -456,7 +482,7 @@
         </button>
         <button data-tab="groupes" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
+          <span class="text-[10px] font-semibold mt-0.5">Planning</span>
         </button>
       </div>
     </nav>
@@ -1376,6 +1402,7 @@ async function renderGroupesTab() {
   var list = document.getElementById('groupes-list');
   list.textContent = '';
   var todayStr = new Date().toISOString().split('T')[0];
+  var todayDate = new Date();
 
   try { groupeAnimateurs = await db.getGroupeAnimateurs(); } catch(e) { groupeAnimateurs = []; }
   try {
@@ -1383,6 +1410,104 @@ async function renderGroupesTab() {
     groupeModifications = {};
     mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
   } catch(e) { groupeModifications = {}; }
+
+  // ── Réunions d'équipe du jour ──
+  var reunionsList = document.getElementById('reunions-list');
+  reunionsList.textContent = '';
+  var role = currentProfile ? currentProfile.role : null;
+  var reunions = window.getReunionsForDay ? window.getReunionsForDay(todayDate, role) : [];
+
+  if (reunions.length > 0) {
+    reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions du jour'));
+    for (var ri = 0; ri < reunions.length; ri++) {
+      var reu = reunions[ri];
+      var rCard = createEl('div', 'bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-2');
+      var rTop = createEl('div', 'flex items-center justify-between');
+      var rInfo = createEl('div', '');
+      rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom));
+      rInfo.appendChild(createEl('p', 'text-xs text-indigo-500', reu.debut + (reu.fin ? ' - ' + reu.fin : '')));
+      if (reu.roles) rInfo.appendChild(createEl('p', 'text-[10px] text-indigo-400 mt-0.5', 'R\u00e9serv\u00e9 : ' + reu.roles.join(', ')));
+      rTop.appendChild(rInfo);
+      rCard.appendChild(rTop);
+
+      // Présent/Absent pour les réunions avec presence=true
+      if (reu.presence && currentProfile) {
+        var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
+        presDiv.id = 'reu-pres-' + reu.slug;
+        rCard.appendChild(presDiv);
+        // Charger les présences de façon asynchrone
+        (async function(slug, container) {
+          try {
+            var presences = await db.getPresencesReunion(slug, todayStr);
+            var profiles = await db.getAllProfiles();
+            var medecins = profiles.filter(function(p) { return p.role === 'medecin'; });
+            var presMap = {};
+            presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
+
+            medecins.forEach(function(med) {
+              var pr = presMap[med.id];
+              var row = createEl('div', 'flex items-center justify-between py-1.5');
+              row.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', med.nom));
+              var btns = createEl('div', 'flex gap-1.5');
+              var btnP = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                (pr && pr.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+                pr && pr.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+              var btnA = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                (pr && pr.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
+                pr && pr.present === false ? '\u2713 Absent' : 'Absent');
+              (function(s, uid) {
+                btnP.addEventListener('click', async function() {
+                  await db.upsertPresenceReunion(s, todayStr, uid, true);
+                  renderGroupesTab();
+                });
+                btnA.addEventListener('click', async function() {
+                  await db.upsertPresenceReunion(s, todayStr, uid, false);
+                  renderGroupesTab();
+                });
+              })(slug, med.id);
+              btns.appendChild(btnP);
+              btns.appendChild(btnA);
+              row.appendChild(btns);
+              container.appendChild(row);
+            });
+          } catch(e) {}
+        })(reu.slug, presDiv);
+      }
+      reunionsList.appendChild(rCard);
+    }
+  }
+
+  // ── Événements ponctuels du jour ──
+  var evtList = document.getElementById('events-equipe-list');
+  evtList.textContent = '';
+  try {
+    var evtsEquipe = await db.getEvenementsEquipe(todayStr);
+    if (evtsEquipe.length > 0) {
+      evtList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', '\u00c9v\u00e9nements'));
+      evtsEquipe.forEach(function(evt) {
+        var eCard = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl p-3 mb-2 flex items-center justify-between');
+        var eInfo = createEl('div', '');
+        eInfo.appendChild(createEl('p', 'text-sm font-bold text-amber-800', evt.titre));
+        var h = new Date(evt.date_heure);
+        var hStr = h.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        if (evt.duree_minutes) {
+          var end = new Date(h.getTime() + evt.duree_minutes * 60000);
+          hStr += ' - ' + end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        }
+        eInfo.appendChild(createEl('p', 'text-xs text-amber-600', hStr));
+        eCard.appendChild(eInfo);
+        if (currentProfile && currentProfile.is_admin) {
+          var btnDel = createEl('button', 'text-red-400 hover:text-red-600 font-bold text-lg', '\u00d7');
+          (function(eid) { btnDel.addEventListener('click', async function() {
+            if (!confirm('Supprimer cet \u00e9v\u00e9nement ?')) return;
+            await db.deleteEvenementEquipe(eid); renderGroupesTab();
+          }); })(evt.id);
+          eCard.appendChild(btnDel);
+        }
+        evtList.appendChild(eCard);
+      });
+    }
+  } catch(e) {}
 
   // Charger les demandes de séances en attente (thérapies complémentaires)
   var demandesEnAttente = [];
@@ -1897,6 +2022,45 @@ function openGroupeActionModal(slug, actionType, groupe) {
     content.appendChild(btnSend);
   }
 }
+
+// Formulaire ajout événement d'équipe
+document.getElementById('btn-add-event-equipe').addEventListener('click', function() {
+  var form = document.getElementById('form-event-equipe');
+  form.classList.toggle('hidden');
+  if (!form.classList.contains('hidden')) {
+    document.getElementById('evt-eq-date').value = new Date().toISOString().split('T')[0];
+  }
+});
+document.getElementById('btn-cancel-evt-eq').addEventListener('click', function() {
+  document.getElementById('form-event-equipe').classList.add('hidden');
+});
+document.getElementById('btn-save-evt-eq').addEventListener('click', async function() {
+  var titre = document.getElementById('evt-eq-titre').value.trim();
+  var date = document.getElementById('evt-eq-date').value;
+  var debut = document.getElementById('evt-eq-debut').value;
+  var errEl = document.getElementById('evt-eq-error');
+  errEl.classList.add('hidden');
+  if (!titre || !date) { errEl.textContent = 'Objet et date requis'; errEl.classList.remove('hidden'); return; }
+  try {
+    var dateHeure = date + 'T' + (debut || '09:00') + ':00';
+    var fin = document.getElementById('evt-eq-fin').value;
+    var duree = null;
+    if (debut && fin) {
+      var dMin = parseInt(debut.split(':')[0]) * 60 + parseInt(debut.split(':')[1]);
+      var fMin = parseInt(fin.split(':')[0]) * 60 + parseInt(fin.split(':')[1]);
+      if (fMin > dMin) duree = fMin - dMin;
+    }
+    await db.createEvenementEquipe({
+      titre: titre, date_heure: dateHeure, type: 'autre',
+      duree_minutes: duree, cree_par: currentProfile ? currentProfile.id : null
+    });
+    document.getElementById('form-event-equipe').classList.add('hidden');
+    document.getElementById('evt-eq-titre').value = '';
+    document.getElementById('evt-eq-debut').value = '';
+    document.getElementById('evt-eq-fin').value = '';
+    renderGroupesTab();
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+});
 
 // Toggle semaine A/B dans l'onglet groupes
 document.getElementById('btn-toggle-semaine').addEventListener('click', function() {

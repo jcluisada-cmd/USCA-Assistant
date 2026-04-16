@@ -471,5 +471,46 @@ window.db = {
     const { data, error } = await sb.from('demandes_seances').update(updates).eq('id', id).select().single();
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ ÉVÉNEMENTS D'ÉQUIPE ════════════════
+
+  /** Créer un événement d'équipe (sans patient_id) */
+  async createEvenementEquipe(evt) {
+    const { data, error } = await sb.from('evenements').insert(evt).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Événements d'équipe pour une date (patient_id IS NULL) */
+  async getEvenementsEquipe(dateStr) {
+    const { data, error } = await sb.from('evenements').select('*').is('patient_id', null).gte('date_heure', dateStr + 'T00:00:00').lte('date_heure', dateStr + 'T23:59:59').order('date_heure');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprimer un événement d'équipe */
+  async deleteEvenementEquipe(id) {
+    const { error } = await sb.from('evenements').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  // ════════════════ PRÉSENCES RÉUNIONS STAFF ════════════════
+
+  /** Upsert présence à une réunion */
+  async upsertPresenceReunion(reunionSlug, dateStr, userId, present) {
+    const { data, error } = await sb.from('presences_reunions')
+      .upsert({ reunion_slug: reunionSlug, date_reunion: dateStr, user_id: userId, present: present },
+        { onConflict: 'reunion_slug,date_reunion,user_id' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Présences pour une réunion à une date */
+  async getPresencesReunion(reunionSlug, dateStr) {
+    const { data, error } = await sb.from('presences_reunions').select('*').eq('reunion_slug', reunionSlug).eq('date_reunion', dateStr);
+    if (error) throw error;
+    return data;
   }
 };
