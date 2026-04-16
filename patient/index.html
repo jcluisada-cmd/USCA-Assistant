@@ -1864,6 +1864,31 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
   H.push('<button id="pin-setup" style="margin-top:24px;background:none;border:none;color:#64748b;font-size:11px;cursor:pointer;display:none;">Configurer un PIN</button>');
   H.push('</div>');
 
+  // Tutoriel premier lancement
+  H.push('<div id="tuto-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(15,23,42,.97);overflow-y:auto;padding:24px;">');
+  H.push('<div style="max-width:400px;margin:0 auto;">');
+  H.push('<p style="color:white;font-size:24px;font-weight:800;margin:40px 0 8px;text-align:center;">\ud83c\udf1f Bienvenue !</p>');
+  H.push('<p style="color:#94a3b8;font-size:14px;text-align:center;margin-bottom:32px;">Cette application vous accompagne apr\u00e8s votre sortie. Elle fonctionne <b style="color:white;">sans internet</b>.</p>');
+
+  H.push('<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:12px;">');
+  H.push('<p style="color:#ef4444;font-size:16px;font-weight:700;margin-bottom:4px;">\u26a0 Craving</p>');
+  H.push('<p style="color:#94a3b8;font-size:13px;">Signalez un craving, analysez vos d\u00e9clencheurs, consultez vos strat\u00e9gies de r\u00e9ponse.</p></div>');
+
+  H.push('<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:12px;">');
+  H.push('<p style="color:#3b82f6;font-size:16px;font-weight:700;margin-bottom:4px;">\u2197 Journal & Strat\u00e9gies</p>');
+  H.push('<p style="color:#94a3b8;font-size:13px;">Suivez l\u2019\u00e9volution de vos cravings dans le temps. Modifiez votre plan de pr\u00e9vention.</p></div>');
+
+  H.push('<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:12px;">');
+  H.push('<p style="color:#f59e0b;font-size:16px;font-weight:700;margin-bottom:4px;">\ud83d\udc8a Traitements & Contacts</p>');
+  H.push('<p style="color:#94a3b8;font-size:13px;">Vos fiches traitements et num\u00e9ros d\u2019urgence accessibles \u00e0 tout moment.</p></div>');
+
+  H.push('<div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;margin-bottom:24px;">');
+  H.push('<p style="color:#10b981;font-size:16px;font-weight:700;margin-bottom:4px;">\ud83d\udcbe Sauvegarde</p>');
+  H.push('<p style="color:#94a3b8;font-size:13px;">Pensez \u00e0 sauvegarder r\u00e9guli\u00e8rement votre app pour ne pas perdre vos donn\u00e9es.</p></div>');
+
+  H.push('<button id="btn-close-tuto" style="width:100%;padding:16px;background:#4F46E5;color:white;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;">C\u2019est compris !</button>');
+  H.push('</div></div>');
+
   // App
   H.push('<div class="app">');
   // Header
@@ -1985,11 +2010,15 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
   H.push('if(localStorage.getItem("usca_theme")==="dark")applyTheme(true);');
   H.push('document.getElementById("btn-theme").addEventListener("click",function(){var d=document.documentElement.classList.contains("dark");applyTheme(!d);localStorage.setItem("usca_theme",d?"light":"dark");});');
 
-  // PIN
+  // PIN (SHA-256 via Web Crypto si dispo, sinon fallback simple)
   H.push('var PIN_KEY="usca_export_pin";');
-  H.push('function hashPin(p){var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return"p"+h;}');
-  H.push('function configPin(){var p=prompt("Choisissez un PIN (4 chiffres) :");if(p&&p.length>=4){localStorage.setItem(PIN_KEY,hashPin(p));alert("PIN configur\u00e9 !");}else if(p!==null){alert("Le PIN doit faire au moins 4 chiffres.");}}');
-  H.push('(function(){var stored=localStorage.getItem(PIN_KEY);if(stored){document.getElementById("pin-overlay").classList.add("open");document.getElementById("pin-submit").addEventListener("click",function(){var v=document.getElementById("pin-input").value;if(hashPin(v)===stored){document.getElementById("pin-overlay").classList.remove("open");}else{document.getElementById("pin-error").style.display="";document.getElementById("pin-input").value="";}});}})();');
+  H.push('async function hashPin(p){try{var enc=new TextEncoder();var buf=await crypto.subtle.digest("SHA-256",enc.encode(p));return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");}catch(e){var h=0;for(var i=0;i<p.length;i++){h=((h<<5)-h)+p.charCodeAt(i);h|=0;}return"p"+h;}}');
+  H.push('async function configPin(){var p=prompt("Choisissez un PIN (4 chiffres) :");if(p&&p.length>=4){var h=await hashPin(p);localStorage.setItem(PIN_KEY,h);alert("PIN configur\u00e9 !");}else if(p!==null){alert("Le PIN doit faire au moins 4 chiffres.");}}');
+  H.push('(function(){var stored=localStorage.getItem(PIN_KEY);if(stored){document.getElementById("pin-overlay").classList.add("open");document.getElementById("pin-submit").addEventListener("click",async function(){var v=document.getElementById("pin-input").value;var h=await hashPin(v);if(h===stored){document.getElementById("pin-overlay").classList.remove("open");}else{document.getElementById("pin-error").style.display="";document.getElementById("pin-input").value="";}});}else{document.getElementById("pin-setup").style.display="";}})();');
+  H.push('document.getElementById("pin-setup").addEventListener("click",function(){configPin();});');
+
+  // Tutoriel premier lancement
+  H.push('(function(){if(!localStorage.getItem("usca_tuto_done")){document.getElementById("tuto-overlay").style.display="block";}document.getElementById("btn-close-tuto").addEventListener("click",function(){document.getElementById("tuto-overlay").style.display="none";localStorage.setItem("usca_tuto_done","1");});})();');
 
   // Craving signal
   H.push('var selIntensity=null,selTriggers=[],selDuration=null;');
@@ -2433,6 +2462,18 @@ document.getElementById('btn-logout').addEventListener('click', function() {
 // ══════════════ AUTO-RESTAURATION ══════════════
 
 (function() {
+  // Export vierge demandé depuis l'admin ?
+  if (window.location.search.indexOf('export=vierge') !== -1) {
+    currentPatient = { id: 'vierge', prenom: 'Consultation', chambre: '0' };
+    patientStrategies = [];
+    // Déclencher l'export HTML avec données vides après un court délai
+    setTimeout(function() {
+      document.getElementById('btn-export-html').click();
+      // Fermer la fenêtre après le téléchargement
+      setTimeout(function() { window.close(); }, 1500);
+    }, 500);
+    return;
+  }
   var session = auth.getPatientSession();
   if (session) { currentPatient = session; showPatientApp(session); }
 })();
