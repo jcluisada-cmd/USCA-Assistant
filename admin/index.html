@@ -475,11 +475,16 @@
     <!-- ═══ ONGLET GROUPES ═══ -->
     <div id="tab-groupes" class="tab-content flex-1 overflow-y-auto hidden">
       <div class="p-6 max-w-2xl mx-auto w-full pb-24">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Planning</h2>
-        <div class="flex items-center gap-2 mb-4">
-          <span id="groupes-semaine-label" class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">Semaine A</span>
-          <button id="btn-toggle-semaine" class="text-xs text-slate-400 hover:text-indigo-600 font-semibold transition-colors">Voir l'autre semaine</button>
-          <button id="btn-add-event-equipe" class="ml-auto text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">+ Événement</button>
+        <h2 class="text-xl font-bold text-slate-800 mb-3">Planning</h2>
+        <!-- Navigation semaine -->
+        <div class="flex items-center justify-between mb-4 bg-white rounded-xl border border-slate-200 p-2.5">
+          <button id="btn-prev-week" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-indigo-100 hover:text-indigo-600 transition-colors font-bold">&lsaquo;</button>
+          <div class="text-center flex-1">
+            <p id="groupes-dates-label" class="text-xs text-slate-500 font-medium"></p>
+            <span id="groupes-semaine-label" class="inline-block text-xs font-bold px-3 py-0.5 rounded-full bg-indigo-100 text-indigo-700 mt-1 text-center">Semaine A</span>
+          </div>
+          <button id="btn-next-week" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-indigo-100 hover:text-indigo-600 transition-colors font-bold">&rsaquo;</button>
+          <button id="btn-add-event-equipe" class="ml-2 text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors flex-shrink-0">+ Événement</button>
         </div>
 
         <!-- Formulaire ajout événement ponctuel (caché par défaut) -->
@@ -504,9 +509,18 @@
         <!-- Événements ponctuels du jour -->
         <div id="events-equipe-list" class="space-y-2 mb-6"></div>
 
-        <!-- Groupes thérapeutiques -->
-        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Groupes thérapeutiques</h3>
+        <!-- Groupes thérapeutiques à venir -->
+        <h3 id="groupes-upcoming-title" class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Groupes thérapeutiques</h3>
         <div id="groupes-list" class="space-y-3"></div>
+
+        <!-- Historique de la semaine -->
+        <div id="groupes-historique-section" class="hidden mt-6">
+          <button id="btn-toggle-historique" class="w-full flex items-center justify-between text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 hover:text-slate-600 transition-colors">
+            <span>Historique de la semaine</span>
+            <span id="historique-chevron" class="text-xs">&#9660;</span>
+          </button>
+          <div id="groupes-historique-list" class="space-y-3 hidden"></div>
+        </div>
       </div>
 
       <!-- Modal actions animateur -->
@@ -1105,6 +1119,7 @@ document.getElementById('sortie-save').addEventListener('click', async function(
     selectedPatientForDetail.date_sortie_prevue = date;
     document.getElementById('sortie-current').textContent = 'Sortie : ' + new Date(date).toLocaleDateString('fr-FR');
     document.getElementById('modal-sortie').classList.add('hidden');
+    renderSorties();
   } catch(e) { console.warn(e); }
   this.disabled = false;
 });
@@ -1714,117 +1729,144 @@ async function renderGroupesTab() {
     mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
   } catch(e) { groupeModifications = {}; }
 
-  // ── Réunions d'équipe du jour ──
+  // ── Calcul semaine affichée ──
+  var viewedMonday = getViewedMonday();
+  var viewedFriday = new Date(viewedMonday);
+  viewedFriday.setDate(viewedFriday.getDate() + 4);
+  var weekOffset = window._groupesWeekOffset || 0;
+  var isCurrentWeek = weekOffset === 0;
+  var isPastWeek = weekOffset < 0;
+
+  var weekType = window.getWeekType(viewedMonday);
+  var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
+
+  // Mettre à jour le header de navigation
+  var moisFmt = { month: 'short' };
+  var datesLabel = document.getElementById('groupes-dates-label');
+  if (datesLabel) {
+    var mL = viewedMonday.toLocaleDateString('fr-FR', { day: 'numeric' });
+    var mF = viewedFriday.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+    datesLabel.textContent = mL + ' \u2013 ' + mF;
+  }
+  var labelEl = document.getElementById('groupes-semaine-label');
+  if (labelEl) {
+    labelEl.textContent = 'Semaine ' + weekType;
+    labelEl.className = 'inline-block text-xs font-bold px-3 py-0.5 rounded-full mt-1 text-center ' +
+      (isCurrentWeek ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500');
+  }
+
+  // ── Réunions (seulement semaine courante) ──
   var reunionsList = document.getElementById('reunions-list');
   reunionsList.textContent = '';
-  var role = currentProfile ? currentProfile.role : null;
-  var reunions = window.getReunionsForDay ? window.getReunionsForDay(todayDate, role) : [];
+  if (isCurrentWeek) {
+    var role = currentProfile ? currentProfile.role : null;
+    var reunions = window.getReunionsForDay ? window.getReunionsForDay(todayDate, role) : [];
+    var now = new Date();
+    // Filtrer les réunions passées
+    reunions = reunions.filter(function(r) {
+      if (!r.fin) return true;
+      var parts = r.fin.split(':');
+      var endTime = new Date(todayDate);
+      endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+      return endTime > now;
+    });
 
-  if (reunions.length > 0) {
-    reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions du jour'));
-    for (var ri = 0; ri < reunions.length; ri++) {
-      var reu = reunions[ri];
-      var rCard = createEl('div', 'bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-2');
-      var rTop = createEl('div', 'flex items-center justify-between');
-      var rInfo = createEl('div', '');
-      rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom));
-      rInfo.appendChild(createEl('p', 'text-xs text-indigo-500', reu.debut + (reu.fin ? ' - ' + reu.fin : '')));
-      if (reu.roles) rInfo.appendChild(createEl('p', 'text-[10px] text-indigo-400 mt-0.5', 'R\u00e9serv\u00e9 : ' + reu.roles.join(', ')));
-      rTop.appendChild(rInfo);
-      rCard.appendChild(rTop);
+    if (reunions.length > 0) {
+      reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions du jour'));
+      for (var ri = 0; ri < reunions.length; ri++) {
+        var reu = reunions[ri];
+        var rCard = createEl('div', 'bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-2');
+        var rTop = createEl('div', 'flex items-center justify-between');
+        var rInfo = createEl('div', '');
+        rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom));
+        rInfo.appendChild(createEl('p', 'text-xs text-indigo-500', reu.debut + (reu.fin ? ' - ' + reu.fin : '')));
+        if (reu.roles) rInfo.appendChild(createEl('p', 'text-[10px] text-indigo-400 mt-0.5', 'R\u00e9serv\u00e9 : ' + reu.roles.join(', ')));
+        rTop.appendChild(rInfo);
+        rCard.appendChild(rTop);
 
-      // Présent/Absent pour les réunions avec presence=true
-      if (reu.presence && currentProfile) {
-        var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
-        presDiv.id = 'reu-pres-' + reu.slug;
-        rCard.appendChild(presDiv);
-        // Charger les présences de façon asynchrone
-        (async function(slug, container) {
-          try {
-            var presences = await db.getPresencesReunion(slug, todayStr);
-            var profiles = await db.getAllProfiles();
-            var medecins = profiles.filter(function(p) { return p.role === 'medecin'; });
-            var presMap = {};
-            presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
-
-            medecins.forEach(function(med) {
-              var pr = presMap[med.id];
-              var row = createEl('div', 'flex items-center justify-between py-1.5');
-              row.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', med.nom));
-              var btns = createEl('div', 'flex gap-1.5');
-              var btnP = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
-                (pr && pr.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
-                pr && pr.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
-              var btnA = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
-                (pr && pr.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
-                pr && pr.present === false ? '\u2713 Absent' : 'Absent');
-              (function(s, uid) {
-                btnP.addEventListener('click', async function() {
-                  await db.upsertPresenceReunion(s, todayStr, uid, true);
-                  renderGroupesTab();
-                });
-                btnA.addEventListener('click', async function() {
-                  await db.upsertPresenceReunion(s, todayStr, uid, false);
-                  renderGroupesTab();
-                });
-              })(slug, med.id);
-              btns.appendChild(btnP);
-              btns.appendChild(btnA);
-              row.appendChild(btns);
-              container.appendChild(row);
-            });
-          } catch(e) {}
-        })(reu.slug, presDiv);
+        if (reu.presence && currentProfile) {
+          var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
+          presDiv.id = 'reu-pres-' + reu.slug;
+          rCard.appendChild(presDiv);
+          (async function(slug, container) {
+            try {
+              var presences = await db.getPresencesReunion(slug, todayStr);
+              var profiles = await db.getAllProfiles();
+              var medecins = profiles.filter(function(p) { return p.role === 'medecin'; });
+              var presMap = {};
+              presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
+              medecins.forEach(function(med) {
+                var pr = presMap[med.id];
+                var row = createEl('div', 'flex items-center justify-between py-1.5');
+                row.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', med.nom));
+                var btns = createEl('div', 'flex gap-1.5');
+                var btnP = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                  (pr && pr.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+                  pr && pr.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+                var btnA = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                  (pr && pr.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
+                  pr && pr.present === false ? '\u2713 Absent' : 'Absent');
+                (function(s, uid) {
+                  btnP.addEventListener('click', async function() {
+                    await db.upsertPresenceReunion(s, todayStr, uid, true);
+                    renderGroupesTab();
+                  });
+                  btnA.addEventListener('click', async function() {
+                    await db.upsertPresenceReunion(s, todayStr, uid, false);
+                    renderGroupesTab();
+                  });
+                })(slug, med.id);
+                btns.appendChild(btnP);
+                btns.appendChild(btnA);
+                row.appendChild(btns);
+                container.appendChild(row);
+              });
+            } catch(e) {}
+          })(reu.slug, presDiv);
+        }
+        reunionsList.appendChild(rCard);
       }
-      reunionsList.appendChild(rCard);
     }
   }
 
-  // ── Événements ponctuels du jour ──
+  // ── Événements ponctuels (seulement semaine courante) ──
   var evtList = document.getElementById('events-equipe-list');
   evtList.textContent = '';
-  try {
-    var evtsEquipe = await db.getEvenementsEquipe(todayStr);
-    if (evtsEquipe.length > 0) {
-      evtList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', '\u00c9v\u00e9nements'));
-      evtsEquipe.forEach(function(evt) {
-        var eCard = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl p-3 mb-2 flex items-center justify-between');
-        var eInfo = createEl('div', '');
-        eInfo.appendChild(createEl('p', 'text-sm font-bold text-amber-800', evt.titre));
-        var h = new Date(evt.date_heure);
-        var hStr = h.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        if (evt.duree_minutes) {
-          var end = new Date(h.getTime() + evt.duree_minutes * 60000);
-          hStr += ' - ' + end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-        eInfo.appendChild(createEl('p', 'text-xs text-amber-600', hStr));
-        eCard.appendChild(eInfo);
-        if (currentProfile && currentProfile.is_admin) {
-          var btnDel = createEl('button', 'text-red-400 hover:text-red-600 font-bold text-lg', '\u00d7');
-          (function(eid) { btnDel.addEventListener('click', async function() {
-            if (!confirm('Supprimer cet \u00e9v\u00e9nement ?')) return;
-            await db.deleteEvenementEquipe(eid); renderGroupesTab();
-          }); })(evt.id);
-          eCard.appendChild(btnDel);
-        }
-        evtList.appendChild(eCard);
-      });
-    }
-  } catch(e) {}
+  if (isCurrentWeek) {
+    try {
+      var evtsEquipe = await db.getEvenementsEquipe(todayStr);
+      if (evtsEquipe.length > 0) {
+        evtList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', '\u00c9v\u00e9nements'));
+        evtsEquipe.forEach(function(evt) {
+          var eCard = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl p-3 mb-2 flex items-center justify-between');
+          var eInfo = createEl('div', '');
+          eInfo.appendChild(createEl('p', 'text-sm font-bold text-amber-800', evt.titre));
+          var h = new Date(evt.date_heure);
+          var hStr = h.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          if (evt.duree_minutes) {
+            var end = new Date(h.getTime() + evt.duree_minutes * 60000);
+            hStr += ' - ' + end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          }
+          eInfo.appendChild(createEl('p', 'text-xs text-amber-600', hStr));
+          eCard.appendChild(eInfo);
+          if (currentProfile && currentProfile.is_admin) {
+            var btnDel = createEl('button', 'text-red-400 hover:text-red-600 font-bold text-lg', '\u00d7');
+            (function(eid) { btnDel.addEventListener('click', async function() {
+              if (!confirm('Supprimer cet \u00e9v\u00e9nement ?')) return;
+              await db.deleteEvenementEquipe(eid); renderGroupesTab();
+            }); })(evt.id);
+            eCard.appendChild(btnDel);
+          }
+          evtList.appendChild(eCard);
+        });
+      }
+    } catch(e) {}
+  }
 
   // Charger les demandes de séances en attente (thérapies complémentaires)
   var demandesEnAttente = [];
   try { demandesEnAttente = await db.getDemandesEnAttente(); } catch(e) {}
 
-  var weekType = window._groupesViewWeek || window.getWeekType(new Date());
-  var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
-  var labelEl = document.getElementById('groupes-semaine-label');
-  if (labelEl) {
-    labelEl.textContent = 'Semaine ' + weekType;
-    var isCurrentWeek = weekType === window.getWeekType(new Date());
-    labelEl.className = 'text-xs font-bold px-2 py-0.5 rounded-full ' +
-      (isCurrentWeek ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-500');
-  }
   var jours = window.JOURS_SEMAINE || [];
   var typeColors = {
     groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' },
@@ -1834,18 +1876,84 @@ async function renderGroupesTab() {
     seances: { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-700', dot: 'bg-cyan-500' }
   };
 
+  // Séparer groupes à venir et historique
   var parJour = {};
   planning.forEach(function(g) {
     if (!parJour[g.jour]) parJour[g.jour] = [];
     parJour[g.jour].push(g);
   });
 
+  var upcomingDays = [];
+  var historiqueDays = [];
+  var nowTime = new Date();
+  var todayDow = todayDate.getDay(); // 0=dim, 1=lun...
+
   [1,2,3,4,5].forEach(function(jour) {
     if (!parJour[jour]) return;
-    var daySection = createEl('div', 'mb-4');
-    daySection.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', jours[jour]));
+    // Calculer la date réelle de ce jour dans la semaine affichée
+    var dayDate = new Date(viewedMonday);
+    dayDate.setDate(dayDate.getDate() + (jour - 1));
+    var dayStr = dayDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+    dayStr = dayStr.charAt(0).toUpperCase() + dayStr.slice(1);
 
-    parJour[jour].forEach(function(g) {
+    if (isCurrentWeek) {
+      // Séparer passé/à venir
+      var upGroups = [];
+      var histGroups = [];
+      parJour[jour].forEach(function(g) {
+        if (jour < todayDow) {
+          histGroups.push(g);
+        } else if (jour === todayDow) {
+          var endH = g.fin || g.debut;
+          if (endH) {
+            var parts = endH.split(':');
+            var endTime = new Date(todayDate);
+            endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+            if (endTime <= nowTime) {
+              histGroups.push(g);
+            } else {
+              upGroups.push(g);
+            }
+          } else {
+            upGroups.push(g); // Horaire variable → toujours à venir
+          }
+        } else {
+          upGroups.push(g);
+        }
+      });
+      if (upGroups.length > 0) upcomingDays.push({ jour: jour, label: dayStr, groups: upGroups });
+      if (histGroups.length > 0) historiqueDays.push({ jour: jour, label: dayStr, groups: histGroups });
+    } else {
+      // Autre semaine : tout afficher
+      upcomingDays.push({ jour: jour, label: dayStr, groups: parJour[jour] });
+    }
+  });
+
+  // Titre de la section
+  var upTitle = document.getElementById('groupes-upcoming-title');
+  if (upTitle) {
+    upTitle.textContent = isCurrentWeek ? 'À venir cette semaine' : (isPastWeek ? 'Groupes de la semaine' : 'Groupes de la semaine');
+  }
+
+  // Historique section
+  var histSection = document.getElementById('groupes-historique-section');
+  var histList = document.getElementById('groupes-historique-list');
+  if (histSection) {
+    if (historiqueDays.length > 0) {
+      histSection.classList.remove('hidden');
+      histList.textContent = '';
+    } else {
+      histSection.classList.add('hidden');
+    }
+  }
+
+  // Fonction de rendu d'un jour de groupes dans un container
+  function renderDayGroups(dayData, container) {
+    var daySection = createEl('div', 'mb-4');
+    var dayHeader = createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', dayData.label);
+    daySection.appendChild(dayHeader);
+
+    dayData.groups.forEach(function(g) {
       var style = typeColors[g.type] || typeColors.groupe;
       var mod = groupeModifications[g.slug];
       var isAnnule = mod && mod.annule;
@@ -1977,8 +2085,19 @@ async function renderGroupesTab() {
       daySection.appendChild(card);
     });
 
-    list.appendChild(daySection);
-  });
+    container.appendChild(daySection);
+  }
+
+  // Rendu des groupes à venir
+  if (upcomingDays.length === 0) {
+    list.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-6', isCurrentWeek ? 'Plus de groupe cette semaine' : 'Aucun groupe'));
+  }
+  upcomingDays.forEach(function(d) { renderDayGroups(d, list); });
+
+  // Rendu de l'historique
+  if (historiqueDays.length > 0 && histList) {
+    historiqueDays.forEach(function(d) { renderDayGroups(d, histList); });
+  }
 }
 
 function openGroupeActionModal(slug, actionType, groupe) {
@@ -2366,10 +2485,40 @@ document.getElementById('btn-save-evt-eq').addEventListener('click', async funct
 });
 
 // Toggle semaine A/B dans l'onglet groupes
-document.getElementById('btn-toggle-semaine').addEventListener('click', function() {
-  var current = window._groupesViewWeek || window.getWeekType(new Date());
-  window._groupesViewWeek = (current === 'A') ? 'B' : 'A';
+// ── Navigation semaine ──
+window._groupesWeekOffset = 0;
+
+function getMonday(date) {
+  var d = new Date(date);
+  var day = d.getDay();
+  d.setDate(d.getDate() - day + (day === 0 ? -6 : 1));
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function getViewedMonday() {
+  var monday = getMonday(new Date());
+  monday.setDate(monday.getDate() + (window._groupesWeekOffset || 0) * 7);
+  return monday;
+}
+
+document.getElementById('btn-prev-week').addEventListener('click', function() {
+  window._groupesWeekOffset = (window._groupesWeekOffset || 0) - 1;
   renderGroupesTab();
+});
+
+document.getElementById('btn-next-week').addEventListener('click', function() {
+  window._groupesWeekOffset = (window._groupesWeekOffset || 0) + 1;
+  renderGroupesTab();
+});
+
+// Toggle historique
+document.getElementById('btn-toggle-historique').addEventListener('click', function() {
+  var listEl = document.getElementById('groupes-historique-list');
+  var chevron = document.getElementById('historique-chevron');
+  var isHidden = listEl.classList.contains('hidden');
+  listEl.classList.toggle('hidden');
+  chevron.textContent = isHidden ? '\u25B2' : '\u25BC';
 });
 
 // Fermeture modal groupes
