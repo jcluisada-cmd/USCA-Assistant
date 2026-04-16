@@ -431,5 +431,45 @@ window.db = {
     const { data, error } = await sb.from('participations').select('*').eq('groupe_slug', groupeSlug).eq('date_groupe', dateStr);
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ DEMANDES DE SÉANCES ════════════════
+
+  /** Créer ou mettre à jour une demande de séance (patient) */
+  async upsertDemandeSeance(patientId, dateStr, groupeSlug) {
+    const { data, error } = await sb.from('demandes_seances')
+      .upsert({ patient_id: patientId, date_demande: dateStr, groupe_slug: groupeSlug || 'therapies-complementaires', statut: 'en_attente' },
+        { onConflict: 'patient_id,date_demande,groupe_slug' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Demandes d'un patient */
+  async getDemandesPatient(patientId) {
+    const { data, error } = await sb.from('demandes_seances').select('*').eq('patient_id', patientId).order('date_demande', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  /** Demandes pour une date (animateur) */
+  async getDemandesParDate(dateStr) {
+    const { data, error } = await sb.from('demandes_seances').select('*').eq('date_demande', dateStr);
+    if (error) throw error;
+    return data;
+  },
+
+  /** Toutes les demandes en attente (animateur) */
+  async getDemandesEnAttente() {
+    const { data, error } = await sb.from('demandes_seances').select('*').eq('statut', 'en_attente').order('date_demande');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Valider/refuser une demande (animateur) — avec ou sans horaire */
+  async updateDemandeSeance(id, updates) {
+    const { data, error } = await sb.from('demandes_seances').update(updates).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
   }
 };

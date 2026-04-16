@@ -606,8 +606,21 @@
         </div>
       </div>
 
+      <!-- Navigation par date -->
+      <div class="flex items-center justify-between mb-4">
+        <button id="ateliers-prev" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="text-center">
+          <p id="ateliers-date-label" class="text-sm font-bold text-slate-800"></p>
+          <p id="ateliers-date-badge" class="text-[10px] text-emerald-600 font-semibold hidden">Aujourd'hui</p>
+        </div>
+        <button id="ateliers-next" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
       <!-- Groupes du jour — cocher participation -->
-      <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Aujourd'hui</h3>
       <div id="ateliers-today" class="space-y-2 mb-6"></div>
 
       <!-- Historique -->
@@ -2001,6 +2014,17 @@ var _ateliersTypeColors = {
   seances: 'bg-cyan-50 border-cyan-200 text-cyan-700'
 };
 
+var _ateliersDate = new Date();
+
+document.getElementById('ateliers-prev').addEventListener('click', function() {
+  _ateliersDate.setDate(_ateliersDate.getDate() - 1);
+  loadAteliers();
+});
+document.getElementById('ateliers-next').addEventListener('click', function() {
+  _ateliersDate.setDate(_ateliersDate.getDate() + 1);
+  loadAteliers();
+});
+
 async function loadAteliers() {
   if (!currentPatient) return;
   var todayContainer = document.getElementById('ateliers-today');
@@ -2008,94 +2032,131 @@ async function loadAteliers() {
   todayContainer.textContent = '';
   historyContainer.textContent = '';
 
-  var todayStr = new Date().toISOString().split('T')[0];
-  var todayGroupes = window.getGroupesForDay ? window.getGroupesForDay(new Date()) : [];
+  var viewDate = new Date(_ateliersDate);
+  var viewDateStr = viewDate.toISOString().split('T')[0];
+  var realTodayStr = new Date().toISOString().split('T')[0];
+  var isToday = viewDateStr === realTodayStr;
 
-  // Récupérer les participations existantes du patient
+  // Date label
+  document.getElementById('ateliers-date-label').textContent = viewDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  var badge = document.getElementById('ateliers-date-badge');
+  if (isToday) { badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+
+  var dayGroupes = window.getGroupesForDay ? window.getGroupesForDay(viewDate) : [];
+
+  // Récupérer les participations et demandes
   var participations = [];
+  var demandes = [];
   try { participations = await db.getParticipationsPatient(currentPatient.id); } catch(e) {}
+  try { demandes = await db.getDemandesPatient(currentPatient.id); } catch(e) {}
   var partMap = {};
   participations.forEach(function(p) { partMap[p.groupe_slug + '_' + p.date_groupe] = p; });
+  var demandeMap = {};
+  demandes.forEach(function(d) { demandeMap[d.groupe_slug + '_' + d.date_demande] = d; });
 
-  // Stats
+  // Stats globales
   var nbPresent = participations.filter(function(p) { return p.present; }).length;
   var nbAbsent = participations.filter(function(p) { return !p.present; }).length;
   document.getElementById('ateliers-stat-present').textContent = nbPresent;
   document.getElementById('ateliers-stat-absent').textContent = nbAbsent;
 
-  // Groupes du jour — avec boutons présent/absent
-  if (todayGroupes.length === 0) {
-    todayContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Pas de groupe prévu aujourd\'hui'));
-  } else {
-    // Récupérer les modifications du jour
-    var todayMods = {};
-    try {
-      var mods = await db.getGroupeModifications(todayStr);
-      mods.forEach(function(m) { todayMods[m.groupe_slug] = m; });
-    } catch(e) {}
+  // Récupérer les modifications du jour
+  var dayMods = {};
+  try {
+    var mods = await db.getGroupeModifications(viewDateStr);
+    mods.forEach(function(m) { dayMods[m.groupe_slug] = m; });
+  } catch(e) {}
 
-    todayGroupes.forEach(function(g) {
-      var mod = todayMods[g.slug];
+  // Groupes du jour
+  if (dayGroupes.length === 0) {
+    todayContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Pas de groupe prévu ce jour'));
+  } else {
+    dayGroupes.forEach(function(g) {
+      var mod = dayMods[g.slug];
       if (mod && mod.annule) return;
       if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
 
-      var key = g.slug + '_' + todayStr;
+      var key = g.slug + '_' + viewDateStr;
       var existing = partMap[key];
       var colors = _ateliersTypeColors[g.type] || _ateliersTypeColors.groupe;
       var heure = (mod && mod.nouvelle_heure) || g.debut;
+      var isTherapie = g.slug === 'therapies-complementaires';
 
       var card = createEl('div', 'border rounded-xl p-4 ' + colors);
-      var top = createEl('div', 'flex items-center justify-between mb-3');
-      var info = createEl('div', '');
+      var info = createEl('div', 'mb-3');
       info.appendChild(createEl('p', 'text-sm font-bold', g.nom));
-      if (heure) info.appendChild(createEl('p', 'text-xs opacity-70', heure + (g.fin ? ' - ' + ((mod && mod.nouvelle_fin) || g.fin) : '')));
-      top.appendChild(info);
-      card.appendChild(top);
+      if (isTherapie) {
+        info.appendChild(createEl('p', 'text-xs opacity-70', 'Acupuncture, Auriculoth\u00e9rapie, Hypnose'));
+        info.appendChild(createEl('p', 'text-xs opacity-70', 'Dr Fatout'));
+      } else if (heure) {
+        info.appendChild(createEl('p', 'text-xs opacity-70', heure + (g.fin ? ' - ' + ((mod && mod.nouvelle_fin) || g.fin) : '')));
+      }
+      card.appendChild(info);
 
-      // Boutons Présent / Absent
-      var btns = createEl('div', 'flex gap-2');
-
-      var btnPresent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
-        (existing && existing.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600 hover:bg-emerald-50'),
-        existing && existing.present ? '\u2713 Présent' : 'Présent');
-
-      var btnAbsent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
-        (existing && existing.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500 hover:bg-slate-50'),
-        existing && existing.present === false ? '\u2713 Absent' : 'Absent');
-
-      (function(slug, nom) {
-        btnPresent.addEventListener('click', async function() {
-          try {
-            await db.upsertParticipation(currentPatient.id, slug, nom, todayStr, true, 'patient');
-            loadAteliers();
-          } catch(e) { console.warn(e); }
-        });
-        btnAbsent.addEventListener('click', async function() {
-          try {
-            await db.upsertParticipation(currentPatient.id, slug, nom, todayStr, false, 'patient');
-            loadAteliers();
-          } catch(e) { console.warn(e); }
-        });
-      })(g.slug, g.nom);
-
-      btns.appendChild(btnPresent);
-      btns.appendChild(btnAbsent);
-      card.appendChild(btns);
+      if (isTherapie) {
+        // Bouton spécial "Demander une séance"
+        var demande = demandeMap[key];
+        if (demande && demande.statut === 'acceptee') {
+          var acceptMsg = createEl('div', 'bg-emerald-100 border border-emerald-300 rounded-lg p-3 text-center');
+          acceptMsg.appendChild(createEl('p', 'text-xs font-bold text-emerald-700', '\u2713 S\u00e9ance accept\u00e9e'));
+          if (demande.heure_debut) {
+            acceptMsg.appendChild(createEl('p', 'text-xs text-emerald-600 mt-1', demande.heure_debut + (demande.heure_fin ? ' - ' + demande.heure_fin : '')));
+          }
+          card.appendChild(acceptMsg);
+        } else if (demande && demande.statut === 'en_attente') {
+          var waitMsg = createEl('div', 'bg-amber-50 border border-amber-200 rounded-lg p-3 text-center');
+          waitMsg.appendChild(createEl('p', 'text-xs font-bold text-amber-700', '\u23f3 Demande envoy\u00e9e \u2014 en attente de r\u00e9ponse'));
+          card.appendChild(waitMsg);
+        } else if (demande && demande.statut === 'refusee') {
+          card.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-2', 'Demande refus\u00e9e'));
+        } else {
+          var btnDemande = createEl('button', 'w-full py-2.5 rounded-lg text-xs font-bold transition-all bg-rose-600 text-white hover:bg-rose-700 active:scale-[0.98]', '\ud83d\ude4f Demander une s\u00e9ance');
+          (function(slug) {
+            btnDemande.addEventListener('click', async function() {
+              try {
+                await db.upsertDemandeSeance(currentPatient.id, viewDateStr, slug);
+                loadAteliers();
+              } catch(e) { console.warn(e); }
+            });
+          })(g.slug);
+          card.appendChild(btnDemande);
+        }
+      } else {
+        // Boutons Présent / Absent
+        var btns = createEl('div', 'flex gap-2');
+        var btnPresent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
+          (existing && existing.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600 hover:bg-emerald-50'),
+          existing && existing.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+        var btnAbsent = createEl('button', 'flex-1 py-2 rounded-lg text-xs font-bold transition-all ' +
+          (existing && existing.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500 hover:bg-slate-50'),
+          existing && existing.present === false ? '\u2713 Absent' : 'Absent');
+        (function(slug, nom, dateStr) {
+          btnPresent.addEventListener('click', async function() {
+            try { await db.upsertParticipation(currentPatient.id, slug, nom, dateStr, true, 'patient'); loadAteliers(); } catch(e) { console.warn(e); }
+          });
+          btnAbsent.addEventListener('click', async function() {
+            try { await db.upsertParticipation(currentPatient.id, slug, nom, dateStr, false, 'patient'); loadAteliers(); } catch(e) { console.warn(e); }
+          });
+        })(g.slug, g.nom, viewDateStr);
+        btns.appendChild(btnPresent);
+        btns.appendChild(btnAbsent);
+        card.appendChild(btns);
+      }
       todayContainer.appendChild(card);
     });
   }
 
-  // Historique — grouper par date
+  // Historique — grouper par date (exclure la date affichée)
   var parDate = {};
   participations.forEach(function(p) {
-    if (p.date_groupe === todayStr) return; // pas dans l'historique
+    if (p.date_groupe === viewDateStr) return;
     if (!parDate[p.date_groupe]) parDate[p.date_groupe] = [];
     parDate[p.date_groupe].push(p);
   });
 
   var dates = Object.keys(parDate).sort().reverse();
   if (dates.length === 0) {
-    historyContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucune participation enregistrée'));
+    historyContainer.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucune participation enregistr\u00e9e'));
   } else {
     dates.forEach(function(dateStr) {
       var d = new Date(dateStr + 'T12:00:00');
@@ -2105,7 +2166,7 @@ async function loadAteliers() {
       parDate[dateStr].forEach(function(p) {
         var row = createEl('div', 'flex items-center justify-between bg-white border border-slate-200 rounded-lg px-3 py-2 mb-1');
         row.appendChild(createEl('span', 'text-xs text-slate-700', p.groupe_nom));
-        row.appendChild(createEl('span', 'text-xs font-bold ' + (p.present ? 'text-emerald-600' : 'text-slate-400'), p.present ? 'Présent' : 'Absent'));
+        row.appendChild(createEl('span', 'text-xs font-bold ' + (p.present ? 'text-emerald-600' : 'text-slate-400'), p.present ? 'Pr\u00e9sent' : 'Absent'));
         section.appendChild(row);
       });
       historyContainer.appendChild(section);

@@ -1384,6 +1384,10 @@ async function renderGroupesTab() {
     mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
   } catch(e) { groupeModifications = {}; }
 
+  // Charger les demandes de séances en attente (thérapies complémentaires)
+  var demandesEnAttente = [];
+  try { demandesEnAttente = await db.getDemandesEnAttente(); } catch(e) {}
+
   var weekType = window._groupesViewWeek || window.getWeekType(new Date());
   var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
   var labelEl = document.getElementById('groupes-semaine-label');
@@ -1434,6 +1438,12 @@ async function renderGroupesTab() {
         title.appendChild(annuleBadge);
       }
       titleDiv.appendChild(title);
+      // Badge jaune si demandes de séance en attente (thérapies complémentaires)
+      if (g.slug === 'therapies-complementaires' && demandesEnAttente.length > 0) {
+        var demBadge = createEl('span', 'inline-block ml-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700', demandesEnAttente.length + ' demande' + (demandesEnAttente.length > 1 ? 's' : ''));
+        title.appendChild(document.createTextNode(' '));
+        title.appendChild(demBadge);
+      }
       if (heure) {
         titleDiv.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', heure + (fin ? ' - ' + fin : '')));
       } else {
@@ -1452,7 +1462,7 @@ async function renderGroupesTab() {
       if (anims.length > 0) {
         anims.forEach(function(a) {
           var badge = createEl('span', 'inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/70 border border-slate-200 text-slate-700', a.nom_affiche);
-          if (currentProfile && a.user_id === currentProfile.id) {
+          if (currentProfile && (a.user_id === currentProfile.id || currentProfile.is_admin)) {
             var btnX = createEl('button', 'ml-0.5 text-red-400 hover:text-red-600 font-bold', '\u00d7');
             (function(slug, uid) {
               btnX.addEventListener('click', async function(e) {
@@ -1479,13 +1489,42 @@ async function renderGroupesTab() {
         })(g.slug);
         animDiv.appendChild(btnDesign);
       }
+      // Bouton désigner un autre soignant (admin)
+      if (currentProfile && currentProfile.is_admin) {
+        var btnDesignOther = createEl('button', 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors', '+ D\u00e9signer');
+        (function(slug, existingAnims) {
+          btnDesignOther.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            try {
+              var profiles = await db.getAllProfiles();
+              var existingIds = existingAnims.map(function(a) { return a.user_id; });
+              var available = profiles.filter(function(p) { return existingIds.indexOf(p.id) === -1; });
+              if (available.length === 0) { alert('Tous les soignants sont d\u00e9j\u00e0 animateurs de ce groupe'); return; }
+              var choiceStr = available.map(function(p, i) { return (i + 1) + '. ' + p.nom + ' (' + p.role + ')'; }).join('\n');
+              var choice = prompt('Choisir un soignant :\n' + choiceStr + '\n\nEntrez le num\u00e9ro :');
+              if (!choice) return;
+              var idx = parseInt(choice) - 1;
+              if (idx >= 0 && idx < available.length) {
+                await db.addGroupeAnimateur(slug, available[idx].id, available[idx].nom);
+                renderGroupesTab();
+              }
+            } catch(err) { console.warn(err); }
+          });
+        })(g.slug, anims);
+        animDiv.appendChild(btnDesignOther);
+      }
       card.appendChild(animDiv);
 
-      // Actions animateur
-      if (isMeAnim) {
+      // Actions animateur (visible si animateur du groupe OU admin)
+      if (isMeAnim || (currentProfile && currentProfile.is_admin)) {
         var actionsRow = createEl('div', 'mt-3 pt-2 border-t border-slate-200/60 flex flex-wrap gap-2');
         var hasFixedTime = !!g.debut;
-        var actions = hasFixedTime ? [
+        var isTherapie = g.slug === 'therapies-complementaires';
+        var actions = isTherapie ? [
+          { label: 'S\u00e9ances', icon: '\ud83d\udcc5', action: 'seances_therapie' },
+          { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
+          { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
+        ] : hasFixedTime ? [
           { label: 'Participation', icon: '\ud83d\udccb', action: 'participation' },
           { label: 'Modifier heure', icon: '\ud83d\udd50', action: 'heure' },
           { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
@@ -1664,6 +1703,122 @@ function openGroupeActionModal(slug, actionType, groupe) {
           } catch(e) { console.warn(e); }
         });
       } catch(e) { patListH.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement patients')); }
+    })();
+
+  } else if (actionType === 'seances_therapie') {
+    title.textContent = 'S\u00e9ances \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-4', 'G\u00e9rez les demandes des patients et programmez des s\u00e9ances'));
+
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var demandes = await db.getDemandesParDate(todayStr);
+        var demandeMap = {};
+        demandes.forEach(function(d) { demandeMap[d.patient_id] = d; });
+
+        // Section demandes en attente
+        var pendingDemandes = demandes.filter(function(d) { return d.statut === 'en_attente'; });
+        if (pendingDemandes.length > 0) {
+          content.appendChild(createEl('p', 'text-xs font-bold text-amber-700 uppercase tracking-wider mb-2', '\ud83d\udd14 Demandes en attente'));
+          pendingDemandes.forEach(function(dem) {
+            var pat = patients.find(function(p) { return p.id === dem.patient_id; });
+            var patLabel = pat ? (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre : 'Patient';
+            var row = createEl('div', 'bg-amber-50 border border-amber-200 rounded-lg p-3 mb-2');
+            row.appendChild(createEl('p', 'text-sm font-bold text-amber-800 mb-2', patLabel));
+
+            var btns = createEl('div', 'flex gap-2');
+            // Accepter avec horaire
+            var btnAccH = createEl('button', 'flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs', 'Accepter + horaire');
+            var btnAcc = createEl('button', 'flex-1 py-2 bg-emerald-100 border border-emerald-300 text-emerald-700 font-bold rounded-lg text-xs', 'Accepter');
+            var btnRef = createEl('button', 'px-3 py-2 bg-white border border-slate-200 text-slate-500 font-bold rounded-lg text-xs', 'Refuser');
+
+            (function(demId, patId) {
+              btnAcc.addEventListener('click', async function() {
+                await db.updateDemandeSeance(demId, { statut: 'acceptee', validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+              btnAccH.addEventListener('click', async function() {
+                var h = prompt('Heure de d\u00e9but (ex: 10:00) :');
+                if (!h) return;
+                var f = prompt('Heure de fin (ex: 10:30) :') || '';
+                await db.updateDemandeSeance(demId, { statut: 'acceptee', heure_debut: h, heure_fin: f || null, validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+              btnRef.addEventListener('click', async function() {
+                await db.updateDemandeSeance(demId, { statut: 'refusee', validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+            })(dem.id, dem.patient_id);
+
+            btns.appendChild(btnAccH);
+            btns.appendChild(btnAcc);
+            btns.appendChild(btnRef);
+            row.appendChild(btns);
+            content.appendChild(row);
+          });
+        }
+
+        // Section programmer une séance
+        content.appendChild(createEl('p', 'text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4', '\u2795 Programmer une s\u00e9ance'));
+        var formProg = createEl('div', 'bg-white border border-slate-200 rounded-lg p-3');
+        var selectPat = createEl('select', 'w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2');
+        selectPat.appendChild(createEl('option', '', 'Choisir un patient...'));
+        patients.forEach(function(p) {
+          var opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = (p.prenom || 'Patient') + ' \u2014 Ch.' + p.numero_chambre;
+          selectPat.appendChild(opt);
+        });
+        formProg.appendChild(selectPat);
+
+        var timeRow = createEl('div', 'flex gap-2 mb-2');
+        var inputDebut = createEl('input', 'flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+        inputDebut.type = 'time'; inputDebut.placeholder = 'D\u00e9but';
+        var inputFin = createEl('input', 'flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+        inputFin.type = 'time'; inputFin.placeholder = 'Fin';
+        timeRow.appendChild(inputDebut);
+        timeRow.appendChild(inputFin);
+        formProg.appendChild(timeRow);
+
+        var btnProg = createEl('button', 'w-full py-2 bg-rose-600 text-white font-bold rounded-lg text-sm hover:bg-rose-700 transition-colors', 'Programmer la s\u00e9ance');
+        btnProg.addEventListener('click', async function() {
+          var patId = selectPat.value;
+          if (!patId || patId === 'Choisir un patient...') return;
+          try {
+            await db.upsertDemandeSeance(patId, todayStr, slug);
+            var inserted = await db.getDemandesParDate(todayStr);
+            var dem = inserted.find(function(d) { return d.patient_id === patId; });
+            if (dem) {
+              var updates = { statut: 'acceptee', validee_par: currentProfile.id };
+              if (inputDebut.value) updates.heure_debut = inputDebut.value;
+              if (inputFin.value) updates.heure_fin = inputFin.value;
+              await db.updateDemandeSeance(dem.id, updates);
+            }
+            openGroupeActionModal(slug, 'seances_therapie', groupe);
+            renderGroupesTab();
+          } catch(e) { console.warn(e); }
+        });
+        formProg.appendChild(btnProg);
+        content.appendChild(formProg);
+
+        // Séances déjà programmées aujourd'hui
+        var accepted = demandes.filter(function(d) { return d.statut === 'acceptee'; });
+        if (accepted.length > 0) {
+          content.appendChild(createEl('p', 'text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 mt-4', '\u2713 S\u00e9ances du jour'));
+          accepted.forEach(function(dem) {
+            var pat = patients.find(function(p) { return p.id === dem.patient_id; });
+            var patLabel = pat ? (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre : 'Patient';
+            var heureStr = dem.heure_debut ? dem.heure_debut + (dem.heure_fin ? ' - ' + dem.heure_fin : '') : 'Horaire non d\u00e9fini';
+            var row = createEl('div', 'flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2.5 mb-1');
+            row.appendChild(createEl('span', 'text-xs font-bold text-emerald-800', patLabel));
+            row.appendChild(createEl('span', 'text-xs text-emerald-600', heureStr));
+            content.appendChild(row);
+          });
+        }
+      } catch(e) { content.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement')); }
     })();
 
   } else if (actionType === 'participation') {
