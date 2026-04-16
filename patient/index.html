@@ -105,7 +105,8 @@
           </button>
 
           <!-- Carte Programme -->
-          <button id="card-programme" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98]">
+          <button id="card-programme" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-emerald-300 transition-all active:scale-[0.98] relative">
+            <span id="badge-programme" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
             </div>
@@ -123,7 +124,8 @@
           </button>
 
           <!-- Carte Traitements -->
-          <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]">
+          <button id="card-traitements" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
+            <span id="badge-traitements" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
             </div>
@@ -142,6 +144,7 @@
 
           <!-- Carte Messages -->
           <button id="card-messages" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
+            <span id="badge-messages" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
             </div>
@@ -151,6 +154,7 @@
 
           <!-- Carte Ateliers -->
           <button id="card-ateliers" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98] relative">
+            <span id="badge-ateliers" class="absolute top-2 right-2 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden"></span>
             <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center mb-3">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
@@ -163,7 +167,7 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <p class="text-sm font-bold text-slate-800">Mon avis</p>
-            <p class="text-[11px] text-slate-500 mt-0.5">Donnez votre retour</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Sur l'application</p>
           </button>
         </div>
       </div>
@@ -599,11 +603,11 @@
       <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <span class="text-sm font-bold">Mon avis</span>
+      <span class="text-sm font-bold">Mon avis sur l'application</span>
     </header>
     <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-24">
       <div id="feedback-form">
-        <p class="text-sm text-slate-600 mb-4">Votre avis nous aide à améliorer l'application et votre séjour.</p>
+        <p class="text-sm text-slate-600 mb-4">Aidez-nous \u00e0 am\u00e9liorer cette application ! Signalez un bug, proposez une id\u00e9e ou dites-nous ce qui vous pla\u00eet.</p>
 
         <!-- Type -->
         <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Type de retour</p>
@@ -786,6 +790,9 @@ async function showPatientApp(patient) {
 
   await loadProgrammeForDate(window._progDate);
 
+  // Rafraîchir les badges de notification
+  refreshBadges();
+
   // Navigation jour précédent / suivant
   document.getElementById('prog-prev').addEventListener('click', function() {
     var d = new Date(window._progDate);
@@ -808,7 +815,7 @@ async function showPatientApp(patient) {
 // ══════════════ NAVIGATION PANELS ══════════════
 
 document.getElementById('card-craving').addEventListener('click', function() { openPanel('craving'); buildTriggerButtons(); showCravingStrategies(); });
-document.getElementById('card-programme').addEventListener('click', function() { openPanel('programme'); });
+document.getElementById('card-programme').addEventListener('click', function() { openPanel('programme'); markSeen('programme'); });
 document.getElementById('card-agenda').addEventListener('click', function() {
   openPanel('agenda');
   if (currentPatient && !window._agendaInitialized) {
@@ -823,6 +830,7 @@ document.getElementById('card-agenda').addEventListener('click', function() {
 document.getElementById('card-strategies').addEventListener('click', function() { openPanel('strategies'); });
 document.getElementById('card-ateliers').addEventListener('click', function() {
   openPanel('ateliers');
+  markSeen('ateliers');
   loadAteliers();
 });
 
@@ -830,6 +838,7 @@ document.getElementById('card-ateliers').addEventListener('click', function() {
 
 document.getElementById('card-messages').addEventListener('click', function() {
   openPanel('messages');
+  markSeen('messages');
   loadMessages();
 });
 
@@ -1747,6 +1756,7 @@ async function loadTraitements() {
 // Charger les traitements quand on ouvre le panel
 document.getElementById('card-traitements').addEventListener('click', function() {
   openPanel('traitements');
+  markSeen('traitements');
   loadTraitements();
 });
 
@@ -2079,6 +2089,75 @@ function escapeHtml(str) {
 }
 
 // Thème géré par ../shared/theme.js (chargé en fin de body)
+
+// ══════════════ BADGES NOTIFICATIONS ══════════════
+
+// Stocke le dernier timestamp de consultation par carte dans localStorage
+function getBadgeKey(card) { return 'usca_badge_' + (currentPatient ? currentPatient.id : '') + '_' + card; }
+
+function getLastSeen(card) {
+  var val = localStorage.getItem(getBadgeKey(card));
+  return val ? val : '1970-01-01T00:00:00Z';
+}
+
+function markSeen(card) {
+  localStorage.setItem(getBadgeKey(card), new Date().toISOString());
+  var badge = document.getElementById('badge-' + card);
+  if (badge) badge.classList.add('hidden');
+}
+
+function showBadge(card, count) {
+  var badge = document.getElementById('badge-' + card);
+  if (!badge) return;
+  if (count > 0) {
+    badge.textContent = count > 9 ? '9+' : count;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+async function refreshBadges() {
+  if (!currentPatient) return;
+  var pid = currentPatient.id;
+
+  // Messages : contenus partagés plus récents que le dernier vu
+  try {
+    var contenus = await db.getContenus(pid);
+    var lastSeenMsg = getLastSeen('messages');
+    var newMsgs = contenus.filter(function(c) { return c.created_at > lastSeenMsg; });
+    showBadge('messages', newMsgs.length);
+  } catch(e) {}
+
+  // Traitements : prescriptions plus récentes
+  try {
+    var prescriptions = await db.getPrescriptions(pid);
+    var lastSeenTrait = getLastSeen('traitements');
+    var newTraits = prescriptions.filter(function(p) { return p.created_at > lastSeenTrait; });
+    showBadge('traitements', newTraits.length);
+  } catch(e) {}
+
+  // Programme : événements plus récents
+  try {
+    var evts = await db.getEvenements(pid);
+    var lastSeenProg = getLastSeen('programme');
+    var newEvts = evts.filter(function(ev) { return ev.created_at > lastSeenProg; });
+    showBadge('programme', newEvts.length);
+  } catch(e) {}
+
+  // Ateliers : groupes du jour sans participation enregistrée
+  try {
+    var todayGroupes = window.getGroupesForDay ? window.getGroupesForDay(new Date()) : [];
+    var todayStr = new Date().toISOString().split('T')[0];
+    var parts = await db.getParticipationsPatient(pid);
+    var partKeys = {};
+    parts.forEach(function(p) { partKeys[p.groupe_slug + '_' + p.date_groupe] = true; });
+    var missing = todayGroupes.filter(function(g) {
+      return g.slug !== 'therapies-complementaires' && !partKeys[g.slug + '_' + todayStr];
+    });
+    showBadge('ateliers', missing.length);
+  } catch(e) {}
+}
 
 // ══════════════ FEEDBACK ══════════════
 
