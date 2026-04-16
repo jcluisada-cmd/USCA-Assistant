@@ -10,7 +10,8 @@
       "Bash(python3:*)",
       "Bash(node -e ' *)",
       "Bash(node *)",
-      "Bash(grep -n '\\\\\\\\u00[a-f0-9]\\\\{2\\\\}' admin/index.html)"
+      "Bash(grep -n '\\\\\\\\u00[a-f0-9]\\\\{2\\\\}' admin/index.html)",
+      "Bash(ls *)"
     ]
   }
 }

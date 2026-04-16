@@ -746,14 +746,33 @@ function WaitlistForm({item, onAdded}) {
     if (!ageNum || ageNum < 1) { setError("Âge requis"); return; }
     setError(""); setSending(true);
     try {
-      const parentDb = window.parent && window.parent.db;
-      if (parentDb && parentDb.addListeAttente) {
-        await parentDb.addListeAttente({ age: ageNum, date_entree_prevue: dateEntree || null, addressage: item.service, commentaire: item.details || '' });
-        onAdded();
+      // Accès au Supabase du parent (dashboard admin)
+      let parentDb = null;
+      try { parentDb = window.parent && window.parent.db; } catch(x) {}
+      if (!parentDb || !parentDb.addListeAttente) {
+        // Fallback : charger le client Supabase directement
+        const sbUrl = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
+        const sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZHhmb3F4Z3ZibWtuemp6ZWNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTgyNTEsImV4cCI6MjA5MTY5NDI1MX0.8Q8-wJUiOLHdf3vtMAvXMQ4JaylTGE-lm5viPWeVfZU';
+        if (window.parent && window.parent.supabase) {
+          const sb = window.parent.supabase.createClient(sbUrl, sbKey);
+          const { error: insertErr } = await sb.from('liste_attente').insert({
+            age: ageNum, date_entree_prevue: dateEntree || null,
+            addressage: item.service || 'Non précisé', commentaire: item.details || ''
+          });
+          if (insertErr) throw insertErr;
+        } else {
+          setError("Ouvrir la Toolbox depuis le dashboard soignant"); setSending(false); return;
+        }
       } else {
-        setError("Ouvrir la Toolbox depuis le dashboard");
+        await parentDb.addListeAttente({ age: ageNum, date_entree_prevue: dateEntree || null, addressage: item.service || 'Non précisé', commentaire: item.details || '' });
       }
-    } catch(e) { setError(e.message || "Erreur"); }
+      // Rafraîchir la liste dans le dashboard parent
+      try { if (window.parent.loadListeAttente) window.parent.loadListeAttente(); } catch(x) {}
+      onAdded();
+    } catch(e) {
+      console.error('Erreur ajout liste attente:', e);
+      setError(typeof e === 'object' ? (e.message || JSON.stringify(e)) : String(e));
+    }
     setSending(false);
   };
 
