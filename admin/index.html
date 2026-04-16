@@ -119,14 +119,10 @@
         </div>
 
         <!-- Stats rapides -->
-        <div class="grid grid-cols-2 gap-3 mb-4">
-          <div class="bg-white rounded-xl border border-slate-200 p-3 text-center">
-            <p id="stat-patients" class="text-2xl font-bold text-indigo-600">—</p>
-            <p class="text-[10px] text-slate-500">Hospitalisés</p>
-          </div>
-          <div class="bg-white rounded-xl border border-slate-200 p-3 text-center">
-            <p id="stat-alertes" class="text-2xl font-bold text-red-500">—</p>
-            <p class="text-[10px] text-slate-500">Cravings signalés</p>
+        <div class="mb-4">
+          <div class="bg-white rounded-xl border border-slate-200 p-4 text-center">
+            <p id="stat-patients" class="text-3xl font-bold text-indigo-600">—</p>
+            <p class="text-xs text-slate-500">Patients hospitalisés</p>
           </div>
         </div>
 
@@ -422,12 +418,18 @@
     <div id="tab-groupes" class="tab-content flex-1 overflow-y-auto hidden">
       <div class="p-6 max-w-2xl mx-auto w-full pb-24">
         <h2 class="text-xl font-bold text-slate-800 mb-4">Groupes thérapeutiques</h2>
-        <div class="bg-white rounded-xl border border-slate-200 p-8 text-center">
-          <div class="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p class="text-xs text-slate-400 mb-4">Semaine A — Planning récurrent</p>
+        <div id="groupes-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Modal actions animateur -->
+      <div id="modal-groupe-actions" class="fixed inset-0 z-[200] bg-black/50 hidden flex items-end justify-center">
+        <div class="bg-white w-full max-w-lg rounded-t-2xl p-6 pb-8 max-h-[85vh] overflow-y-auto" id="modal-groupe-body">
+          <div class="flex items-center justify-between mb-4">
+            <h3 id="modal-groupe-title" class="text-base font-bold text-slate-800"></h3>
+            <button id="modal-groupe-close" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">&times;</button>
           </div>
-          <p class="text-sm font-medium text-slate-600">Le planning des groupes sera configurable ici</p>
-          <p class="text-xs text-slate-400 mt-2">Roulement sur 2 semaines, jours et horaires</p>
+          <div id="modal-groupe-content"></div>
         </div>
       </div>
     </div>
@@ -444,13 +446,13 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
           <span class="text-[10px] font-semibold mt-0.5">Patients</span>
         </button>
-        <button data-tab="groupes" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
-        </button>
         <button data-tab="toolbox" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
           <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
+        </button>
+        <button data-tab="groupes" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="text-[10px] font-semibold mt-0.5">Groupes</span>
         </button>
       </div>
     </nav>
@@ -461,6 +463,7 @@
 <script src="../shared/supabase.js"></script>
 <script src="../shared/auth.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
+<script src="../shared/planning-groupes.js"></script>
 
 <script>
 // ── Helpers DOM sûrs ──
@@ -488,6 +491,8 @@ function switchAdminTab(tabId) {
     document.getElementById('admin-toolbox-iframe').src = '../staff/toolbox.html?embedded=true';
     toolboxLoaded = true;
   }
+  // Load groupes tab
+  if (tabId === 'groupes') renderGroupesTab();
 }
 adminTabs.forEach(function(btn) { btn.addEventListener('click', function() { switchAdminTab(btn.dataset.tab); }); });
 
@@ -559,7 +564,6 @@ async function loadDashboardStats() {
     loadedAlertes = results[1];
     loadedPermissions = results[2];
     document.getElementById('stat-patients').textContent = loadedPatients.length;
-    document.getElementById('stat-alertes').textContent = loadedAlertes.length;
     renderPatients();
   } catch (err) {
     console.warn('Stats indisponibles :', err.message);
@@ -1344,6 +1348,276 @@ document.getElementById('btn-pin-logout').addEventListener('click', async () => 
   document.getElementById('pin-overlay').classList.add('hidden');
   document.getElementById('admin-app').classList.add('hidden');
   document.getElementById('login-screen').classList.remove('hidden');
+});
+
+// ══════════════ ONGLET GROUPES ══════════════
+
+var groupeAnimateurs = [];
+var groupeModifications = {};
+
+async function renderGroupesTab() {
+  var list = document.getElementById('groupes-list');
+  list.textContent = '';
+  var todayStr = new Date().toISOString().split('T')[0];
+
+  try { groupeAnimateurs = await db.getGroupeAnimateurs(); } catch(e) { groupeAnimateurs = []; }
+  try {
+    var mods = await db.getGroupeModifications(todayStr);
+    groupeModifications = {};
+    mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
+  } catch(e) { groupeModifications = {}; }
+
+  var planning = window.PLANNING_GROUPES || [];
+  var jours = window.JOURS_SEMAINE || [];
+  var typeColors = {
+    groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' },
+    atelier: { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700', dot: 'bg-violet-500' },
+    groupe_jeu: { bg: 'bg-teal-50', border: 'border-teal-200', text: 'text-teal-700', dot: 'bg-teal-500' },
+    therapie: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', dot: 'bg-rose-500' }
+  };
+
+  var parJour = {};
+  planning.forEach(function(g) {
+    if (!parJour[g.jour]) parJour[g.jour] = [];
+    parJour[g.jour].push(g);
+  });
+
+  [1,2,3,4,5].forEach(function(jour) {
+    if (!parJour[jour]) return;
+    var daySection = createEl('div', 'mb-4');
+    daySection.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', jours[jour]));
+
+    parJour[jour].forEach(function(g) {
+      var style = typeColors[g.type] || typeColors.groupe;
+      var mod = groupeModifications[g.slug];
+      var isAnnule = mod && mod.annule;
+      var heure = (mod && mod.nouvelle_heure) || g.debut;
+      var fin = (mod && mod.nouvelle_fin) || g.fin;
+
+      var card = createEl('div', style.bg + ' border ' + style.border + ' rounded-xl p-4 mb-2' + (isAnnule ? ' opacity-50' : ''));
+
+      var topRow = createEl('div', 'flex items-start justify-between gap-2');
+      var titleDiv = createEl('div', 'flex-1');
+      var titleText = g.nom;
+      if (isAnnule) titleText = g.nom + ' — ANNULÉ';
+      var title = createEl('p', 'text-sm font-bold ' + style.text + (isAnnule ? ' line-through' : ''), isAnnule ? g.nom : titleText);
+      if (isAnnule) {
+        var annuleBadge = createEl('span', 'text-red-500 text-xs font-bold ml-2 no-underline', 'ANNULÉ');
+        annuleBadge.style.textDecoration = 'none';
+        title.appendChild(document.createTextNode(' '));
+        title.appendChild(annuleBadge);
+      }
+      titleDiv.appendChild(title);
+      if (heure) {
+        titleDiv.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', heure + (fin ? ' - ' + fin : '')));
+      } else {
+        titleDiv.appendChild(createEl('p', 'text-xs text-slate-400 mt-0.5 italic', 'Horaire variable'));
+      }
+      if (g.detail) titleDiv.appendChild(createEl('p', 'text-xs text-slate-400 mt-0.5', g.detail));
+      topRow.appendChild(titleDiv);
+
+      var dot = createEl('div', style.dot + ' w-3 h-3 rounded-full flex-shrink-0 mt-1');
+      topRow.appendChild(dot);
+      card.appendChild(topRow);
+
+      // Animateurs
+      var anims = groupeAnimateurs.filter(function(a) { return a.groupe_slug === g.slug; });
+      var animDiv = createEl('div', 'mt-2 flex flex-wrap gap-1.5 items-center');
+      if (anims.length > 0) {
+        anims.forEach(function(a) {
+          var badge = createEl('span', 'inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/70 border border-slate-200 text-slate-700', a.nom_affiche);
+          if (currentProfile && a.user_id === currentProfile.id) {
+            var btnX = createEl('button', 'ml-0.5 text-red-400 hover:text-red-600 font-bold', '\u00d7');
+            (function(slug, uid) {
+              btnX.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                try { await db.removeGroupeAnimateur(slug, uid); renderGroupesTab(); } catch(err) { console.warn(err); }
+              });
+            })(g.slug, a.user_id);
+            badge.appendChild(btnX);
+          }
+          animDiv.appendChild(badge);
+        });
+      } else {
+        animDiv.appendChild(createEl('span', 'text-[11px] text-slate-400 italic', 'Aucun animateur'));
+      }
+
+      var isMeAnim = currentProfile && anims.some(function(a) { return a.user_id === currentProfile.id; });
+      if (!isMeAnim && currentProfile) {
+        var btnDesign = createEl('button', 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-colors', '+ Me d\u00e9signer');
+        (function(slug) {
+          btnDesign.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            try { await db.addGroupeAnimateur(slug, currentProfile.id, currentProfile.nom); renderGroupesTab(); } catch(err) { console.warn(err); }
+          });
+        })(g.slug);
+        animDiv.appendChild(btnDesign);
+      }
+      card.appendChild(animDiv);
+
+      // Actions animateur
+      if (isMeAnim) {
+        var actionsRow = createEl('div', 'mt-3 pt-2 border-t border-slate-200/60 flex flex-wrap gap-2');
+        var actions = [
+          { label: 'Modifier heure', icon: '\ud83d\udd50', action: 'heure' },
+          { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
+          { label: 'Exclure patient', icon: '\ud83d\udeab', action: 'exclure' },
+          { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
+        ];
+        actions.forEach(function(act) {
+          var btn = createEl('button', 'text-[11px] font-semibold px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors', act.icon + ' ' + act.label);
+          (function(slug, actionType, groupe) {
+            btn.addEventListener('click', function() { openGroupeActionModal(slug, actionType, groupe); });
+          })(g.slug, act.action, g);
+          actionsRow.appendChild(btn);
+        });
+        card.appendChild(actionsRow);
+      }
+
+      daySection.appendChild(card);
+    });
+
+    list.appendChild(daySection);
+  });
+}
+
+function openGroupeActionModal(slug, actionType, groupe) {
+  var modal = document.getElementById('modal-groupe-actions');
+  var title = document.getElementById('modal-groupe-title');
+  var content = document.getElementById('modal-groupe-content');
+  content.textContent = '';
+  modal.classList.remove('hidden');
+  var todayStr = new Date().toISOString().split('T')[0];
+
+  if (actionType === 'heure') {
+    title.textContent = 'Modifier l\'heure \u2014 ' + groupe.nom;
+    var form = createEl('div', 'space-y-3');
+    form.appendChild(createEl('p', 'text-xs text-slate-500', 'Modification pour aujourd\'hui uniquement (' + todayStr + ')'));
+    var row = createEl('div', 'flex gap-3');
+    var lbl1 = createEl('label', 'flex-1');
+    lbl1.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'D\u00e9but'));
+    var inp1 = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    inp1.type = 'time'; inp1.id = 'grp-new-debut'; inp1.value = groupe.debut || '';
+    lbl1.appendChild(inp1); row.appendChild(lbl1);
+    var lbl2 = createEl('label', 'flex-1');
+    lbl2.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Fin'));
+    var inp2 = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    inp2.type = 'time'; inp2.id = 'grp-new-fin'; inp2.value = groupe.fin || '';
+    lbl2.appendChild(inp2); row.appendChild(lbl2);
+    form.appendChild(row);
+    var btnSave = createEl('button', 'w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-indigo-700 transition-colors', 'Enregistrer');
+    btnSave.addEventListener('click', async function() {
+      var nd = document.getElementById('grp-new-debut').value;
+      var nf = document.getElementById('grp-new-fin').value;
+      if (!nd) return;
+      try {
+        await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, nouvelle_heure: nd, nouvelle_fin: nf || null, modifie_par: currentProfile.id });
+        modal.classList.add('hidden'); renderGroupesTab();
+      } catch(e) { console.warn(e); }
+    });
+    form.appendChild(btnSave);
+    var btnReset = createEl('button', 'w-full bg-slate-100 text-slate-600 font-semibold py-2 rounded-xl text-sm hover:bg-slate-200 transition-colors mt-2', 'Remettre l\'horaire normal');
+    btnReset.addEventListener('click', async function() {
+      try { await db.deleteGroupeModification(slug, todayStr); modal.classList.add('hidden'); renderGroupesTab(); } catch(e) { console.warn(e); }
+    });
+    form.appendChild(btnReset);
+    content.appendChild(form);
+
+  } else if (actionType === 'annuler') {
+    var mod = groupeModifications[slug];
+    var isAnnule = mod && mod.annule;
+    if (isAnnule) {
+      title.textContent = 'R\u00e9tablir \u2014 ' + groupe.nom;
+      content.appendChild(createEl('p', 'text-sm text-slate-600 mb-4', 'R\u00e9tablir ce groupe pour aujourd\'hui ?'));
+      var btnRetablir = createEl('button', 'w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-emerald-700 transition-colors', 'Oui, r\u00e9tablir');
+      btnRetablir.addEventListener('click', async function() {
+        try { await db.deleteGroupeModification(slug, todayStr); modal.classList.add('hidden'); renderGroupesTab(); } catch(e) { console.warn(e); }
+      });
+      content.appendChild(btnRetablir);
+    } else {
+      title.textContent = 'Annuler \u2014 ' + groupe.nom;
+      content.appendChild(createEl('p', 'text-sm text-slate-600 mb-3', 'Annuler ce groupe pour aujourd\'hui (' + todayStr + ') ?'));
+      var msgLabel = createEl('label', 'block mb-3');
+      msgLabel.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Motif (optionnel)'));
+      var msgInput = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+      msgInput.id = 'grp-cancel-msg'; msgInput.placeholder = 'Ex: animateur absent';
+      msgLabel.appendChild(msgInput);
+      content.appendChild(msgLabel);
+      var btnAnnuler = createEl('button', 'w-full bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-red-700 transition-colors', 'Annuler le groupe');
+      btnAnnuler.addEventListener('click', async function() {
+        try {
+          await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, annule: true, message: document.getElementById('grp-cancel-msg').value.trim() || null, modifie_par: currentProfile.id });
+          modal.classList.add('hidden'); renderGroupesTab();
+        } catch(e) { console.warn(e); }
+      });
+      content.appendChild(btnAnnuler);
+    }
+
+  } else if (actionType === 'exclure') {
+    title.textContent = 'Exclure un patient \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Le patient ne verra pas ce groupe dans son programme aujourd\'hui'));
+    var patList = createEl('div', 'space-y-2 max-h-60 overflow-y-auto');
+    content.appendChild(patList);
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var mod = groupeModifications[slug];
+        var excl = (mod && mod.exclusions) || [];
+        patients.forEach(function(p) {
+          var isExcluded = excl.indexOf(p.id) !== -1;
+          var row = createEl('div', 'flex items-center justify-between p-2 rounded-lg ' + (isExcluded ? 'bg-red-50 border border-red-200' : 'bg-white border border-slate-200'));
+          row.appendChild(createEl('span', 'text-sm text-slate-700', 'Ch.' + p.numero_chambre + (p.prenom ? ' \u2014 ' + p.prenom : '')));
+          var btn = createEl('button', 'text-xs font-bold px-2.5 py-1 rounded-full ' + (isExcluded ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'), isExcluded ? 'R\u00e9int\u00e9grer' : 'Exclure');
+          (function(patientId, wasExcluded) {
+            btn.addEventListener('click', async function() {
+              var curMod = groupeModifications[slug] || {};
+              var curExcl = (curMod.exclusions || []).slice();
+              if (wasExcluded) { curExcl = curExcl.filter(function(id) { return id !== patientId; }); }
+              else { curExcl.push(patientId); }
+              try {
+                await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, exclusions: curExcl, modifie_par: currentProfile.id });
+                var mods = await db.getGroupeModifications(todayStr);
+                groupeModifications = {};
+                mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
+                openGroupeActionModal(slug, 'exclure', groupe);
+              } catch(e) { console.warn(e); }
+            });
+          })(p.id, isExcluded);
+          row.appendChild(btn);
+          patList.appendChild(row);
+        });
+      } catch(e) { patList.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement patients')); }
+    })();
+
+  } else if (actionType === 'rappel') {
+    title.textContent = 'Envoyer un rappel \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Ce rappel sera visible dans le programme des patients'));
+    var msgLabel = createEl('label', 'block mb-3');
+    msgLabel.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Message'));
+    var msgArea = createEl('textarea', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    msgArea.id = 'grp-rappel-msg'; msgArea.rows = 3;
+    msgArea.value = 'Rappel : ' + groupe.nom + (groupe.debut ? ' \u00e0 ' + groupe.debut : '') + ' aujourd\'hui';
+    msgLabel.appendChild(msgArea);
+    content.appendChild(msgLabel);
+    var btnSend = createEl('button', 'w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-indigo-700 transition-colors', '\ud83d\udce2 Envoyer le rappel');
+    btnSend.addEventListener('click', async function() {
+      var msg = document.getElementById('grp-rappel-msg').value.trim();
+      if (!msg) return;
+      try {
+        await db.sendGroupeRappel(slug, todayStr, msg, currentProfile.id);
+        modal.classList.add('hidden');
+      } catch(e) { console.warn(e); }
+    });
+    content.appendChild(btnSend);
+  }
+}
+
+// Fermeture modal groupes
+document.getElementById('modal-groupe-close').addEventListener('click', function() {
+  document.getElementById('modal-groupe-actions').classList.add('hidden');
+});
+document.getElementById('modal-groupe-actions').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
 });
 
 // ── Auto-login si session existante ──

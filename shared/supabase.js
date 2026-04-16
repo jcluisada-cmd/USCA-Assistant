@@ -314,5 +314,73 @@ window.db = {
     const { data, error } = await sb.from('patients').update({ date_sortie_prevue: dateSortie }).eq('id', patientId).select().single();
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ ANIMATEURS DE GROUPES ════════════════
+
+  /** Liste tous les animateurs de groupes */
+  async getGroupeAnimateurs() {
+    const { data, error } = await sb.from('groupe_animateurs').select('*').order('created_at');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Se désigner animateur d'un groupe */
+  async addGroupeAnimateur(groupeSlug, userId, nomAffiche) {
+    const { data, error } = await sb.from('groupe_animateurs').insert({
+      groupe_slug: groupeSlug,
+      user_id: userId,
+      nom_affiche: nomAffiche
+    }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Se retirer comme animateur d'un groupe */
+  async removeGroupeAnimateur(groupeSlug, userId) {
+    const { error } = await sb.from('groupe_animateurs').delete().eq('groupe_slug', groupeSlug).eq('user_id', userId);
+    if (error) throw error;
+  },
+
+  // ════════════════ MODIFICATIONS DE GROUPES ════════════════
+
+  /** Récupère les modifications pour une date donnée */
+  async getGroupeModifications(dateStr) {
+    const { data, error } = await sb.from('groupe_modifications').select('*').eq('date_effet', dateStr);
+    if (error) throw error;
+    return data;
+  },
+
+  /** Crée ou met à jour une modification de groupe (upsert sur slug+date) */
+  async upsertGroupeModification(mod) {
+    const { data, error } = await sb.from('groupe_modifications')
+      .upsert(mod, { onConflict: 'groupe_slug,date_effet' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime une modification (retour à l'horaire normal) */
+  async deleteGroupeModification(groupeSlug, dateStr) {
+    const { error } = await sb.from('groupe_modifications').delete().eq('groupe_slug', groupeSlug).eq('date_effet', dateStr);
+    if (error) throw error;
+  },
+
+  // ════════════════ RAPPELS DE GROUPE ════════════════
+
+  /** Envoyer un rappel pour un groupe */
+  async sendGroupeRappel(groupeSlug, dateStr, message, envoyePar) {
+    const { data, error } = await sb.from('groupe_rappels').insert({
+      groupe_slug: groupeSlug, date_effet: dateStr, message: message, envoye_par: envoyePar
+    }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Récupère les rappels du jour pour un patient */
+  async getGroupeRappels(dateStr) {
+    const { data, error } = await sb.from('groupe_rappels').select('*').eq('date_effet', dateStr).order('created_at', { ascending: false });
+    if (error) throw error;
+    return data;
   }
 };

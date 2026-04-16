@@ -173,7 +173,20 @@ ALTER TABLE evenements ADD CONSTRAINT evenements_type_check
 
 ---
 
-## Priorité 8 — Design et identité visuelle
+## Priorité 8 — Module demandes de post-cure + Annuaire patients
+
+### Demandes de post-cure (rôle médecin)
+- JC a un module HTML existant à intégrer
+- Fonctionnalité réservée aux profils avec rôle `medecin`
+- Intégration dans le module admin ou en carte dédiée
+
+### Annuaire patients
+- Liste/répertoire des patients pour consultation rapide
+- À définir : contenu, filtres, accès
+
+---
+
+## Priorité 9 — Design et identité visuelle
 
 - Logo et icône : ✅ intégrés (icon-512.png, splash.png)
 - Pour changer l'icône sur les téléphones déjà installés → nécessite désinstall/réinstall
@@ -188,15 +201,20 @@ ALTER TABLE evenements ADD CONSTRAINT evenements_type_check
 | `PROJECT_PENDING.md` | Ce fichier — plan de développement |
 | `SPEC_PATIENT_V3.md` | Spec du module patient v3 |
 | `parametrage_login.md` | Spec du login unifié |
-| `supabase-migration-v5.sql` | CASCADE (à exécuter) |
+| `supabase-migration-v5.sql` | CASCADE (exécutée) |
+| `supabase-migration-v6.sql` | Groupes : animateurs + modifications + rappels (à exécuter) |
+| `shared/planning-groupes.js` | Planning semaine A partagé patient/admin |
 | `affiche-equipe.html` | Affiche A4 imprimable pour l'équipe |
 
 ---
 
 ## Notes pour la prochaine session
 
-1. **Commencer par exécuter migration v5** si pas encore fait
-2. **Tester le circuit complet** soignant → patient
-3. **JC doit fournir** le planning des groupes sur 2 semaines pour la priorité 2
-4. **Mot de passe commun** des soignants : `usca_c15`
-5. **URL de production** : https://usca-connect.pages.dev
+1. **Exécuter migration v6** dans Supabase (tables groupe_animateurs, groupe_modifications, groupe_rappels)
+2. **Tester l'onglet Groupes** dans l'admin : désignation animateur, modifier heure, annuler, exclure, rappel
+3. **Tester le programme patient** : vérifier que les groupes + repas s'affichent correctement sur la timeline
+4. **JC doit fournir** le planning semaine B pour compléter le roulement
+5. **Bugs à corriger** : re-login admin après signUp, modals fond noir, déconnexion patient
+6. **Chantier futur** : module post-cure (HTML existant de JC) + annuaire patients
+7. **Mot de passe commun** des soignants : `usca_c15`
+8. **URL de production** : https://usca-connect.pages.dev

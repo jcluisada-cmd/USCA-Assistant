@@ -323,6 +323,7 @@
       <span class="text-sm font-bold">Programme du jour</span>
     </header>
     <div class="flex-1 p-5 max-w-lg mx-auto w-full">
+      <div id="rappels-container" class="space-y-2 mb-4"></div>
       <div id="timeline-container" class="space-y-0"></div>
       <div id="timeline-empty" class="bg-white rounded-xl border border-slate-200 p-8 text-center hidden">
         <p class="text-sm text-slate-500">Aucun programme configuré</p>
@@ -490,7 +491,7 @@
       </div>
     </div>
     <!-- Iframe pour afficher une fiche -->
-    <iframe id="fiche-iframe" class="flex-1 w-full border-none hidden" title="Fiche traitement"></iframe>
+    <iframe id="fiche-iframe" class="flex-1 w-full border-none hidden" style="min-height:calc(100vh - 52px);" title="Fiche traitement"></iframe>
   </div>
 
   <!-- ════════════════ PANEL PERMISSION ════════════════ -->
@@ -590,6 +591,7 @@
 <script src="../shared/auth.js"></script>
 <script src="../shared/craving-agenda.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
+<script src="../shared/planning-groupes.js"></script>
 
 <script>
 // ── État ──
@@ -645,16 +647,61 @@ async function showPatientApp(patient) {
   // Charger le programme + événements + permissions
   var activites = [];
 
+  // Routine quotidienne (repas — affichage discret, pas encadré)
+  activites.push({ heure: '08:00', label: 'Petit déjeuner', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '12:00', label: 'Déjeuner', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '16:00', label: 'Goûter', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '18:00', label: 'Dîner', type: 'repas', lieu: '', isEvent: false });
+
+  // Planning des groupes (depuis planning-groupes.js partagé)
+  var todayDow = now.getDay(); // 0=dim, 1=lun, 2=mar, ...
+  var todayStr = now.toISOString().split('T')[0];
+
+  // Charger les modifications de groupes (changements d'heure, annulations, exclusions)
+  var groupeMods = {};
+  try {
+    var modsData = await db.getGroupeModifications(todayStr);
+    modsData.forEach(function(m) { groupeMods[m.groupe_slug] = m; });
+  } catch(e) {}
+
+  // Charger les noms des animateurs
+  var animateurs = {};
+  try {
+    var animData = await db.getGroupeAnimateurs();
+    animData.forEach(function(a) {
+      if (!animateurs[a.groupe_slug]) animateurs[a.groupe_slug] = [];
+      animateurs[a.groupe_slug].push(a.nom_affiche);
+    });
+  } catch(e) {}
+
+  (window.PLANNING_GROUPES || []).forEach(function(g) {
+    if (g.jour !== todayDow) return;
+    var mod = groupeMods[g.slug];
+    // Annulé pour aujourd'hui ?
+    if (mod && mod.annule) return;
+    // Exclu pour ce patient ?
+    if (mod && mod.exclusions && mod.exclusions.indexOf(patient.id) !== -1) return;
+    var debut = (mod && mod.nouvelle_heure) || g.debut;
+    var fin = (mod && mod.nouvelle_fin) || g.fin;
+    var animLabel = animateurs[g.slug] ? animateurs[g.slug].join(', ') : '';
+    var lieu = g.detail || '';
+    if (animLabel) lieu = lieu ? lieu + ' — ' + animLabel : animLabel;
+    if (debut) {
+      activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
+    } else {
+      activites.push({ heure: '10:00', label: g.nom, type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
+    }
+  });
+
   // Programme template (si existant)
   if (patient.programme_id) {
     try {
       var prog = await db.getProgrammeById(patient.programme_id);
-      if (prog.activites) activites = prog.activites;
+      if (prog.activites) activites = activites.concat(prog.activites);
     } catch(e) {}
   }
 
   // Événements du jour (pushés par le soignant)
-  var todayStr = now.toISOString().split('T')[0];
   try {
     var evts = await db.getEvenements(patient.id);
     evts.forEach(function(evt) {
@@ -690,6 +737,19 @@ async function showPatientApp(patient) {
           isPermission: true
         });
       }
+    });
+  } catch(e) {}
+
+  // Charger les rappels de groupe
+  try {
+    var rappels = await db.getGroupeRappels(todayStr);
+    var rappelContainer = document.getElementById('rappels-container');
+    rappelContainer.textContent = '';
+    rappels.forEach(function(r) {
+      var banner = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2');
+      banner.appendChild(createEl('span', 'text-amber-600 text-lg flex-shrink-0', '\ud83d\udce2'));
+      banner.appendChild(createEl('p', 'text-sm text-amber-800 font-medium', r.message));
+      rappelContainer.appendChild(banner);
     });
   } catch(e) {}
 
@@ -1173,6 +1233,9 @@ function renderTimeline(activites) {
     soin: { bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500', text: 'text-indigo-700' },
     repas: { bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500', text: 'text-amber-700' },
     groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', dot: 'bg-emerald-500', text: 'text-emerald-700' },
+    atelier: { bg: 'bg-violet-50', border: 'border-violet-200', dot: 'bg-violet-500', text: 'text-violet-700' },
+    groupe_jeu: { bg: 'bg-teal-50', border: 'border-teal-200', dot: 'bg-teal-500', text: 'text-teal-700' },
+    therapie: { bg: 'bg-rose-50', border: 'border-rose-200', dot: 'bg-rose-500', text: 'text-rose-700' },
     activite: { bg: 'bg-purple-50', border: 'border-purple-200', dot: 'bg-purple-500', text: 'text-purple-700' },
     libre: { bg: 'bg-slate-50', border: 'border-slate-200', dot: 'bg-slate-400', text: 'text-slate-600' },
     entretien: { bg: 'bg-indigo-100', border: 'border-indigo-300', dot: 'bg-indigo-600', text: 'text-indigo-800' },
@@ -1188,8 +1251,8 @@ function renderTimeline(activites) {
 
     if (!nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
 
-    // Mise en valeur : événements et groupes = importants, repas/soins = discrets
-    var isImportant = act.isEvent || act.isPermission || act.type === 'groupe' || act.type === 'entretien' || act.type === 'permission';
+    // Mise en valeur : événements et groupes = importants (encadrés couleur), repas/soins = discrets (pas encadrés)
+    var isImportant = act.isEvent || act.isPermission || act.isGroupe || act.type === 'groupe' || act.type === 'atelier' || act.type === 'groupe_jeu' || act.type === 'therapie' || act.type === 'entretien' || act.type === 'permission';
     var isRoutine = act.type === 'repas' || act.type === 'soin' || act.type === 'libre';
 
     var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-40' : '') + (isRoutine && !isCurrent ? ' opacity-70' : ''));
