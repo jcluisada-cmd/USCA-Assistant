@@ -2542,7 +2542,7 @@ function renderPostcureCard(patient) {
   var hasDate = !!statut.date_postcure;
   var hasStruct = !!statut.structure;
 
-  if (hasDate || hasStruct) {
+  if (hasDate) {
     // Post-cure prévue → afficher les infos
     var card = document.createElement('div');
     card.className = 'bg-teal-50 dark:bg-teal-950 rounded-2xl border-2 border-teal-200 dark:border-teal-800 p-4';

@@ -546,12 +546,17 @@ window.db = {
 
   // ── Statut post-cure (workflow, pas de données patient) ──
 
-  /** Met à jour un flag du statut post-cure */
+  /** Met à jour un flag du statut post-cure.
+   * value === true  → checkbox workflow, on stocke la date du jour
+   * value (string)  → on stocke la valeur telle quelle (structure, date_postcure…)
+   * value falsy     → suppression de la clé */
   async updatePostcureStatut(patientId, key, value) {
     const { data: patient } = await sb.from('patients').select('postcure_statut').eq('id', patientId).single();
     const statut = patient?.postcure_statut || {};
-    if (value) {
+    if (value === true) {
       statut[key] = new Date().toISOString().split('T')[0];
+    } else if (value) {
+      statut[key] = value;
     } else {
       delete statut[key];
     }

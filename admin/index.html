@@ -2114,11 +2114,10 @@ async function renderGroupesTab() {
           var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
           presDiv.id = 'reu-pres-' + reu.slug;
           rCard.appendChild(presDiv);
-          (async function(slug, container) {
+          (async function(slug, container, reuJour) {
             try {
               var presences = await db.getPresencesReunion(slug, todayStr);
               var profiles = await db.getAllProfiles();
-              var reuJour = reu.jour; // jour de la réunion (1=lun..5=ven)
               var medecins = profiles.filter(function(p) {
                 if (p.role !== 'medecin') return false;
                 // Filtrer par jours de présence si défini
@@ -2156,7 +2155,7 @@ async function renderGroupesTab() {
                 container.appendChild(row);
               });
             } catch(e) {}
-          })(reu.slug, presDiv);
+          })(reu.slug, presDiv, reu.jour);
         }
         reunionsList.appendChild(rCard);
       }
