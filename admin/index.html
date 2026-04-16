@@ -127,6 +127,63 @@
           </div>
         </div>
 
+        <!-- ═══ Entrées / Sorties ═══ -->
+        <div id="section-entrees-sorties" class="mb-4">
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <!-- Onglets Sorties / Liste d'attente -->
+            <div class="flex border-b border-slate-200">
+              <button id="tab-sorties-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-indigo-600 border-b-2 border-indigo-600" onclick="switchESTab('sorties')">Sorties prévues</button>
+              <button id="tab-attente-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-slate-400 border-b-2 border-transparent" onclick="switchESTab('attente')">Liste d'attente</button>
+            </div>
+
+            <!-- Contenu : Sorties prévues -->
+            <div id="es-sorties" class="p-3">
+              <div id="sorties-list" class="space-y-1.5"></div>
+            </div>
+
+            <!-- Contenu : Liste d'attente -->
+            <div id="es-attente" class="p-3 hidden">
+              <div id="attente-list" class="space-y-1.5"></div>
+              <button id="btn-add-attente" class="w-full mt-2 py-2.5 border-2 border-dashed border-indigo-300 rounded-lg text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors">+ Ajouter un patient</button>
+
+              <!-- Formulaire ajout/édition attente -->
+              <div id="form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                <h5 id="form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Âge</label>
+                    <input type="number" id="att-age" placeholder="65" min="18" max="100" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date d'entrée prévue</label>
+                    <input type="date" id="att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Adressage</label>
+                  <select id="att-addressage" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                    <option value="CSAPA">CSAPA</option>
+                    <option value="Addictologue">Addictologue</option>
+                    <option value="Médecin Traitant">Médecin Traitant</option>
+                    <option value="Hépatologie">Hépatologie</option>
+                    <option value="Cardiologie">Cardiologie</option>
+                    <option value="Neurologie">Neurologie</option>
+                    <option value="Psychiatre">Psychiatre</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
+                  <input type="text" id="att-commentaire" placeholder="Détails..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                </div>
+                <div class="flex gap-2">
+                  <button id="btn-cancel-attente" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+                  <button id="btn-save-attente" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors">Enregistrer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Formulaire nouveau patient -->
         <div id="form-new-patient" class="bg-white rounded-xl border border-indigo-200 p-5 mb-4 hidden">
           <h4 class="text-sm font-bold text-indigo-700 mb-3">Nouveau patient</h4>
@@ -603,8 +660,177 @@ async function loadDashboardStats() {
     loadedPermissions = results[2];
     document.getElementById('stat-patients').textContent = loadedPatients.length;
     renderPatients();
+    renderSorties();
+    loadListeAttente();
   } catch (err) {
     console.warn('Stats indisponibles :', err.message);
+  }
+}
+
+// ═══ ENTRÉES / SORTIES ═══
+
+var loadedAttente = [];
+var editingAttenteId = null;
+
+function switchESTab(tab) {
+  var isSorties = tab === 'sorties';
+  document.getElementById('es-sorties').classList.toggle('hidden', !isSorties);
+  document.getElementById('es-attente').classList.toggle('hidden', isSorties);
+  document.getElementById('tab-sorties-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
+  document.getElementById('tab-attente-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (!isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
+}
+
+function renderSorties() {
+  var list = document.getElementById('sorties-list');
+  list.textContent = '';
+  var sorties = loadedPatients.filter(function(p) { return p.date_sortie_prevue; })
+    .sort(function(a, b) { return new Date(a.date_sortie_prevue) - new Date(b.date_sortie_prevue); });
+  if (sorties.length === 0) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-3', 'Aucune sortie prévue'));
+    return;
+  }
+  sorties.forEach(function(p) {
+    var row = createEl('div', 'flex items-center justify-between p-2.5 bg-slate-50 rounded-lg');
+    var left = createEl('div', 'flex items-center gap-2');
+    var badge = createEl('span', 'text-xs font-bold bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded', p.numero_chambre);
+    left.appendChild(badge);
+    left.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', 'Chambre ' + p.numero_chambre));
+    row.appendChild(left);
+    var dateStr = new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+    var today = new Date(); today.setHours(0,0,0,0);
+    var sortieDate = new Date(p.date_sortie_prevue); sortieDate.setHours(0,0,0,0);
+    var isPast = sortieDate <= today;
+    row.appendChild(createEl('span', 'text-xs font-semibold ' + (isPast ? 'text-red-500' : 'text-emerald-600'), dateStr));
+    list.appendChild(row);
+  });
+}
+
+async function loadListeAttente() {
+  try {
+    loadedAttente = await db.getListeAttente();
+    renderAttente();
+  } catch (err) {
+    console.warn('Liste attente indisponible :', err.message);
+  }
+}
+
+function createEditSvg() {
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '12'); svg.setAttribute('height', '12'); svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+  var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z');
+  svg.appendChild(path);
+  return svg;
+}
+
+function createTrashSvg() {
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '12'); svg.setAttribute('height', '12'); svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+  var p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p1.setAttribute('d', 'M3 6h18');
+  var p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p2.setAttribute('d', 'M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6');
+  var p3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p3.setAttribute('d', 'M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2');
+  svg.appendChild(p1); svg.appendChild(p2); svg.appendChild(p3);
+  return svg;
+}
+
+function renderAttente() {
+  var list = document.getElementById('attente-list');
+  list.textContent = '';
+  if (loadedAttente.length === 0) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-3', 'Aucun patient en attente'));
+    return;
+  }
+  loadedAttente.forEach(function(item) {
+    var row = createEl('div', 'p-2.5 bg-slate-50 rounded-lg');
+    var top = createEl('div', 'flex items-center justify-between');
+    var left = createEl('div', 'flex items-center gap-2 flex-1 min-w-0');
+    left.appendChild(createEl('span', 'text-xs font-bold text-slate-700', 'Patient de ' + item.age + ' ans'));
+    left.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded whitespace-nowrap', item.addressage));
+    top.appendChild(left);
+
+    var right = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
+    if (item.date_entree_prevue) {
+      right.appendChild(createEl('span', 'text-xs font-semibold text-indigo-600', new Date(item.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
+    }
+    var btnEdit = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors');
+    btnEdit.appendChild(createEditSvg());
+    (function(id) { btnEdit.addEventListener('click', function(e) { e.stopPropagation(); editAttente(id); }); })(item.id);
+    right.appendChild(btnEdit);
+    var btnDel = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors');
+    btnDel.appendChild(createTrashSvg());
+    (function(id) { btnDel.addEventListener('click', function(e) { e.stopPropagation(); deleteAttente(id); }); })(item.id);
+    right.appendChild(btnDel);
+    top.appendChild(right);
+    row.appendChild(top);
+
+    if (item.commentaire) {
+      row.appendChild(createEl('p', 'text-[11px] text-slate-500 mt-1 truncate', item.commentaire));
+    }
+    list.appendChild(row);
+  });
+}
+
+document.getElementById('btn-add-attente').addEventListener('click', function() {
+  editingAttenteId = null;
+  document.getElementById('form-attente-title').textContent = 'Nouveau patient';
+  document.getElementById('att-age').value = '';
+  document.getElementById('att-date').value = '';
+  document.getElementById('att-addressage').value = 'Médecin Traitant';
+  document.getElementById('att-commentaire').value = '';
+  document.getElementById('form-attente').classList.remove('hidden');
+});
+
+document.getElementById('btn-cancel-attente').addEventListener('click', function() {
+  document.getElementById('form-attente').classList.add('hidden');
+  editingAttenteId = null;
+});
+
+document.getElementById('btn-save-attente').addEventListener('click', async function() {
+  var age = parseInt(document.getElementById('att-age').value);
+  var date = document.getElementById('att-date').value;
+  var addressage = document.getElementById('att-addressage').value;
+  var commentaire = document.getElementById('att-commentaire').value.trim();
+  if (!age || age < 1) return;
+  try {
+    if (editingAttenteId) {
+      await db.updateListeAttente(editingAttenteId, { age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+    } else {
+      await db.addListeAttente({ age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+    }
+    document.getElementById('form-attente').classList.add('hidden');
+    editingAttenteId = null;
+    await loadListeAttente();
+  } catch (err) {
+    console.error('Erreur liste attente :', err);
+  }
+});
+
+function editAttente(id) {
+  var item = loadedAttente.find(function(a) { return a.id === id; });
+  if (!item) return;
+  editingAttenteId = id;
+  document.getElementById('form-attente-title').textContent = 'Modifier le patient';
+  document.getElementById('att-age').value = item.age;
+  document.getElementById('att-date').value = item.date_entree_prevue || '';
+  document.getElementById('att-addressage').value = item.addressage;
+  document.getElementById('att-commentaire').value = item.commentaire || '';
+  document.getElementById('form-attente').classList.remove('hidden');
+}
+
+async function deleteAttente(id) {
+  if (!confirm('Retirer ce patient de la liste d\'attente ?')) return;
+  try {
+    await db.deleteListeAttente(id);
+    await loadListeAttente();
+  } catch (err) {
+    console.error('Erreur suppression attente :', err);
   }
 }
 

@@ -512,5 +512,35 @@ window.db = {
     const { data, error } = await sb.from('presences_reunions').select('*').eq('reunion_slug', reunionSlug).eq('date_reunion', dateStr);
     if (error) throw error;
     return data;
+  },
+
+  // ── Liste d'attente ──
+
+  /** Récupère la liste d'attente triée par date d'entrée prévue */
+  async getListeAttente() {
+    const { data, error } = await sb.from('liste_attente').select('*').order('date_entree_prevue', { ascending: true, nullsFirst: false });
+    if (error) throw error;
+    return data;
+  },
+
+  /** Ajoute un patient à la liste d'attente */
+  async addListeAttente(item) {
+    const { data, error } = await sb.from('liste_attente').insert(item).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Met à jour un patient de la liste d'attente */
+  async updateListeAttente(id, updates) {
+    updates.updated_at = new Date().toISOString();
+    const { data, error } = await sb.from('liste_attente').update(updates).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime un patient de la liste d'attente */
+  async deleteListeAttente(id) {
+    const { error } = await sb.from('liste_attente').delete().eq('id', id);
+    if (error) throw error;
   }
 };

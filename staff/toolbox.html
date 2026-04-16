@@ -675,9 +675,9 @@ function SejourView({onBack}) {
 /* ─── ELSA HUB ─── */
 function ELSAHub({onNav, onBack}) {
   const items = [
-    {l:"Fiches réflexes",desc:"5 situations cliniques courantes",i:I.steth,v:"elsa_fiches",c:C.t[600]},
+    {l:"Liaisons en cours",desc:"Liste des patients à voir",i:I.clipboard,v:"liaisons",c:C.a[600]},
     {l:"Admission & Orientation",desc:"Critères USCA & filières",i:I.building,v:"admission",c:C.n[700]},
-    {l:"Liaisons en cours",desc:"Liste des patients à voir",i:I.clipboard,v:"liaisons",c:C.a[600]}
+    {l:"Fiches réflexes",desc:"5 situations cliniques courantes",i:I.steth,v:"elsa_fiches",c:C.t[600]}
   ];
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
