@@ -2518,7 +2518,18 @@ document.getElementById('btn-logout').addEventListener('click', function() {
 
 (function() {
   var session = auth.getPatientSession();
-  if (session) { currentPatient = session; showPatientApp(session); }
+  if (session) {
+    currentPatient = session;
+    showPatientApp(session);
+    // Auto-export si lancé depuis le dashboard admin avec ?action=
+    var params = new URLSearchParams(window.location.search);
+    var action = params.get('action');
+    if (action === 'export-pdf') {
+      setTimeout(function() { document.getElementById('btn-export').click(); }, 1500);
+    } else if (action === 'export-html') {
+      setTimeout(function() { document.getElementById('btn-export-html').click(); }, 1500);
+    }
+  }
 })();
 
 if ('serviceWorker' in navigator) {

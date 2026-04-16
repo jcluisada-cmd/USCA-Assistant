@@ -146,6 +146,26 @@
               <div id="attente-list" class="space-y-1.5"></div>
               <button id="btn-add-attente" class="w-full mt-2 py-2.5 border-2 border-dashed border-indigo-300 rounded-lg text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors">+ Ajouter un patient</button>
 
+              <!-- Formulaire admission depuis liste d'attente -->
+              <div id="form-admettre" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                <h5 class="text-xs font-bold text-emerald-700 mb-2">Admettre le patient</h5>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Chambre</label>
+                    <input type="text" id="adm-chambre" placeholder="312" inputmode="numeric" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date de naissance</label>
+                    <input type="date" id="adm-ddn" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400">
+                  </div>
+                </div>
+                <p id="adm-error" class="text-xs text-red-500 text-center mb-2 hidden"></p>
+                <div class="flex gap-2">
+                  <button id="btn-cancel-admettre" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+                  <button id="btn-save-admettre" class="flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs hover:bg-emerald-700 transition-colors">Admettre</button>
+                </div>
+              </div>
+
               <!-- Formulaire ajout/édition attente -->
               <div id="form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
                 <h5 id="form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
@@ -286,6 +306,18 @@
               </div>
               <div><p class="text-sm font-semibold text-slate-700">Annoncer la date de sortie</p><p id="sortie-current" class="text-[11px] text-slate-400">Non définie</p></div>
             </button>
+
+            <!-- Exports de sortie -->
+            <div id="sortie-exports" class="hidden space-y-2 mt-1 pl-11">
+              <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                <div><p class="text-xs font-bold">Fiche de sortie (PDF)</p><p class="text-[10px] text-white/70">Craving, stratégies, contacts</p></div>
+              </button>
+              <button id="btn-export-html-admin" class="w-full bg-white border-2 border-indigo-200 text-indigo-700 rounded-xl p-3 flex items-center gap-3 hover:border-indigo-400 transition-all active:scale-[0.98] text-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+                <div><p class="text-xs font-bold">App de sortie (HTML)</p><p class="text-[10px] text-slate-500">Application autonome hors-ligne</p></div>
+              </button>
+            </div>
           </div>
 
           <button id="btn-view-as-patient" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 mb-3">
@@ -773,6 +805,11 @@ function renderAttente() {
     if (item.date_entree_prevue) {
       right.appendChild(createEl('span', 'text-xs font-semibold text-indigo-600', new Date(item.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
     }
+    // Bouton Admettre (vert)
+    var btnAdm = createEl('button', 'text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition-colors whitespace-nowrap', 'Admettre');
+    (function(id) { btnAdm.addEventListener('click', function(e) { e.stopPropagation(); startAdmettre(id); }); })(item.id);
+    right.appendChild(btnAdm);
+
     var btnEdit = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors');
     btnEdit.appendChild(createEditSvg());
     (function(id) { btnEdit.addEventListener('click', function(e) { e.stopPropagation(); editAttente(id); }); })(item.id);
@@ -847,6 +884,54 @@ async function deleteAttente(id) {
     console.error('Erreur suppression attente :', err);
   }
 }
+
+// ── Admission depuis liste d'attente ──
+var admettreAttenteId = null;
+
+function startAdmettre(id) {
+  admettreAttenteId = id;
+  document.getElementById('adm-chambre').value = '';
+  document.getElementById('adm-ddn').value = '';
+  document.getElementById('adm-error').classList.add('hidden');
+  document.getElementById('form-admettre').classList.remove('hidden');
+  document.getElementById('form-attente').classList.add('hidden');
+}
+
+document.getElementById('btn-cancel-admettre').addEventListener('click', function() {
+  document.getElementById('form-admettre').classList.add('hidden');
+  admettreAttenteId = null;
+});
+
+document.getElementById('btn-save-admettre').addEventListener('click', async function() {
+  var chambre = document.getElementById('adm-chambre').value.trim();
+  var ddn = document.getElementById('adm-ddn').value;
+  var errEl = document.getElementById('adm-error');
+
+  if (!chambre) { errEl.textContent = 'Chambre requise'; errEl.classList.remove('hidden'); return; }
+  if (!ddn) { errEl.textContent = 'Date de naissance requise'; errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+
+  try {
+    // Créer le patient
+    await db.createPatient({
+      numero_chambre: chambre,
+      date_naissance: ddn,
+      date_admission: new Date().toISOString().split('T')[0],
+      date_sortie_prevue: null
+    });
+    // Supprimer de la liste d'attente
+    if (admettreAttenteId) {
+      await db.deleteListeAttente(admettreAttenteId);
+    }
+    document.getElementById('form-admettre').classList.add('hidden');
+    admettreAttenteId = null;
+    // Rafraîchir les deux listes
+    await loadDashboardStats();
+  } catch (err) {
+    errEl.textContent = err.message || 'Erreur lors de l\'admission';
+    errEl.classList.remove('hidden');
+  }
+});
 
 // ── Cartes cliquables → ouvrent les sections ──
 // Afficher la liste des patients au chargement de l'onglet
@@ -997,6 +1082,30 @@ document.getElementById('btn-view-as-patient').addEventListener('click', functio
   window.open('../patient/', '_blank');
 });
 
+// Export PDF depuis admin → ouvre le module patient avec trigger export
+document.getElementById('btn-export-pdf-admin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id, prenom: p.prenom, chambre: p.numero_chambre,
+    programme_id: p.programme_id, substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, admin_preview: true
+  }));
+  window.open('../patient/?action=export-pdf', '_blank');
+});
+
+// Export HTML (app de sortie) depuis admin
+document.getElementById('btn-export-html-admin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id, prenom: p.prenom, chambre: p.numero_chambre,
+    programme_id: p.programme_id, substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, admin_preview: true
+  }));
+  window.open('../patient/?action=export-html', '_blank');
+});
+
 // ── Accordions ──
 document.getElementById('acc-craving').addEventListener('click', async function() {
   var content = document.getElementById('acc-craving-content');
@@ -1119,6 +1228,8 @@ document.getElementById('sortie-save').addEventListener('click', async function(
     selectedPatientForDetail.date_sortie_prevue = date;
     document.getElementById('sortie-current').textContent = 'Sortie : ' + new Date(date).toLocaleDateString('fr-FR');
     document.getElementById('modal-sortie').classList.add('hidden');
+    var exportsDiv = document.getElementById('sortie-exports');
+    if (exportsDiv) exportsDiv.classList.remove('hidden');
     renderSorties();
   } catch(e) { console.warn(e); }
   this.disabled = false;
@@ -1152,6 +1263,16 @@ async function showPatientDetail(patient) {
 
   // Date sortie dans le bouton
   document.getElementById('sortie-current').textContent = patient.date_sortie_prevue ? 'Sortie : ' + new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR') : 'Non d\u00e9finie';
+
+  // Afficher les boutons d'export si une date de sortie est définie
+  var exportsDiv = document.getElementById('sortie-exports');
+  if (exportsDiv) {
+    if (patient.date_sortie_prevue) {
+      exportsDiv.classList.remove('hidden');
+    } else {
+      exportsDiv.classList.add('hidden');
+    }
+  }
 
   // Log craving
   var cravingLog = document.getElementById('detail-craving-log');
