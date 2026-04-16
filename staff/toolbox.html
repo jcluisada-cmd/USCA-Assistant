@@ -72,7 +72,7 @@
   html.dark .btn-pill.active { background: rgba(16,185,129,.15); border-color: #27ab83; color: #6ee7b7; }
   html.dark .check-box { border-color: #475569; }
   html.dark .section-btn { color: #e2e8f0; }
-  html.dark .fb-textarea, html.dark .fb-input { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+  html.dark .fb-textarea, html.dark .fb-input, html.dark select { background: #1e293b; border-color: #475569; color: #e2e8f0; }
   html.dark .fb-tag { background: #1e293b; border-color: #334155; color: #e2e8f0; }
   html.dark .fb-tag.sel { background: rgba(16,185,129,.15); border-color: #27ab83; color: #6ee7b7; }
   html.dark .fb-submit { background: #27ab83; }
@@ -117,6 +117,10 @@ const I = {
   msgSquare: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
   send: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>,
   copy: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>,
+  plus: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>,
+  clipboard: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
+  grip: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></svg>,
+  trash: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>,
 };
 
 /* ══════════════════════ COLORS ══════════════════════ */
@@ -668,12 +672,37 @@ function SejourView({onBack}) {
   </div>;
 }
 
-/* ─── ELSA ─── */
-function ELSAView({onBack}) {
+/* ─── ELSA HUB ─── */
+function ELSAHub({onNav, onBack}) {
+  const items = [
+    {l:"Fiches réflexes",desc:"5 situations cliniques courantes",i:I.steth,v:"elsa_fiches",c:C.t[600]},
+    {l:"Admission & Orientation",desc:"Critères USCA & filières",i:I.building,v:"admission",c:C.n[700]},
+    {l:"Liaisons en cours",desc:"Liste des patients à voir",i:I.clipboard,v:"liaisons",c:C.a[600]}
+  ];
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.steth(C.t[300])} title="ELSA" sub="Liaison Addictologie"/>
+    {items.map(item=><div key={item.v} className="card card-tap" style={{padding:14,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onNav(item.v)}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:40,height:40,borderRadius:12,background:item.c+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{item.i(item.c,22)}</div>
+        <div><div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400]}}>{item.desc}</div></div>
+      </div>
+      {I.chevR(C.n[300])}
+    </div>)}
+    <div className="card" style={{padding:14,background:C.n[50],marginTop:8}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:6}}>Scores repérage rapide ELSA</div>
+      {[["AUDIT-C","alcool","≥ 4 (H) / ≥ 3 (F) → usage à risque"],["CAST","cannabis","≥ 2 → interv. brève. ≥ 3 → addictologie"],["DAST-10","drogues","≥ 3 → usage problématique. ≥ 6 → dépendance"],["Fagerström","tabac","≥ 7 → dépendance forte"]].map(([n,s,d],i)=>
+        <div key={i} style={{fontSize:12,color:C.n[600],marginBottom:3}}><b>{n}</b> ({s}) : {d}</div>)}
+    </div>
+  </div>;
+}
+
+/* ─── ELSA FICHES RÉFLEXES ─── */
+function ELSAFichesView({onBack}) {
   const [op, setOp] = useState(null);
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
-    <SectionHead icon={I.steth(C.t[300])} title="ELSA — Fiches réflexes" sub="Liaison Addictologie"/>
+    <SectionHead icon={I.steth(C.t[300])} title="Fiches réflexes ELSA" sub="Situations cliniques courantes"/>
     {ELSA.map((f,i)=><div key={i} className="card" style={{marginBottom:8,overflow:"hidden"}}>
       <button className="section-btn" onClick={()=>setOp(op===i?null:i)}>
         <div style={{textAlign:"left"}}><div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.title}</div><div style={{fontSize:11,color:C.n[400]}}>{f.motif}</div></div>
@@ -686,11 +715,141 @@ function ELSAView({onBack}) {
         </div>)}
       </div>}
     </div>)}
-    <div className="card" style={{padding:14,background:C.n[50],marginTop:8}}>
-      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:6}}>Scores repérage rapide ELSA</div>
-      {[["AUDIT-C","alcool","≥ 4 (H) / ≥ 3 (F) → usage à risque"],["CAST","cannabis","≥ 2 → interv. brève. ≥ 3 → addictologie"],["DAST-10","drogues","≥ 3 → usage problématique. ≥ 6 → dépendance"],["Fagerström","tabac","≥ 7 → dépendance forte"]].map(([n,s,d],i)=>
-        <div key={i} style={{fontSize:12,color:C.n[600],marginBottom:3}}><b>{n}</b> ({s}) : {d}</div>)}
-    </div>
+  </div>;
+}
+
+/* ─── LIAISONS ELSA (ToDo localStorage) ─── */
+const DEFAULT_SERVICES = ["Urgences (Circuit court)","Hépatologie","Cardiologie","Maladies infectieuses (MIT)","Neurologie"];
+const ORIENTATIONS = ["Réévaluation","Pré-admission","CSAPA","Addictologue","Hospitalisation"];
+
+function LiaisonsView({onBack}) {
+  const loadData = () => { try { return JSON.parse(localStorage.getItem('elsa_liaisons')) || []; } catch { return []; } };
+  const loadServices = () => { try { const s = JSON.parse(localStorage.getItem('elsa_services_custom')); return s || []; } catch { return []; } };
+  const [items, setItems] = useState(loadData);
+  const [customServices, setCustomServices] = useState(loadServices);
+  const [showForm, setShowForm] = useState(false);
+  const [newService, setNewService] = useState("");
+  const [newAutreService, setNewAutreService] = useState("");
+  const [newDetails, setNewDetails] = useState("");
+  const [openId, setOpenId] = useState(null);
+  const [dragIdx, setDragIdx] = useState(null);
+
+  const allServices = [...DEFAULT_SERVICES, ...customServices, "Autre"];
+
+  const save = (data) => { setItems(data); localStorage.setItem('elsa_liaisons', JSON.stringify(data)); };
+  const saveCustomServices = (s) => { setCustomServices(s); localStorage.setItem('elsa_services_custom', JSON.stringify(s)); };
+
+  const addItem = () => {
+    let svc = newService;
+    if (svc === "Autre" && newAutreService.trim()) {
+      svc = newAutreService.trim();
+      if (!DEFAULT_SERVICES.includes(svc) && !customServices.includes(svc)) {
+        const ns = [...customServices, svc];
+        saveCustomServices(ns);
+      }
+    }
+    if (!svc || svc === "Autre") return;
+    const item = { id: Date.now(), service: svc, details: newDetails.trim(), checklist: { indication: null, motivation: null, orientation: [] }, created: new Date().toISOString() };
+    save([...items, item]);
+    setNewService(""); setNewAutreService(""); setNewDetails(""); setShowForm(false);
+  };
+
+  const removeItem = (id) => save(items.filter(i=>i.id!==id));
+
+  const updateChecklist = (id, field, value) => {
+    save(items.map(i => i.id===id ? {...i, checklist:{...i.checklist, [field]:value}} : i));
+  };
+
+  const toggleOrientation = (id, val) => {
+    const item = items.find(i=>i.id===id);
+    const curr = item.checklist.orientation || [];
+    const next = curr.includes(val) ? curr.filter(v=>v!==val) : [...curr, val];
+    updateChecklist(id, "orientation", next);
+  };
+
+  const onDragStart = (idx) => setDragIdx(idx);
+  const onDragOver = (e, idx) => { e.preventDefault(); };
+  const onDrop = (idx) => {
+    if (dragIdx === null || dragIdx === idx) return;
+    const copy = [...items];
+    const [moved] = copy.splice(dragIdx, 1);
+    copy.splice(idx, 0, moved);
+    save(copy);
+    setDragIdx(null);
+  };
+
+  const ChoiceBtns = ({options, value, onChange}) => <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+    {options.map(o=><button key={o} className={`btn-pill ${value===o?'active':''}`} onClick={()=>onChange(o)} style={{fontSize:11}}>{value===o&&"✓ "}{o}</button>)}
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.clipboard(C.t[300])} title="Liaisons en cours" sub="Patients à voir"/>
+
+    {items.length === 0 && !showForm && <div className="card" style={{padding:20,textAlign:"center"}}>
+      <div style={{fontSize:13,color:C.n[400],marginBottom:12}}>Aucune liaison en cours</div>
+    </div>}
+
+    {items.map((item, idx) => <div key={item.id} className="card" style={{marginBottom:8,overflow:"hidden",borderLeftWidth:3,borderLeftColor:C.t[500]}}
+      draggable onDragStart={()=>onDragStart(idx)} onDragOver={(e)=>onDragOver(e,idx)} onDrop={()=>onDrop(idx)}>
+      <button className="section-btn" onClick={()=>setOpenId(openId===item.id?null:item.id)}>
+        <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+          <span style={{cursor:"grab",touchAction:"none"}}>{I.grip(C.n[300])}</span>
+          <div style={{textAlign:"left",flex:1}}>
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Patient {idx+1}</span>
+              <Badge color={C.t[600]}>{item.service}</Badge>
+            </div>
+            {item.details && <div style={{fontSize:11,color:C.n[400],marginTop:2}}>{item.details}</div>}
+          </div>
+        </div>
+        {openId===item.id?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {openId===item.id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>1. INDICATION D'HOSPITALISATION</div>
+          <ChoiceBtns options={["Oui","Non"]} value={item.checklist.indication} onChange={(v)=>updateChecklist(item.id,"indication",v)}/>
+        </div>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>2. MOTIVATION</div>
+          <ChoiceBtns options={["Oui","À travailler","Non"]} value={item.checklist.motivation} onChange={(v)=>updateChecklist(item.id,"motivation",v)}/>
+        </div>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>3. ORIENTATION</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+            {ORIENTATIONS.map(o=><button key={o} className={`btn-pill ${(item.checklist.orientation||[]).includes(o)?'active':''}`} onClick={()=>toggleOrientation(item.id,o)} style={{fontSize:11}}>{(item.checklist.orientation||[]).includes(o)&&"✓ "}{o}</button>)}
+          </div>
+        </div>
+        <button onClick={()=>removeItem(item.id)} style={{display:"flex",alignItems:"center",gap:6,border:"none",background:"none",cursor:"pointer",color:C.r[500],fontSize:12,fontWeight:600,padding:0,marginTop:4}}>
+          {I.trash(C.r[500])} Retirer de la liste
+        </button>
+      </div>}
+    </div>)}
+
+    {showForm ? <div className="card" style={{padding:14,marginTop:8}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:10}}>Nouvelle liaison</div>
+      <div style={{marginBottom:10}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Service</div>
+        <select value={newService} onChange={e=>setNewService(e.target.value)} style={{width:"100%",padding:"10px 12px",border:`2px solid ${C.bdr}`,borderRadius:10,fontSize:13,fontFamily:"inherit",outline:"none",background:C.bg,color:C.n[900]}}>
+          <option value="">— Choisir un service —</option>
+          {allServices.map(s=><option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+      {newService === "Autre" && <div style={{marginBottom:10}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Nom du service</div>
+        <input value={newAutreService} onChange={e=>setNewAutreService(e.target.value)} placeholder="Saisir le service..." className="fb-input"/>
+      </div>}
+      <div style={{marginBottom:12}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Détails (optionnel)</div>
+        <textarea value={newDetails} onChange={e=>setNewDetails(e.target.value)} placeholder="Motif, chambre, commentaire..." className="fb-textarea" style={{minHeight:60}}/>
+      </div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={addItem} className="fb-submit" style={{flex:1}}>Ajouter</button>
+        <button onClick={()=>{setShowForm(false);setNewService("");setNewAutreService("");setNewDetails("");}} style={{flex:0,padding:"12px 16px",border:`2px solid ${C.bdr}`,borderRadius:12,background:C.bg,cursor:"pointer",fontWeight:700,fontSize:13,color:C.n[600]}}>Annuler</button>
+      </div>
+    </div> : <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:14,borderRadius:14,border:`2px dashed ${C.t[400]}`,background:C.t[50],color:C.t[700],fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:8}}>
+      {I.plus(C.t[600])} Ajouter une liaison
+    </button>}
   </div>;
 }
 
@@ -749,6 +908,26 @@ function ComorView({onBack}) {
   </div>;
 }
 
+/* ─── PROTOCOLES USCA HUB ─── */
+function ProtocolesHub({onNav, onBack}) {
+  const items = [
+    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]},
+    {l:"Checklist Séjour",desc:"Timeline J1-J12 & checklist",i:I.calendar,v:"sejour",c:C.a[600]},
+    {l:"Comorbidités psy",desc:"Double diagnostic & TDAH",i:I.brain,v:"comorbidites",c:C.t[700]}
+  ];
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA" sub="Prescriptions & prises en charge"/>
+    {items.map(item=><div key={item.v} className="card card-tap" style={{padding:14,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onNav(item.v)}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:40,height:40,borderRadius:12,background:item.c+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{item.i(item.c,22)}</div>
+        <div><div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400]}}>{item.desc}</div></div>
+      </div>
+      {I.chevR(C.n[300])}
+    </div>)}
+  </div>;
+}
+
 /* ─── ADMISSION ─── */
 function AdmView({onBack}) {
   return <div className="fade-in">
@@ -777,7 +956,7 @@ function AdmView({onBack}) {
 
 /* ─── FEEDBACK ─── */
 function FeedbackView({onBack}) {
-  const MODULES = ["Prescription/Substance","Séjour J1-J12","Scores","Interactions","Comorbidités psy","ELSA","Admission/Orientation","Convertisseur BZD","Général / Autre"];
+  const MODULES = ["Protocoles USCA","ELSA / Liaisons","Traitements","Scores","Interactions","Convertisseur BZD","Général / Autre"];
   const TYPES = [{id:"bug",label:"🐛 Bug / Erreur",desc:"Quelque chose ne marche pas"},{id:"content",label:"📝 Correction contenu",desc:"Posologie, protocole, CI inexacte"},{id:"feature",label:"💡 Suggestion",desc:"Nouvelle fonctionnalité ou amélioration"},{id:"ux",label:"🎨 Ergonomie",desc:"Navigation, lisibilité, design"}];
   const PRIORITIES = ["Faible","Normale","Haute","Urgente"];
 
@@ -931,17 +1110,15 @@ function App() {
 
   const navItems = [
     {id:"home",label:"Accueil",icon:I.home},
-    {id:"substances",label:"Prescription",icon:I.pill},
-    {id:"sejour",label:"Séjour",icon:I.calendar},
+    {id:"protocoles_hub",label:"Protocoles",icon:I.pill},
+    {id:"elsa_hub",label:"ELSA",icon:I.steth},
     {id:"scores",label:"Scores",icon:I.calc},
     {id:"more",label:"Plus",icon:I.menu}
   ];
 
   const moreItems = [
-    {id:"comorbidites",label:"Comorbidités psy",icon:I.brain},
+    {id:"fiches_traitements",label:"Traitements",icon:I.heart},
     {id:"interactions",label:"Interactions",icon:I.alert},
-    {id:"admission",label:"Admission & Orientation",icon:I.building},
-    {id:"elsa",label:"ELSA",icon:I.steth},
     {id:"bzdcalc",label:"Convertisseur BZD",icon:I.scale},
     {id:"feedback",label:"💬 Feedback",icon:I.msgSquare}
   ];
@@ -963,11 +1140,22 @@ function App() {
           </div>
         </div>}
 
-        <div className="grid-2" style={{marginBottom:20}}>
-          {[{l:"Protocoles USCA",i:I.pill,v:"substances",c:C.t[600]},{l:"Séjour J1-J12",i:I.calendar,v:"sejour",c:C.a[600]},{l:"Scores",i:I.calc,v:"scores",c:C.n[600]},{l:"Interactions",i:I.alert,v:"interactions",c:C.r[500]},{l:"Comorbidités",i:I.brain,v:"comorbidites",c:C.t[700]},{l:"ELSA",i:I.steth,v:"elsa",c:C.n[500]},{l:"Admission",i:I.building,v:"admission",c:C.n[700]},{l:"Fiches Traitements",i:I.heart,v:"fiches_traitements",c:C.a[700]}].map(item=>
-            <div key={item.v} className="card card-tap" style={{padding:14}} onClick={()=>nav(item.v)}>
-              {item.i(item.c, 24)}
-              <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginTop:8}}>{item.l}</div>
+        {/* 2 grandes cartes mises en valeur */}
+        {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, #fff)`},
+          {l:"ELSA",desc:"Fiches réflexes, admission, liaisons",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, #fff)`}
+        ].map(item=>
+          <div key={item.v} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>nav(item.v)}>
+            <div style={{width:48,height:48,borderRadius:14,background:item.c+"20",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.i(item.c,26)}</div>
+            <div style={{flex:1}}><div style={{fontSize:15,fontWeight:900,color:C.n[900]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400],marginTop:2}}>{item.desc}</div></div>
+            {I.chevR(C.n[300])}
+          </div>)}
+
+        {/* 3 cartes secondaires */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:20}}>
+          {[{l:"Traitements",i:I.heart,v:"fiches_traitements",c:C.a[700]},{l:"Scores",i:I.calc,v:"scores",c:C.n[600]},{l:"Interactions",i:I.alert,v:"interactions",c:C.r[500]}].map(item=>
+            <div key={item.v} className="card card-tap" style={{padding:12,textAlign:"center"}} onClick={()=>nav(item.v)}>
+              {item.i(item.c, 22)}
+              <div style={{fontSize:12,fontWeight:800,color:C.n[800],marginTop:6}}>{item.l}</div>
             </div>)}
         </div>
 
@@ -982,9 +1170,11 @@ function App() {
         </div>
       </div>;
 
+      case "protocoles_hub": return <ProtocolesHub onNav={nav} onBack={()=>nav("home")}/>;
+
       case "substances": return <div className="fade-in">
-        <BackBtn onClick={()=>nav("home")}/>
-        <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA"/>
+        <BackBtn onClick={()=>nav("protocoles_hub")}/>
+        <SectionHead icon={I.pill(C.t[300])} title="Substances" sub="Protocoles par substance"/>
         {Object.entries(SUBSTANCES).map(([k,s])=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelSub(k)}>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
             <span style={{fontSize:28}}>{s.icon}</span>
@@ -994,7 +1184,7 @@ function App() {
         </div>)}
       </div>;
 
-      case "sejour": return <SejourView onBack={()=>nav("home")}/>;
+      case "sejour": return <SejourView onBack={()=>nav("protocoles_hub")}/>;
 
       case "scores": return <div className="fade-in">
         <BackBtn onClick={()=>nav("home")}/>
@@ -1022,9 +1212,11 @@ function App() {
       </div>;
 
       case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
-      case "comorbidites": return <ComorView onBack={()=>nav("home")}/>;
-      case "elsa": return <ELSAView onBack={()=>nav("home")}/>;
-      case "admission": return <AdmView onBack={()=>nav("home")}/>;
+      case "comorbidites": return <ComorView onBack={()=>nav("protocoles_hub")}/>;
+      case "elsa_hub": return <ELSAHub onNav={nav} onBack={()=>nav("home")}/>;
+      case "elsa_fiches": return <ELSAFichesView onBack={()=>nav("elsa_hub")}/>;
+      case "admission": return <AdmView onBack={()=>nav("elsa_hub")}/>;
+      case "liaisons": return <LiaisonsView onBack={()=>nav("elsa_hub")}/>;
       case "fiches_traitements": return selFiche ? <div className="fade-in">
         <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
           <button onClick={()=>setSelFiche(null)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer"}}>{I.chevL(C.n[600])}</button>
@@ -1033,7 +1225,7 @@ function App() {
         <iframe src={"../fiches-traitements/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
       </div> : <div className="fade-in">
         <BackBtn onClick={()=>nav("home")}/>
-        <SectionHead icon={I.heart(C.a[300])} title="Fiches Traitements Patients"/>
+        <SectionHead icon={I.heart(C.a[300])} title="Traitements" sub="Fiches d'information patients"/>
         <p style={{fontSize:12,color:C.n[400],marginBottom:16}}>Fiches d'information à remettre aux patients. Cliquez pour consulter.</p>
         {[
           {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
@@ -1083,7 +1275,12 @@ function App() {
     <div className="bottom-nav">
       <div className="bottom-nav-inner">
         {navItems.map(item=>{
-          const act = item.id==="more"?menuOpen:(item.id===view||(item.id==="substances"&&selSub));
+          const protoViews = ["protocoles_hub","substances","sejour","comorbidites"];
+          const elsaViews = ["elsa_hub","elsa_fiches","admission","liaisons"];
+          const act = item.id==="more"?menuOpen:
+            item.id==="protocoles_hub"?(protoViews.includes(view)||selSub):
+            item.id==="elsa_hub"?elsaViews.includes(view):
+            (item.id===view);
           return <button key={item.id} className="nav-btn" onClick={()=>item.id==="more"?setMenuOpen(!menuOpen):nav(item.id)} style={{color:act?C.t[600]:C.n[400]}}>
             {item.icon(act?C.t[600]:C.n[400])}
             <span>{item.label}</span>
