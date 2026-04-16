@@ -320,13 +320,28 @@
       <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <span class="text-sm font-bold">Programme du jour</span>
+      <span class="text-sm font-bold flex-1">Programme</span>
     </header>
-    <div class="flex-1 p-5 max-w-lg mx-auto w-full">
+    <!-- Navigation date -->
+    <div class="sticky top-[52px] z-[9] bg-slate-50 border-b border-slate-200 px-4 py-2">
+      <div class="flex items-center justify-between max-w-lg mx-auto">
+        <button id="prog-prev" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors disabled:opacity-30">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="text-center">
+          <p id="prog-date-label" class="text-sm font-bold text-slate-800"></p>
+          <p id="prog-date-badge" class="text-[10px] text-emerald-600 font-semibold hidden">Aujourd'hui</p>
+        </div>
+        <button id="prog-next" class="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100 transition-colors disabled:opacity-30">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-8">
       <div id="rappels-container" class="space-y-2 mb-4"></div>
-      <div id="timeline-container" class="space-y-0"></div>
+      <div id="timeline-container" class="space-y-1"></div>
       <div id="timeline-empty" class="bg-white rounded-xl border border-slate-200 p-8 text-center hidden">
-        <p class="text-sm text-slate-500">Aucun programme configuré</p>
+        <p class="text-sm text-slate-500">Aucun programme ce jour</p>
       </div>
     </div>
   </div>
@@ -644,141 +659,43 @@ async function showPatientApp(patient) {
   var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
-  // Charger le programme + événements + permissions
-  var activites = [];
+  // Programme : date courante + navigation
+  window._progDate = new Date();
+  window._progAdmission = patient.date_admission ? new Date(patient.date_admission + 'T00:00:00') : null;
+  window._progAllEvts = [];
+  window._progAllPerms = [];
 
-  // Routine quotidienne (repas — affichage discret, pas encadré)
-  activites.push({ heure: '08:00', label: 'Petit déjeuner', type: 'repas', lieu: '', isEvent: false });
-  activites.push({ heure: '12:00', label: 'Déjeuner', type: 'repas', lieu: '', isEvent: false });
-  activites.push({ heure: '16:00', label: 'Goûter', type: 'repas', lieu: '', isEvent: false });
-  activites.push({ heure: '18:00', label: 'Dîner', type: 'repas', lieu: '', isEvent: false });
+  // Pré-charger événements et permissions (une seule fois)
+  try { window._progAllEvts = await db.getEvenements(patient.id); } catch(e) {}
+  try { window._progAllPerms = await db.getPermissions(patient.id); } catch(e) {}
 
-  // Planning des groupes (depuis planning-groupes.js partagé)
-  var todayDow = now.getDay(); // 0=dim, 1=lun, 2=mar, ...
-  var todayStr = now.toISOString().split('T')[0];
-
-  // Charger les modifications de groupes (changements d'heure, annulations, exclusions)
-  var groupeMods = {};
-  try {
-    var modsData = await db.getGroupeModifications(todayStr);
-    modsData.forEach(function(m) { groupeMods[m.groupe_slug] = m; });
-  } catch(e) {}
-
-  // Charger les noms des animateurs
-  var animateurs = {};
+  // Charger les noms des animateurs (une seule fois)
+  window._progAnimateurs = {};
   try {
     var animData = await db.getGroupeAnimateurs();
     animData.forEach(function(a) {
-      if (!animateurs[a.groupe_slug]) animateurs[a.groupe_slug] = [];
-      animateurs[a.groupe_slug].push(a.nom_affiche);
+      if (!window._progAnimateurs[a.groupe_slug]) window._progAnimateurs[a.groupe_slug] = [];
+      window._progAnimateurs[a.groupe_slug].push(a.nom_affiche);
     });
   } catch(e) {}
 
-  var bandeauxGroupes = []; // Groupes sans heure → bandeau informatif
-  (window.PLANNING_GROUPES || []).forEach(function(g) {
-    if (g.jour !== todayDow) return;
-    var mod = groupeMods[g.slug];
-    // Annulé pour aujourd'hui ?
-    if (mod && mod.annule) return;
-    // Exclu pour ce patient ?
-    if (mod && mod.exclusions && mod.exclusions.indexOf(patient.id) !== -1) return;
-    var animLabel = animateurs[g.slug] ? animateurs[g.slug].join(', ') : '';
-    var lieu = g.detail || '';
-    if (animLabel) lieu = lieu ? lieu + ' \u2014 ' + animLabel : animLabel;
+  await loadProgrammeForDate(window._progDate);
 
-    // Vérifier si horaire individuel pour ce patient
-    var individuel = mod && mod.horaires_individuels && mod.horaires_individuels[patient.id];
-    var debut = individuel ? individuel.heure : ((mod && mod.nouvelle_heure) || g.debut);
-    var fin = individuel ? individuel.fin : ((mod && mod.nouvelle_fin) || g.fin);
-
-    if (debut) {
-      activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
-    } else {
-      // Pas d'heure → bandeau informatif (pas dans la timeline)
-      bandeauxGroupes.push({ nom: g.nom, detail: lieu });
-    }
+  // Navigation jour précédent / suivant
+  document.getElementById('prog-prev').addEventListener('click', function() {
+    var d = new Date(window._progDate);
+    d.setDate(d.getDate() - 1);
+    // Ne pas remonter avant l'admission
+    if (window._progAdmission && d < window._progAdmission) return;
+    window._progDate = d;
+    loadProgrammeForDate(d);
   });
-
-  // Programme template (si existant)
-  if (patient.programme_id) {
-    try {
-      var prog = await db.getProgrammeById(patient.programme_id);
-      if (prog.activites) activites = activites.concat(prog.activites);
-    } catch(e) {}
-  }
-
-  // Événements du jour (pushés par le soignant)
-  try {
-    var evts = await db.getEvenements(patient.id);
-    evts.forEach(function(evt) {
-      if (!evt.date_heure) return;
-      var evtDate = evt.date_heure.split('T')[0];
-      if (evtDate === todayStr) {
-        var evtTime = new Date(evt.date_heure);
-        var typeLabels = { entretien:'Entretien', consultation:'Consultation', familial:'Entretien familial', rdv_externe:'RDV externe', autre:'Événement' };
-        activites.push({
-          heure: evtTime.getHours().toString().padStart(2,'0') + ':' + evtTime.getMinutes().toString().padStart(2,'0'),
-          label: evt.titre || typeLabels[evt.type] || 'Événement',
-          type: 'entretien',
-          lieu: evt.lieu || '',
-          isEvent: true
-        });
-      }
-    });
-  } catch(e) {}
-
-  // Permissions du jour
-  try {
-    var perms = await db.getPermissions(patient.id);
-    perms.forEach(function(p) {
-      if (p.statut !== 'validee') return;
-      var permDebut = new Date(p.date_debut);
-      var permRetour = new Date(p.date_retour);
-      if (permDebut.toISOString().split('T')[0] === todayStr || permRetour.toISOString().split('T')[0] === todayStr) {
-        activites.push({
-          heure: permDebut.toISOString().split('T')[0] === todayStr ? permDebut.getHours().toString().padStart(2,'0') + ':' + permDebut.getMinutes().toString().padStart(2,'0') : permRetour.getHours().toString().padStart(2,'0') + ':' + permRetour.getMinutes().toString().padStart(2,'0'),
-          label: permDebut.toISOString().split('T')[0] === todayStr ? 'Permission (d\u00e9part)' : 'Permission (retour)',
-          type: 'permission',
-          lieu: '',
-          isPermission: true
-        });
-      }
-    });
-  } catch(e) {}
-
-  // Afficher les bandeaux : rappels + groupes sans heure
-  var rappelContainer = document.getElementById('rappels-container');
-  rappelContainer.textContent = '';
-
-  // Bandeaux pour les groupes sans horaire défini (ex: thérapies complémentaires)
-  bandeauxGroupes.forEach(function(bg) {
-    var banner = createEl('div', 'bg-rose-50 border border-rose-200 rounded-xl px-4 py-3');
-    banner.appendChild(createEl('p', 'text-sm font-semibold text-rose-700', bg.nom));
-    var sub = 'Horaire \u00e0 confirmer';
-    if (bg.detail) sub += ' \u2014 ' + bg.detail;
-    banner.appendChild(createEl('p', 'text-xs text-rose-500 mt-0.5', sub));
-    rappelContainer.appendChild(banner);
+  document.getElementById('prog-next').addEventListener('click', function() {
+    var d = new Date(window._progDate);
+    d.setDate(d.getDate() + 1);
+    window._progDate = d;
+    loadProgrammeForDate(d);
   });
-
-  // Rappels envoyés par les animateurs
-  try {
-    var rappels = await db.getGroupeRappels(todayStr);
-    rappels.forEach(function(r) {
-      var banner = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2');
-      banner.appendChild(createEl('span', 'text-amber-600 text-lg flex-shrink-0', '\ud83d\udce2'));
-      banner.appendChild(createEl('p', 'text-sm text-amber-800 font-medium', r.message));
-      rappelContainer.appendChild(banner);
-    });
-  } catch(e) {}
-
-  // Trier par heure
-  activites.sort(function(a, b) { return a.heure.localeCompare(b.heure); });
-
-  if (activites.length > 0) {
-    renderTimeline(activites);
-  } else {
-    document.getElementById('timeline-empty').classList.remove('hidden');
-  }
 
   loadStrategies();
 }
@@ -1237,9 +1154,129 @@ document.getElementById('btn-send-craving').addEventListener('click', async func
   }, 1000);
 });
 
+// ══════════════ CHARGEMENT PROGRAMME PAR DATE ══════════════
+
+async function loadProgrammeForDate(date) {
+  var dateStr = date.toISOString().split('T')[0];
+  var dow = date.getDay();
+  var todayReal = new Date().toISOString().split('T')[0];
+  var isToday = dateStr === todayReal;
+
+  // Mettre à jour la date affichée
+  document.getElementById('prog-date-label').textContent = date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  var badge = document.getElementById('prog-date-badge');
+  if (isToday) { badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+
+  // Désactiver le bouton précédent si on est à la date d'admission
+  var btnPrev = document.getElementById('prog-prev');
+  if (window._progAdmission) {
+    var prevDay = new Date(date); prevDay.setDate(prevDay.getDate() - 1);
+    btnPrev.disabled = prevDay < window._progAdmission;
+  }
+
+  var activites = [];
+
+  // Routine quotidienne (repas — affichage discret, pas encadré)
+  activites.push({ heure: '08:00', label: 'Petit d\u00e9jeuner', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '12:00', label: 'D\u00e9jeuner', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '16:00', label: 'Go\u00fbter', type: 'repas', lieu: '', isEvent: false });
+  activites.push({ heure: '18:00', label: 'D\u00eener', type: 'repas', lieu: '', isEvent: false });
+
+  // Groupes du jour (selon jour de la semaine)
+  var groupeMods = {};
+  try {
+    var modsData = await db.getGroupeModifications(dateStr);
+    modsData.forEach(function(m) { groupeMods[m.groupe_slug] = m; });
+  } catch(e) {}
+
+  var bandeauxGroupes = [];
+  (window.PLANNING_GROUPES || []).forEach(function(g) {
+    if (g.jour !== dow) return;
+    var mod = groupeMods[g.slug];
+    if (mod && mod.annule) return;
+    if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
+    var animLabel = window._progAnimateurs[g.slug] ? window._progAnimateurs[g.slug].join(', ') : '';
+    var lieu = g.detail || '';
+    if (animLabel) lieu = lieu ? lieu + ' \u2014 ' + animLabel : animLabel;
+    var individuel = mod && mod.horaires_individuels && mod.horaires_individuels[currentPatient.id];
+    var debut = individuel ? individuel.heure : ((mod && mod.nouvelle_heure) || g.debut);
+    var fin = individuel ? individuel.fin : ((mod && mod.nouvelle_fin) || g.fin);
+    if (debut) {
+      activites.push({ heure: debut, label: g.nom + (fin ? ' (' + debut + '-' + fin + ')' : ''), type: g.type, lieu: lieu, isEvent: false, isGroupe: true });
+    } else {
+      bandeauxGroupes.push({ nom: g.nom, detail: lieu });
+    }
+  });
+
+  // Programme template
+  if (currentPatient.programme_id) {
+    try {
+      var prog = await db.getProgrammeById(currentPatient.programme_id);
+      if (prog.activites) activites = activites.concat(prog.activites);
+    } catch(e) {}
+  }
+
+  // Événements du jour
+  (window._progAllEvts || []).forEach(function(evt) {
+    if (!evt.date_heure) return;
+    if (evt.date_heure.split('T')[0] !== dateStr) return;
+    var evtTime = new Date(evt.date_heure);
+    var typeLabels = { entretien:'Entretien', consultation:'Consultation', familial:'Entretien familial', rdv_externe:'RDV externe', autre:'\u00c9v\u00e9nement' };
+    activites.push({
+      heure: evtTime.getHours().toString().padStart(2,'0') + ':' + evtTime.getMinutes().toString().padStart(2,'0'),
+      label: evt.titre || typeLabels[evt.type] || '\u00c9v\u00e9nement',
+      type: 'entretien', lieu: evt.lieu || '', isEvent: true
+    });
+  });
+
+  // Permissions du jour
+  (window._progAllPerms || []).forEach(function(p) {
+    if (p.statut !== 'validee') return;
+    var permDebut = new Date(p.date_debut);
+    var permRetour = new Date(p.date_retour);
+    if (permDebut.toISOString().split('T')[0] === dateStr) {
+      activites.push({ heure: permDebut.getHours().toString().padStart(2,'0') + ':' + permDebut.getMinutes().toString().padStart(2,'0'), label: 'Permission (d\u00e9part)', type: 'permission', lieu: '', isPermission: true });
+    }
+    if (permRetour.toISOString().split('T')[0] === dateStr) {
+      activites.push({ heure: permRetour.getHours().toString().padStart(2,'0') + ':' + permRetour.getMinutes().toString().padStart(2,'0'), label: 'Permission (retour)', type: 'permission', lieu: '', isPermission: true });
+    }
+  });
+
+  // Bandeaux
+  var rappelContainer = document.getElementById('rappels-container');
+  rappelContainer.textContent = '';
+  bandeauxGroupes.forEach(function(bg) {
+    var banner = createEl('div', 'bg-rose-50 border border-rose-200 rounded-xl px-4 py-3');
+    banner.appendChild(createEl('p', 'text-sm font-semibold text-rose-700', bg.nom));
+    var sub = 'Horaire \u00e0 confirmer';
+    if (bg.detail) sub += ' \u2014 ' + bg.detail;
+    banner.appendChild(createEl('p', 'text-xs text-rose-500 mt-0.5', sub));
+    rappelContainer.appendChild(banner);
+  });
+  try {
+    var rappels = await db.getGroupeRappels(dateStr);
+    rappels.forEach(function(r) {
+      var banner = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2');
+      banner.appendChild(createEl('span', 'text-amber-600 text-lg flex-shrink-0', '\ud83d\udce2'));
+      banner.appendChild(createEl('p', 'text-sm text-amber-800 font-medium', r.message));
+      rappelContainer.appendChild(banner);
+    });
+  } catch(e) {}
+
+  // Trier et afficher
+  activites.sort(function(a, b) { return a.heure.localeCompare(b.heure); });
+  document.getElementById('timeline-empty').classList.add('hidden');
+  if (activites.length > 0) {
+    renderTimeline(activites, isToday);
+  } else {
+    document.getElementById('timeline-container').textContent = '';
+    document.getElementById('timeline-empty').classList.remove('hidden');
+  }
+}
+
 // ══════════════ TIMELINE ══════════════
 
-function renderTimeline(activites) {
+function renderTimeline(activites, isToday) {
   var container = document.getElementById('timeline-container');
   container.textContent = '';
   if (!activites || activites.length === 0) { document.getElementById('timeline-empty').classList.remove('hidden'); return; }
@@ -1247,6 +1284,7 @@ function renderTimeline(activites) {
   var now = new Date();
   var nowMinutes = now.getHours() * 60 + now.getMinutes();
   var nowInserted = false;
+  var showNow = isToday !== false; // Marqueur "maintenant" uniquement aujourd'hui
   var typeStyles = {
     soin: { bg: 'bg-indigo-50', border: 'border-indigo-200', dot: 'bg-indigo-500', text: 'text-indigo-700' },
     repas: { bg: 'bg-amber-50', border: 'border-amber-200', dot: 'bg-amber-500', text: 'text-amber-700' },
@@ -1263,47 +1301,44 @@ function renderTimeline(activites) {
   activites.forEach(function(act, i) {
     var parts = act.heure.split(':');
     var actMin = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-    var isPast = actMin + 60 < nowMinutes;
-    var isCurrent = !isPast && actMin <= nowMinutes;
+    var isPast = showNow ? (actMin + 60 < nowMinutes) : false;
+    var isCurrent = showNow ? (!isPast && actMin <= nowMinutes) : false;
     var style = typeStyles[act.type] || typeStyles.libre;
 
-    if (!nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
+    if (showNow && !nowInserted && actMin > nowMinutes) { nowInserted = true; container.appendChild(makeNowMarker(now)); }
 
-    // Mise en valeur : événements et groupes = importants (encadrés couleur), repas/soins = discrets (pas encadrés)
     var isImportant = act.isEvent || act.isPermission || act.isGroupe || act.type === 'groupe' || act.type === 'atelier' || act.type === 'groupe_jeu' || act.type === 'therapie' || act.type === 'entretien' || act.type === 'permission';
     var isRoutine = act.type === 'repas' || act.type === 'soin' || act.type === 'libre';
 
     var row = createEl('div', 'flex gap-3' + (isPast ? ' opacity-40' : '') + (isRoutine && !isCurrent ? ' opacity-70' : ''));
-    var timeCol = createEl('div', 'w-14 pt-3 text-right flex-shrink-0');
-    timeCol.appendChild(createEl('span', (isRoutine ? 'text-[10px]' : 'text-xs') + ' font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
+    var timeCol = createEl('div', 'w-16 pt-4 text-right flex-shrink-0');
+    timeCol.appendChild(createEl('span', (isRoutine ? 'text-xs' : 'text-sm') + ' font-bold ' + (isPast ? 'text-slate-400' : 'text-slate-600'), act.heure));
     row.appendChild(timeCol);
     var lineCol = createEl('div', 'flex flex-col items-center');
-    var dotSize = isImportant ? 'w-4 h-4' : 'w-2.5 h-2.5';
-    lineCol.appendChild(createEl('div', dotSize + ' rounded-full flex-shrink-0 mt-4 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '')));
-    if (i < activites.length - 1) lineCol.appendChild(createEl('div', 'w-0.5 flex-1 bg-slate-200 min-h-4'));
+    var dotSize = isImportant ? 'w-4 h-4' : 'w-3 h-3';
+    lineCol.appendChild(createEl('div', dotSize + ' rounded-full flex-shrink-0 mt-5 ' + style.dot + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '')));
+    if (i < activites.length - 1) lineCol.appendChild(createEl('div', 'w-0.5 flex-1 bg-slate-200 min-h-6'));
     row.appendChild(lineCol);
 
     if (isRoutine && !isCurrent) {
-      // Activité de routine : juste une ligne simple
-      var simpleLabel = createEl('div', 'flex-1 mb-2 pt-3');
-      simpleLabel.appendChild(createEl('p', 'text-xs text-slate-400', act.label));
+      var simpleLabel = createEl('div', 'flex-1 mb-3 pt-4');
+      simpleLabel.appendChild(createEl('p', 'text-sm text-slate-400', act.label));
       row.appendChild(simpleLabel);
     } else {
-      // Activité importante ou en cours : carte complète
-      var cardClasses = style.bg + ' border ' + style.border + ' rounded-xl flex-1 mb-2' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '');
+      var cardClasses = style.bg + ' border ' + style.border + ' rounded-xl flex-1 mb-3' + (isCurrent ? ' ring-2 ring-emerald-400 ring-offset-2' : '');
       if (isImportant) cardClasses += ' shadow-sm';
       var card = createEl('div', cardClasses);
-      card.style.padding = isImportant ? '14px' : '10px 12px';
-      card.appendChild(createEl('p', (isImportant ? 'text-sm font-extrabold' : 'text-sm font-bold') + ' ' + style.text, act.label));
-      if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', act.lieu));
-      if (act.isEvent) card.appendChild(createEl('span', 'inline-block mt-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-200 text-indigo-700', 'RDV'));
-      if (act.isPermission) card.appendChild(createEl('span', 'inline-block mt-1 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-200 text-cyan-700', 'Permission'));
+      card.style.padding = isImportant ? '16px' : '12px 14px';
+      card.appendChild(createEl('p', (isImportant ? 'text-base font-extrabold' : 'text-sm font-bold') + ' ' + style.text, act.label));
+      if (act.lieu) card.appendChild(createEl('p', 'text-xs text-slate-500 mt-1', act.lieu));
+      if (act.isEvent) card.appendChild(createEl('span', 'inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-200 text-indigo-700', 'RDV'));
+      if (act.isPermission) card.appendChild(createEl('span', 'inline-block mt-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-200 text-cyan-700', 'Permission'));
       row.appendChild(card);
     }
 
     container.appendChild(row);
   });
-  if (!nowInserted) container.appendChild(makeNowMarker(now));
+  if (showNow && !nowInserted) container.appendChild(makeNowMarker(now));
 }
 
 function makeNowMarker(now) {
