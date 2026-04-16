@@ -157,6 +157,14 @@
             <p class="text-sm font-bold text-slate-800">Ateliers</p>
             <p id="ateliers-subtitle" class="text-[11px] text-slate-500 mt-0.5">Participation aux groupes</p>
           </button>
+          <!-- Carte Feedback -->
+          <button id="card-feedback" class="bg-white rounded-2xl border border-slate-200 p-4 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98] relative">
+            <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <p class="text-sm font-bold text-slate-800">Mon avis</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Donnez votre retour</p>
+          </button>
         </div>
       </div>
 
@@ -581,6 +589,74 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
         </div>
         <p class="text-sm text-slate-500">Aucun message pour le moment</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ PANEL FEEDBACK ════════════════ -->
+  <div id="panel-feedback" class="panel">
+    <header class="sticky top-0 z-10 bg-amber-600 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Mon avis</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-24">
+      <div id="feedback-form">
+        <p class="text-sm text-slate-600 mb-4">Votre avis nous aide à améliorer l'application et votre séjour.</p>
+
+        <!-- Type -->
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Type de retour</p>
+        <div class="grid grid-cols-2 gap-2 mb-4" id="feedback-types">
+          <button data-type="satisfaction" class="fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all">
+            <span class="text-lg">😊</span>
+            <p class="text-xs font-bold text-slate-700 mt-1">Satisfaction</p>
+          </button>
+          <button data-type="suggestion" class="fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all">
+            <span class="text-lg">💡</span>
+            <p class="text-xs font-bold text-slate-700 mt-1">Suggestion</p>
+          </button>
+          <button data-type="probleme" class="fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all">
+            <span class="text-lg">⚠️</span>
+            <p class="text-xs font-bold text-slate-700 mt-1">Problème</p>
+          </button>
+          <button data-type="autre" class="fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all">
+            <span class="text-lg">💬</span>
+            <p class="text-xs font-bold text-slate-700 mt-1">Autre</p>
+          </button>
+        </div>
+
+        <!-- Concerne -->
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Ça concerne</p>
+        <select id="feedback-module" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-amber-500 focus:outline-none transition-colors mb-4">
+          <option value="">Choisir...</option>
+          <option value="Programme">Programme du jour</option>
+          <option value="Craving">Alerte craving</option>
+          <option value="Stratégies">Mes stratégies</option>
+          <option value="Traitements">Fiches traitements</option>
+          <option value="Ateliers">Ateliers / Groupes</option>
+          <option value="Permission">Permissions de sortie</option>
+          <option value="Messages">Messages</option>
+          <option value="Séjour">Le séjour en général</option>
+          <option value="Application">L'application</option>
+          <option value="Autre">Autre</option>
+        </select>
+
+        <!-- Message -->
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Votre message</p>
+        <textarea id="feedback-message" class="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm text-slate-800 focus:border-amber-500 focus:outline-none transition-colors mb-4" rows="4" placeholder="Décrivez votre retour..."></textarea>
+
+        <!-- Boutons envoi -->
+        <button id="btn-feedback-email" class="w-full py-3 bg-amber-600 text-white font-bold rounded-xl text-sm hover:bg-amber-700 transition-colors active:scale-[0.98] mb-2 disabled:opacity-50" disabled>Envoyer par email</button>
+        <button id="btn-feedback-copy" class="w-full py-3 bg-white border-2 border-amber-200 text-amber-700 font-bold rounded-xl text-sm hover:bg-amber-50 transition-colors active:scale-[0.98] disabled:opacity-50" disabled>Copier le texte</button>
+        <p id="feedback-status" class="text-xs text-center mt-2 hidden"></p>
+      </div>
+
+      <div id="feedback-sent" class="hidden text-center py-8">
+        <div class="text-5xl mb-4">✅</div>
+        <p class="text-base font-bold text-slate-800 mb-2">Merci pour votre retour !</p>
+        <p class="text-sm text-slate-500 mb-6">Votre avis sera pris en compte par l'équipe.</p>
+        <button id="btn-feedback-again" class="px-6 py-2.5 border-2 border-amber-300 text-amber-700 font-bold rounded-xl text-sm">Envoyer un autre avis</button>
       </div>
     </div>
   </div>
@@ -2003,6 +2079,93 @@ function escapeHtml(str) {
 }
 
 // Thème géré par ../shared/theme.js (chargé en fin de body)
+
+// ══════════════ FEEDBACK ══════════════
+
+document.getElementById('card-feedback').addEventListener('click', function() { openPanel('feedback'); });
+
+var _fbSelectedType = null;
+document.querySelectorAll('.fb-type-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    _fbSelectedType = this.dataset.type;
+    document.querySelectorAll('.fb-type-btn').forEach(function(b) {
+      b.className = 'fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all';
+    });
+    this.className = 'fb-type-btn border-2 border-amber-500 bg-amber-50 rounded-xl p-3 text-left';
+    updateFeedbackButtons();
+  });
+});
+
+document.getElementById('feedback-message').addEventListener('input', updateFeedbackButtons);
+
+function updateFeedbackButtons() {
+  var msg = document.getElementById('feedback-message').value.trim();
+  var ok = _fbSelectedType && msg.length > 0;
+  document.getElementById('btn-feedback-email').disabled = !ok;
+  document.getElementById('btn-feedback-copy').disabled = !ok;
+}
+
+function buildFeedbackText() {
+  var typeLabels = { satisfaction: 'Satisfaction', suggestion: 'Suggestion', probleme: 'Probl\u00e8me', autre: 'Autre' };
+  var mod = document.getElementById('feedback-module').value || 'Non pr\u00e9cis\u00e9';
+  var msg = document.getElementById('feedback-message').value.trim();
+  var prenom = currentPatient ? currentPatient.prenom : 'Anonyme';
+  var chambre = currentPatient ? currentPatient.chambre : '?';
+  return [
+    '\u2550\u2550\u2550 USCA FEEDBACK PATIENT \u2550\u2550\u2550',
+    'Date: ' + new Date().toLocaleDateString('fr-FR') + ' ' + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}),
+    'Type: ' + (typeLabels[_fbSelectedType] || '\u2014'),
+    'Concerne: ' + mod,
+    'Patient: ' + prenom + ' (Ch.' + chambre + ')',
+    '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500',
+    msg,
+    '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550'
+  ].join('\n');
+}
+
+document.getElementById('btn-feedback-email').addEventListener('click', function() {
+  var typeLabels = { satisfaction: 'Satisfaction', suggestion: 'Suggestion', probleme: 'Probl\u00e8me', autre: 'Autre' };
+  var mod = document.getElementById('feedback-module').value || 'G\u00e9n\u00e9ral';
+  var subject = encodeURIComponent('Feedback Patient USCA \u2014 ' + (typeLabels[_fbSelectedType] || '') + ' \u2014 ' + mod);
+  var body = encodeURIComponent(buildFeedbackText());
+  window.location.href = 'mailto:jc.luisada@gmail.com?subject=' + subject + '&body=' + body;
+  showFeedbackSent();
+});
+
+document.getElementById('btn-feedback-copy').addEventListener('click', function() {
+  var text = buildFeedbackText();
+  var statusEl = document.getElementById('feedback-status');
+  navigator.clipboard.writeText(text).then(function() {
+    statusEl.textContent = 'Texte copi\u00e9 !';
+    statusEl.className = 'text-xs text-center mt-2 text-emerald-600 font-semibold';
+    statusEl.classList.remove('hidden');
+    setTimeout(function() { statusEl.classList.add('hidden'); }, 2000);
+  }).catch(function() {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    statusEl.textContent = 'Texte copi\u00e9 !';
+    statusEl.className = 'text-xs text-center mt-2 text-emerald-600 font-semibold';
+    statusEl.classList.remove('hidden');
+    setTimeout(function() { statusEl.classList.add('hidden'); }, 2000);
+  });
+});
+
+function showFeedbackSent() {
+  document.getElementById('feedback-form').classList.add('hidden');
+  document.getElementById('feedback-sent').classList.remove('hidden');
+}
+
+document.getElementById('btn-feedback-again').addEventListener('click', function() {
+  _fbSelectedType = null;
+  document.querySelectorAll('.fb-type-btn').forEach(function(b) {
+    b.className = 'fb-type-btn border-2 border-slate-200 rounded-xl p-3 text-left hover:border-amber-400 transition-all';
+  });
+  document.getElementById('feedback-module').value = '';
+  document.getElementById('feedback-message').value = '';
+  updateFeedbackButtons();
+  document.getElementById('feedback-form').classList.remove('hidden');
+  document.getElementById('feedback-sent').classList.add('hidden');
+});
 
 // ══════════════ ATELIERS (participations) ══════════════
 
