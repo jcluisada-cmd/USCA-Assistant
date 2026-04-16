@@ -8,7 +8,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 <script src="../shared/postcure-structures.js"></script>
-<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
 :root{--bg:#f0f5f5;--surface:#fff;--surface-alt:#f5f9f9;--ink:#102743;--ink-soft:#3a5568;--ink-muted:#7a8e9e;--accent:#1a6b6a;--accent-dark:#102743;--accent-light:#d5ecec;--accent-bg:#e8f4f4;--teal:#407a91;--border:#cddde0;--radius:10px;--shadow:0 1px 3px rgba(16,39,67,.06),0 4px 12px rgba(16,39,67,.04);--red:#a03030}
@@ -125,7 +124,7 @@ html.dark input,html.dark textarea,html.dark select{background:var(--surface)!im
 <img id="header-logo" alt="USCA">
 <div class="header-text"><h1>Dossier post-cure — Volet Patient</h1><p>USCA / ELSA — Pitié-Salpêtrière (AP-HP)</p></div>
 </div></div>
-<div class="security">🔒 Vos données restent sur votre appareil — rien n'est envoyé à un serveur</div>
+<div class="security">🔒 Aucune donn\u00e9e personnelle n'est enregistr\u00e9e sur un serveur — tout reste sur votre appareil</div>
 
 <!-- STRUCTURE SELECTOR -->
 <div class="struct-bar">
@@ -311,58 +310,11 @@ var DEFAULT_ENGAGEMENT = window.POSTCURE_DEFAULT_ENGAGEMENT || '';
 // ============================================================
 var uploads = {}, sigPads = {}, sigImages = {};
 var connectedPatientId = null;
-var sbClient = null;
-
-// ============================================================
-// SUPABASE — détection session patient hospitalisé
-// ============================================================
-function detectPatientSession() {
-  try {
-    var raw = localStorage.getItem('patient_session');
-    if (!raw) return;
-    var session = JSON.parse(raw);
-    if (!session || !session.id) return;
-    if (session.expires && session.expires < Date.now()) return;
-    connectedPatientId = session.id;
-    // Initialiser le client Supabase (anon)
-    if (window.supabase && window.supabase.createClient) {
-      sbClient = window.supabase.createClient(
-        'https://pydxfoqxgvbmknzjzecn.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZHhmb3F4Z3ZibWtuemp6ZWNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTgyNTEsImV4cCI6MjA5MTY5NDI1MX0.8Q8-wJUiOLHdf3vtMAvXMQ4JaylTGE-lm5viPWeVfZU'
-      );
-    }
-    // Mettre à jour le bandeau
-    var secBanner = document.querySelector('.security');
-    if (secBanner) {
-      var label = session.prenom ? session.prenom : 'Chambre ' + (session.chambre || '');
-      secBanner.textContent = '\u2705 ' + label + ' \u2014 votre dossier sera transmis \u00e0 l\'\u00e9quipe soignante';
-      secBanner.style.background = '#d1fae5';
-      secBanner.style.color = '#065f46';
-    }
-  } catch(e) { console.warn('Session patient non d\u00e9tect\u00e9e'); }
-}
-
-async function saveToSupabase(patientData) {
-  if (!connectedPatientId || !sbClient) return;
-  try {
-    var result = await sbClient.rpc('save_volet_patient', {
-      p_patient_id: connectedPatientId,
-      p_structure_key: patientData.postcure || '',
-      p_data: patientData
-    });
-    if (result.error) throw result.error;
-    showToast('\u2713 Donn\u00e9es sauvegard\u00e9es sur le serveur');
-  } catch(e) {
-    console.warn('Sauvegarde Supabase \u00e9chou\u00e9e:', e);
-    showToast('ZIP t\u00e9l\u00e9charg\u00e9 (sauvegarde serveur \u00e9chou\u00e9e)');
-  }
-}
 
 // ============================================================
 // INIT
 // ============================================================
 function init() {
-  detectPatientSession();
   if (LOGO_WEB) document.getElementById('header-logo').src = LOGO_WEB;
 
   // Populate structure dropdown from shared data
@@ -900,9 +852,6 @@ function generatePatient() {
   idx = addToZip(zip, ['id_r', 'id_v', 'mut_r', 'mut_v'], idx);
   idx = addMulti(zip, 'patient_autres', idx);
   dlZip(zip, 'Patient_' + p.nom + '_' + p.prenom + '_' + p.date.replace(/\//g, '-') + '.zip');
-
-  // Sauvegarder sur Supabase si patient connecté
-  saveToSupabase(p);
 }
 
 // ============================================================
