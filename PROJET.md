@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 16 avril 2026
+> Dernière mise à jour : 16 avril 2026 (session soir)
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md
 
 ---
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.26 |
+| **Service Worker** | usca-v3.37 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -64,18 +64,21 @@ USCA-Assistant/
 ├── patient/
 │   └── index.html              ← Interface patient (8 cartes)
 ├── admin/
-│   └── index.html              ← Dashboard admin (Patients, Toolbox, Groupes)
+│   └── index.html              ← Dashboard soignant (Patients, Toolbox, Planning)
 ├── staff/
 │   ├── index.html              ← Dashboard staff (redirige vers admin pour l'instant)
 │   └── toolbox.html            ← V1 Toolbox extraite (iframe dans admin)
 ├── shared/
 │   ├── supabase.js             ← Client Supabase + CRUD helpers
 │   ├── auth.js                 ← Gestion session, login/logout
-│   ├── planning-groupes.js     ← Planning semaine A (source unique patient/admin)
+│   ├── planning-groupes.js     ← Planning semaine A+B + réunions (source unique patient/soignant)
 │   ├── craving-agenda.js       ← Composant agenda craving (vues semaine/mois/3mois/1an)
 │   ├── fiches-catalogue.js     ← Catalogue des 20 fiches traitements
 │   ├── theme.css               ← Variables CSS dark mode
 │   └── theme.js                ← Toggle dark mode
+├── functions/
+│   └── api/
+│       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
 │   └── fiche_*.html            ← 20 fiches patient par médicament
 ├── affiche-equipe.html         ← Affiche A4 imprimable avec QR code
@@ -83,7 +86,7 @@ USCA-Assistant/
 ├── splash.png                  ← Splash screen
 ├── manifest.json               ← Manifeste PWA
 ├── sw.js                       ← Service Worker multi-pages
-└── supabase-migration-v*.sql   ← Scripts migrations (v1 à v7, toutes exécutées)
+└── supabase-migration-v*.sql   ← Scripts migrations (v1 à v11, toutes exécutées)
 ```
 
 ---
@@ -116,7 +119,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `patients` — Patients hospitalisés (chambre, DDN, admission, sortie prévue)
 - `alertes` — Alertes craving/effet_indesirable/urgence/demande (patient_id, type, intensité, statut)
 - `strategies` — Stratégies de prévention patient (5 catégories Marlatt)
-- `evenements` — Événements individuels (entretien, consultation, familial, rdv_externe)
+- `evenements` — Événements (patient_id nullable : individuels + équipe). Types : entretien, consultation, familial, rdv_externe, reunion, staff, labo, supervision
 - `permissions_sortie` — Demandes de permission (statut, date/heure sortie/retour, motif)
 - `messages` — Contenus partagés par le soignant (notes, liens, consignes)
 - `fiches_traitements_patient` — Fiches traitements prescrites (checklist)
@@ -126,6 +129,14 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `groupe_modifications` — Modifications par date (annulation, changement heure, exclusions, horaires_individuels JSONB)
 - `groupe_rappels` — Rappels envoyés par l'animateur
 
+### Tables participations et demandes (migrations v9-v10)
+- `participations` — Présences/absences aux groupes (patient ou animateur)
+- `demandes_seances` — Demandes de séances thérapies complémentaires (en_attente/acceptee/refusee)
+
+### Tables auth et réunions (migrations v8, v11)
+- `device_tokens` — Appareils de confiance soignants (auto-login 90j)
+- `presences_reunions` — Présences aux réunions staff (médecins)
+
 ### Migrations exécutées
 - v1 : Schéma initial (profiles, patients, alertes, programmes, groupes)
 - v2 : Stratégies, permissions, messages, fiches traitements
@@ -134,7 +145,10 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v5 : CASCADE sur alertes et stratégies (suppression patient)
 - v6 : Tables groupes (animateurs, modifications, rappels)
 - v7 : Horaires individuels (JSONB dans groupe_modifications)
-- v8 : Appareils de confiance (device_tokens) — **À EXÉCUTER**
+- v8 : Appareils de confiance (device_tokens)
+- v9 : Participations aux groupes
+- v10 : Demandes de séances thérapies complémentaires
+- v11 : Événements d'équipe (patient_id nullable) + présences réunions
 
 ---
 
@@ -142,32 +156,45 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 
 ### Login unifié (index.html)
 - ✅ Onglets Patient / Soignant
-- ✅ Auto-redirect si session existante
+- ✅ Auto-redirect si session existante, login unique (pas de double login)
 - ✅ Mode dev admin (triple-tap logo)
-- ✅ Splash screen
+- ✅ Splash screen, bannière WebView iOS
+- ✅ Date de naissance patient : auto-formatage JJ/MM/AAAA (clavier numérique)
+- ✅ Messages d'erreur auth précis (réseau/identifiants/rate-limit)
 
-### Module Patient — 8 cartes
+### Module Patient — 9 cartes + feedback
 - ✅ **J'ai un craving** : intensité 1-10, courbe d'insight, déclencheurs, durée, stratégies
 - ✅ **Mon journal** : agenda craving (semaine/mois/3mois/1an), courbe tendance, stats
-- ✅ **Programme** : timeline, navigation date, routine (repas hardcodés), groupes semaine A colorés, bandeau groupes sans heure fixe, horaires individuels
+- ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels
 - ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Traitements** : fiches prescrites, 20 fiches HTML, navigation par catégorie
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
 - ✅ **Messages** : contenus partagés par le soignant
-- ⬜ **Ateliers** : placeholder (à développer)
+- ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance (thérapies complémentaires), historique, stats, animateur/lieu affichés
+- ✅ **Mon avis** : feedback structuré sur l'application (email ou copie)
+- ✅ **Badges notification** : ronds rouges sur Messages, Traitements, Programme, Ateliers quand il y a du nouveau
 
-### Module Admin — 3 onglets
-- ✅ **Patients** : liste, admission, détail patient (journal craving, fiches traitements, permissions, événements, voir comme patient, supprimer séjour)
+### Module Soignant — 3 onglets
+- ✅ **Patients** : liste avec badges craving/permission, admission, détail patient (journal craving avec marquage auto traité, fiches traitements, permissions valider/refuser/annuler, événements, voir comme patient, supprimer séjour, export JSON), bouton app vierge
 - ✅ **Toolbox** : iframe V1 avec dark mode
-- ✅ **Groupes** : planning semaine A, animateurs, actions (modifier heure, annuler, exclure, horaires individuels, rappel)
+- ✅ **Planning** (ex-Groupes) : planning semaine A+B avec toggle, groupes thérapeutiques + animateurs + actions, réunions d'équipe récurrentes (mardi, jeudi), Staff Psychiatrie lundi (médecins, Présent/Absent), événements ponctuels (ajout texte libre + date/heure), badge demandes séances en attente, demandes de séances thérapies complémentaires (accepter/refuser/programmer)
 
 ### Gestion comptes (admin)
-- ✅ Création, modification rôle/nom, toggle admin, suppression (partielle — voir bugs)
+- ✅ Création, modification rôle/nom, toggle admin
+- ✅ Suppression complète (profil + compte Auth via Cloudflare Function)
+- ✅ Désignation animateurs pour les groupes (admin peut désigner/retirer n'importe qui)
 
 ### App exportée HTML autonome
 - ✅ Signal craving + agenda + stratégies modifiables
 - ✅ Fiches traitements embarquées
-- ✅ PIN local, dark mode, export/import JSON
+- ✅ PIN local SHA-256, dark mode, export/import JSON
+- ✅ Tutoriel au premier lancement
+- ✅ Génération version vierge depuis l'admin (consultation)
+
+### Auth avancée
+- ✅ Client Supabase robuste (safeStorage, PKCE, autoRefresh)
+- ✅ Appareils de confiance (device tokens 90j, max 5, auto-register/révocation)
+- ✅ Cloudflare Function suppression compte (`functions/api/delete-user.js`)
 
 ### Toolbox Soignant V1
 - ✅ 8 modules cliniques : Protocoles, Séjour J1-J12, Scores, Interactions, Comorbidités, ELSA, Admission, Fiches Traitements
@@ -187,71 +214,25 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 
 ## 8. PLAN DE DÉVELOPPEMENT — CE QUI RESTE
 
-### Priorité 1 — Tests et corrections de bugs
-- [x] Corriger : modals admin (fermeture au clic fond noir) — v3.25
-- [x] Corriger : déconnexion patient → redirection accueil — v3.25
-- [ ] Tester : suppression de séjour patient (migration v5 déjà exécutée)
-- [ ] Tester : création de compte soignant (@aphp.fr)
-- [ ] Tester : planifier événement → vérifier côté patient
-- [ ] Tester : partager contenu → carte Messages patient
-- [ ] Tester : annoncer permission → côté patient + timeline
-- [ ] Tester : date de sortie → côté patient
-- [ ] Tester : app exportée (craving, agenda, stratégies, sauvegarde HTML)
-- [ ] Tester : dark mode admin complet (détail patient, modals, accordions)
-- [ ] Tester : "Voir comme patient" depuis l'admin
+### Fait — Session 16/04 soir (v3.25 → v3.37)
+- [x] **P1** — Bugs corrigés : modals fond noir, déconnexion patient, badge craving, permissions accordion, double login soignant, date naissance mobile, encodage UTF-8
+- [x] **P2** — Planning semaine A+B (alternance ISO paire=A/impaire=B), type `seances` (sophrologie cyan)
+- [x] **P3** — Ateliers patient (navigation date, Présent/Absent, historique) + participation animateur + demandes séances thérapies complémentaires
+- [x] **P4** — Onglet Planning (ex-Groupes) : réunions d'équipe récurrentes, Staff Psychiatrie médecins, événements ponctuels texte libre
+- [x] **P6** — App exportée v3 : PIN SHA-256, tutoriel premier lancement, génération version vierge
+- [x] **P9** — Auth avancée : messages erreur, safeStorage/PKCE, device tokens, Cloudflare Function suppression, WebView iOS
+- [x] Badges notification patient (Messages, Traitements, Programme, Ateliers)
+- [x] Carte Feedback patient ("Mon avis sur l'application")
+- [x] Désignation animateurs par l'admin + accès actions animateur pour l'admin
+- [x] Animateur/lieu affichés dans les ateliers patient
 
-### Priorité 2 — Planning semaine B
-- [x] Ajouter semaine B dans `shared/planning-groupes.js` — v3.26
-- [x] Logique semaine A/B (référence : semaine du 13/04/2026 = A) — v3.26
-- [x] Badge semaine A/B dans le programme patient — v3.26
-- [x] Bouton "Voir l'autre semaine" dans l'onglet Groupes admin — v3.26
-- [x] Type `seances` (sophrologie) avec couleur cyan — v3.26
-- [ ] Tester l'alternance en conditions réelles (vérifier que la bonne semaine s'affiche)
-
-### Priorité 3 — Carte Ateliers patient
-- [ ] Liste des groupes auxquels le patient a participé
-- [ ] Contenu pushé par les animateurs
-- [ ] Badges de participation
-- [ ] Table SQL `participations` (patient_id, groupe_id, date, present)
-- [ ] Côté admin : gestion des présences dans l'onglet Groupes
-
-### Priorité 4 — Agenda staff (événements d'équipe)
-- [ ] Migration SQL : `evenements.patient_id` → nullable + nouveaux types (reunion, staff, supervision, autre)
-- [ ] Renommer onglet "Groupes" → "Planning" dans l'admin
-- [ ] Vue agenda partagée pour les soignants
-- [ ] Événements d'équipe sans patient_id
-
-### Priorité 5 — Personnalisation staff
-- [ ] `profiles.modules_autorises` = plafond par rôle (admin)
-- [ ] `profiles.modules_actifs` = choisi par le soignant
-- [ ] Page "Mes préférences" dans l'admin
-
-### Priorité 6 — App exportée v3
-- [ ] Tester le PIN local
-- [ ] Mini tutoriel au premier lancement
-- [ ] Génération HTML vierge depuis l'admin (patients non hospitalisés)
-- [ ] Vérifier la sauvegarde HTML (re-génération avec données à jour)
-
-### Priorité 7 — Fusion staff/admin
-- [ ] Fusionner `/staff/` et `/admin/` en un seul module
-- [ ] Auto-détection du type d'utilisateur
-- [ ] Mode dev via compte admin (déjà codé)
-
-### Priorité 8 — Post-cure + Annuaire
-- [ ] Intégrer le module HTML existant de JC (demandes de post-cure, rôle médecin)
-- [ ] Annuaire patients (liste, filtres, accès — à définir avec JC)
-
-### Priorité 9 — Auth avancée
-- [x] Cloudflare Pages Function : `functions/api/delete-user.js` — v3.25
-- [x] Table `device_tokens` : migration v8 créée (à exécuter dans Supabase)
-- [x] Enregistrement automatique appareil de confiance au login — v3.25
-- [x] Révocation token à la déconnexion — v3.25
-- [x] Détection WebView iOS → bannière "Ouvrir dans Safari" — v3.25
-- [x] Messages d'erreur auth précis (réseau/identifiants/rate-limit/serveur) — v3.25
-- [x] Client Supabase robuste (safeStorage, PKCE, autoRefresh) — v3.25
-- [ ] Gestion appareils dans les paramètres du compte (UI "Mes appareils")
-- [ ] Variable env Cloudflare : `SUPABASE_SERVICE_ROLE_KEY` (action manuelle)
-- [ ] Exécuter migration v8 dans Supabase SQL Editor
+### À faire
+- [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
+- [ ] **P7** — Ménage technique : supprimer `/staff/index.html` inutile (5 min, zéro impact)
+- [ ] **P8** — Post-cure (module HTML de JC) + Annuaire patients
+- [ ] UI "Mes appareils de confiance" dans paramètres du compte
+- [ ] Tester toutes les nouvelles features en conditions réelles
+- [ ] Fix bug export app vierge (crash après téléchargement)
 
 ---
 
@@ -327,10 +308,10 @@ Le reste (substance, programme) est géré dans le détail patient après admiss
 - Export/import JSON, re-génération HTML
 
 ### Questions ouvertes pour JC
-1. Planning semaine B (jour, heure, nom, salle, animateur)
+1. ~~Planning semaine B~~ → Fait (session 16/04)
 2. Entretiens individuels : heures fixes ou variables ? système de rendez-vous ?
 3. App exportée : mises à jour post-sortie ? (re-télécharger vs version en ligne)
-4. Données sensibles dans l'export : protection suffisante avec PIN ?
+4. Données sensibles dans l'export : protection suffisante avec PIN SHA-256 ?
 
 ---
 

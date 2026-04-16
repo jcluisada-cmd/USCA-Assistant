@@ -607,7 +607,7 @@
     </header>
     <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-24">
       <div id="feedback-form">
-        <p class="text-sm text-slate-600 mb-4">Aidez-nous \u00e0 am\u00e9liorer cette application ! Signalez un bug, proposez une id\u00e9e ou dites-nous ce qui vous pla\u00eet.</p>
+        <p class="text-sm text-slate-600 mb-4">Aidez-nous à améliorer cette application ! Signalez un bug, proposez une idée ou dites-nous ce qui vous plaît.</p>
 
         <!-- Type -->
         <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Type de retour</p>
@@ -2462,18 +2462,6 @@ document.getElementById('btn-logout').addEventListener('click', function() {
 // ══════════════ AUTO-RESTAURATION ══════════════
 
 (function() {
-  // Export vierge demandé depuis l'admin ?
-  if (window.location.search.indexOf('export=vierge') !== -1) {
-    currentPatient = { id: 'vierge', prenom: 'Consultation', chambre: '0' };
-    patientStrategies = [];
-    // Déclencher l'export HTML avec données vides après un court délai
-    setTimeout(function() {
-      document.getElementById('btn-export-html').click();
-      // Fermer la fenêtre après le téléchargement
-      setTimeout(function() { window.close(); }, 1500);
-    }, 500);
-    return;
-  }
   var session = auth.getPatientSession();
   if (session) { currentPatient = session; showPatientApp(session); }
 })();
