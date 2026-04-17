@@ -825,31 +825,35 @@ function renderAttente() {
   }
   loadedAttente.forEach(function(item) {
     var row = createEl('div', 'p-2.5 bg-slate-50 rounded-lg');
-    var top = createEl('div', 'flex items-center justify-between');
-    var left = createEl('div', 'flex items-center gap-2 flex-1 min-w-0');
-    left.appendChild(createEl('span', 'text-xs font-bold text-slate-700', 'Patient de ' + item.age + ' ans'));
-    left.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded whitespace-nowrap', item.addressage));
-    top.appendChild(left);
 
-    var right = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
+    // Ligne 1 : âge + date + icônes éditer/supprimer
+    var top = createEl('div', 'flex items-center justify-between gap-1');
+    var topLeft = createEl('div', 'flex items-center gap-1.5 min-w-0');
+    topLeft.appendChild(createEl('span', 'text-xs font-bold text-slate-700 truncate', 'Patient de ' + item.age + ' ans'));
+    top.appendChild(topLeft);
+
+    var topRight = createEl('div', 'flex items-center gap-1 flex-shrink-0');
     if (item.date_entree_prevue) {
-      right.appendChild(createEl('span', 'text-xs font-semibold text-indigo-600', new Date(item.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
+      topRight.appendChild(createEl('span', 'text-xs font-semibold text-indigo-600 whitespace-nowrap', new Date(item.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
     }
-    // Bouton Admettre (vert)
-    var btnAdm = createEl('button', 'text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition-colors whitespace-nowrap', 'Admettre');
-    (function(id) { btnAdm.addEventListener('click', function(e) { e.stopPropagation(); startAdmettre(id); }); })(item.id);
-    right.appendChild(btnAdm);
-
     var btnEdit = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors');
     btnEdit.appendChild(createEditSvg());
     (function(id) { btnEdit.addEventListener('click', function(e) { e.stopPropagation(); editAttente(id); }); })(item.id);
-    right.appendChild(btnEdit);
+    topRight.appendChild(btnEdit);
     var btnDel = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors');
     btnDel.appendChild(createTrashSvg());
     (function(id) { btnDel.addEventListener('click', function(e) { e.stopPropagation(); deleteAttente(id); }); })(item.id);
-    right.appendChild(btnDel);
-    top.appendChild(right);
+    topRight.appendChild(btnDel);
+    top.appendChild(topRight);
     row.appendChild(top);
+
+    // Ligne 2 : badge adressage + bouton Admettre
+    var bottom = createEl('div', 'flex items-center justify-between gap-1 mt-1.5');
+    bottom.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded', item.addressage));
+    var btnAdm = createEl('button', 'text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors whitespace-nowrap flex-shrink-0', 'Admettre');
+    (function(id) { btnAdm.addEventListener('click', function(e) { e.stopPropagation(); startAdmettre(id); }); })(item.id);
+    bottom.appendChild(btnAdm);
+    row.appendChild(bottom);
 
     if (item.commentaire) {
       row.appendChild(createEl('p', 'text-[11px] text-slate-500 mt-1 truncate', item.commentaire));
@@ -1847,7 +1851,9 @@ async function renderComptes() {
         actions.appendChild(adminLabel);
 
         // Supprimer (profil + compte Auth via Cloudflare Function)
-        var btnDel = createEl('button', 'px-3 py-1.5 bg-white border border-red-200 text-red-500 font-bold rounded-lg text-xs hover:bg-red-50 transition-colors', 'Supprimer');
+        var btnDel = createEl('button', 'w-7 h-7 flex items-center justify-center bg-white border border-red-200 text-red-400 rounded-lg hover:bg-red-50 hover:text-red-600 transition-colors flex-shrink-0');
+        btnDel.title = 'Supprimer le compte';
+        btnDel.appendChild(createTrashSvg());
         (function(profileId, nom) {
           btnDel.addEventListener('click', async function() {
             if (!confirm('Supprimer définitivement le compte de ' + nom + ' ?\n\nCette action supprime le profil ET le compte de connexion.')) return;
