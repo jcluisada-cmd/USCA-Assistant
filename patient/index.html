@@ -1344,7 +1344,7 @@ async function loadProgrammeForDate(date) {
   (window.getGroupesForDay ? window.getGroupesForDay(date) : []).forEach(function(g) {
     var mod = groupeMods[g.slug];
     if (mod && mod.annule) return;
-    if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
+    if (mod && Array.isArray(mod.exclusions) && currentPatient && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
     var animLabel = window._progAnimateurs[g.slug] ? window._progAnimateurs[g.slug].join(', ') : '';
     var lieu = g.detail || '';
     if (animLabel) lieu = lieu ? lieu + ' \u2014 ' + animLabel : animLabel;
@@ -1362,7 +1362,7 @@ async function loadProgrammeForDate(date) {
   if (currentPatient.programme_id) {
     try {
       var prog = await db.getProgrammeById(currentPatient.programme_id);
-      if (prog.activites) activites = activites.concat(prog.activites);
+      if (Array.isArray(prog.activites)) activites = activites.concat(prog.activites);
     } catch(e) {}
   }
 
@@ -1434,11 +1434,12 @@ async function loadProgrammeForDate(date) {
     });
   } catch(e) {}
 
-  // Trier et afficher
+  // Trier et afficher (filtrer entrées avec heure invalide pour éviter crash du tri/rendu)
+  activites = activites.filter(function(a) { return a && typeof a.heure === 'string' && /^\d{2}:\d{2}/.test(a.heure); });
   activites.sort(function(a, b) { return a.heure.localeCompare(b.heure); });
   document.getElementById('timeline-empty').classList.add('hidden');
   if (activites.length > 0) {
-    renderTimeline(activites, isToday);
+    renderTimeline(activites, isToday, dateStr, date, _progParticipations, _progDemandes);
   } else {
     document.getElementById('timeline-container').textContent = '';
     document.getElementById('timeline-empty').classList.remove('hidden');
@@ -1447,7 +1448,9 @@ async function loadProgrammeForDate(date) {
 
 // ══════════════ TIMELINE ══════════════
 
-function renderTimeline(activites, isToday) {
+function renderTimeline(activites, isToday, dateStr, date, _progParticipations, _progDemandes) {
+  _progParticipations = _progParticipations || {};
+  _progDemandes = _progDemandes || {};
   var container = document.getElementById('timeline-container');
   container.textContent = '';
   if (!activites || activites.length === 0) { document.getElementById('timeline-empty').classList.remove('hidden'); return; }
@@ -1471,6 +1474,7 @@ function renderTimeline(activites, isToday) {
   };
 
   activites.forEach(function(act, i) {
+    try {
     var parts = act.heure.split(':');
     var actMin = parseInt(parts[0]) * 60 + parseInt(parts[1]);
     var isPast = showNow ? (actMin + 60 < nowMinutes) : false;
@@ -1528,6 +1532,7 @@ function renderTimeline(activites, isToday) {
     }
 
     container.appendChild(row);
+    } catch(err) { console.warn('Timeline: activité ignorée', act, err); }
   });
   if (showNow && !nowInserted) container.appendChild(makeNowMarker(now));
 }
@@ -2417,7 +2422,7 @@ async function loadAteliers() {
     dayGroupes.forEach(function(g) {
       var mod = dayMods[g.slug];
       if (mod && mod.annule) return;
-      if (mod && mod.exclusions && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
+      if (mod && Array.isArray(mod.exclusions) && currentPatient && mod.exclusions.indexOf(currentPatient.id) !== -1) return;
 
       var key = g.slug + '_' + viewDateStr;
       var existing = partMap[key];
