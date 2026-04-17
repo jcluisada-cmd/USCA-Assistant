@@ -570,5 +570,95 @@ window.db = {
     }
     const { error } = await sb.from('patients').update({ postcure_statut: statut }).eq('id', patientId);
     if (error) throw error;
+  },
+
+  // ════════════════ LIVRET IFSI — ÉTUDIANTES EN STAGE ════════════════
+
+  /** Récupère le stage d'une étudiante par user_id (un seul stage actif par utilisatrice) */
+  async getStageByUserId(userId) {
+    const { data, error } = await sb.from('etudiants_stages').select('*').eq('user_id', userId).order('created_at', { ascending: false }).limit(1).maybeSingle();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Récupère un stage par son id */
+  async getStageById(stageId) {
+    const { data, error } = await sb.from('etudiants_stages').select('*').eq('id', stageId).single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Liste tous les stages (admin + IDE + médecins) */
+  async getAllStages() {
+    const { data, error } = await sb.from('etudiants_stages').select('*').order('date_debut', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  /** Stages dont je suis la tutrice référente */
+  async getStagesByTuteur(tuteurId) {
+    const { data, error } = await sb.from('etudiants_stages').select('*').eq('tuteur_id', tuteurId).order('date_debut', { ascending: false });
+    if (error) throw error;
+    return data;
+  },
+
+  /** Crée un stage (appelé à l'admission d'une nouvelle étudiante) */
+  async createStage(payload) {
+    const { data, error } = await sb.from('etudiants_stages').insert(payload).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Met à jour un stage (dates, tuteur, statut) */
+  async updateStage(stageId, patch) {
+    const { data, error } = await sb.from('etudiants_stages').update(patch).eq('id', stageId).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime un stage (cascade sur progression) — admin uniquement */
+  async deleteStage(stageId) {
+    const { error } = await sb.from('etudiants_stages').delete().eq('id', stageId);
+    if (error) throw error;
+  },
+
+  /** Réinitialise la progression d'un stage (garde le stage, vide les réponses)
+   * Usage : en fin de stage pour remettre à zéro avant réutilisation du compte,
+   * ou pour reset sans supprimer l'identité étudiante. */
+  async resetProgressionStage(stageId) {
+    const { error } = await sb.from('etudiant_progression').delete().eq('stage_id', stageId);
+    if (error) throw error;
+  },
+
+  /** Toute la progression d'un stage */
+  async getProgressionStage(stageId) {
+    const { data, error } = await sb.from('etudiant_progression').select('*').eq('stage_id', stageId);
+    if (error) throw error;
+    return data;
+  },
+
+  /** Upsert d'une réponse (unique par stage_id + question_id) */
+  async upsertProgression(stageId, chapitreId, questionId, reponseEtudiant, reponseJson) {
+    const payload = {
+      stage_id: stageId,
+      chapitre_id: chapitreId,
+      question_id: questionId,
+      reponse_etudiant: reponseEtudiant ?? null,
+      reponse_json: reponseJson ?? null,
+      updated_at: new Date().toISOString()
+    };
+    const { data, error } = await sb.from('etudiant_progression').upsert(payload, { onConflict: 'stage_id,question_id' }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Marquer une question comme vue par la tutrice (ou la démarquer) */
+  async markProgressionVue(stageId, questionId, vu, tuteurProfileId) {
+    const patch = vu
+      ? { vu_tuteur: true,  vu_par: tuteurProfileId, vu_le: new Date().toISOString() }
+      : { vu_tuteur: false, vu_par: null, vu_le: null };
+    const { data, error } = await sb.from('etudiant_progression').update(patch).eq('stage_id', stageId).eq('question_id', questionId).select().single();
+    if (error) throw error;
+    return data;
   }
 };
