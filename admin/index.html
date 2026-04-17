@@ -468,10 +468,31 @@
 
         <!-- Modal Date de sortie -->
         <div id="modal-sortie" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
-          <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8">
-            <h3 class="text-base font-bold text-slate-800 mb-3">Date de sortie</h3>
-            <input type="date" id="sortie-date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-4">
-            <div class="flex gap-2">
+          <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-base font-bold text-slate-800 mb-3">Sortie du patient</h3>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Date de sortie</label>
+            <input type="date" id="sortie-date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Destination</label>
+            <div class="flex gap-2 mb-3" id="sortie-dest-radios">
+              <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+                <input type="radio" name="sortie-dest" value="rad" class="accent-emerald-600"><span>RAD</span>
+              </label>
+              <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+                <input type="radio" name="sortie-dest" value="postcure" class="accent-emerald-600"><span>Post-cure</span>
+              </label>
+              <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+                <input type="radio" name="sortie-dest" value="autre" class="accent-emerald-600"><span>Autre</span>
+              </label>
+            </div>
+            <div id="sortie-postcure-wrap" class="mb-3 hidden">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Centre de post-cure</label>
+              <select id="sortie-postcure-centre" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"></select>
+            </div>
+            <div id="sortie-autre-wrap" class="mb-3 hidden">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Précision</label>
+              <input type="text" id="sortie-autre-precision" placeholder="Ex : HDJ, foyer, transfert..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+            </div>
+            <div class="flex gap-2 mt-4">
               <button id="sortie-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
               <button id="sortie-save" class="flex-1 py-2.5 bg-emerald-600 text-white font-bold rounded-xl text-sm">Confirmer</button>
             </div>
@@ -632,6 +653,7 @@
 <script src="../shared/auth.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
+<script src="../shared/postcure-centres.js"></script>
 <script src="../shared/postcure-structures.js"></script>
 
 <script>
@@ -756,6 +778,32 @@ function switchESTab(tab) {
   document.getElementById('tab-attente-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (!isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
 }
 
+var _sortiesOpen = {}; // id patient → bool (accordion état)
+var CHECKLIST_ITEMS = [
+  { key: 'ordonnance', label: 'Ordonnance de sortie' },
+  { key: 'transport',  label: 'Bon de transport' },
+  { key: 'bulletin',   label: 'Bulletin de situation' },
+  { key: 'crh',        label: 'CRH' }
+];
+
+function sortieDestLabel(info) {
+  if (!info || !info.destination) return { text: 'Destination ?', cls: 'text-amber-600 bg-amber-50 border border-amber-200' };
+  if (info.destination === 'rad') return { text: 'RAD', cls: 'text-slate-700 bg-slate-100' };
+  if (info.destination === 'postcure') {
+    var centre = info.postcure_centre && window.POSTCURE_CENTRES && window.POSTCURE_CENTRES[info.postcure_centre];
+    return { text: centre ? 'PC : ' + centre.nom : 'Post-cure ?', cls: 'text-indigo-700 bg-indigo-100' };
+  }
+  if (info.destination === 'autre') {
+    return { text: info.autre_precision ? 'Autre : ' + info.autre_precision : 'Autre ?', cls: 'text-purple-700 bg-purple-100' };
+  }
+  return { text: '—', cls: 'text-slate-500 bg-slate-100' };
+}
+
+function checklistAllDone(info) {
+  if (!info || !info.checklist) return false;
+  return CHECKLIST_ITEMS.every(function(it) { return info.checklist[it.key] === true; });
+}
+
 function renderSorties() {
   var list = document.getElementById('sorties-list');
   list.textContent = '';
@@ -766,18 +814,82 @@ function renderSorties() {
     return;
   }
   sorties.forEach(function(p) {
-    var row = createEl('div', 'flex items-center justify-between p-2.5 bg-slate-50 rounded-lg');
-    var left = createEl('div', 'flex items-center gap-2');
-    var badge = createEl('span', 'text-xs font-bold bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded', p.numero_chambre);
-    left.appendChild(badge);
-    left.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', 'Chambre ' + p.numero_chambre));
-    row.appendChild(left);
+    var info = p.sortie_info || {};
+    var allDone = checklistAllDone(info);
+    var isOpen = !!_sortiesOpen[p.id];
+
+    var wrap = createEl('div', 'bg-slate-50 rounded-lg overflow-hidden');
+
+    // Header (cliquable)
+    var header = createEl('div', 'flex items-center justify-between p-2.5 cursor-pointer hover:bg-slate-100 transition-colors');
+    var left = createEl('div', 'flex items-center gap-2 min-w-0');
+    var chambreCls = allDone ? 'bg-emerald-500 text-white' : 'bg-indigo-100 text-indigo-600';
+    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-0.5 rounded ' + chambreCls, p.numero_chambre));
+    left.appendChild(createEl('span', 'text-xs font-semibold text-slate-700 flex-shrink-0', 'Ch.'));
+    var destInfo = sortieDestLabel(info);
+    left.appendChild(createEl('span', 'text-[10px] font-semibold px-1.5 py-0.5 rounded truncate ' + destInfo.cls, destInfo.text));
+    header.appendChild(left);
+
+    var right = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
     var dateStr = new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
     var today = new Date(); today.setHours(0,0,0,0);
     var sortieDate = new Date(p.date_sortie_prevue); sortieDate.setHours(0,0,0,0);
     var isPast = sortieDate <= today;
-    row.appendChild(createEl('span', 'text-xs font-semibold ' + (isPast ? 'text-red-500' : 'text-emerald-600'), dateStr));
-    list.appendChild(row);
+    right.appendChild(createEl('span', 'text-xs font-semibold ' + (isPast ? 'text-red-500' : 'text-emerald-600'), dateStr));
+    var chevron = createEl('span', 'text-slate-400 text-xs transition-transform', isOpen ? '▾' : '▸');
+    right.appendChild(chevron);
+    header.appendChild(right);
+
+    header.addEventListener('click', function() {
+      _sortiesOpen[p.id] = !_sortiesOpen[p.id];
+      renderSorties();
+    });
+    wrap.appendChild(header);
+
+    // Accordion
+    if (isOpen) {
+      var body = createEl('div', 'px-2.5 pb-2.5 pt-1 border-t border-slate-200 bg-white');
+
+      // Édition destination rapide si manquante ou à corriger
+      var editBtn = createEl('button', 'w-full text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 py-1 mb-1.5 underline', 'Modifier date / destination');
+      editBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        selectedPatientForDetail = p;
+        openSortieModal(p);
+      });
+      body.appendChild(editBtn);
+
+      // Checklist
+      var checklist = info.checklist || { ordonnance: false, transport: false, bulletin: false, crh: false };
+      CHECKLIST_ITEMS.forEach(function(item) {
+        var row = createEl('label', 'flex items-center gap-2 py-1.5 cursor-pointer');
+        var cb = createEl('input', 'accent-emerald-600 w-4 h-4 flex-shrink-0');
+        cb.type = 'checkbox';
+        cb.checked = !!checklist[item.key];
+        cb.addEventListener('change', async function(e) {
+          e.stopPropagation();
+          var newChecklist = Object.assign({}, checklist, {});
+          newChecklist[item.key] = cb.checked;
+          var newInfo = Object.assign({}, info, { checklist: newChecklist });
+          try {
+            await db.updatePatientSortieInfo(p.id, newInfo);
+            p.sortie_info = newInfo;
+            renderSorties();
+          } catch(err) { console.warn(err); cb.checked = !cb.checked; }
+        });
+        row.appendChild(cb);
+        row.appendChild(createEl('span', 'text-xs text-slate-700 ' + (checklist[item.key] ? 'line-through text-slate-400' : ''), item.label));
+        body.appendChild(row);
+      });
+
+      if (allDone) {
+        body.appendChild(createEl('p', 'text-[11px] font-bold text-emerald-600 text-center mt-1', '✓ Dossier de sortie complet'));
+      }
+
+      wrap.appendChild(body);
+    }
+
+    list.appendChild(wrap);
   });
 }
 
@@ -1318,8 +1430,44 @@ document.getElementById('btn-action-perm').addEventListener('click', function() 
 document.getElementById('perm-cancel').addEventListener('click', function() { document.getElementById('modal-perm').classList.add('hidden'); });
 document.getElementById('btn-action-contenu').addEventListener('click', function() { document.getElementById('modal-contenu').classList.remove('hidden'); });
 document.getElementById('contenu-cancel').addEventListener('click', function() { document.getElementById('modal-contenu').classList.add('hidden'); });
-document.getElementById('btn-action-sortie').addEventListener('click', function() { document.getElementById('modal-sortie').classList.remove('hidden'); });
+document.getElementById('btn-action-sortie').addEventListener('click', function() {
+  openSortieModal(selectedPatientForDetail);
+});
 document.getElementById('sortie-cancel').addEventListener('click', function() { document.getElementById('modal-sortie').classList.add('hidden'); });
+
+// ── Remplissage du select post-cure (une fois au chargement) ──
+(function() {
+  var sel = document.getElementById('sortie-postcure-centre');
+  if (sel && window.POSTCURE_CENTRES) {
+    sel.textContent = '';
+    sel.appendChild(new Option('— Choisir —', ''));
+    Object.keys(window.POSTCURE_CENTRES).forEach(function(k) {
+      var c = window.POSTCURE_CENTRES[k];
+      sel.appendChild(new Option(c.nom + ' — ' + c.ville, k));
+    });
+  }
+})();
+
+// ── Toggle sous-champs selon destination ──
+document.querySelectorAll('input[name="sortie-dest"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    document.getElementById('sortie-postcure-wrap').classList.toggle('hidden', this.value !== 'postcure');
+    document.getElementById('sortie-autre-wrap').classList.toggle('hidden', this.value !== 'autre');
+  });
+});
+
+function openSortieModal(patient) {
+  if (!patient) return;
+  document.getElementById('modal-sortie').classList.remove('hidden');
+  document.getElementById('sortie-date').value = patient.date_sortie_prevue || '';
+  var info = patient.sortie_info || {};
+  var dest = info.destination || '';
+  document.querySelectorAll('input[name="sortie-dest"]').forEach(function(r) { r.checked = (r.value === dest); });
+  document.getElementById('sortie-postcure-centre').value = info.postcure_centre || '';
+  document.getElementById('sortie-autre-precision').value = info.autre_precision || '';
+  document.getElementById('sortie-postcure-wrap').classList.toggle('hidden', dest !== 'postcure');
+  document.getElementById('sortie-autre-wrap').classList.toggle('hidden', dest !== 'autre');
+}
 
 // ── Save événement ──
 document.getElementById('evt-save').addEventListener('click', async function() {
@@ -1396,10 +1544,20 @@ document.getElementById('contenu-save').addEventListener('click', async function
 document.getElementById('sortie-save').addEventListener('click', async function() {
   var date = document.getElementById('sortie-date').value;
   if (!date) return;
+  var destRadio = document.querySelector('input[name="sortie-dest"]:checked');
+  var destination = destRadio ? destRadio.value : null;
+  var existing = selectedPatientForDetail.sortie_info || {};
+  var info = {
+    destination: destination,
+    postcure_centre: destination === 'postcure' ? (document.getElementById('sortie-postcure-centre').value || null) : null,
+    autre_precision: destination === 'autre' ? (document.getElementById('sortie-autre-precision').value.trim() || null) : null,
+    checklist: existing.checklist || { ordonnance: false, transport: false, bulletin: false, crh: false }
+  };
   this.disabled = true;
   try {
-    await db.updatePatientSortie(selectedPatientForDetail.id, date);
+    await db.updatePatientSortie(selectedPatientForDetail.id, date, info);
     selectedPatientForDetail.date_sortie_prevue = date;
+    selectedPatientForDetail.sortie_info = info;
     document.getElementById('sortie-current').textContent = 'Sortie : ' + new Date(date).toLocaleDateString('fr-FR');
     document.getElementById('modal-sortie').classList.add('hidden');
     var exportsDiv = document.getElementById('sortie-exports');

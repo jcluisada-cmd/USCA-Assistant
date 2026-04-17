@@ -67,7 +67,7 @@ window.db = {
   async getPatientByRoom(room, dob) {
     const { data, error } = await sb
       .from('patients')
-      .select('id, prenom, programme_id, numero_chambre, substance_principale, date_admission, date_sortie_prevue, postcure_statut')
+      .select('id, prenom, programme_id, numero_chambre, substance_principale, date_admission, date_sortie_prevue, postcure_statut, sortie_info')
       .eq('numero_chambre', room)
       .eq('date_naissance', dob)
       .single();
@@ -333,8 +333,16 @@ window.db = {
 
   // ════════════════ DATE DE SORTIE ════════════════
 
-  async updatePatientSortie(patientId, dateSortie) {
-    const { data, error } = await sb.from('patients').update({ date_sortie_prevue: dateSortie }).eq('id', patientId).select().single();
+  async updatePatientSortie(patientId, dateSortie, sortieInfo) {
+    const payload = { date_sortie_prevue: dateSortie };
+    if (sortieInfo !== undefined) payload.sortie_info = sortieInfo;
+    const { data, error } = await sb.from('patients').update(payload).eq('id', patientId).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  async updatePatientSortieInfo(patientId, sortieInfo) {
+    const { data, error } = await sb.from('patients').update({ sortie_info: sortieInfo }).eq('id', patientId).select().single();
     if (error) throw error;
     return data;
   },
