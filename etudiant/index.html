@@ -80,6 +80,8 @@ let currentStage = null;
 let currentProfile = null;
 let progressionMap = {};
 let currentTab = 'accueil';
+let isPreview = false; // soignant en mode consultation lecture seule
+let previewStudentName = '';
 
 const SAVE_DEBOUNCE_MS = 500;
 let saveTimers = {};
@@ -108,16 +110,42 @@ function showSaveIndicator() {
 
 (async function init() {
   const profile = await auth.getStaffSession();
-  if (!profile || profile.role !== 'etudiant_ide') {
+  if (!profile) { window.location.href = '../'; return; }
+
+  const urlStageId = new URLSearchParams(window.location.search).get('stage');
+  const isSoignant = profile.role === 'ide' || profile.role === 'medecin' || profile.is_admin === true;
+
+  if (profile.role !== 'etudiant_ide' && !(isSoignant && urlStageId)) {
+    // Soignant sans ?stage=... ou autre rôle : retour home
     window.location.href = '../';
     return;
   }
   currentProfile = profile;
-  document.getElementById('hdr-nom').textContent = profile.nom || profile.email;
 
-  try {
-    currentStage = await db.getStageByUserId(profile.id);
-  } catch(e) { console.warn('Stage non trouvé', e); }
+  if (isSoignant && urlStageId) {
+    isPreview = true;
+    try {
+      currentStage = await db.getStageById(urlStageId);
+      // Récupérer le nom de l'étudiante
+      const { data: studProfile } = await sb.from('profiles').select('nom').eq('id', currentStage.user_id).single();
+      previewStudentName = (studProfile && studProfile.nom) || '(étudiante)';
+    } catch(e) { console.warn('Stage introuvable', e); }
+  } else {
+    try {
+      currentStage = await db.getStageByUserId(profile.id);
+    } catch(e) { console.warn('Stage non trouvé', e); }
+  }
+
+  document.getElementById('hdr-nom').textContent = isPreview
+    ? '👁 Consultation — ' + previewStudentName
+    : (profile.nom || profile.email);
+
+  if (isPreview) {
+    const banner = createEl('div', 'bg-amber-500 text-white text-center text-xs font-bold py-1.5');
+    banner.textContent = 'Mode consultation soignant — lecture seule';
+    document.querySelector('header').appendChild(banner);
+    document.getElementById('btn-logout').textContent = '← Retour dashboard';
+  }
 
   if (!currentStage) {
     document.getElementById('panel-empty').classList.remove('hidden');
@@ -136,6 +164,7 @@ function showSaveIndicator() {
 })();
 
 document.getElementById('btn-logout').addEventListener('click', async () => {
+  if (isPreview) { window.location.href = '../admin/'; return; }
   try { await auth.logoutStaff(); } catch(e) {}
   localStorage.removeItem('usca_session');
   window.location.href = '../';
@@ -315,7 +344,41 @@ function renderQuestion(chapitreId, q) {
     showFeedback(feedback, q, existing, null);
   }
 
+  // Mode preview : désactiver tous les contrôles + masquer les boutons de soumission + toujours montrer feedback
+  if (isPreview) {
+    zone.querySelectorAll('input, textarea, select').forEach(el => { el.disabled = true; });
+    zone.querySelectorAll('button').forEach(b => { b.style.display = 'none'; });
+    if (q.reponse_attendue || q.type === 'table_fill') {
+      showFeedback(feedback, q, existing || {}, null);
+    }
+    // Bouton "Marquer comme vu" pour IDE/admin
+    card.appendChild(renderVuToggle(q, existing));
+  }
+
   return card;
+}
+
+function renderVuToggle(q, existing) {
+  const row = createEl('div', 'mt-3 pt-3 border-t border-slate-100 flex items-center justify-between');
+  const isVu = existing && existing.vu_tuteur === true;
+  const label = createEl('span', 'text-[11px] text-slate-500', isVu ? '✓ Déjà validé avec l\'étudiante' : 'Pas encore validé');
+  row.appendChild(label);
+  // Seulement afficher le bouton de toggle si on a déjà une réponse à valider
+  if (existing && (existing.reponse_etudiant || existing.reponse_json)) {
+    const btn = createEl('button', 'text-[11px] font-bold px-2.5 py-1 rounded-lg transition-colors ' +
+      (isVu ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700'),
+      isVu ? 'Annuler' : '✓ Marquer comme vu');
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try {
+        const row = await db.markProgressionVue(currentStage.id, q.id, !isVu, currentProfile.id);
+        progressionMap[q.id] = row;
+        renderChapitre(currentTab.slice(3)); // refresh du chapitre courant
+      } catch(e) { console.warn(e); btn.disabled = false; }
+    });
+    row.appendChild(btn);
+  }
+  return row;
 }
 
 function renderFillIn(zone, feedback, chapitreId, q, existing) {

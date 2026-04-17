@@ -210,6 +210,17 @@
           </div>
         </div>
 
+        <!-- ═══ Mes élèves (livret IFSI) ═══ -->
+        <div id="section-eleves" class="mb-4 hidden">
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <div class="flex items-center justify-between px-3 py-2.5 border-b border-slate-200">
+              <h3 class="text-xs font-bold text-slate-700">🎓 Mes élèves</h3>
+              <span id="eleves-count" class="text-[10px] text-slate-400"></span>
+            </div>
+            <div id="eleves-list" class="p-3 space-y-2"></div>
+          </div>
+        </div>
+
         <!-- Formulaire nouveau patient -->
         <div id="form-new-patient" class="bg-white rounded-xl border border-indigo-200 p-5 mb-4 hidden">
           <h4 class="text-sm font-bold text-indigo-700 mb-3">Nouveau patient</h4>
@@ -654,6 +665,7 @@
 <script src="../shared/fiches-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
 <script src="../shared/postcure-structures.js"></script>
+<script src="../shared/livret-ifsi-contenu.js"></script>
 
 <script>
 // ── Helpers DOM sûrs ──
@@ -736,6 +748,7 @@ function showAdminApp(profile) {
   document.getElementById('staff-name').textContent = profile.nom;
   loadDashboardStats();
   checkAdminAccess();
+  loadEleves();
 
   if (auth.hasPin()) {
     auth.setupInactivityLock(60 * 60 * 1000, () => {
@@ -3067,6 +3080,137 @@ document.getElementById('modal-groupe-actions').addEventListener('click', functi
   // Pas de session → afficher le login
   document.getElementById('login-screen').classList.remove('hidden');
 })();
+
+// ══════════════ MES ÉLÈVES (Livret IFSI — vue tuteur) ══════════════
+
+async function loadEleves() {
+  // Visible pour IDE, médecin, admin
+  var visible = currentProfile && (currentProfile.is_admin || currentProfile.role === 'ide' || currentProfile.role === 'medecin');
+  if (!visible) return;
+
+  try {
+    var stages = await db.getAllStages();
+    if (!stages || stages.length === 0) return;
+
+    document.getElementById('section-eleves').classList.remove('hidden');
+
+    // Pour chaque stage on récupère : le profil de l'élève, le total de questions livret, et le nb de réponses / à revoir
+    var enriched = await Promise.all(stages.map(async function(s) {
+      var prof = null;
+      try { var res = await sb.from('profiles').select('nom, email').eq('id', s.user_id).single(); prof = res.data; } catch(e) {}
+      var progression = [];
+      try { progression = await db.getProgressionStage(s.id); } catch(e) {}
+      return {
+        stage: s,
+        profil: prof || { nom: '(nom inconnu)' },
+        nb_repondu: progression.filter(function(p) { return p.reponse_etudiant || p.reponse_json; }).length,
+        nb_a_revoir: progression.filter(function(p) { return (p.reponse_etudiant || p.reponse_json) && !p.vu_tuteur; }).length
+      };
+    }));
+
+    // Mes élèves en premier, puis les autres
+    enriched.sort(function(a, b) {
+      var aMine = a.stage.tuteur_id === currentProfile.id ? 0 : 1;
+      var bMine = b.stage.tuteur_id === currentProfile.id ? 0 : 1;
+      if (aMine !== bMine) return aMine - bMine;
+      return new Date(b.stage.date_debut) - new Date(a.stage.date_debut);
+    });
+
+    document.getElementById('eleves-count').textContent = enriched.length + ' élève' + (enriched.length > 1 ? 's' : '');
+    renderEleves(enriched);
+  } catch(e) { console.warn('loadEleves', e); }
+}
+
+function renderEleves(list) {
+  var container = document.getElementById('eleves-list');
+  container.textContent = '';
+
+  list.forEach(function(item) {
+    var s = item.stage;
+    var p = item.profil;
+    var isMine = s.tuteur_id === currentProfile.id;
+    var isAdmin = currentProfile.is_admin === true;
+
+    var card = createEl('div', 'bg-slate-50 rounded-lg p-3 border border-slate-200');
+
+    // Header ligne 1 : nom + badge "tuteur/tutrice" si mine
+    var header = createEl('div', 'flex items-center justify-between gap-2 mb-1.5');
+    var left = createEl('div', 'flex items-center gap-2 min-w-0');
+    left.appendChild(createEl('span', 'text-sm font-bold text-slate-800 truncate', p.nom));
+    if (isMine) left.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 flex-shrink-0', 'Référent·e'));
+    header.appendChild(left);
+    if (item.nb_a_revoir > 0) {
+      header.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 flex-shrink-0', item.nb_a_revoir + ' à revoir'));
+    }
+    card.appendChild(header);
+
+    // Ligne 2 : IFSI / promo / dates
+    var meta = [];
+    if (s.ifsi_origine) meta.push(s.ifsi_origine);
+    if (s.promo) meta.push('Promo ' + s.promo);
+    if (s.annee_formation) meta.push('A' + s.annee_formation);
+    var dateRange = new Date(s.date_debut).toLocaleDateString('fr-FR', { day:'numeric', month:'short' }) +
+                    ' → ' + new Date(s.date_fin).toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+    card.appendChild(createEl('p', 'text-[11px] text-slate-500 mb-2', meta.join(' • ') + ' — ' + dateRange));
+
+    // Barre de progression
+    var bar = createEl('div', 'h-1.5 bg-slate-200 rounded-full overflow-hidden mb-2');
+    var fill = createEl('div', 'h-full bg-indigo-500 transition-all');
+    // Estimation : on calcule le total sur LIVRET_IFSI si dispo côté admin, sinon juste nb répondu
+    var totalEstim = window.LIVRET_IFSI ? countTotalQuestions(window.LIVRET_IFSI) : item.nb_repondu;
+    var pct = totalEstim ? Math.round(100 * item.nb_repondu / totalEstim) : 0;
+    fill.style.width = pct + '%';
+    bar.appendChild(fill);
+    card.appendChild(bar);
+    card.appendChild(createEl('p', 'text-[10px] text-slate-500 mb-2', item.nb_repondu + '/' + totalEstim + ' questions répondues (' + pct + '%)'));
+
+    // Actions
+    var actions = createEl('div', 'flex gap-2');
+    var btnVoir = createEl('button', 'flex-1 text-[11px] font-bold py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors', '👁 Consulter le livret');
+    btnVoir.addEventListener('click', function() {
+      window.location.href = '../etudiant/?stage=' + s.id;
+    });
+    actions.appendChild(btnVoir);
+
+    if (isAdmin) {
+      var btnMore = createEl('button', 'text-[11px] font-bold px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100', '⋯');
+      btnMore.addEventListener('click', function() { showEleveAdminMenu(item); });
+      actions.appendChild(btnMore);
+    }
+    card.appendChild(actions);
+
+    container.appendChild(card);
+  });
+}
+
+function countTotalQuestions(livret) {
+  var n = 0;
+  (livret.chapitres || []).forEach(function(ch) {
+    (ch.sections || []).forEach(function(sec) { n += (sec.questions || []).length; });
+  });
+  return n;
+}
+
+function showEleveAdminMenu(item) {
+  var s = item.stage;
+  var actions = [
+    { label: 'Clôturer le stage (statut terminé)', run: async function() {
+      if (!confirm('Marquer ce stage comme terminé ?')) return;
+      try { await db.updateStage(s.id, { statut: 'termine' }); await loadEleves(); } catch(e) { alert('Erreur : ' + e.message); }
+    }},
+    { label: '↺ Réinitialiser la progression (garde le compte)', run: async function() {
+      if (!confirm('Supprimer toutes les réponses de ' + item.profil.nom + ' ? Le compte reste actif.')) return;
+      try { await db.resetProgressionStage(s.id); await loadEleves(); } catch(e) { alert('Erreur : ' + e.message); }
+    }},
+    { label: '🗑 Supprimer le stage + progression', run: async function() {
+      if (!confirm('Supprimer complètement le stage et toutes les réponses de ' + item.profil.nom + ' ? Irréversible.')) return;
+      try { await db.deleteStage(s.id); await loadEleves(); } catch(e) { alert('Erreur : ' + e.message); }
+    }}
+  ];
+  var choice = prompt('Actions admin :\n1 — ' + actions[0].label + '\n2 — ' + actions[1].label + '\n3 — ' + actions[2].label + '\n\nEntrer 1, 2 ou 3 :');
+  var idx = parseInt(choice, 10) - 1;
+  if (idx >= 0 && idx < actions.length) actions[idx].run();
+}
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
