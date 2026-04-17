@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.65';
+const CACHE_NAME = 'usca-v3.66';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -52,6 +52,9 @@ self.addEventListener('activate', e => {
 // ── FETCH : stratégie différente selon le type de requête ──
 self.addEventListener('fetch', e => {
   const url = e.request.url;
+
+  // Ignorer les schémas non-http (chrome-extension://, etc.) : non cachables
+  if (!url.startsWith('http')) return;
 
   // Requêtes API/Realtime → toujours réseau, jamais de cache
   if (NETWORK_ONLY.some(domain => url.includes(domain))) {
