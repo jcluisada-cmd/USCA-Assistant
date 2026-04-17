@@ -112,15 +112,31 @@ function showSaveIndicator() {
   const profile = await auth.getStaffSession();
   if (!profile) { window.location.href = '../'; return; }
 
-  const urlStageId = new URLSearchParams(window.location.search).get('stage');
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlStageId = urlParams.get('stage');
+  const isDemoPreview = urlParams.get('preview') === 'demo';
   const isSoignant = profile.role === 'ide' || profile.role === 'medecin' || profile.is_admin === true;
 
-  if (profile.role !== 'etudiant_ide' && !(isSoignant && urlStageId)) {
-    // Soignant sans ?stage=... ou autre rôle : retour home
+  if (profile.role !== 'etudiant_ide' && !(isSoignant && (urlStageId || isDemoPreview))) {
     window.location.href = '../';
     return;
   }
   currentProfile = profile;
+
+  // Mode démo : contenu pédagogique uniquement, aucun stage réel
+  if (isDemoPreview && isSoignant) {
+    isPreview = true;
+    previewStudentName = 'démo — aperçu contenu';
+    currentStage = { id: null, date_debut: null, date_fin: null, ifsi_origine: null, promo: null };
+    document.getElementById('hdr-nom').textContent = '👁 Aperçu livret IFSI';
+    const banner = createEl('div', 'bg-indigo-500 text-white text-center text-xs font-bold py-1.5');
+    banner.textContent = 'Mode aperçu — contenu pédagogique en lecture seule';
+    document.querySelector('header').appendChild(banner);
+    document.getElementById('btn-logout').textContent = '← Retour Toolbox';
+    renderTabs();
+    switchTab('accueil');
+    return;
+  }
 
   if (isSoignant && urlStageId) {
     isPreview = true;
@@ -164,7 +180,11 @@ function showSaveIndicator() {
 })();
 
 document.getElementById('btn-logout').addEventListener('click', async () => {
-  if (isPreview) { window.location.href = '../admin/'; return; }
+  if (isPreview) {
+    const isDemo = new URLSearchParams(window.location.search).get('preview') === 'demo';
+    window.location.href = isDemo ? '../staff/toolbox.html' : '../admin/';
+    return;
+  }
   try { await auth.logoutStaff(); } catch(e) {}
   localStorage.removeItem('usca_session');
   window.location.href = '../';

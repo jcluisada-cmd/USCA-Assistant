@@ -121,6 +121,7 @@ const I = {
   clipboard: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
   grip: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></svg>,
   trash: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>,
+  book: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>,
 };
 
 /* ══════════════════════ COLORS ══════════════════════ */
@@ -1237,12 +1238,17 @@ function App() {
           </div>
         </div>}
 
-        {/* 3 grandes cartes mises en valeur */}
+        {/* 4 grandes cartes mises en valeur */}
         {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
           {l:"ELSA",desc:"Liaisons, admission, fiches réflexes",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
-          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`}
+          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`},
+          {l:"Livret IFSI",desc:"Aperçu du contenu pédagogique élève·s IDE",i:I.book,v:"livret_ifsi_preview",c:"#4F46E5",bg:`linear-gradient(135deg, #EEF2FF, ${C.bg})`}
         ].map(item=>
-          <div key={item.v} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>item.v==='postcure_medecin'?window.open('../postcure/medecin.html','_blank'):nav(item.v)}>
+          <div key={item.v} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>{
+            if(item.v==='postcure_medecin'){window.open('../postcure/medecin.html','_blank');return;}
+            if(item.v==='livret_ifsi_preview'){window.open('../etudiant/?preview=demo','_blank');return;}
+            nav(item.v);
+          }}>
             <div style={{width:48,height:48,borderRadius:14,background:item.c+"20",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.i(item.c,26)}</div>
             <div style={{flex:1}}><div style={{fontSize:15,fontWeight:900,color:C.n[900]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400],marginTop:2}}>{item.desc}</div></div>
             {I.chevR(C.n[300])}

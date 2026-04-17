@@ -210,11 +210,11 @@
           </div>
         </div>
 
-        <!-- ═══ Mes élèves (livret IFSI) ═══ -->
+        <!-- ═══ Mon élève (livret IFSI) ═══ -->
         <div id="section-eleves" class="mb-4 hidden">
           <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
             <div class="flex items-center justify-between px-3 py-2.5 border-b border-slate-200">
-              <h3 class="text-xs font-bold text-slate-700">🎓 Mes élèves</h3>
+              <h3 class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
               <span id="eleves-count" class="text-[10px] text-slate-400"></span>
             </div>
             <div id="eleves-list" class="p-3 space-y-2"></div>
@@ -474,6 +474,49 @@
               <button id="contenu-save" class="flex-1 py-2.5 bg-purple-600 text-white font-bold rounded-xl text-sm">Partager</button>
             </div>
             <p id="contenu-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+          </div>
+        </div>
+
+        <!-- Modal Modifier élève (admin) -->
+        <div id="modal-eleve-edit" class="fixed inset-0 z-[110] bg-black/50 flex items-end justify-center hidden">
+          <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-base font-bold text-slate-800 mb-3">Modifier l'élève</h3>
+            <input type="hidden" id="eleve-edit-stage-id">
+            <input type="hidden" id="eleve-edit-user-id">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom Nom</label>
+            <input type="text" id="eleve-edit-nom" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-3">
+            <div class="grid grid-cols-2 gap-2 mb-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">IFSI</label>
+                <input type="text" id="eleve-edit-ifsi" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Promo</label>
+                <input type="text" id="eleve-edit-promo" placeholder="2024-2027" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              </div>
+            </div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Année de formation</label>
+            <select id="eleve-edit-annee" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-3">
+              <option value="1">1ère année</option>
+              <option value="2">2e année</option>
+              <option value="3">3e année</option>
+            </select>
+            <div class="grid grid-cols-2 gap-2 mb-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Début</label>
+                <input type="date" id="eleve-edit-debut" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Fin</label>
+                <input type="date" id="eleve-edit-fin" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+              </div>
+            </div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">IDE référent·e</label>
+            <select id="eleve-edit-tuteur" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-4"></select>
+            <div class="flex gap-2">
+              <button id="eleve-edit-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+              <button id="eleve-edit-save" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm">Enregistrer</button>
+            </div>
           </div>
         </div>
 
@@ -3108,7 +3151,7 @@ async function loadEleves() {
       };
     }));
 
-    // Mes élèves en premier, puis les autres
+    // Mon élève en premier, puis les autres
     enriched.sort(function(a, b) {
       var aMine = a.stage.tuteur_id === currentProfile.id ? 0 : 1;
       var bMine = b.stage.tuteur_id === currentProfile.id ? 0 : 1;
@@ -3116,7 +3159,7 @@ async function loadEleves() {
       return new Date(b.stage.date_debut) - new Date(a.stage.date_debut);
     });
 
-    document.getElementById('eleves-count').textContent = enriched.length + ' élève' + (enriched.length > 1 ? 's' : '');
+    document.getElementById('eleves-count').textContent = enriched.length === 0 ? 'aucune' : (enriched.length === 1 ? '1 en cours' : enriched.length + ' en cours');
     renderEleves(enriched);
   } catch(e) { console.warn('loadEleves', e); }
 }
@@ -3173,6 +3216,10 @@ function renderEleves(list) {
     actions.appendChild(btnVoir);
 
     if (isAdmin) {
+      var btnEditEleve = createEl('button', 'text-[11px] font-bold px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100', '✏️');
+      btnEditEleve.title = 'Modifier';
+      btnEditEleve.addEventListener('click', function() { openEleveEditForm(item); });
+      actions.appendChild(btnEditEleve);
       var btnMore = createEl('button', 'text-[11px] font-bold px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100', '⋯');
       btnMore.addEventListener('click', function() { showEleveAdminMenu(item); });
       actions.appendChild(btnMore);
@@ -3182,6 +3229,55 @@ function renderEleves(list) {
     container.appendChild(card);
   });
 }
+
+async function openEleveEditForm(item) {
+  document.getElementById('eleve-edit-stage-id').value = item.stage.id;
+  document.getElementById('eleve-edit-user-id').value = item.stage.user_id;
+  document.getElementById('eleve-edit-nom').value = item.profil.nom || '';
+  document.getElementById('eleve-edit-ifsi').value = item.stage.ifsi_origine || '';
+  document.getElementById('eleve-edit-promo').value = item.stage.promo || '';
+  document.getElementById('eleve-edit-annee').value = item.stage.annee_formation || '1';
+  document.getElementById('eleve-edit-debut').value = item.stage.date_debut || '';
+  document.getElementById('eleve-edit-fin').value = item.stage.date_fin || '';
+  var selTut = document.getElementById('eleve-edit-tuteur');
+  selTut.textContent = '';
+  selTut.appendChild(new Option('— Aucun·e —', ''));
+  try {
+    var res = await sb.from('profiles').select('id, nom').eq('role', 'ide').order('nom');
+    (res.data || []).forEach(function(i) {
+      var opt = new Option(i.nom, i.id);
+      if (i.id === item.stage.tuteur_id) opt.selected = true;
+      selTut.appendChild(opt);
+    });
+  } catch(e) { console.warn(e); }
+  document.getElementById('modal-eleve-edit').classList.remove('hidden');
+}
+
+document.getElementById('eleve-edit-cancel').addEventListener('click', function() {
+  document.getElementById('modal-eleve-edit').classList.add('hidden');
+});
+
+document.getElementById('eleve-edit-save').addEventListener('click', async function() {
+  var btn = this;
+  var stageId = document.getElementById('eleve-edit-stage-id').value;
+  var userId = document.getElementById('eleve-edit-user-id').value;
+  var nom = document.getElementById('eleve-edit-nom').value.trim();
+  btn.disabled = true; btn.textContent = 'Enregistrement...';
+  try {
+    if (nom) await sb.from('profiles').update({ nom: nom }).eq('id', userId);
+    await db.updateStage(stageId, {
+      ifsi_origine: document.getElementById('eleve-edit-ifsi').value.trim() || null,
+      promo: document.getElementById('eleve-edit-promo').value.trim() || null,
+      annee_formation: parseInt(document.getElementById('eleve-edit-annee').value, 10) || null,
+      date_debut: document.getElementById('eleve-edit-debut').value || null,
+      date_fin: document.getElementById('eleve-edit-fin').value || null,
+      tuteur_id: document.getElementById('eleve-edit-tuteur').value || null
+    });
+    document.getElementById('modal-eleve-edit').classList.add('hidden');
+    await loadEleves();
+  } catch(e) { alert('Erreur : ' + e.message); }
+  btn.disabled = false; btn.textContent = 'Enregistrer';
+});
 
 function countTotalQuestions(livret) {
   var n = 0;
