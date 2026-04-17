@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 17 avril 2026
+> Dernière mise à jour : 17 avril 2026 (session soir v3.64 → v3.70)
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md
 
 ---
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.64 |
+| **Service Worker** | usca-v3.70 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -64,7 +64,9 @@ USCA-Assistant/
 ├── patient/
 │   └── index.html              ← Interface patient (9 cartes + post-cure)
 ├── admin/
-│   └── index.html              ← Dashboard soignant (Patients, Toolbox, Planning)
+│   └── index.html              ← Dashboard soignant (Patients, Toolbox, Planning, Mon élève)
+├── etudiant/
+│   └── index.html              ← SPA livret IFSI (élève) + mode preview soignant
 ├── staff/
 │   └── toolbox.html            ← V1 Toolbox React (iframe dans admin)
 ├── postcure/                   ← Module post-cure (volets séparés)
@@ -79,6 +81,7 @@ USCA-Assistant/
 │   ├── postcure-structures.js  ← 14 structures post-cure (engagements, checklists)
 │   ├── craving-agenda.js       ← Composant agenda craving
 │   ├── fiches-catalogue.js     ← Catalogue des 20 fiches traitements
+│   ├── livret-ifsi-contenu.js  ← Contenu pédagogique livret IFSI (14 chapitres, ~90 questions)
 │   ├── theme.css               ← Variables CSS dark mode
 │   └── theme.js                ← Toggle dark mode
 ├── functions/
@@ -86,7 +89,7 @@ USCA-Assistant/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
 │   └── fiche_*.html            ← 20 fiches patient par médicament
-├── migrations/                 ← Scripts SQL (v1 à v13)
+├── migrations/                 ← Scripts SQL (v1 à v16)
 │   ├── supabase-schema.sql     ← Schéma initial
 │   └── supabase-migration-v*.sql
 ├── assets/                     ← Images sources
@@ -165,6 +168,8 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v12 : Liste d'attente (table liste_attente)
 - v13 : Jours de présence soignants (profiles.jours_presence)
 - v14 : Statut post-cure workflow (patients.postcure_statut JSONB)
+- v15 : Infos de sortie (patients.sortie_info JSONB — destination RAD/post-cure/autre + checklist documents)
+- v16 : Livret IFSI — tables etudiants_stages + etudiant_progression + RLS (étudiante voit son stage, IDE/médecins voient tout, admin CRUD complet)
 
 ---
 
@@ -281,6 +286,20 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [x] Dark mode : fix lisibilité indigo (patient, admin, planning, Toolbox dégradés)
 - [x] Bug fix : synchro sorties prévues après mise à jour date sortie
 
+### Fait — Session 17/04 nuit (v3.64 → v3.70)
+- [x] **Fix programme patient** — timeline ne rendait qu'une ligne à cause d'un `ReferenceError: dateStr is not defined` dans `renderTimeline` (variable définie dans `loadProgrammeForDate` mais utilisée sans paramètre). Ajout passage explicite `dateStr/date/_progParticipations/_progDemandes` + filtre amont des activités avec heure invalide + try/catch par itération pour robustesse (commit `0131138`).
+- [x] **Dashboard sorties — destination + checklist documents** (commit `1e9c64a`, refs `3c8cacb` pour fixes layout) — migration v15 `sortie_info` JSONB. Modal sortie avec radio RAD/Post-cure/Autre + select centre (14 via `shared/postcure-structures.js`). Accordion cliquable sur chaque ligne sortie avec checklist 3 états (Ordonnance/Transport/Bulletin/CRH — À faire / ✓ Fait / N/A). Badge chambre passe en vert quand tous items sont réglés (fait OU N/A).
+- [x] **Fix SW chrome-extension** — ignore les requêtes non-http pour éviter `Failed to execute 'put' on 'Cache'`.
+- [x] **Module Livret IFSI — P1 complète** (commits `f657f94`, `2c5f444`, `5881c24`, `ec51590`, `48faf3d`, `3e53ce6`) :
+    - Migration v16 : tables `etudiants_stages` + `etudiant_progression` (RLS : élève voit son stage, IDE/médecin voient tout, admin CRUD).
+    - Rôle `etudiant_ide` (underscore) avec redirection login → `/etudiant/`.
+    - SPA `etudiant/index.html` : header sticky (safe-area iPhone OK), onglets scrollables (Accueil + Lexique + 11 chapitres), moteur rendu 6 types de questions (fill_in, QCM single/multi, vrai/faux, table_fill, texte_libre), auto-correction normalisée (casse/accents/ponctuation + mots-clés), feedback visuel (emerald/amber/rose), persistance debounced 500 ms.
+    - Contenu pédagogique `shared/livret-ifsi-contenu.js` : 14 chapitres rédigés, ~90 questions. Lexique 21 acronymes (ELSA, USCA, CSAPA, CAARUD, CJC, OH, AA, RDR, TSO, THC, CBD, GHB, SLAM, PTSD, CPOA, TS, CMP, TDAH, ASPDT, AAH, ALD). Items "À rédiger" restants sur les études de cas (c'est voulu — exercice de réflexion libre).
+    - **Vue tuteur (P2)** : section "Mon élève" dans dashboard admin pour IDE/médecin/admin (`db.getAllStages()` + progression). Clic "Consulter le livret" → `/etudiant/?stage=<id>` en mode lecture seule (bandeau orange, inputs disabled, feedback toujours visible, bouton "✓ Marquer comme vu" par question).
+    - **Édition élève (P1-C)** : bouton ✏️ admin → modal (nom, IFSI, promo, année, dates, IDE référent·e). Menu ⋯ admin : clôturer stage / réinitialiser progression / supprimer stage.
+    - **Carte Toolbox "📘 Livret IFSI"** → `/etudiant/?preview=demo` (aperçu contenu sans élève, pour IDE avant entretien).
+    - Workflow "1 élève à la fois" : entre 2 stages → ✏️ modifier l'identité + ⋯ réinitialiser progression + nouveau mot de passe → livret vierge.
+
 ### Fait — Session 17/04 soir (v3.62 → v3.64)
 - [x] **Fix critique** — accolade `});` orpheline dans `admin/index.html` (commit cd32ca3) qui cassait tout le script inline : module admin figé, page vide après déconnexion, redirection erratique vers module patient. Cache SW bumped pour forcer refresh.
 - [x] **Fix closure var+async dans Staff Psychiatrie** — `reu.jour` était capturé par closure dans une IIFE async → après la boucle `for`, il pointait vers la dernière réunion (jeudi). Conséquence : Dr Fatout (jours_presence=[4]) apparaissait dans le Staff du lundi. Passage de `reu.jour` en paramètre explicite.
@@ -292,7 +311,10 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
-- [ ] Tester toutes les nouvelles features en conditions réelles
+- [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
+- [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF). Actuellement seule l'auto-évaluation manque.
+- [ ] **Livret IFSI — PDF basique** : export progression élève (questions + ses réponses) pour archivage fin de stage si pas de portfolio complet.
+- [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
 
 ---
 
