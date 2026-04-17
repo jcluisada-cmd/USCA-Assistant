@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="../manifest.json">
+<title>USCA Connect — Mon livret de stage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  .tabs-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+  .tabs-scroll::-webkit-scrollbar { display: none; }
+  .tab-btn.active { background: #4F46E5; color: white; }
+  html.dark body { background: #0f172a; color: #e2e8f0; }
+  html.dark .bg-white { background-color: #1e293b !important; }
+  html.dark .text-slate-800 { color: #e2e8f0 !important; }
+  html.dark .text-slate-700 { color: #cbd5e1 !important; }
+  html.dark .text-slate-600 { color: #94a3b8 !important; }
+  html.dark .border-slate-200 { border-color: #334155 !important; }
+  html.dark .border-slate-300 { border-color: #475569 !important; }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h1 class="text-sm font-extrabold text-slate-800 truncate">Mon livret de stage</h1>
+        <p id="hdr-nom" class="text-[11px] text-slate-500 truncate">—</p>
+      </div>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <span id="save-indicator" class="text-[10px] font-semibold text-emerald-600 opacity-0 transition-opacity">✓ Enregistré</span>
+        <button id="btn-logout" class="text-[11px] font-semibold text-slate-500 hover:text-indigo-600 transition-colors">Déconnexion</button>
+      </div>
+    </div>
+    <div class="h-1 bg-slate-100">
+      <div id="progress-global" class="h-full bg-indigo-600 transition-all" style="width: 0%"></div>
+    </div>
+    <nav class="tabs-scroll overflow-x-auto border-b border-slate-200 bg-white">
+      <div id="tabs-container" class="flex gap-1 px-3 py-2 min-w-max"></div>
+    </nav>
+  </header>
+
+  <main class="flex-1 max-w-3xl mx-auto w-full px-4 py-5 pb-10">
+    <div id="panel-empty" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-5 text-center">
+      <p class="text-sm font-bold text-amber-800 mb-1">Aucun stage configuré</p>
+      <p class="text-xs text-amber-700">Contacte l'équipe USCA pour l'initialisation de ton livret.</p>
+    </div>
+    <div id="panel-accueil" class="tab-panel"></div>
+    <div id="panel-lexique" class="tab-panel hidden"></div>
+    <div id="panel-chapitre" class="tab-panel hidden"></div>
+  </main>
+
+<script src="../shared/supabase.js"></script>
+<script src="../shared/auth.js"></script>
+<script src="../shared/livret-ifsi-contenu.js"></script>
+<script>
+'use strict';
+
+let currentStage = null;
+let currentProfile = null;
+let progressionMap = {};
+let currentTab = 'accueil';
+
+const SAVE_DEBOUNCE_MS = 500;
+let saveTimers = {};
+
+function createEl(tag, cls, text) {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+function normalize(s) {
+  if (s == null) return '';
+  return String(s).toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[.,;:!?'"()\[\]]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function showSaveIndicator() {
+  const el = document.getElementById('save-indicator');
+  el.style.opacity = '1';
+  clearTimeout(el._hideTimer);
+  el._hideTimer = setTimeout(() => { el.style.opacity = '0'; }, 1500);
+}
+
+(async function init() {
+  const profile = await auth.getStaffSession();
+  if (!profile || profile.role !== 'etudiant_ide') {
+    window.location.href = '../';
+    return;
+  }
+  currentProfile = profile;
+  document.getElementById('hdr-nom').textContent = profile.nom || profile.email;
+
+  try {
+    currentStage = await db.getStageByUserId(profile.id);
+  } catch(e) { console.warn('Stage non trouvé', e); }
+
+  if (!currentStage) {
+    document.getElementById('panel-empty').classList.remove('hidden');
+    document.getElementById('panel-accueil').classList.add('hidden');
+    return;
+  }
+
+  try {
+    const rows = await db.getProgressionStage(currentStage.id);
+    rows.forEach(r => { progressionMap[r.question_id] = r; });
+  } catch(e) { console.warn('Progression non chargée', e); }
+
+  renderTabs();
+  renderAccueil();
+  updateGlobalProgress();
+})();
+
+document.getElementById('btn-logout').addEventListener('click', async () => {
+  try { await auth.logoutStaff(); } catch(e) {}
+  localStorage.removeItem('usca_session');
+  window.location.href = '../';
+});
+
+function renderTabs() {
+  const container = document.getElementById('tabs-container');
+  container.textContent = '';
+  const tabs = [
+    { id: 'accueil', label: 'Accueil', icone: '🏠' },
+    { id: 'lexique', label: 'Lexique', icone: '📖' }
+  ];
+  (LIVRET_IFSI.chapitres || []).forEach(ch => {
+    tabs.push({ id: 'ch:' + ch.id, label: ch.titre, icone: ch.icone || '' });
+  });
+  tabs.forEach(t => {
+    const btn = createEl('button', 'tab-btn text-[11px] font-bold px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 whitespace-nowrap transition-colors');
+    btn.textContent = (t.icone ? t.icone + ' ' : '') + t.label;
+    if (t.id === currentTab) btn.classList.add('active');
+    btn.addEventListener('click', () => switchTab(t.id));
+    container.appendChild(btn);
+  });
+}
+
+function switchTab(tabId) {
+  currentTab = tabId;
+  const tabIds = ['accueil', 'lexique'].concat((LIVRET_IFSI.chapitres || []).map(c => 'ch:' + c.id));
+  document.querySelectorAll('#tabs-container .tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', tabIds[i] === tabId);
+  });
+  document.getElementById('panel-accueil').classList.toggle('hidden', tabId !== 'accueil');
+  document.getElementById('panel-lexique').classList.toggle('hidden', tabId !== 'lexique');
+  document.getElementById('panel-chapitre').classList.toggle('hidden', !tabId.startsWith('ch:'));
+
+  if (tabId === 'accueil') renderAccueil();
+  else if (tabId === 'lexique') renderLexique();
+  else if (tabId.startsWith('ch:')) renderChapitre(tabId.slice(3));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderAccueil() {
+  const root = document.getElementById('panel-accueil');
+  root.textContent = '';
+
+  const hero = createEl('div', 'bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-2xl p-5 mb-5 shadow-sm');
+  hero.appendChild(createEl('p', 'text-[11px] uppercase font-bold opacity-80 mb-1', 'Bienvenue'));
+  hero.appendChild(createEl('h2', 'text-xl font-extrabold mb-2', currentProfile.nom || ''));
+  hero.appendChild(createEl('p', 'text-sm opacity-90', 'Stage du ' + formatDateFr(currentStage.date_debut) + ' au ' + formatDateFr(currentStage.date_fin)));
+  if (currentStage.ifsi_origine) {
+    hero.appendChild(createEl('p', 'text-xs opacity-75 mt-1', currentStage.ifsi_origine + ' — Promo ' + (currentStage.promo || '')));
+  }
+  root.appendChild(hero);
+
+  if (LIVRET_IFSI.presentation && LIVRET_IFSI.presentation.service) {
+    const pres = createEl('div', 'bg-white border border-slate-200 rounded-xl p-4 mb-5');
+    pres.appendChild(createEl('p', 'text-xs font-bold text-slate-500 uppercase mb-2', 'Le service'));
+    pres.appendChild(createEl('p', 'text-sm text-slate-700 leading-relaxed', LIVRET_IFSI.presentation.service));
+    if (LIVRET_IFSI.presentation.localisation) {
+      pres.appendChild(createEl('p', 'text-xs text-slate-500 mt-2', '📍 ' + LIVRET_IFSI.presentation.localisation));
+    }
+    root.appendChild(pres);
+  }
+
+  const list = createEl('div', 'bg-white border border-slate-200 rounded-xl overflow-hidden');
+  list.appendChild(createEl('p', 'text-xs font-bold text-slate-500 uppercase px-4 pt-4 pb-2', 'Progression par chapitre'));
+  (LIVRET_IFSI.chapitres || []).forEach(ch => {
+    const stats = chapterStats(ch);
+    const row = createEl('button', 'w-full flex items-center gap-3 px-4 py-3 border-t border-slate-100 hover:bg-slate-50 text-left transition-colors');
+    row.appendChild(createEl('span', 'text-xl flex-shrink-0', ch.icone || '📚'));
+    const mid = createEl('div', 'flex-1 min-w-0');
+    mid.appendChild(createEl('p', 'text-sm font-bold text-slate-800 truncate', ch.titre));
+    const bar = createEl('div', 'h-1 bg-slate-100 rounded-full overflow-hidden mt-1');
+    const fill = createEl('div', 'h-full bg-indigo-500 transition-all');
+    fill.style.width = (stats.total ? Math.round(100 * stats.done / stats.total) : 0) + '%';
+    bar.appendChild(fill);
+    mid.appendChild(bar);
+    row.appendChild(mid);
+    row.appendChild(createEl('span', 'text-[11px] font-bold text-slate-500 flex-shrink-0', stats.done + '/' + stats.total));
+    row.addEventListener('click', () => switchTab('ch:' + ch.id));
+    list.appendChild(row);
+  });
+  root.appendChild(list);
+}
+
+function formatDateFr(dStr) {
+  if (!dStr) return '—';
+  return new Date(dStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function chapterStats(ch) {
+  let total = 0, done = 0;
+  (ch.sections || []).forEach(sec => {
+    (sec.questions || []).forEach(q => {
+      total++;
+      const p = progressionMap[q.id];
+      if (p && (p.reponse_etudiant || p.reponse_json)) done++;
+    });
+  });
+  return { total, done };
+}
+
+function updateGlobalProgress() {
+  let total = 0, done = 0;
+  (LIVRET_IFSI.chapitres || []).forEach(ch => {
+    const s = chapterStats(ch);
+    total += s.total; done += s.done;
+  });
+  const pct = total ? Math.round(100 * done / total) : 0;
+  document.getElementById('progress-global').style.width = pct + '%';
+}
+
+function renderLexique() {
+  const root = document.getElementById('panel-lexique');
+  root.textContent = '';
+  root.appendChild(createEl('h2', 'text-lg font-extrabold text-slate-800 mb-3', 'Lexique'));
+  const grid = createEl('div', 'space-y-2');
+  (LIVRET_IFSI.lexique || []).forEach(item => {
+    const card = createEl('div', 'bg-white border border-slate-200 rounded-xl p-3');
+    const header = createEl('div', 'flex items-baseline gap-2 mb-1 flex-wrap');
+    header.appendChild(createEl('span', 'text-sm font-extrabold text-indigo-600', item.acronyme));
+    header.appendChild(createEl('span', 'text-sm text-slate-700 font-semibold', item.definition));
+    card.appendChild(header);
+    if (item.contexte === 'À compléter') {
+      card.appendChild(createEl('p', 'text-[11px] text-amber-600 italic', '⚠ À compléter'));
+    } else if (item.contexte) {
+      card.appendChild(createEl('p', 'text-xs text-slate-500 leading-relaxed', item.contexte));
+    }
+    if (item.lien_toolbox) {
+      const link = createEl('a', 'text-[11px] font-semibold text-indigo-500 hover:text-indigo-700 mt-1 inline-block', '→ Voir dans la Toolbox');
+      link.href = item.lien_toolbox;
+      card.appendChild(link);
+    }
+    grid.appendChild(card);
+  });
+  root.appendChild(grid);
+}
+
+function renderChapitre(chapitreId) {
+  const root = document.getElementById('panel-chapitre');
+  root.textContent = '';
+  const ch = (LIVRET_IFSI.chapitres || []).find(c => c.id === chapitreId);
+  if (!ch) return;
+  root.appendChild(createEl('h2', 'text-xl font-extrabold text-slate-800 mb-4', (ch.icone ? ch.icone + ' ' : '') + ch.titre));
+  (ch.sections || []).forEach(sec => {
+    root.appendChild(createEl('h3', 'text-sm font-bold text-indigo-700 uppercase mt-5 mb-2', sec.titre));
+    (sec.questions || []).forEach(q => root.appendChild(renderQuestion(ch.id, q)));
+  });
+}
+
+function renderQuestion(chapitreId, q) {
+  const card = createEl('div', 'bg-white border border-slate-200 rounded-xl p-4 mb-3');
+  const existing = progressionMap[q.id];
+  card.appendChild(createEl('p', 'text-sm font-semibold text-slate-800 mb-3 leading-relaxed', q.enonce));
+  const zone = createEl('div', 'space-y-2');
+  const feedback = createEl('div', 'mt-3 hidden');
+
+  const renderers = {
+    fill_in: renderFillIn,
+    qcm_single: renderQcmSingle,
+    qcm_multi: renderQcmMulti,
+    vrai_faux: renderVraiFaux,
+    table_fill: renderTableFill,
+    texte_libre: renderTexteLibre
+  };
+  const fn = renderers[q.type];
+  if (fn) fn(zone, feedback, chapitreId, q, existing);
+
+  card.appendChild(zone);
+  card.appendChild(feedback);
+
+  const ra = q.reponse_attendue;
+  if (typeof ra === 'string' && (ra === 'À rédiger' || ra === 'À compléter' || ra.startsWith('À rédiger'))) {
+    card.appendChild(createEl('p', 'text-[10px] text-amber-600 italic mt-2', '⚠ Contenu à valider par l\'équipe'));
+  }
+
+  if (existing && (existing.reponse_etudiant || existing.reponse_json)) {
+    showFeedback(feedback, q, existing, null);
+  }
+
+  return card;
+}
+
+function renderFillIn(zone, feedback, chapitreId, q, existing) {
+  const input = createEl('input', 'w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+  input.type = 'text';
+  input.placeholder = 'Ta réponse...';
+  if (existing && existing.reponse_etudiant) input.value = existing.reponse_etudiant;
+  zone.appendChild(input);
+  const btn = createEl('button', 'px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors', 'Vérifier');
+  zone.appendChild(btn);
+  btn.addEventListener('click', async () => {
+    const val = input.value.trim();
+    if (!val) return;
+    const correct = checkFillIn(val, q);
+    await saveProgression(chapitreId, q.id, val, null);
+    showFeedback(feedback, q, { reponse_etudiant: val }, correct);
+  });
+}
+
+function checkFillIn(val, q) {
+  const nv = normalize(val);
+  const expected = normalize(q.reponse_attendue);
+  if (expected && nv === expected) return 'correct';
+  const keywords = (q.mots_cles || []).map(normalize).filter(Boolean);
+  if (keywords.length && keywords.some(k => nv.includes(k))) return 'partial';
+  return 'incorrect';
+}
+
+function renderQcmSingle(zone, feedback, chapitreId, q, existing) {
+  (q.choix || []).forEach(c => {
+    const btn = createEl('button', 'w-full text-left px-3 py-2 border border-slate-200 rounded-lg text-sm hover:bg-slate-50 transition-colors');
+    btn.textContent = c.label;
+    if (existing && existing.reponse_etudiant === c.id) btn.classList.add('bg-indigo-50', 'border-indigo-300');
+    btn.addEventListener('click', async () => {
+      zone.querySelectorAll('button').forEach(b => b.classList.remove('bg-indigo-50', 'border-indigo-300'));
+      btn.classList.add('bg-indigo-50', 'border-indigo-300');
+      await saveProgression(chapitreId, q.id, c.id, null);
+      showFeedback(feedback, q, { reponse_etudiant: c.id }, c.id === q.reponse_attendue ? 'correct' : 'incorrect');
+    });
+    zone.appendChild(btn);
+  });
+}
+
+function renderQcmMulti(zone, feedback, chapitreId, q, existing) {
+  const selected = new Set((existing && existing.reponse_json && existing.reponse_json.selected) || []);
+  (q.choix || []).forEach(c => {
+    const row = createEl('label', 'flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm cursor-pointer hover:bg-slate-50');
+    const cb = createEl('input', 'accent-indigo-600');
+    cb.type = 'checkbox';
+    cb.checked = selected.has(c.id);
+    cb.addEventListener('change', () => { cb.checked ? selected.add(c.id) : selected.delete(c.id); });
+    row.appendChild(cb);
+    row.appendChild(createEl('span', '', c.label));
+    zone.appendChild(row);
+  });
+  const btn = createEl('button', 'px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors', 'Valider');
+  zone.appendChild(btn);
+  btn.addEventListener('click', async () => {
+    const arr = Array.from(selected).sort();
+    const expected = (q.reponse_attendue || []).slice().sort();
+    const verdict = JSON.stringify(arr) === JSON.stringify(expected) ? 'correct' : 'incorrect';
+    await saveProgression(chapitreId, q.id, null, { selected: arr });
+    showFeedback(feedback, q, { reponse_json: { selected: arr } }, verdict);
+  });
+}
+
+function renderVraiFaux(zone, feedback, chapitreId, q, existing) {
+  const row = createEl('div', 'flex gap-2');
+  ['vrai', 'faux'].forEach(v => {
+    const btn = createEl('button', 'flex-1 py-2 border border-slate-200 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors');
+    btn.textContent = v === 'vrai' ? 'Vrai' : 'Faux';
+    if (existing && existing.reponse_etudiant === v) btn.classList.add('bg-indigo-50', 'border-indigo-300');
+    btn.addEventListener('click', async () => {
+      row.querySelectorAll('button').forEach(b => b.classList.remove('bg-indigo-50', 'border-indigo-300'));
+      btn.classList.add('bg-indigo-50', 'border-indigo-300');
+      await saveProgression(chapitreId, q.id, v, null);
+      showFeedback(feedback, q, { reponse_etudiant: v }, v === q.reponse_attendue ? 'correct' : 'incorrect');
+    });
+    row.appendChild(btn);
+  });
+  zone.appendChild(row);
+}
+
+function renderTableFill(zone, feedback, chapitreId, q, existing) {
+  const cells = (existing && existing.reponse_json && existing.reponse_json.cells) || {};
+  (q.lignes || []).forEach(ln => {
+    const grp = createEl('div', 'bg-slate-50 border border-slate-200 rounded-lg p-2');
+    grp.appendChild(createEl('p', 'text-xs font-bold text-slate-700 mb-1', ln.cellules[0]));
+    for (let i = 1; i < (q.colonnes || []).length; i++) {
+      grp.appendChild(createEl('label', 'block text-[10px] font-semibold text-slate-500 mb-0.5 mt-1', q.colonnes[i]));
+      const input = createEl('input', 'w-full px-2 py-1 bg-white border border-slate-200 rounded text-xs');
+      input.type = 'text';
+      input.value = (cells[ln.id] && cells[ln.id][i]) || '';
+      const rowId = ln.id, colIdx = i;
+      input.addEventListener('input', () => {
+        cells[rowId] = cells[rowId] || {};
+        cells[rowId][colIdx] = input.value;
+        debounceSave(chapitreId, q.id, null, { cells });
+      });
+      grp.appendChild(input);
+    }
+    zone.appendChild(grp);
+  });
+  const btn = createEl('button', 'px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors mt-2', 'Voir les réponses attendues');
+  zone.appendChild(btn);
+  btn.addEventListener('click', () => showFeedback(feedback, q, { reponse_json: { cells } }, 'table'));
+}
+
+function renderTexteLibre(zone, feedback, chapitreId, q, existing) {
+  const ta = createEl('textarea', 'w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+  ta.rows = 4;
+  ta.placeholder = 'Ta réflexion...';
+  if (existing && existing.reponse_etudiant) ta.value = existing.reponse_etudiant;
+  ta.addEventListener('input', () => debounceSave(chapitreId, q.id, ta.value, null));
+  zone.appendChild(ta);
+  if (q.reponse_attendue) {
+    const btn = createEl('button', 'px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors mt-1', 'Voir la réponse attendue');
+    zone.appendChild(btn);
+    btn.addEventListener('click', () => showFeedback(feedback, q, { reponse_etudiant: ta.value }, 'info'));
+  }
+}
+
+function showFeedback(el, q, data, verdict) {
+  el.classList.remove('hidden');
+  el.textContent = '';
+  let bgCls, label;
+  if (verdict === 'correct') { bgCls = 'bg-emerald-50 border-emerald-200'; label = 'Réponse correcte'; }
+  else if (verdict === 'partial') { bgCls = 'bg-amber-50 border-amber-200'; label = 'Réponse partielle'; }
+  else if (verdict === 'incorrect') { bgCls = 'bg-rose-50 border-rose-200'; label = 'Réponse à revoir'; }
+  else { bgCls = 'bg-slate-50 border-slate-200'; label = 'Réponse attendue'; }
+
+  const box = createEl('div', 'border rounded-lg p-3 ' + bgCls);
+  box.appendChild(createEl('p', 'text-[11px] font-bold uppercase mb-1 text-slate-600', label));
+  const ra = q.reponse_attendue;
+  if (typeof ra === 'string' && ra) {
+    box.appendChild(createEl('p', 'text-sm text-slate-800 leading-relaxed', ra));
+  } else if (Array.isArray(ra)) {
+    box.appendChild(createEl('p', 'text-sm text-slate-800', ra.join(', ')));
+  } else if (q.type === 'table_fill') {
+    (q.lignes || []).forEach(ln => {
+      const li = createEl('div', 'mb-1');
+      li.appendChild(createEl('span', 'text-xs font-bold text-slate-700', ln.cellules[0] + ' : '));
+      li.appendChild(createEl('span', 'text-xs text-slate-600', ln.reponse_attendue || '—'));
+      box.appendChild(li);
+    });
+  }
+  if (q.explication) {
+    box.appendChild(createEl('p', 'text-xs text-slate-600 italic mt-2 leading-relaxed', '💡 ' + q.explication));
+  }
+  if (q.reference && q.reference.label) {
+    const ref = createEl('div', 'mt-2 text-[11px] text-indigo-600');
+    if (q.reference.path) {
+      const a = createEl('a', 'hover:underline', '📎 ' + q.reference.label);
+      a.href = q.reference.path;
+      ref.appendChild(a);
+    } else {
+      ref.textContent = '📎 ' + q.reference.label;
+    }
+    box.appendChild(ref);
+  }
+  el.appendChild(box);
+}
+
+async function saveProgression(chapitreId, questionId, reponseEtudiant, reponseJson) {
+  if (!currentStage) return;
+  try {
+    const row = await db.upsertProgression(currentStage.id, chapitreId, questionId, reponseEtudiant, reponseJson);
+    progressionMap[questionId] = row;
+    showSaveIndicator();
+    updateGlobalProgress();
+    if (currentTab === 'accueil') renderAccueil();
+  } catch(e) { console.warn('Erreur save', e); }
+}
+
+function debounceSave(chapitreId, questionId, reponseEtudiant, reponseJson) {
+  clearTimeout(saveTimers[questionId]);
+  saveTimers[questionId] = setTimeout(() => {
+    saveProgression(chapitreId, questionId, reponseEtudiant, reponseJson);
+  }, SAVE_DEBOUNCE_MS);
+}
+</script>
+</body>
+</html>

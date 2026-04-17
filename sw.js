@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.66';
+const CACHE_NAME = 'usca-v3.67';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [
@@ -9,6 +9,9 @@ const LOCAL_ASSETS = [
   './patient/index.html',
   './admin/',
   './admin/index.html',
+  './etudiant/',
+  './etudiant/index.html',
+  './shared/livret-ifsi-contenu.js',
   './postcure/patient.html',
   './postcure/medecin.html',
   './shared/supabase.js',

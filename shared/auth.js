@@ -92,6 +92,7 @@ window.auth = {
       medecin: ['toolbox', 'dashboard', 'alertes', 'groupes', 'config'],
       ide: ['toolbox', 'dashboard', 'alertes', 'groupes', 'config'],
       etudiant: ['toolbox'],
+      etudiant_ide: ['livret'],
       animateur: ['groupes']
     };
     return map[role] || [];
