@@ -239,6 +239,19 @@
           </div>
         </div>
 
+        <!-- Modal réponse question externe -->
+        <div id="modal-question-response" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+          <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3">
+            <h4 class="text-sm font-bold text-slate-800">Répondre à la question</h4>
+            <p id="modal-question-msg" class="text-xs text-slate-600 italic bg-violet-50 p-2 rounded-lg"></p>
+            <textarea id="modal-question-text" rows="3" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-violet-400" placeholder="Votre réponse… (laisser vide pour marquer traité sans réponse)"></textarea>
+            <div class="flex gap-2">
+              <button id="modal-question-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+              <button id="modal-question-submit" class="flex-1 py-2.5 bg-violet-600 text-white font-bold rounded-lg text-sm">Envoyer</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Modal réponse signalement externe -->
         <div id="modal-flag-response" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
           <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3">
@@ -3223,10 +3236,11 @@ async function loadEleves() {
         document.getElementById('eleves-externe-wrap').classList.remove('hidden');
         if (isAdmin) document.getElementById('eleves-externe-subheader').classList.remove('hidden');
         var externeData = await Promise.all(externes.map(async function(ext) {
-          var sessions = [], flags = [];
+          var sessions = [], flags = [], questions = [];
           try { sessions = await db.getExterneStats(ext.id); } catch(e) {}
           try { flags = await db.getExterneFlags(ext.id); } catch(e) {}
-          return { profil: ext, sessions: sessions, flags: flags };
+          try { questions = await db.getExterneQuestions(ext.id); } catch(e) {}
+          return { profil: ext, sessions: sessions, flags: flags, questions: questions };
         }));
         renderExterne(externeData);
         hasContent = true;
@@ -3415,6 +3429,33 @@ function renderExterne(list) {
       });
     }
 
+    // Questions de l'externe (en attente seulement)
+    var questionsOuvertes = (item.questions || []).filter(function(q) { return q.statut === 'ouvert'; });
+    if (questionsOuvertes.length > 0) {
+      card.appendChild(createEl('p', 'text-[10px] font-bold text-violet-700 uppercase tracking-wide mb-1.5 mt-2', '💬 Questions de l\'externe'));
+      questionsOuvertes.forEach(function(q) {
+        var qRow = createEl('div', 'bg-violet-50 rounded-lg p-2 mb-1.5 border border-violet-100');
+        qRow.appendChild(createEl('p', 'text-[11px] text-slate-700 leading-relaxed', q.message));
+        qRow.appendChild(createEl('p', 'text-[10px] text-slate-400 mt-0.5', new Date(q.created_at).toLocaleDateString('fr-FR')));
+        var qAct = createEl('div', 'flex gap-2 mt-2');
+        var btnRep = createEl('button', 'text-[11px] font-bold px-3 py-1 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors', '💬 Répondre');
+        btnRep.addEventListener('click', (function(qId, qMsg) {
+          return function() { openQuestionResponseModal(qId, qMsg); };
+        })(q.id, q.message));
+        qAct.appendChild(btnRep);
+        var btnDone = createEl('button', 'text-[11px] font-bold px-3 py-1 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors', '✓ Traité');
+        btnDone.addEventListener('click', (function(qId) {
+          return async function() {
+            if (!confirm('Marquer cette question comme traitée sans réponse ?')) return;
+            try { await db.respondToExternQuestion(qId, null); await loadEleves(); } catch(e) { alert('Erreur : ' + e.message); }
+          };
+        })(q.id));
+        qAct.appendChild(btnDone);
+        qRow.appendChild(qAct);
+        card.appendChild(qRow);
+      });
+    }
+
     // Actions
     var actionsRow = createEl('div', 'flex gap-2 mt-2');
     var btnQCM = createEl('button', 'flex-1 text-[11px] font-bold py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors', '🩺 Ouvrir le QCM');
@@ -3483,6 +3524,35 @@ function showExterneSessionsModal(extId, extNom, sessions) {
   overlay.addEventListener('click', function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
   document.body.appendChild(overlay);
 }
+
+// ── Modal réponse question externe ──
+var _pendingQuestionId = null;
+
+function openQuestionResponseModal(questionId, message) {
+  _pendingQuestionId = questionId;
+  document.getElementById('modal-question-msg').textContent = message;
+  document.getElementById('modal-question-text').value = '';
+  document.getElementById('modal-question-response').classList.remove('hidden');
+}
+
+document.getElementById('modal-question-cancel').addEventListener('click', function() {
+  document.getElementById('modal-question-response').classList.add('hidden');
+  _pendingQuestionId = null;
+});
+
+document.getElementById('modal-question-submit').addEventListener('click', async function() {
+  var btn = this;
+  if (!_pendingQuestionId) return;
+  var reponse = document.getElementById('modal-question-text').value.trim() || null;
+  btn.disabled = true; btn.textContent = 'Envoi…';
+  try {
+    await db.respondToExternQuestion(_pendingQuestionId, reponse);
+    document.getElementById('modal-question-response').classList.add('hidden');
+    _pendingQuestionId = null;
+    await loadEleves();
+  } catch(e) { alert('Erreur : ' + e.message); }
+  btn.disabled = false; btn.textContent = 'Envoyer';
+});
 
 // ── Modal réponse signalement ──
 var _pendingFlagId = null;

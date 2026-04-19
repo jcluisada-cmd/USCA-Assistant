@@ -43,23 +43,67 @@
 
   <main class="max-w-2xl mx-auto px-4 py-5 space-y-4">
 
-    <!-- CARTE 1 : CHAMBRES (lecture seule, masquée en mode tuteur) -->
-    <section id="section-chambres" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="chambres-body">
+    <!-- CARTE 1 : ENTRÉES / SORTIES (masquée en mode tuteur) -->
+    <section id="section-entrees-sorties" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="ex-es-outer">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
           <div class="text-left">
-            <p class="text-sm font-bold text-slate-800">Chambres</p>
-            <p class="text-[11px] text-slate-500">Patients hospitalisés — lecture seule</p>
+            <p class="text-sm font-bold text-slate-800">Entrées / Sorties</p>
+            <p class="text-[11px] text-slate-500">Patients hospitalisés, sorties, liste d'attente</p>
           </div>
         </div>
         <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div id="chambres-body" class="hidden border-t border-slate-100">
-        <div id="chambres-list" class="divide-y divide-slate-100">
-          <p class="text-sm text-slate-400 px-5 py-6 text-center">Chargement…</p>
+      <div id="ex-es-outer" class="hidden border-t border-slate-100">
+        <div class="flex border-b border-slate-200">
+          <button id="ex-tab-sorties-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-indigo-600 border-b-2 border-indigo-600" onclick="switchExESTab('sorties')">Sorties prévues</button>
+          <button id="ex-tab-attente-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-slate-400 border-b-2 border-transparent" onclick="switchExESTab('attente')">Liste d'attente</button>
+        </div>
+        <div id="ex-tab-sorties" class="p-3">
+          <div id="ex-sorties-list" class="space-y-1.5"><p class="text-xs text-slate-400 text-center py-3">Chargement…</p></div>
+        </div>
+        <div id="ex-tab-attente" class="p-3 hidden">
+          <div id="ex-attente-list" class="space-y-1.5"></div>
+          <button id="ex-btn-add-attente" class="w-full mt-2 py-2.5 border-2 border-dashed border-indigo-300 rounded-lg text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors">+ Ajouter un patient</button>
+          <div id="ex-form-admettre" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+            <h5 class="text-xs font-bold text-emerald-700 mb-2">Admettre le patient</h5>
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Chambre</label>
+                <input type="text" id="ex-adm-chambre" placeholder="312" inputmode="numeric" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400"></div>
+              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date de naissance</label>
+                <input type="date" id="ex-adm-ddn" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400"></div>
+            </div>
+            <p id="ex-adm-error" class="text-xs text-red-500 text-center mb-2 hidden"></p>
+            <div class="flex gap-2">
+              <button id="ex-btn-cancel-admettre" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+              <button id="ex-btn-save-admettre" class="flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs hover:bg-emerald-700 transition-colors">Admettre</button>
+            </div>
+          </div>
+          <div id="ex-form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+            <h5 id="ex-form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Âge</label>
+                <input type="number" id="ex-att-age" placeholder="65" min="18" max="100" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
+              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date d'entrée prévue</label>
+                <input type="date" id="ex-att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
+            </div>
+            <div class="mb-2"><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Adressage</label>
+              <select id="ex-att-addressage" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                <option value="CSAPA">CSAPA</option><option value="Addictologue">Addictologue</option>
+                <option value="Médecin Traitant">Médecin Traitant</option><option value="Hépatologie">Hépatologie</option>
+                <option value="Cardiologie">Cardiologie</option><option value="Neurologie">Neurologie</option>
+                <option value="Psychiatre">Psychiatre</option>
+              </select></div>
+            <div class="mb-2"><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
+              <input type="text" id="ex-att-commentaire" placeholder="Détails..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
+            <div class="flex gap-2">
+              <button id="ex-btn-cancel-attente" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+              <button id="ex-btn-save-attente" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors">Enregistrer</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -79,59 +123,100 @@
         <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
       <div id="qcm-body" class="hidden border-t border-slate-100 px-5 py-5 space-y-4">
-
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Item</label>
           <select id="qcm-item" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
             <option value="">— Tous les items —</option>
           </select>
         </div>
-
         <div id="qcm-inprogress" class="hidden space-y-2"></div>
         <button id="qcm-start" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm">Lancer la session</button>
-        <!-- Bouton tuteur uniquement -->
         <button id="qcm-view-all" class="w-full py-3 bg-white border-2 border-indigo-200 text-indigo-600 font-bold rounded-xl transition-all text-sm hidden hover:bg-indigo-50">📋 Voir toutes les questions</button>
       </div>
     </section>
 
-    <!-- CARTE 3 : SIGNALEMENTS -->
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="flags-body">
+    <!-- LIGNE 2 PETITES CARTES : Signalements + Export (masquées en mode tuteur) -->
+    <div id="section-small-cards" class="grid grid-cols-2 gap-3">
+      <!-- Signalements -->
+      <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+        <button class="w-full px-4 py-3 flex items-start gap-2 accordion-toggle" data-target="flags-body">
+          <div class="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <div class="text-left flex-1 min-w-0">
+            <p class="text-xs font-bold text-slate-800 leading-tight">Signalements</p>
+            <p id="flags-count" class="text-[10px] text-slate-500 truncate">—</p>
+          </div>
+          <svg class="accordion-icon transition-transform flex-shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="flags-body" class="hidden border-t border-slate-100 max-h-56 overflow-y-auto">
+          <div id="flags-list"><p class="text-xs text-slate-400 px-4 py-4 text-center">Aucun signalement.</p></div>
+        </div>
+      </section>
+      <!-- Export QCM -->
+      <section id="section-export" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+        <div class="px-4 py-3 flex items-start gap-2">
+          <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold text-slate-800 leading-tight">Exporter QCM</p>
+            <p class="text-[10px] text-slate-500">Hors-ligne · 477 questions</p>
+          </div>
+        </div>
+        <div class="px-4 pb-3 flex-1 flex flex-col justify-end">
+          <button id="btn-export-qcm" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Générer et télécharger
+          </button>
+          <p id="export-status" class="text-[10px] text-slate-400 text-center mt-1.5 hidden"></p>
+        </div>
+      </section>
+    </div>
+
+    <!-- CARTE 4 : MA CHECKLIST (masquée en mode tuteur) -->
+    <section id="section-checklist" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="checklist-body">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          <div class="w-10 h-10 bg-cyan-50 rounded-lg flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           </div>
           <div class="text-left">
-            <p class="text-sm font-bold text-slate-800">Mes signalements</p>
-            <p id="flags-count" class="text-[11px] text-slate-500">—</p>
+            <p class="text-sm font-bold text-slate-800">Ma checklist</p>
+            <p id="checklist-summary" class="text-[11px] text-slate-500">—</p>
           </div>
         </div>
         <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div id="flags-body" class="hidden border-t border-slate-100">
-        <div id="flags-list" class="divide-y divide-slate-100">
-          <p class="text-sm text-slate-400 px-5 py-6 text-center">Aucun signalement.</p>
+      <div id="checklist-body" class="hidden border-t border-slate-100">
+        <div id="checklist-items" class="divide-y divide-slate-100"></div>
+        <div class="px-5 py-3 border-t border-slate-100 flex gap-2">
+          <input type="text" id="checklist-input" placeholder="Ajouter un élément…" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-cyan-400">
+          <button id="checklist-add" class="px-4 py-2 bg-cyan-600 text-white text-xs font-bold rounded-lg hover:bg-cyan-700 transition flex-shrink-0">+</button>
         </div>
       </div>
     </section>
 
-    <!-- CARTE 4 : EXPORT MODULE PÉDAGOGIQUE (masquée en mode tuteur) -->
-    <section id="section-export" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <div class="px-5 py-4 flex items-center gap-3">
-        <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <!-- CARTE 5 : QUESTIONS AU TUTEUR (masquée en mode tuteur) -->
+    <section id="section-questions" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="questions-body">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-violet-50 rounded-lg flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold text-slate-800">Questions au tuteur</p>
+            <p id="questions-count" class="text-[11px] text-slate-500">—</p>
+          </div>
         </div>
-        <div class="flex-1">
-          <p class="text-sm font-bold text-slate-800">Exporter mon module QCM</p>
-          <p class="text-[11px] text-slate-500">App hors-ligne avec toutes vos données et les 477 questions</p>
+        <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="questions-body" class="hidden border-t border-slate-100">
+        <div id="questions-list" class="divide-y divide-slate-100"></div>
+        <div class="px-5 py-4 border-t border-slate-100 space-y-2">
+          <textarea id="question-input" rows="2" placeholder="Posez votre question au tuteur médecin…" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm resize-none focus:outline-none focus:border-violet-400"></textarea>
+          <button id="question-submit" class="w-full py-2.5 bg-violet-600 text-white text-sm font-bold rounded-xl hover:bg-violet-700 transition">Envoyer la question</button>
         </div>
-      </div>
-      <div class="px-5 pb-4">
-        <button id="btn-export-qcm" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition flex items-center justify-center gap-2">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Générer et télécharger
-        </button>
-        <p id="export-status" class="text-[11px] text-slate-400 text-center mt-2 hidden"></p>
       </div>
     </section>
 
@@ -223,14 +308,11 @@ var _previewTuteur = new URLSearchParams(location.search).get('preview') === 'tu
     lnk.textContent = '← Retour au dashboard';
     banner.appendChild(lnk);
     document.querySelector('header').after(banner);
-    // Masquer chambres, signalements et export (non pertinents pour tuteur)
-    ['section-chambres', 'section-export'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el) el.style.display = 'none';
+    // Masquer les sections non pertinentes pour le tuteur
+    ['section-entrees-sorties', 'section-small-cards', 'section-checklist', 'section-questions'].forEach(function(sid) {
+      var s = document.getElementById(sid);
+      if (s) s.style.display = 'none';
     });
-    // Masquer aussi la carte signalements (3e section)
-    var sections = document.querySelectorAll('main > section');
-    if (sections[2]) sections[2].style.display = 'none';
   } else {
     // Mode normal : seul role='externe' autorisé
     if (session.role !== 'externe') { window.location.href = '../admin/'; return; }
@@ -277,7 +359,7 @@ async function initApp() {
   } catch(e) {
     document.getElementById('qcm-stats').textContent = 'Erreur catalogue';
   }
-  if (!_previewTuteur) { loadChambres(); loadFlags(); loadInProgress(); }
+  if (!_previewTuteur) { loadFlags(); loadInProgress(); loadChecklist(); loadQuestions(); }
 }
 
 async function loadInProgress() {
@@ -312,34 +394,362 @@ async function loadInProgress() {
   }
 }
 
-async function loadChambres() {
-  var box = document.getElementById('chambres-list');
-  clear(box);
-  try {
-    var patients = await db.getPatients();
-    if (!patients || !patients.length) {
-      box.appendChild(el('p', { class: 'text-sm text-slate-400 px-5 py-6 text-center', text: 'Aucun patient hospitalisé.' }));
-      return;
-    }
-    patients.forEach(function(p) {
-      var sortie = p.date_sortie_prevue ? new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR') : '—';
-      var subst = p.substance_principale || '—';
-      var row = el('div', { class: 'px-5 py-3 flex items-center gap-4' }, [
-        el('div', { class: 'w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center' }, [
-          el('span', { class: 'text-emerald-700 font-extrabold text-sm', text: String(p.numero_chambre || '?') })
-        ]),
-        el('div', { class: 'flex-1 min-w-0' }, [
-          el('p', { class: 'text-sm font-bold text-slate-800 truncate', text: p.prenom || '—' }),
-          el('p', { class: 'text-[11px] text-slate-500 truncate', text: subst + ' · sortie ' + sortie })
-        ])
-      ]);
-      box.appendChild(row);
-    });
-  } catch(e) {
-    clear(box);
-    box.appendChild(el('p', { class: 'text-sm text-red-500 px-5 py-6 text-center', text: 'Accès refusé ou erreur réseau.' }));
-  }
+// ════════════════ ENTRÉES / SORTIES ════════════════
+var _exPatients = [];
+var _exAttente = [];
+var _exEditingAttenteId = null;
+var _exAdmettreItem = null;
+
+function switchExESTab(tab) {
+  var isSorties = tab === 'sorties';
+  document.getElementById('ex-tab-sorties').classList.toggle('hidden', !isSorties);
+  document.getElementById('ex-tab-attente').classList.toggle('hidden', isSorties);
+  document.getElementById('ex-tab-sorties-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
+  document.getElementById('ex-tab-attente-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (!isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
 }
+
+async function loadExEntreesSorties() {
+  try {
+    _exPatients = await db.getPatients() || [];
+  } catch(e) { _exPatients = []; }
+  renderExSorties();
+  try {
+    _exAttente = await db.getListeAttente() || [];
+  } catch(e) { _exAttente = []; }
+  renderExAttente();
+}
+
+function renderExSorties() {
+  var list = document.getElementById('ex-sorties-list');
+  if (!list) return;
+  clear(list);
+  var sorties = _exPatients.filter(function(p) { return p.date_sortie_prevue; })
+    .sort(function(a, b) { return new Date(a.date_sortie_prevue) - new Date(b.date_sortie_prevue); });
+  if (!sorties.length) {
+    list.appendChild(el('p', { class: 'text-xs text-slate-400 text-center py-3', text: 'Aucune sortie prévue.' }));
+    return;
+  }
+  var destLabels = { rad: 'RAD', postcure: 'Post-cure', autre: 'Autre' };
+  sorties.forEach(function(p) {
+    var today = new Date(); today.setHours(0,0,0,0);
+    var sd = new Date(p.date_sortie_prevue); sd.setHours(0,0,0,0);
+    var isPast = sd <= today;
+    var dateStr = new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+    var info = p.sortie_info || {};
+    var dest = info.destination ? (destLabels[info.destination] || info.destination) : null;
+    var subst = p.substance_principale || null;
+    var row = el('div', { class: 'flex items-center gap-2 bg-slate-50 rounded-lg p-2.5' });
+    var left = el('div', { class: 'flex items-center gap-2 flex-1 min-w-0' });
+    left.appendChild(el('span', { class: 'text-xs font-bold px-2 py-1 rounded bg-indigo-100 text-indigo-700 flex-shrink-0', text: 'Ch.' + p.numero_chambre }));
+    left.appendChild(el('span', { class: 'text-xs text-slate-700 truncate', text: p.prenom || '—' }));
+    if (subst) left.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 flex-shrink-0 hidden sm:inline', text: subst }));
+    if (dest) left.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 flex-shrink-0', text: dest }));
+    row.appendChild(left);
+    row.appendChild(el('span', { class: 'text-xs font-semibold flex-shrink-0 ' + (isPast ? 'text-red-500' : 'text-emerald-600'), text: dateStr }));
+    list.appendChild(row);
+  });
+}
+
+function renderExAttente() {
+  var list = document.getElementById('ex-attente-list');
+  if (!list) return;
+  clear(list);
+  if (!_exAttente.length) {
+    list.appendChild(el('p', { class: 'text-xs text-slate-400 text-center py-3', text: 'Aucun patient en attente.' }));
+    return;
+  }
+  _exAttente.forEach(function(p) {
+    var dateStr = p.date_entree_prevue ? new Date(p.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '—';
+    var row = el('div', { class: 'flex items-center justify-between gap-2 bg-slate-50 rounded-lg p-2.5 mb-1' });
+    var left = el('div', { class: 'flex-1 min-w-0' });
+    var top = el('div', { class: 'flex items-center gap-1.5 flex-wrap' });
+    top.appendChild(el('span', { class: 'text-xs font-bold text-slate-700', text: p.age ? p.age + ' ans' : '—' }));
+    top.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700', text: p.addressage || '—' }));
+    top.appendChild(el('span', { class: 'text-[10px] text-slate-400', text: dateStr }));
+    left.appendChild(top);
+    if (p.commentaire) left.appendChild(el('p', { class: 'text-[10px] text-slate-500 truncate mt-0.5', text: p.commentaire }));
+    row.appendChild(left);
+    var actions = el('div', { class: 'flex items-center gap-1 flex-shrink-0' });
+    var btnAdm = el('button', { class: 'text-[10px] font-bold px-2 py-1 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700', text: 'Adm.' });
+    (function(pat) {
+      btnAdm.addEventListener('click', function() {
+        _exAdmettreItem = pat;
+        document.getElementById('ex-adm-chambre').value = '';
+        document.getElementById('ex-adm-ddn').value = '';
+        document.getElementById('ex-adm-error').classList.add('hidden');
+        document.getElementById('ex-form-attente').classList.add('hidden');
+        document.getElementById('ex-form-admettre').classList.remove('hidden');
+        document.getElementById('ex-btn-add-attente').classList.add('hidden');
+      });
+    })(p);
+    actions.appendChild(btnAdm);
+    var btnEd = el('button', { class: 'text-[10px] font-bold px-1.5 py-1 bg-white border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-100', text: '✏️' });
+    (function(pat) {
+      btnEd.addEventListener('click', function() {
+        _exEditingAttenteId = pat.id;
+        document.getElementById('ex-form-attente-title').textContent = 'Modifier';
+        document.getElementById('ex-att-age').value = pat.age || '';
+        document.getElementById('ex-att-date').value = pat.date_entree_prevue || '';
+        document.getElementById('ex-att-commentaire').value = pat.commentaire || '';
+        var sel = document.getElementById('ex-att-addressage');
+        for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === pat.addressage) { sel.selectedIndex = i; break; } }
+        document.getElementById('ex-form-admettre').classList.add('hidden');
+        document.getElementById('ex-form-attente').classList.remove('hidden');
+        document.getElementById('ex-btn-add-attente').classList.add('hidden');
+      });
+    })(p);
+    actions.appendChild(btnEd);
+    var btnDel = el('button', { class: 'text-[10px] font-bold px-1.5 py-1 bg-white border border-red-200 rounded-lg text-red-400 hover:bg-red-50', text: '✕' });
+    (function(id) {
+      btnDel.addEventListener('click', async function() {
+        if (!confirm('Retirer ce patient de la liste d\'attente ?')) return;
+        try { await db.deleteListeAttente(id); await loadExEntreesSorties(); } catch(e) { alert('Erreur : ' + e.message); }
+      });
+    })(p.id);
+    actions.appendChild(btnDel);
+    row.appendChild(actions);
+    list.appendChild(row);
+  });
+}
+
+// Chargement lazily à l'ouverture de l'accordion
+(function() {
+  var btn = document.querySelector('[data-target="ex-es-outer"]');
+  var body = document.getElementById('ex-es-outer');
+  var loaded = false;
+  if (btn && body) {
+    btn.addEventListener('click', function() {
+      if (body.classList.contains('hidden') && !loaded) {
+        loaded = true;
+        loadExEntreesSorties();
+      }
+    }, true);
+  }
+})();
+
+document.getElementById('ex-btn-add-attente').addEventListener('click', function() {
+  _exEditingAttenteId = null;
+  document.getElementById('ex-form-attente-title').textContent = 'Nouveau patient';
+  document.getElementById('ex-att-age').value = '';
+  document.getElementById('ex-att-date').value = '';
+  document.getElementById('ex-att-commentaire').value = '';
+  document.getElementById('ex-att-addressage').selectedIndex = 0;
+  document.getElementById('ex-form-admettre').classList.add('hidden');
+  document.getElementById('ex-form-attente').classList.remove('hidden');
+  this.classList.add('hidden');
+});
+
+document.getElementById('ex-btn-cancel-attente').addEventListener('click', function() {
+  document.getElementById('ex-form-attente').classList.add('hidden');
+  document.getElementById('ex-btn-add-attente').classList.remove('hidden');
+  _exEditingAttenteId = null;
+});
+
+document.getElementById('ex-btn-cancel-admettre').addEventListener('click', function() {
+  document.getElementById('ex-form-admettre').classList.add('hidden');
+  document.getElementById('ex-btn-add-attente').classList.remove('hidden');
+  _exAdmettreItem = null;
+});
+
+document.getElementById('ex-btn-save-attente').addEventListener('click', async function() {
+  var age = parseInt(document.getElementById('ex-att-age').value);
+  var date = document.getElementById('ex-att-date').value;
+  var addr = document.getElementById('ex-att-addressage').value;
+  var commentaire = document.getElementById('ex-att-commentaire').value.trim();
+  try {
+    var payload = { age: age || null, addressage: addr, date_entree_prevue: date || null, commentaire: commentaire || null };
+    if (_exEditingAttenteId) {
+      await db.updateListeAttente(_exEditingAttenteId, payload);
+    } else {
+      await db.addListeAttente(payload);
+    }
+    document.getElementById('ex-form-attente').classList.add('hidden');
+    document.getElementById('ex-btn-add-attente').classList.remove('hidden');
+    _exEditingAttenteId = null;
+    await loadExEntreesSorties();
+  } catch(e) { alert('Erreur : ' + e.message); }
+});
+
+document.getElementById('ex-btn-save-admettre').addEventListener('click', async function() {
+  if (!_exAdmettreItem) return;
+  var chambre = document.getElementById('ex-adm-chambre').value.trim();
+  var ddn = document.getElementById('ex-adm-ddn').value;
+  var errEl = document.getElementById('ex-adm-error');
+  if (!chambre || !ddn) { errEl.textContent = 'Chambre et date de naissance requis.'; errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+  this.disabled = true; this.textContent = 'Admission…';
+  try {
+    await db.createPatient({ numero_chambre: chambre, date_naissance: ddn, date_admission: new Date().toISOString().split('T')[0], date_sortie_prevue: null });
+    await db.deleteListeAttente(_exAdmettreItem.id);
+    document.getElementById('ex-form-admettre').classList.add('hidden');
+    document.getElementById('ex-btn-add-attente').classList.remove('hidden');
+    _exAdmettreItem = null;
+    await loadExEntreesSorties();
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+  this.disabled = false; this.textContent = 'Admettre';
+});
+
+// ════════════════ CHECKLIST ════════════════
+var _checklistItems = [];
+var _checklistSaveTimer = null;
+
+async function loadChecklist() {
+  try { _checklistItems = await db.getChecklist() || []; } catch(e) { _checklistItems = []; }
+  renderChecklist();
+}
+
+function renderChecklist() {
+  var box = document.getElementById('checklist-items');
+  var summary = document.getElementById('checklist-summary');
+  if (!box) return;
+  clear(box);
+  var total = _checklistItems.length;
+  var done = _checklistItems.filter(function(i) { return i.done; }).length;
+  summary.textContent = total ? done + '/' + total + ' terminé' + (total > 1 ? 's' : '') : 'Aucun élément';
+  if (!total) {
+    box.appendChild(el('p', { class: 'text-sm text-slate-400 text-center px-5 py-4', text: 'Ajoutez des tâches à faire…' }));
+    return;
+  }
+  _checklistItems.forEach(function(item, idx) {
+    var row = el('div', { class: 'flex items-center gap-3 px-5 py-3' });
+    var cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.checked = !!item.done;
+    cb.className = 'w-4 h-4 accent-cyan-600 flex-shrink-0 cursor-pointer';
+    (function(i) {
+      cb.addEventListener('change', function() {
+        _checklistItems[i].done = cb.checked;
+        renderChecklist();
+        scheduleChecklistSave();
+      });
+    })(idx);
+    var label = el('span', { class: 'flex-1 text-sm ' + (item.done ? 'line-through text-slate-400' : 'text-slate-800'), text: item.text });
+    var btnDel = el('button', { class: 'text-slate-300 hover:text-red-400 transition-colors text-xs flex-shrink-0', text: '✕' });
+    (function(i) {
+      btnDel.addEventListener('click', function() {
+        _checklistItems.splice(i, 1);
+        renderChecklist();
+        scheduleChecklistSave();
+      });
+    })(idx);
+    row.appendChild(cb); row.appendChild(label); row.appendChild(btnDel);
+    box.appendChild(row);
+  });
+}
+
+function scheduleChecklistSave() {
+  if (_checklistSaveTimer) clearTimeout(_checklistSaveTimer);
+  _checklistSaveTimer = setTimeout(async function() {
+    try { await db.saveChecklist(_checklistItems); } catch(e) { console.warn('checklist save:', e); }
+  }, 600);
+}
+
+document.getElementById('checklist-add').addEventListener('click', function() {
+  var inp = document.getElementById('checklist-input');
+  var text = inp.value.trim();
+  if (!text) return;
+  _checklistItems.push({ id: Date.now().toString(36), text: text, done: false });
+  inp.value = '';
+  renderChecklist();
+  scheduleChecklistSave();
+});
+
+document.getElementById('checklist-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('checklist-add').click(); }
+});
+
+// ════════════════ QUESTIONS AU TUTEUR ════════════════
+var _myQuestions = [];
+var _editingQId = null;
+
+async function loadQuestions() {
+  var countEl = document.getElementById('questions-count');
+  try {
+    _myQuestions = await db.getMyExternQuestions();
+    var nbOuv = _myQuestions.filter(function(q) { return q.statut === 'ouvert'; }).length;
+    countEl.textContent = _myQuestions.length
+      ? _myQuestions.length + ' message' + (_myQuestions.length > 1 ? 's' : '') + (nbOuv ? ' · ' + nbOuv + ' en attente' : ' · tout traité')
+      : 'Aucune question envoyée';
+  } catch(e) { countEl.textContent = 'Erreur de chargement'; _myQuestions = []; }
+  renderQuestions();
+}
+
+function renderQuestions() {
+  var box = document.getElementById('questions-list');
+  if (!box) return;
+  clear(box);
+  if (!_myQuestions.length) {
+    box.appendChild(el('p', { class: 'text-sm text-slate-400 text-center px-5 py-4', text: 'Aucune question envoyée.' }));
+    return;
+  }
+  _myQuestions.forEach(function(q) {
+    var isTraite = q.statut === 'traite';
+    var wrap = el('div', { class: 'px-5 py-3' });
+
+    if (_editingQId === q.id) {
+      var editArea = document.createElement('textarea');
+      editArea.rows = 2;
+      editArea.className = 'w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-violet-400 mb-2';
+      editArea.value = q.message;
+      var saveBtn = el('button', { class: 'text-xs font-bold px-3 py-1.5 bg-violet-600 text-white rounded-lg hover:bg-violet-700 mr-2', text: 'Enregistrer' });
+      var cancelBtn = el('button', { class: 'text-xs font-bold px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-600', text: 'Annuler' });
+      saveBtn.addEventListener('click', async function() {
+        var msg = editArea.value.trim(); if (!msg) return;
+        try { await db.updateExternQuestion(q.id, { message: msg }); _editingQId = null; await loadQuestions(); } catch(e) { alert('Erreur : ' + e.message); }
+      });
+      cancelBtn.addEventListener('click', function() { _editingQId = null; renderQuestions(); });
+      wrap.appendChild(editArea); wrap.appendChild(saveBtn); wrap.appendChild(cancelBtn);
+      box.appendChild(wrap); return;
+    }
+
+    var header = el('div', { class: 'flex items-start justify-between gap-2 mb-1.5' });
+    var left = el('div', { class: 'flex-1 min-w-0' });
+    left.appendChild(el('p', { class: 'text-sm text-slate-800 leading-relaxed', text: q.message }));
+    left.appendChild(el('p', { class: 'text-[10px] text-slate-400 mt-0.5', text: new Date(q.created_at).toLocaleDateString('fr-FR') }));
+    header.appendChild(left);
+    header.appendChild(el('span', {
+      class: 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ' + (isTraite ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'),
+      text: isTraite ? '✓ Répondu' : 'En attente'
+    }));
+    wrap.appendChild(header);
+
+    if (q.reponse) {
+      var rep = el('div', { class: 'mt-1.5 px-3 py-2 bg-violet-50 rounded-lg border border-violet-100' });
+      rep.appendChild(el('p', { class: 'text-[10px] font-bold text-violet-500 mb-0.5', text: '💬 Réponse du tuteur' }));
+      rep.appendChild(el('p', { class: 'text-xs text-violet-900 leading-relaxed', text: q.reponse }));
+      wrap.appendChild(rep);
+    }
+
+    var actRow = el('div', { class: 'flex gap-2 mt-2' });
+    if (!isTraite) {
+      var editBtn = el('button', { class: 'text-[11px] font-bold px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50', text: '✏️ Modifier' });
+      (function(qId) { editBtn.addEventListener('click', function() { _editingQId = qId; renderQuestions(); }); })(q.id);
+      actRow.appendChild(editBtn);
+    }
+    var delBtn = el('button', { class: 'text-[11px] font-bold px-2.5 py-1 bg-white border border-red-100 rounded-lg text-red-400 hover:bg-red-50', text: '✕ Supprimer' });
+    (function(qId) {
+      delBtn.addEventListener('click', async function() {
+        if (!confirm('Supprimer cette question ?')) return;
+        try { await db.deleteExternQuestion(qId); await loadQuestions(); } catch(e) { alert('Erreur : ' + e.message); }
+      });
+    })(q.id);
+    actRow.appendChild(delBtn);
+    wrap.appendChild(actRow);
+    box.appendChild(wrap);
+  });
+}
+
+document.getElementById('question-submit').addEventListener('click', async function() {
+  var inp = document.getElementById('question-input');
+  var msg = inp.value.trim();
+  if (!msg) return;
+  this.disabled = true; this.textContent = 'Envoi…';
+  try {
+    await db.createExternQuestion(msg);
+    inp.value = '';
+    await loadQuestions();
+  } catch(e) { alert('Erreur : ' + e.message); }
+  this.disabled = false; this.textContent = 'Envoyer la question';
+});
 
 async function loadFlags() {
   var box = document.getElementById('flags-list');

@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.77 |
+| **Service Worker** | usca-v3.80 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -243,14 +243,16 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 
 ### Module Externe — Dashboard QCM EDN (`extern/index.html`)
 - ✅ **Garde session** : redirection automatique vers `/extern/` au login si `role='externe'`
-- ✅ **Carte Chambres** (lecture seule) : liste patients hospitalisés via `db.getPatients()`, pas d'actions, juste prénom + chambre + substance principale + date sortie prévue
+- ✅ **Carte Entrées/Sorties** : onglets Sorties prévues + Liste d'attente avec CRUD complet (mêmes fonctionnalités que l'admin), chargement lazy à l'ouverture de l'accordion
 - ✅ **Carte Mon QCM EDN** : sélecteur item uniquement (index.json chargé une fois) — mode entraînement séquentiel par défaut, correction immédiate + explication. Plus de filtre difficulté ni de sélecteur n ni de mode examen.
 - ✅ **Joueur QCM modal** : 4 choix par question, progression "Q n / total", bouton 💬 "Demander une explication" → `demande_explication` dans `qcm_flags`, bouton 👎 → `erreur_question`. Score final + persistance Supabase (`qcm_sessions` + `qcm_reponses`).
 - ✅ **Affichage questions** : préfixe `[Item XX] Question N - Difficulté :` retiré via `cleanQ()` — affiche uniquement l'énoncé de la question.
-- ✅ **Carte Mes signalements** : historique des flags émis (statut ouvert/traité, message original, réponse tuteur si renseignée)
+- ✅ **2 petites cartes côte à côte** : Signalements (accordion compact) + Exporter QCM (bouton direct)
 - ✅ **Mode tuteur** (`?preview=tuteur`) : bandeau orange, bouton "Voir toutes les questions" par item, 👎 signalement activé, chambres/signalements/export masqués.
 - ✅ **Export app autonome** : bouton ⬇ → HTML standalone 477 questions embarquées + joueur interactif. Sans features tuteur (signalements).
-- ✅ **Vue tuteur dans admin** : section "Mon externe" pour médecin/admin — stats sessions, signalements en attente, réponse aux flags. Tous les médecins voient l'externe (pas de tuteur désigné).
+- ✅ **Vue tuteur dans admin** : section "Mon externe" pour médecin/admin — stats sessions, signalements en attente, réponse aux flags, questions de l'externe avec réponse inline. Tous les médecins voient l'externe.
+- ✅ **Checklist personnelle** : stockée dans `profiles.checklist_items` (Supabase, pas localStorage) — add/toggle/delete, debounce save 600ms
+- ✅ **Questions au tuteur** : l'externe peut poser des questions textuelles, les modifier/supprimer si ouvert. Le tuteur voit dans "Mon externe" et répond via modal. Migration v20.
 - ✅ **Lazy-load** : `index.json` (catalogue léger) au démarrage ; un `item_XX.json` n'est chargé que lorsque l'item est sélectionné, puis caché en mémoire pour la session
 - ✅ **Service Worker** : précache `extern/`, `qcm-engine.js`, `data/index.json` ; les `item_*.json` restent en cache dynamique stale-while-revalidate
 - ✅ **Identifiant question stable** : `"Item 76 - Q12"` (helper `QCMEngine._utils.questionSourceId`) — invariant même si on réordonne le JSON, utilisé pour scoring et signalements

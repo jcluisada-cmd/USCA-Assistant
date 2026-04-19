@@ -723,5 +723,80 @@ window.db = {
     const { data, error } = await sb.from('etudiant_progression').update(patch).eq('stage_id', stageId).eq('question_id', questionId).select().single();
     if (error) throw error;
     return data;
+  },
+
+  // ════════════════ CHECKLIST PERSONNELLE (extern) ════════════════
+
+  /** Récupère les items de la checklist personnelle (profiles.checklist_items) */
+  async getChecklist() {
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) return [];
+    const { data } = await sb.from('profiles').select('checklist_items').eq('id', user.id).single();
+    return data?.checklist_items || [];
+  },
+
+  /** Sauvegarde la checklist personnelle */
+  async saveChecklist(items) {
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) throw new Error('Non authentifié');
+    const { error } = await sb.from('profiles').update({ checklist_items: items }).eq('id', user.id);
+    if (error) throw error;
+  },
+
+  // ════════════════ QUESTIONS EXTERN → TUTEUR ════════════════
+
+  /** Crée une question adressée au tuteur */
+  async createExternQuestion(message) {
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) throw new Error('Non authentifié');
+    const { data, error } = await sb.from('extern_questions').insert({ user_id: user.id, message }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Questions de l'extern connecté */
+  async getMyExternQuestions() {
+    const { data, error } = await sb.from('extern_questions').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Met à jour une question (message ou statut) */
+  async updateExternQuestion(id, updates) {
+    updates.updated_at = new Date().toISOString();
+    const { data, error } = await sb.from('extern_questions').update(updates).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime une question */
+  async deleteExternQuestion(id) {
+    const { error } = await sb.from('extern_questions').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  /** Questions d'un externe donné (accessible aux médecins via RLS) */
+  async getExterneQuestions(externeId) {
+    const { data, error } = await sb.from('extern_questions')
+      .select('*')
+      .eq('user_id', externeId)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Répondre à une question (médecin) et la marquer comme traitée */
+  async respondToExternQuestion(id, reponse) {
+    const payload = { statut: 'traite', updated_at: new Date().toISOString() };
+    if (reponse !== null && reponse !== undefined) payload.reponse = reponse;
+    const { data, error } = await sb.from('extern_questions').update(payload).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime toutes les questions d'un externe (reset) */
+  async resetExterneQuestions(externeId) {
+    const { error } = await sb.from('extern_questions').delete().eq('user_id', externeId);
+    if (error) throw error;
   }
 };
