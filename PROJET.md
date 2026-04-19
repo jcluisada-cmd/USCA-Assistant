@@ -1,7 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 17 avril 2026 (session soir v3.64 → v3.70)
-> Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md
+> Dernière mise à jour : 19 avril 2026 (session v3.70 → v3.71 — module QCM EDN externe)
+> Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md, NEXT_SESSION_QCM.md
 
 ---
 
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.70 |
+| **Service Worker** | usca-v3.71 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -67,8 +67,13 @@ USCA-Assistant/
 │   └── index.html              ← Dashboard soignant (Patients, Toolbox, Planning, Mon élève)
 ├── etudiant/
 │   └── index.html              ← SPA livret IFSI (élève) + mode preview soignant
+├── extern/
+│   └── index.html              ← Dashboard externe (chambres lecture seule + QCM EDN + signalements)
 ├── staff/
 │   └── toolbox.html            ← V1 Toolbox React (iframe dans admin)
+├── data/                       ← Base QCM EDN (lazy-loaded, non précachée en bloc)
+│   ├── index.json              ← Catalogue 23 items / 477 questions
+│   └── item_*.json             ← 1 fichier par item EDN (chargé à la demande)
 ├── postcure/                   ← Module post-cure (volets séparés)
 │   ├── patient.html            ← Formulaire patient (6 étapes, standalone)
 │   ├── medecin.html            ← Formulaire médecin (standalone ou lié patient)
@@ -82,6 +87,7 @@ USCA-Assistant/
 │   ├── craving-agenda.js       ← Composant agenda craving
 │   ├── fiches-catalogue.js     ← Catalogue des 20 fiches traitements
 │   ├── livret-ifsi-contenu.js  ← Contenu pédagogique livret IFSI (14 chapitres, ~90 questions)
+│   ├── qcm-engine.js           ← Moteur QCM EDN (lazy-load index/items, scoring, signalements)
 │   ├── theme.css               ← Variables CSS dark mode
 │   └── theme.js                ← Toggle dark mode
 ├── functions/
@@ -89,7 +95,7 @@ USCA-Assistant/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
 │   └── fiche_*.html            ← 20 fiches patient par médicament
-├── migrations/                 ← Scripts SQL (v1 à v16)
+├── migrations/                 ← Scripts SQL (v1 à v17)
 │   ├── supabase-schema.sql     ← Schéma initial
 │   └── supabase-migration-v*.sql
 ├── assets/                     ← Images sources
@@ -153,6 +159,12 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `liste_attente` — Patients en attente d'admission (age, addressage, date_entree_prevue, commentaire)
 - `patients.postcure_statut` — JSONB workflow post-cure (flags d'envoi, pas de données patient)
 
+### Tables QCM EDN externe (migration v17 locale, appliquée Supabase sous nom `v15_qcm_edn`)
+- `tuteur_etudiant` — Lien tuteur↔apprenant (type='externe' ou 'etudiant_ide')
+- `qcm_sessions` — Une ligne par série QCM jouée (item, mode entrainement/examen, score)
+- `qcm_reponses` — Une ligne par question répondue (`question_source` stable type "Item 76 - Q12", correct, temps_ms)
+- `qcm_flags` — Signalements externe → tuteur (erreur_question | demande_explication, statut ouvert/traité, `tuteur_reponse`)
+
 ### Migrations exécutées
 - v1 : Schéma initial (profiles, patients, alertes, programmes, groupes)
 - v2 : Stratégies, permissions, messages, fiches traitements
@@ -170,6 +182,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - v14 : Statut post-cure workflow (patients.postcure_statut JSONB)
 - v15 : Infos de sortie (patients.sortie_info JSONB — destination RAD/post-cure/autre + checklist documents)
 - v16 : Livret IFSI — tables etudiants_stages + etudiant_progression + RLS (étudiante voit son stage, IDE/médecins voient tout, admin CRUD complet)
+- v17 : QCM EDN externe — tables tuteur_etudiant + qcm_sessions + qcm_reponses + qcm_flags + RLS (chacun ne voit que ses sessions/réponses/signalements). Numérotée v17 localement car v15/v16 distantes étaient déjà prises (collision résolue). Côté Supabase la migration est enregistrée sous le nom `v15_qcm_edn`.
 
 ---
 
@@ -227,6 +240,16 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - ✅ **PDFs améliorés** : police 9pt, titre 14pt, sous-titre 10pt, sections barre colorée latérale, marges 20mm, smart page breaks, footer USCA, format Prénom Nom, DDN jj/mm/aaaa
 - ✅ **Sécurité** : aucune donnée patient stockée sur serveur — seuls des flags workflow dans `patients.postcure_statut`
 - ✅ **Bandeau** : "Aucune donnée personnelle n'est enregistrée sur un serveur — tout reste sur votre appareil"
+
+### Module Externe — Dashboard QCM EDN (`extern/index.html`)
+- ✅ **Garde session** : redirection automatique vers `/extern/` au login si `role='externe'`
+- ✅ **Carte Chambres** (lecture seule) : liste patients hospitalisés via `db.getPatients()`, pas d'actions, juste prénom + chambre + substance principale + date sortie prévue
+- ✅ **Carte Mon QCM EDN** : sélecteur item (depuis `data/index.json` chargé une fois), filtre difficulté (1=Facile/2=Moyen/3=Difficile/Toutes), nombre de questions (5/10/20/30), mode entraînement (correction immédiate + explication) ou examen (correction à la fin uniquement)
+- ✅ **Joueur QCM modal** : 4 choix par question, badge difficulté, progression "Q n / total", bouton "⚑ Signaler" qui ouvre prompt + insère dans `qcm_flags`. Score final + persistance Supabase (`qcm_sessions` + `qcm_reponses`).
+- ✅ **Carte Mes signalements** : historique des flags émis (statut ouvert/traité, message original, réponse tuteur si renseignée)
+- ✅ **Lazy-load** : `index.json` (catalogue léger) au démarrage ; un `item_XX.json` n'est chargé que lorsque l'item est sélectionné, puis caché en mémoire pour la session
+- ✅ **Service Worker** : précache `extern/`, `qcm-engine.js`, `data/index.json` ; les `item_*.json` restent en cache dynamique stale-while-revalidate
+- ✅ **Identifiant question stable** : `"Item 76 - Q12"` (helper `QCMEngine._utils.questionSourceId`) — invariant même si on réordonne le JSON, utilisé pour scoring et signalements
 
 ### Auth avancée
 - ✅ Client Supabase robuste (safeStorage, PKCE, autoRefresh)
@@ -300,6 +323,17 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
     - **Carte Toolbox "📘 Livret IFSI"** → `/etudiant/?preview=demo` (aperçu contenu sans élève, pour IDE avant entretien).
     - Workflow "1 élève à la fois" : entre 2 stages → ✏️ modifier l'identité + ⋯ réinitialiser progression + nouveau mot de passe → livret vierge.
 
+### Fait — Session 19/04 (v3.70 → v3.71)
+- [x] **Module QCM EDN externe** (commit `6ccd59c`) — chantier complet livré en une session :
+    - Migration SQL : 4 tables `tuteur_etudiant`, `qcm_sessions`, `qcm_reponses`, `qcm_flags` + RLS (chacun ne voit que ses propres données ; les signalements seront vus par les tuteurs via la table `tuteur_etudiant`). Fichier local **v17** car v15/v16 distantes étaient déjà prises (sortie_info + livret IFSI) — appliquée côté Supabase sous le nom interne `v15_qcm_edn`.
+    - `shared/qcm-engine.js` : moteur lazy-load — `loadIndex()`, `loadItem(label)` avec cache mémoire, `getQuestions({item, difficulte, mode, n})` (random en entraînement, séquentiel en examen), `saveSession()`, `flagQuestion()`, `getMyFlags()`, `getMyStats()`. Helper `_utils.questionSourceId(item, n)` pour identifier une question de manière stable (`"Item 76 - Q12"`), `_utils.itemToFilename` pour résoudre `"Item 66a"` → `item_66a.json`.
+    - `extern/index.html` : dashboard externe (chambres lecture seule, sessions QCM, signalements). Construction DOM 100 % `createElement` (helper `el(tag, attrs, children)`) — pas d'`innerHTML` sur données dynamiques, défensif même si le JSON devenait public.
+    - `data/` : 1 catalogue `index.json` + 23 fichiers `item_*.json` (477 questions EDN Psychiatrie-Addictologie). Encodage UTF-8 vérifié (accents OK).
+    - Routing `index.html` : `role='externe'` → `extern/`, `role='etudiant_ide'` → `etudiant/`, autres → `admin/`.
+    - `sw.js` v3.71 : précache `extern/`, `qcm-engine.js`, `data/index.json` (les 23 items restent en cache dynamique).
+    - `staff/toolbox.html` : carte "Livret IFSI" retirée (accès suffisant via dashboard "Mon élève").
+    - `admin/index.html` : bouton « Générer une app patient vierge » masqué (jugé moche/inutile pour l'instant — div parent en `hidden`, code JS conservé).
+
 ### Fait — Session 17/04 soir (v3.62 → v3.64)
 - [x] **Fix critique** — accolade `});` orpheline dans `admin/index.html` (commit cd32ca3) qui cassait tout le script inline : module admin figé, page vide après déconnexion, redirection erratique vers module patient. Cache SW bumped pour forcer refresh.
 - [x] **Fix closure var+async dans Staff Psychiatrie** — `reu.jour` était capturé par closure dans une IIFE async → après la boucle `for`, il pointait vers la dernière réunion (jeudi). Conséquence : Dr Fatout (jours_presence=[4]) apparaissait dans le Staff du lundi. Passage de `reu.jour` en paramètre explicite.
@@ -314,6 +348,9 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
 - [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF). Actuellement seule l'auto-évaluation manque.
 - [ ] **Livret IFSI — PDF basique** : export progression élève (questions + ses réponses) pour archivage fin de stage si pas de portfolio complet.
+- [ ] **QCM EDN — vue tuteur** : section "Mes externes" dans `admin/index.html` (analogue à "Mon élève"). Lister `qcm_flags` ouverts via jointure `tuteur_etudiant`, agréger stats `qcm_sessions` par item/externe (% de réussite, dernière session, signalements en attente). Permettre au tuteur de répondre via `qcm_flags.tuteur_reponse` + bascule statut → `traite`.
+- [ ] **QCM EDN — lien tuteur↔externe** : UI dans gestion comptes admin pour insérer une ligne `tuteur_etudiant` au moment de la création d'un compte externe (sélecteur tuteur parmi médecins/IDE).
+- [ ] **QCM EDN — affichage tuteur dans en-tête `extern/`** : la requête est faite (jointure `tuteur_etudiant` → `profiles`) mais la jointure peut échouer si le nom de FK n'est pas exactement `tuteur_etudiant_tuteur_id_fkey` — à valider une fois que des liens existent.
 - [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
 
 ---
