@@ -59,6 +59,8 @@
       if (!resp.ok) throw new Error(`Échec chargement ${filename} : ${resp.status}`);
       const json = await resp.json();
       const questions = Array.isArray(json) ? json : (json.qcm || []);
+      // Annote chaque question avec son identifiant stable (utilisé pour reprise de session)
+      questions.forEach(q => { q._source = questionSourceId(q.item, q.question_numero); });
       _itemsCache.set(itemLabel, questions);
       return questions;
     },
@@ -158,15 +160,71 @@
       return data || [];
     },
 
-    /** Statistiques : agrégation des sessions de l'utilisateur courant */
+    /** Statistiques : uniquement les sessions terminées de l'utilisateur courant */
     async getMyStats() {
       if (!window.sb) throw new Error('Client Supabase indisponible');
       const { data, error } = await window.sb
         .from('qcm_sessions')
         .select('item, mode, nb_questions, score, created_at')
+        .eq('statut', 'terminee')
         .order('created_at', { ascending: false });
       if (error) throw error;
       return data || [];
+    },
+
+    /** Crée une session en cours au début (avant que toutes les questions soient répondues) */
+    async startSession({ item, mode, questions }) {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      const { data: user } = await window.sb.auth.getUser();
+      if (!user?.user) throw new Error('Utilisateur non authentifié');
+      const questions_json = questions.map(q => q._source);
+      const { data: session, error } = await window.sb
+        .from('qcm_sessions')
+        .insert({ user_id: user.user.id, item: item || null, mode, nb_questions: questions.length, score: 0, statut: 'en_cours', questions_json })
+        .select().single();
+      if (error) throw error;
+      return session;
+    },
+
+    /** Enregistre une réponse individuelle immédiatement */
+    async saveAnswer(sessionId, { question_source, reponse_choisie, correct, temps_ms }) {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      const { error } = await window.sb.from('qcm_reponses').insert({ session_id: sessionId, question_source, reponse_choisie, correct, temps_ms: temps_ms ?? null });
+      if (error) throw error;
+    },
+
+    /** Marque une session comme terminée avec le score final */
+    async completeSession(sessionId, score) {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      const { error } = await window.sb.from('qcm_sessions').update({ statut: 'terminee', score }).eq('id', sessionId);
+      if (error) throw error;
+    },
+
+    /** Retourne les sessions en cours avec le nombre de réponses déjà enregistrées */
+    async getMyInProgressSessions() {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      const { data, error } = await window.sb
+        .from('qcm_sessions')
+        .select('*, qcm_reponses(count)')
+        .eq('statut', 'en_cours')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    },
+
+    /** Récupère les réponses d'une session (pour reprise) */
+    async getSessionReponses(sessionId) {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      const { data, error } = await window.sb.from('qcm_reponses').select('*').eq('session_id', sessionId);
+      if (error) throw error;
+      return data || [];
+    },
+
+    /** Supprime une session abandonnée et ses réponses */
+    async abandonSession(sessionId) {
+      if (!window.sb) throw new Error('Client Supabase indisponible');
+      await window.sb.from('qcm_reponses').delete().eq('session_id', sessionId);
+      await window.sb.from('qcm_sessions').delete().eq('id', sessionId);
     },
 
     // Exposé pour debug / tests

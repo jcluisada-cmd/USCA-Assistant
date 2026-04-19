@@ -79,6 +79,7 @@
           </select>
         </div>
 
+        <div id="qcm-inprogress" class="hidden space-y-2"></div>
         <button id="qcm-start" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm">Lancer la session</button>
         <!-- Bouton tuteur uniquement -->
         <button id="qcm-view-all" class="w-full py-3 bg-white border-2 border-indigo-200 text-indigo-600 font-bold rounded-xl transition-all text-sm hidden hover:bg-indigo-50">📋 Voir toutes les questions</button>
@@ -268,7 +269,39 @@ async function initApp() {
   } catch(e) {
     document.getElementById('qcm-stats').textContent = 'Erreur catalogue';
   }
-  if (!_previewTuteur) { loadChambres(); loadFlags(); }
+  if (!_previewTuteur) { loadChambres(); loadFlags(); loadInProgress(); }
+}
+
+async function loadInProgress() {
+  var box = document.getElementById('qcm-inprogress');
+  if (!box) return;
+  clear(box);
+  try {
+    var sessions = await QCMEngine.getMyInProgressSessions();
+    if (!sessions.length) { box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    sessions.forEach(function(s) {
+      var nb = (s.qcm_reponses && s.qcm_reponses[0]) ? Number(s.qcm_reponses[0].count) : 0;
+      var pct = s.nb_questions ? Math.round(100 * nb / s.nb_questions) : 0;
+      var row = el('div', { class: 'bg-indigo-50 border border-indigo-100 rounded-xl px-3 py-2.5' });
+      var top = el('div', { class: 'flex items-center justify-between gap-2 mb-1.5' });
+      top.appendChild(el('p', { class: 'text-xs font-bold text-indigo-800 truncate', text: '📖 ' + (s.item || 'Tous les items') + ' — ' + nb + '/' + s.nb_questions + ' (' + pct + '%)' }));
+      var btnReprendre = el('button', { class: 'text-[11px] font-bold px-2.5 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex-shrink-0', text: 'Reprendre' });
+      (function(session) {
+        btnReprendre.addEventListener('click', function() { resumeSession(session); });
+      })(s);
+      top.appendChild(btnReprendre);
+      row.appendChild(top);
+      var bar = el('div', { class: 'h-1 bg-indigo-100 rounded-full overflow-hidden' });
+      var fill = el('div', { class: 'h-full bg-indigo-500 rounded-full' });
+      fill.style.width = pct + '%';
+      bar.appendChild(fill);
+      row.appendChild(bar);
+      box.appendChild(row);
+    });
+  } catch(e) {
+    box.classList.add('hidden');
+  }
 }
 
 async function loadChambres() {
@@ -411,31 +444,77 @@ function showAllQuestionsModal(itemLabel, questions) {
 
 document.getElementById('qcm-start').addEventListener('click', async function() {
   var btn = this;
-  btn.disabled = true;
-  btn.textContent = 'Chargement…';
+  btn.disabled = true; btn.textContent = 'Chargement…';
   try {
     var item = document.getElementById('qcm-item').value || null;
-    // Toutes les questions de l'item, ordre séquentiel
+    // Vérifier s'il existe une session en cours pour cet item
+    var inProgress = await QCMEngine.getMyInProgressSessions();
+    var existing = inProgress.find(function(s) { return s.item === item || (!s.item && !item); });
+    if (existing) {
+      var nb = (existing.qcm_reponses && existing.qcm_reponses[0]) ? Number(existing.qcm_reponses[0].count) : 0;
+      var choice = confirm('Session en cours : ' + nb + '/' + existing.nb_questions + ' questions répondues.\n\nOK → Reprendre\nAnnuler → Recommencer depuis le début');
+      if (choice) {
+        btn.disabled = false; btn.textContent = 'Lancer la session';
+        resumeSession(existing);
+        return;
+      }
+      await QCMEngine.abandonSession(existing.id);
+    }
     var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential' });
     if (!questions.length) { alert('Aucune question pour cet item.'); return; }
-    qcmState = { item: item, mode: currentMode, questions: questions, idx: 0, reponses: [], tStart: Date.now() };
-    // Réafficher les boutons footer (cas où tuteur avait ouvert la vue lecture)
+    await startFreshSession(item, questions);
+  } catch(e) {
+    alert('Erreur : ' + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Lancer la session';
+  }
+});
+
+async function startFreshSession(item, questions) {
+  var session = await QCMEngine.startSession({ item: item, mode: currentMode, questions: questions });
+  qcmState = { sessionId: session.id, item: item, mode: currentMode, questions: questions, idx: 0, reponses: [], tStart: Date.now() };
+  document.getElementById('qcm-flag').style.display = '';
+  document.getElementById('qcm-thumbdown').style.display = '';
+  document.getElementById('qcm-next').style.display = '';
+  showQuestion();
+  document.getElementById('qcm-modal').classList.remove('hidden');
+}
+
+async function resumeSession(session) {
+  try {
+    var item = session.item || null;
+    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential' });
+    // Construire un index source → question
+    var srcMap = {};
+    questions.forEach(function(q) { srcMap[q._source] = q; });
+    // Reconstruire la liste ordonnée à partir de questions_json
+    var sessionQuestions = (session.questions_json || []).map(function(src) { return srcMap[src]; }).filter(Boolean);
+    if (!sessionQuestions.length) { await startFreshSession(item, questions); return; }
+    // Récupérer les réponses déjà enregistrées
+    var existingReponses = await QCMEngine.getSessionReponses(session.id);
+    var answeredSources = new Set(existingReponses.map(function(r) { return r.question_source; }));
+    // Trouver la première question sans réponse
+    var startIdx = sessionQuestions.length;
+    for (var i = 0; i < sessionQuestions.length; i++) {
+      if (!answeredSources.has(sessionQuestions[i]._source)) { startIdx = i; break; }
+    }
+    var reponses = existingReponses.map(function(r) {
+      return { question_source: r.question_source, reponse_choisie: r.reponse_choisie, correct: r.correct, temps_ms: r.temps_ms };
+    });
+    qcmState = { sessionId: session.id, item: item, mode: currentMode, questions: sessionQuestions, idx: startIdx, reponses: reponses, tStart: Date.now() };
     document.getElementById('qcm-flag').style.display = '';
     document.getElementById('qcm-thumbdown').style.display = '';
     document.getElementById('qcm-next').style.display = '';
     showQuestion();
     document.getElementById('qcm-modal').classList.remove('hidden');
   } catch(e) {
-    alert('Erreur : ' + e.message);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Lancer la session';
+    alert('Erreur reprise : ' + e.message);
   }
-});
+}
 
 document.getElementById('qcm-close').addEventListener('click', function() {
-  if (qcmState && !confirm('Quitter sans sauvegarder ?')) return;
   document.getElementById('qcm-modal').classList.add('hidden');
+  if (qcmState) { loadInProgress(); } // rafraîchir la bannière "en cours"
   qcmState = null;
 });
 
@@ -506,12 +585,10 @@ function onAnswer(q, btn) {
   var letter = btn.dataset.letter;
   var correct = btn.dataset.correct === 'true';
   var temps_ms = Date.now() - qcmState.tStart;
-  qcmState.reponses.push({
-    question_source: QCMEngine._utils.questionSourceId(q.item, q.question_numero),
-    reponse_choisie: letter,
-    correct: correct,
-    temps_ms: temps_ms
-  });
+  var reponse = { question_source: QCMEngine._utils.questionSourceId(q.item, q.question_numero), reponse_choisie: letter, correct: correct, temps_ms: temps_ms };
+  qcmState.reponses.push(reponse);
+  // Sauvegarde immédiate (permet la reprise si interruption)
+  if (qcmState.sessionId) QCMEngine.saveAnswer(qcmState.sessionId, reponse).catch(function(e) { console.warn('save answer:', e); });
   document.querySelectorAll('.qcm-choice').forEach(function(b) { b.dataset.answered = '1'; b.style.pointerEvents = 'none'; });
 
   if (qcmState.mode === 'entrainement') {
@@ -562,14 +639,11 @@ async function finishSession() {
     nextBtn.onclick = null;
   };
   try {
-    await QCMEngine.saveSession({
-      item: qcmState.item,
-      mode: qcmState.mode,
-      nb_questions: total,
-      score: score,
-      reponses: qcmState.reponses
-    });
+    if (qcmState.sessionId) {
+      await QCMEngine.completeSession(qcmState.sessionId, score);
+    }
     document.getElementById('save-status').textContent = '✓ Session enregistrée';
+    loadInProgress(); // plus de session en cours → vider la bannière
   } catch(e) {
     document.getElementById('save-status').textContent = '⚠ Échec enregistrement : ' + e.message;
   }
