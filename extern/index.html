@@ -779,7 +779,6 @@ var editingAttenteId = null, admettreAttenteId = null;
 var _sortiesOpen = {};
 var toolboxLoaded = false;
 var planningLoaded = false;
-var patientsDataLoaded = false;
 var _previewTuteur = new URLSearchParams(location.search).get('preview') === 'tuteur';
 
 // ── Garde session ──
@@ -1243,14 +1242,15 @@ document.getElementById('btn-save-admettre').addEventListener('click', async fun
   }
 });
 
-// Lazy-load à l'ouverture de l'accordion Patients
+// Lazy-load à l'ouverture de l'accordion Patients (recharge à chaque ouverture)
 (function() {
   var btn = document.querySelector('[data-target="patients-body-outer"]');
   var body = document.getElementById('patients-body-outer');
   if (btn && body) {
     btn.addEventListener('click', function() {
-      if (body.classList.contains('hidden') && !patientsDataLoaded) {
-        patientsDataLoaded = true;
+      // body.classList.contains('hidden') est évalué AVANT le toggle de l'accordion
+      // → true signifie "fermé en ce moment, va s'ouvrir" → on déclenche le rechargement
+      if (body.classList.contains('hidden')) {
         loadExternData();
       }
     }, true);
