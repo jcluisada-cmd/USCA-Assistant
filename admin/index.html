@@ -213,23 +213,28 @@
         <!-- ═══ Mes élèves / Mon externe (accordion unifié) ═══ -->
         <div id="section-eleves" class="mb-4 hidden">
           <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <div class="flex items-center justify-between px-3 py-2.5 border-b border-slate-200">
+            <button id="eleves-accordion-btn" class="w-full flex items-center justify-between px-3 py-2.5 hover:bg-slate-50 transition-colors">
               <h3 id="eleves-section-title" class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
-              <span id="eleves-count" class="text-[10px] text-slate-400"></span>
-            </div>
-            <!-- Sous-section IFSI (IDE + admin) -->
-            <div id="eleves-ifsi-wrap">
-              <div id="eleves-ifsi-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">📘 Livret IFSI</span>
+              <div class="flex items-center gap-2">
+                <span id="eleves-count" class="text-[10px] text-slate-400"></span>
+                <svg id="eleves-chevron" class="w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </div>
-              <div id="eleves-list" class="p-3 space-y-2"></div>
-            </div>
-            <!-- Sous-section QCM externe (médecin + admin) -->
-            <div id="eleves-externe-wrap" class="hidden">
-              <div id="eleves-externe-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">🩺 Externe — QCM EDN</span>
+            </button>
+            <div id="eleves-body" class="border-t border-slate-200">
+              <!-- Sous-section IFSI (IDE + admin) -->
+              <div id="eleves-ifsi-wrap">
+                <div id="eleves-ifsi-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">📘 Livret IFSI</span>
+                </div>
+                <div id="eleves-list" class="p-3 space-y-2"></div>
               </div>
-              <div id="externe-list" class="p-3 space-y-2"></div>
+              <!-- Sous-section QCM externe (médecin + admin) -->
+              <div id="eleves-externe-wrap" class="hidden">
+                <div id="eleves-externe-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">🩺 Externe — QCM EDN</span>
+                </div>
+                <div id="externe-list" class="p-3 space-y-2"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -3410,13 +3415,21 @@ function renderExterne(list) {
       });
     }
 
-    // Bouton stats détaillées
+    // Actions
     var actionsRow = createEl('div', 'flex gap-2 mt-2');
-    var btnStats = createEl('button', 'flex-1 text-[11px] font-bold py-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-colors', '📊 Voir toutes les sessions');
-    btnStats.addEventListener('click', (function(extId, extNom, extSessions) {
-      return function() { showExterneSessionsModal(extId, extNom, extSessions); };
-    })(ext.id, ext.nom, sessions));
-    actionsRow.appendChild(btnStats);
+    var btnQCM = createEl('button', 'flex-1 text-[11px] font-bold py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors', '🩺 Ouvrir le QCM');
+    btnQCM.addEventListener('click', function() {
+      window.location.href = '../extern/?preview=tuteur';
+    });
+    actionsRow.appendChild(btnQCM);
+    if (sessions.length) {
+      var btnStats = createEl('button', 'text-[11px] font-bold px-2 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-100', '📊');
+      btnStats.title = 'Voir toutes les sessions';
+      btnStats.addEventListener('click', (function(extId, extNom, extSessions) {
+        return function() { showExterneSessionsModal(extId, extNom, extSessions); };
+      })(ext.id, ext.nom, sessions));
+      actionsRow.appendChild(btnStats);
+    }
     card.appendChild(actionsRow);
 
     container.appendChild(card);
@@ -3468,6 +3481,15 @@ function openFlagResponseModal(flagId, question, message) {
   document.getElementById('modal-flag-text').value = '';
   document.getElementById('modal-flag-response').classList.remove('hidden');
 }
+
+// ── Accordion Mes élèves ──
+document.getElementById('eleves-accordion-btn').addEventListener('click', function() {
+  var body = document.getElementById('eleves-body');
+  var chevron = document.getElementById('eleves-chevron');
+  var open = !body.classList.contains('hidden');
+  body.classList.toggle('hidden', open);
+  chevron.style.transform = open ? 'rotate(-90deg)' : '';
+});
 
 document.getElementById('modal-flag-cancel').addEventListener('click', function() {
   document.getElementById('modal-flag-response').classList.add('hidden');
