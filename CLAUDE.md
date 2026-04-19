@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.80 |
+| **Service Worker** | usca-v3.82 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -345,6 +345,17 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [x] **Fix closure var+async dans Staff Psychiatrie** — `reu.jour` était capturé par closure dans une IIFE async → après la boucle `for`, il pointait vers la dernière réunion (jeudi). Conséquence : Dr Fatout (jours_presence=[4]) apparaissait dans le Staff du lundi. Passage de `reu.jour` en paramètre explicite.
 - [x] **Fix post-cure patient** — bouton « Faire une demande de post-cure » disparaissait dès qu'une structure (et pas seulement une date) était définie. Condition simplifiée à `if (hasDate)` : le bouton réapparaît automatiquement si la date est retirée.
 - [x] **Fix DB post-cure** — `updatePostcureStatut` écrasait systématiquement `structure` et `date_postcure` par la date du jour (fonction conçue pour checkboxes, détournée pour valeurs libres). Distinction `value === true` (workflow → date du jour) vs `value` string (→ valeur brute). `shared/supabase.js:549`.
+
+### Fait — Session 19-20/04 (v3.81 → v3.82) — Refonte extern en 3 onglets
+- [x] **Dashboard externe — refonte complète** : `extern/index.html` passe de single-page (1298 lignes) à 3 onglets (~3370 lignes) avec navigation bottom-nav et IDs admin directs (sans préfixe `ex-`).
+- [x] **Onglet Dashboard** : accordion "Patients" avec 3 sous-onglets (Chambres / Sorties / Attente) + carte QCM EDN + 2 petites cartes (Signalements + Export) + Checklist + Questions au tuteur. Le détail patient (section dédiée) reprend exactement les fonctionnalités admin : Journal craving, Fiches traitements, Permissions, Actions (événement, permission, contenu, sortie, post-cure), exports PDF/HTML, Voir comme patient, suppression séjour. Tous les modals admin (delete, event, perm, contenu, sortie) intégrés.
+- [x] **Onglet Toolbox** : iframe lazy-load `staff/toolbox.html?embedded=true` (ne charge qu'au premier clic).
+- [x] **Onglet Planning** : copie complète du planning admin (renderGroupesTab + openGroupeActionModal + handlers `btn-prev/next-week`, `btn-add-event-equipe`, `btn-toggle-historique`, modal animateur). Lazy-load au premier affichage.
+- [x] **Mode tuteur (`?preview=tuteur`)** : bandeau orange via div HTML `#tuteur-banner` (plus injecté dynamiquement), masque les sections non-QCM, masque les onglets Toolbox/Planning de la nav (focus QCM uniquement).
+- [x] **Architecture HTML** : `body` en flex column 100dvh, conteneur tabs avec `position:absolute; inset:0`, classe `.extern-tab-flex` pour le tab toolbox afin que l'iframe remplisse tout l'espace via `flex:1`.
+- [x] **Scripts partagés** ajoutés à extern : `fiches-catalogue.js`, `planning-groupes.js`, `postcure-structures.js` (pour les fonctions de détail patient et planning).
+- [x] **sw.js** : v3.81 → v3.82.
+- [x] **admin/index.html** : onglet "Patients" renommé "Dashboard", icône Toolbox passée en clé (déjà fait avant cette session).
 
 ### Fait — Session 19/04 soir (v3.71 → v3.75)
 - [x] **Mon externe** : section dans dashboard admin/médecin (analogue à "Mon élève"). Tous les médecins peuvent voir l'externe (pas de tuteur désigné). Stats sessions QCM, signalements en attente, réponse aux flags. Migration v18 RLS médecin→externe sessions/flags.

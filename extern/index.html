@@ -23,85 +23,140 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
-  header { padding-top: env(safe-area-inset-top); }
-  main { padding-bottom: max(2.5rem, env(safe-area-inset-bottom)); }
   .qcm-letter { width: 28px; height: 28px; font-weight: 700; }
+  /* Tabs system */
+  .extern-tab { position: absolute; inset: 0; overflow-y: auto; }
+  .extern-tab.hidden { display: none; }
+  .extern-tab-flex { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .extern-tab-flex.hidden { display: none; }
+  /* Dark mode — indigo readability */
+  html.dark .text-indigo-600 { color: #a5b4fc !important; }
+  html.dark .text-indigo-700 { color: #a5b4fc !important; }
+  html.dark .bg-indigo-50 { background-color: rgba(79,70,229,0.1) !important; }
+  html.dark .bg-indigo-100 { background-color: rgba(79,70,229,0.15) !important; }
+  html.dark .border-indigo-200 { border-color: rgba(79,70,229,0.3) !important; }
 </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="bg-slate-50" style="height:100dvh;display:flex;flex-direction:column;overflow:hidden">
 
-  <header class="bg-indigo-600 text-white px-5 pt-6 pb-6 sticky top-0 z-30 shadow-md">
-    <div class="flex items-center justify-between max-w-2xl mx-auto">
-      <div>
-        <p class="text-indigo-200 text-xs font-medium">Externe en stage</p>
-        <h1 id="hdr-nom" class="text-xl font-extrabold tracking-tight">—</h1>
-        <p id="hdr-tuteur" class="text-indigo-200 text-xs mt-0.5"></p>
+  <!-- Header compact indigo -->
+  <header class="bg-indigo-600 text-white shadow-md flex-shrink-0" style="padding-top:env(safe-area-inset-top)">
+    <div class="flex items-center justify-between max-w-2xl mx-auto px-4 py-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <a href="../" class="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </a>
+        <div class="min-w-0">
+          <p class="text-indigo-200 text-[10px] font-medium leading-tight">Externe en stage</p>
+          <h1 id="hdr-nom" class="text-base font-extrabold tracking-tight leading-tight truncate">—</h1>
+        </div>
+        <span id="hdr-tuteur" class="text-indigo-200 text-[10px] hidden"></span>
       </div>
-      <button id="btn-logout" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition">Déconnexion</button>
+      <button id="btn-logout" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition flex-shrink-0">Déconnexion</button>
     </div>
   </header>
 
-  <main class="max-w-2xl mx-auto px-4 py-5 space-y-4">
+  <!-- Bandeau tuteur (caché par défaut) -->
+  <div id="tuteur-banner" class="hidden flex-shrink-0" style="background:#FEF3C7;color:#92400E;text-align:center;padding:8px 16px;font-size:0.75rem;font-weight:700;border-bottom:1px solid #FDE68A">
+    🩺 Mode tuteur — <a href="../admin/" style="text-decoration:underline;font-weight:800">← Retour au dashboard</a>
+  </div>
 
-    <!-- CARTE 1 : ENTRÉES / SORTIES (masquée en mode tuteur) -->
-    <section id="section-entrees-sorties" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="ex-es-outer">
+  <!-- Conteneur des 3 onglets -->
+  <div style="flex:1;overflow:hidden;position:relative">
+
+  <!-- ═══ ONGLET DASHBOARD ═══ -->
+  <div id="tab-dashboard" class="extern-tab">
+
+  <main id="dashboard-main-content" class="max-w-2xl mx-auto px-4 py-5 space-y-4 pb-24">
+
+    <!-- CARTE 1 : PATIENTS (Chambres / Sorties / Attente) -->
+    <section id="section-patients-card" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="patients-body-outer">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           </div>
           <div class="text-left">
-            <p class="text-sm font-bold text-slate-800">Entrées / Sorties</p>
-            <p class="text-[11px] text-slate-500">Patients hospitalisés, sorties, liste d'attente</p>
+            <p class="text-sm font-bold text-slate-800">Patients</p>
+            <p class="text-[11px] text-slate-500">Chambres, sorties prévues, liste d'attente</p>
           </div>
         </div>
         <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
-      <div id="ex-es-outer" class="hidden border-t border-slate-100">
+      <div id="patients-body-outer" class="hidden border-t border-slate-100">
         <div class="flex border-b border-slate-200">
-          <button id="ex-tab-sorties-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-indigo-600 border-b-2 border-indigo-600" onclick="switchExESTab('sorties')">Sorties prévues</button>
-          <button id="ex-tab-attente-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-slate-400 border-b-2 border-transparent" onclick="switchExESTab('attente')">Liste d'attente</button>
+          <button id="ext-ptab-chambres-btn" type="button" class="flex-1 text-xs font-bold py-2.5 text-center text-indigo-600 border-b-2 border-indigo-600">Chambres</button>
+          <button id="ext-ptab-sorties-btn" type="button" class="flex-1 text-xs font-bold py-2.5 text-center text-slate-400 border-b-2 border-transparent">Sorties</button>
+          <button id="ext-ptab-attente-btn" type="button" class="flex-1 text-xs font-bold py-2.5 text-center text-slate-400 border-b-2 border-transparent">Attente</button>
         </div>
-        <div id="ex-tab-sorties" class="p-3">
-          <div id="ex-sorties-list" class="space-y-1.5"><p class="text-xs text-slate-400 text-center py-3">Chargement…</p></div>
+
+        <!-- Sous-onglet : Chambres -->
+        <div id="ext-ptab-chambres" class="p-3">
+          <div id="patients-list" class="space-y-2"><p class="text-xs text-slate-400 text-center py-3">Chargement…</p></div>
         </div>
-        <div id="ex-tab-attente" class="p-3 hidden">
-          <div id="ex-attente-list" class="space-y-1.5"></div>
-          <button id="ex-btn-add-attente" class="w-full mt-2 py-2.5 border-2 border-dashed border-indigo-300 rounded-lg text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors">+ Ajouter un patient</button>
-          <div id="ex-form-admettre" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+
+        <!-- Sous-onglet : Sorties -->
+        <div id="ext-ptab-sorties" class="p-3 hidden">
+          <div id="sorties-list" class="space-y-1.5"></div>
+        </div>
+
+        <!-- Sous-onglet : Liste d'attente -->
+        <div id="ext-ptab-attente" class="p-3 hidden">
+          <div id="attente-list" class="space-y-1.5"></div>
+          <button id="btn-add-attente" class="w-full mt-2 py-2.5 border-2 border-dashed border-indigo-300 rounded-lg text-xs font-bold text-indigo-600 hover:bg-indigo-50 transition-colors">+ Ajouter un patient</button>
+
+          <!-- Formulaire admission depuis liste d'attente -->
+          <div id="form-admettre" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
             <h5 class="text-xs font-bold text-emerald-700 mb-2">Admettre le patient</h5>
             <div class="grid grid-cols-2 gap-2 mb-2">
-              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Chambre</label>
-                <input type="text" id="ex-adm-chambre" placeholder="312" inputmode="numeric" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400"></div>
-              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date de naissance</label>
-                <input type="date" id="ex-adm-ddn" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400"></div>
+              <div>
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Chambre</label>
+                <input type="text" id="adm-chambre" placeholder="312" inputmode="numeric" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400">
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date de naissance</label>
+                <input type="date" id="adm-ddn" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-emerald-400">
+              </div>
             </div>
-            <p id="ex-adm-error" class="text-xs text-red-500 text-center mb-2 hidden"></p>
+            <p id="adm-error" class="text-xs text-red-500 text-center mb-2 hidden"></p>
             <div class="flex gap-2">
-              <button id="ex-btn-cancel-admettre" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
-              <button id="ex-btn-save-admettre" class="flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs hover:bg-emerald-700 transition-colors">Admettre</button>
+              <button id="btn-cancel-admettre" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+              <button id="btn-save-admettre" class="flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs hover:bg-emerald-700 transition-colors">Admettre</button>
             </div>
           </div>
-          <div id="ex-form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-            <h5 id="ex-form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
+
+          <!-- Formulaire ajout/édition attente -->
+          <div id="form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+            <h5 id="form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
             <div class="grid grid-cols-2 gap-2 mb-2">
-              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Âge</label>
-                <input type="number" id="ex-att-age" placeholder="65" min="18" max="100" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
-              <div><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date d'entrée prévue</label>
-                <input type="date" id="ex-att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
+              <div>
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Âge</label>
+                <input type="number" id="att-age" placeholder="65" min="18" max="100" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date d'entrée prévue</label>
+                <input type="date" id="att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+              </div>
             </div>
-            <div class="mb-2"><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Adressage</label>
-              <select id="ex-att-addressage" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
-                <option value="CSAPA">CSAPA</option><option value="Addictologue">Addictologue</option>
-                <option value="Médecin Traitant">Médecin Traitant</option><option value="Hépatologie">Hépatologie</option>
-                <option value="Cardiologie">Cardiologie</option><option value="Neurologie">Neurologie</option>
+            <div class="mb-2">
+              <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Adressage</label>
+              <select id="att-addressage" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                <option value="CSAPA">CSAPA</option>
+                <option value="Addictologue">Addictologue</option>
+                <option value="Médecin Traitant">Médecin Traitant</option>
+                <option value="Hépatologie">Hépatologie</option>
+                <option value="Cardiologie">Cardiologie</option>
+                <option value="Neurologie">Neurologie</option>
                 <option value="Psychiatre">Psychiatre</option>
-              </select></div>
-            <div class="mb-2"><label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
-              <input type="text" id="ex-att-commentaire" placeholder="Détails..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></div>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
+              <input type="text" id="att-commentaire" placeholder="Détails..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+            </div>
             <div class="flex gap-2">
-              <button id="ex-btn-cancel-attente" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
-              <button id="ex-btn-save-attente" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors">Enregistrer</button>
+              <button id="btn-cancel-attente" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+              <button id="btn-save-attente" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors">Enregistrer</button>
             </div>
           </div>
         </div>
@@ -222,6 +277,219 @@
 
   </main>
 
+  <!-- ═══ Section Détail Patient (mêmes IDs que admin/index.html) ═══ -->
+  <section id="section-patient-detail" class="hidden max-w-2xl mx-auto px-4 py-5 pb-24">
+    <div class="flex items-center justify-between mb-3">
+      <h3 id="detail-patient-title" class="text-lg font-bold text-slate-800"></h3>
+      <button id="btn-back-patients" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">Retour</button>
+    </div>
+    <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
+
+    <!-- Accordion : Journal craving -->
+    <button id="acc-craving" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+      <div class="flex items-center gap-2.5">
+        <div id="craving-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-slate-700">Journal craving</span>
+        <span id="craving-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
+      </div>
+      <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div id="acc-craving-content" class="hidden mb-2 pl-2">
+      <div id="detail-craving-log"></div>
+    </div>
+
+    <!-- Accordion : Fiches traitements -->
+    <button id="acc-fiches" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 bg-amber-50 rounded-full flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-slate-700">Fiches traitements</span>
+      </div>
+      <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div id="acc-fiches-content" class="hidden mb-2 pl-2">
+      <div id="fiches-checklist" class="space-y-1"></div>
+    </div>
+
+    <!-- Accordion : Permissions -->
+    <button id="acc-perms" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+      <div class="flex items-center gap-2.5">
+        <div id="perm-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-slate-700">Permissions</span>
+        <span id="perm-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
+      </div>
+      <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div id="acc-perms-content" class="hidden mb-2 pl-2">
+      <div id="detail-perms-list"></div>
+    </div>
+
+    <!-- Actions -->
+    <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
+    <div class="space-y-2 mb-4">
+      <button id="btn-action-event" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+        <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        </div>
+        <div><p class="text-sm font-semibold text-slate-700">Planifier un événement</p><p class="text-[11px] text-slate-400">Entretien, consultation, RDV externe...</p></div>
+      </button>
+      <button id="btn-action-perm" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+        <div class="w-8 h-8 bg-cyan-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </div>
+        <div><p class="text-sm font-semibold text-slate-700">Annoncer une permission</p><p class="text-[11px] text-slate-400">48h max, retour 20h</p></div>
+      </button>
+      <button id="btn-action-contenu" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+        <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+        </div>
+        <div><p class="text-sm font-semibold text-slate-700">Partager du contenu</p><p class="text-[11px] text-slate-400">Note, lien, consigne</p></div>
+      </button>
+      <button id="btn-action-sortie" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+        <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+        </div>
+        <div><p class="text-sm font-semibold text-slate-700">Annoncer la date de sortie</p><p id="sortie-current" class="text-[11px] text-slate-400">Non définie</p></div>
+      </button>
+
+      <!-- Accordion Dossier post-cure -->
+      <div class="w-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <button id="btn-action-postcure" class="w-full p-3.5 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left">
+          <div class="w-8 h-8 bg-teal-50 dark:bg-teal-900 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+          </div>
+          <div class="flex-1"><p class="text-sm font-semibold text-slate-700 dark:text-slate-200">Dossier post-cure</p><p id="postcure-subtitle" class="text-[11px] text-slate-400">Volet médical, statut, structure</p></div>
+          <svg id="postcure-chevron" class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div id="postcure-statut-zone" class="hidden border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3 space-y-3">
+          <div id="postcure-meta" class="space-y-2"></div>
+          <div id="postcure-checks" class="space-y-1.5"></div>
+          <button id="btn-open-medecin" class="w-full py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg text-xs transition-colors">Remplir le volet médical</button>
+        </div>
+      </div>
+
+      <!-- Exports de sortie -->
+      <div id="sortie-exports" class="hidden space-y-2">
+        <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3.5 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
+          <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          </div>
+          <div><p class="text-sm font-semibold">Fiche de sortie (PDF)</p><p class="text-[11px] text-white/70">Craving, stratégies, contacts</p></div>
+        </button>
+        <button id="btn-export-html-admin" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-all active:scale-[0.98] text-left">
+          <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+          </div>
+          <div><p class="text-sm font-semibold text-slate-700">App de sortie (HTML)</p><p class="text-[11px] text-slate-400">Application autonome hors-ligne</p></div>
+        </button>
+      </div>
+    </div>
+
+    <button id="btn-view-as-patient" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2 mb-3">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      Voir comme patient
+    </button>
+
+    <button id="btn-delete-patient" class="w-full py-3 bg-white border-2 border-red-200 hover:border-red-400 text-red-500 font-bold rounded-xl text-sm transition-colors active:scale-[0.98] flex items-center justify-center gap-2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+      Supprimer ce séjour
+    </button>
+  </section>
+
+  </div><!-- /tab-dashboard -->
+
+  <!-- ═══ ONGLET TOOLBOX ═══ -->
+  <div id="tab-toolbox" class="extern-tab-flex hidden">
+    <iframe id="extern-toolbox-iframe" class="w-full border-none flex-1" style="height:100%" title="USCA Toolbox"></iframe>
+  </div>
+
+  <!-- ═══ ONGLET PLANNING ═══ -->
+  <div id="tab-planning" class="extern-tab hidden">
+    <div class="p-6 max-w-2xl mx-auto w-full pb-24">
+      <h2 class="text-xl font-bold text-slate-800 mb-3">Planning</h2>
+      <!-- Navigation semaine -->
+      <div class="flex items-center justify-between mb-4 bg-white rounded-xl border border-slate-200 p-2.5">
+        <button id="btn-prev-week" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-indigo-100 hover:text-indigo-600 transition-colors font-bold">&lsaquo;</button>
+        <div class="text-center flex-1">
+          <p id="groupes-dates-label" class="text-xs text-slate-500 font-medium"></p>
+          <span id="groupes-semaine-label" class="inline-block text-xs font-bold px-3 py-0.5 rounded-full bg-indigo-100 text-indigo-700 mt-1 text-center">Semaine A</span>
+        </div>
+        <button id="btn-next-week" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-indigo-100 hover:text-indigo-600 transition-colors font-bold">&rsaquo;</button>
+        <button id="btn-add-event-equipe" class="ml-2 text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors flex-shrink-0">+ Événement</button>
+      </div>
+
+      <!-- Formulaire ajout événement ponctuel -->
+      <div id="form-event-equipe" class="bg-white border border-indigo-200 rounded-xl p-4 mb-4 hidden">
+        <h4 class="text-sm font-bold text-slate-700 mb-3">Ajouter un événement</h4>
+        <input type="text" id="evt-eq-titre" placeholder="Objet (ex: Labo, Réunion CLUD...)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2">
+        <input type="date" id="evt-eq-date" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2">
+        <div class="flex gap-2 mb-3">
+          <input type="time" id="evt-eq-debut" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm" placeholder="Début">
+          <input type="time" id="evt-eq-fin" class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm" placeholder="Fin">
+        </div>
+        <div class="flex gap-2">
+          <button id="btn-cancel-evt-eq" class="flex-1 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+          <button id="btn-save-evt-eq" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors">Ajouter</button>
+        </div>
+        <p id="evt-eq-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+      </div>
+
+      <!-- Réunions du jour -->
+      <div id="reunions-list" class="space-y-2 mb-4"></div>
+      <!-- Événements ponctuels -->
+      <div id="events-equipe-list" class="space-y-2 mb-6"></div>
+
+      <!-- Groupes thérapeutiques -->
+      <h3 id="groupes-upcoming-title" class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Groupes thérapeutiques</h3>
+      <div id="groupes-list" class="space-y-3"></div>
+
+      <!-- Historique de la semaine -->
+      <div id="groupes-historique-section" class="hidden mt-6">
+        <button id="btn-toggle-historique" class="w-full flex items-center justify-between text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 hover:text-slate-600 transition-colors">
+          <span>Historique de la semaine</span>
+          <span id="historique-chevron" class="text-xs">&#9660;</span>
+        </button>
+        <div id="groupes-historique-list" class="space-y-3 hidden"></div>
+      </div>
+    </div>
+
+    <!-- Modal actions animateur -->
+    <div id="modal-groupe-actions" class="fixed inset-0 z-[200] bg-black/50 hidden flex items-end justify-center">
+      <div class="bg-white w-full max-w-lg rounded-t-2xl p-6 pb-8 max-h-[85vh] overflow-y-auto" id="modal-groupe-body">
+        <div class="flex items-center justify-between mb-4">
+          <h3 id="modal-groupe-title" class="text-base font-bold text-slate-800"></h3>
+          <button id="modal-groupe-close" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200">&times;</button>
+        </div>
+        <div id="modal-groupe-content"></div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /conteneur tabs -->
+
+  <!-- ═══ Bottom navigation ═══ -->
+  <nav class="bg-white/97 backdrop-blur border-t border-slate-200 px-2 pb-[calc(env(safe-area-inset-bottom,4px)+4px)] pt-1 z-40 flex-shrink-0">
+    <div class="flex justify-around max-w-lg mx-auto">
+      <button data-tab="dashboard" class="extern-nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-indigo-600">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Dashboard</span>
+      </button>
+      <button data-tab="toolbox" class="extern-nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
+      </button>
+      <button data-tab="planning" class="extern-nav-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="text-[10px] font-semibold mt-0.5">Planning</span>
+      </button>
+    </div>
+  </nav>
+
   <!-- MODAL JOUEUR QCM -->
   <div id="qcm-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-stretch sm:items-center justify-center sm:p-4">
     <div class="bg-white w-full sm:max-w-xl sm:rounded-2xl flex flex-col max-h-screen overflow-hidden">
@@ -247,8 +515,149 @@
     </div>
   </div>
 
+  <!-- ═══ MODALS PATIENT (mêmes IDs que admin) ═══ -->
+
+  <!-- Modal confirmation suppression -->
+  <div id="modal-delete" class="fixed inset-0 z-[100] bg-black/50 flex items-center justify-center hidden">
+    <div class="bg-white w-full max-w-sm mx-4 rounded-2xl p-5">
+      <div class="text-center mb-4">
+        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">Supprimer ce séjour ?</h3>
+        <p class="text-sm text-slate-500 mt-2">Les données du patient ont-elles été exportées ?</p>
+        <p class="text-xs text-slate-400 mt-1">Cette action supprimera le patient et toutes ses données (cravings, stratégies, permissions, prescriptions).</p>
+      </div>
+      <div class="space-y-2">
+        <button id="btn-export-then-delete" class="w-full py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm transition-colors">Sauvegarder les données puis supprimer</button>
+        <button id="btn-confirm-delete" class="w-full py-2.5 bg-red-500 text-white font-bold rounded-xl text-sm transition-colors">Confirmer la suppression</button>
+        <button id="btn-cancel-delete" class="w-full py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Événement -->
+  <div id="modal-event" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
+    <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8">
+      <h3 class="text-base font-bold text-slate-800 mb-3">Planifier un événement</h3>
+      <div class="space-y-3">
+        <select id="evt-type" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          <option value="entretien">Entretien en chambre</option>
+          <option value="consultation">Consultation dans l'hôpital</option>
+          <option value="familial">Entretien familial</option>
+          <option value="rdv_externe">RDV externe</option>
+          <option value="autre">Autre</option>
+        </select>
+        <input type="text" id="evt-titre" placeholder="Titre (optionnel, ex: avec Dr X)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+        <div class="grid grid-cols-2 gap-2">
+          <input type="date" id="evt-date" class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          <input type="time" id="evt-heure" class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+        </div>
+        <input type="text" id="evt-lieu" placeholder="Lieu (optionnel)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+        <textarea id="evt-desc" rows="2" placeholder="Détails (optionnel)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm resize-none"></textarea>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="evt-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+        <button id="evt-save" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm">Planifier</button>
+      </div>
+      <p id="evt-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- Modal Permission -->
+  <div id="modal-perm" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
+    <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8">
+      <h3 class="text-base font-bold text-slate-800 mb-3">Annoncer une permission</h3>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 mb-1 block">Départ</label>
+            <input type="date" id="perm-date-debut" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 mb-1 block">Heure départ</label>
+            <input type="time" id="perm-heure-debut" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 mb-1 block">Retour</label>
+            <input type="date" id="perm-date-retour" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 mb-1 block">Heure retour</label>
+            <input type="time" id="perm-heure-retour" value="20:00" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          </div>
+        </div>
+        <input type="text" id="perm-motif" placeholder="Motif (optionnel)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="perm-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+        <button id="perm-save" class="flex-1 py-2.5 bg-cyan-600 text-white font-bold rounded-xl text-sm">Annoncer</button>
+      </div>
+      <p id="perm-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- Modal Contenu -->
+  <div id="modal-contenu" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
+    <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8">
+      <h3 class="text-base font-bold text-slate-800 mb-3">Partager du contenu</h3>
+      <div class="space-y-3">
+        <select id="contenu-type" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+          <option value="note">Note / Message</option>
+          <option value="lien">Lien URL</option>
+          <option value="consigne">Consigne</option>
+        </select>
+        <input type="text" id="contenu-titre" placeholder="Titre" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+        <textarea id="contenu-texte" rows="3" placeholder="Contenu, message ou lien URL..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm resize-none"></textarea>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="contenu-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+        <button id="contenu-save" class="flex-1 py-2.5 bg-purple-600 text-white font-bold rounded-xl text-sm">Partager</button>
+      </div>
+      <p id="contenu-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- Modal Date de sortie -->
+  <div id="modal-sortie" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
+    <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8 max-h-[90vh] overflow-y-auto">
+      <h3 class="text-base font-bold text-slate-800 mb-3">Sortie du patient</h3>
+      <label class="block text-xs font-semibold text-slate-600 mb-1">Date de sortie</label>
+      <input type="date" id="sortie-date" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm mb-3">
+      <label class="block text-xs font-semibold text-slate-600 mb-1">Destination</label>
+      <div class="flex gap-2 mb-3" id="sortie-dest-radios">
+        <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+          <input type="radio" name="sortie-dest" value="rad" class="accent-emerald-600"><span>RAD</span>
+        </label>
+        <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+          <input type="radio" name="sortie-dest" value="postcure" class="accent-emerald-600"><span>Post-cure</span>
+        </label>
+        <label class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+          <input type="radio" name="sortie-dest" value="autre" class="accent-emerald-600"><span>Autre</span>
+        </label>
+      </div>
+      <div id="sortie-postcure-wrap" class="mb-3 hidden">
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Centre de post-cure</label>
+        <select id="sortie-postcure-centre" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm"></select>
+      </div>
+      <div id="sortie-autre-wrap" class="mb-3 hidden">
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Précision</label>
+        <input type="text" id="sortie-autre-precision" placeholder="Ex : HDJ, foyer, transfert..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="sortie-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
+        <button id="sortie-save" class="flex-1 py-2.5 bg-emerald-600 text-white font-bold rounded-xl text-sm">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
 <script src="../shared/supabase.js"></script>
 <script src="../shared/auth.js"></script>
+<script src="../shared/fiches-catalogue.js"></script>
+<script src="../shared/planning-groupes.js"></script>
+<script src="../shared/postcure-structures.js"></script>
 <script src="../shared/qcm-engine.js"></script>
 <script src="../shared/theme.js"></script>
 <script>
@@ -281,12 +690,104 @@ function el(tag, attrs, children) {
 }
 function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
 
-// ── Garde session ──
+// ── Helpers DOM admin (createEl, SVG icons) ──
+function createEl(tag, classes, text) {
+  var n = document.createElement(tag);
+  if (classes) n.className = classes;
+  if (text) n.textContent = text;
+  return n;
+}
+
+function createEditSvg() {
+  var ns = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('width', '14'); svg.setAttribute('height', '14');
+  svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+  var p1 = document.createElementNS(ns, 'path'); p1.setAttribute('d', 'M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z');
+  var p2 = document.createElementNS(ns, 'path'); p2.setAttribute('d', 'm15 5 4 4');
+  svg.appendChild(p1); svg.appendChild(p2);
+  return svg;
+}
+
+function createTrashSvg() {
+  var ns = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('width', '14'); svg.setAttribute('height', '14');
+  svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+  ['M3 6h18', 'M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6', 'M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2'].forEach(function(d) {
+    var p = document.createElementNS(ns, 'path'); p.setAttribute('d', d); svg.appendChild(p);
+  });
+  return svg;
+}
+
+// ════════════════ NAVIGATION ONGLETS ════════════════
+function switchExternTab(tabId) {
+  // Toggle visibility
+  ['dashboard', 'toolbox', 'planning'].forEach(function(t) {
+    var el = document.getElementById('tab-' + t);
+    if (el) el.classList.toggle('hidden', t !== tabId);
+  });
+  // Update nav buttons
+  document.querySelectorAll('.extern-nav-tab').forEach(function(b) {
+    var active = b.dataset.tab === tabId;
+    b.classList.toggle('text-indigo-600', active);
+    b.classList.toggle('text-slate-400', !active);
+  });
+  // Lazy load Toolbox iframe
+  if (tabId === 'toolbox' && !toolboxLoaded) {
+    var iframe = document.getElementById('extern-toolbox-iframe');
+    if (iframe) iframe.src = '../staff/toolbox.html?embedded=true';
+    toolboxLoaded = true;
+  }
+  // Lazy load Planning (étape 5)
+  if (tabId === 'planning' && typeof renderGroupesTab === 'function') {
+    renderGroupesTab();
+  }
+}
+
+document.querySelectorAll('.extern-nav-tab').forEach(function(btn) {
+  btn.addEventListener('click', function() { switchExternTab(btn.dataset.tab); });
+});
+
+// ── Navigation sous-onglets Patients (Chambres / Sorties / Attente) ──
+function switchPatientsTab(tab) {
+  ['chambres', 'sorties', 'attente'].forEach(function(t) {
+    var pane = document.getElementById('ext-ptab-' + t);
+    if (pane) pane.classList.toggle('hidden', t !== tab);
+    var btn = document.getElementById('ext-ptab-' + t + '-btn');
+    if (btn) {
+      var active = t === tab;
+      btn.className = 'flex-1 text-xs font-bold py-2.5 text-center ' +
+        (active ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
+    }
+  });
+}
+
+document.getElementById('ext-ptab-chambres-btn').addEventListener('click', function() { switchPatientsTab('chambres'); });
+document.getElementById('ext-ptab-sorties-btn').addEventListener('click', function() { switchPatientsTab('sorties'); });
+document.getElementById('ext-ptab-attente-btn').addEventListener('click', function() { switchPatientsTab('attente'); });
+
+// ════════════════ GLOBALS ════════════════
+var currentProfile = null;
+var loadedPatients = [], loadedAlertes = [], loadedPermissions = [], loadedAttente = [];
+var selectedPatientForDetail = null, patientPrescriptions = [];
+var editingAttenteId = null, admettreAttenteId = null;
+var _sortiesOpen = {};
+var toolboxLoaded = false;
+var planningLoaded = false;
+var patientsDataLoaded = false;
 var _previewTuteur = new URLSearchParams(location.search).get('preview') === 'tuteur';
 
+// ── Garde session ──
 (async function guard() {
   var session = await auth.getStaffSession();
   if (!session) { window.location.href = '../'; return; }
+
+  currentProfile = session;
 
   if (_previewTuteur) {
     // Mode tuteur : soignant (médecin/admin) navigue en mode preview
@@ -295,23 +796,16 @@ var _previewTuteur = new URLSearchParams(location.search).get('preview') === 'tu
       window.location.href = '../'; return;
     }
     document.getElementById('hdr-nom').textContent = 'QCM EDN — Vue tuteur';
-    document.getElementById('hdr-tuteur').textContent = session.nom || '';
-    // Masquer les sections non pertinentes (chambres, signalements, export)
-    var toHide = ['btn-logout'];
-    // Ajouter un bandeau tuteur
-    var banner = document.createElement('div');
-    banner.style.cssText = 'background:#FEF3C7;color:#92400E;text-align:center;padding:8px 16px;font-size:0.75rem;font-weight:700;border-bottom:1px solid #FDE68A';
-    banner.textContent = '🩺 Mode tuteur — ';
-    var lnk = document.createElement('a');
-    lnk.href = '../admin/';
-    lnk.style.cssText = 'text-decoration:underline;font-weight:800';
-    lnk.textContent = '← Retour au dashboard';
-    banner.appendChild(lnk);
-    document.querySelector('header').after(banner);
-    // Masquer les sections non pertinentes pour le tuteur
-    ['section-entrees-sorties', 'section-small-cards', 'section-checklist', 'section-questions'].forEach(function(sid) {
+    document.getElementById('tuteur-banner').classList.remove('hidden');
+    // Masquer les sections non pertinentes pour le tuteur (Patients, signalements, export, checklist, questions)
+    ['section-patients-card', 'section-small-cards', 'section-checklist', 'section-questions'].forEach(function(sid) {
       var s = document.getElementById(sid);
       if (s) s.style.display = 'none';
+    });
+    // Mode tuteur : masquer onglets Toolbox et Planning (focus QCM uniquement)
+    var navTabs = document.querySelectorAll('.extern-nav-tab');
+    navTabs.forEach(function(b) {
+      if (b.dataset.tab !== 'dashboard') b.style.display = 'none';
     });
   } else {
     // Mode normal : seul role='externe' autorisé
@@ -394,200 +888,972 @@ async function loadInProgress() {
   }
 }
 
-// ════════════════ ENTRÉES / SORTIES ════════════════
-var _exPatients = [];
-var _exAttente = [];
-var _exEditingAttenteId = null;
-var _exAdmettreItem = null;
+// ════════════════ DONNÉES PATIENTS / SORTIES / ATTENTE ════════════════
 
-function switchExESTab(tab) {
-  var isSorties = tab === 'sorties';
-  document.getElementById('ex-tab-sorties').classList.toggle('hidden', !isSorties);
-  document.getElementById('ex-tab-attente').classList.toggle('hidden', isSorties);
-  document.getElementById('ex-tab-sorties-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
-  document.getElementById('ex-tab-attente-btn').className = 'flex-1 text-xs font-bold py-2.5 text-center ' + (!isSorties ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-slate-400 border-b-2 border-transparent');
+var CHECKLIST_ITEMS = [
+  { key: 'ordonnance', label: 'Ordonnance de sortie' },
+  { key: 'transport',  label: 'Bon de transport' },
+  { key: 'bulletin',   label: 'Bulletin de situation' },
+  { key: 'crh',        label: 'CRH' }
+];
+
+function sortieDestLabel(info) {
+  if (!info || !info.destination) return { text: 'Destination ?', cls: 'text-amber-600 bg-amber-50 border border-amber-200' };
+  if (info.destination === 'rad') return { text: 'RAD', cls: 'text-slate-700 bg-slate-100' };
+  if (info.destination === 'postcure') {
+    var centre = info.postcure_centre && window.POSTCURE_STRUCTS && window.POSTCURE_STRUCTS[info.postcure_centre];
+    return { text: centre ? 'PC : ' + centre.nom : 'Post-cure ?', cls: 'text-indigo-700 bg-indigo-100' };
+  }
+  if (info.destination === 'autre') {
+    return { text: info.autre_precision ? 'Autre : ' + info.autre_precision : 'Autre ?', cls: 'text-purple-700 bg-purple-100' };
+  }
+  return { text: '—', cls: 'text-slate-500 bg-slate-100' };
 }
 
-async function loadExEntreesSorties() {
-  try {
-    _exPatients = await db.getPatients() || [];
-  } catch(e) { _exPatients = []; }
-  renderExSorties();
-  try {
-    _exAttente = await db.getListeAttente() || [];
-  } catch(e) { _exAttente = []; }
-  renderExAttente();
+function checklistAllDone(info) {
+  if (!info || !info.checklist) return false;
+  return CHECKLIST_ITEMS.every(function(it) {
+    var v = info.checklist[it.key];
+    return v === true || v === 'na';
+  });
 }
 
-function renderExSorties() {
-  var list = document.getElementById('ex-sorties-list');
+function cycleChecklistState(v) {
+  if (v === true) return 'na';
+  if (v === 'na') return false;
+  return true;
+}
+
+async function loadExternData() {
+  try {
+    var results = await Promise.all([
+      db.getPatients(),
+      db.getAlertesNonTraitees(),
+      db.getAllPermissionsEnAttente()
+    ]);
+    loadedPatients = results[0] || [];
+    loadedAlertes = results[1] || [];
+    loadedPermissions = results[2] || [];
+    renderExternPatients();
+    renderSorties();
+    loadListeAttente();
+  } catch (err) {
+    console.warn('Données externe indisponibles :', err.message);
+  }
+}
+
+// ── Rendu patients (cliquables → détail) ──
+function renderExternPatients() {
+  var list = document.getElementById('patients-list');
   if (!list) return;
-  clear(list);
-  var sorties = _exPatients.filter(function(p) { return p.date_sortie_prevue; })
+  list.classList.remove('hidden');
+  list.textContent = '';
+  var detail = document.getElementById('section-patient-detail');
+  if (detail) detail.classList.add('hidden');
+
+  if (loadedPatients.length === 0) {
+    var empty = createEl('div', 'bg-white rounded-xl border border-slate-200 p-6 text-center');
+    empty.appendChild(createEl('p', 'text-sm text-slate-500', 'Aucun patient hospitalisé'));
+    list.appendChild(empty);
+    return;
+  }
+  loadedPatients.forEach(function(p) {
+    var patientAlertes = loadedAlertes.filter(function(a) { return a.patient_id === p.id; });
+    var hasCraving = patientAlertes.length > 0;
+
+    var card = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md hover:border-indigo-300 transition-all active:scale-[0.98]');
+
+    var avatar = createEl('div', 'w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0');
+    avatar.appendChild(createEl('span', 'text-sm font-bold text-indigo-600', p.numero_chambre));
+    card.appendChild(avatar);
+
+    var info = createEl('div', 'flex-1 min-w-0');
+    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', 'Chambre ' + p.numero_chambre));
+    var details = [];
+    if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
+    if (details.length) info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5 truncate', details.join(' \u00b7 ')));
+    card.appendChild(info);
+
+    var icons = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
+    if (hasCraving) {
+      var cravingIcon = createEl('div', 'w-7 h-7 bg-red-100 rounded-full flex items-center justify-center');
+      cravingIcon.title = patientAlertes.length + ' craving(s)';
+      cravingIcon.appendChild(createEl('span', 'text-red-500 text-xs font-bold', patientAlertes.length));
+      icons.appendChild(cravingIcon);
+    }
+    var patientPerms = loadedPermissions.filter(function(pm) { return pm.patient_id === p.id; });
+    if (patientPerms.length > 0) {
+      var permIcon = createEl('div', 'w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center');
+      permIcon.title = patientPerms.length + ' permission(s) en attente';
+      permIcon.appendChild(createEl('span', 'text-cyan-600 text-xs font-bold', patientPerms.length));
+      icons.appendChild(permIcon);
+    }
+    icons.appendChild(createEl('span', 'text-slate-300 text-lg', '\u203a'));
+    card.appendChild(icons);
+
+    (function(patient) {
+      card.addEventListener('click', function() {
+        if (typeof showPatientDetail === 'function') showPatientDetail(patient);
+      });
+    })(p);
+    list.appendChild(card);
+  });
+}
+
+// ── Sorties prévues ──
+function renderSorties() {
+  var list = document.getElementById('sorties-list');
+  if (!list) return;
+  list.textContent = '';
+  var sorties = loadedPatients.filter(function(p) { return p.date_sortie_prevue; })
     .sort(function(a, b) { return new Date(a.date_sortie_prevue) - new Date(b.date_sortie_prevue); });
-  if (!sorties.length) {
-    list.appendChild(el('p', { class: 'text-xs text-slate-400 text-center py-3', text: 'Aucune sortie prévue.' }));
+  if (sorties.length === 0) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-3', 'Aucune sortie prévue'));
     return;
   }
-  var destLabels = { rad: 'RAD', postcure: 'Post-cure', autre: 'Autre' };
   sorties.forEach(function(p) {
-    var today = new Date(); today.setHours(0,0,0,0);
-    var sd = new Date(p.date_sortie_prevue); sd.setHours(0,0,0,0);
-    var isPast = sd <= today;
-    var dateStr = new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
     var info = p.sortie_info || {};
-    var dest = info.destination ? (destLabels[info.destination] || info.destination) : null;
-    var subst = p.substance_principale || null;
-    var row = el('div', { class: 'flex items-center gap-2 bg-slate-50 rounded-lg p-2.5' });
-    var left = el('div', { class: 'flex items-center gap-2 flex-1 min-w-0' });
-    left.appendChild(el('span', { class: 'text-xs font-bold px-2 py-1 rounded bg-indigo-100 text-indigo-700 flex-shrink-0', text: 'Ch.' + p.numero_chambre }));
-    left.appendChild(el('span', { class: 'text-xs text-slate-700 truncate', text: p.prenom || '—' }));
-    if (subst) left.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 flex-shrink-0 hidden sm:inline', text: subst }));
-    if (dest) left.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 flex-shrink-0', text: dest }));
-    row.appendChild(left);
-    row.appendChild(el('span', { class: 'text-xs font-semibold flex-shrink-0 ' + (isPast ? 'text-red-500' : 'text-emerald-600'), text: dateStr }));
-    list.appendChild(row);
+    var allDone = checklistAllDone(info);
+    var isOpen = !!_sortiesOpen[p.id];
+
+    var wrap = createEl('div', 'rounded-lg overflow-hidden ' + (allDone ? 'bg-emerald-50 border border-emerald-300' : 'bg-slate-50'));
+
+    var header = createEl('div', 'flex items-center justify-between gap-2 p-2.5 cursor-pointer hover:bg-slate-100 transition-colors');
+    var left = createEl('div', 'flex items-center gap-2 min-w-0 flex-1');
+    var chambreCls = allDone ? 'bg-emerald-500 text-white' : 'bg-indigo-100 text-indigo-700';
+    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-1 rounded flex-shrink-0 ' + chambreCls, 'Chambre ' + p.numero_chambre));
+    var destInfo = sortieDestLabel(info);
+    left.appendChild(createEl('span', 'text-[10px] font-semibold px-1.5 py-0.5 rounded truncate ' + destInfo.cls, destInfo.text));
+    header.appendChild(left);
+
+    var right = createEl('div', 'flex items-center gap-1.5 flex-shrink-0');
+    var dateStr = new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+    var today = new Date(); today.setHours(0,0,0,0);
+    var sortieDate = new Date(p.date_sortie_prevue); sortieDate.setHours(0,0,0,0);
+    var isPast = sortieDate <= today;
+    right.appendChild(createEl('span', 'text-xs font-semibold ' + (isPast ? 'text-red-500' : 'text-emerald-600'), dateStr));
+    var chevron = createEl('span', 'text-slate-400 text-xs transition-transform', isOpen ? '▾' : '▸');
+    right.appendChild(chevron);
+    header.appendChild(right);
+
+    header.addEventListener('click', function() {
+      _sortiesOpen[p.id] = !_sortiesOpen[p.id];
+      renderSorties();
+    });
+    wrap.appendChild(header);
+
+    if (isOpen) {
+      var body = createEl('div', 'px-2.5 pb-2.5 pt-1 border-t border-slate-200 bg-white');
+
+      var editBtn = createEl('button', 'w-full text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 py-1 mb-1.5 underline', 'Modifier date / destination');
+      editBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        selectedPatientForDetail = p;
+        if (typeof openSortieModal === 'function') openSortieModal(p);
+      });
+      body.appendChild(editBtn);
+
+      body.appendChild(createEl('p', 'text-[10px] text-slate-400 mb-1', 'Cliquer pour cycler : à faire → ✓ fait → N/A'));
+      var checklist = info.checklist || {};
+      CHECKLIST_ITEMS.forEach(function(item) {
+        var state = checklist[item.key];
+        var stateLabel, stateCls, labelCls;
+        if (state === true)      { stateLabel = '✓ Fait'; stateCls = 'bg-emerald-500 text-white border-emerald-500'; labelCls = 'text-slate-400 line-through'; }
+        else if (state === 'na') { stateLabel = 'N/A';    stateCls = 'bg-slate-300 text-slate-700 border-slate-300'; labelCls = 'text-slate-400 italic'; }
+        else                     { stateLabel = 'À faire'; stateCls = 'bg-white text-slate-500 border-slate-300'; labelCls = 'text-slate-700'; }
+
+        var row = createEl('div', 'flex items-center justify-between gap-2 py-1.5');
+        row.appendChild(createEl('span', 'text-xs flex-1 ' + labelCls, item.label));
+        var btn = createEl('button', 'text-[10px] font-bold px-2 py-1 rounded-md border transition-colors flex-shrink-0 ' + stateCls, stateLabel);
+        btn.addEventListener('click', async function(e) {
+          e.stopPropagation();
+          var newState = cycleChecklistState(state);
+          var newChecklist = Object.assign({}, checklist);
+          newChecklist[item.key] = newState;
+          var newInfo = Object.assign({}, info, { checklist: newChecklist });
+          btn.disabled = true;
+          try {
+            await db.updatePatientSortieInfo(p.id, newInfo);
+            p.sortie_info = newInfo;
+            renderSorties();
+          } catch(err) { console.warn(err); btn.disabled = false; }
+        });
+        row.appendChild(btn);
+        body.appendChild(row);
+      });
+
+      if (allDone) {
+        body.appendChild(createEl('p', 'text-[11px] font-bold text-emerald-600 text-center mt-1', '✓ Dossier de sortie complet'));
+      }
+      wrap.appendChild(body);
+    }
+
+    list.appendChild(wrap);
   });
 }
 
-function renderExAttente() {
-  var list = document.getElementById('ex-attente-list');
+// ── Liste d'attente ──
+async function loadListeAttente() {
+  try {
+    loadedAttente = await db.getListeAttente();
+    renderAttente();
+  } catch (err) {
+    console.warn('Liste attente indisponible :', err.message);
+  }
+}
+
+function renderAttente() {
+  var list = document.getElementById('attente-list');
   if (!list) return;
-  clear(list);
-  if (!_exAttente.length) {
-    list.appendChild(el('p', { class: 'text-xs text-slate-400 text-center py-3', text: 'Aucun patient en attente.' }));
+  list.textContent = '';
+  if (loadedAttente.length === 0) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-3', 'Aucun patient en attente'));
     return;
   }
-  _exAttente.forEach(function(p) {
-    var dateStr = p.date_entree_prevue ? new Date(p.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : '—';
-    var row = el('div', { class: 'flex items-center justify-between gap-2 bg-slate-50 rounded-lg p-2.5 mb-1' });
-    var left = el('div', { class: 'flex-1 min-w-0' });
-    var top = el('div', { class: 'flex items-center gap-1.5 flex-wrap' });
-    top.appendChild(el('span', { class: 'text-xs font-bold text-slate-700', text: p.age ? p.age + ' ans' : '—' }));
-    top.appendChild(el('span', { class: 'text-[10px] px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700', text: p.addressage || '—' }));
-    top.appendChild(el('span', { class: 'text-[10px] text-slate-400', text: dateStr }));
-    left.appendChild(top);
-    if (p.commentaire) left.appendChild(el('p', { class: 'text-[10px] text-slate-500 truncate mt-0.5', text: p.commentaire }));
-    row.appendChild(left);
-    var actions = el('div', { class: 'flex items-center gap-1 flex-shrink-0' });
-    var btnAdm = el('button', { class: 'text-[10px] font-bold px-2 py-1 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700', text: 'Adm.' });
-    (function(pat) {
-      btnAdm.addEventListener('click', function() {
-        _exAdmettreItem = pat;
-        document.getElementById('ex-adm-chambre').value = '';
-        document.getElementById('ex-adm-ddn').value = '';
-        document.getElementById('ex-adm-error').classList.add('hidden');
-        document.getElementById('ex-form-attente').classList.add('hidden');
-        document.getElementById('ex-form-admettre').classList.remove('hidden');
-        document.getElementById('ex-btn-add-attente').classList.add('hidden');
-      });
-    })(p);
-    actions.appendChild(btnAdm);
-    var btnEd = el('button', { class: 'text-[10px] font-bold px-1.5 py-1 bg-white border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-100', text: '✏️' });
-    (function(pat) {
-      btnEd.addEventListener('click', function() {
-        _exEditingAttenteId = pat.id;
-        document.getElementById('ex-form-attente-title').textContent = 'Modifier';
-        document.getElementById('ex-att-age').value = pat.age || '';
-        document.getElementById('ex-att-date').value = pat.date_entree_prevue || '';
-        document.getElementById('ex-att-commentaire').value = pat.commentaire || '';
-        var sel = document.getElementById('ex-att-addressage');
-        for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === pat.addressage) { sel.selectedIndex = i; break; } }
-        document.getElementById('ex-form-admettre').classList.add('hidden');
-        document.getElementById('ex-form-attente').classList.remove('hidden');
-        document.getElementById('ex-btn-add-attente').classList.add('hidden');
-      });
-    })(p);
-    actions.appendChild(btnEd);
-    var btnDel = el('button', { class: 'text-[10px] font-bold px-1.5 py-1 bg-white border border-red-200 rounded-lg text-red-400 hover:bg-red-50', text: '✕' });
-    (function(id) {
-      btnDel.addEventListener('click', async function() {
-        if (!confirm('Retirer ce patient de la liste d\'attente ?')) return;
-        try { await db.deleteListeAttente(id); await loadExEntreesSorties(); } catch(e) { alert('Erreur : ' + e.message); }
-      });
-    })(p.id);
-    actions.appendChild(btnDel);
-    row.appendChild(actions);
+  loadedAttente.forEach(function(item) {
+    var row = createEl('div', 'p-2.5 bg-slate-50 rounded-lg');
+    var top = createEl('div', 'flex items-center justify-between gap-1');
+    var topLeft = createEl('div', 'flex items-center gap-1.5 min-w-0');
+    topLeft.appendChild(createEl('span', 'text-xs font-bold text-slate-700 truncate', 'Patient de ' + item.age + ' ans'));
+    top.appendChild(topLeft);
+
+    var topRight = createEl('div', 'flex items-center gap-1 flex-shrink-0');
+    if (item.date_entree_prevue) {
+      topRight.appendChild(createEl('span', 'text-xs font-semibold text-indigo-600 whitespace-nowrap', new Date(item.date_entree_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
+    }
+    var btnEdit = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors');
+    btnEdit.appendChild(createEditSvg());
+    (function(id) { btnEdit.addEventListener('click', function(e) { e.stopPropagation(); editAttente(id); }); })(item.id);
+    topRight.appendChild(btnEdit);
+    var btnDel = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors');
+    btnDel.appendChild(createTrashSvg());
+    (function(id) { btnDel.addEventListener('click', function(e) { e.stopPropagation(); deleteAttente(id); }); })(item.id);
+    topRight.appendChild(btnDel);
+    top.appendChild(topRight);
+    row.appendChild(top);
+
+    var bottom = createEl('div', 'flex items-center justify-between gap-1 mt-1.5');
+    bottom.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded', item.addressage));
+    var btnAdm = createEl('button', 'text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors whitespace-nowrap flex-shrink-0', 'Admettre');
+    (function(id) { btnAdm.addEventListener('click', function(e) { e.stopPropagation(); startAdmettre(id); }); })(item.id);
+    bottom.appendChild(btnAdm);
+    row.appendChild(bottom);
+
+    if (item.commentaire) {
+      row.appendChild(createEl('p', 'text-[11px] text-slate-500 mt-1 truncate', item.commentaire));
+    }
     list.appendChild(row);
   });
 }
 
-// Chargement lazily à l'ouverture de l'accordion
+document.getElementById('btn-add-attente').addEventListener('click', function() {
+  editingAttenteId = null;
+  document.getElementById('form-attente-title').textContent = 'Nouveau patient';
+  document.getElementById('att-age').value = '';
+  document.getElementById('att-date').value = '';
+  document.getElementById('att-addressage').value = 'Médecin Traitant';
+  document.getElementById('att-commentaire').value = '';
+  document.getElementById('form-attente').classList.remove('hidden');
+});
+
+document.getElementById('btn-cancel-attente').addEventListener('click', function() {
+  document.getElementById('form-attente').classList.add('hidden');
+  editingAttenteId = null;
+});
+
+document.getElementById('btn-save-attente').addEventListener('click', async function() {
+  var age = parseInt(document.getElementById('att-age').value);
+  var date = document.getElementById('att-date').value;
+  var addressage = document.getElementById('att-addressage').value;
+  var commentaire = document.getElementById('att-commentaire').value.trim();
+  if (!age || age < 1) return;
+  try {
+    if (editingAttenteId) {
+      await db.updateListeAttente(editingAttenteId, { age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+    } else {
+      await db.addListeAttente({ age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+    }
+    document.getElementById('form-attente').classList.add('hidden');
+    editingAttenteId = null;
+    await loadListeAttente();
+  } catch (err) {
+    console.error('Erreur liste attente :', err);
+  }
+});
+
+function editAttente(id) {
+  var item = loadedAttente.find(function(a) { return a.id === id; });
+  if (!item) return;
+  editingAttenteId = id;
+  document.getElementById('form-attente-title').textContent = 'Modifier le patient';
+  document.getElementById('att-age').value = item.age;
+  document.getElementById('att-date').value = item.date_entree_prevue || '';
+  document.getElementById('att-addressage').value = item.addressage;
+  document.getElementById('att-commentaire').value = item.commentaire || '';
+  document.getElementById('form-attente').classList.remove('hidden');
+}
+
+async function deleteAttente(id) {
+  if (!confirm('Retirer ce patient de la liste d\'attente ?')) return;
+  try {
+    await db.deleteListeAttente(id);
+    await loadListeAttente();
+  } catch (err) {
+    console.error('Erreur suppression attente :', err);
+  }
+}
+
+function startAdmettre(id) {
+  admettreAttenteId = id;
+  document.getElementById('adm-chambre').value = '';
+  document.getElementById('adm-ddn').value = '';
+  document.getElementById('adm-error').classList.add('hidden');
+  document.getElementById('form-admettre').classList.remove('hidden');
+  document.getElementById('form-attente').classList.add('hidden');
+}
+
+document.getElementById('btn-cancel-admettre').addEventListener('click', function() {
+  document.getElementById('form-admettre').classList.add('hidden');
+  admettreAttenteId = null;
+});
+
+document.getElementById('btn-save-admettre').addEventListener('click', async function() {
+  var chambre = document.getElementById('adm-chambre').value.trim();
+  var ddn = document.getElementById('adm-ddn').value;
+  var errEl = document.getElementById('adm-error');
+  if (!chambre) { errEl.textContent = 'Chambre requise'; errEl.classList.remove('hidden'); return; }
+  if (!ddn) { errEl.textContent = 'Date de naissance requise'; errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+  try {
+    await db.createPatient({
+      numero_chambre: chambre,
+      date_naissance: ddn,
+      date_admission: new Date().toISOString().split('T')[0],
+      date_sortie_prevue: null
+    });
+    if (admettreAttenteId) {
+      await db.deleteListeAttente(admettreAttenteId);
+    }
+    document.getElementById('form-admettre').classList.add('hidden');
+    admettreAttenteId = null;
+    await loadExternData();
+  } catch (err) {
+    errEl.textContent = err.message || 'Erreur lors de l\'admission';
+    errEl.classList.remove('hidden');
+  }
+});
+
+// Lazy-load à l'ouverture de l'accordion Patients
 (function() {
-  var btn = document.querySelector('[data-target="ex-es-outer"]');
-  var body = document.getElementById('ex-es-outer');
-  var loaded = false;
+  var btn = document.querySelector('[data-target="patients-body-outer"]');
+  var body = document.getElementById('patients-body-outer');
   if (btn && body) {
     btn.addEventListener('click', function() {
-      if (body.classList.contains('hidden') && !loaded) {
-        loaded = true;
-        loadExEntreesSorties();
+      if (body.classList.contains('hidden') && !patientsDataLoaded) {
+        patientsDataLoaded = true;
+        loadExternData();
       }
     }, true);
   }
 })();
 
-document.getElementById('ex-btn-add-attente').addEventListener('click', function() {
-  _exEditingAttenteId = null;
-  document.getElementById('ex-form-attente-title').textContent = 'Nouveau patient';
-  document.getElementById('ex-att-age').value = '';
-  document.getElementById('ex-att-date').value = '';
-  document.getElementById('ex-att-commentaire').value = '';
-  document.getElementById('ex-att-addressage').selectedIndex = 0;
-  document.getElementById('ex-form-admettre').classList.add('hidden');
-  document.getElementById('ex-form-attente').classList.remove('hidden');
-  this.classList.add('hidden');
+// ════════════════ DÉTAIL PATIENT ════════════════
+
+document.getElementById('btn-back-patients').addEventListener('click', function() {
+  document.getElementById('section-patient-detail').classList.add('hidden');
+  renderExternPatients();
 });
 
-document.getElementById('ex-btn-cancel-attente').addEventListener('click', function() {
-  document.getElementById('ex-form-attente').classList.add('hidden');
-  document.getElementById('ex-btn-add-attente').classList.remove('hidden');
-  _exEditingAttenteId = null;
+// Voir comme patient
+document.getElementById('btn-view-as-patient').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id, prenom: p.prenom, chambre: p.numero_chambre,
+    programme_id: p.programme_id, substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, admin_preview: true
+  }));
+  window.open('../patient/', '_blank');
 });
 
-document.getElementById('ex-btn-cancel-admettre').addEventListener('click', function() {
-  document.getElementById('ex-form-admettre').classList.add('hidden');
-  document.getElementById('ex-btn-add-attente').classList.remove('hidden');
-  _exAdmettreItem = null;
+document.getElementById('btn-export-pdf-admin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id, prenom: p.prenom, chambre: p.numero_chambre,
+    programme_id: p.programme_id, substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, admin_preview: true
+  }));
+  window.open('../patient/?action=export-pdf', '_blank');
 });
 
-document.getElementById('ex-btn-save-attente').addEventListener('click', async function() {
-  var age = parseInt(document.getElementById('ex-att-age').value);
-  var date = document.getElementById('ex-att-date').value;
-  var addr = document.getElementById('ex-att-addressage').value;
-  var commentaire = document.getElementById('ex-att-commentaire').value.trim();
-  try {
-    var payload = { age: age || null, addressage: addr, date_entree_prevue: date || null, commentaire: commentaire || null };
-    if (_exEditingAttenteId) {
-      await db.updateListeAttente(_exEditingAttenteId, payload);
-    } else {
-      await db.addListeAttente(payload);
+document.getElementById('btn-export-html-admin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  localStorage.setItem('patient_session', JSON.stringify({
+    id: p.id, prenom: p.prenom, chambre: p.numero_chambre,
+    programme_id: p.programme_id, substance: p.substance_principale,
+    expires: Date.now() + 2 * 60 * 60 * 1000, admin_preview: true
+  }));
+  window.open('../patient/?action=export-html', '_blank');
+});
+
+// ── Accordions détail patient ──
+document.getElementById('acc-craving').addEventListener('click', async function() {
+  var content = document.getElementById('acc-craving-content');
+  var wasHidden = content.classList.contains('hidden');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+  if (wasHidden && selectedPatientForDetail && currentProfile) {
+    var patientAlertes = loadedAlertes.filter(function(a) { return a.patient_id === selectedPatientForDetail.id; });
+    if (patientAlertes.length > 0) {
+      try {
+        await Promise.all(patientAlertes.map(function(a) {
+          return db.updateAlerteStatut(a.id, 'traitee', currentProfile.id);
+        }));
+        loadedAlertes = await db.getAlertesNonTraitees();
+      } catch(e) { console.warn(e); }
     }
-    document.getElementById('ex-form-attente').classList.add('hidden');
-    document.getElementById('ex-btn-add-attente').classList.remove('hidden');
-    _exEditingAttenteId = null;
-    await loadExEntreesSorties();
-  } catch(e) { alert('Erreur : ' + e.message); }
+  }
+});
+document.getElementById('acc-fiches').addEventListener('click', function() {
+  var content = document.getElementById('acc-fiches-content');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+});
+document.getElementById('acc-perms').addEventListener('click', function() {
+  var content = document.getElementById('acc-perms-content');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
 
-document.getElementById('ex-btn-save-admettre').addEventListener('click', async function() {
-  if (!_exAdmettreItem) return;
-  var chambre = document.getElementById('ex-adm-chambre').value.trim();
-  var ddn = document.getElementById('ex-adm-ddn').value;
-  var errEl = document.getElementById('ex-adm-error');
-  if (!chambre || !ddn) { errEl.textContent = 'Chambre et date de naissance requis.'; errEl.classList.remove('hidden'); return; }
-  errEl.classList.add('hidden');
-  this.disabled = true; this.textContent = 'Admission…';
+// ── Statut post-cure ──
+function renderPostcureStatut(patient) {
+  var meta = document.getElementById('postcure-meta');
+  var checks = document.getElementById('postcure-checks');
+  if (!meta || !checks) return;
+  var statut = patient.postcure_statut || {};
+  meta.textContent = '';
+  checks.textContent = '';
+
+  var structs = window.POSTCURE_STRUCTS || {};
+  var structKeys = Object.keys(structs);
+
+  var structRow = createEl('div', '');
+  structRow.appendChild(createEl('label', 'text-[10px] font-semibold text-slate-500 dark:text-slate-400 block mb-1', 'Structure de post-cure'));
+  var sel = document.createElement('select');
+  sel.className = 'w-full px-2.5 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-teal-400';
+  var optEmpty = document.createElement('option');
+  optEmpty.value = ''; optEmpty.textContent = '\u2014 Non d\u00e9finie \u2014';
+  sel.appendChild(optEmpty);
+  structKeys.forEach(function(k) {
+    var opt = document.createElement('option');
+    opt.value = k; opt.textContent = structs[k].nom + ' \u2014 ' + structs[k].ville;
+    if (statut.structure === k) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  var optAutre = document.createElement('option');
+  optAutre.value = '__autre'; optAutre.textContent = 'Autre (texte libre)';
+  if (statut.structure && !structs[statut.structure] && statut.structure !== '') optAutre.selected = true;
+  sel.appendChild(optAutre);
+  sel.addEventListener('change', async function() {
+    if (this.value === '__autre') {
+      var nom = prompt('Nom de la structure :');
+      if (nom && nom.trim()) {
+        await savePostcureMeta(patient, 'structure', nom.trim());
+      } else { renderPostcureStatut(patient); }
+    } else {
+      await savePostcureMeta(patient, 'structure', this.value);
+    }
+  });
+  structRow.appendChild(sel);
+  if (statut.structure && !structs[statut.structure] && statut.structure !== '') {
+    structRow.appendChild(createEl('p', 'text-[10px] text-teal-600 dark:text-teal-400 mt-1 font-semibold', statut.structure));
+  }
+  meta.appendChild(structRow);
+
+  var dateRow = createEl('div', '');
+  dateRow.appendChild(createEl('label', 'text-[10px] font-semibold text-slate-500 dark:text-slate-400 block mb-1', 'Date d\u2019entr\u00e9e pr\u00e9vue'));
+  var dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.value = statut.date_postcure || '';
+  dateInput.className = 'w-full px-2.5 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-xs text-slate-700 dark:text-slate-200 focus:outline-none focus:border-teal-400';
+  dateInput.addEventListener('change', async function() {
+    await savePostcureMeta(patient, 'date_postcure', this.value || null);
+  });
+  meta.appendChild(dateRow);
+  dateRow.appendChild(dateInput);
+
+  var items = [
+    { key: 'patient_usca', label: 'Volet patient envoy\u00e9 \u00e0 l\u2019USCA', icon: '\ud83d\udce8' },
+    { key: 'patient_structure', label: 'Volet patient envoy\u00e9 \u00e0 la structure', icon: '\ud83c\udfe5' },
+    { key: 'medecin_rempli', label: 'Volet m\u00e9dical rempli', icon: '\ud83e\ude7a' },
+    { key: 'medecin_envoye', label: 'Volet m\u00e9dical envoy\u00e9 \u00e0 la structure', icon: '\ud83d\udce4' }
+  ];
+
+  items.forEach(function(item) {
+    var isChecked = !!statut[item.key];
+    var row = createEl('div', 'flex items-center gap-2.5');
+    var cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.checked = isChecked;
+    cb.className = 'w-4 h-4 rounded accent-teal-600 cursor-pointer flex-shrink-0';
+    (function(k) {
+      cb.addEventListener('change', async function() {
+        try {
+          await db.updatePostcureStatut(patient.id, k, this.checked);
+          patient.postcure_statut = patient.postcure_statut || {};
+          if (this.checked) { patient.postcure_statut[k] = new Date().toISOString().split('T')[0]; }
+          else { delete patient.postcure_statut[k]; }
+          renderPostcureStatut(patient);
+        } catch(e) { console.warn(e); this.checked = !this.checked; }
+      });
+    })(item.key);
+    row.appendChild(cb);
+    var lbl = createEl('span', 'text-xs ' + (isChecked ? 'text-teal-700 dark:text-teal-300 font-semibold' : 'text-slate-600 dark:text-slate-400'), item.icon + ' ' + item.label);
+    if (isChecked && statut[item.key]) lbl.appendChild(document.createTextNode(' \u2014 ' + statut[item.key]));
+    row.appendChild(lbl);
+    checks.appendChild(row);
+  });
+
+  var sub = document.getElementById('postcure-subtitle');
+  if (sub) {
+    var parts = [];
+    if (statut.structure) {
+      var sn = structs[statut.structure] ? structs[statut.structure].nom : statut.structure;
+      parts.push(sn);
+    }
+    if (statut.date_postcure) parts.push(new Date(statut.date_postcure).toLocaleDateString('fr-FR'));
+    var nbChecked = items.filter(function(i) { return !!statut[i.key]; }).length;
+    if (nbChecked > 0) parts.push(nbChecked + '/4');
+    sub.textContent = parts.length > 0 ? parts.join(' \u2014 ') : 'Volet m\u00e9dical, statut, structure';
+  }
+}
+
+async function savePostcureMeta(patient, key, value) {
   try {
-    await db.createPatient({ numero_chambre: chambre, date_naissance: ddn, date_admission: new Date().toISOString().split('T')[0], date_sortie_prevue: null });
-    await db.deleteListeAttente(_exAdmettreItem.id);
-    document.getElementById('ex-form-admettre').classList.add('hidden');
-    document.getElementById('ex-btn-add-attente').classList.remove('hidden');
-    _exAdmettreItem = null;
-    await loadExEntreesSorties();
-  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
-  this.disabled = false; this.textContent = 'Admettre';
+    await db.updatePostcureStatut(patient.id, key, value);
+    patient.postcure_statut = patient.postcure_statut || {};
+    if (value) { patient.postcure_statut[key] = value; }
+    else { delete patient.postcure_statut[key]; }
+    renderPostcureStatut(patient);
+  } catch(e) { console.warn(e); }
+}
+
+document.getElementById('btn-action-postcure').addEventListener('click', function() {
+  var zone = document.getElementById('postcure-statut-zone');
+  var chevron = document.getElementById('postcure-chevron');
+  zone.classList.toggle('hidden');
+  chevron.style.transform = zone.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
+
+document.getElementById('btn-open-medecin').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var p = selectedPatientForDetail;
+  var statut = p.postcure_statut || {};
+  var params = new URLSearchParams();
+  params.set('patient_id', p.id);
+  params.set('patient_nom', p.numero_chambre);
+  if (p.date_naissance) params.set('patient_ddn', p.date_naissance);
+  if (statut.structure) params.set('structure', statut.structure);
+  window.open('../postcure/medecin.html?' + params.toString(), '_blank');
+});
+
+// ── Modals patient ──
+document.getElementById('btn-action-event').addEventListener('click', function() {
+  document.getElementById('modal-event').classList.remove('hidden');
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('evt-date').value = today;
+});
+document.getElementById('evt-cancel').addEventListener('click', function() { document.getElementById('modal-event').classList.add('hidden'); });
+document.getElementById('btn-action-perm').addEventListener('click', function() {
+  document.getElementById('modal-perm').classList.remove('hidden');
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('perm-date-debut').value = today;
+  document.getElementById('perm-date-retour').value = today;
+});
+document.getElementById('perm-cancel').addEventListener('click', function() { document.getElementById('modal-perm').classList.add('hidden'); });
+document.getElementById('btn-action-contenu').addEventListener('click', function() { document.getElementById('modal-contenu').classList.remove('hidden'); });
+document.getElementById('contenu-cancel').addEventListener('click', function() { document.getElementById('modal-contenu').classList.add('hidden'); });
+document.getElementById('btn-action-sortie').addEventListener('click', function() { openSortieModal(selectedPatientForDetail); });
+document.getElementById('sortie-cancel').addEventListener('click', function() { document.getElementById('modal-sortie').classList.add('hidden'); });
+
+// Remplissage du select post-cure (une fois)
+(function() {
+  var sel = document.getElementById('sortie-postcure-centre');
+  if (sel && window.POSTCURE_STRUCTS) {
+    sel.textContent = '';
+    sel.appendChild(new Option('— Choisir —', ''));
+    Object.keys(window.POSTCURE_STRUCTS).forEach(function(k) {
+      var c = window.POSTCURE_STRUCTS[k];
+      sel.appendChild(new Option(c.nom + ' — ' + c.ville, k));
+    });
+  }
+})();
+
+// Toggle sous-champs selon destination
+document.querySelectorAll('input[name="sortie-dest"]').forEach(function(r) {
+  r.addEventListener('change', function() {
+    document.getElementById('sortie-postcure-wrap').classList.toggle('hidden', this.value !== 'postcure');
+    document.getElementById('sortie-autre-wrap').classList.toggle('hidden', this.value !== 'autre');
+  });
+});
+
+function openSortieModal(patient) {
+  if (!patient) return;
+  document.getElementById('modal-sortie').classList.remove('hidden');
+  document.getElementById('sortie-date').value = patient.date_sortie_prevue || '';
+  var info = patient.sortie_info || {};
+  var dest = info.destination || '';
+  document.querySelectorAll('input[name="sortie-dest"]').forEach(function(r) { r.checked = (r.value === dest); });
+  document.getElementById('sortie-postcure-centre').value = info.postcure_centre || '';
+  document.getElementById('sortie-autre-precision').value = info.autre_precision || '';
+  document.getElementById('sortie-postcure-wrap').classList.toggle('hidden', dest !== 'postcure');
+  document.getElementById('sortie-autre-wrap').classList.toggle('hidden', dest !== 'autre');
+}
+
+// Save événement
+document.getElementById('evt-save').addEventListener('click', async function() {
+  var date = document.getElementById('evt-date').value;
+  var heure = document.getElementById('evt-heure').value;
+  var errEl = document.getElementById('evt-error');
+  if (!date || !heure) { errEl.textContent = 'Date et heure obligatoires'; errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+  this.disabled = true; this.textContent = 'Enregistrement...';
+  var type = document.getElementById('evt-type').value;
+  var typeLabels = { entretien:'Entretien', consultation:'Consultation', familial:'Entretien familial', rdv_externe:'RDV externe', autre:'Événement' };
+  var titre = document.getElementById('evt-titre').value.trim() || typeLabels[type] || 'Événement';
+  try {
+    await db.createEvenement({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, titre: titre, description: document.getElementById('evt-desc').value.trim() || null, date_heure: date + 'T' + heure + ':00', lieu: document.getElementById('evt-lieu').value.trim() || null, type: type });
+    document.getElementById('modal-event').classList.add('hidden');
+    document.getElementById('evt-titre').value = ''; document.getElementById('evt-desc').value = ''; document.getElementById('evt-lieu').value = '';
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+  this.disabled = false; this.textContent = 'Planifier';
+});
+
+// Save permission
+document.getElementById('perm-save').addEventListener('click', async function() {
+  var dateDebut = document.getElementById('perm-date-debut').value;
+  var heureDebut = document.getElementById('perm-heure-debut').value || '09:00';
+  var dateRetour = document.getElementById('perm-date-retour').value;
+  var heureRetour = document.getElementById('perm-heure-retour').value || '20:00';
+  var errEl = document.getElementById('perm-error');
+  errEl.classList.add('hidden');
+  if (!dateDebut || !dateRetour) { errEl.textContent = 'Dates obligatoires'; errEl.classList.remove('hidden'); return; }
+  var debut = new Date(dateDebut + 'T' + heureDebut);
+  var retour = new Date(dateRetour + 'T' + heureRetour);
+  var diffH = (retour - debut) / (1000 * 60 * 60);
+  if (diffH > 48) { errEl.textContent = 'La permission ne peut pas dépasser 48h'; errEl.classList.remove('hidden'); return; }
+  if (diffH <= 0) { errEl.textContent = 'La date de retour doit être après le départ'; errEl.classList.remove('hidden'); return; }
+  var retourHeure = parseInt(heureRetour.split(':')[0]);
+  if (retourHeure > 20) { errEl.textContent = 'Heure de retour maximale : 20h00'; errEl.classList.remove('hidden'); return; }
+  var jourDebut = debut.getDay();
+  if (jourDebut >= 1 && jourDebut <= 5) {
+    if (dateRetour !== dateDebut) { errEl.textContent = 'En semaine, le retour doit être le même jour'; errEl.classList.remove('hidden'); return; }
+  }
+  this.disabled = true; this.textContent = 'Enregistrement...';
+  try {
+    await db.createPermission({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, date_debut: debut.toISOString(), date_retour: retour.toISOString(), motif: document.getElementById('perm-motif').value.trim() || null, statut: 'validee' });
+    document.getElementById('modal-perm').classList.add('hidden');
+    document.getElementById('perm-motif').value = '';
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+  this.disabled = false; this.textContent = 'Annoncer';
+});
+
+// Save contenu
+document.getElementById('contenu-save').addEventListener('click', async function() {
+  var titre = document.getElementById('contenu-titre').value.trim();
+  var texte = document.getElementById('contenu-texte').value.trim();
+  var errEl = document.getElementById('contenu-error');
+  if (!titre || !texte) { errEl.textContent = 'Titre et contenu obligatoires'; errEl.classList.remove('hidden'); return; }
+  errEl.classList.add('hidden');
+  this.disabled = true; this.textContent = 'Envoi...';
+  try {
+    await db.createContenu({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, titre: titre, contenu: texte, type: document.getElementById('contenu-type').value });
+    document.getElementById('modal-contenu').classList.add('hidden');
+    document.getElementById('contenu-titre').value = ''; document.getElementById('contenu-texte').value = '';
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+  this.disabled = false; this.textContent = 'Partager';
+});
+
+// Save date de sortie
+document.getElementById('sortie-save').addEventListener('click', async function() {
+  var date = document.getElementById('sortie-date').value;
+  if (!date) return;
+  var destRadio = document.querySelector('input[name="sortie-dest"]:checked');
+  var destination = destRadio ? destRadio.value : null;
+  var existing = selectedPatientForDetail.sortie_info || {};
+  var info = {
+    destination: destination,
+    postcure_centre: destination === 'postcure' ? (document.getElementById('sortie-postcure-centre').value || null) : null,
+    autre_precision: destination === 'autre' ? (document.getElementById('sortie-autre-precision').value.trim() || null) : null,
+    checklist: existing.checklist || { ordonnance: false, transport: false, bulletin: false, crh: false }
+  };
+  this.disabled = true;
+  try {
+    await db.updatePatientSortie(selectedPatientForDetail.id, date, info);
+    selectedPatientForDetail.date_sortie_prevue = date;
+    selectedPatientForDetail.sortie_info = info;
+    document.getElementById('sortie-current').textContent = 'Sortie : ' + new Date(date).toLocaleDateString('fr-FR');
+    document.getElementById('modal-sortie').classList.add('hidden');
+    var exportsDiv = document.getElementById('sortie-exports');
+    if (exportsDiv) exportsDiv.classList.remove('hidden');
+    renderSorties();
+  } catch(e) { console.warn(e); }
+  this.disabled = false;
+});
+
+// ── Show Patient Detail ──
+async function showPatientDetail(patient) {
+  selectedPatientForDetail = patient;
+  document.getElementById('patients-list').classList.add('hidden');
+  document.getElementById('section-patient-detail').classList.remove('hidden');
+
+  document.getElementById('acc-craving-content').classList.add('hidden');
+  document.getElementById('acc-fiches-content').classList.add('hidden');
+  document.getElementById('acc-perms-content').classList.add('hidden');
+  document.getElementById('postcure-statut-zone').classList.add('hidden');
+  document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
+
+  document.getElementById('detail-patient-title').textContent = 'Chambre ' + patient.numero_chambre;
+
+  var infoDiv = document.getElementById('detail-patient-info');
+  infoDiv.textContent = '';
+  var infos = [['Admission', patient.date_admission ? new Date(patient.date_admission).toLocaleDateString('fr-FR') : '\u2014']];
+  if (patient.date_sortie_prevue) infos.push(['Sortie', new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR')]);
+  infos.forEach(function(item) {
+    var row = createEl('div', 'flex justify-between py-1.5');
+    row.appendChild(createEl('span', 'text-xs text-slate-500', item[0]));
+    row.appendChild(createEl('span', 'text-xs font-semibold text-slate-800', item[1]));
+    infoDiv.appendChild(row);
+  });
+
+  document.getElementById('sortie-current').textContent = patient.date_sortie_prevue ? 'Sortie : ' + new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR') : 'Non d\u00e9finie';
+
+  var exportsDiv = document.getElementById('sortie-exports');
+  if (exportsDiv) exportsDiv.classList.toggle('hidden', !patient.date_sortie_prevue);
+
+  renderPostcureStatut(patient);
+
+  // Log craving
+  var cravingLog = document.getElementById('detail-craving-log');
+  cravingLog.textContent = '';
+  var cravingIcon = document.getElementById('craving-icon');
+  var cravingBadge = document.getElementById('craving-count-badge');
+  try {
+    var cravings = await db.getCravingHistory(patient.id);
+    if (cravings.length > 0) {
+      cravingIcon.className = 'w-7 h-7 bg-red-100 rounded-full flex items-center justify-center';
+      cravingIcon.querySelector('svg').setAttribute('stroke', '#ef4444');
+      cravingBadge.textContent = cravings.length;
+      cravingBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-red-100 text-red-600';
+      cravings.slice(-10).reverse().forEach(function(c) {
+        var d = new Date(c.horodatage);
+        var row = createEl('div', 'flex items-center gap-2 py-2 border-b border-slate-100');
+        row.appendChild(createEl('span', 'text-[11px] text-slate-500 w-20 flex-shrink-0', d.toLocaleDateString('fr-FR', {day:'2-digit',month:'2-digit'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})));
+        var barBg = createEl('div', 'flex-1 h-2 bg-slate-100 rounded-full overflow-hidden');
+        var barFill = createEl('div', 'h-full rounded-full');
+        var intensity = c.intensite || 0;
+        barFill.style.width = (intensity * 10) + '%';
+        barFill.style.background = intensity <= 3 ? '#fbbf24' : intensity <= 6 ? '#f97316' : '#ef4444';
+        barBg.appendChild(barFill);
+        row.appendChild(barBg);
+        row.appendChild(createEl('span', 'text-xs font-bold text-slate-700 w-8 text-right', intensity + '/10'));
+        cravingLog.appendChild(row);
+        if (c.declencheur) cravingLog.appendChild(createEl('p', 'text-[10px] text-slate-400 pl-22 mb-1', c.declencheur));
+      });
+    } else {
+      cravingIcon.className = 'w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center';
+      cravingBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden';
+      cravingLog.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun craving signal\u00e9'));
+    }
+  } catch(e) {
+    cravingLog.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun craving signal\u00e9'));
+  }
+
+  // Prescriptions
+  try {
+    patientPrescriptions = await db.getPrescriptions(patient.id);
+  } catch(e) { patientPrescriptions = []; }
+  renderFichesChecklist(patient.id);
+
+  renderPatientPerms(patient.id);
+}
+
+function renderFichesChecklist(patientId) {
+  var container = document.getElementById('fiches-checklist');
+  if (!container) return;
+  container.textContent = '';
+  if (typeof FICHES_CATALOGUE === 'undefined') {
+    container.appendChild(createEl('p', 'text-xs text-slate-400', 'Catalogue indisponible'));
+    return;
+  }
+  var prescribedSlugs = patientPrescriptions.map(function(p) { return p.fiche_slug; });
+
+  var categories = {};
+  FICHES_CATALOGUE.forEach(function(f) {
+    if (!categories[f.categorie]) categories[f.categorie] = [];
+    categories[f.categorie].push(f);
+  });
+
+  Object.keys(categories).forEach(function(cat) {
+    container.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase mt-3 mb-1', cat));
+    categories[cat].forEach(function(fiche) {
+      var isChecked = prescribedSlugs.indexOf(fiche.slug) !== -1;
+      var row = createEl('label', 'flex items-center gap-3 bg-white rounded-lg border border-slate-200 px-3 py-2.5 cursor-pointer hover:bg-slate-50 transition-colors');
+      var checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = isChecked;
+      checkbox.className = 'w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 flex-shrink-0';
+      (function(slug, cb) {
+        cb.addEventListener('change', async function() {
+          cb.disabled = true;
+          try {
+            if (cb.checked) {
+              await db.addPrescription(patientId, slug, currentProfile ? currentProfile.id : null);
+            } else {
+              await db.removePrescription(patientId, slug);
+            }
+            patientPrescriptions = await db.getPrescriptions(patientId);
+          } catch(e) {
+            console.warn('Erreur prescription :', e);
+            cb.checked = !cb.checked;
+          }
+          cb.disabled = false;
+        });
+      })(fiche.slug, checkbox);
+      row.appendChild(checkbox);
+      row.appendChild(createEl('span', 'text-sm text-slate-800', fiche.nom));
+      container.appendChild(row);
+    });
+  });
+}
+
+// Suppression séjour
+document.getElementById('btn-delete-patient').addEventListener('click', function() {
+  document.getElementById('modal-delete').classList.remove('hidden');
+});
+document.getElementById('btn-cancel-delete').addEventListener('click', function() {
+  document.getElementById('modal-delete').classList.add('hidden');
+});
+
+document.getElementById('btn-export-then-delete').addEventListener('click', async function() {
+  if (!selectedPatientForDetail) return;
+  this.disabled = true; this.textContent = 'Export...';
+  try {
+    var pid = selectedPatientForDetail.id;
+    var data = {
+      patient: selectedPatientForDetail,
+      cravings: await db.getCravingHistory(pid),
+      strategies: await db.getStrategies(pid),
+      prescriptions: await db.getPrescriptions(pid),
+      permissions: await db.getPermissions(pid),
+      evenements: await db.getEvenements(pid),
+      contenus: await db.getContenus(pid),
+      exportDate: new Date().toISOString()
+    };
+    var json = JSON.stringify(data, null, 2);
+    var blob = new Blob([json], {type:'application/json;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'sejour-ch' + selectedPatientForDetail.numero_chambre + '-' + new Date().toISOString().split('T')[0] + '.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    await deletePatientData(pid);
+  } catch(e) { console.warn('Erreur :', e); }
+  this.disabled = false; this.textContent = 'Sauvegarder les donn\u00e9es puis supprimer';
+});
+
+document.getElementById('btn-confirm-delete').addEventListener('click', async function() {
+  if (!selectedPatientForDetail) return;
+  this.disabled = true; this.textContent = 'Suppression...';
+  try {
+    await deletePatientData(selectedPatientForDetail.id);
+  } catch(e) { console.warn('Erreur :', e); }
+  this.disabled = false; this.textContent = 'Confirmer la suppression';
+});
+
+async function deletePatientData(patientId) {
+  var { error } = await sb.from('patients').delete().eq('id', patientId);
+  if (error) throw error;
+  document.getElementById('modal-delete').classList.add('hidden');
+  document.getElementById('section-patient-detail').classList.add('hidden');
+  await loadExternData();
+}
+
+async function renderPatientPerms(patientId) {
+  var list = document.getElementById('detail-perms-list');
+  var permIcon = document.getElementById('perm-icon');
+  var permBadge = document.getElementById('perm-count-badge');
+  list.textContent = '';
+
+  try {
+    var perms = await db.getPermissions(patientId);
+    var enAttente = perms.filter(function(p) { return p.statut === 'en_attente'; });
+
+    if (enAttente.length > 0) {
+      permIcon.className = 'w-7 h-7 bg-cyan-100 rounded-full flex items-center justify-center';
+      permIcon.querySelector('svg').setAttribute('stroke', '#0891b2');
+      permBadge.textContent = enAttente.length;
+      permBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-cyan-100 text-cyan-700';
+    } else {
+      permIcon.className = 'w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center';
+      permBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden';
+    }
+
+    if (perms.length === 0) {
+      list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucune permission'));
+      return;
+    }
+
+    perms.forEach(function(p) {
+      var debut = new Date(p.date_debut);
+      var retour = new Date(p.date_retour);
+      var statutStyles = {
+        en_attente: { bg: 'bg-cyan-50 border-cyan-200', badge: 'bg-cyan-100 text-cyan-700', label: 'En attente' },
+        validee: { bg: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', label: 'Valid\u00e9e' },
+        refusee: { bg: 'bg-red-50 border-red-200', badge: 'bg-red-100 text-red-700', label: 'Refus\u00e9e' },
+        annulee: { bg: 'bg-slate-50 border-slate-200', badge: 'bg-slate-100 text-slate-500', label: 'Annul\u00e9e' }
+      };
+      var style = statutStyles[p.statut] || statutStyles.en_attente;
+
+      var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + style.bg);
+      var header = createEl('div', 'flex items-center justify-between mb-1');
+      header.appendChild(createEl('span', 'text-xs font-semibold text-slate-700',
+        debut.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'}) + ' ' +
+        debut.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) + ' \u2192 ' +
+        retour.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})
+      ));
+      header.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full ' + style.badge, style.label));
+      card.appendChild(header);
+
+      if (debut.toDateString() !== retour.toDateString()) {
+        card.appendChild(createEl('p', 'text-[10px] text-slate-500', 'Retour : ' + retour.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})));
+      }
+
+      var actions = createEl('div', 'flex gap-2 mt-2');
+      if (p.statut !== 'validee') {
+        var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
+        (function(pid, permId) { btnVal.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
+        actions.appendChild(btnVal);
+      }
+      if (p.statut !== 'refusee') {
+        var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
+        (function(pid, permId) { btnRef.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
+        actions.appendChild(btnRef);
+      }
+      if (p.statut !== 'annulee') {
+        var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-400 font-bold rounded-lg text-xs transition-colors', 'Annuler');
+        (function(pid, permId) { btnAnn.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'annulee' }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
+        actions.appendChild(btnAnn);
+      }
+      card.appendChild(actions);
+      list.appendChild(card);
+    });
+  } catch(e) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
+  }
+}
 
 // ════════════════ CHECKLIST ════════════════
 var _checklistItems = [];
@@ -785,6 +2051,816 @@ async function loadFlags() {
     counter.textContent = 'Erreur de chargement';
   }
 }
+
+// ════════════════ PLANNING ════════════════
+var groupeAnimateurs = [];
+var groupeModifications = {};
+window._groupesWeekOffset = 0;
+
+function getMonday(date) {
+  var d = new Date(date);
+  var day = d.getDay();
+  d.setDate(d.getDate() - day + (day === 0 ? -6 : 1));
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function getViewedMonday() {
+  var monday = getMonday(new Date());
+  monday.setDate(monday.getDate() + (window._groupesWeekOffset || 0) * 7);
+  return monday;
+}
+
+async function renderGroupesTab() {
+  var list = document.getElementById('groupes-list');
+  if (!list) return;
+  list.textContent = '';
+  var todayStr = new Date().toISOString().split('T')[0];
+  var todayDate = new Date();
+
+  try { groupeAnimateurs = await db.getGroupeAnimateurs(); } catch(e) { groupeAnimateurs = []; }
+  try {
+    var mods = await db.getGroupeModifications(todayStr);
+    groupeModifications = {};
+    mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
+  } catch(e) { groupeModifications = {}; }
+
+  var viewedMonday = getViewedMonday();
+  var viewedFriday = new Date(viewedMonday);
+  viewedFriday.setDate(viewedFriday.getDate() + 4);
+  var weekOffset = window._groupesWeekOffset || 0;
+  var isCurrentWeek = weekOffset === 0;
+  var isPastWeek = weekOffset < 0;
+
+  var weekType = window.getWeekType(viewedMonday);
+  var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
+
+  var datesLabel = document.getElementById('groupes-dates-label');
+  if (datesLabel) {
+    var mL = viewedMonday.toLocaleDateString('fr-FR', { day: 'numeric' });
+    var mF = viewedFriday.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+    datesLabel.textContent = mL + ' \u2013 ' + mF;
+  }
+  var labelEl = document.getElementById('groupes-semaine-label');
+  if (labelEl) {
+    labelEl.textContent = 'Semaine ' + weekType;
+    labelEl.className = 'inline-block text-xs font-bold px-3 py-0.5 rounded-full mt-1 text-center ' +
+      (isCurrentWeek ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300' : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-300');
+  }
+
+  var reunionsList = document.getElementById('reunions-list');
+  reunionsList.textContent = '';
+  {
+    var role = currentProfile ? currentProfile.role : null;
+    var allReunions = weekType === 'A' ? (window.REUNIONS_A || []) : (window.REUNIONS_B || []);
+    var now = new Date();
+    var todayDow = todayDate.getDay();
+    var reunions = allReunions.filter(function(r) {
+      if (r.roles && role && r.roles.indexOf(role) === -1) return false;
+      if (isCurrentWeek) {
+        if (r.jour < todayDow) return false;
+        if (r.jour === todayDow && r.fin) {
+          var parts = r.fin.split(':');
+          var endTime = new Date(todayDate);
+          endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+          if (endTime <= now) return false;
+        }
+      }
+      return true;
+    });
+
+    if (reunions.length > 0) {
+      reunionsList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', 'R\u00e9unions'));
+      for (var ri = 0; ri < reunions.length; ri++) {
+        var reu = reunions[ri];
+        var rCard = createEl('div', 'bg-indigo-50 border border-indigo-200 rounded-xl p-4 mb-2');
+        var rTop = createEl('div', 'flex items-center justify-between');
+        var rInfo = createEl('div', '');
+        var reuDate = new Date(viewedMonday);
+        reuDate.setDate(reuDate.getDate() + (reu.jour - 1));
+        var reuDayLabel = reuDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+        reuDayLabel = reuDayLabel.charAt(0).toUpperCase() + reuDayLabel.slice(1);
+        var isReuToday = isCurrentWeek && reu.jour === todayDow;
+        rInfo.appendChild(createEl('p', 'text-sm font-bold text-indigo-700', reu.nom + (isReuToday ? '' : ' — ' + reuDayLabel)));
+        rInfo.appendChild(createEl('p', 'text-xs text-indigo-500', reu.debut + (reu.fin ? ' - ' + reu.fin : '')));
+        if (reu.roles) rInfo.appendChild(createEl('p', 'text-[10px] text-indigo-400 mt-0.5', 'R\u00e9serv\u00e9 : ' + reu.roles.join(', ')));
+        rTop.appendChild(rInfo);
+        rCard.appendChild(rTop);
+
+        if (reu.presence && currentProfile) {
+          var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
+          presDiv.id = 'reu-pres-' + reu.slug;
+          rCard.appendChild(presDiv);
+          var reuDateStr = reuDate.getFullYear() + '-' +
+            String(reuDate.getMonth() + 1).padStart(2, '0') + '-' +
+            String(reuDate.getDate()).padStart(2, '0');
+          (async function(slug, container, reuJour, dateStr) {
+            try {
+              var presences = await db.getPresencesReunion(slug, dateStr);
+              var profiles = await db.getAllProfiles();
+              var medecins = profiles.filter(function(p) {
+                if (p.role !== 'medecin') return false;
+                if (p.jours_presence && p.jours_presence.length > 0) {
+                  return p.jours_presence.indexOf(reuJour) !== -1;
+                }
+                return true;
+              });
+              var presMap = {};
+              presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
+              medecins.forEach(function(med) {
+                var pr = presMap[med.id];
+                var row = createEl('div', 'flex items-center justify-between py-1.5');
+                row.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', med.nom));
+                var btns = createEl('div', 'flex gap-1.5');
+                var btnP = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                  (pr && pr.present === true ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+                  pr && pr.present === true ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+                var btnA = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
+                  (pr && pr.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
+                  pr && pr.present === false ? '\u2713 Absent' : 'Absent');
+                (function(s, uid, ds) {
+                  btnP.addEventListener('click', async function() {
+                    if (btnP.classList.contains('bg-emerald-600')) {
+                      await db.deletePresenceReunion(s, ds, uid);
+                    } else {
+                      await db.upsertPresenceReunion(s, ds, uid, true);
+                    }
+                    renderGroupesTab();
+                  });
+                  btnA.addEventListener('click', async function() {
+                    if (btnA.classList.contains('bg-slate-600')) {
+                      await db.deletePresenceReunion(s, ds, uid);
+                    } else {
+                      await db.upsertPresenceReunion(s, ds, uid, false);
+                    }
+                    renderGroupesTab();
+                  });
+                })(slug, med.id, dateStr);
+                btns.appendChild(btnP);
+                btns.appendChild(btnA);
+                row.appendChild(btns);
+                container.appendChild(row);
+              });
+            } catch(e) {}
+          })(reu.slug, presDiv, reu.jour, reuDateStr);
+        }
+        reunionsList.appendChild(rCard);
+      }
+    }
+  }
+
+  var evtList = document.getElementById('events-equipe-list');
+  evtList.textContent = '';
+  if (isCurrentWeek) {
+    try {
+      var evtsEquipe = await db.getEvenementsEquipe(todayStr);
+      if (evtsEquipe.length > 0) {
+        evtList.appendChild(createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', '\u00c9v\u00e9nements'));
+        evtsEquipe.forEach(function(evt) {
+          var eCard = createEl('div', 'bg-amber-50 border border-amber-200 rounded-xl p-3 mb-2 flex items-center justify-between');
+          var eInfo = createEl('div', '');
+          eInfo.appendChild(createEl('p', 'text-sm font-bold text-amber-800', evt.titre));
+          var h = new Date(evt.date_heure);
+          var hStr = h.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          if (evt.duree_minutes) {
+            var end = new Date(h.getTime() + evt.duree_minutes * 60000);
+            hStr += ' - ' + end.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+          }
+          eInfo.appendChild(createEl('p', 'text-xs text-amber-600', hStr));
+          eCard.appendChild(eInfo);
+          if (currentProfile && currentProfile.is_admin) {
+            var btnDel = createEl('button', 'text-red-400 hover:text-red-600 font-bold text-lg', '\u00d7');
+            (function(eid) { btnDel.addEventListener('click', async function() {
+              if (!confirm('Supprimer cet \u00e9v\u00e9nement ?')) return;
+              await db.deleteEvenementEquipe(eid); renderGroupesTab();
+            }); })(evt.id);
+            eCard.appendChild(btnDel);
+          }
+          evtList.appendChild(eCard);
+        });
+      }
+    } catch(e) {}
+  }
+
+  var demandesEnAttente = [];
+  try { demandesEnAttente = await db.getDemandesEnAttente(); } catch(e) {}
+
+  var jours = window.JOURS_SEMAINE || [];
+  var typeColors = {
+    groupe: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' },
+    atelier: { bg: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700', dot: 'bg-violet-500' },
+    groupe_jeu: { bg: 'bg-teal-50', border: 'border-teal-200', text: 'text-teal-700', dot: 'bg-teal-500' },
+    therapie: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-700', dot: 'bg-rose-500' },
+    seances: { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-700', dot: 'bg-cyan-500' }
+  };
+
+  var parJour = {};
+  planning.forEach(function(g) {
+    if (!parJour[g.jour]) parJour[g.jour] = [];
+    parJour[g.jour].push(g);
+  });
+
+  var upcomingDays = [];
+  var historiqueDays = [];
+  var nowTime = new Date();
+  var todayDow2 = todayDate.getDay();
+
+  [1,2,3,4,5].forEach(function(jour) {
+    if (!parJour[jour]) return;
+    var dayDate = new Date(viewedMonday);
+    dayDate.setDate(dayDate.getDate() + (jour - 1));
+    var dayStr = dayDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'short' });
+    dayStr = dayStr.charAt(0).toUpperCase() + dayStr.slice(1);
+
+    if (isCurrentWeek) {
+      var upGroups = [];
+      var histGroups = [];
+      parJour[jour].forEach(function(g) {
+        if (jour < todayDow2) {
+          histGroups.push(g);
+        } else if (jour === todayDow2) {
+          var endH = g.fin || g.debut;
+          if (endH) {
+            var parts = endH.split(':');
+            var endTime = new Date(todayDate);
+            endTime.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0);
+            if (endTime <= nowTime) {
+              histGroups.push(g);
+            } else {
+              upGroups.push(g);
+            }
+          } else {
+            var cutoff = new Date(todayDate);
+            cutoff.setHours(17, 0, 0, 0);
+            if (nowTime >= cutoff) {
+              histGroups.push(g);
+            } else {
+              upGroups.push(g);
+            }
+          }
+        } else {
+          upGroups.push(g);
+        }
+      });
+      if (upGroups.length > 0) upcomingDays.push({ jour: jour, label: dayStr, groups: upGroups });
+      if (histGroups.length > 0) historiqueDays.push({ jour: jour, label: dayStr, groups: histGroups });
+    } else {
+      upcomingDays.push({ jour: jour, label: dayStr, groups: parJour[jour] });
+    }
+  });
+
+  var upTitle = document.getElementById('groupes-upcoming-title');
+  if (upTitle) {
+    upTitle.textContent = isCurrentWeek ? 'À venir cette semaine' : 'Groupes de la semaine';
+  }
+
+  var histSection = document.getElementById('groupes-historique-section');
+  var histList = document.getElementById('groupes-historique-list');
+  if (histSection) {
+    if (historiqueDays.length > 0) {
+      histSection.classList.remove('hidden');
+      histList.textContent = '';
+    } else {
+      histSection.classList.add('hidden');
+    }
+  }
+
+  function renderDayGroups(dayData, container) {
+    var daySection = createEl('div', 'mb-4');
+    var dayHeader = createEl('h3', 'text-sm font-bold text-slate-500 uppercase tracking-wider mb-2', dayData.label);
+    daySection.appendChild(dayHeader);
+
+    dayData.groups.forEach(function(g) {
+      var style = typeColors[g.type] || typeColors.groupe;
+      var mod = groupeModifications[g.slug];
+      var isAnnule = mod && mod.annule;
+      var heure = (mod && mod.nouvelle_heure) || g.debut;
+      var fin = (mod && mod.nouvelle_fin) || g.fin;
+
+      var card = createEl('div', style.bg + ' border ' + style.border + ' rounded-xl p-4 mb-2' + (isAnnule ? ' opacity-50' : ''));
+
+      var topRow = createEl('div', 'flex items-start justify-between gap-2');
+      var titleDiv = createEl('div', 'flex-1');
+      var title = createEl('p', 'text-sm font-bold ' + style.text + (isAnnule ? ' line-through' : ''), g.nom);
+      if (isAnnule) {
+        var annuleBadge = createEl('span', 'text-red-500 text-xs font-bold ml-2 no-underline', 'ANNULÉ');
+        annuleBadge.style.textDecoration = 'none';
+        title.appendChild(document.createTextNode(' '));
+        title.appendChild(annuleBadge);
+      }
+      titleDiv.appendChild(title);
+      if (g.slug === 'therapies-complementaires' && demandesEnAttente.length > 0) {
+        var demBadge = createEl('span', 'inline-block ml-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700', demandesEnAttente.length + ' demande' + (demandesEnAttente.length > 1 ? 's' : ''));
+        title.appendChild(document.createTextNode(' '));
+        title.appendChild(demBadge);
+      }
+      if (heure) {
+        titleDiv.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5', heure + (fin ? ' - ' + fin : '')));
+      }
+      if (g.detail) titleDiv.appendChild(createEl('p', 'text-xs text-slate-400 mt-0.5', g.detail));
+      topRow.appendChild(titleDiv);
+
+      var dot = createEl('div', style.dot + ' w-3 h-3 rounded-full flex-shrink-0 mt-1');
+      topRow.appendChild(dot);
+      card.appendChild(topRow);
+
+      var anims = groupeAnimateurs.filter(function(a) { return a.groupe_slug === g.slug; });
+      var animDiv = createEl('div', 'mt-2 flex flex-wrap gap-1.5 items-center');
+      if (anims.length > 0) {
+        anims.forEach(function(a) {
+          var badge = createEl('span', 'inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-white/70 border border-slate-200 text-slate-700', a.nom_affiche);
+          if (currentProfile && (a.user_id === currentProfile.id || currentProfile.is_admin)) {
+            var btnX = createEl('button', 'ml-0.5 text-red-400 hover:text-red-600 font-bold', '\u00d7');
+            (function(slug, uid) {
+              btnX.addEventListener('click', async function(e) {
+                e.stopPropagation();
+                try { await db.removeGroupeAnimateur(slug, uid); renderGroupesTab(); } catch(err) { console.warn(err); }
+              });
+            })(g.slug, a.user_id);
+            badge.appendChild(btnX);
+          }
+          animDiv.appendChild(badge);
+        });
+      } else {
+        animDiv.appendChild(createEl('span', 'text-[11px] text-slate-400 italic', 'Aucun animateur'));
+      }
+
+      var isMeAnim = currentProfile && anims.some(function(a) { return a.user_id === currentProfile.id; });
+      if (!isMeAnim && currentProfile) {
+        var btnDesign = createEl('button', 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors', '+ Me d\u00e9signer');
+        (function(slug) {
+          btnDesign.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            try { await db.addGroupeAnimateur(slug, currentProfile.id, currentProfile.nom); renderGroupesTab(); } catch(err) { console.warn(err); }
+          });
+        })(g.slug);
+        animDiv.appendChild(btnDesign);
+      }
+      if (currentProfile && currentProfile.is_admin) {
+        var btnDesignOther = createEl('button', 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors', '+ D\u00e9signer');
+        (function(slug, existingAnims) {
+          btnDesignOther.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            try {
+              var profiles = await db.getAllProfiles();
+              var existingIds = existingAnims.map(function(a) { return a.user_id; });
+              var available = profiles.filter(function(p) { return existingIds.indexOf(p.id) === -1; });
+              if (available.length === 0) { alert('Tous les soignants sont d\u00e9j\u00e0 animateurs de ce groupe'); return; }
+              var choiceStr = available.map(function(p, i) { return (i + 1) + '. ' + p.nom + ' (' + p.role + ')'; }).join('\n');
+              var choice = prompt('Choisir un soignant :\n' + choiceStr + '\n\nEntrez le num\u00e9ro :');
+              if (!choice) return;
+              var idx = parseInt(choice) - 1;
+              if (idx >= 0 && idx < available.length) {
+                await db.addGroupeAnimateur(slug, available[idx].id, available[idx].nom);
+                renderGroupesTab();
+              }
+            } catch(err) { console.warn(err); }
+          });
+        })(g.slug, anims);
+        animDiv.appendChild(btnDesignOther);
+      }
+      card.appendChild(animDiv);
+
+      if (isMeAnim || (currentProfile && currentProfile.is_admin)) {
+        var actionsRow = createEl('div', 'mt-3 pt-2 border-t border-slate-200/60 flex flex-wrap gap-2');
+        var hasFixedTime = !!g.debut;
+        var isTherapie = g.slug === 'therapies-complementaires';
+        var actions = isTherapie ? [
+          { label: 'S\u00e9ances', icon: '\ud83d\udcc5', action: 'seances_therapie' },
+          { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
+          { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
+        ] : hasFixedTime ? [
+          { label: 'Participation', icon: '\ud83d\udccb', action: 'participation' },
+          { label: 'Modifier heure', icon: '\ud83d\udd50', action: 'heure' },
+          { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
+          { label: 'Exclure patient', icon: '\ud83d\udeab', action: 'exclure' },
+          { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
+        ] : [
+          { label: 'Participation', icon: '\ud83d\udccb', action: 'participation' },
+          { label: 'Planifier horaires', icon: '\ud83d\udcc5', action: 'horaires_individuels' },
+          { label: isAnnule ? 'R\u00e9tablir' : 'Annuler', icon: isAnnule ? '\u2705' : '\u274c', action: 'annuler' },
+          { label: 'Rappel', icon: '\ud83d\udce2', action: 'rappel' }
+        ];
+        actions.forEach(function(act) {
+          var btn = createEl('button', 'text-[11px] font-semibold px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors', act.icon + ' ' + act.label);
+          (function(slug, actionType, groupe) {
+            btn.addEventListener('click', function() { openGroupeActionModal(slug, actionType, groupe); });
+          })(g.slug, act.action, g);
+          actionsRow.appendChild(btn);
+        });
+        card.appendChild(actionsRow);
+      }
+
+      daySection.appendChild(card);
+    });
+
+    container.appendChild(daySection);
+  }
+
+  if (upcomingDays.length === 0) {
+    list.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-6', isCurrentWeek ? 'Plus de groupe cette semaine' : 'Aucun groupe'));
+  }
+  upcomingDays.forEach(function(d) { renderDayGroups(d, list); });
+  if (historiqueDays.length > 0 && histList) {
+    historiqueDays.forEach(function(d) { renderDayGroups(d, histList); });
+  }
+}
+
+function openGroupeActionModal(slug, actionType, groupe) {
+  var modal = document.getElementById('modal-groupe-actions');
+  var title = document.getElementById('modal-groupe-title');
+  var content = document.getElementById('modal-groupe-content');
+  content.textContent = '';
+  modal.classList.remove('hidden');
+  var todayStr = new Date().toISOString().split('T')[0];
+
+  if (actionType === 'heure') {
+    title.textContent = 'Modifier l\'heure \u2014 ' + groupe.nom;
+    var form = createEl('div', 'space-y-3');
+    form.appendChild(createEl('p', 'text-xs text-slate-500', 'Modification pour aujourd\'hui uniquement (' + todayStr + ')'));
+    var row = createEl('div', 'flex gap-3');
+    var lbl1 = createEl('label', 'flex-1');
+    lbl1.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'D\u00e9but'));
+    var inp1 = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    inp1.type = 'time'; inp1.id = 'grp-new-debut'; inp1.value = groupe.debut || '';
+    lbl1.appendChild(inp1); row.appendChild(lbl1);
+    var lbl2 = createEl('label', 'flex-1');
+    lbl2.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Fin'));
+    var inp2 = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    inp2.type = 'time'; inp2.id = 'grp-new-fin'; inp2.value = groupe.fin || '';
+    lbl2.appendChild(inp2); row.appendChild(lbl2);
+    form.appendChild(row);
+    var btnSave = createEl('button', 'w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-indigo-700 transition-colors', 'Enregistrer');
+    btnSave.addEventListener('click', async function() {
+      var nd = document.getElementById('grp-new-debut').value;
+      var nf = document.getElementById('grp-new-fin').value;
+      if (!nd) return;
+      try {
+        await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, nouvelle_heure: nd, nouvelle_fin: nf || null, modifie_par: currentProfile.id });
+        modal.classList.add('hidden'); renderGroupesTab();
+      } catch(e) { console.warn(e); }
+    });
+    form.appendChild(btnSave);
+    var btnReset = createEl('button', 'w-full bg-slate-100 text-slate-600 font-semibold py-2 rounded-xl text-sm hover:bg-slate-200 transition-colors mt-2', 'Remettre l\'horaire normal');
+    btnReset.addEventListener('click', async function() {
+      try { await db.deleteGroupeModification(slug, todayStr); modal.classList.add('hidden'); renderGroupesTab(); } catch(e) { console.warn(e); }
+    });
+    form.appendChild(btnReset);
+    content.appendChild(form);
+
+  } else if (actionType === 'annuler') {
+    var modA = groupeModifications[slug];
+    var isAnnuleA = modA && modA.annule;
+    if (isAnnuleA) {
+      title.textContent = 'R\u00e9tablir \u2014 ' + groupe.nom;
+      content.appendChild(createEl('p', 'text-sm text-slate-600 mb-4', 'R\u00e9tablir ce groupe pour aujourd\'hui ?'));
+      var btnRetablir = createEl('button', 'w-full bg-emerald-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-emerald-700 transition-colors', 'Oui, r\u00e9tablir');
+      btnRetablir.addEventListener('click', async function() {
+        try { await db.deleteGroupeModification(slug, todayStr); modal.classList.add('hidden'); renderGroupesTab(); } catch(e) { console.warn(e); }
+      });
+      content.appendChild(btnRetablir);
+    } else {
+      title.textContent = 'Annuler \u2014 ' + groupe.nom;
+      content.appendChild(createEl('p', 'text-sm text-slate-600 mb-3', 'Annuler ce groupe pour aujourd\'hui (' + todayStr + ') ?'));
+      var msgLabel = createEl('label', 'block mb-3');
+      msgLabel.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Motif (optionnel)'));
+      var msgInput = createEl('input', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+      msgInput.id = 'grp-cancel-msg'; msgInput.placeholder = 'Ex: animateur absent';
+      msgLabel.appendChild(msgInput);
+      content.appendChild(msgLabel);
+      var btnAnnuler = createEl('button', 'w-full bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-red-700 transition-colors', 'Annuler le groupe');
+      btnAnnuler.addEventListener('click', async function() {
+        try {
+          await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, annule: true, message: document.getElementById('grp-cancel-msg').value.trim() || null, modifie_par: currentProfile.id });
+          modal.classList.add('hidden'); renderGroupesTab();
+        } catch(e) { console.warn(e); }
+      });
+      content.appendChild(btnAnnuler);
+    }
+
+  } else if (actionType === 'exclure') {
+    title.textContent = 'Exclure un patient \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Le patient ne verra pas ce groupe dans son programme aujourd\'hui'));
+    var patList = createEl('div', 'space-y-2 max-h-60 overflow-y-auto');
+    content.appendChild(patList);
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var modE = groupeModifications[slug];
+        var excl = (modE && modE.exclusions) || [];
+        patients.forEach(function(p) {
+          var isExcluded = excl.indexOf(p.id) !== -1;
+          var row = createEl('div', 'flex items-center justify-between p-2 rounded-lg ' + (isExcluded ? 'bg-red-50 border border-red-200' : 'bg-white border border-slate-200'));
+          row.appendChild(createEl('span', 'text-sm text-slate-700', 'Ch.' + p.numero_chambre + (p.prenom ? ' \u2014 ' + p.prenom : '')));
+          var btn = createEl('button', 'text-xs font-bold px-2.5 py-1 rounded-full ' + (isExcluded ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'), isExcluded ? 'R\u00e9int\u00e9grer' : 'Exclure');
+          (function(patientId, wasExcluded) {
+            btn.addEventListener('click', async function() {
+              var curMod = groupeModifications[slug] || {};
+              var curExcl = (curMod.exclusions || []).slice();
+              if (wasExcluded) { curExcl = curExcl.filter(function(id) { return id !== patientId; }); }
+              else { curExcl.push(patientId); }
+              try {
+                await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, exclusions: curExcl, modifie_par: currentProfile.id });
+                var mods = await db.getGroupeModifications(todayStr);
+                groupeModifications = {};
+                mods.forEach(function(m) { groupeModifications[m.groupe_slug] = m; });
+                openGroupeActionModal(slug, 'exclure', groupe);
+              } catch(e) { console.warn(e); }
+            });
+          })(p.id, isExcluded);
+          row.appendChild(btn);
+          patList.appendChild(row);
+        });
+      } catch(e) { patList.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement patients')); }
+    })();
+
+  } else if (actionType === 'horaires_individuels') {
+    title.textContent = 'Planifier les horaires \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Assigner un cr\u00e9neau individuel \u00e0 chaque patient pour aujourd\'hui'));
+    var patListH = createEl('div', 'space-y-2 max-h-72 overflow-y-auto mb-3');
+    content.appendChild(patListH);
+    var btnSaveAll = createEl('button', 'w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-indigo-700 transition-colors', 'Enregistrer les horaires');
+    content.appendChild(btnSaveAll);
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var modH = groupeModifications[slug] || {};
+        var hi = modH.horaires_individuels || {};
+        patients.forEach(function(p) {
+          var existing = hi[p.id];
+          var row = createEl('div', 'flex items-center gap-2 p-2 bg-white border border-slate-200 rounded-lg');
+          row.appendChild(createEl('span', 'text-sm text-slate-700 flex-1', 'Ch.' + p.numero_chambre + (p.prenom ? ' \u2014 ' + p.prenom : '')));
+          var inpH = createEl('input', 'w-20 border border-slate-300 rounded-lg px-2 py-1 text-sm text-center');
+          inpH.type = 'time'; inpH.dataset.pid = p.id; inpH.classList.add('grp-hi-input');
+          if (existing) inpH.value = existing.heure || '';
+          row.appendChild(inpH);
+          var inpF = createEl('input', 'w-20 border border-slate-300 rounded-lg px-2 py-1 text-sm text-center');
+          inpF.type = 'time'; inpF.dataset.pid = p.id; inpF.classList.add('grp-hi-fin');
+          if (existing) inpF.value = existing.fin || '';
+          row.appendChild(inpF);
+          patListH.appendChild(row);
+        });
+        btnSaveAll.addEventListener('click', async function() {
+          var inputs = patListH.querySelectorAll('.grp-hi-input');
+          var fins = patListH.querySelectorAll('.grp-hi-fin');
+          var newHI = {};
+          inputs.forEach(function(inp, i) {
+            if (inp.value) {
+              newHI[inp.dataset.pid] = { heure: inp.value, fin: fins[i].value || null };
+            }
+          });
+          try {
+            await db.upsertGroupeModification({ groupe_slug: slug, date_effet: todayStr, horaires_individuels: newHI, modifie_par: currentProfile.id });
+            modal.classList.add('hidden');
+            renderGroupesTab();
+          } catch(e) { console.warn(e); }
+        });
+      } catch(e) { patListH.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement patients')); }
+    })();
+
+  } else if (actionType === 'seances_therapie') {
+    title.textContent = 'S\u00e9ances \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-4', 'G\u00e9rez les demandes des patients et programmez des s\u00e9ances'));
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var demandes = await db.getDemandesParDate(todayStr);
+        var pendingDemandes = demandes.filter(function(d) { return d.statut === 'en_attente'; });
+        if (pendingDemandes.length > 0) {
+          content.appendChild(createEl('p', 'text-xs font-bold text-amber-700 uppercase tracking-wider mb-2', '\ud83d\udd14 Demandes en attente'));
+          pendingDemandes.forEach(function(dem) {
+            var pat = patients.find(function(p) { return p.id === dem.patient_id; });
+            var patLabel = pat ? (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre : 'Patient';
+            var row = createEl('div', 'bg-amber-50 border border-amber-200 rounded-lg p-3 mb-2');
+            row.appendChild(createEl('p', 'text-sm font-bold text-amber-800 mb-2', patLabel));
+            var btns = createEl('div', 'flex gap-2');
+            var btnAccH = createEl('button', 'flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs', 'Accepter + horaire');
+            var btnAcc = createEl('button', 'flex-1 py-2 bg-emerald-100 border border-emerald-300 text-emerald-700 font-bold rounded-lg text-xs', 'Accepter');
+            var btnRef = createEl('button', 'px-3 py-2 bg-white border border-slate-200 text-slate-500 font-bold rounded-lg text-xs', 'Refuser');
+            (function(demId) {
+              btnAcc.addEventListener('click', async function() {
+                await db.updateDemandeSeance(demId, { statut: 'acceptee', validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+              btnAccH.addEventListener('click', async function() {
+                var h = prompt('Heure de d\u00e9but (ex: 10:00) :');
+                if (!h) return;
+                var f = prompt('Heure de fin (ex: 10:30) :') || '';
+                await db.updateDemandeSeance(demId, { statut: 'acceptee', heure_debut: h, heure_fin: f || null, validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+              btnRef.addEventListener('click', async function() {
+                await db.updateDemandeSeance(demId, { statut: 'refusee', validee_par: currentProfile.id });
+                openGroupeActionModal(slug, 'seances_therapie', groupe);
+                renderGroupesTab();
+              });
+            })(dem.id);
+            btns.appendChild(btnAccH);
+            btns.appendChild(btnAcc);
+            btns.appendChild(btnRef);
+            row.appendChild(btns);
+            content.appendChild(row);
+          });
+        }
+        content.appendChild(createEl('p', 'text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4', '\u2795 Programmer une s\u00e9ance'));
+        var formProg = createEl('div', 'bg-white border border-slate-200 rounded-lg p-3');
+        var selectPat = createEl('select', 'w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm mb-2');
+        selectPat.appendChild(createEl('option', '', 'Choisir un patient...'));
+        patients.forEach(function(p) {
+          var opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = (p.prenom || 'Patient') + ' \u2014 Ch.' + p.numero_chambre;
+          selectPat.appendChild(opt);
+        });
+        formProg.appendChild(selectPat);
+        var timeRow = createEl('div', 'flex gap-2 mb-2');
+        var inputDebut = createEl('input', 'flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+        inputDebut.type = 'time';
+        var inputFin = createEl('input', 'flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm');
+        inputFin.type = 'time';
+        timeRow.appendChild(inputDebut);
+        timeRow.appendChild(inputFin);
+        formProg.appendChild(timeRow);
+        var btnProg = createEl('button', 'w-full py-2 bg-rose-600 text-white font-bold rounded-lg text-sm hover:bg-rose-700 transition-colors', 'Programmer la s\u00e9ance');
+        btnProg.addEventListener('click', async function() {
+          var patId = selectPat.value;
+          if (!patId) return;
+          try {
+            await db.upsertDemandeSeance(patId, todayStr, slug);
+            var inserted = await db.getDemandesParDate(todayStr);
+            var dem = inserted.find(function(d) { return d.patient_id === patId; });
+            if (dem) {
+              var updates = { statut: 'acceptee', validee_par: currentProfile.id };
+              if (inputDebut.value) updates.heure_debut = inputDebut.value;
+              if (inputFin.value) updates.heure_fin = inputFin.value;
+              await db.updateDemandeSeance(dem.id, updates);
+            }
+            openGroupeActionModal(slug, 'seances_therapie', groupe);
+            renderGroupesTab();
+          } catch(e) { console.warn(e); }
+        });
+        formProg.appendChild(btnProg);
+        content.appendChild(formProg);
+        var accepted = demandes.filter(function(d) { return d.statut === 'acceptee'; });
+        if (accepted.length > 0) {
+          content.appendChild(createEl('p', 'text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 mt-4', '\u2713 S\u00e9ances du jour'));
+          accepted.forEach(function(dem) {
+            var pat = patients.find(function(p) { return p.id === dem.patient_id; });
+            var patLabel = pat ? (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre : 'Patient';
+            var heureStr = dem.heure_debut ? dem.heure_debut + (dem.heure_fin ? ' - ' + dem.heure_fin : '') : 'Horaire non d\u00e9fini';
+            var row = createEl('div', 'flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2.5 mb-1');
+            row.appendChild(createEl('span', 'text-xs font-bold text-emerald-800', patLabel));
+            row.appendChild(createEl('span', 'text-xs text-emerald-600', heureStr));
+            content.appendChild(row);
+          });
+        }
+      } catch(e) { content.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement')); }
+    })();
+
+  } else if (actionType === 'participation') {
+    title.textContent = 'Participation \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Cochez la pr\u00e9sence ou l\'absence de chaque patient'));
+    var patListP = createEl('div', 'space-y-2');
+    content.appendChild(patListP);
+    (async function() {
+      try {
+        var patients = await db.getPatients();
+        var existingParts = await db.getParticipationsGroupe(slug, todayStr);
+        var partMap = {};
+        existingParts.forEach(function(p) { partMap[p.patient_id] = p; });
+        if (patients.length === 0) {
+          patListP.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucun patient hospitalis\u00e9'));
+          return;
+        }
+        patients.forEach(function(pat) {
+          var existing = partMap[pat.id];
+          var row = createEl('div', 'flex items-center justify-between bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5');
+          var info = createEl('div', '');
+          info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', (pat.prenom || 'Patient') + ' \u2014 Ch.' + pat.numero_chambre));
+          row.appendChild(info);
+          var btns = createEl('div', 'flex gap-1.5');
+          var btnP = createEl('button', 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all ' +
+            (existing && existing.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+            existing && existing.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+          var btnA = createEl('button', 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all ' +
+            (existing && existing.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
+            existing && existing.present === false ? '\u2713 Absent' : 'Absent');
+          (function(patId) {
+            btnP.addEventListener('click', async function() {
+              try {
+                await db.upsertParticipation(patId, slug, groupe.nom, todayStr, true, 'animateur');
+                openGroupeActionModal(slug, 'participation', groupe);
+              } catch(e) { console.warn(e); }
+            });
+            btnA.addEventListener('click', async function() {
+              try {
+                await db.upsertParticipation(patId, slug, groupe.nom, todayStr, false, 'animateur');
+                openGroupeActionModal(slug, 'participation', groupe);
+              } catch(e) { console.warn(e); }
+            });
+          })(pat.id);
+          btns.appendChild(btnP);
+          btns.appendChild(btnA);
+          row.appendChild(btns);
+          patListP.appendChild(row);
+        });
+      } catch(e) { patListP.appendChild(createEl('p', 'text-sm text-red-500', 'Erreur chargement')); }
+    })();
+
+  } else if (actionType === 'rappel') {
+    title.textContent = 'Envoyer un rappel \u2014 ' + groupe.nom;
+    content.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Ce rappel sera visible dans le programme des patients'));
+    var msgLabel = createEl('label', 'block mb-3');
+    msgLabel.appendChild(createEl('span', 'text-xs font-semibold text-slate-600 block mb-1', 'Message'));
+    var msgArea = createEl('textarea', 'w-full border border-slate-300 rounded-lg px-3 py-2 text-sm');
+    msgArea.id = 'grp-rappel-msg'; msgArea.rows = 3;
+    msgArea.value = 'Rappel : ' + groupe.nom + (groupe.debut ? ' \u00e0 ' + groupe.debut : '') + ' aujourd\'hui';
+    msgLabel.appendChild(msgArea);
+    content.appendChild(msgLabel);
+    var btnSend = createEl('button', 'w-full bg-indigo-600 text-white font-bold py-2.5 rounded-xl text-sm hover:bg-indigo-700 transition-colors', '\ud83d\udce2 Envoyer le rappel');
+    btnSend.addEventListener('click', async function() {
+      var msg = document.getElementById('grp-rappel-msg').value.trim();
+      if (!msg) return;
+      try {
+        await db.sendGroupeRappel(slug, todayStr, msg, currentProfile.id);
+        modal.classList.add('hidden');
+      } catch(e) { console.warn(e); }
+    });
+    content.appendChild(btnSend);
+  }
+}
+
+// Formulaire ajout événement d'équipe
+document.getElementById('btn-add-event-equipe').addEventListener('click', function() {
+  var form = document.getElementById('form-event-equipe');
+  form.classList.toggle('hidden');
+  if (!form.classList.contains('hidden')) {
+    document.getElementById('evt-eq-date').value = new Date().toISOString().split('T')[0];
+  }
+});
+document.getElementById('btn-cancel-evt-eq').addEventListener('click', function() {
+  document.getElementById('form-event-equipe').classList.add('hidden');
+});
+document.getElementById('btn-save-evt-eq').addEventListener('click', async function() {
+  var titre = document.getElementById('evt-eq-titre').value.trim();
+  var date = document.getElementById('evt-eq-date').value;
+  var debut = document.getElementById('evt-eq-debut').value;
+  var errEl = document.getElementById('evt-eq-error');
+  errEl.classList.add('hidden');
+  if (!titre || !date) { errEl.textContent = 'Objet et date requis'; errEl.classList.remove('hidden'); return; }
+  try {
+    var dateHeure = date + 'T' + (debut || '09:00') + ':00';
+    var fin = document.getElementById('evt-eq-fin').value;
+    var duree = null;
+    if (debut && fin) {
+      var dMin = parseInt(debut.split(':')[0]) * 60 + parseInt(debut.split(':')[1]);
+      var fMin = parseInt(fin.split(':')[0]) * 60 + parseInt(fin.split(':')[1]);
+      if (fMin > dMin) duree = fMin - dMin;
+    }
+    await db.createEvenementEquipe({
+      titre: titre, date_heure: dateHeure, type: 'autre',
+      duree_minutes: duree, cree_par: currentProfile ? currentProfile.id : null
+    });
+    document.getElementById('form-event-equipe').classList.add('hidden');
+    document.getElementById('evt-eq-titre').value = '';
+    document.getElementById('evt-eq-debut').value = '';
+    document.getElementById('evt-eq-fin').value = '';
+    renderGroupesTab();
+  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
+});
+
+document.getElementById('btn-prev-week').addEventListener('click', function() {
+  window._groupesWeekOffset = (window._groupesWeekOffset || 0) - 1;
+  renderGroupesTab();
+});
+document.getElementById('btn-next-week').addEventListener('click', function() {
+  window._groupesWeekOffset = (window._groupesWeekOffset || 0) + 1;
+  renderGroupesTab();
+});
+
+document.getElementById('btn-toggle-historique').addEventListener('click', function() {
+  var listEl = document.getElementById('groupes-historique-list');
+  var chevron = document.getElementById('historique-chevron');
+  var isHidden = listEl.classList.contains('hidden');
+  listEl.classList.toggle('hidden');
+  chevron.textContent = isHidden ? '\u25B2' : '\u25BC';
+});
+
+// Fermeture modals au clic sur le fond noir
+document.getElementById('modal-groupe-close').addEventListener('click', function() {
+  document.getElementById('modal-groupe-actions').classList.add('hidden');
+});
+document.getElementById('modal-groupe-actions').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
+});
+['modal-delete', 'modal-event', 'modal-perm', 'modal-contenu', 'modal-sortie'].forEach(function(id) {
+  var elM = document.getElementById(id);
+  if (elM) elM.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.add('hidden');
+  });
+});
 
 // ════════════════ JOUEUR QCM ════════════════
 var qcmState = null;
