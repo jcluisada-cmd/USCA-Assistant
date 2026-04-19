@@ -312,11 +312,6 @@ function renderLexique() {
     } else if (item.contexte) {
       card.appendChild(createEl('p', 'text-xs text-slate-500 leading-relaxed', item.contexte));
     }
-    if (item.lien_toolbox) {
-      const link = createEl('a', 'text-[11px] font-semibold text-indigo-500 hover:text-indigo-700 mt-1 inline-block', '→ Voir dans la Toolbox');
-      link.href = item.lien_toolbox;
-      card.appendChild(link);
-    }
     grid.appendChild(card);
   });
   root.appendChild(grid);

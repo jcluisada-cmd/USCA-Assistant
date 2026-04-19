@@ -89,8 +89,8 @@
       let pool = allQuestions;
       if (difficulte) pool = pool.filter(q => q.difficulte === difficulte);
 
-      // Mode entraînement : tirage aléatoire ; examen : séquentiel
-      const ordered = mode === 'examen' ? pool : shuffle(pool);
+      // sequential ou examen : ordre du JSON ; entrainement : aléatoire
+      const ordered = (mode === 'examen' || mode === 'sequential') ? pool : shuffle(pool);
       return ordered.slice(0, n);
     },
 

@@ -79,37 +79,9 @@
           </select>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Difficulté</label>
-            <select id="qcm-diff" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
-              <option value="">Toutes</option>
-              <option value="1">1 · Facile</option>
-              <option value="2">2 · Moyen</option>
-              <option value="3">3 · Difficile</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre</label>
-            <select id="qcm-n" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
-              <option value="5">5</option>
-              <option value="10" selected>10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Mode</label>
-          <div class="flex bg-slate-100 rounded-xl p-1">
-            <button data-mode="entrainement" class="qcm-mode flex-1 py-2 rounded-lg text-xs font-bold bg-white text-indigo-600 shadow-sm">Entraînement</button>
-            <button data-mode="examen" class="qcm-mode flex-1 py-2 rounded-lg text-xs font-bold text-slate-500">Examen</button>
-          </div>
-          <p class="text-[11px] text-slate-400 mt-1">Entraînement : correction immédiate. Examen : correction à la fin.</p>
-        </div>
-
         <button id="qcm-start" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm">Lancer la session</button>
+        <!-- Bouton tuteur uniquement -->
+        <button id="qcm-view-all" class="w-full py-3 bg-white border-2 border-indigo-200 text-indigo-600 font-bold rounded-xl transition-all text-sm hidden hover:bg-indigo-50">📋 Voir toutes les questions</button>
       </div>
     </section>
 
@@ -169,8 +141,12 @@
         </button>
       </header>
       <div id="qcm-content" class="flex-1 overflow-y-auto px-5 py-5 space-y-4"></div>
-      <footer class="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center gap-3">
-        <button id="qcm-flag" class="text-xs font-semibold text-amber-600 hover:text-amber-700">⚑ Signaler</button>
+      <footer class="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center gap-2">
+        <button id="qcm-flag" class="flex items-center gap-1 text-xs font-semibold text-indigo-500 hover:text-indigo-700" title="Demander une explication au tuteur">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Explication
+        </button>
+        <button id="qcm-thumbdown" class="text-sm text-slate-400 hover:text-red-500 transition-colors px-1" title="Signaler une erreur dans cette question">👎</button>
         <div class="flex-1"></div>
         <button id="qcm-next" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-lg transition disabled:opacity-40">Suivant</button>
       </footer>
@@ -265,17 +241,8 @@ document.querySelectorAll('.accordion-toggle').forEach(function(btn) {
   });
 });
 
-// ── Mode toggle ──
+// Mode fixé : entraînement avec correction immédiate
 var currentMode = 'entrainement';
-document.querySelectorAll('.qcm-mode').forEach(function(b) {
-  b.addEventListener('click', function() {
-    currentMode = b.dataset.mode;
-    document.querySelectorAll('.qcm-mode').forEach(function(x) {
-      x.className = 'qcm-mode flex-1 py-2 rounded-lg text-xs font-bold ' +
-        (x.dataset.mode === currentMode ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500');
-    });
-  });
-});
 
 // ── Init ──
 async function initApp() {
@@ -289,11 +256,14 @@ async function initApp() {
       sel.appendChild(opt);
     });
     document.getElementById('qcm-stats').textContent = index.total_questions + ' questions · ' + index.total_items + ' items';
+    // En mode tuteur : afficher le bouton "Voir toutes les questions"
+    if (_previewTuteur) {
+      document.getElementById('qcm-view-all').classList.remove('hidden');
+    }
   } catch(e) {
     document.getElementById('qcm-stats').textContent = 'Erreur catalogue';
   }
-  loadChambres();
-  loadFlags();
+  if (!_previewTuteur) { loadChambres(); loadFlags(); }
 }
 
 async function loadChambres() {
@@ -363,17 +333,91 @@ async function loadFlags() {
 // ════════════════ JOUEUR QCM ════════════════
 var qcmState = null;
 
+// ── Vue tuteur : toutes les questions d'un item ──
+document.getElementById('qcm-view-all').addEventListener('click', async function() {
+  var btn = this;
+  var item = document.getElementById('qcm-item').value;
+  if (!item) { alert('Sélectionnez un item.'); return; }
+  btn.disabled = true; btn.textContent = 'Chargement…';
+  try {
+    var questions = await QCMEngine.loadItem(item);
+    showAllQuestionsModal(item, questions);
+  } catch(e) { alert('Erreur : ' + e.message); }
+  btn.disabled = false; btn.textContent = '📋 Voir toutes les questions';
+});
+
+function showAllQuestionsModal(itemLabel, questions) {
+  var modal = document.getElementById('qcm-modal');
+  document.getElementById('qcm-progress').textContent = itemLabel;
+  document.getElementById('qcm-meta').textContent = questions.length + ' questions — mode lecture tuteur';
+  var content = document.getElementById('qcm-content');
+  clear(content);
+
+  questions.forEach(function(q, idx) {
+    var qBlock = el('div', { class: 'pb-5 mb-5 border-b border-slate-100 last:border-0 last:mb-0' });
+    qBlock.appendChild(el('p', { class: 'text-[10px] font-bold text-indigo-400 mb-1', text: 'Q' + (idx + 1) + ' · Difficulté ' + q.difficulte }));
+    qBlock.appendChild(el('p', { class: 'text-sm font-semibold text-slate-800 mb-3 leading-relaxed', text: q.question }));
+    q.reponses.forEach(function(r) {
+      var isCorrect = r.correct === true;
+      var row = el('div', {
+        class: 'flex items-start gap-2 py-1.5 px-2 rounded-lg mb-1 ' + (isCorrect ? 'bg-emerald-50' : '')
+      });
+      var letter = el('span', {
+        class: 'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ' +
+          (isCorrect ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-500')
+      });
+      letter.textContent = r.lettre;
+      var txt = el('span', { class: 'text-sm ' + (isCorrect ? 'text-emerald-800 font-semibold' : 'text-slate-600') });
+      txt.textContent = r.texte;
+      row.appendChild(letter); row.appendChild(txt);
+      qBlock.appendChild(row);
+    });
+    if (q.explication) {
+      var exp = el('div', { class: 'mt-2 px-3 py-2 bg-indigo-50 rounded-lg border border-indigo-100' });
+      exp.appendChild(el('p', { class: 'text-[11px] font-bold text-indigo-500 mb-0.5', text: '💡 Explication' }));
+      exp.appendChild(el('p', { class: 'text-xs text-indigo-800 leading-relaxed', text: q.explication }));
+      qBlock.appendChild(exp);
+    }
+    // Bouton 👎 par question (mode tuteur — signaler une erreur)
+    var flagRow = el('div', { class: 'mt-2 flex justify-end' });
+    var btnFlag = el('button', { class: 'text-xs text-slate-300 hover:text-red-500 transition-colors', text: '👎 Signaler une erreur' });
+    (function(qItem, qNum) {
+      btnFlag.addEventListener('click', async function() {
+        if (!confirm('Signaler une erreur dans cette question ?')) return;
+        try {
+          await QCMEngine.flagQuestion(QCMEngine._utils.questionSourceId(qItem, qNum), 'erreur_question', null);
+          btnFlag.textContent = '✓ Signalé';
+          btnFlag.disabled = true;
+        } catch(e) { alert('Erreur : ' + e.message); }
+      });
+    })(q.item, q.question_numero);
+    flagRow.appendChild(btnFlag);
+    qBlock.appendChild(flagRow);
+    content.appendChild(qBlock);
+  });
+
+  // Masquer explication + suivant (non pertinents en mode lecture)
+  document.getElementById('qcm-flag').style.display = 'none';
+  document.getElementById('qcm-next').style.display = 'none';
+  // Garder 👎 visible pour signaler des erreurs depuis la vue tuteur
+  document.getElementById('qcm-thumbdown').style.display = '';
+  modal.classList.remove('hidden');
+}
+
 document.getElementById('qcm-start').addEventListener('click', async function() {
   var btn = this;
   btn.disabled = true;
   btn.textContent = 'Chargement…';
   try {
     var item = document.getElementById('qcm-item').value || null;
-    var diff = parseInt(document.getElementById('qcm-diff').value) || null;
-    var n = parseInt(document.getElementById('qcm-n').value) || 10;
-    var questions = await QCMEngine.getQuestions({ item: item, difficulte: diff, mode: currentMode, n: n });
-    if (!questions.length) { alert('Aucune question pour ces critères.'); return; }
+    // Toutes les questions de l'item, ordre séquentiel
+    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential' });
+    if (!questions.length) { alert('Aucune question pour cet item.'); return; }
     qcmState = { item: item, mode: currentMode, questions: questions, idx: 0, reponses: [], tStart: Date.now() };
+    // Réafficher les boutons footer (cas où tuteur avait ouvert la vue lecture)
+    document.getElementById('qcm-flag').style.display = '';
+    document.getElementById('qcm-thumbdown').style.display = '';
+    document.getElementById('qcm-next').style.display = '';
     showQuestion();
     document.getElementById('qcm-modal').classList.remove('hidden');
   } catch(e) {
@@ -402,13 +446,24 @@ document.getElementById('qcm-next').addEventListener('click', function() {
 });
 
 document.getElementById('qcm-flag').addEventListener('click', async function() {
-  if (!qcmState) return;
+  if (!qcmState || _previewTuteur) return;
   var q = qcmState.questions[qcmState.idx];
-  var msg = prompt('Signaler cette question. Message :');
+  var msg = prompt('Ce que vous n\'avez pas compris (optionnel) :');
   if (msg === null) return;
   try {
-    await QCMEngine.flagQuestion(QCMEngine._utils.questionSourceId(q.item, q.question_numero), 'erreur_question', msg);
-    alert('Signalement envoyé au tuteur.');
+    await QCMEngine.flagQuestion(QCMEngine._utils.questionSourceId(q.item, q.question_numero), 'demande_explication', msg.trim() || null);
+    alert('Demande envoyée au tuteur ✓');
+    loadFlags();
+  } catch(e) { alert('Erreur : ' + e.message); }
+});
+
+document.getElementById('qcm-thumbdown').addEventListener('click', async function() {
+  if (!qcmState) return;
+  var q = qcmState.questions[qcmState.idx];
+  if (!confirm('Signaler une erreur dans cette question ?')) return;
+  try {
+    await QCMEngine.flagQuestion(QCMEngine._utils.questionSourceId(q.item, q.question_numero), 'erreur_question', null);
+    alert('Erreur signalée ✓');
     loadFlags();
   } catch(e) { alert('Erreur : ' + e.message); }
 });
