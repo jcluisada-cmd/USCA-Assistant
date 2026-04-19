@@ -49,6 +49,7 @@
       </div>
       <div class="flex items-center gap-2 flex-shrink-0">
         <span id="save-indicator" class="text-[10px] font-semibold text-emerald-600 opacity-0 transition-opacity">✓ Enregistré</span>
+        <button id="btn-export-livret" class="hidden text-[11px] font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">⬇ Exporter</button>
         <button id="btn-logout" class="text-[11px] font-semibold text-slate-500 hover:text-indigo-600 transition-colors">Déconnexion</button>
       </div>
     </div>
@@ -173,6 +174,8 @@ function showSaveIndicator() {
     const rows = await db.getProgressionStage(currentStage.id);
     rows.forEach(r => { progressionMap[r.question_id] = r; });
   } catch(e) { console.warn('Progression non chargée', e); }
+
+  document.getElementById('btn-export-livret').classList.remove('hidden');
 
   renderTabs();
   renderAccueil();
@@ -573,6 +576,106 @@ function debounceSave(chapitreId, questionId, reponseEtudiant, reponseJson) {
   saveTimers[questionId] = setTimeout(() => {
     saveProgression(chapitreId, questionId, reponseEtudiant, reponseJson);
   }, SAVE_DEBOUNCE_MS);
+}
+
+document.getElementById('btn-export-livret').addEventListener('click', downloadLivret);
+
+function downloadLivret() {
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function getAnswerText(q) {
+    const p = progressionMap[q.id];
+    if (!p) return null;
+    if (q.type === 'fill_in' || q.type === 'texte_libre' || q.type === 'vrai_faux') return p.reponse_etudiant || null;
+    if (q.type === 'qcm_single') {
+      if (!p.reponse_etudiant) return null;
+      const c = (q.choix || []).find(x => x.id === p.reponse_etudiant);
+      return c ? c.label : p.reponse_etudiant;
+    }
+    if (q.type === 'qcm_multi') {
+      const sel = p.reponse_json && p.reponse_json.selected;
+      if (!sel || !sel.length) return null;
+      return sel.map(id => { const c = (q.choix || []).find(x => x.id === id); return c ? c.label : id; }).join(', ');
+    }
+    if (q.type === 'table_fill') {
+      const cells = p.reponse_json && p.reponse_json.cells;
+      if (!cells) return null;
+      return (q.lignes || []).map(ln => {
+        const vals = Object.values(cells[ln.id] || {}).filter(Boolean).join(', ');
+        return ln.cellules[0] + ' : ' + (vals || '—');
+      }).join(' | ');
+    }
+    return null;
+  }
+  function getExpectedText(q) {
+    const ra = q.reponse_attendue;
+    if (typeof ra === 'string') return ra;
+    if (Array.isArray(ra)) return ra.join(', ');
+    if (q.type === 'table_fill') return (q.lignes || []).map(ln => ln.cellules[0] + ' : ' + (ln.reponse_attendue || '—')).join(' | ');
+    return null;
+  }
+
+  const nom = (isPreview ? previewStudentName : (currentProfile && currentProfile.nom)) || '';
+  const stageDates = currentStage ? (formatDateFr(currentStage.date_debut) + ' — ' + formatDateFr(currentStage.date_fin)) : '';
+  const ifsi = currentStage ? ((currentStage.ifsi_origine || '') + (currentStage.promo ? ' — Promo ' + currentStage.promo : '')) : '';
+
+  let rows = '';
+  let qNum = 0;
+  (LIVRET_IFSI.chapitres || []).forEach(ch => {
+    const stats = chapterStats(ch);
+    rows += '<div class="ch"><h2>' + esc(ch.icone ? ch.icone + ' ' + ch.titre : ch.titre) + ' <span class="prog">(' + stats.done + '/' + stats.total + ')</span></h2>';
+    (ch.sections || []).forEach(sec => {
+      rows += '<h3>' + esc(sec.titre) + '</h3>';
+      (sec.questions || []).forEach(q => {
+        qNum++;
+        const ans = getAnswerText(q);
+        const exp = getExpectedText(q);
+        const skip = typeof exp === 'string' && (exp.startsWith('À rédiger') || exp.startsWith('À compléter'));
+        rows += '<div class="q' + (ans ? '' : ' empty') + '"><p class="qn">Q' + qNum + '</p>';
+        rows += '<p class="qe">' + esc(q.enonce) + '</p>';
+        rows += '<p class="qa">' + (ans ? esc(ans) : '<em>Sans réponse</em>') + '</p>';
+        if (exp && !skip) rows += '<p class="qx"><strong>Attendu :</strong> ' + esc(exp) + '</p>';
+        if (q.explication) rows += '<p class="qi">💡 ' + esc(q.explication) + '</p>';
+        rows += '</div>';
+      });
+    });
+    rows += '</div>';
+  });
+
+  const html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Livret IFSI \u2014 ' + esc(nom) + '</title>'
+    + '<style>body{font-family:Georgia,serif;max-width:760px;margin:auto;padding:24px;color:#1e293b;font-size:14px}'
+    + 'h1{font-size:1.4rem;font-weight:800;border-bottom:3px solid #4F46E5;padding-bottom:8px;margin-bottom:4px}'
+    + '.meta{color:#64748b;font-size:.8rem;margin:2px 0}'
+    + '.ch{margin-top:2em;page-break-inside:avoid}'
+    + 'h2{font-size:1rem;font-weight:700;color:#4F46E5;border-left:4px solid #4F46E5;padding-left:8px;margin-top:1.5em}'
+    + 'h3{font-size:.85rem;font-weight:700;color:#64748b;text-transform:uppercase;margin-top:1em;letter-spacing:.05em}'
+    + '.prog{font-weight:400;color:#94a3b8;font-size:.8rem}'
+    + '.q{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:8px}'
+    + '.q.empty{opacity:.6}'
+    + '.qn{font-size:.7rem;font-weight:700;color:#94a3b8;margin:0 0 3px}'
+    + '.qe{font-weight:600;margin:0 0 6px}'
+    + '.qa{background:#ede9fe;border-left:3px solid #4F46E5;padding:4px 8px;border-radius:4px;margin:4px 0}'
+    + '.qx{font-size:.8rem;color:#047857;margin:4px 0}'
+    + '.qi{font-size:.78rem;color:#64748b;font-style:italic;margin:4px 0}'
+    + '@media print{.q{page-break-inside:avoid}}'
+    + '</style></head><body>'
+    + '<h1>Livret de Stage IFSI — USCA Pitié-Salpêtrière</h1>'
+    + '<p class="meta"><strong>' + esc(nom) + '</strong></p>'
+    + (stageDates ? '<p class="meta">Stage : ' + esc(stageDates) + '</p>' : '')
+    + (ifsi ? '<p class="meta">' + esc(ifsi) + '</p>' : '')
+    + '<p class="meta">Exporté le ' + new Date().toLocaleDateString('fr-FR') + '</p>'
+    + rows
+    + '</body></html>';
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'livret-ifsi-' + nom.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '.html';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); document.body.removeChild(a); }, 1000);
 }
 </script>
 </body>

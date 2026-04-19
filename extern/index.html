@@ -160,6 +160,11 @@
 <script>
 'use strict';
 
+// ── Nettoyage préfixe question "[Item XX] Question N - Difficulté : " ──
+function cleanQ(text) {
+  return String(text || '').replace(/^\[.*?\].*?:\s*/, '');
+}
+
 // ── Helper DOM safe (remplace innerHTML sur tout contenu dynamique) ──
 function el(tag, attrs, children) {
   var n = document.createElement(tag);
@@ -356,7 +361,7 @@ function showAllQuestionsModal(itemLabel, questions) {
   questions.forEach(function(q, idx) {
     var qBlock = el('div', { class: 'pb-5 mb-5 border-b border-slate-100 last:border-0 last:mb-0' });
     qBlock.appendChild(el('p', { class: 'text-[10px] font-bold text-indigo-400 mb-1', text: 'Q' + (idx + 1) + ' · Difficulté ' + q.difficulte }));
-    qBlock.appendChild(el('p', { class: 'text-sm font-semibold text-slate-800 mb-3 leading-relaxed', text: q.question }));
+    qBlock.appendChild(el('p', { class: 'text-sm font-semibold text-slate-800 mb-3 leading-relaxed', text: cleanQ(q.question) }));
     q.reponses.forEach(function(r) {
       var isCorrect = r.correct === true;
       var row = el('div', {
@@ -471,11 +476,11 @@ document.getElementById('qcm-thumbdown').addEventListener('click', async functio
 function showQuestion() {
   var q = qcmState.questions[qcmState.idx];
   document.getElementById('qcm-progress').textContent = 'Question ' + (qcmState.idx + 1) + ' / ' + qcmState.questions.length;
-  document.getElementById('qcm-meta').textContent = q.item + ' · Difficulté ' + q.difficulte;
+  document.getElementById('qcm-meta').textContent = q.item || '';
   var content = document.getElementById('qcm-content');
   clear(content);
 
-  content.appendChild(el('p', { class: 'text-sm font-medium text-slate-800 leading-relaxed', text: q.question }));
+  content.appendChild(el('p', { class: 'text-sm font-medium text-slate-800 leading-relaxed', text: cleanQ(q.question) }));
 
   var choices = el('div', { class: 'space-y-2' });
   q.reponses.forEach(function(r) {
@@ -738,7 +743,7 @@ function buildExportHTML(nom, dateExport, sessions, statsByItem, allItems, idx) 
     '  var q=state.questions[state.idx];\n' +
     '  document.getElementById("ex-progress").textContent="Question "+(state.idx+1)+" / "+state.questions.length;\n' +
     '  document.getElementById("ex-meta").textContent=(q._item||"")+" \u00b7 Difficult\u00e9 "+q.difficulte;\n' +
-    '  document.getElementById("ex-question").textContent=q.question;\n' +
+    '  document.getElementById("ex-question").textContent=q.question.replace(/^\\[.*?\\].*?:\\s*/,"");\n' +
     '  document.getElementById("ex-explication").style.display="none";\n' +
     '  document.getElementById("ex-next").disabled=true;\n' +
     '  var cbox=document.getElementById("ex-choices");\n' +

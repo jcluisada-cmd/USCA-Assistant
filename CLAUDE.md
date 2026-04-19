@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 19 avril 2026 (session v3.71 → v3.72 — Mon externe dashboard + export HTML autonome)
+> Dernière mise à jour : 19 avril 2026 (session v3.74 → v3.75 — export HTML livret IFSI + QCM simplifié + vue tuteur + nettoyage prefixe questions)
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md, NEXT_SESSION_QCM.md
 
 ---
@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.71 |
+| **Service Worker** | usca-v3.75 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -244,9 +244,13 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 ### Module Externe — Dashboard QCM EDN (`extern/index.html`)
 - ✅ **Garde session** : redirection automatique vers `/extern/` au login si `role='externe'`
 - ✅ **Carte Chambres** (lecture seule) : liste patients hospitalisés via `db.getPatients()`, pas d'actions, juste prénom + chambre + substance principale + date sortie prévue
-- ✅ **Carte Mon QCM EDN** : sélecteur item (depuis `data/index.json` chargé une fois), filtre difficulté (1=Facile/2=Moyen/3=Difficile/Toutes), nombre de questions (5/10/20/30), mode entraînement (correction immédiate + explication) ou examen (correction à la fin uniquement)
-- ✅ **Joueur QCM modal** : 4 choix par question, badge difficulté, progression "Q n / total", bouton "⚑ Signaler" qui ouvre prompt + insère dans `qcm_flags`. Score final + persistance Supabase (`qcm_sessions` + `qcm_reponses`).
+- ✅ **Carte Mon QCM EDN** : sélecteur item uniquement (index.json chargé une fois) — mode entraînement séquentiel par défaut, correction immédiate + explication. Plus de filtre difficulté ni de sélecteur n ni de mode examen.
+- ✅ **Joueur QCM modal** : 4 choix par question, progression "Q n / total", bouton 💬 "Demander une explication" → `demande_explication` dans `qcm_flags`, bouton 👎 → `erreur_question`. Score final + persistance Supabase (`qcm_sessions` + `qcm_reponses`).
+- ✅ **Affichage questions** : préfixe `[Item XX] Question N - Difficulté :` retiré via `cleanQ()` — affiche uniquement l'énoncé de la question.
 - ✅ **Carte Mes signalements** : historique des flags émis (statut ouvert/traité, message original, réponse tuteur si renseignée)
+- ✅ **Mode tuteur** (`?preview=tuteur`) : bandeau orange, bouton "Voir toutes les questions" par item, 👎 signalement activé, chambres/signalements/export masqués.
+- ✅ **Export app autonome** : bouton ⬇ → HTML standalone 477 questions embarquées + joueur interactif. Sans features tuteur (signalements).
+- ✅ **Vue tuteur dans admin** : section "Mon externe" pour médecin/admin — stats sessions, signalements en attente, réponse aux flags. Tous les médecins voient l'externe (pas de tuteur désigné).
 - ✅ **Lazy-load** : `index.json` (catalogue léger) au démarrage ; un `item_XX.json` n'est chargé que lorsque l'item est sélectionné, puis caché en mémoire pour la session
 - ✅ **Service Worker** : précache `extern/`, `qcm-engine.js`, `data/index.json` ; les `item_*.json` restent en cache dynamique stale-while-revalidate
 - ✅ **Identifiant question stable** : `"Item 76 - Q12"` (helper `QCMEngine._utils.questionSourceId`) — invariant même si on réordonne le JSON, utilisé pour scoring et signalements
@@ -340,16 +344,27 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [x] **Fix post-cure patient** — bouton « Faire une demande de post-cure » disparaissait dès qu'une structure (et pas seulement une date) était définie. Condition simplifiée à `if (hasDate)` : le bouton réapparaît automatiquement si la date est retirée.
 - [x] **Fix DB post-cure** — `updatePostcureStatut` écrasait systématiquement `structure` et `date_postcure` par la date du jour (fonction conçue pour checkboxes, détournée pour valeurs libres). Distinction `value === true` (workflow → date du jour) vs `value` string (→ valeur brute). `shared/supabase.js:549`.
 
+### Fait — Session 19/04 soir (v3.71 → v3.75)
+- [x] **Mon externe** : section dans dashboard admin/médecin (analogue à "Mon élève"). Tous les médecins peuvent voir l'externe (pas de tuteur désigné). Stats sessions QCM, signalements en attente, réponse aux flags. Migration v18 RLS médecin→externe sessions/flags.
+- [x] **Accordion "Mes élèves"** unifié admin : IFSI + QCM en sous-sections, accordion repliable, titre dynamique selon le rôle.
+- [x] **QCM simplifié** : suppression filtre difficulté, sélecteur n, mode examen. Sélection item uniquement + mode séquentiel (ordre progressif JSON). `qcm-engine.js` mode `'sequential'` ajouté.
+- [x] **Préfixe questions nettoyé** : `cleanQ()` strip `[Item XX] Question N - Difficulté :` à l'affichage (pas en JSON source). Appliqué dans joueur, vue tuteur, export.
+- [x] **Boutons 💬 Explication + 👎 signalement** distincts par question (remplace le seul bouton ⚑ Signaler).
+- [x] **Mode tuteur** (`?preview=tuteur`) : bandeau, "Voir toutes les questions" par item avec explications, 👎 préservé, sections non pertinentes masquées.
+- [x] **Export HTML autonome QCM** : Blob + URL.createObjectURL, 477 questions embarquées, joueur interactif DOM pur sans innerHTML. Masqué en mode tuteur.
+- [x] **Fix planning réunions** : décocher présence/absence maintenant possible (`deletePresenceReunion`) + date isolée par semaine (`reuDateStr` calculé depuis `reuDate` réelle).
+- [x] **Export HTML livret IFSI** : bouton ⬇ dans `etudiant/index.html`, génère un HTML imprimable avec toutes les questions + réponses de l'élève, résolution IDs→labels pour QCM, réponses attendues, explications. Disponible pour élève et soignant en mode consultation.
+- [x] Retrait liens "Voir dans la Toolbox" du lexique IFSI.
+- [x] `sw.js` v3.75
+
 ### À faire
 - [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
-- [ ] **Livret IFSI — PDF basique** : export progression élève (questions + ses réponses) pour archivage fin de stage.
-- [x] **QCM EDN — vue tuteur** : section "Mon externe" dans `admin/index.html` pour médecin/admin. Tous les médecins voient l'externe (pas de tuteur désigné). Stats sessions, signalements, réponse aux flags. (v3.72)
-- [x] **QCM EDN — export app autonome** : bouton dans `extern/index.html` génère un HTML standalone avec 477 questions embarquées + joueur interactif + historique sessions. Sans feature tuteur (signalements). (v3.72)
-- [ ] **Bug planning — présence réunion** : cocher présence/absence sur une réunion ne peut pas être décoché, et s'applique à toutes les semaines (pas isolé par date de semaine).
+- [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF).
+- [ ] **QCM EDN — lien tuteur↔externe** : UI dans gestion comptes admin pour insérer une ligne `tuteur_etudiant` au moment de la création d'un compte externe (sélecteur tuteur parmi médecins/IDE).
 - [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
 
 ---
