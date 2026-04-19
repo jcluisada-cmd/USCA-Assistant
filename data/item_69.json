@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 1,
+      "question": "[Item 69] Question 1 - Facile : Le post-partum blues (baby blues) est-il considéré comme un état pathologique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Oui, c'est une urgence psychiatrique absolue.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Non, il est considéré comme un état adaptatif physiologique transitoire.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Oui, il nécessite toujours un traitement antidépresseur.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Non, mais il évolue systématiquement vers la schizophrénie.",
+          "correct": false
+        }
+      ],
+      "explication": "Le post-partum blues n'est pas un état pathologique : il peut être considéré comme un état adaptatif physiologique, touchant 30 à 80 % des accouchées. (Source EDN Item 69, p.112)",
+      "difficulte": 1,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 2,
+      "question": "[Item 69] Question 2 - Facile : Quand survient typiquement le pic du post-partum blues (baby blues) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le 1er mois après l'accouchement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au 3e jour après l'accouchement.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "À la fin de la première année.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Avant l'accouchement.",
+          "correct": false
+        }
+      ],
+      "explication": "Le post-partum blues survient entre le 2e et le 5e jour après l'accouchement, avec un pic au 3e jour. (Source EDN Item 69, p.112)",
+      "difficulte": 1,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 3,
+      "question": "[Item 69] Question 3 - Moyen : Quelle est la prévalence de l'épisode dépressif caractérisé (EDC) du post-partum ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "15 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "50 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "80 %",
+          "correct": false
+        }
+      ],
+      "explication": "L'EDC du post-partum concerne environ 15 % des femmes. (Source EDN Item 69, p.112)",
+      "difficulte": 2,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 4,
+      "question": "[Item 69] Question 4 - Moyen : À quel grand risque majeur expose un épisode maniaque ou un épisode psychotique bref survenant dans le post-partum ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "À un risque exclusif d'hémorragie de la délivrance.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "À une simple fatigue compensée par le sommeil.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "À un risque majeur suicidaire ou d'infanticide.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "À une dépendance fulgurante aux opiacés.",
+          "correct": false
+        }
+      ],
+      "explication": "Le risque majeur dans l'épisode maniaque ou l'épisode psychotique bref du post-partum est un risque suicidaire ou d'infanticide. (Source EDN Item 69, p.113-114)",
+      "difficulte": 2,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 5,
+      "question": "[Item 69] Question 5 - Difficile : Concernant l'épisode psychotique bref du post-partum (psychose puerpérale), quel tableau clinique l'accompagne classiquement, nécessitant d'éliminer une cause organique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hyperphagie boulimique majeure.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un syndrome pseudo-confusionnel, avec délires polymorphes et labilité émotionnelle.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un syndrome parkinsonien asymétrique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une catalepsie rigide sans délire.",
+          "correct": false
+        }
+      ],
+      "explication": "La symptomatologie de l'épisode psychotique bref du post-partum comporte la présence de symptômes confusionnels (tableau pseudo-confusionnel) nécessitant d'éliminer des diagnostics organiques (thrombophlébite cérébrale, infection, etc.). (Source EDN Item 69, p.114)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 6,
+      "question": "[Item 69] Question 6 - Difficile : Vers quelle pathologie psychiatrique chronique évolue majoritairement un épisode psychotique bref du post-partum ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La schizophrénie hébéphrénique systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble de personnalité borderline.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble bipolaire (essentiellement).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'évolue jamais vers une pathologie chronique.",
+          "correct": false
+        }
+      ],
+      "explication": "L'évolution de l'épisode psychotique bref du post-partum se fait dans la majorité des cas vers un trouble psychiatrique chronique (trouble bipolaire essentiellement, parfois schizophrénie). (Source EDN Item 69, p.114)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 7,
+      "question": "[Item 69] Question 7 - Difficile : Comment se définissent les 'phobies d'impulsion' qui surviennent souvent dans les troubles anxieux ou dépressifs du post-partum ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des actes agressifs impulsifs incontrôlables envers l'entourage.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La peur panique de sortir de chez soi avec le bébé (agoraphobie).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Des angoisses de passage à l'acte à l'égard du bébé (peur de lui faire du mal), dont la mère reconnaît le caractère déraisonnable, sans passage à l'acte réel.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La peur de la mort par arrêt cardiaque imminent.",
+          "correct": false
+        }
+      ],
+      "explication": "Les phobies d'impulsion sont des angoisses de passage à l'acte à l'égard du bébé (peur de lui faire du mal). La mère reconnaît le caractère déraisonnable, et elles ne sont pas un facteur de risque de passage à l'acte hétéro-agressif. (Source EDN Item 69, p.114)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 8,
+      "question": "[Item 69] Question 8 - Difficile : Une femme découvre fortuitement sa grossesse au 7e mois de gestation. Elle n'a eu aucune modification corporelle notable (pas de ventre, règles maintenues). Quel est le diagnostic le plus probable ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une simulation.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un déni de grossesse total.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un déni de grossesse partiel.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une dissimulation volontaire.",
+          "correct": false
+        }
+      ],
+      "explication": "Le déni de grossesse se définit comme la non-prise de conscience de l'état de grossesse à partir de 22 SA (déni partiel) et parfois jusqu'à l'accouchement (déni total). La découverte au 7e mois est un déni partiel (avant l'accouchement). (Source EDN Item 69, p.111)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 9,
+      "question": "[Item 69] Question 9 - Difficile : Quel traitement thymorégulateur est FORMELLEMENT et ABSOLUMENT interdit chez la femme enceinte et la femme en âge de procréer (en première intention) en raison de sa forte tératogénicité ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le sulfate de magnésium.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'acide valproïque (Dépakine, Dépakote).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le lithium.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'olanzapine.",
+          "correct": false
+        }
+      ],
+      "explication": "L'acide valproïque est absolument interdit pendant la grossesse et en première intention chez toute femme en âge de procréer (tératogénicité majeure et troubles neurodéveloppementaux). (Source EDN Item 69, p.115)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 10,
+      "question": "[Item 69] Question 10 - Difficile : En cas d'intoxication de la femme enceinte dépendante à l'héroïne, quelle est l'attitude recommandée face à la grossesse vis-à-vis du sevrage ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sevrage opiacé brutal en hospitalisation sous contrainte.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Maintien d'un usage réduit d'héroïne.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Instauration ou maintien rapide d'un Traitement de Substitution Opiacée (TSO) car le sevrage brutal est contre-indiqué (risque d'avortement).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Prescription de benzodiazépines massives pour compenser le sevrage total de l'héroïne.",
+          "correct": false
+        }
+      ],
+      "explication": "Le sevrage brutal des opiacés est contre-indiqué chez la femme enceinte (risque de mort fœtale). L'instauration d'un traitement de substitution opiacée doit se faire en quelques jours. (Source EDN Addictologie Opiacés/Item 69, p.368)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 11,
+      "question": "[Item 69] Question 11 - Difficile : Parmi les éléments cliniques suivants, lequel est particulièrement fréquent dans l'EDC du post-partum et nécessite une vigilance accrue (témoignant souvent de caractéristiques mixtes) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypersomnie majeure sans tristesse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des signes d'hypomanie associés (tachypsychie, insomnie sans fatigue, hyperréactivité).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le mutisme akinétique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence totale d'anxiété.",
+          "correct": false
+        }
+      ],
+      "explication": "Il faut absolument rechercher des signes d'hypomanie (témoignant de caractéristiques mixtes de l'épisode dépressif) qui sont fréquents lors de la période périnatale (tachypsychie, insomnie sans fatigue, hyperréactivité...). (Source EDN Item 69, p.112)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 12,
+      "question": "[Item 69] Question 12 - Difficile : Une femme sans antécédents psychiatriques traités pour EDC pendant la grossesse découvre sa grossesse. Elle est sous traitement antidépresseur efficace. Que faire de ce traitement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'arrêt brutal du traitement est impératif au 1er trimestre.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le doubler pour prévenir la rechute.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'arrêt brutal n'est pas recommandé car il peut entraîner un sevrage ou la décompensation du trouble ; l'évaluation bénéfice/risque est primordiale (via le CRAT).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Remplacer l'antidépresseur par du lithium.",
+          "correct": false
+        }
+      ],
+      "explication": "L'arrêt brutal d'un traitement lors de la découverte d'une grossesse n'est pas recommandé car il peut entraîner un sevrage ou la décompensation du trouble sous-jacent. (Source EDN Item 69, p.115)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 13,
+      "question": "[Item 69] Question 13 - Difficile : Quelle est la mission principale des UME (Unités Mère-Enfant) ou UMB ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Permettre exclusivement la garde de l'enfant pendant les soins psychiatriques de la mère.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Assurer le soin psychiatrique de la mère, associé au travail du lien mère-enfant et à la prévention des troubles du développement de l'enfant.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Offrir un lieu de vie pérenne jusqu'à la majorité de l'enfant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Réaliser l'évaluation sociale en vue d'un placement définitif.",
+          "correct": false
+        }
+      ],
+      "explication": "L'objectif des UME/UMB est le soin de la mère associé au travail du lien mère-enfant dans une démarche de prévention des troubles du développement de l'enfant. (Source EDN Item 69, p.115)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 14,
+      "question": "[Item 69] Question 14 - Difficile : Lors d'un post-partum, quelle pathologie non psychiatrique est un diagnostic différentiel urgentissime majeur de la confusion avec délire et signes infectieux ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La thrombophlébite cérébrale ou une infection (endométrite).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le diabète de type 1.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperparathyroïdie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un anévrysme de l'aorte abdominale.",
+          "correct": false
+        }
+      ],
+      "explication": "Devant une symptomatologie aiguë en post-partum (notamment pseudo-confusionnelle), il faudra éliminer en urgence une thrombophlébite cérébrale, les infections (endométrite) et les causes métaboliques. (Source EDN Item 69, p.109/114)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "question_numero": 15,
+      "question": "[Item 69] Question 15 - Difficile : Concernant les troubles anxieux en période prénatale, à quels trimestres sont-ils statistiquement les plus fréquents ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Exclusivement au 2e trimestre.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au premier et au dernier trimestres de grossesse.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Au 2e et au dernier trimestre.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prévalence est stable tout au long des trois trimestres.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles anxieux touchent 5 à 15 % des femmes dans la période prénatale, avec une plus forte prévalence au premier et au dernier trimestres de grossesse. (Source EDN Item 69, p.110)",
+      "difficulte": 3,
+      "source": "EDN Item 69"
+    }
+  ]
+}

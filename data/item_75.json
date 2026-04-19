@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 1,
+      "question": "[Item 75] Question 1 - Facile : Quel est le principe actif du tabac majoritairement responsable de la dépendance ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le monoxyde de carbone.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les goudrons.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La nicotine.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les radicaux libres.",
+          "correct": false
+        }
+      ],
+      "explication": "La nicotine est le principal agent responsable de la dépendance, provoquant un pic rapide de concentration plasmatique. Elle n'est pas considérée comme cancérogène. (Source EDN Item 75, 15, 16)",
+      "difficulte": 1,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 2,
+      "question": "[Item 75] Question 2 - Facile : Quel test clinique est spécifiquement utilisé pour évaluer le niveau de dépendance au tabac ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le test AUDIT-C.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le test de Fagerström.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le score de Richmond.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le questionnaire MDQ.",
+          "correct": false
+        }
+      ],
+      "explication": "L'évaluation de la dépendance au tabac se fait classiquement à l'aide du test de Fagerström en 6 questions. (Source EDN Item 75, 17)",
+      "difficulte": 1,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 3,
+      "question": "[Item 75] Question 3 - Moyen : Sur le plan épidémiologique, quelle part des décès par cancers broncho-pulmonaires est attribuable à l'intoxication tabagique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "25 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "50 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "80 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "95 %",
+          "correct": false
+        }
+      ],
+      "explication": "Le tabagisme est responsable de 80 % des décès par cancers broncho-pulmonaires (et de 25% de l'ensemble des cancers). (Source EDN Item 75, 15, 18)",
+      "difficulte": 2,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 4,
+      "question": "[Item 75] Question 4 - Moyen : En ce qui concerne la cigarette électronique, quelle affirmation est exacte selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle diffuse systématiquement des goudrons toxiques.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle est formellement recommandée comme point d'entrée pour les non-fumeurs.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle dispense un mélange de propylène glycol, nicotine, eau, arômes et glycérol sans combustion.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle ne peut pas être utilisée comme outil de sevrage.",
+          "correct": false
+        }
+      ],
+      "explication": "La cigarette électronique dispense un mélange de propylène glycol, nicotine, eau, arômes et glycérol propulsé sous forme de vapeur. Elle peut être utile comme outil de sevrage, mais est déconseillée aux non-fumeurs. (Source EDN Item 75, 19-20)",
+      "difficulte": 2,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 5,
+      "question": "[Item 75] Question 5 - Difficile : Lors de l'évaluation du risque lié à l'intoxication tabagique, quelle est la règle concernant l'impact de la dose par rapport à la durée d'exposition ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Doubler la dose multiplie le risque de cancer par 16, doubler la durée le multiplie par 2.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Doubler la dose multiplie le risque de cancer par 2, doubler la durée le multiplie par 16, voire 23.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La dose journalière a un impact exponentiel tandis que la durée a un impact linéaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le concept de Paquets-Année (PA) traduit parfaitement cette équivalence des risques.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée de l'intoxication est le facteur de risque le plus important. Doubler la dose multiplie le risque par 2, alors que doubler la durée le multiplie par 16, voire 23. Le calcul en PA n'est donc pas le plus pertinent. (Source EDN Item 75, 21, 22)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 6,
+      "question": "[Item 75] Question 6 - Difficile : Quel traitement pharmacologique d'aide à l'arrêt du tabac agit comme inhibiteur de la recapture de la noradrénaline et de la dopamine ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La varénicline (Champix®).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le bupropion (Zyban®).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La fluoxétine (Prozac®).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'acamprosate (Aotal®).",
+          "correct": false
+        }
+      ],
+      "explication": "Le bupropion, utilisé en dernière intention, est un inhibiteur de la recapture de la noradrénaline et de la dopamine. La varénicline est un agoniste partiel des récepteurs nicotiniques. (Source EDN Item 75, 23-24)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 7,
+      "question": "[Item 75] Question 7 - Difficile : Comment le tabagisme passif modifie-t-il le risque de cardiopathies ischémiques et de cancer broncho-pulmonaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il ne l'augmente pas significativement chez l'adulte.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il le multiplie par 1,3.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il le multiplie par 3.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il le multiplie par 16.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intoxication passive multiplie le risque de cardiopathies ischémiques et de cancer broncho-pulmonaire par 1,3. (Source EDN Item 75, 25)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 8,
+      "question": "[Item 75] Question 8 - Difficile : Quelle affirmation est VRAIE concernant les comorbidités psychiatriques liées au tabagisme ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le tabac est un facteur protecteur contre le trouble panique grâce à son effet anxiolytique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "82 % des patients atteints de schizophrénie et environ 56 % de ceux atteints de troubles bipolaires fument.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les symptômes dépressifs induits par le sevrage tabagique nécessitent systématiquement un traitement antidépresseur.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'arrêt du tabac aggrave durablement le niveau de stress et l'anxiété des anciens fumeurs.",
+          "correct": false
+        }
+      ],
+      "explication": "82% des patients atteints de schizophrénie et 56% des bipolaires fument. Le tabac pourrait favoriser le trouble panique (effets stimulants). Les symptômes anxio-dépressifs de sevrage sont transitoires et ne nécessitent généralement pas de pharmacothérapie psychiatrique spécifique. L'arrêt durable améliore le niveau de stress. (Source EDN Item 75, 26-27)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 9,
+      "question": "[Item 75] Question 9 - Difficile : Lors de l'évaluation par le test de Fagerström, quelles sont les deux questions considérées comme les plus utiles pour caractériser l'intoxication tabagique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le nombre de cigarettes fumées par jour et si le patient fume lorsqu'il est malade.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le temps écoulé avant la première cigarette le matin et le nombre de cigarettes fumées par jour.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La difficulté à ne pas fumer dans les lieux interdits et la cigarette la plus difficile à supprimer.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le nombre de tentatives d'arrêt précédentes et le fait de fumer davantage le matin.",
+          "correct": false
+        }
+      ],
+      "explication": "Les questions n° 1 (délai avant la 1ère cigarette) et n° 4 (nombre de cigarettes par jour) de ce test sont les plus utiles pour caractériser l'intoxication tabagique. (Source EDN Item 75, 28-29)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 10,
+      "question": "[Item 75] Question 10 - Difficile : Parmi les complications physiopathologiques du tabac, à quelle substance impute-t-on directement le risque accru d'évènements cardiovasculaires (comme l'ischémie myocardique) par compétition avec l'oxygène ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les goudrons.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le monoxyde de carbone (CO).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les radicaux libres.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La nicotine pure.",
+          "correct": false
+        }
+      ],
+      "explication": "Le monoxyde de carbone (CO) issu de la combustion est une cause majeure de troubles cardiovasculaires en réduisant le transport de l'oxygène. (Source EDN Item 75, 30)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 11,
+      "question": "[Item 75] Question 11 - Difficile : Dans la physiopathologie cutanéo-muqueuse et obstétricale du tabagisme, quelle complication n'est PAS classiquement listée dans le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'augmentation de la sévérité de l'acné.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le retard de croissance intra-utérin et l'accouchement prématuré.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperpigmentation irréversible des sclères oculaires.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le déchaussement dentaire et la parodontopathie.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hyperpigmentation irréversible des sclères n'est pas une complication tabagique listée. Les autres (acné, RCIU, déchaussement) le sont. (Source EDN Item 75, 25-26)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 12,
+      "question": "[Item 75] Question 12 - Difficile : Quel score au test de Fagerström témoigne d'une dépendance modérée au tabac ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "0 à 1",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "2 à 3",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "4 à 6",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "7 à 10",
+          "correct": false
+        }
+      ],
+      "explication": "Selon l'interprétation du score de Fagerström : 0 à 1 = pas de dépendance ; 2 à 3 = dépendance modérée ; 4 à 6 = dépendance forte. (Source EDN Item 75, 31)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 13,
+      "question": "[Item 75] Question 13 - Difficile : Quel pourcentage de fumeurs réguliers présentent des signes de dépendance selon les données épidémiologiques du référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 25 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 49 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 75 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Environ 90 %",
+          "correct": false
+        }
+      ],
+      "explication": "49 % des fumeurs réguliers présentent des signes de dépendance. (Source EDN Item 75, 21)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 14,
+      "question": "[Item 75] Question 14 - Difficile : Parmi les effets indésirables des formes orales de substitution nicotinique, lequel est classiquement rapporté ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sédation profonde.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Constipation opiniâtre.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Hoquets et dysgueusie.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Prise de poids rapide.",
+          "correct": false
+        }
+      ],
+      "explication": "Les effets indésirables des formes orales de TSN incluent: hoquets, dysgueusie, palpitations, nausées, brûlures des lèvres, hypersécrétion salivaire. (Source EDN Item 75, 31-23)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "question_numero": 15,
+      "question": "[Item 75] Question 15 - Difficile : Concernant l'utilisation combinée des Traitements de Substitution Nicotinique (TSN), quelle est la recommandation lors d'un sevrage ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est formellement contre-indiqué d'associer un patch à une forme orale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'association de formes orales (gommes) aux patchs transdermiques est possible et courante.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La varénicline doit toujours être prescrite en 1ère intention avec un patch.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les TSN ne sont efficaces qu'en cure courte de 2 semaines maximum.",
+          "correct": false
+        }
+      ],
+      "explication": "Lors du traitement, les formes orales peuvent être associées aux patchs. Les TSN doivent être prescrits suffisamment longtemps à un dosage adapté. (Source EDN Item 75, 31)",
+      "difficulte": 3,
+      "source": "EDN Item 75"
+    }
+  ]
+}

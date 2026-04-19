@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 1,
+      "question": "[Item 79] Question 1 - Facile : Quelles sont les deux seules addictions comportementales officiellement reconnues dans les classifications diagnostiques internationales (CIM/DSM) selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le jeu d'argent pathologique et l'addiction aux achats compulsifs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le jeu d'argent pathologique et le trouble du jeu vidéo.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'addiction sexuelle et l'addiction à Internet.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'addiction à l'exercice physique et le trouble du jeu vidéo.",
+          "correct": false
+        }
+      ],
+      "explication": "Le jeu d'argent pathologique (DSM-5) et le trouble du jeu vidéo (CIM-11) sont les deux considérées comme officiellement reconnues. L'addiction à Internet est encore discutée. (Source EDN Item 79, 32-33)",
+      "difficulte": 1,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 2,
+      "question": "[Item 79] Question 2 - Facile : À quel âge légal la pratique des jeux de hasard et d'argent (JHA) est-elle interdite en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Aux moins de 16 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Aux moins de 18 ans.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Aux moins de 21 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a pas d'interdiction formelle, seule une régulation des sites.",
+          "correct": false
+        }
+      ],
+      "explication": "La pratique des JHA est interdite aux moins de 18 ans, bien que la prévalence du jeu pathologique y soit plus importante que chez les adultes. (Source EDN Item 79, 34)",
+      "difficulte": 1,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 3,
+      "question": "[Item 79] Question 3 - Moyen : Quelle notion décrit l'attitude du joueur d'argent pathologique qui retourne souvent jouer pour recouvrer ses pertes ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le 'craving'.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le 'big win'.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le 'chasing' (se refaire).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le 'thrill' (frisson).",
+          "correct": false
+        }
+      ],
+      "explication": "La phase de pertes pousse le joueur à rejouer pour tenter de regagner l'argent perdu et 'se refaire', phénomène appelé 'chasing'. (Source EDN Item 79, 35)",
+      "difficulte": 2,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 4,
+      "question": "[Item 79] Question 4 - Moyen : Quelle est la prévalence estimée des comorbidités psychiatriques chez les patients présentant une addiction comportementale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 10 %.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 25 %.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Entre 50 et 75 %.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 95 %.",
+          "correct": false
+        }
+      ],
+      "explication": "Les comorbidités psychiatriques (TDAH, anxieux, humeur, autres addictions) touchent 50 à 75 % des patients avec addictions comportementales. (Source EDN Item 79, 36, 37)",
+      "difficulte": 2,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 5,
+      "question": "[Item 79] Question 5 - Difficile : Pour poser le diagnostic de certitude du trouble du jeu vidéo (CIM-11), sur quelle durée minimale d'observation s'appuie-t-on généralement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au moins 1 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 3 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Au moins 12 mois.",
+          "correct": true
+        }
+      ],
+      "explication": "Le comportement de jeux et les autres caractéristiques sont généralement manifestes sur une période d'au moins 12 mois (bien que cette durée puisse être plus courte si tous les critères sont réunis et sévères). (Source EDN Item 79, 38)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 6,
+      "question": "[Item 79] Question 6 - Difficile : Quel sous-groupe démographique est le plus fortement touché par l'addiction aux achats compulsifs selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Surtout masculin (80 %).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Surtout féminin (90 %).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Sex-ratio parfaitement équilibré (1/1).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Surtout des mineurs de moins de 15 ans.",
+          "correct": false
+        }
+      ],
+      "explication": "Le sex-ratio pour les achats compulsifs est féminin à 90 %. (Source EDN Item 79, 39)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 7,
+      "question": "[Item 79] Question 7 - Difficile : Que désigne précisément le terme 'slam' fréquemment comorbide à l'addiction sexuelle (chemsex) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La consommation compulsive de jeux vidéo en réseau.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'injection par voie intraveineuse de substances illicites (notamment cathinones) en contexte sexuel.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une technique d'exposition psychothérapeutique d'immersion ('flooding').",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La consommation excessive d'achats en ligne lors d'épisodes maniaques.",
+          "correct": false
+        }
+      ],
+      "explication": "Le 'slam' désigne l'injection par voie intraveineuse de cathinones de synthèse ou méthamphétamine en contexte sexuel (chemsex). (Source EDN Item 79, 40)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 8,
+      "question": "[Item 79] Question 8 - Difficile : Concernant la pharmacothérapie du jeu d'argent pathologique, quelle affirmation est exacte en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le baclofène possède une AMM spécifique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La fluoxétine est le traitement de référence avec AMM.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il n'existe pas à l'heure actuelle de traitement médicamenteux ayant une AMM pour ce trouble.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le bupropion est recommandé en première ligne.",
+          "correct": false
+        }
+      ],
+      "explication": "Il n'existe pas à l'heure actuelle de traitement médicamenteux ayant une Autorisation de mise sur le marché (AMM) pour le jeu d'argent pathologique. (Source EDN Item 79, 41)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 9,
+      "question": "[Item 79] Question 9 - Difficile : Parmi les troubles suivants, lequel constitue le principal diagnostic différentiel d'une addiction comportementale à évoquer si le comportement ne survient QUE pendant des phases spécifiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'épisode maniaque ou hypomaniaque.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble de la personnalité évitante.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le syndrome de sevrage opiacé.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'anorexie mentale de type restrictif.",
+          "correct": false
+        }
+      ],
+      "explication": "L'épisode maniaque ou hypomaniaque est le diagnostic différentiel classique si l'addiction comportementale (achats compulsifs, hypersexualité, jeu) survient exclusivement durant ces épisodes. (Source EDN Item 79, 42, 43)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 10,
+      "question": "[Item 79] Question 10 - Difficile : Pour poser le diagnostic formel de jeu d'argent pathologique selon les critères en vigueur, combien de manifestations doivent avoir été présentes au cours de la dernière année ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au moins 2.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 4.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 6.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Au moins 9.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour un diagnostic de certitude de jeu d'argent pathologique (DSM-5), au moins quatre des neuf manifestations doivent habituellement avoir été présentes au cours de la dernière année. (Source EDN Item 79, 44)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 11,
+      "question": "[Item 79] Question 11 - Difficile : Quelle mesure d'accompagnement social spécifique le patient joueur d'argent pathologique peut-il demander de son propre chef pour se protéger ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une curatelle renforcée automatique gérée par la banque.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une démarche d'interdiction volontaire de jeux (casinos et sites légaux) valable pour 3 ans minimum.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une interdiction bancaire de crédit à la consommation prononcée par le Juge des libertés.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'injonction de soins psychiatriques obligatoire sans consentement.",
+          "correct": false
+        }
+      ],
+      "explication": "Le patient peut faire une démarche d'interdiction volontaire de jeux valable pour une durée de trois ans minimum (auprès du Ministère de l'Intérieur / ANJ). (Source EDN Item 79, 38)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 12,
+      "question": "[Item 79] Question 12 - Difficile : Quel type de thérapie est recommandé et validé en première ligne pour la prise en charge psychothérapeutique du jeu d'argent pathologique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La psychanalyse d'inspiration freudienne.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'EMDR (Eye Movement Desensitization and Reprocessing).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'entretien motivationnel et les thérapies cognitivo-comportementales (TCC).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La sismothérapie (ECT) à visée désinhibitrice.",
+          "correct": false
+        }
+      ],
+      "explication": "Les psychothérapies ayant fait la preuve de leur efficacité dans le jeu d'argent pathologique sont l'entretien motivationnel et les TCC. (Source EDN Item 79, 45)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 13,
+      "question": "[Item 79] Question 13 - Difficile : Parmi les comorbidités à rechercher en priorité face à une addiction sexuelle, laquelle est classiquement citée dans le tableau spécifique du référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'anorexie mentale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble délirant.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble bipolaire et les pratiques de Chemsex/Slam.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les troubles obsessionnels compulsifs (TOC) primaires.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le tableau des spécificités, l'addiction sexuelle est corrélée au trouble bipolaire et aux pratiques de Chemsex et slam. (Source EDN Item 79, 46)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 14,
+      "question": "[Item 79] Question 14 - Difficile : Qu'est-ce qu'une 'distorsion cognitive' spécifique dans le contexte du jeu de hasard et d'argent (JHA) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La conviction d'entendre des voix hallucinatoires encourageant à jouer.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La perte de la vision des couleurs après une longue session de jeu vidéo.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une pensée erronée sur la place du hasard (ex : penser qu'on fera un 6 si on lance le dé plus fort).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'incapacité à se souvenir des sommes exactes perdues au jeu.",
+          "correct": false
+        }
+      ],
+      "explication": "Les distorsions cognitives dans le JHA sont des pensées erronées sur la place du hasard et du contrôle (ex : lancer le dé plus fort pour obtenir un certain résultat). (Source EDN Item 79, 47)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "question_numero": 15,
+      "question": "[Item 79] Question 15 - Difficile : Quel diagnostic différentiel doit être évoqué devant un tableau d'hypersexualité d'apparition récente chez un patient parkinsonien ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une paraphilie vraie d'apparition tardive.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une hypersexualité iatrogénique induite par les agonistes dopaminergiques.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un syndrome de Kleine-Levin.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une évolution naturelle du trouble déficitaire de l'attention (TDAH).",
+          "correct": false
+        }
+      ],
+      "explication": "Le diagnostic différentiel principal de l'hypersexualité dans ce contexte est l'hypersexualité iatrogénique liée aux traitements par agonistes dopaminergiques de la maladie de Parkinson. (Source EDN Item 79, 46)",
+      "difficulte": 3,
+      "source": "EDN Item 79"
+    }
+  ]
+}

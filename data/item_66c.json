@@ -1,0 +1,644 @@
+{
+  "qcm": [
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 1,
+      "question": "[Item 66c] Question 1 - Facile : Comment se définit principalement le trouble panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par la présence d'une seule attaque de panique dans la vie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par la répétition d'attaques de panique inattendues et spontanées.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Par la peur persistante d'avoir une maladie physique grave (hypocondrie).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Par l'évitement exclusif des araignées et insectes.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble panique est caractérisé par la répétition des attaques de panique, le plus souvent spontanées et imprévisibles (au moins au début). (Source EDN Item 66c)",
+      "difficulte": 1,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 2,
+      "question": "[Item 66c] Question 2 - Facile : Qu'est-ce que l'anxiété anticipatoire dans le contexte du trouble panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La peur de contracter une infection virale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La peur persistante de voir se reproduire une attaque de panique ('peur d'avoir peur').",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'angoisse liée à l'attente des résultats d'un examen médical.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une anxiété déclenchée uniquement par l'observation d'autrui.",
+          "correct": false
+        }
+      ],
+      "explication": "La répétition des crises entraîne une anxiété anticipatoire : le patient vit dans la crainte de voir se reproduire les AP de manière inopinée, c'est la 'peur d'avoir peur'. (Source EDN Item 66c)",
+      "difficulte": 1,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 3,
+      "question": "[Item 66c] Question 3 - Moyen : Quelle est la prévalence sur la vie entière du trouble panique en population générale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 0,5 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 à 3 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "10 à 15 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Environ 25 %",
+          "correct": false
+        }
+      ],
+      "explication": "La prévalence sur la vie entière du trouble panique varie entre 1 et 3 % selon les études, avec une prédominance féminine. (Source EDN Item 66c)",
+      "difficulte": 2,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 4,
+      "question": "[Item 66c] Question 4 - Moyen : À quel âge le trouble panique débute-t-il typiquement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Avant 10 ans",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Entre 20 et 30 ans",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Entre 40 et 50 ans",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 65 ans",
+          "correct": false
+        }
+      ],
+      "explication": "L'âge de début se situe typiquement entre 20 et 30 ans, bien qu'il puisse y avoir des débuts plus précoces ou tardifs. (Source EDN Item 66c)",
+      "difficulte": 2,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 5,
+      "question": "[Item 66c] Question 5 - Difficile : Pour répondre aux critères du DSM-5, pendant combien de temps au minimum une attaque de panique doit-elle avoir été suivie d'une crainte persistante de nouvelles attaques ou d'un changement inadapté de comportement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 semaine",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 mois",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "3 mois",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "6 mois",
+          "correct": false
+        }
+      ],
+      "explication": "Selon le critère B du DSM-5, au moins une des attaques a été suivie par une période d'un mois (ou plus) de crainte persistante ou d'un changement de comportement inadapté. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 6,
+      "question": "[Item 66c] Question 6 - Difficile : Le trouble panique est souvent compliqué d'agoraphobie. Selon le DSM-5, combien de types de situations (sur 5 listées : transports, espaces ouverts, lieux clos, files d'attente, seul à l'extérieur) la peur doit-elle concerner au minimum pour poser ce diagnostic ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "2",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "3",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Toutes les 5",
+          "correct": false
+        }
+      ],
+      "explication": "L'agoraphobie (DSM-5) nécessite une peur ou anxiété marquées pour deux (ou plus) des cinq situations spécifiques listées. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 7,
+      "question": "[Item 66c] Question 7 - Difficile : Quelle affirmation est vraie concernant l'association entre le trouble panique et l'agoraphobie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est impossible de poser un diagnostic d'agoraphobie sans trouble panique avéré.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'agoraphobie désigne exclusivement la peur des grands espaces.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il existe des formes d'agoraphobie sans trouble panique et des formes de trouble panique sans agoraphobie.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'agoraphobie précède toujours l'apparition de la première attaque de panique.",
+          "correct": false
+        }
+      ],
+      "explication": "Bien que TP et agoraphobie soient fréquemment associés, ils peuvent se retrouver de manière isolée : il existe des formes de TP sans agoraphobie et d'agoraphobie sans TP. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 8,
+      "question": "[Item 66c] Question 8 - Difficile : Concernant l'évolution du trouble panique, de quelle complication psychiatrique (comorbidité) s'accompagne-t-il avec le risque le plus élevé parmi les troubles anxieux ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble psychotique bref.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'épisode dépressif caractérisé.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble de la personnalité borderline.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble factice.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble panique est le trouble anxieux pour lequel le risque de développer un épisode dépressif caractérisé est le plus élevé. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 9,
+      "question": "[Item 66c] Question 9 - Difficile : Quel concept cognitif central est proposé pour expliquer la physiopathologie du trouble panique, assimilé à un 'cercle vicieux' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La phobie sociale généralisée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyperactivité dopaminergique striatale.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La phobie intéroceptive (interprétation catastrophiste des sensations internes physiologiques).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le clivage du Moi de type psychotique.",
+          "correct": false
+        }
+      ],
+      "explication": "Le concept de 'phobie intéroceptive' suggère que les patients interprètent de manière catastrophiste leurs sensations internes physiologiques (ex: palpitations), ce qui renforce l'anxiété et déclenche l'attaque. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 10,
+      "question": "[Item 66c] Question 10 - Difficile : Devant une suspicion de trouble panique, pourquoi est-il essentiel de mener un examen clinique rigoureux ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Pour rassurer le patient en lui prescrivant un scanner systématique à chaque crise.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Pour éliminer en urgence des étiologies médicales non psychiatriques (ex: syndrome coronarien aigu, hyperthyroïdie, embolie pulmonaire) aux symptômes intenses.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Parce que le trouble panique s'accompagne toujours d'une arythmie sévère permanente.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Parce que le trouble panique ne se traite que par chirurgie si une cause organique est trouvée.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble panique a des symptômes physiques majeurs. Il faut impérativement éliminer des causes CV, respiratoires, neuro ou endocriniennes par un examen rigoureux. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 11,
+      "question": "[Item 66c] Question 11 - Difficile : Quel traitement psychothérapeutique doit être privilégié et a largement montré son efficacité dans le trouble panique avec agoraphobie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La psychanalyse brève",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les thérapies cognitivo-comportementales (TCC) centrées sur l'exposition et la désensibilisation",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La thérapie de couple systémique",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La sismothérapie d'entretien",
+          "correct": false
+        }
+      ],
+      "explication": "Les TCC doivent être privilégiées. Les techniques les plus utiles sont centrées sur l'exposition et la désensibilisation aux sensations physiques des AP et aux situations redoutées. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 12,
+      "question": "[Item 66c] Question 12 - Difficile : Dans les formes sévères de trouble panique nécessitant un traitement pharmacologique de fond, quelle classe de médicaments est recommandée en première intention ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les benzodiazépines au long cours",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les antipsychotiques atypiques",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les antidépresseurs de type ISRS ou IRSNA",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les bêta-bloquants à visée centrale",
+          "correct": false
+        }
+      ],
+      "explication": "Le traitement pharmacologique principal de fond repose sur les antidépresseurs, en première intention les ISRS ou IRSNA, justifiés dans les formes sévères. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 13,
+      "question": "[Item 66c] Question 13 - Difficile : Quelle est la place des benzodiazépines dans la prise en charge du trouble panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles constituent le traitement de fond exclusif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elles sont formellement contre-indiquées.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elles peuvent être utilisées de manière ponctuelle et bien limitée dans le temps en cas de manifestations invalidantes.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elles doivent être administrées uniquement par voie intraveineuse en urgence.",
+          "correct": false
+        }
+      ],
+      "explication": "Les benzodiazépines peuvent être utilisées ponctuellement (lors des crises ou sur quelques jours max) en attendant l'efficacité des ISRS, mais ne constituent pas le traitement de fond. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 14,
+      "question": "[Item 66c] Question 14 - Difficile : Pour poser le diagnostic d'agoraphobie selon le DSM-5, la peur, l'anxiété ou l'évitement doivent être persistants. Quelle en est la durée typique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 semaine",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 mois",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois ou plus",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "1 an",
+          "correct": false
+        }
+      ],
+      "explication": "Le critère F du diagnostic DSM-5 de l'agoraphobie précise que la peur, l'anxiété ou l'évitement sont persistants, durant typiquement 6 mois ou plus. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 15,
+      "question": "[Item 66c] Question 15 - Difficile : Parmi les éléments d'éducation thérapeutique du trouble panique, quelle recommandation hygiéno-diététique est classique pour prévenir le déclenchement des crises ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'arrêt de l'exercice physique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'arrêt des excitants comme le café, le tabac et l'alcool.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un régime hyperprotéiné exclusif.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le maintien prolongé de l'éveil nocturne pour désensibiliser l'anxiété.",
+          "correct": false
+        }
+      ],
+      "explication": "L'éducation thérapeutique comprend des règles hygiéno-diététiques simples : arrêt des excitants (café, tabac, alcool), pratique d'une activité physique régulière, hygiène de sommeil. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 16,
+      "question": "[Item 66c] Question 16 - Difficile : Quelle caractéristique comportementale majeure signe la sévérité de l'agoraphobie et entrave l'autonomie du patient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La nécessité systématique de la présence d'un accompagnant pour affronter les situations redoutées.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyperactivité nocturne.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le mutisme sélectif en famille.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les compulsions de vérification de l'habitat.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans l'agoraphobie, les situations sont activement évitées ou nécessitent la présence d'un accompagnant pour être subies avec une peur intense (critère D DSM-5). (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 17,
+      "question": "[Item 66c] Question 17 - Difficile : Lors du diagnostic différentiel psychiatrique, comment distinguer un trouble panique d'une anxiété sociale (phobie sociale) en cas d'attaque de panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans la phobie sociale, l'attaque de panique est déclenchée exclusivement par des situations sociales redoutées, et non de façon inattendue.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans le trouble panique, les attaques surviennent seulement la nuit.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Dans la phobie sociale, il n'y a jamais de signes neurovégétatifs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble panique ne s'accompagne jamais de gêne sociale.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble panique se distingue des autres troubles anxieux car les AP ne surviennent pas exclusivement en réponse à des situations phobogènes précises (ex: situations sociales pour l'anxiété sociale). (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 18,
+      "question": "[Item 66c] Question 18 - Difficile : Devant un premier épisode suspect d'attaque de panique, que faut-il systématiquement évoquer dans les causes toxiques (diagnostics différentiels) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un surdosage en paracétamol.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une intoxication aiguë ou un sevrage lié à des substances psychoactives (cocaïne, amphétamines, alcool, cannabis).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une carence en vitamine C.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'ingestion de neuroleptiques sédatifs.",
+          "correct": false
+        }
+      ],
+      "explication": "Les intoxications par psychostimulants (cocaïne, amphétamines) ou cannabis, ainsi que les sevrages (alcool, BZD), doivent être systématiquement éliminés devant un tableau d'attaque de panique. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 19,
+      "question": "[Item 66c] Question 19 - Difficile : Quel est le critère majeur définissant la rémission spontanée ou l'évolution à long terme du trouble panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une guérison complète spontanée systématique en 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'évolution est généralement chronique, les AP pouvant s'espacer mais l'anxiété anticipatoire ou l'agoraphobie persistant souvent.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La transformation inéluctable en schizophrénie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble disparaît toujours avec l'avancée en âge après 50 ans.",
+          "correct": false
+        }
+      ],
+      "explication": "L'évolution est généralement chronique. Une amélioration est possible (AP espacées), mais l'anxiété anticipatoire et surtout l'agoraphobie persistent souvent pendant des années. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "question_numero": 20,
+      "question": "[Item 66c] Question 20 - Difficile : Dans quel cas l'hospitalisation en psychiatrie est-elle indiquée pour un trouble panique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Systématiquement dès la première crise pour bilan initial.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Si le patient présente une agoraphobie l'empêchant de prendre le métro.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle est rarement nécessaire, sauf en cas de manifestations anxieuses extrêmement envahissantes, de comorbidité dépressive et/ou de risque suicidaire.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Obligatoire pendant les 4 premières semaines d'initiation d'un antidépresseur.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble panique se traite majoritairement en ambulatoire. L'hospitalisation est rare, réservée aux formes avec anxiété extrême, dépression comorbide sévère ou risque suicidaire. (Source EDN Item 66c)",
+      "difficulte": 3,
+      "source": "EDN Item 66c"
+    }
+  ]
+}

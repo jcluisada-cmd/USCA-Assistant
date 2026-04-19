@@ -1,0 +1,964 @@
+{
+  "qcm": [
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 1,
+      "question": "[Item 77] Question 1 - Facile : Quel est le mécanisme d'action principal des benzodiazépines expliquant leurs effets et le risque de dépendance ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Inhibition de la recapture de la sérotonine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Agonistes des récepteurs GABA-A.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Antagonistes des récepteurs dopaminergiques D2.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Inhibition de la monoamine oxydase (IMAO).",
+          "correct": false
+        }
+      ],
+      "explication": "Les benzodiazépines et apparentés sont des agonistes des récepteurs GABA-A. Cette action est à l'origine de leurs effets aigus et du sevrage en cas de tolérance. (Source EDN Item 77)",
+      "difficulte": 1,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 2,
+      "question": "[Item 77] Question 2 - Facile : Quelle proportion de la population française a reçu au moins une fois une prescription de benzodiazépines ou apparentés ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 2 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 5 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 13 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 40 %",
+          "correct": false
+        }
+      ],
+      "explication": "Environ 13 % de la population française a consommé au moins une fois une benzodiazépine (avec une prédominance féminine de 65 %). (Source EDN Item 77)",
+      "difficulte": 1,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 3,
+      "question": "[Item 77] Question 3 - Moyen : Afin de prévenir le risque de dépendance, quelle est la durée maximale légale de prescription d'une benzodiazépine à visée anxiolytique (sevrage compris) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "4 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "12 semaines",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "1 an",
+          "correct": false
+        }
+      ],
+      "explication": "Les références médicales opposables stipulent qu'il n'y a pas de prescription de benzodiazépines à visée anxiolytique au-delà d'une durée de 12 semaines. (Source EDN Item 77)",
+      "difficulte": 2,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 4,
+      "question": "[Item 77] Question 4 - Moyen : Quelle est la durée maximale de prescription pour un hypnotique (benzodiazépine ou médicament en Z) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "2 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "4 semaines",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "12 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "6 mois",
+          "correct": false
+        }
+      ],
+      "explication": "Les références médicales opposables précisent une durée maximale de 4 semaines pour la prescription de benzodiazépines (ou apparentés) à visée hypnotique. (Source EDN Item 77)",
+      "difficulte": 2,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 5,
+      "question": "[Item 77] Question 5 - Difficile : Lors d'une intoxication aiguë (surdosage) grave aux benzodiazépines avec dépression respiratoire et coma, quel antidote spécifique est indiqué ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La Naloxone (Narcan).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La N-acétylcystéine.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le Flumazénil (Anexate).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le Glucagon.",
+          "correct": false
+        }
+      ],
+      "explication": "En cas d'intoxication aiguë aux benzodiazépines avec troubles importants de la vigilance ou coma (urgence vitale), l'antidote disponible est le flumazénil. (Source EDN Item 77 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 6,
+      "question": "[Item 77] Question 6 - Difficile : Que signifie un 'usage à risque' concernant les benzodiazépines, même en l'absence de trouble addictologique avéré ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La prise du médicament avec un verre d'eau gazeuse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Toute prescription ou prise hors des références médicales opposables (ex: posologie trop forte, durée trop longue, indication non justifiée).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La prise ponctuelle d'une BZD avant une chirurgie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le fait de conduire après 24 heures d'arrêt du traitement.",
+          "correct": false
+        }
+      ],
+      "explication": "Tout usage de benzodiazépines en dehors des références médicales opposables (durée, indication, posologie ou auto-médication) doit être considéré comme un usage à risque. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 7,
+      "question": "[Item 77] Question 7 - Difficile : Lors de l'arrêt d'une benzodiazépine, quel facteur favorise particulièrement la sévérité du syndrome de sevrage ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La demi-vie très longue de la molécule (ex: prazépam).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'âge du patient inférieur à 25 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La demi-vie courte d'élimination du médicament et l'arrêt brutal.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La prescription de BZD à visée myorelaxante uniquement.",
+          "correct": false
+        }
+      ],
+      "explication": "La sévérité du syndrome de sevrage est associée à la rapidité de diminution, une posologie élevée, une demi-vie courte du médicament, une anxiété importante à l'arrêt, etc. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 8,
+      "question": "[Item 77] Question 8 - Difficile : Comment se manifeste classiquement un syndrome de sevrage aux benzodiazépines ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par un mutisme et une hypotonie généralisée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Tremblements, anxiété, insomnie, céphalées, pouvant aller jusqu'à des hallucinations ou des convulsions.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hyperphagie massive et une hypersomnie de 20h/jour.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une bradycardie sévère et des épistaxis.",
+          "correct": false
+        }
+      ],
+      "explication": "Les signes de sevrage incluent : tremblements, anxiété, insomnie, céphalées, et plus rarement mais sévèrement confusion, hallucinations, convulsions, incoordination motrice, coma. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 9,
+      "question": "[Item 77] Question 9 - Difficile : Lors de la mise en place d'un sevrage de benzodiazépines chez un patient dépendant, quelle est la règle d'or pour la décroissance ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Arrêt brutal sous couverture neuroleptique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Décroissance extrêmement progressive sur plusieurs semaines voire mois, titrée avec le patient.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Substitution immédiate par de l'alcool à faible dose.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Baisse de 50 % de la dose tous les 2 jours en ambulatoire.",
+          "correct": false
+        }
+      ],
+      "explication": "Le sevrage des benzodiazépines se fait lentement, de manière extrêmement progressive sur plusieurs semaines voire mois pour les utilisations longues/posologies élevées. Il n'existe pas de schéma consensuel rigide, on 'titre' la réduction. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 10,
+      "question": "[Item 77] Question 10 - Difficile : Quelle est l'indication formelle pour réaliser un sevrage de benzodiazépines en milieu hospitalier (et non ambulatoire) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Patient prenant une BZD en dose standard depuis 3 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Insomnie légère occasionnelle.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Doses très élevées de BZD, dépendance à l'alcool associée, ou antécédents de syndrome de sevrage sévère avec convulsions.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Dès l'âge de 65 ans, toute diminution de BZD impose une hospitalisation.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hospitalisation est programmée en cas de doses très élevées, insomnie rebelle, dépendance associée (alcool, drogues), troubles psychiatriques sévères ou ATCD de syndrome de sevrage sévère/convulsions. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 11,
+      "question": "[Item 77] Question 11 - Difficile : Sur le plan psychiatrique, quel effet paradoxal lie-t-on à une prescription inappropriée ou trop prolongée de benzodiazépines (par phénomène de tolérance) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une amélioration spontanée et définitive de l'humeur.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'apparition d'un syndrome sérotoninergique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une majoration des symptômes psychiatriques (anxiété, dépression, idées suicidaires) par perte d'effet thérapeutique.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'éradication totale des hallucinations.",
+          "correct": false
+        }
+      ],
+      "explication": "Une prise prolongée ou inadaptée expose à une majoration des symptômes psychiatriques (anxiété, dépression, idées suicidaires) due à la tolérance et la perte des effets thérapeutiques. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 12,
+      "question": "[Item 77] Question 12 - Difficile : Laquelle de ces conditions est un facteur de risque majeur favorisant la rechute ou l'échec de l'arrêt des benzodiazépines en ambulatoire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une durée de traitement inférieure à 1 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence d'un trouble anxieux sous-jacent mal traité ou d'une insomnie sévère.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La prescription initiale par un médecin psychiatre plutôt qu'un médecin généraliste.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prise d'un antidépresseur ISRS correctement dosé.",
+          "correct": false
+        }
+      ],
+      "explication": "Une insomnie sévère, un trouble anxieux mal traité, une détresse psychologique ou la consommation d'alcool/autres substances avant l'arrêt augmentent le risque d'échec du sevrage ou de rechute. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 13,
+      "question": "[Item 77] Question 13 - Difficile : À l'initiation d'un traitement par benzodiazépines chez une personne de plus de 65 ans, quelle règle de posologie est fondamentale pour limiter le risque de iatrogénie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Doubler la posologie pour contrer la résistance hépatique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Diviser la posologie d'initiation par deux par rapport à l'adulte jeune.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Ne prescrire que des BZD à demi-vie longue (diazépam).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Associer systématiquement avec un hypnotique.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez les patients âgés de 65 ans et plus, les posologies d'initiation doivent être divisées par deux pour limiter les risques de sédation, confusion et chutes (risque majoré avec l'âge). (Source EDN Item 74 / 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 14,
+      "question": "[Item 77] Question 14 - Difficile : Devant un patient très attaché à ses benzodiazépines et ne parvenant pas à l'arrêt total, qu'est-ce qui est considéré comme une stratégie de 'réduction des dommages et des risques' valable ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'obtention d'une diminution de la posologie, même sans arrêt complet.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le passage brutal à un hypnotique pur (type zolpidem) pour la journée.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'arrêt de la sécurité sociale pour forcer le sevrage.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prescription de BZD injectables pour éviter la voie digestive.",
+          "correct": false
+        }
+      ],
+      "explication": "Bien que l'objectif idéal soit l'arrêt complet, l'obtention d'une diminution de la posologie doit déjà être considérée comme un résultat favorable et une étape facilitant un arrêt ultérieur (réduction des risques). (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 15,
+      "question": "[Item 77] Question 15 - Difficile : Parmi ces mesures d'encadrement, laquelle peut être utile face à un usage nocif persistant de benzodiazépines en ambulatoire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La délivrance fractionnée et la désignation d'une pharmacie de délivrance unique.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "La vente libre en parapharmacie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La prescription sur ordonnance simple non datée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prise en charge en clinique chirurgicale.",
+          "correct": false
+        }
+      ],
+      "explication": "Des mesures d'encadrement comme la délivrance fractionnée, la désignation d'une pharmacie de délivrance unique ou un contrat avec le médecin conseil de la CPAM peuvent aider à limiter les abus. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 16,
+      "question": "[Item 77] Question 16 - Difficile : Quel est le risque cognitif à long terme suspecté lors d'un usage prolongé de benzodiazépines, particulièrement chez le sujet âgé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'apparition d'un syndrome de Gilles de la Tourette.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le risque de troubles cognitifs induits (démence).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hypermnésie avec reviviscence.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le syndrome de Korsakoff isolé.",
+          "correct": false
+        }
+      ],
+      "explication": "Parmi les complications non psychiatriques de l'usage prolongé des BZD, il existe une suspicion de troubles cognitifs induits par la prise prolongée (avec un possible lien évoqué avec l'apparition de démence chez le sujet âgé). (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 17,
+      "question": "[Item 77] Question 17 - Difficile : Parmi les mesures de prévention primaire visant le prescripteur, laquelle est fondamentale lors du renouvellement d'une ordonnance de BZD ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Renouveler automatiquement l'ordonnance par téléphone si le patient va bien.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Augmenter la dose systématiquement pour prévenir l'échappement thérapeutique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "S'interroger sur la pertinence de l'indication, du maintien de la posologie, et dépister une tolérance thérapeutique ou une dépendance.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Changer de molécule à chaque consultation pour éviter l'addiction.",
+          "correct": false
+        }
+      ],
+      "explication": "Le médecin doit s'interroger, à chaque renouvellement, sur la pertinence de l'indication et du maintien, et dépister une tolérance/dépendance (l'idéal étant de prévoir l'arrêt dès l'introduction). (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 18,
+      "question": "[Item 77] Question 18 - Difficile : Laquelle de ces pratiques médicales n'est PAS en accord avec les références médicales opposables concernant les anxiolytiques et hypnotiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Rechercher la posologie minimale efficace.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Associer deux benzodiazépines à visée anxiolytique pour une attaque de panique sévère.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Limiter la durée à 4 semaines pour un hypnotique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Diviser les posologies d'initiation par deux chez le sujet âgé.",
+          "correct": false
+        }
+      ],
+      "explication": "Les RMO stipulent clairement qu'il n'y a pas lieu d'associer deux anxiolytiques (ou deux hypnotiques) dans le traitement de l'anxiété ou de l'insomnie. (Source EDN Item 77 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 19,
+      "question": "[Item 77] Question 19 - Difficile : Comment définit-on spécifiquement la dépendance aux benzodiazépines selon les critères addictologiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La présence d'effets secondaires digestifs à la prise du traitement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'apparition d'une somnolence diurne modérée.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'impossibilité d'arrêter l'usage, soit en raison de signes de sevrage, soit en raison d'envies compulsives (craving) importantes.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Toute prise de benzodiazépine dépassant 7 jours continus.",
+          "correct": false
+        }
+      ],
+      "explication": "La dépendance est caractérisée par une perte de contrôle : l'impossibilité d'arrêter l'usage due au syndrome de sevrage physiologiques (tolérance/sevrage) et/ou au craving (désir puissant/compulsif). (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 20,
+      "question": "[Item 77] Question 20 - Difficile : Lors de la conduite d'un sevrage BZD en ambulatoire, qu'est-il recommandé pour impliquer et sécuriser le patient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Demander au patient de ramener les comprimés non utilisés (titrer la réduction) et favoriser le renforcement positif en cas de succès.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Lui confier un flacon de flumazénil en cas de malaise.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Lui interdire tout suivi psychothérapique pour ne pas entraver le sevrage physiologique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Ne le revoir qu'au bout de 6 mois une fois le sevrage terminé.",
+          "correct": false
+        }
+      ],
+      "explication": "Au cours des consultations, il est recommandé de titrer la réduction de posologie, demander au patient de ramener les comprimés non utilisés, et de favoriser tout renforcement positif. Un suivi régulier est indispensable. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 21,
+      "question": "[Item 77] Question 21 - Difficile : Chez un patient très anxieux pour lequel vous décidez d'arrêter une prescription inadaptée de BZD au long cours, quel traitement de substitution peut s'avérer plus adapté ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le passage aux amphétamines.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La mise en place d'une psychothérapie et l'optimisation ou l'instauration d'un antidépresseur (traitement de fond du trouble anxieux).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La prescription de buprénorphine (Subutex).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le passage exclusif au phénobarbital.",
+          "correct": false
+        }
+      ],
+      "explication": "Les antidépresseurs (ISRS/IRSNA) sont le traitement de fond pharmacologique des troubles anxieux, souvent associés à une TCC. Les BZD ne devraient pas être le traitement de fond. (Source EDN Item 77 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 22,
+      "question": "[Item 77] Question 22 - Difficile : Quel effet indésirable des BZD représente un motif médico-légal majeur de vigilance, en particulier lié à des usages délictuels ou une intoxication volontaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La soumission chimique avec viols/agressions par amnésie antérograde.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "L'apparition de tics vocaux profanes (coprolalie).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperacousie bilatérale irréversible.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La rhabdomyolyse aiguë massive systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intoxication aiguë aux BZD comporte des risques majeurs : accident, décès par surdosage, mais aussi agression ou viol par soumission chimique du fait des propriétés amnésiantes et sédatives. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 23,
+      "question": "[Item 77] Question 23 - Difficile : Quelle est la caractéristique des prescriptions de BZD en France soulignant le problème majeur de santé publique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Presque aucune BZD n'est remboursée, poussant à l'achat illégal.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les 3/4 des usagers en prennent sur une durée supérieure à six mois (bien au-delà des recommandations).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La majorité des prescriptions sont faites par des urologues.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les hommes consomment 5 fois plus de BZD que les femmes.",
+          "correct": false
+        }
+      ],
+      "explication": "La France est l'un des premiers consommateurs européens de BZD, et un problème majeur est que les trois quarts des usagers en prennent sur une durée supérieure à 6 mois, contrevenant aux RMO (max 12 sem). (Source EDN Item 77 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 24,
+      "question": "[Item 77] Question 24 - Difficile : Lorsqu'un patient est hospitalisé pour une pathologie médicale non psychiatrique (ex: chirurgie programmée) et qu'il est dépendant aux BZD, quel risque le médecin doit-il impérativement anticiper ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le risque de syndrome de sevrage par oubli de prescription ou arrêt brutal, pouvant conduire à des convulsions ou une confusion.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une incompatibilité absolue avec tous les antalgiques.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une intolérance totale au glucose per-opératoire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apparition systématique d'une schizophrénie post-opératoire.",
+          "correct": false
+        }
+      ],
+      "explication": "Toute prescription prolongée expose à un risque de syndrome de sevrage en cas d'arrêt brutal accidentel (oubli, hospitalisation...). Il est crucial d'interroger sur l'usage pour le prévenir (prescription ajustée et concertée). (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 25,
+      "question": "[Item 77] Question 25 - Difficile : Lors de la diminution progressive des BZD (sevrage), la réapparition de symptômes d'anxiété plus intenses qu'à l'initiation du traitement, diminuant en quelques jours, s'appelle :",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'effet placebo.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le rebond des symptômes d'anxiété.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'échappement thérapeutique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'attaque de panique spontanée de sevrage.",
+          "correct": false
+        }
+      ],
+      "explication": "À l'arrêt du traitement, on observe un rebond des symptômes d'anxiété (ou d'insomnie pour les hypnotiques), qui sont plus intenses qu'à l'initiation mais qui diminuent spontanément en quelques jours. Il est important d'en prévenir le patient. (Source EDN Item 74 / 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 26,
+      "question": "[Item 77] Question 26 - Facile : Quelle est la durée de traitement médiane observée en pratique pour ces spécialités (BZD), malgré les recommandations ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "4 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "12 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "7 mois",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "3 ans",
+          "correct": false
+        }
+      ],
+      "explication": "La durée médiane de traitement retrouvée pour ces spécialités est de 7 mois, ce qui est très au-delà des références médicales opposables. (Source EDN Item 77)",
+      "difficulte": 1,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 27,
+      "question": "[Item 77] Question 27 - Moyen : En France, comment évolue le nombre de consommateurs de benzodiazépines ces dernières années (entre 2012 et 2015) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est en très forte augmentation (+25%)",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est parfaitement stable",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il est en baisse d'environ 6 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il a baissé de plus de 50 %",
+          "correct": false
+        }
+      ],
+      "explication": "Le nombre de consommateurs a baissé de près de 6 % entre 2012 et 2015 (-4% pour anxiolytiques, -13% pour hypnotiques). (Source EDN Item 77)",
+      "difficulte": 2,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 28,
+      "question": "[Item 77] Question 28 - Difficile : Un de vos patients consomme 8 comprimés d'alprazolam/jour avec de l'alcool depuis des années. Vous décidez de l'hospitaliser pour sevrage, pourquoi ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Pour lui administrer du Flumazénil en intraveineuse pendant un mois",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Parce qu'il existe un risque majeur de complications graves (convulsions, délirium) dû à la forte dépendance mixte",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Parce que l'alprazolam ne peut être sevré qu'en réanimation",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Pour le passer au zolpidem intraveineux",
+          "correct": false
+        }
+      ],
+      "explication": "La dépendance mixte alcool+BZD et les fortes doses majorent drastiquement le risque de sevrage sévère (convulsions), nécessitant souvent un encadrement hospitalier. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 29,
+      "question": "[Item 77] Question 29 - Difficile : Le 'nomadisme médical' dans l'addiction aux BZD correspond à :",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La perte d'orientation spatiale liée à l'ataxie",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le fait de changer régulièrement de médecin pour obtenir de multiples prescriptions",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le fait de voyager à l'étranger pour acheter des génériques",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'incapacité à rester assis (akathisie)",
+          "correct": false
+        }
+      ],
+      "explication": "Le nomadisme médical (multiplication des prescripteurs et pharmacies) est un comportement d'addiction classique (recherche compulsive ou 'craving') pour contourner les refus de prescription. (Source EDN Item 77)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "question_numero": 30,
+      "question": "[Item 77] Question 30 - Difficile : Quelle est la prépondérance selon le genre dans la consommation régulière de BZD en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Strictement égal",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "80% sont des hommes",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "65% sont des femmes (elles en prennent deux fois plus que les hommes)",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Uniquement les hommes de plus de 50 ans",
+          "correct": false
+        }
+      ],
+      "explication": "65 % des sujets ayant reçu des prescriptions de BZD sont des femmes. De manière générale, les femmes prennent deux fois plus de psychotropes que les hommes. (Source EDN Item 77/74)",
+      "difficulte": 3,
+      "source": "EDN Item 77"
+    }
+  ]
+}

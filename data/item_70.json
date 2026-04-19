@@ -1,0 +1,324 @@
+{
+  "qcm": [
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 1,
+      "question": "[Item 70] Question 1 - Facile : Quelle est la règle pharmacologique de base lors de la prescription de psychotropes chez le sujet âgé de plus de 65 ans ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Start high, go fast.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Start low, go slow (débuter à posologie faible et augmenter lentement).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Ne jamais prescrire de psychotropes après 65 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Associer systématiquement plusieurs molécules pour diminuer les doses.",
+          "correct": false
+        }
+      ],
+      "explication": "La règle fondamentale en gériatrie est 'start low, go slow' (débuter à posologie plus faible, généralement demi-dose, et augmentation lente) avec monothérapie privilégiée. (Source EDN Item 70, p.119)",
+      "difficulte": 1,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 2,
+      "question": "[Item 70] Question 2 - Facile : Quelle est la durée maximale de prescription recommandée pour les benzodiazépines à visée anxiolytique chez la personne âgée (comme chez l'adulte) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "4 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "12 semaines",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Durée illimitée",
+          "correct": false
+        }
+      ],
+      "explication": "La durée de prescription est limitée au maximum à 12 semaines pour les anxiolytiques et 4 semaines pour les hypnotiques. (Source EDN Item 70, p.119)",
+      "difficulte": 1,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 3,
+      "question": "[Item 70] Question 3 - Moyen : Sur le plan clinique, quelle est la plainte la plus fréquemment mise en avant par le sujet âgé lors d'un épisode dépressif caractérisé (souvent au détriment de l'humeur triste) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une euphorie inadaptée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des plaintes médicales d'allure somatique (douleurs, troubles digestifs) et mnésiques.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hypersexualité soudaine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des hallucinations auditives injonctives exclusives.",
+          "correct": false
+        }
+      ],
+      "explication": "Les symptômes au premier plan ne font souvent pas évoquer de manière évidente un syndrome dépressif. Le motif de consultation concerne généralement des symptômes d'allure somatique (douleurs, troubles digestifs, perte d'appétit) ou des plaintes mnésiques. (Source EDN Item 70, p.121)",
+      "difficulte": 2,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 4,
+      "question": "[Item 70] Question 4 - Moyen : Comment se caractérise le risque de suicide chez la personne âgée comparativement à l'adulte jeune ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est quasi nul.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le ratio tentatives de suicide/suicides aboutis est beaucoup plus faible (4/1 contre 20/1) marquant une létalité très élevée.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il est plus impulsif mais moins létal.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il utilise principalement l'intoxication médicamenteuse bénigne en appel à l'aide.",
+          "correct": false
+        }
+      ],
+      "explication": "Le ratio tentatives de suicide/suicides est beaucoup plus faible (4/1 contre 20/1 chez les jeunes), traduisant une intention claire et une létalité forte. (Source EDN Item 70, p.121)",
+      "difficulte": 2,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 5,
+      "question": "[Item 70] Question 5 - Difficile : Lors de la prescription d'un traitement antidépresseur chez le sujet âgé, quelle classe médicamenteuse est préférentiellement évitée en raison de sa forte toxicité (anticholinergique, QT long) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les ISRS (ex: Sertraline).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les antidépresseurs tricycliques/imipraminiques (ex: Amitriptyline).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les IRSNA (ex: Venlafaxine).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La Mirtazapine.",
+          "correct": false
+        }
+      ],
+      "explication": "Les antidépresseurs tricycliques sont déconseillés chez le sujet âgé en raison de leurs effets indésirables importants, notamment cardiotoxiques (allongement QT) et anticholinergiques. (Source EDN Item 70, p.119)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 6,
+      "question": "[Item 70] Question 6 - Difficile : Quelle est la particularité clinique de la schizophrénie à début tardif (>40 ans) ou très tardif (>60 ans) par rapport aux formes du sujet jeune ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une forte prédominance masculine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un syndrome de désorganisation massif au premier plan.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une prédominance féminine, des hallucinations très riches et l'absence ou le peu de désorganisation.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence totale d'hallucinations.",
+          "correct": false
+        }
+      ],
+      "explication": "Les schizophrénies tardives/très tardives se distinguent par une prédominance féminine, davantage d'hallucinations (visuelles, cénesthésiques, olfactives), des idées de persécution, et moins de symptômes de désorganisation/négatifs. (Source EDN Item 70, p.123)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 7,
+      "question": "[Item 70] Question 7 - Difficile : Comment se manifestent fréquemment les idées délirantes (SPCD) dans le cadre d'une maladie d'Alzheimer ou d'une pathologie apparentée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par un délire mystique très structuré et messianique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par des idées de grandeur et de filiation royale.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Par des idées de persécution ou des perturbations de l'identification (ex: on me vole mes objets, ce n'est pas ma maison).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Par un syndrome d'influence externe transmis par ondes radio.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans la maladie d'Alzheimer, les idées délirantes sont souvent de type persécution ou perturbations de l'identification (vols d'objets, maison perçue comme étrangère), souvent liées aux altérations mnésiques et sensorielles. (Source EDN Item 70, p.125)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 8,
+      "question": "[Item 70] Question 8 - Difficile : Lors du traitement des SPCD (symptômes psychocomportementaux des démences) par des antipsychotiques de seconde génération, quel risque iatrogène majeur justifie une indication très restrictive ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le développement systématique d'une ostéoporose.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une surmortalité notamment par accident vasculaire cérébral (AVC).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le déclenchement d'un syndrome de Guillain-Barré.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apparition d'un glaucome à angle ouvert.",
+          "correct": false
+        }
+      ],
+      "explication": "La prescription d'antipsychotiques de seconde génération chez les patients déments est associée à une surmortalité (notamment par AVC). Leur utilisation doit se limiter aux idées délirantes/hallucinations ou troubles du comportement sévères (agitation/agressivité). (Source EDN Item 70, p.120)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 9,
+      "question": "[Item 70] Question 9 - Difficile : Auprès d'un sujet âgé présentant un épisode dépressif, la présence d'apathie est très fréquente. Dans quelle pathologie l'apathie est-elle aussi souvent présente au point d'en faire un diagnostic différentiel complexe ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hyperthyroïdie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les troubles neurocognitifs mineurs et majeurs (ex: Maladie d'Alzheimer).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble panique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apnée du sommeil isolée.",
+          "correct": false
+        }
+      ],
+      "explication": "L'apathie se confond souvent avec l'anhédonie (retrouvée dans l'EDC). L'apathie est principalement rencontrée dans les troubles neurocognitifs mineurs et majeurs, posant un problème de diagnostic différentiel avec la dépression. (Source EDN Item 70, p.122)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "question_numero": 10,
+      "question": "[Item 70] Question 10 - Difficile : En gériatrie, quelle manifestation clinique doit absolument faire évoquer une démence à corps de Lewy (DCL), pathologie où la prescription d'antipsychotiques est d'ailleurs déconseillée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'apparition précoce d'hallucinations visuelles (souvent très détaillées).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un délire mégalomaniaque isolé.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une écholalie systématique précoce.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hypersexualité isolée.",
+          "correct": false
+        }
+      ],
+      "explication": "La présence d'hallucinations visuelles précoces est un critère diagnostique de la démence à corps de Lewy (où les antipsychotiques sont déconseillés en raison de la sensibilité extrême aux effets extrapyramidaux). (Source EDN Item 70, p.124)",
+      "difficulte": 3,
+      "source": "EDN Item 70"
+    }
+  ]
+}

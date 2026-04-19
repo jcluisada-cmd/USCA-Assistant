@@ -1,0 +1,1828 @@
+{
+  "qcm": [
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 1,
+      "question": "[Item 76] Question 1 - Facile : Quelle est la substance psychoactive la plus consommée en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le cannabis",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le tabac",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'alcool",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La cocaïne",
+          "correct": false
+        }
+      ],
+      "explication": "L'alcool est la substance psychoactive la plus consommée en France. Près de 90 % des adultes en consomment au moins une fois par an. (Source EDN Item 76)",
+      "difficulte": 1,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 2,
+      "question": "[Item 76] Question 2 - Facile : À quelle quantité d'alcool pur correspond un « verre standard » tel que servi dans un débit de boisson ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "5 g d'alcool pur",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "10 g d'alcool pur",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "15 g d'alcool pur",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "20 g d'alcool pur",
+          "correct": false
+        }
+      ],
+      "explication": "Un verre standard d'alcool correspond à une quantité de 10 g d'alcool pur (soit environ 10 cL de vin, 25 cL de bière à 4° ou 3 cL d'un alcool fort). (Source EDN Item 76)",
+      "difficulte": 1,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 3,
+      "question": "[Item 76] Question 3 - Moyen : Selon les repères de consommation, comment définit-on un usage d'alcool « à faible risque » ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Maximum 15 verres par semaine et 3 verres par jour.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Maximum 10 verres par semaine, pas plus de 2 verres par jour, et des jours sans consommation.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Maximum 21 verres par semaine pour un homme et 14 pour une femme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'usage à faible risque n'existe pas pour l'alcool.",
+          "correct": false
+        }
+      ],
+      "explication": "L'usage à faible risque correspond à : ne pas consommer plus de 10 verres standards par semaine, ne pas consommer plus de 2 verres standards par jour, et avoir des jours dans la semaine sans consommation. (Source EDN Item 76)",
+      "difficulte": 2,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 4,
+      "question": "[Item 76] Question 4 - Moyen : Comment définit-on une Alcoolisation Ponctuelle Importante (API) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une consommation de 3 verres ou plus en une occasion.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une consommation de 4 verres ou plus en une occasion.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une consommation de 6 verres standards ou plus en une occasion.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Toute consommation menant au coma éthylique.",
+          "correct": false
+        }
+      ],
+      "explication": "On parle d'alcoolisation ponctuelle importante (API) pour une consommation de 6 verres standards ou plus en une occasion. (Source EDN Item 76)",
+      "difficulte": 2,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 5,
+      "question": "[Item 76] Question 5 - Difficile : Combien de décès sont attribuables chaque année à l'alcool en France, en faisant la 2ème cause de mortalité évitable ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 10 000 décès",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 25 000 décès",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 41 000 décès",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Environ 75 000 décès",
+          "correct": false
+        }
+      ],
+      "explication": "Avec 41 000 décès attribuables chaque année à l'alcool en France, il s'agit de la deuxième cause de mortalité évitable après le tabagisme. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 6,
+      "question": "[Item 76] Question 6 - Difficile : À partir de quel score au questionnaire AUDIT-C évoque-t-on un mésusage actuel d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "≥ 2 chez l'homme et >= 1 chez la femme.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "≥ 4 chez l'homme et ≥ 3 chez la femme.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "≥ 6 chez l'homme et la femme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "≥ 8 chez l'homme et ≥ 7 chez la femme.",
+          "correct": false
+        }
+      ],
+      "explication": "Un score supérieur ou égal à 4 chez l'homme et à 3 chez la femme au questionnaire AUDIT-C est évocateur d'un mésusage actuel d'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 7,
+      "question": "[Item 76] Question 7 - Difficile : Quel marqueur biologique baisse le plus rapidement, dès la première semaine après l'arrêt de la consommation d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le Volume Globulaire Moyen (VGM).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La Transferrine Désialylée (CDT).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La Gamma Glutamyl Transpeptidase (GGT).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'ASAT.",
+          "correct": false
+        }
+      ],
+      "explication": "La GGT baisse plus rapidement que les autres marqueurs, dès la première semaine après l'arrêt de la consommation, et se normalise en 4 à 10 semaines. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 8,
+      "question": "[Item 76] Question 8 - Difficile : Parmi les marqueurs biologiques de consommation d'alcool, quelle est la principale caractéristique du Volume Globulaire Moyen (VGM) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "C'est le marqueur le plus sensible et le plus rapide à se normaliser.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est spécifique mais se normalise très lentement (environ 3 mois après l'arrêt).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il n'est modifié qu'en cas de cirrhose hépatique avérée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il baisse immédiatement après une alcoolisation ponctuelle importante.",
+          "correct": false
+        }
+      ],
+      "explication": "Le VGM est le marqueur le moins sensible, toutefois assez spécifique, et se normalise très lentement (trois mois après l'arrêt de la consommation d'alcool). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 9,
+      "question": "[Item 76] Question 9 - Difficile : Quel cancer voit son risque augmenter chez la femme dès la consommation d'un seul verre standard d'alcool par jour ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le cancer du col de l'utérus.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le cancer de l'endomètre.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le cancer du sein.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le cancer de l'ovaire.",
+          "correct": false
+        }
+      ],
+      "explication": "Toute consommation d'alcool entraîne un risque pour la santé, avec notamment une augmentation du risque de cancer du sein chez la femme dès 1 verre standard par jour. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 10,
+      "question": "[Item 76] Question 10 - Difficile : Lors de l'intoxication alcoolique aiguë avec coma éthylique, quelles sont les caractéristiques cliniques typiques de ce coma ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Coma agité avec hypertension, hyperthermie et myosis serré.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Coma calme avec hypotension, hypotonie, hypothermie et mydriase bilatérale symétrique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Coma avec rigidité de décérébration et fièvre à 40°C.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Coma hypertonique avec asymétrie pupillaire et signes de localisation.",
+          "correct": false
+        }
+      ],
+      "explication": "Le coma éthylique est un coma calme, avec hypotension artérielle, hypotonie, hypothermie, mydriase bilatérale symétrique, peu réactive et sans signes de localisation. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 11,
+      "question": "[Item 76] Question 11 - Difficile : Quelle est la complication neurologique majeure favorisée par une correction trop rapide d'une hyponatrémie chez un patient alcoolo-dépendant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'encéphalopathie de Gayet-Wernicke.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome de démyélinisation osmotique (myélinolyse centropontine).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La démence alcoolique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La névrite optique rétro-bulbaire.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome de démyélinisation osmotique est favorisé par la correction trop rapide d'une hyponatrémie, la dénutrition et un mésusage d'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 12,
+      "question": "[Item 76] Question 12 - Difficile : Quelle mesure d'urgence vitale doit être appliquée chez un patient alcoolique suspecté d'encéphalopathie de Gayet-Wernicke ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une perfusion de soluté glucosé hypertonique immédiatement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une supplémentation en vitamine B1 intraveineuse avant toute perfusion de glucosé.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'administration de benzodiazépines à fortes doses.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une restriction hydrique stricte.",
+          "correct": false
+        }
+      ],
+      "explication": "Tout symptôme évocateur d'encéphalopathie de Gayet-Wernicke impose en urgence une supplémentation en vitamine B1 intraveineuse AVANT toute perfusion de glucosé (le glucose consommant la vitamine B1, ce qui aggraverait les lésions). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 13,
+      "question": "[Item 76] Question 13 - Difficile : Dans le syndrome de sevrage non compliqué de l'alcool, quels sont les signes les plus évocateurs et fréquents ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Tremblements, sueurs profuses, anxiété et vomissements.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Hypotonie, bradycardie, hypothermie et hypersomnie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Hallucinations visuelles, fièvre à 40°C et confusion majeure.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Mydriase aréactive, coma calme et hypotension.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome de sevrage non compliqué associe tremblements, sueurs profuses, anxiété et vomissements. Les signes apparaissent dans les heures suivant l'arrêt et sont soulagés par la prise d'alcool ou de benzodiazépines. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 14,
+      "question": "[Item 76] Question 14 - Difficile : Quel est le délai d'apparition classique des crises convulsives de sevrage après l'arrêt ou la forte diminution de l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans les 2 premières heures.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Vers 48 heures.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Après 7 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 1 mois d'abstinence.",
+          "correct": false
+        }
+      ],
+      "explication": "Les crises convulsives de sevrage (généralisées tonico-cloniques) surviennent dans la majorité des cas 48 heures après l'arrêt ou une forte diminution de l'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 15,
+      "question": "[Item 76] Question 15 - Difficile : Quel tableau clinique caractérise le Delirium Tremens ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une léthargie profonde avec hypotension et hypothermie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une confusion agitée, des tremblements majeurs, des hallucinations pluri-sensorielles (zoopsies), fièvre et tachycardie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Des idées délirantes de persécution très systématisées sans confusion ni troubles neurovégétatifs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une paralysie ascendante et des troubles de déglutition isolés.",
+          "correct": false
+        }
+      ],
+      "explication": "Le delirium tremens est un état de confusion agitée et délirante avec tremblements majeurs, hallucinations souvent visuelles (zoopsies), et signes neurovégétatifs (fièvre, sueurs, tachycardie). C'est une urgence médicale. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 16,
+      "question": "[Item 76] Question 16 - Difficile : Quel est l'objectif du RPIB (Repérage Précoce et Intervention Brève) en addictologie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Initier obligatoirement un sevrage hospitalier immédiat.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dénoncer le patient aux autorités de sécurité routière.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Repérer le mésusage et amener le patient à réduire sa consommation, idéalement en dessous des repères à faible risque.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Prescrire un traitement médicamenteux aversif à l'insu du patient.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intervention brève vise à restituer l'évaluation et amener le consommateur dans le mésusage (sans dépendance sévère) à réduire sa consommation, en laissant le libre choix au patient. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 17,
+      "question": "[Item 76] Question 17 - Difficile : Quelle est la conduite thérapeutique recommandée lors d'un sevrage alcoolique simple en ambulatoire concernant les benzodiazépines ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles sont prescrites à vie pour maintenir l'abstinence.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La prescription n'est pas systématique, mais si indiquée, utiliser une BZD à demi-vie longue (diazépam) à doses décroissantes sur 7 à 10 jours.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il faut prescrire exclusivement du flumazénil en sublingual.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il faut utiliser des BZD à demi-vie très courte à doses croissantes sur 1 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "De façon non systématique, la prescription d'une BZD à vie longue (diazépam) à doses progressivement décroissantes sur 7 à 10 jours accompagne l'hydratation et la vitamine B1 lors d'un sevrage. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 18,
+      "question": "[Item 76] Question 18 - Difficile : Lors d'un sevrage alcoolique, en présence d'une contre-indication aux BZD à demi-vie longue (insuffisance hépato-cellulaire ou respiratoire sévère), quelle est la recommandation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Réaliser le sevrage en ambulatoire sans aucun traitement anxiolytique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Remplacer les BZD par des neuroleptiques à très forte dose en ambulatoire.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le sevrage se fait en hospitalisation, en utilisant des BZD uniquement en cas de signes de sevrage avec réévaluation à chaque prise.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Continuer l'alcool à faible dose de manière pérenne.",
+          "correct": false
+        }
+      ],
+      "explication": "En cas de contre-indication (insuffisance hépatocellulaire/respiratoire), le sevrage nécessite une hospitalisation. On utilise des BZD (souvent à demi-vie courte comme l'oxazépam) uniquement si des signes de sevrage apparaissent. (Source EDN Item 76/77)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 19,
+      "question": "[Item 76] Question 19 - Difficile : Parmi ces comorbidités psychiatriques, laquelle est particulièrement fréquente chez les patients souffrant de trouble de l'usage de l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble obsessionnel compulsif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'anorexie mentale restrictive stricte.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les troubles anxieux et les troubles dépressifs.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble délirant persistant de type érotomaniaque.",
+          "correct": false
+        }
+      ],
+      "explication": "Les comorbidités psychiatriques les plus fréquentes dans le trouble lié à l'usage de l'alcool sont les troubles anxieux et les troubles dépressifs. Le risque suicidaire est aussi très fortement augmenté. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 20,
+      "question": "[Item 76] Question 20 - Difficile : Comment traite-t-on une crise convulsive de sevrage alcoolique aux urgences ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par l'instauration immédiate d'un traitement anti-épileptique au long cours (ex : Dépakine).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Diazépam systématique à forte dose avec dégression sur 7 à 10 jours, sans instaurer de traitement anti-comitial au long cours.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Uniquement par la vitamine B1 en intraveineuse.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Par l'administration de neuroleptiques sédatifs.",
+          "correct": false
+        }
+      ],
+      "explication": "Le traitement d'une crise convulsive de sevrage nécessite du diazépam à forte dose avec dégression sur 7-10 jours. Il n'y a pas d'instauration systématique de traitement anti-comitial au long cours. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 21,
+      "question": "[Item 76] Question 21 - Difficile : Quel est le pourcentage de patients souffrant de trouble bipolaire présentant également un trouble lié à l'usage d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Jusqu'à 10 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Jusqu'à 20 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Jusqu'à 40 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 80 %",
+          "correct": false
+        }
+      ],
+      "explication": "On observe des troubles liés à l'usage d'alcool chez les patients souffrant de schizophrénie (20 à 30 %) ou de troubles bipolaires (jusqu'à 40 %). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 22,
+      "question": "[Item 76] Question 22 - Difficile : Dans le traitement pharmacologique de la dépendance à l'alcool au long cours, quels médicaments sont prescrits pour aider au maintien de l'arrêt (abstinence) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Acamprosate, Naltrexone, Disulfirame.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Nalméfène et Baclofène.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Méthadone et Buprénorphine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Diazépam et Oxazépam à vie.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour le maintien de l'arrêt de l'alcool (abstinence), on utilise l'acamprosate, la naltrexone ou le disulfirame. Le nalméfène et le baclofène sont plutôt utilisés pour le maintien d'une consommation contrôlée (réduction). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 23,
+      "question": "[Item 76] Question 23 - Difficile : Quelle est l'attitude thérapeutique fondamentale concernant l'objectif de consommation lors de la prise en charge d'un trouble de l'usage de l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'objectif d'abstinence totale doit être imposé d'emblée au patient.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le patient doit définir lui-même son objectif (arrêt complet ou réduction), cet objectif pouvant changer au cours du temps.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Seul un sevrage hospitalier immédiat est acceptable.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il faut menacer le patient de conséquences pénales s'il ne réduit pas.",
+          "correct": false
+        }
+      ],
+      "explication": "L'objectif (arrêt de l'usage ou retour à un usage à faible risque/réduction) doit être défini par le patient lui-même, afin de maintenir le lien thérapeutique et favoriser la motivation au changement. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 24,
+      "question": "[Item 76] Question 24 - Difficile : Quelle complication obstétricale majeure est causée par la consommation d'alcool pendant la grossesse ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La macrosomie fœtale constante.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome d'alcoolisation fœtale, première cause de retard mental non génétique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le diabète gestationnel systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hydrocéphalie.",
+          "correct": false
+        }
+      ],
+      "explication": "La consommation d'alcool pendant la grossesse expose au risque de syndrome d'alcoolisation fœtale (SAF) et d'autres troubles causés par l'alcoolisation fœtale, dont un retard mental isolé. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 25,
+      "question": "[Item 76] Question 25 - Difficile : Quelle anomalie de la numération formule sanguine (NFS) est un marqueur très fréquent d'une intoxication chronique à l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une microcytose isolée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une hyperleucocytose majeure.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une macrocytose (élévation du VGM).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une polyglobulie.",
+          "correct": false
+        }
+      ],
+      "explication": "La macrocytose (élévation du Volume Globulaire Moyen) est un des marqueurs biologiques usuels d'une consommation chronique d'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 26,
+      "question": "[Item 76] Question 26 - Difficile : Lors de la prise en charge du Delirium Tremens, quel élément de surveillance biologique nécessite une attention extrême en dehors de l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'uricémie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le bilan lipidique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les troubles hydro-électrolytiques (ionogramme) et l'hydratation.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La TSH.",
+          "correct": false
+        }
+      ],
+      "explication": "Le Delirium Tremens expose à un risque majeur de déshydratation et de troubles électrolytiques. Il faut surveiller constantes, hydratation, ionogramme sanguin, créatininémie, phosphorémie. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 27,
+      "question": "[Item 76] Question 27 - Difficile : Laquelle de ces complications hématologiques peut être directement causée par la toxicité de l'alcool ou une hépatopathie alcoolique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une thrombocytémie essentielle.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une anémie, une thrombopénie ou une leucopénie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un myélome multiple.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un lymphome de Hodgkin.",
+          "correct": false
+        }
+      ],
+      "explication": "L'alcool peut entraîner une macrocytose, une anémie, une thrombopénie, une leucopénie (par toxicité directe, ou liées à l'hépatopathie alcoolique ou aux carences). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 28,
+      "question": "[Item 76] Question 28 - Difficile : Le diagnostic d'un mésusage d'alcool repose sur trois entités selon sa gravité. Lesquelles ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Abstinence, intoxication aiguë, sevrage.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Usage à faible risque, usage ponctuel, usage fœtal.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Usage à risque, usage nocif pour la santé, syndrome de dépendance.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Dépendance physique, dépendance psychique, tolérance.",
+          "correct": false
+        }
+      ],
+      "explication": "Le mésusage regroupe l'usage à risque (risques sans dommage actuel), l'usage nocif (dommages de santé avérés sans dépendance) et la dépendance (perte de contrôle, tolérance, sevrage...). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 29,
+      "question": "[Item 76] Question 29 - Difficile : Face à une intoxication alcoolique aiguë simple (agitation, ébriété), quelle est la conduite à tenir en urgence ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Perfusion de naloxone en urgence.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dialyse immédiate.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Repos au calme, protection du patient et surveillance horaire des constantes jusqu'au retour des capacités relationnelles.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Administration intraveineuse systématique de Dépakine.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intoxication aiguë simple nécessite un repos au calme, une protection du patient (risque suicidaire, fugue), l'élimination des diagnostics différentiels et une surveillance jusqu'au retour de l'état normal. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 30,
+      "question": "[Item 76] Question 30 - Difficile : En addictologie, quel outil relationnel est indispensable pour aborder la dépendance et susciter le changement chez le patient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La psychanalyse longue.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'entretien motivationnel.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La technique d'immersion (flooding).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La contrainte médico-légale systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "Le travail sur la motivation est central. L'entretien motivationnel est un style d'entretien collaboratif visant à renforcer la motivation au changement et l'adhésion en explorant l'ambivalence. (Source EDN Item 76 / 01)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 31,
+      "question": "[Item 76] Question 31 - Difficile : En cas de delirium tremens, quelle vitamine doit être administrée à fortes doses par voie parentérale avant toute perfusion glucosée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La vitamine B9.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La vitamine C.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La vitamine B1 (Thiamine).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La vitamine B12.",
+          "correct": false
+        }
+      ],
+      "explication": "Le delirium tremens impose un traitement par vitamine B1 parentérale à forte dose (pour prévenir l'encéphalopathie de Gayet-Wernicke) AVANT toute perfusion de sérum glucosé. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 32,
+      "question": "[Item 76] Question 32 - Difficile : Quelle proportion de la mortalité évitable est attribuable à l'alcool chez les 20-39 ans en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "5 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "10 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "25 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "50 %",
+          "correct": false
+        }
+      ],
+      "explication": "La part de la mortalité évitable attribuable à l'alcool est particulièrement élevée chez les 20-39 ans, représentant environ 25 %. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 33,
+      "question": "[Item 76] Question 33 - Difficile : Quels troubles cardiovasculaires constituent une complication médicale classique de l'intoxication chronique à l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La sténose mitrale et l'endocardite infectieuse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hypertension artérielle, les troubles du rythme et les cardiomyopathies.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hypotension artérielle orthostatique sévère isolée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le rétrécissement aortique calcifié.",
+          "correct": false
+        }
+      ],
+      "explication": "Les complications cardiovasculaires de l'alcoolisme chronique incluent l'hypertension artérielle, les troubles du rythme, les cardiomyopathies et l'insuffisance cardiaque gauche. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 34,
+      "question": "[Item 76] Question 34 - Difficile : Le questionnaire AUDIT-C évalue un mésusage actuel. Sur quelle période temporelle portent ses questions ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les 30 derniers jours.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les 6 derniers mois.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les 12 derniers mois.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La vie entière.",
+          "correct": false
+        }
+      ],
+      "explication": "Les questions de l'AUDIT-C portent sur la consommation d'alcool au cours des 12 derniers mois. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 35,
+      "question": "[Item 76] Question 35 - Difficile : Quelle est la particularité du syndrome de sevrage non compliqué chez un tiers des patients dépendants à l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est toujours mortel sans traitement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins un tiers d'entre eux n'ont aucun symptôme de sevrage lors d'un arrêt de la consommation.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il ne survient qu'après 3 semaines d'abstinence totale.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il provoque systématiquement un syndrome de Lyell.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome de sevrage ne survient que chez certains patients dépendants : au moins un tiers d'entre eux n'ont aucun symptôme de sevrage lors d'un arrêt de consommation d'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 36,
+      "question": "[Item 76] Question 36 - Difficile : Quel type de cancer de l'œsophage est reconnu comme fortement lié à l'intoxication alcoolo-tabagique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'adénocarcinome du tiers inférieur.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le carcinome épidermoïde de l'œsophage.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le sarcome de l'œsophage.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le mélanome œsophagien.",
+          "correct": false
+        }
+      ],
+      "explication": "L'alcool, surtout associé au tabac, est un facteur de risque très fort pour le cancer épidermoïde de l'œsophage et les cancers des voies aérodigestives supérieures (VADS). (Source EDN Item 76/75)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 37,
+      "question": "[Item 76] Question 37 - Difficile : Au moment de l'intervention brève (RPIB), quelle documentation est remise au patient s'il souhaite réduire sa consommation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une convocation pénale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une ordonnance d'interdiction de vente d'alcool.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "De la documentation écrite et une orientation possible vers des structures spécialisées.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Un arrêt de travail obligatoire de 30 jours.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le cadre du RPIB, le professionnel remet une documentation écrite et propose une orientation vers des structures spécialisées, en laissant le libre choix au patient. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 38,
+      "question": "[Item 76] Question 38 - Difficile : Quel diagnostic différentiel métabolique urgentissime doit être éliminé devant un trouble de la conscience associé à une haleine œnolique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hypercalcémie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une hypothyroïdie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hypoglycémie (ou acidocétose alcoolique).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hypomagnésémie isolée.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hypoglycémie, l'hyponatrémie, ou l'acidocétose alcoolique, ainsi que le trauma crânien, sont des urgences vitales à éliminer devant un coma suspecté 'éthylique'. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 39,
+      "question": "[Item 76] Question 39 - Difficile : Dans le cadre de l'addiction, comment se caractérise le phénomène de 'tolérance' selon la CIM-10 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'apparition de tremblements lors de l'arrêt de la substance.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le besoin d'une quantité plus importante de la substance pour obtenir l'effet désiré (perte d'effet à dose constante).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'envie irrépressible de consommer la substance (craving).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La poursuite de la consommation malgré les dommages organiques.",
+          "correct": false
+        }
+      ],
+      "explication": "La tolérance est la nécessité d'augmenter les doses de substance ou la fréquence pour obtenir le même effet (perte d'effet à même dose). C'est un des critères de la dépendance (CIM-10). (Source EDN Addictologie Intro/Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 40,
+      "question": "[Item 76] Question 40 - Difficile : Les complications digestives chroniques du mésusage d'alcool incluent souvent une inflammation d'une glande annexe. Laquelle ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La thyroïdite.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La parotidite bilatérale infectieuse.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La pancréatite aiguë ou la pancréatite chronique calcifiante.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'appendicite chronique.",
+          "correct": false
+        }
+      ],
+      "explication": "Sur le plan digestif, la pancréatite aiguë et la pancréatite chronique calcifiante font partie des complications fréquentes et graves de l'intoxication chronique à l'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 41,
+      "question": "[Item 76] Question 41 - Difficile : Quel marqueur biologique est très spécifique de la consommation d'alcool et se normalise en quelques semaines après l'arrêt ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le Volume Globulaire Moyen (VGM)",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les Transaminases (ASAT/ALAT)",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La Gamma Glutamyl Transpeptidase (GGT)",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La Transferrine désialylée (CDT)",
+          "correct": true
+        }
+      ],
+      "explication": "La CDT est très spécifique et se normalise en quelques semaines. Sa sensibilité est meilleure que celle de la GGT. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 42,
+      "question": "[Item 76] Question 42 - Difficile : Quelle complication neurologique, favorisée par une carence en vitamine B1, est classique de l'intoxication chronique à l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le syndrome de démyélinisation osmotique",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'encéphalopathie de Gayet-Wernicke",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La maladie de Parkinson",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'encéphalopathie hépatique",
+          "correct": false
+        }
+      ],
+      "explication": "L'encéphalopathie de Gayet-Wernicke est une complication classique, favorisée par une carence en vitamine B1 (thiamine) fréquente chez le patient alcoolodépendant. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 43,
+      "question": "[Item 76] Question 43 - Difficile : Parmi les cancers suivants, lequel est fortement lié à la consommation d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Cancer de la prostate",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Carcinome hépatocellulaire",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Cancer du poumon",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Mélanome malin",
+          "correct": false
+        }
+      ],
+      "explication": "L'alcool est un facteur de risque fort de cancers des voies aérodigestives supérieures, de cancer épidermoïde de l'œsophage et de carcinome hépatocellulaire. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 44,
+      "question": "[Item 76] Question 44 - Difficile : À partir de quand les premiers signes du syndrome de sevrage non compliqué (tremblements, sueurs, anxiété) apparaissent-ils généralement après l'arrêt de l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans les premières minutes",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans les heures qui suivent l'arrêt (fréquemment le matin au réveil)",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Toujours après 48 heures",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Après une semaine",
+          "correct": false
+        }
+      ],
+      "explication": "Les premiers symptômes surviennent dans les heures qui suivent l'arrêt de la consommation, très fréquemment le matin au réveil pour les fortes dépendances. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 45,
+      "question": "[Item 76] Question 45 - Difficile : Quel est le pourcentage de patients atteints de schizophrénie qui présentent un trouble lié à l'usage d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 5 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "20 à 30 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 60 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Près de 90 %",
+          "correct": false
+        }
+      ],
+      "explication": "On observe des troubles liés à l'usage d'alcool chez les patients souffrant de schizophrénie dans 20 à 30 % des cas (et jusqu'à 40 % dans les troubles bipolaires). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 46,
+      "question": "[Item 76] Question 46 - Difficile : Dans la stratégie de RPIB (Repérage Précoce et Intervention Brève), quelle est la durée typique de l'intervention brève ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins d'une minute",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "5 à 20 minutes",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "1 heure au minimum",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Plusieurs séances d'une heure réparties sur 6 mois",
+          "correct": false
+        }
+      ],
+      "explication": "L'intervention brève est dispensée individuellement, en un temps court, de 5 à 20 minutes, et peut être répétée. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 47,
+      "question": "[Item 76] Question 47 - Difficile : L'hydratation fait partie de la prise en charge du sevrage non compliqué. Quelle quantité quotidienne per os est recommandée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "500 mL",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 litre",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "2 à 3 litres par 24 h",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "5 litres par 24 h",
+          "correct": false
+        }
+      ],
+      "explication": "Le sevrage comprend une hydratation orale adaptée, de l'ordre de deux à trois litres par 24 h, associée à une supplémentation en vitamine B1. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 48,
+      "question": "[Item 76] Question 48 - Difficile : Lors de la prévention primaire du mésusage d'alcool, quel est l'objectif principal ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Diminuer les symptômes du delirium tremens",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Éviter la première consommation ou la retarder (notamment chez les jeunes)",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Traiter les complications hépatiques",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Sevrer les patients hospitalisés en urgence",
+          "correct": false
+        }
+      ],
+      "explication": "La prévention primaire a pour objectif d'éviter la première consommation de substances ou de la retarder, par l'information et l'éducation, avant toute pathologie ou addiction. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 49,
+      "question": "[Item 76] Question 49 - Difficile : Quelle est la caractéristique de la GGT comme marqueur de consommation d'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est très spécifique de l'alcool, sans autre cause possible.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle se normalise très lentement (plusieurs mois).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Sa sensibilité et spécificité sont médiocres, et elle baisse dès la 1ère semaine d'arrêt.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "C'est l'examen obligatoire pour poser le diagnostic de dépendance.",
+          "correct": false
+        }
+      ],
+      "explication": "La GGT a une sensibilité et spécificité médiocre. Elle baisse rapidement dès la première semaine après l'arrêt et se normalise en 4 à 10 semaines. Le diagnostic de dépendance est clinique. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 50,
+      "question": "[Item 76] Question 50 - Difficile : Une femme enceinte souhaite savoir si elle peut consommer un verre d'alcool par semaine. Quelle est la recommandation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Uniquement du vin rouge.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Zéro alcool pendant la grossesse.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un verre par semaine est considéré comme usage à faible risque.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Uniquement au 3ème trimestre.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans certaines situations, dont la grossesse ou le projet de grossesse, l'abstinence totale (non-usage) est recommandée en raison des risques de Syndrome d'Alcoolisation Fœtale. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 51,
+      "question": "[Item 76] Question 51 - Difficile : Quel signe neurovégétatif N'EST PAS un signe de sevrage alcoolique classique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Tachycardie",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Sueurs profuses",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Hypertension artérielle",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Bradypnée sévère",
+          "correct": true
+        }
+      ],
+      "explication": "Le sevrage alcoolique entraine une hyperactivité sympathique (tachycardie, hypertension, sueurs, tremblements). La bradypnée est plutôt signe d'une intoxication aux opiacés ou sédatifs. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 52,
+      "question": "[Item 76] Question 52 - Difficile : Dans l'intoxication alcoolique aiguë à faible dose, quel est l'effet physiologique prédominant sur le SNC ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Coma profond d'emblée",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Convulsions tonico-cloniques",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Effet désinhibiteur et euphorisant",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Hallucinations visuelles terrifiantes",
+          "correct": false
+        }
+      ],
+      "explication": "À faible dose, l'effet de l'alcool est désinhibiteur et euphorisant. L'effet dépresseur majeur conduisant au coma survient à plus forte dose. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 53,
+      "question": "[Item 76] Question 53 - Difficile : Quelle affirmation concernant l'intervention brève (RPIB) est FAUSSE ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est dispensée en un temps court de 5 à 20 minutes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle inclut la définition d'un verre standard.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle est réalisée de façon directive et impose l'arrêt total.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle donne au patient le choix de son objectif de consommation.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intervention brève est réalisée de façon empathique, sans jugement, en insistant sur le libre choix du patient (et non de façon directive). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 54,
+      "question": "[Item 76] Question 54 - Difficile : Lequel de ces signes biologiques ne témoigne PAS typiquement d'un trouble métabolique lié à l'alcool ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Hypoglycémie",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Hyperkaliémie",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Hyperuricémie",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Hypertriglycéridémie",
+          "correct": false
+        }
+      ],
+      "explication": "L'alcool induit typiquement une hypokaliémie (et hyponatrémie, hypoglycémie, hyperuricémie, hypertriglycéridémie). L'hyperkaliémie n'est pas typique des troubles ioniques liés à l'alcool. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 55,
+      "question": "[Item 76] Question 55 - Difficile : À quelle condition le diagnostic de dépendance à l'alcool requiert-il la présence d'un syndrome de sevrage clinique selon la CIM-11 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "C'est un critère obligatoire pour poser le diagnostic.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il n'est pas obligatoire, l'impossibilité de contrôler l'usage (ou le craving) peut suffire parmi d'autres critères.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il faut que le sevrage entraine des crises convulsives.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le sevrage n'existe pas dans la dépendance à l'alcool.",
+          "correct": false
+        }
+      ],
+      "explication": "La dépendance ne nécessite pas obligatoirement un syndrome de sevrage (certains n'en ont aucun). Elle repose sur un faisceau d'éléments (désir puissant, perte de contrôle, abandon des intérêts, poursuite malgré dommages). (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 56,
+      "question": "[Item 76] Question 56 - Difficile : Parmi les mesures de soutien au long cours, laquelle favorise le maintien de l'abstinence hors du cadre médical strict ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'isolement pour éviter les tentations",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La participation à des groupes d'entraide et d'auto-support (Alcooliques anonymes, Vie libre, etc.)",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le travail exclusif de nuit",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'utilisation quotidienne de benzodiazépines",
+          "correct": false
+        }
+      ],
+      "explication": "Le patient doit être informé de l'existence d'associations d'entraide et d'auto-support (Alcooliques anonymes, Vie libre...) dont l'association avec la prise en charge améliore le pronostic. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "question_numero": 57,
+      "question": "[Item 76] Question 57 - Difficile : Quelle précaution est cruciale face à une hyponatrémie chronique chez un patient alcoolodépendant aux urgences ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Corriger le plus vite possible avec du NaCl hypertonique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Corriger lentement pour éviter un syndrome de démyélinisation osmotique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Ne pas corriger car l'hyponatrémie protège le cerveau du sevrage.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Administrer des diurétiques de l'anse.",
+          "correct": false
+        }
+      ],
+      "explication": "La correction d'une hyponatrémie doit être lente, car si elle est trop rapide, notamment en présence de dénutrition et mésusage d'alcool, elle expose à la myélinolyse centropontique. (Source EDN Item 76)",
+      "difficulte": 3,
+      "source": "EDN Item 76"
+    }
+  ]
+}

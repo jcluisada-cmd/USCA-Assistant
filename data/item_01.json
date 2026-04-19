@@ -1,0 +1,324 @@
+{
+  "qcm": [
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 1,
+      "question": "[Item 01] Question 1 - Facile : Comment se caractérise fondamentalement la relation médecin-malade ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "C'est une relation strictement symétrique basée sur un échange de savoirs équivalents.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "C'est une relation asymétrique, le médecin ayant l'expertise médicale et le patient l'expertise de son vécu.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "C'est une relation où le patient détient le savoir biomédical et le médecin la théorie profane.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "C'est une relation purement technique, indépendante des attentes ou de l'investissement affectif.",
+          "correct": false
+        }
+      ],
+      "explication": "La relation médecin-malade est interpersonnelle et asymétrique. Le médecin dispose d'une expertise médicale (théorie savante), et le patient dispose d'une expertise du vécu de sa maladie (théorie profane). (Source EDN Item 01, 1-2)",
+      "difficulte": 1,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 2,
+      "question": "[Item 01] Question 2 - Facile : Quelle est la définition exacte de l'empathie clinique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La capacité à ressentir la même chose que le patient (sympathie).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'incapacité à ressentir la même chose que le patient (apathie).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La capacité de comprendre les affects et les pensées d'autrui et de lui faire comprendre qu'il est compris.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le fait de projeter ses propres émotions sur le vécu du patient.",
+          "correct": false
+        }
+      ],
+      "explication": "L'empathie clinique est la capacité de comprendre les affects et les pensées d'autrui (empathie affective et cognitive) et de lui faire comprendre qu'il est compris. Elle se différencie de la sympathie. (Source EDN Item 01, 3)",
+      "difficulte": 1,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 3,
+      "question": "[Item 01] Question 3 - Moyen : Dans l'entretien motivationnel, que signifie la lettre 'T' de l'acronyme VICTOIRE ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Trouver des solutions à la place du patient.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Tolérer les résistances face au changement.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Transférer ses propres motivations au patient.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Traiter rapidement l'ambivalence par la persuasion.",
+          "correct": false
+        }
+      ],
+      "explication": "Le 'T' signifie Tolérer : tolérer les résistances face au changement, avec un jugement positif inconditionnel, en légitimant certains arguments du patient sans argumenter contre. (Source EDN Item 01, 4)",
+      "difficulte": 2,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 4,
+      "question": "[Item 01] Question 4 - Moyen : Lors de l'annonce d'une mauvaise nouvelle, quelle étape doit impérativement précéder la délivrance progressive de l'information ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Proposer immédiatement un support écrit.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Distinguer ce que le patient sait déjà, souhaite savoir et doit savoir.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Donner un espoir, même irréaliste, pour amortir le choc.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Demander au patient de reformuler l'information biomédicale complexe.",
+          "correct": false
+        }
+      ],
+      "explication": "L'étape 2 consiste à distinguer ce que le patient sait déjà, souhaite savoir et doit savoir, avant l'étape 3 qui est de donner l'information progressivement au rythme du patient. (Source EDN Item 01, 5-6)",
+      "difficulte": 2,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 5,
+      "question": "[Item 01] Question 5 - Difficile : Un médecin ressent une antipathie envers son patient, ce qui le conduit à prendre des décisions trop hâtives. De quel concept s'agit-il ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Transfert négatif du patient.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Contre-transfert positif du médecin.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Mécanisme de défense par sublimation.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Contre-transfert négatif du médecin.",
+          "correct": true
+        }
+      ],
+      "explication": "Le contre-transfert désigne l'investissement affectif du médecin envers le patient. S'il est négatif, le médecin peut avoir des attitudes de rejet comme une décision prise trop rapidement. (Source EDN Item 01, 7-8)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 6,
+      "question": "[Item 01] Question 6 - Difficile : Un patient attribue l'échec de son traitement à l'incompétence de son médecin, refusant de voir sa propre inobservance. Quel mécanisme de défense utilise-t-il ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le déplacement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La projection.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'isolation.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La sublimation.",
+          "correct": false
+        }
+      ],
+      "explication": "La projection est une défense faisant attribuer à autrui ses propres affects ou responsabilités liés à la maladie, comme le fait de projeter sur la mauvaise compétence supposée du médecin l'évolution négative. (Source EDN Item 01, 9)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 7,
+      "question": "[Item 01] Question 7 - Difficile : Dans la théorie de l'ajustement au stress (coping), à quoi correspond l'évaluation secondaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au stress directement perçu par le sujet (évaluation de la menace).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Aux stratégies de coping centrées exclusivement sur l'émotion.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "À l'inventaire par le sujet de son 'contrôle perçu' et de son 'soutien social perçu'.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "À la phase d'acceptation du diagnostic médical.",
+          "correct": false
+        }
+      ],
+      "explication": "L'évaluation secondaire correspond au 'contrôle perçu' (inventaire des ressources personnelles) et au 'soutien social perçu' (aides et protections disponibles) par le sujet pour faire face au stress. (Source EDN Item 01, 10)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 8,
+      "question": "[Item 01] Question 8 - Difficile : Un patient fumeur reconnaît que les inconvénients du tabac sont aussi importants que les avantages, mais reste ambivalent sur l'arrêt. À quel stade de Prochaska et DiClemente se trouve-t-il ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Pré-contemplation.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Détermination.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Contemplation.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Maintien.",
+          "correct": false
+        }
+      ],
+      "explication": "Le stade de contemplation est celui où le patient pense que les inconvénients sont aussi importants que les avantages. (Source EDN Item 01, 11)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 9,
+      "question": "[Item 01] Question 9 - Difficile : Quel ensemble de signes caractérise une alliance thérapeutique FAIBLE lors d'un entretien ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Temps de latence à l'énoncé long et pourcentage d'interruption faible.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Réponses brèves, temps de latence court et tendance à interrompre le médecin.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Durée de l'énoncé longue et proxémique adaptée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Reformulation fréquente par le patient et paralangage expressif.",
+          "correct": false
+        }
+      ],
+      "explication": "Un patient qui répond de manière brève (durée de l'énoncé courte), avec un temps de latence court et qui a tendance à interrompre le médecin caractérise une alliance thérapeutique faible. (Source EDN Item 01, 12)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    },
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "question_numero": 10,
+      "question": "[Item 01] Question 10 - Difficile : Dans le cadre d'une maladie chronique nécessitant un changement de style de vie, quel modèle de relation médecin-malade est le plus adapté et attendu ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La relation actif/passif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La relation consensuelle.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La relation coopérative.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La relation participative.",
+          "correct": true
+        }
+      ],
+      "explication": "La relation participative positionne le patient comme acteur privilégié, nécessitant de changer son style de vie, trouvant un compromis réciproque avec le médecin. Elle est adaptée aux maladies chroniques. (Source EDN Item 01, 13-14)",
+      "difficulte": 3,
+      "source": "EDN Item 01"
+    }
+  ]
+}

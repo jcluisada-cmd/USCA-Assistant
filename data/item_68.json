@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 1,
+      "question": "[Item 68] Question 1 - Facile : Quels sont les deux principaux troubles du comportement externalisés décrits chez l'enfant et l'adolescent ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble d'anxiété généralisée et le trouble panique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble oppositionnel avec provocation (TOP) et le trouble des conduites (TC).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La schizophrénie précoce et l'épisode maniaque.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble du spectre autistique et la dyspraxie.",
+          "correct": false
+        }
+      ],
+      "explication": "Les principaux troubles figurant dans les troubles du comportement de l'enfant et de l'adolescent (externalisés) sont le trouble oppositionnel avec provocation (TOP) et le trouble des conduites (TC). (Source EDN Item 68, p.294)",
+      "difficulte": 1,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 2,
+      "question": "[Item 68] Question 2 - Facile : Quelle est la prévalence moyenne du trouble oppositionnel avec provocation (TOP) en population générale pédiatrique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "0,1 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1,5 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "3 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "10 %",
+          "correct": false
+        }
+      ],
+      "explication": "Le TOP a une prévalence moyenne de 3 % en population pédiatrique. (Source EDN Item 68, p.297)",
+      "difficulte": 1,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 3,
+      "question": "[Item 68] Question 3 - Moyen : Quelle est la durée minimale requise de la présence des symptômes pour poser un diagnostic de Trouble Oppositionnel avec Provocation (TOP) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 mois",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "3 mois",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "12 mois",
+          "correct": false
+        }
+      ],
+      "explication": "Le diagnostic du TOP requiert la présence des symptômes pendant au moins 6 mois (presque tous les jours avant 5 ans, et au moins une fois par semaine après 5 ans). (Source EDN Item 68, p.295)",
+      "difficulte": 2,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 4,
+      "question": "[Item 68] Question 4 - Moyen : Quelle est la durée d'observation minimale requise pour retenir un diagnostic de Trouble des Conduites (TC) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "3 mois",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "6 mois",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "12 mois",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "24 mois",
+          "correct": false
+        }
+      ],
+      "explication": "Le diagnostic de TC requiert la présence du syndrome clinique significatif dans les 12 derniers mois avec des critères de retentissement. (Source EDN Item 68, p.296)",
+      "difficulte": 2,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 5,
+      "question": "[Item 68] Question 5 - Difficile : Lors du diagnostic d'un Trouble des Conduites (TC), quel critère d'âge de début est considéré comme un facteur de mauvais pronostic ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un début tardif après 16 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un début précoce avant l'âge de 10 ans.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un début pile au moment de la puberté.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le mauvais pronostic n'est pas lié à l'âge de début.",
+          "correct": false
+        }
+      ],
+      "explication": "Le début précoce du TC (avant 10 ans), l'existence d'émotions prosociales limitées et la sévérité des symptômes sont des facteurs de mauvais pronostic. (Source EDN Item 68, p.296)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 6,
+      "question": "[Item 68] Question 6 - Difficile : Quels sont les trois grands regroupements symptomatiques caractéristiques du Trouble Oppositionnel avec Provocation (TOP) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Agressions physiques, vols, destructions de biens.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Humeur colérique/irritable, comportement querelleur/provocateur, esprit vindicatif.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Hallucinations, idées délirantes, repli social.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Inattention, hyperactivité motrice, impulsivité verbale.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome clinique du TOP associe humeur colérique/irritable, un comportement querelleur/provocateur, et un esprit vindicatif. (Source EDN Item 68, p.295)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 7,
+      "question": "[Item 68] Question 7 - Difficile : Dans le cadre d'un Trouble des Conduites (TC), qu'entend-on par la spécification 'émotions prosociales limitées' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une absence de remords ou de culpabilité, une insensibilité et un manque d'empathie.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une hypersensibilité au rejet et une labilité émotionnelle extrême.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'incapacité à sourire en public (amimie).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un refus exclusif d'interagir avec les adultes de la famille.",
+          "correct": false
+        }
+      ],
+      "explication": "L'existence d'émotions prosociales limitées correspond à l'absence de remords ou de culpabilité, l'insensibilité ou le manque d'empathie. C'est un facteur de mauvais pronostic. (Source EDN Item 68, p.296)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 8,
+      "question": "[Item 68] Question 8 - Difficile : Chez les filles, comment s'exprime plus fréquemment le Trouble des Conduites par rapport aux garçons ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par des agressions armées systématiques.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par une agressivité relationnelle (exclusion sociale d'autrui, colportage de rumeurs).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Exclusivement par des destructions de biens publics par le feu.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a aucune différence d'expression clinique entre filles et garçons.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez les filles, les symptômes d'agressivité physique sont moins fréquents que chez les garçons, mais l'agressivité relationnelle (exclusion, rumeurs) est fréquente. (Source EDN Item 68, p.296)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 9,
+      "question": "[Item 68] Question 9 - Difficile : Quelle comorbidité psychiatrique est extrêmement fréquente et doit être systématiquement recherchée devant un trouble oppositionnel avec provocation (TOP) ou un trouble des conduites (TC) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble obsessionnel compulsif (TOC).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La narcolepsie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble déficit de l'attention avec ou sans hyperactivité (TDAH).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La schizophrénie infantile.",
+          "correct": false
+        }
+      ],
+      "explication": "Le TOP et le TC sont souvent associés au TDAH qui est à rechercher systématiquement, tout comme les troubles des apprentissages et de la communication. (Source EDN Item 68, p.295/297)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 10,
+      "question": "[Item 68] Question 10 - Difficile : Sur le plan neurophysiologique, quelle particularité fonctionnelle retrouve-t-on souvent chez les enfants et adolescents avec trouble des conduites et agressivité (lié à la recherche de sensations) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hyperréactivité au stress avec taux de cortisol basal explosif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une tachycardie permanente de repos.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une faible réactivité au stress (moindre réactivité du rythme cardiaque et faible réponse du cortisol).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Des décharges épileptiformes occipitales continues.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles du comportement sont associés à une faible réactivité au stress : moindre réactivité du rythme cardiaque, faible réponse du cortisol à l'exposition au stress. Cela contribue à la recherche de sensations et au moindre ressenti de la peur/culpabilité. (Source EDN Item 68, p.298)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 11,
+      "question": "[Item 68] Question 11 - Difficile : Quel mécanisme cognitif est spécifiquement reconnu comme un facteur de risque dans l'apparition et le maintien des troubles du comportement (légitimation de la violence) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le biais d'attribution hostile dans les relations sociales (attribuer des intentions négatives lors d'interactions neutres).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hypermémoire épisodique des détails.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'incapacité à reconnaître les visages (prosopagnosie).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le délire mégalomaniaque d'invincibilité.",
+          "correct": false
+        }
+      ],
+      "explication": "Le biais d'attribution hostile dans les relations sociales (attribuer souvent des intentions négatives à autrui dans les interactions neutres) est un facteur cognitif majeur. Ce biais peut contribuer à la légitimation de la violence. (Source EDN Item 68, p.298)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 12,
+      "question": "[Item 68] Question 12 - Difficile : Face à un Trouble des Conduites (TC) sévère persistant à l'âge adulte, vers quel diagnostic psychiatrique s'oriente-t-on cliniquement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un trouble de personnalité antisociale.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un trouble bipolaire à cycles rapides.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une schizophrénie hébéphrénique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un trouble de l'adaptation chronique.",
+          "correct": false
+        }
+      ],
+      "explication": "La persistance à l'âge adulte de comportements agressifs et de transgressions sociales sévères (suite à un TC) doit faire évoquer une personnalité antisociale. (Source EDN Item 68, p.297)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 13,
+      "question": "[Item 68] Question 13 - Difficile : Quelle est la composante de l'humeur du Trouble Oppositionnel avec Provocation (TOP) qui augmente fortement le risque ultérieur d'évolution vers un trouble de l'humeur (dépression) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le comportement vindicatif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'humeur colérique et irritable.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le refus actif des règles.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le vol de petits objets.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles de l'humeur sont fréquents dans l'évolution du TOP. Ce risque est principalement lié à la dimension 'humeur colérique/irritable' du trouble. (Source EDN Item 68, p.296)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 14,
+      "question": "[Item 68] Question 14 - Difficile : Lors de l'évaluation diagnostique, le Trouble des Conduites (TC) est défini par la violation des droits fondamentaux d'autrui. Parmi ces comportements, lequel en fait partie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le refus de manger ses légumes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les mensonges utilitaires, les effractions et les vols sans ou avec confrontation.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les oublis fréquents de matériel scolaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La phobie des espaces publics.",
+          "correct": false
+        }
+      ],
+      "explication": "Le TC inclut vols et fraudes (effraction, vols sans confrontation, mensonges utilitaires), agressions, destructions, et violations graves des règles. (Source EDN Item 68, p.296)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "question_numero": 15,
+      "question": "[Item 68] Question 15 - Difficile : Quel constat environnemental éducatif est un facteur de risque majeur du Trouble des Conduites (TC) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un style éducatif coercitif, inconsistant, avec négligences ou réponses parentales imprévisibles.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une éducation Montessori stricte.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un régime alimentaire exclusivement végétalien dans l'enfance.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence de pratique sportive extra-scolaire.",
+          "correct": false
+        }
+      ],
+      "explication": "Les facteurs de risque environnementaux incluent un style éducatif coercitif ou inconsistant : violences physiques ou psychologiques, négligences éducatives ou réponses parentales imprévisibles. (Source EDN Item 68, p.298)",
+      "difficulte": 3,
+      "source": "EDN Item 68"
+    }
+  ]
+}

@@ -245,8 +245,11 @@ formStaff.addEventListener('submit', async function() {
       type: 'staff',
       profile: profile
     }));
-    // Rediriger : étudiantes IDE → livret, autres soignants → dashboard admin
-    window.location.href = (profile.role === 'etudiant_ide') ? 'etudiant/' : 'admin/';
+    // Rediriger : étudiantes IDE → livret, externes → QCM, autres soignants → dashboard admin
+    var dest = 'admin/';
+    if (profile.role === 'etudiant_ide') dest = 'etudiant/';
+    else if (profile.role === 'externe') dest = 'extern/';
+    window.location.href = dest;
   } catch(err) {
     showError(err.message);
   } finally {
@@ -271,7 +274,10 @@ function showError(msg) {
   // Staff ?
   var staffSession = await auth.getStaffSession();
   if (staffSession) {
-    window.location.href = (staffSession.role === 'etudiant_ide') ? 'etudiant/' : 'admin/';
+    var dest = 'admin/';
+    if (staffSession.role === 'etudiant_ide') dest = 'etudiant/';
+    else if (staffSession.role === 'externe') dest = 'extern/';
+    window.location.href = dest;
     return;
   }
   // Pas de session → masquer le splash et montrer le login

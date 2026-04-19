@@ -1,0 +1,804 @@
+{
+  "qcm": [
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 1,
+      "question": "[Item 74] Question 1 - Facile : Quelles sont les six grandes classes principales de psychotropes utilisées en psychiatrie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Antipsychotiques, antidépresseurs, thymorégulateurs, anxiolytiques, hypnotiques, psychostimulants.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Antibiotiques, antalgiques, anxiolytiques, curares, antipsychotiques, corticoïdes.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Antipsychotiques, antidépresseurs, opiacés, hypnotiques, bêta-bloquants, anesthésiques.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Anxiolytiques, antidépresseurs, antiparkinsoniens, anticholinergiques, antalgiques, sédatifs.",
+          "correct": false
+        }
+      ],
+      "explication": "Les principales classes de psychotropes sont les antipsychotiques, antidépresseurs, thymorégulateurs, anxiolytiques, hypnotiques et psychostimulants. (Source EDN Item 74)",
+      "difficulte": 1,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 2,
+      "question": "[Item 74] Question 2 - Facile : Quel est le délai d'action habituel pour observer l'efficacité complète d'un traitement antidépresseur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "48 heures maximum.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "2 à 4 semaines.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "3 mois minimum.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Immédiat dès la première prise.",
+          "correct": false
+        }
+      ],
+      "explication": "Le délai d'action des antidépresseurs est compris entre 2 et 4 semaines. Il est recommandé de ne pas l'interrompre pour inefficacité avant 4 semaines à dose efficace. (Source EDN Item 74)",
+      "difficulte": 1,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 3,
+      "question": "[Item 74] Question 3 - Moyen : Quelle est la durée maximale de prescription légale pour les benzodiazépines utilisées comme anxiolytiques (sevrage compris) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "4 semaines.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "12 semaines.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a pas de durée limite.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée de prescription maximale réglementaire (incluant la période de sevrage) est de 12 semaines pour les benzodiazépines anxiolytiques. (Source EDN Item 74)",
+      "difficulte": 2,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 4,
+      "question": "[Item 74] Question 4 - Moyen : Quelle est la durée maximale de prescription légale pour les benzodiazépines et apparentés (Zolpidem, Zopiclone) utilisés comme hypnotiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "2 semaines.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "4 semaines.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "12 semaines.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "6 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée de prescription est limitée à 4 semaines pour les hypnotiques. Cette durée est réglementaire et la prescription n'est pas renouvelable sans réévaluation. (Source EDN Item 74)",
+      "difficulte": 2,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 5,
+      "question": "[Item 74] Question 5 - Difficile : Quelle benzodiazépine est à privilégier chez un patient souffrant d'insuffisance hépatique car elle en est le métabolite final (demi-vie courte, non modifiée) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le diazépam (Valium).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'alprazolam (Xanax).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le clorazépate.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'oxazépam (Seresta).",
+          "correct": true
+        }
+      ],
+      "explication": "L'oxazépam est un métabolite final de nombreuses benzodiazépines (pas de métabolisme hépatique lourd requis). C'est la BZD à privilégier en cas d'insuffisance hépatique ou grossesse. L'IH sévère est une contre-indication absolue pour toutes les BZD à l'exception de l'oxazépam. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 6,
+      "question": "[Item 74] Question 6 - Difficile : Quel est l'antidote spécifique utilisé en cas de surdosage engageant le pronostic vital par intoxication aiguë aux benzodiazépines ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La naloxone (Narcan).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La N-acétylcystéine.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le flumazénil (Anexate).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le glucagon.",
+          "correct": false
+        }
+      ],
+      "explication": "En cas de surdosage par benzodiazépines entraînant une dépression respiratoire ou un coma, l'antidote spécifique est le flumazénil (Anexate). (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 7,
+      "question": "[Item 74] Question 7 - Difficile : Quelle triade de signes cliniques et biologiques est particulièrement évocatrice d'un Syndrome Malin des Neuroleptiques (urgence vitale) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Hypothermie, diarrhée et élévation des plaquettes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Hyperthermie (40°C), rigidité extrapyramidale et élévation des CPK.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Myoclonies, hyperréflexie et mydriase.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Agranulocytose, ictère et rash cutané.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome malin des neuroleptiques associe une hyperthermie, une rigidité extrapyramidale majeure, des troubles végétatifs (sueurs, tachycardie) et biologiquement une élévation franche des CPK et une hyperleucocytose. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 8,
+      "question": "[Item 74] Question 8 - Difficile : Quel risque médicamenteux majeur impose une surveillance stricte de la NFS (hebdomadaire puis mensuelle) lors de la prescription de Clozapine (Leponex) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une thrombopénie sévère induisant des hémorragies.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une anémie hémolytique auto-immune.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une agranulocytose toxique (chute des PNN).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une polyglobulie majeure.",
+          "correct": false
+        }
+      ],
+      "explication": "La clozapine expose à un risque particulièrement élevé d'agranulocytose, ce qui impose une surveillance obligatoire de l'hémogramme (NFS) hebdomadaire puis mensuelle. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 9,
+      "question": "[Item 74] Question 9 - Difficile : Parmi les éléments suivants, lequel constitue une contre-indication ABSOLUE au traitement par sels de Lithium ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypothyroïdie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyponatrémie ou un régime sans sel.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La présence d'un psoriasis.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prise concomitante d'antipsychotiques atypiques.",
+          "correct": false
+        }
+      ],
+      "explication": "Le lithium s'éliminant par le rein en compétition avec le sodium, la déplétion hydrosodée, l'hyponatrémie, l'association aux diurétiques et le régime sans sel sont des contre-indications absolues (risque majeur de surdosage). (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 10,
+      "question": "[Item 74] Question 10 - Difficile : Quelle est la recommandation ferme concernant l'utilisation du divalproate de sodium (ou valpromide) chez la femme ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est le traitement de première ligne sans restriction chez la femme jeune.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est contre-indiqué uniquement lors du troisième trimestre de grossesse.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il est formellement contre-indiqué pendant la grossesse et chez la femme en âge de procréer.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'est tératogène qu'en cas d'association avec le lithium.",
+          "correct": false
+        }
+      ],
+      "explication": "Le valproate est formellement contre-indiqué pendant la grossesse, l'allaitement et chez la femme en âge de procréer en raison de son haut risque tératogène et de troubles neurodéveloppementaux graves pour l'enfant. (Source EDN Item 69/74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 11,
+      "question": "[Item 74] Question 11 - Difficile : Lors d'une intoxication (surdosage) par le Lithium, quelle symptomatologie est la plus évocatrice de gravité ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des signes neurologiques sévères (syndrome cérébelleux, myoclonies, confusion, convulsions).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une alopécie brutale et un prurit.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un ictère foudroyant avec cytolyse hépatique majeure.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une insuffisance respiratoire aiguë avec bronchospasme.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intoxication au lithium se manifeste par des signes neurologiques sévères (syndrome cérébelleux avec tremblements, dysarthrie, confusion, myoclonies, encéphalopathie et convulsions), associés à des troubles digestifs (diarrhée) et cardiaques. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 12,
+      "question": "[Item 74] Question 12 - Difficile : Une femme de 78 ans traitée par ISRS (Sertraline) est admise pour syndrome confusionnel récent. Quel trouble hydro-électrolytique iatrogène lié aux ISRS devez-vous impérativement redouter et rechercher ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypercalcémie maligne.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyponatrémie par SIADH (Sécrétion Inappropriée d'Hormone Antidiurétique).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperkaliémie avec insuffisance rénale anurique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La déshydratation hypernatrémique sévère.",
+          "correct": false
+        }
+      ],
+      "explication": "Les antidépresseurs ISRS exposent au risque d'hyponatrémie (souvent par SIADH), en particulier chez la personne âgée de 65 ans et plus. Il est recommandé de surveiller la natrémie. (Source EDN Item 70/74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 13,
+      "question": "[Item 74] Question 13 - Difficile : Quelle est la contre-indication absolue de TOUS les antidépresseurs ISRS et IRSNA au vu du risque d'interaction médicamenteuse majeure ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'association avec un bêta-bloquant.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'association avec les antidépresseurs IMAO (Inhibiteurs de la MonoAmine Oxydase).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'association avec les antalgiques de palier 1 (Paracétamol).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'association avec le Lithium.",
+          "correct": false
+        }
+      ],
+      "explication": "L'association d'un ISRS ou d'un IRSNA à un IMAO est une contre-indication absolue en raison du risque très élevé de syndrome sérotoninergique potentiellement mortel. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 14,
+      "question": "[Item 74] Question 14 - Difficile : Quel tableau clinique caractérise un syndrome sérotoninergique, complication grave des antidépresseurs ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Bradycardie extrême, constipation opiniâtre, miosis et hypothermie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Symptômes neurologiques (myoclonies, confusion, hyperréflexie), neuro-végétatifs (sueurs, tachycardie, hyperthermie) et digestifs (diarrhée).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Paralysie flasque ascendante, aphonie et détresse respiratoire sans fièvre.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Rétention aiguë d'urine isolée et glaucome à angle fermé fulgurant.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome sérotoninergique associe des signes digestifs (diarrhée, nausées), neurologiques (confusion, agitation, myoclonies, hyperréflexie, mydriase) et neuro-végétatifs (tachycardie, hyperthermie, sueurs). C'est une urgence vitale. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 15,
+      "question": "[Item 74] Question 15 - Difficile : Comment traite-t-on spécifiquement une dystonie aiguë (crise oculogyre, torticolis, trismus) survenant à l'initiation d'un antipsychotique de première génération ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "En administrant une ampoule de naloxone en intraveineux.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "En augmentant la dose de l'antipsychotique pour saturer les récepteurs D2.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "En administrant un correcteur anticholinergique par voie intramusculaire (ex : tropatépine / Lepticur).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "En instaurant un traitement par L-DOPA à vie.",
+          "correct": false
+        }
+      ],
+      "explication": "Les dystonies aiguës (contracture musculaire, crises oculogyres) s'observent à l'initiation d'un antipsychotique. Le traitement d'urgence repose sur l'injection intramusculaire d'un anticholinergique (tropatépine). (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 16,
+      "question": "[Item 74] Question 16 - Difficile : Lors de la prescription d'antipsychotiques de seconde génération (ex : Olanzapine, Rispéridone), quelle est la complication au long cours imposant une surveillance clinique stricte (poids, périmètre abdominal, tension) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'apparition systématique d'une surdité de perception.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le développement d'un syndrome métabolique (prise de poids, dyslipidémie, diabète).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une insuffisance rénale aiguë organique irréversible.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La survenue d'un diabète insipide.",
+          "correct": false
+        }
+      ],
+      "explication": "Les antipsychotiques de seconde génération exposent à des effets indésirables endocrino-métaboliques majeurs : prise de poids, troubles lipidiques, intolérance au glucose/diabète et syndrome métabolique. Un bilan métabolique est indispensable. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 17,
+      "question": "[Item 74] Question 17 - Difficile : Quel paramètre de l'électrocardiogramme (ECG) doit être impérativement surveillé sous traitement antipsychotique pour prévenir le risque de torsades de pointes ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'espace PR.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le complexe QRS.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'intervalle QTc (QT corrigé).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'onde P.",
+          "correct": false
+        }
+      ],
+      "explication": "L'augmentation de l'espace QT avec risque de torsades de pointes et mort subite est un risque identifié. Il faut calculer le QTc (> 450 ms chez l'homme et > 470 ms chez la femme est considéré allongé). (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 18,
+      "question": "[Item 74] Question 18 - Difficile : Sous quelle forme réglementaire précise le Zolpidem (Stilnox) doit-il être obligatoirement prescrit ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sur une ordonnance libre, avec mention 'non substituable'.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Sur une ordonnance bizone d'ALD uniquement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Sur ordonnance sécurisée (stupéfiants/assimilés).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le Zolpidem ne nécessite plus d'ordonnance.",
+          "correct": false
+        }
+      ],
+      "explication": "En France, la prescription du zolpidem (hypnotique apparenté aux BZD) doit être réalisée sur ordonnance sécurisée. La durée maximale de prescription est de 4 semaines, non renouvelable. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 19,
+      "question": "[Item 74] Question 19 - Difficile : Lors du traitement d'un TDAH chez l'enfant par Méthylphénidate (Ritaline), quelle surveillance clinique mensuelle est strictement recommandée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le poids, la taille, la fréquence cardiaque et la tension artérielle.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le bilan hépatique complet (ASAT, ALAT).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le fond d'œil et la pression intra-oculaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'échographie cardiaque systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "Les effets indésirables du méthylphénidate (perte d'appétit, effets stimulants) justifient la surveillance mensuelle du poids, de la taille (risque d'altération de la croissance staturo-pondérale), de la fréquence cardiaque et de la tension artérielle. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 20,
+      "question": "[Item 74] Question 20 - Difficile : Lors de la prescription d'une benzodiazépine (BZD) chez un patient âgé (plus de 65 ans), quelle règle de bon usage est obligatoire à l'initiation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Prescrire d'emblée les doses maximales pour agir vite sur l'angoisse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les posologies d'initiation doivent être divisées par deux par rapport à l'adulte jeune.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Associer obligatoirement un hypnotique et un anxiolytique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Privilégier la voie intraveineuse lente.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez les patients âgés de 65 ans et plus, les posologies d'initiation des benzodiazépines doivent être divisées par deux pour limiter les risques de sédation, confusion et chutes. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 21,
+      "question": "[Item 74] Question 21 - Difficile : Quelle est la conséquence physiologique clinique majeure à anticiper et traiter si un patient sous psychotropes anticholinergiques (ex : imipraminiques, certains antipsychotiques) présente une douleur abdominale brutale au bas-ventre ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une appendicite aiguë.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une rétention aiguë d'urine (RAU) induite par les effets anticholinergiques (adénome de la prostate décompensé).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une colite ischémique due à une hypertension aiguë.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une rupture de rate sous-capsulaire.",
+          "correct": false
+        }
+      ],
+      "explication": "L'un des effets indésirables classiques des psychotropes ayant des effets anticholinergiques (imipraminiques, cyamémazine) est la rétention aiguë d'urine, particulièrement contre-indiquée en cas d'adénome de la prostate. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 22,
+      "question": "[Item 74] Question 22 - Difficile : Quel effet neurologique indésirable correspond à 'l'impossibilité de rester assis ou immobile, associée à une plainte d'impatience' souvent induit par un traitement antipsychotique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'akinésie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome malin.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'akathisie.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La catatonie.",
+          "correct": false
+        }
+      ],
+      "explication": "L'akathisie correspond à l'impossibilité à rester assis ou immobile, associée à des plaintes d'impatience. Son traitement repose sur la prescription d'un bêta-bloquant ou d'une BZD, ou l'adaptation des doses. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 23,
+      "question": "[Item 74] Question 23 - Difficile : Concernant l'interaction des thymorégulateurs, quel effet a la Carbamazépine (Tegretol) sur la contraception par œstroprogestatifs ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle n'a aucun effet.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle potentialise les effets provoquant des thromboses.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle diminue les concentrations d'œstroprogestatifs par induction enzymatique, exposant à un risque de contraception inefficace.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle induit systématiquement une aménorrhée permanente.",
+          "correct": false
+        }
+      ],
+      "explication": "La carbamazépine est un puissant inducteur enzymatique. Elle entraîne la baisse de la concentration d'autres traitements comme les œstroprogestatifs, ce qui génère un risque de contraception orale inefficace. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 24,
+      "question": "[Item 74] Question 24 - Difficile : Quelle est la contre-indication absolue commune de tous les anxiolytiques benzodiazépines concernant l'appareil respiratoire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le rhume des foins.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'insuffisance respiratoire sévère et le syndrome d'apnées obstructives du sommeil (SAOS) non traité par PPC.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'asthme allergique intermittent.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La tuberculose pulmonaire guérie.",
+          "correct": false
+        }
+      ],
+      "explication": "Les BZD étant des dépresseurs du SNC, l'insuffisance respiratoire sévère et le syndrome d'apnées obstructives du sommeil non appareillé (PPC) sont des contre-indications absolues en raison du risque de dépression respiratoire. (Source EDN Item 74/110)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "question_numero": 25,
+      "question": "[Item 74] Question 25 - Difficile : Quel anxiolytique non-benzodiazépinique est un antagoniste des récepteurs H1, agissant avec une anxiolyse rapide sans induire de dépendance (souvent privilégié en cas d'antécédent addictif) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La buspirone (Buspar).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le propranolol (Avlocardyl).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hydroxyzine (Atarax).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le zolpidem (Stilnox).",
+          "correct": false
+        }
+      ],
+      "explication": "L'hydroxyzine (Atarax) est un antihistaminique H1 procurant une anxiolyse rapide sans risque de dépendance, contrairement aux benzodiazépines. Il expose toutefois à des effets anticholinergiques et à un allongement du QT. (Source EDN Item 74)",
+      "difficulte": 3,
+      "source": "EDN Item 74"
+    }
+  ]
+}

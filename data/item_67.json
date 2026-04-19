@@ -1,0 +1,644 @@
+{
+  "qcm": [
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 1,
+      "question": "[Item 67] Question 1 - Facile : Quels sont les deux domaines cliniques dans lesquels on observe des déficits caractérisant les Troubles du Spectre de l'Autisme (TSA) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hyperactivité motrice et le déficit d'attention.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les anomalies de la communication/interactions sociales ET le caractère restreint/répétitif des comportements, intérêts ou activités.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le déficit intellectuel constant et l'absence totale de langage.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les hallucinations visuelles et le ralentissement psychomoteur.",
+          "correct": false
+        }
+      ],
+      "explication": "Les TSA se définissent par des déficits dans 2 domaines : la communication/interactions sociales, et les comportements, intérêts ou activités restreints/répétitifs. (Source EDN Item 67)",
+      "difficulte": 1,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 2,
+      "question": "[Item 67] Question 2 - Facile : Quels sont les deux syndromes principaux qui caractérisent le Trouble Déficit de l'Attention avec ou sans Hyperactivité (TDAH) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un syndrome d'inattention et/ou un syndrome d'hyperactivité/impulsivité.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un déficit mnésique et une agressivité préméditée.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Des tics moteurs multiples et des rituels compulsifs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un retard mental sévère et des stéréotypies motrices.",
+          "correct": false
+        }
+      ],
+      "explication": "Le TDAH se caractérise par un syndrome d'inattention et/ou un syndrome d'hyperactivité/impulsivité. (Source EDN Item 67)",
+      "difficulte": 1,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 3,
+      "question": "[Item 67] Question 3 - Moyen : Quelle est la prévalence estimée des Troubles du Spectre de l'Autisme (TSA) et leur sex-ratio ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Prévalence 5 %, sex-ratio de 3 filles pour 1 garçon.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Prévalence 1 %, sex-ratio de 4 garçons pour 1 fille.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Prévalence 10 %, sex-ratio équilibré 1/1.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Prévalence 0,1 %, sex-ratio de 10 garçons pour 1 fille.",
+          "correct": false
+        }
+      ],
+      "explication": "La prévalence des TSA est de 1 % avec un sex-ratio de 4/1 en faveur des garçons. (Source EDN Item 67)",
+      "difficulte": 2,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 4,
+      "question": "[Item 67] Question 4 - Moyen : Quelle est la prévalence estimée du TDAH et son sex-ratio en population pédiatrique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Prévalence 1 %, sex-ratio 4 garçons pour 1 fille.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Prévalence 5 %, sex-ratio de 3 garçons pour 1 fille.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Prévalence 10 %, sex-ratio féminin prédominant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Prévalence 15 %, sex-ratio équilibré.",
+          "correct": false
+        }
+      ],
+      "explication": "La prévalence du TDAH est de 5 % et le sex-ratio est de 3/1 en faveur des garçons. (Source EDN Item 67)",
+      "difficulte": 2,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 5,
+      "question": "[Item 67] Question 5 - Difficile : Lors de l'évaluation clinique d'un TSA, l'absence ou la pauvreté de l'attention conjointe est un signe majeur. À quoi correspond-elle ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'incapacité de l'enfant à soutenir son attention sur un jeu vidéo plus de 5 minutes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'incapacité pour l'enfant de partager l'attention d'une personne sur un objet ou de chercher à attirer l'attention d'autrui sur un objet.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La distraction perpétuelle par des stimuli externes non pertinents.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le besoin irrépressible d'aligner des objets symétriquement.",
+          "correct": false
+        }
+      ],
+      "explication": "L'attention conjointe traduit le partage d'intérêt. Son absence ou pauvreté fait partie du déficit de la réciprocité sociale/émotionnelle dans le TSA. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 6,
+      "question": "[Item 67] Question 6 - Difficile : Dans la sémiologie du TSA, on décrit l'absence du 'pointage proto-déclaratif'. De quoi s'agit-il ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'enfant pointe un objet uniquement pour l'obtenir (demande).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'enfant pointe un objet pour attirer l'attention d'autrui et partager un intérêt.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'enfant désigne ses propres parties du corps sur demande.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'enfant refuse de regarder ce que le parent pointe.",
+          "correct": false
+        }
+      ],
+      "explication": "Le pointage proto-déclaratif sert à montrer pour attirer l'attention d'autrui sur un objet et partager (à distinguer du proto-impératif, pour obtenir). Il est très souvent absent dans le TSA. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 7,
+      "question": "[Item 67] Question 7 - Difficile : Quelle affirmation est vraie concernant l'évolution précoce et l'apparition des symptômes dans le TSA ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les symptômes débutent systématiquement après 5 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ un tiers des enfants présentent une stagnation ou régression du développement socio-communicatif entre 12 et 24 mois.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La présence d'hallucinations auditives vers 3 ans signe l'entrée dans le trouble.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le retard d'acquisition de la marche autonome est le seul signe précoce fiable de TSA.",
+          "correct": false
+        }
+      ],
+      "explication": "Bien que les signes soient souvent présents avant 36 mois, environ 1/3 des enfants TSA présentent une stagnation ou régression (notamment du langage et des interactions) entre 12 et 24 mois, vrai signe d'appel. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 8,
+      "question": "[Item 67] Question 8 - Difficile : Lequel de ces comportements fait partie des 'intérêts restreints et comportements répétitifs' du TSA ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un déficit pragmatique du langage limitant l'accès au second degré.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'absence de jeu de faire semblant.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une adhésion inflexible à des routines mineures et une intolérance au changement (besoin d'immuabilité).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Un isolement relationnel par désintérêt pour les pairs.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intolérance au changement, les routines, les stéréotypies, l'intérêt restreint anormal et les particularités sensorielles forment le 2ème grand critère (comportements/intérêts restreints et répétitifs). (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 9,
+      "question": "[Item 67] Question 9 - Difficile : Quelle est la principale comorbidité neurodéveloppementale associée aux TSA, retrouvée chez environ 40 % de ces patients ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble du développement intellectuel (TDI).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome de Gilles de la Tourette.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La schizophrénie infantile.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble oppositionnel avec provocation (TOP).",
+          "correct": false
+        }
+      ],
+      "explication": "Le TDI (trouble du développement intellectuel) est la comorbidité la plus fréquente, touchant environ 40 % des personnes avec TSA. L'épilepsie touche environ 20 %. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 10,
+      "question": "[Item 67] Question 10 - Difficile : Pour poser le diagnostic de TDAH, dans combien de contextes/domaines de vie (familial, scolaire, social) les symptômes doivent-ils retentir de manière significative ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans 1 seul contexte suffit s'il est scolaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans au moins 2 domaines/contextes.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Dans tous les contextes sans exception.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Exclusivement au domicile familial.",
+          "correct": false
+        }
+      ],
+      "explication": "Les symptômes de TDAH doivent être présents dans au moins deux contextes (ex: école et domicile) et associés à un retentissement social, scolaire ou professionnel. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 11,
+      "question": "[Item 67] Question 11 - Difficile : Selon les critères du DSM-5, avant quel âge les symptômes du TDAH doivent-ils avoir débuté pour poser le diagnostic ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Avant 3 ans",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Avant 7 ans",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Avant 12 ans",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Avant 18 ans",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble doit avoir débuté pendant l'enfance, spécifiquement avant l'âge de 12 ans selon le DSM-5. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 12,
+      "question": "[Item 67] Question 12 - Difficile : Dans le cadre du TDAH, l'impulsivité peut avoir des conséquences émotionnelles spécifiques. Lesquelles sont classiquement décrites ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une anhédonie totale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une intolérance à la frustration, des sautes d'humeur et des accès de colère.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une apathie et une sidération motrice.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hypersyntonie avec fuite des idées.",
+          "correct": false
+        }
+      ],
+      "explication": "L'impulsivité du TDAH se traduit sur le plan émotionnel par une intolérance à la frustration, de l'irritabilité à la moindre contrariété, des sautes d'humeur et des crises de colère. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 13,
+      "question": "[Item 67] Question 13 - Difficile : Quelle est la présentation clinique la plus trompeuse de TDAH chez la fille, qui explique souvent un retard diagnostique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une présentation hyperactive prédominante avec hétéro-agressivité.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une présentation inattentive prédominante, sans hyperactivité majeure apparente.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une présentation purement opposante et provocatrice.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le TDAH n'existe pas chez la fille.",
+          "correct": false
+        }
+      ],
+      "explication": "Les filles ont plus souvent une présentation inattentive prédominante (sans hyperactivité majeure), ce qui entraîne un diagnostic souvent tardif (elles ne dérangent pas la classe). (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 14,
+      "question": "[Item 67] Question 14 - Difficile : Parmi ces troubles psychiatriques, lequel est une comorbidité très fréquente (environ 80 % dans les formes mixtes) du TDAH et un facteur de mauvais pronostic ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble oppositionnel avec provocation (TOP) et les troubles des conduites (TC).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble de personnalité schizoïde.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La boulimie nerveuse.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble délirant persistant.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles du comportement (TOP et TC) sont des comorbidités très fréquentes du TDAH (80% des formes mixtes ont un TOP) et constituent des facteurs de mauvais pronostic d'évolution. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 15,
+      "question": "[Item 67] Question 15 - Difficile : Quel est le traitement pharmacologique de première intention du TDAH chez l'enfant de plus de 6 ans, en cas d'insuffisance des mesures éducatives ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La rispéridone (antipsychotique).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le méthylphénidate (psychostimulant).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La fluoxétine (antidépresseur ISRS).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'atomoxétine.",
+          "correct": false
+        }
+      ],
+      "explication": "Le méthylphénidate (dérivé amphétaminique, psychostimulant) est le traitement de première ligne en France à partir de 6 ans, en cas d'insuffisance des mesures éducatives non médicamenteuses. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 16,
+      "question": "[Item 67] Question 16 - Difficile : Sur le plan de la prise en charge scolaire d'un enfant avec un TND sévère, que nécessite la mise en place d'un Projet Personnalisé de Scolarisation (PPS) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'accord direct du médecin scolaire uniquement (via un PAP).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une notification de la MDPH (Maison Départementale des Personnes Handicapées).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une décision de la Caisse Primaire d'Assurance Maladie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une ordonnance du Juge des enfants.",
+          "correct": false
+        }
+      ],
+      "explication": "Le PPS, permettant des aménagements lourds ou une AESH, nécessite une notification de la MDPH, contrairement au PAP qui est sous responsabilité du chef d'établissement/médecin scolaire. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 17,
+      "question": "[Item 67] Question 17 - Difficile : Face à un TDAH, quelle intervention non pharmacologique doit être proposée de façon systématique pour les parents, particulièrement en cas de comorbidité avec un TOP ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une psychanalyse familiale hebdomadaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des programmes de renforcement des habiletés parentales (stratégies cognitivo-comportementales).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un placement institutionnel prophylactique de l'enfant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'interdiction des activités sportives pour limiter l'agitation.",
+          "correct": false
+        }
+      ],
+      "explication": "Les programmes de renforcement des habiletés parentales (Barkley, etc.) sont très utiles et recommandés, notamment en cas de retentissement important ou comorbidité avec un TOP/TC. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 18,
+      "question": "[Item 67] Question 18 - Difficile : Concernant l'évolution du TDAH à l'âge adulte, quelle affirmation est exacte selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le TDAH disparaît invariablement à la majorité (18 ans).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Pour environ 2/3 des patients, des symptômes de TDAH persistent à l'âge adulte avec un retentissement fonctionnel.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperactivité motrice s'aggrave exponentiellement avec l'âge adulte.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le méthylphénidate est formellement interdit de prescription chez l'adulte.",
+          "correct": false
+        }
+      ],
+      "explication": "Le TDAH persiste à l'âge adulte chez environ 2/3 des patients avec un retentissement fonctionnel. L'hyperactivité motrice tend à s'atténuer ou s'intérioriser, mais l'inattention/impulsivité restent. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 19,
+      "question": "[Item 67] Question 19 - Difficile : Pour les enfants avec TSA (notamment non verbaux) ayant des difficultés majeures de communication, quelle approche rééducative spécifique est recommandée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'utilisation de la méthode de communication augmentée/alternative (systèmes de signes ou pictogrammes, ex: PECS/Makaton).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "La privation sensorielle stricte.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hypnose éricksonienne.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'isolement en chambre de réassurance.",
+          "correct": false
+        }
+      ],
+      "explication": "L'utilisation de systèmes de communication augmentée (pictogrammes, signes) complète la rééducation orthophonique classique pour pallier le déficit sévère du langage verbal. (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "question_numero": 20,
+      "question": "[Item 67] Question 20 - Difficile : Quelle est la place des traitements pharmacologiques 'curatifs' spécifiques aux mécanismes centraux du TSA en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'aripiprazole guérit le déficit d'attention conjointe.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La sérotonine est prescrite systématiquement pour relancer le langage.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il n'existe à ce jour aucun traitement 'curatif' du TSA, la pharmacologie ne cible que les comorbidités et troubles du comportement sévères.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le lithium est le seul traitement ayant l'AMM curative de l'autisme.",
+          "correct": false
+        }
+      ],
+      "explication": "Il n'existe pas de traitement curatif des TSA. Les médicaments (ex: antipsychotiques comme la rispéridone) sont purement symptomatiques (ex: pour l'irritabilité/agressivité sévère). (Source EDN Item 67)",
+      "difficulte": 3,
+      "source": "EDN Item 67"
+    }
+  ]
+}

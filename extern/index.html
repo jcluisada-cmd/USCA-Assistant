@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="USCA Externe">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../icon-512.png">
+<title>USCA Connect — Externe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+  body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; }
+  .qcm-letter { width: 28px; height: 28px; font-weight: 700; }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+  <header class="bg-indigo-600 text-white px-5 pt-10 pb-6 sticky top-0 z-30 shadow-md">
+    <div class="flex items-center justify-between max-w-2xl mx-auto">
+      <div>
+        <p class="text-indigo-200 text-xs font-medium">Externe en stage</p>
+        <h1 id="hdr-nom" class="text-xl font-extrabold tracking-tight">—</h1>
+        <p id="hdr-tuteur" class="text-indigo-200 text-xs mt-0.5"></p>
+      </div>
+      <button id="btn-logout" class="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto px-4 py-5 space-y-4">
+
+    <!-- CARTE 1 : CHAMBRES (lecture seule) -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="chambres-body">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold text-slate-800">Chambres</p>
+            <p class="text-[11px] text-slate-500">Patients hospitalisés — lecture seule</p>
+          </div>
+        </div>
+        <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="chambres-body" class="hidden border-t border-slate-100">
+        <div id="chambres-list" class="divide-y divide-slate-100">
+          <p class="text-sm text-slate-400 px-5 py-6 text-center">Chargement…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTE 2 : QCM EDN -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="qcm-body">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold text-slate-800">Mon QCM EDN</p>
+            <p id="qcm-stats" class="text-[11px] text-slate-500">477 questions · 23 items</p>
+          </div>
+        </div>
+        <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="qcm-body" class="hidden border-t border-slate-100 px-5 py-5 space-y-4">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Item</label>
+          <select id="qcm-item" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
+            <option value="">— Tous les items —</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Difficulté</label>
+            <select id="qcm-diff" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
+              <option value="">Toutes</option>
+              <option value="1">1 · Facile</option>
+              <option value="2">2 · Moyen</option>
+              <option value="3">3 · Difficile</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre</label>
+            <select id="qcm-n" class="w-full px-3 py-2.5 bg-white border-2 border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:border-indigo-500 focus:outline-none">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Mode</label>
+          <div class="flex bg-slate-100 rounded-xl p-1">
+            <button data-mode="entrainement" class="qcm-mode flex-1 py-2 rounded-lg text-xs font-bold bg-white text-indigo-600 shadow-sm">Entraînement</button>
+            <button data-mode="examen" class="qcm-mode flex-1 py-2 rounded-lg text-xs font-bold text-slate-500">Examen</button>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">Entraînement : correction immédiate. Examen : correction à la fin.</p>
+        </div>
+
+        <button id="qcm-start" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold rounded-xl transition-all text-sm">Lancer la session</button>
+      </div>
+    </section>
+
+    <!-- CARTE 3 : SIGNALEMENTS -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="flags-body">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-sm font-bold text-slate-800">Mes signalements</p>
+            <p id="flags-count" class="text-[11px] text-slate-500">—</p>
+          </div>
+        </div>
+        <svg class="accordion-icon transition-transform" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="flags-body" class="hidden border-t border-slate-100">
+        <div id="flags-list" class="divide-y divide-slate-100">
+          <p class="text-sm text-slate-400 px-5 py-6 text-center">Aucun signalement.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL JOUEUR QCM -->
+  <div id="qcm-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-stretch sm:items-center justify-center sm:p-4">
+    <div class="bg-white w-full sm:max-w-xl sm:rounded-2xl flex flex-col max-h-screen overflow-hidden">
+      <header class="px-5 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div>
+          <p id="qcm-progress" class="text-[11px] text-slate-500 font-semibold">Question 1 / 10</p>
+          <p id="qcm-meta" class="text-xs font-bold text-slate-700">—</p>
+        </div>
+        <button id="qcm-close" class="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-200 rounded-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </header>
+      <div id="qcm-content" class="flex-1 overflow-y-auto px-5 py-5 space-y-4"></div>
+      <footer class="px-5 py-3 border-t border-slate-200 bg-slate-50 flex items-center gap-3">
+        <button id="qcm-flag" class="text-xs font-semibold text-amber-600 hover:text-amber-700">⚑ Signaler</button>
+        <div class="flex-1"></div>
+        <button id="qcm-next" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-lg transition disabled:opacity-40">Suivant</button>
+      </footer>
+    </div>
+  </div>
+
+<script src="../shared/supabase.js"></script>
+<script src="../shared/auth.js"></script>
+<script src="../shared/qcm-engine.js"></script>
+<script src="../shared/theme.js"></script>
+<script>
+'use strict';
+
+// ── Helper DOM safe (remplace innerHTML sur tout contenu dynamique) ──
+function el(tag, attrs, children) {
+  var n = document.createElement(tag);
+  if (attrs) {
+    for (var k in attrs) {
+      if (k === 'class') n.className = attrs[k];
+      else if (k === 'text') n.textContent = attrs[k];
+      else if (k === 'dataset') { for (var dk in attrs[k]) n.dataset[dk] = attrs[k][dk]; }
+      else if (k === 'html') n.innerHTML = attrs[k]; // réservé aux SVG littéraux sans data externe
+      else n.setAttribute(k, attrs[k]);
+    }
+  }
+  if (children) {
+    (Array.isArray(children) ? children : [children]).forEach(function(c) {
+      if (c == null) return;
+      n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    });
+  }
+  return n;
+}
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+
+// ── Garde session ──
+(async function guard() {
+  var session = await auth.getStaffSession();
+  if (!session) { window.location.href = '../'; return; }
+  document.getElementById('hdr-nom').textContent = session.nom || 'Externe';
+  try {
+    var res = await sb.from('tuteur_etudiant').select('tuteur_id, profiles!tuteur_etudiant_tuteur_id_fkey(nom)').eq('etudiant_id', session.id).limit(1);
+    if (res.data && res.data[0] && res.data[0].profiles) {
+      document.getElementById('hdr-tuteur').textContent = 'Tuteur : ' + res.data[0].profiles.nom;
+    }
+  } catch(e) {}
+  initApp();
+})();
+
+document.getElementById('btn-logout').addEventListener('click', async function() {
+  await auth.logoutStaff();
+  window.location.href = '../';
+});
+
+// ── Accordions ──
+document.querySelectorAll('.accordion-toggle').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var body = document.getElementById(btn.dataset.target);
+    var icon = btn.querySelector('.accordion-icon');
+    var open = !body.classList.contains('hidden');
+    body.classList.toggle('hidden');
+    if (icon) icon.style.transform = open ? '' : 'rotate(180deg)';
+  });
+});
+
+// ── Mode toggle ──
+var currentMode = 'entrainement';
+document.querySelectorAll('.qcm-mode').forEach(function(b) {
+  b.addEventListener('click', function() {
+    currentMode = b.dataset.mode;
+    document.querySelectorAll('.qcm-mode').forEach(function(x) {
+      x.className = 'qcm-mode flex-1 py-2 rounded-lg text-xs font-bold ' +
+        (x.dataset.mode === currentMode ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500');
+    });
+  });
+});
+
+// ── Init ──
+async function initApp() {
+  try {
+    var index = await QCMEngine.loadIndex();
+    var sel = document.getElementById('qcm-item');
+    index.items.forEach(function(it) {
+      var opt = document.createElement('option');
+      opt.value = it.item;
+      opt.textContent = it.item + ' · ' + it.domaine + ' (' + it.nb_questions + ')';
+      sel.appendChild(opt);
+    });
+    document.getElementById('qcm-stats').textContent = index.total_questions + ' questions · ' + index.total_items + ' items';
+  } catch(e) {
+    document.getElementById('qcm-stats').textContent = 'Erreur catalogue';
+  }
+  loadChambres();
+  loadFlags();
+}
+
+async function loadChambres() {
+  var box = document.getElementById('chambres-list');
+  clear(box);
+  try {
+    var patients = await db.getPatients();
+    if (!patients || !patients.length) {
+      box.appendChild(el('p', { class: 'text-sm text-slate-400 px-5 py-6 text-center', text: 'Aucun patient hospitalisé.' }));
+      return;
+    }
+    patients.forEach(function(p) {
+      var sortie = p.date_sortie_prevue ? new Date(p.date_sortie_prevue).toLocaleDateString('fr-FR') : '—';
+      var subst = p.substance_principale || '—';
+      var row = el('div', { class: 'px-5 py-3 flex items-center gap-4' }, [
+        el('div', { class: 'w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center' }, [
+          el('span', { class: 'text-emerald-700 font-extrabold text-sm', text: String(p.numero_chambre || '?') })
+        ]),
+        el('div', { class: 'flex-1 min-w-0' }, [
+          el('p', { class: 'text-sm font-bold text-slate-800 truncate', text: p.prenom || '—' }),
+          el('p', { class: 'text-[11px] text-slate-500 truncate', text: subst + ' · sortie ' + sortie })
+        ])
+      ]);
+      box.appendChild(row);
+    });
+  } catch(e) {
+    clear(box);
+    box.appendChild(el('p', { class: 'text-sm text-red-500 px-5 py-6 text-center', text: 'Accès refusé ou erreur réseau.' }));
+  }
+}
+
+async function loadFlags() {
+  var box = document.getElementById('flags-list');
+  var counter = document.getElementById('flags-count');
+  try {
+    var flags = await QCMEngine.getMyFlags();
+    if (!flags.length) {
+      counter.textContent = 'Aucun signalement';
+      return;
+    }
+    var nbOuv = flags.filter(function(f){ return f.statut === 'ouvert'; }).length;
+    counter.textContent = flags.length + ' signalement' + (flags.length>1?'s':'') + ' · ' + nbOuv + ' en attente';
+    clear(box);
+    flags.forEach(function(f) {
+      var d = new Date(f.created_at).toLocaleDateString('fr-FR');
+      var statutClass = f.statut === 'traite' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700';
+      var typeLabel = f.type === 'erreur_question' ? 'Erreur' : 'Explication';
+      var inner = el('div', { class: 'flex-1 min-w-0' }, [
+        el('p', { class: 'text-xs font-bold text-slate-800', text: f.question_source }),
+        el('p', { class: 'text-[11px] text-slate-500 mt-0.5', text: typeLabel + ' · ' + d })
+      ]);
+      if (f.message) inner.appendChild(el('p', { class: 'text-xs text-slate-600 mt-1 italic', text: '« ' + f.message + ' »' }));
+      if (f.tuteur_reponse) inner.appendChild(el('p', { class: 'text-xs text-emerald-700 mt-2 bg-emerald-50 p-2 rounded', text: 'Tuteur : ' + f.tuteur_reponse }));
+      var row = el('div', { class: 'px-5 py-3' }, [
+        el('div', { class: 'flex items-start justify-between gap-2' }, [
+          inner,
+          el('span', { class: 'text-[10px] font-bold px-2 py-0.5 rounded-full ' + statutClass, text: f.statut === 'traite' ? 'Traité' : 'Ouvert' })
+        ])
+      ]);
+      box.appendChild(row);
+    });
+  } catch(e) {
+    counter.textContent = 'Erreur de chargement';
+  }
+}
+
+// ════════════════ JOUEUR QCM ════════════════
+var qcmState = null;
+
+document.getElementById('qcm-start').addEventListener('click', async function() {
+  var btn = this;
+  btn.disabled = true;
+  btn.textContent = 'Chargement…';
+  try {
+    var item = document.getElementById('qcm-item').value || null;
+    var diff = parseInt(document.getElementById('qcm-diff').value) || null;
+    var n = parseInt(document.getElementById('qcm-n').value) || 10;
+    var questions = await QCMEngine.getQuestions({ item: item, difficulte: diff, mode: currentMode, n: n });
+    if (!questions.length) { alert('Aucune question pour ces critères.'); return; }
+    qcmState = { item: item, mode: currentMode, questions: questions, idx: 0, reponses: [], tStart: Date.now() };
+    showQuestion();
+    document.getElementById('qcm-modal').classList.remove('hidden');
+  } catch(e) {
+    alert('Erreur : ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Lancer la session';
+  }
+});
+
+document.getElementById('qcm-close').addEventListener('click', function() {
+  if (qcmState && !confirm('Quitter sans sauvegarder ?')) return;
+  document.getElementById('qcm-modal').classList.add('hidden');
+  qcmState = null;
+});
+
+document.getElementById('qcm-next').addEventListener('click', function() {
+  if (!qcmState) return;
+  if (qcmState.idx + 1 >= qcmState.questions.length) {
+    finishSession();
+  } else {
+    qcmState.idx++;
+    qcmState.tStart = Date.now();
+    showQuestion();
+  }
+});
+
+document.getElementById('qcm-flag').addEventListener('click', async function() {
+  if (!qcmState) return;
+  var q = qcmState.questions[qcmState.idx];
+  var msg = prompt('Signaler cette question. Message :');
+  if (msg === null) return;
+  try {
+    await QCMEngine.flagQuestion(QCMEngine._utils.questionSourceId(q.item, q.question_numero), 'erreur_question', msg);
+    alert('Signalement envoyé au tuteur.');
+    loadFlags();
+  } catch(e) { alert('Erreur : ' + e.message); }
+});
+
+function showQuestion() {
+  var q = qcmState.questions[qcmState.idx];
+  document.getElementById('qcm-progress').textContent = 'Question ' + (qcmState.idx + 1) + ' / ' + qcmState.questions.length;
+  document.getElementById('qcm-meta').textContent = q.item + ' · Difficulté ' + q.difficulte;
+  var content = document.getElementById('qcm-content');
+  clear(content);
+
+  content.appendChild(el('p', { class: 'text-sm font-medium text-slate-800 leading-relaxed', text: q.question }));
+
+  var choices = el('div', { class: 'space-y-2' });
+  q.reponses.forEach(function(r) {
+    var letter = el('span', { class: 'qcm-letter rounded-full bg-slate-100 text-slate-700 flex items-center justify-center flex-shrink-0', text: r.lettre });
+    var textNode = el('span', { class: 'flex-1', text: r.texte });
+    var btn = el('button', {
+      class: 'qcm-choice w-full text-left px-3 py-3 bg-white border-2 border-slate-200 rounded-xl text-sm hover:border-indigo-300 transition flex items-start gap-3',
+      dataset: { letter: r.lettre, correct: String(r.correct) }
+    }, [letter, textNode]);
+    btn.addEventListener('click', function() { onAnswer(q, btn); });
+    choices.appendChild(btn);
+  });
+  content.appendChild(choices);
+
+  var fb = el('div', { class: 'hidden', id: 'qcm-feedback' });
+  content.appendChild(fb);
+
+  document.getElementById('qcm-next').disabled = true;
+}
+
+function onAnswer(q, btn) {
+  if (btn.dataset.answered) return;
+  var letter = btn.dataset.letter;
+  var correct = btn.dataset.correct === 'true';
+  var temps_ms = Date.now() - qcmState.tStart;
+  qcmState.reponses.push({
+    question_source: QCMEngine._utils.questionSourceId(q.item, q.question_numero),
+    reponse_choisie: letter,
+    correct: correct,
+    temps_ms: temps_ms
+  });
+  document.querySelectorAll('.qcm-choice').forEach(function(b) { b.dataset.answered = '1'; b.style.pointerEvents = 'none'; });
+
+  if (qcmState.mode === 'entrainement') {
+    document.querySelectorAll('.qcm-choice').forEach(function(b) {
+      var isCorrect = b.dataset.correct === 'true';
+      var lt = b.querySelector('.qcm-letter');
+      if (isCorrect) {
+        b.className = b.className.replace('border-slate-200', 'border-emerald-500 bg-emerald-50');
+        if (lt) lt.className = 'qcm-letter rounded-full bg-emerald-500 text-white flex items-center justify-center flex-shrink-0';
+      } else if (b === btn) {
+        b.className = b.className.replace('border-slate-200', 'border-red-500 bg-red-50');
+        if (lt) lt.className = 'qcm-letter rounded-full bg-red-500 text-white flex items-center justify-center flex-shrink-0';
+      }
+    });
+    var fb = document.getElementById('qcm-feedback');
+    fb.className = 'mt-3 p-3 rounded-xl text-sm ' + (correct ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-800');
+    clear(fb);
+    fb.appendChild(el('p', { class: 'font-bold mb-1', text: correct ? '✓ Bonne réponse' : '✗ Incorrect' }));
+    fb.appendChild(el('p', { class: 'text-xs leading-relaxed', text: q.explication || '' }));
+    fb.classList.remove('hidden');
+  } else {
+    btn.className = btn.className.replace('border-slate-200', 'border-indigo-500 bg-indigo-50');
+  }
+  document.getElementById('qcm-next').disabled = false;
+  if (qcmState.idx + 1 >= qcmState.questions.length) {
+    document.getElementById('qcm-next').textContent = 'Terminer';
+  }
+}
+
+async function finishSession() {
+  var score = qcmState.reponses.filter(function(r) { return r.correct; }).length;
+  var total = qcmState.questions.length;
+  var content = document.getElementById('qcm-content');
+  clear(content);
+  var wrap = el('div', { class: 'text-center py-8' }, [
+    el('p', { class: 'text-xs text-slate-500 font-semibold mb-2', text: 'SCORE FINAL' }),
+    el('p', { class: 'text-5xl font-extrabold text-indigo-600 mb-1', text: score + ' / ' + total }),
+    el('p', { class: 'text-sm text-slate-500', text: Math.round(100 * score / total) + ' % de bonnes réponses' }),
+    el('p', { class: 'text-xs text-slate-400 mt-4', id: 'save-status', text: 'Enregistrement…' })
+  ]);
+  content.appendChild(wrap);
+  var nextBtn = document.getElementById('qcm-next');
+  nextBtn.textContent = 'Fermer';
+  nextBtn.onclick = function() {
+    document.getElementById('qcm-modal').classList.add('hidden');
+    qcmState = null;
+    nextBtn.textContent = 'Suivant';
+    nextBtn.onclick = null;
+  };
+  try {
+    await QCMEngine.saveSession({
+      item: qcmState.item,
+      mode: qcmState.mode,
+      nb_questions: total,
+      score: score,
+      reponses: qcmState.reponses
+    });
+    document.getElementById('save-status').textContent = '✓ Session enregistrée';
+  } catch(e) {
+    document.getElementById('save-status').textContent = '⚠ Échec enregistrement : ' + e.message;
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js').catch(function(){});
+}
+</script>
+</body>
+</html>

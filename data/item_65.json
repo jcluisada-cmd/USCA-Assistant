@@ -1,0 +1,644 @@
+{
+  "qcm": [
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 1,
+      "question": "[Item 65] Question 1 - Facile : Quelle est la durée minimale d'évolution des idées délirantes pour poser le diagnostic de trouble délirant persistant selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 semaine",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 mois",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "1 an",
+          "correct": false
+        }
+      ],
+      "explication": "Le diagnostic de trouble délirant persistant repose sur la présence d'une ou plusieurs idées délirantes évoluant pendant 1 mois ou plus. (Source EDN Item 65, p.157)",
+      "difficulte": 1,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 2,
+      "question": "[Item 65] Question 2 - Facile : À quel âge se fait le plus fréquemment l'entrée dans le trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Entre 15 et 25 ans",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Entre 25 et 35 ans",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Entre 40 et 50 ans",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 65 ans",
+          "correct": false
+        }
+      ],
+      "explication": "L'entrée dans la pathologie se fait à l'âge adulte, le plus souvent entre 40 et 50 ans. (Source EDN Item 65, p.156)",
+      "difficulte": 1,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 3,
+      "question": "[Item 65] Question 3 - Moyen : Quel est le sous-type de trouble délirant persistant le plus fréquent ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le type érotomaniaque",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le type de jalousie",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le type de persécution",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le type mégalomaniaque",
+          "correct": false
+        }
+      ],
+      "explication": "Le sous-type le plus fréquent du trouble délirant persistant est le sous-type de persécution. (Source EDN Item 65, p.156)",
+      "difficulte": 2,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 4,
+      "question": "[Item 65] Question 4 - Moyen : Laquelle de ces caractéristiques cliniques est ABSENTE par définition dans un trouble délirant persistant pur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une conviction inébranlable",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un syndrome de désorganisation",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un mécanisme interprétatif",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un retentissement émotionnel",
+          "correct": false
+        }
+      ],
+      "explication": "Pour poser le diagnostic de trouble délirant persistant, il ne doit pas exister de syndrome de désorganisation ou de syndrome négatif (contrairement à la schizophrénie). (Source EDN Item 65, p.157)",
+      "difficulte": 2,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 5,
+      "question": "[Item 65] Question 5 - Difficile : Quelle est la triade évolutive classique décrite dans le trouble délirant persistant de type érotomaniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Espoir, dépit, rancune.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Idéalisation, fusion, destruction.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Séduction, manipulation, persécution.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Doute, certitude, résignation.",
+          "correct": false
+        }
+      ],
+      "explication": "Le délire érotomaniaque évolue classiquement en trois phases : une phase longue d'espoir, une phase de dépit, puis de rancune (avec risque de passage à l'acte). (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 6,
+      "question": "[Item 65] Question 6 - Difficile : Dans le trouble délirant persistant, comment se caractérise typiquement la systématisation des idées délirantes ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Floue et incohérente, comme dans la schizophrénie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Parfaitement systématisée, logique et cohérente avec souvent un thème unique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Absente, les idées changeant tous les jours.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Paranoïde et désorganisée.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le trouble délirant persistant, les idées délirantes sont bien systématisées : elles se déroulent de façon logique et cohérente, comportant généralement un thème unique. (Source EDN Item 65, p.156)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 7,
+      "question": "[Item 65] Question 7 - Difficile : Lors de la prise en charge d'un trouble délirant persistant de type persécution, quel effet paradoxal peut avoir l'hospitalisation en psychiatrie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle guérit instantanément le délire par effet placebo.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle entraîne systématiquement un virage maniaque.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle accentue souvent le sentiment de persécution et peut aggraver la revendication.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle déclenche des hallucinations auditives.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hospitalisation d'un patient souffrant d'idées délirantes de persécution accentue souvent le sentiment de persécution et peut aggraver les comportements de revendication. (Source EDN Item 65, p.158)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 8,
+      "question": "[Item 65] Question 8 - Difficile : Selon les critères DSM-5, si des hallucinations sont présentes dans le trouble délirant persistant, quelle doit être leur caractéristique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles doivent être obligatoirement intrapsychiques.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elles sont prédominantes et masquent les idées délirantes.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elles ne sont pas au premier plan et sont en rapport direct avec le contenu des idées délirantes.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La présence d'hallucinations exclut formellement le diagnostic.",
+          "correct": false
+        }
+      ],
+      "explication": "Si des hallucinations sont présentes, elles ne sont pas au premier plan et sont en rapport avec le contenu des idées délirantes. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 9,
+      "question": "[Item 65] Question 9 - Difficile : Quel mécanisme délirant n'est PAS classiquement prédominant dans le trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Interprétatif",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Intuitif",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Imaginatif",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Hallucinatoire",
+          "correct": true
+        }
+      ],
+      "explication": "Les mécanismes rencontrés sont principalement interprétatif, intuitif et imaginatif. Le mécanisme hallucinatoire est rare et non prédominant. (Source EDN Item 65, p.156)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 10,
+      "question": "[Item 65] Question 10 - Difficile : Quel est le traitement de fond pharmacologique recommandé dans les troubles délirants persistants ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les sels de lithium en première intention.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les antidépresseurs tricycliques seuls.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les benzodiazépines au long cours.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un traitement antipsychotique, bien que son efficacité soit souvent modérée.",
+          "correct": true
+        }
+      ],
+      "explication": "Le recours à un traitement antipsychotique est recommandé, bien que leur efficacité soit souvent modérée. (Source EDN Item 65, p.158)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 11,
+      "question": "[Item 65] Question 11 - Difficile : Quel trouble de la personnalité est particulièrement reconnu comme un diagnostic différentiel et parfois un facteur de risque du trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Personnalité obsessionnelle-compulsive.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Personnalité paranoïaque.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Personnalité dépendante.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Personnalité évitante.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles de personnalité (notamment paranoïaque, mais aussi borderline et antisociale) font partie des diagnostics différentiels et des facteurs de risque. La personnalité paranoïaque peut se compliquer d'un trouble délirant persistant. (Source EDN Item 65, p.158)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 12,
+      "question": "[Item 65] Question 12 - Difficile : Quelle est la particularité épidémiologique du trouble délirant persistant de type jalousie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est quasi-exclusivement féminin.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est plus fréquent chez les hommes et un trouble d'usage d'alcool est fréquemment associé.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il ne survient qu'avant l'âge de 25 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il est toujours associé à un syndrome de désorganisation sévère.",
+          "correct": false
+        }
+      ],
+      "explication": "Cette forme est plus fréquente chez les hommes et un trouble d'usage d'alcool est fréquemment associé. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 13,
+      "question": "[Item 65] Question 13 - Difficile : Lequel de ces facteurs de risque est spécifiquement associé au développement d'un trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un quotient intellectuel très élevé (> 130).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les déficits sensoriels et l'isolement social.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La consommation précoce de cannabis avant 15 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'appartenance à une fratrie nombreuse.",
+          "correct": false
+        }
+      ],
+      "explication": "Les facteurs de risque associés sont l'âge avancé, l'isolement social ou les déficits sensoriels, des antécédents familiaux, l'immigration. (Source EDN Item 65, p.156)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 14,
+      "question": "[Item 65] Question 14 - Difficile : Selon les critères du DSM-5, quel impact doit avoir le délire sur le comportement général du sujet pour retenir le diagnostic de trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il entraîne une désorganisation comportementale totale et permanente.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il provoque une inertie psychomotrice constante (clinophilie).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "En dehors de l'impact des idées délirantes, il n'y a pas d'altération marquée du fonctionnement ni de bizarrerie manifeste du comportement.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il induit systématiquement des stéréotypies motrices.",
+          "correct": false
+        }
+      ],
+      "explication": "Critère C du DSM-5 : en dehors de l'impact des idées délirantes, il n'y a pas d'altération marquée du fonctionnement ni de bizarrerie manifeste du comportement. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 15,
+      "question": "[Item 65] Question 15 - Difficile : Dans le trouble délirant persistant de type somatique, quel est le thème délirant le plus fréquemment retrouvé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La conviction d'avoir des organes en or ou en verre.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La sensation d'émettre une odeur nauséabonde ou d'être infesté par des parasites.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La négation absolue de posséder un cœur (syndrome de Cotard).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La certitude de pouvoir guérir d'un cancer par la force de la pensée.",
+          "correct": false
+        }
+      ],
+      "explication": "Les idées les plus fréquentes concernent la sensation d'émettre une odeur nauséabonde, d'être infesté par des insectes ou parasites, ou que certaines parties du corps sont difformes. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 16,
+      "question": "[Item 65] Question 16 - Difficile : Devant un trouble délirant persistant, quelle caractéristique est associée à l'adhésion du sujet à ses idées délirantes ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'adhésion est faible et le patient demande de l'aide pour s'en défaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le sujet adhère totalement à ses idées délirantes, avec une conviction inébranlable.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'adhésion fluctue massivement d'une heure à l'autre.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le patient simule consciemment son adhésion.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans les troubles délirants persistants, le sujet adhère totalement à ses idées délirantes (conviction inébranlable et idée fixe). (Source EDN Item 65, p.156-157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 17,
+      "question": "[Item 65] Question 17 - Difficile : Outre le traitement antipsychotique, quelle approche psychothérapeutique est recommandée dans les troubles délirants persistants ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une psychanalyse cure type.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une thérapie de groupe institutionnelle exclusive.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une psychothérapie de soutien ou cognitivo-comportementale individuelle.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hypnose de régression.",
+          "correct": false
+        }
+      ],
+      "explication": "Une psychothérapie de soutien ou TCC doit systématiquement être proposée. La thérapie individuelle semble plus efficace que la thérapie de groupe. (Source EDN Item 65, p.158)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 18,
+      "question": "[Item 65] Question 18 - Difficile : Lors de la phase de 'rancune' du délire érotomaniaque, quel risque majeur impose une extrême vigilance ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le développement d'une anorexie mentale sévère.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un passage à l'acte hétéro-agressif (injures, menaces, violence).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un délire d'infestation parasitaire foudroyant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hyponatrémie de dilution.",
+          "correct": false
+        }
+      ],
+      "explication": "Durant la phase de rancune de l'érotomanie, les sollicitations deviennent injures et menaces. Le risque de passage à l'acte est alors important et peut justifier des soins sans consentement. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 19,
+      "question": "[Item 65] Question 19 - Difficile : Que stipule le DSM-5 concernant les épisodes thymiques (maniaques ou dépressifs) dans le trouble délirant persistant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Ils doivent être présents plus de la moitié du temps.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Ils excluent définitivement le diagnostic s'ils surviennent une seule fois.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "S'ils surviennent, ils doivent être brefs en comparaison avec la durée totale des périodes délirantes.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Ils constituent une sous-catégorie obligatoire du trouble.",
+          "correct": false
+        }
+      ],
+      "explication": "Critère D du DSM-5 : si des épisodes maniaques ou dépressifs sont présents, leur durée doit avoir été brève par rapport à la durée totale des périodes délirantes. (Source EDN Item 65, p.157)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "question_numero": 20,
+      "question": "[Item 65] Question 20 - Difficile : Parmi ces examens paracliniques, lequel est indispensable lors d'un premier épisode délirant pour éliminer une pathologie organique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un test de Rorschach.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un PET-scan au FDG.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un bilan sanguin (glycémie, calcémie, TSH, toxiques) et, selon le contexte, une imagerie cérébrale.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une ponction lombaire systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "Un examen clinique complet et des examens complémentaires (hémogramme, iono, glycémie, calcémie, TSH, bilan hépatique, toxiques, ECG, et imagerie cérébrale selon clinique) sont indispensables pour éliminer les diagnostics différentiels organiques. (Source EDN Item 65, p.158)",
+      "difficulte": 3,
+      "source": "EDN Item 65"
+    }
+  ]
+}

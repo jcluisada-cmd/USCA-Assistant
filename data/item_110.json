@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 1,
+      "question": "[Item 110] Question 1 - Facile : Quel examen est considéré comme la référence pour l'étude électro-physiologique complète du sommeil ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'actimétrie sur une semaine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'électro-encéphalogramme (EEG) de veille simple.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La polysomnographie (associant EEG, EOG, EMG, paramètres cardio-respiratoires).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'agenda du sommeil rempli par le patient.",
+          "correct": false
+        }
+      ],
+      "explication": "La polysomnographie est l'examen de référence pour l'étude du sommeil. Elle n'est cependant pas indiquée en 1ère intention pour une simple insomnie. (Source EDN Item 110)",
+      "difficulte": 1,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 2,
+      "question": "[Item 110] Question 2 - Facile : Quelle proportion du sommeil total de l'adulte est généralement occupée par le sommeil paradoxal (REM) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "5 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "25 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "50 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "75 %",
+          "correct": false
+        }
+      ],
+      "explication": "Le sommeil lent représente 50 à 75 % du sommeil, et le sommeil paradoxal environ 25 %. (Source EDN Item 110)",
+      "difficulte": 1,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 3,
+      "question": "[Item 110] Question 3 - Moyen : Devant un trouble insomnie chronique chez l'adulte, quel est le traitement de première intention recommandé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La prescription de benzodiazépines hypnotiques pour au moins 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La thérapie cognitive et comportementale (TCC) de l'insomnie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La prescription d'antidépresseurs tricycliques sédatifs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le sevrage total de caféine sans autre intervention.",
+          "correct": false
+        }
+      ],
+      "explication": "La TCC de l'insomnie (qui associe éducation à l'hygiène, restrictions de sommeil, contrôle du stimulus et restructuration cognitive) est le traitement de référence en 1ère intention. (Source EDN Item 110)",
+      "difficulte": 2,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 4,
+      "question": "[Item 110] Question 4 - Moyen : À quelle pathologie neurologique le \"trouble du comportement en sommeil paradoxal\" (mouvements violents en fin de nuit liés à la perte de l'atonie musculaire) est-il fréquemment associé ou précurseur chez le sujet âgé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La maladie d'Alzheimer.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les syndromes parkinsoniens (synucléinopathies comme la maladie de Parkinson ou la démence à corps de Lewy).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La sclérose en plaques.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La chorée de Huntington.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble du comportement en sommeil paradoxal accompagne ou précède souvent de plusieurs années les pathologies neurodégénératives, essentiellement les syndromes parkinsoniens. (Source EDN Item 110)",
+      "difficulte": 2,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 5,
+      "question": "[Item 110] Question 5 - Difficile : Pour poser le diagnostic de narcolepsie de type 1, quelle molécule retrouve-t-on à un taux effondré lors du dosage dans le liquide céphalo-rachidien (LCR) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La dopamine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hypocrétine (ou orexine).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La mélatonine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La sérotonine.",
+          "correct": false
+        }
+      ],
+      "explication": "La narcolepsie de type 1 est liée à la perte de fonction des neurones à orexine/hypocrétine hypothalamiques. Le dosage dans le LCR révèle un taux bas ou effondré. (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 6,
+      "question": "[Item 110] Question 6 - Difficile : Quelle est la durée maximale de prescription légale autorisée pour les médicaments hypnotiques (apparentés aux benzodiazépines, type zolpidem) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 semaine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "4 semaines (incluant la période de sevrage).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "12 semaines.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "6 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée de prescription des hypnotiques est strictement limitée à 4 semaines maximum. Ils ne sont indiqués qu'en cas d'insomnie aiguë. (Source EDN Item 110 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 7,
+      "question": "[Item 110] Question 7 - Difficile : Le diagnostic de narcolepsie de type 1 repose cliniquement sur une tétrade symptomatique très évocatrice. Outre l'hypersomnolence diurne, les hallucinations hypnagogiques et la paralysie du sommeil, quel est le 4ème signe, considéré comme pathognomonique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'insomnie fatale familiale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La cataplexie (abolition brutale du tonus musculaire déclenchée par une émotion positive).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le somnambulisme agressif.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les impatiences des membres inférieurs.",
+          "correct": false
+        }
+      ],
+      "explication": "La cataplexie (perte de tonus déclenchée par une émotion, souvent le rire) est le signe pathognomonique de la narcolepsie de type 1 (anciennement narcolepsie-cataplexie). (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 8,
+      "question": "[Item 110] Question 8 - Difficile : Quel examen paraclinique, réalisé la journée après une polysomnographie, permet d'objectiver et quantifier la propension du sujet à s'endormir la journée (recherche d'endormissements en sommeil paradoxal) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le Test de Maintien de l'Éveil (TME).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le Test Itératif de Latence d'Endormissement (TILE).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'actimétrie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'électromyogramme (EMG).",
+          "correct": false
+        }
+      ],
+      "explication": "Les TILE mesurent la propension à s'endormir la journée (utilisés pour diagnostiquer les hypersomnies centrales comme la narcolepsie). Les TME mesurent la capacité à rester éveillé (efficacité des traitements, médico-légal). (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 9,
+      "question": "[Item 110] Question 9 - Difficile : Comment se définit principalement le syndrome des jambes sans repos (SJSR) souvent confondu avec une insomnie d'endormissement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des douleurs neuropathiques fulgurantes uniquement nocturnes et non calmées par la marche.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un besoin irrépressible de mobiliser les jambes, aggravé au repos, soulagé par le mouvement, avec une prédominance vespérale (le soir).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une claudication intermittente artérielle du sujet âgé.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des crampes musculaires au réveil.",
+          "correct": false
+        }
+      ],
+      "explication": "Le SJSR associe 4 critères : impatiences, aggravation au repos, soulagement par le mouvement, et caractère vespéral (plus intense le soir). (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 10,
+      "question": "[Item 110] Question 10 - Difficile : Quel comportement différentie fondamentalement les terreurs nocturnes des cauchemars chez l'enfant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les terreurs nocturnes surviennent en sommeil paradoxal en fin de nuit.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans la terreur nocturne (qui survient en sommeil lent profond en début de nuit), l'enfant est peu accessible à la réassurance et au réveil n'a pas de souvenir de l'épisode, avec retour au sommeil facile.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'enfant décrit précisément et avec angoisse le monstre de son rêve lors d'une terreur nocturne.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La terreur nocturne nécessite systématiquement un traitement par anti-épileptiques.",
+          "correct": false
+        }
+      ],
+      "explication": "Les terreurs nocturnes (parasomnie de sommeil lent profond) entraînent une manifestation spectaculaire de peur, mais sans réveil complet ni mémorisation, l'enfant se rendort facilement (contrairement aux cauchemars en sommeil paradoxal mémorisés). (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 11,
+      "question": "[Item 110] Question 11 - Difficile : Face à une somnolence diurne excessive chez un conducteur de poids lourd (permis lourd) traité pour un SAS, quel test est réglementaire et indispensable pour autoriser la reprise temporaire de la conduite ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le test d'Epworth.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le Test Itératif de Latence d'Endormissement (TILE).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le Test de Maintien de l'Éveil (TME) pour confirmer l'efficacité thérapeutique.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'électroencéphalogramme standard de 20 minutes.",
+          "correct": false
+        }
+      ],
+      "explication": "Les conducteurs dotés de permis lourds nécessitent de passer un TME pour confirmer l'efficacité thérapeutique et la possible reprise (temporaire) de la conduite. (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 12,
+      "question": "[Item 110] Question 12 - Difficile : Quelle est la cause de somnolence diurne excessive la plus fréquente en population générale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le syndrome d'apnées du sommeil.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La narcolepsie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La dette de sommeil chronique (syndrome d'insuffisance de sommeil).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le syndrome de Kleine-Levin.",
+          "correct": false
+        }
+      ],
+      "explication": "Les causes les plus fréquentes d'hypersomnolence sont la dette de sommeil chronique, l'obésité, la dépression, les psychotropes. (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 13,
+      "question": "[Item 110] Question 13 - Difficile : Qu'est-ce que l'inertie du sommeil (ou ivresse du réveil), classiquement retrouvée dans l'hypersomnie idiopathique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le fait de s'endormir au volant.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une difficulté très importante à se réveiller au décours de la nuit, avec lenteur et confusion matinale persistante.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'incapacité totale à bouger au moment de l'endormissement (paralysie du sommeil).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La persistance des rêves à l'état vigile.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans l'hypersomnie idiopathique, malgré des nuits longues (10h+) et de bonne qualité, le réveil est très difficile avec une forte inertie du réveil, voire une ivresse du réveil avec confusion. (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 14,
+      "question": "[Item 110] Question 14 - Difficile : Sur quoi se base la technique du \"contrôle du stimulus\" utilisée dans la thérapie cognitivo-comportementale de l'insomnie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'utilisation de lumière forte le soir.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Viser à gérer l'horaire du coucher en fonction de la propension au sommeil pour réassocier un signal physiologique clair au lit et à l'endormissement (le lit sert à dormir).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La restriction calorique hydrique après 18h.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prise de mélatonine à libération immédiate.",
+          "correct": false
+        }
+      ],
+      "explication": "La TCC comprend le contrôle du stimulus (réassocier le lit au sommeil, se lever si on ne dort pas) et la restriction du temps passé au lit. (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "question_numero": 15,
+      "question": "[Item 110] Question 15 - Difficile : Dans le modèle à deux processus de la régulation de l'alternance veille-sommeil, à quoi correspond le processus S ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au processus circadien (horloge interne de 24h gérée par les noyaux suprachiasmatiques).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au processus homéostasique, accumulatif (la pression de sommeil qui s'accumule pendant l'éveil et diminue pendant le sommeil).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "À la sécrétion exclusive de sérotonine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Au sommeil paradoxal pur.",
+          "correct": false
+        }
+      ],
+      "explication": "Le processus S est le processus homéostasique (« Je dors car je suis fatigué », accumulation de la dette). Le processus C est le circadien (« Je dors car c'est l'heure »). (Source EDN Item 110)",
+      "difficulte": 3,
+      "source": "EDN Item 110"
+    }
+  ]
+}

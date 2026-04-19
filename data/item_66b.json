@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 1,
+      "question": "[Item 66b] Question 1 - Facile : Quelle est la durée d'évolution minimale requise des soucis excessifs pour poser le diagnostic de trouble anxieux généralisé (TAG) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au moins 1 mois",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 3 mois",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 6 mois",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Au moins 1 an",
+          "correct": false
+        }
+      ],
+      "explication": "Le TAG est marqué par une symptomatologie anxieuse chronique, c'est-à-dire évoluant pendant plus de 6 mois. (Source EDN Item 66b)",
+      "difficulte": 1,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 2,
+      "question": "[Item 66b] Question 2 - Facile : Quelle est la prévalence sur la vie entière du trouble anxieux généralisé en population générale et son sex-ratio ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "5 %, prédominance féminine (2 femmes pour 1 homme)",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "1 %, sex-ratio équilibré",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "10 %, prédominance masculine (2 hommes pour 1 femme)",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "3 %, prédominance féminine (4 femmes pour 1 homme)",
+          "correct": false
+        }
+      ],
+      "explication": "La prévalence sur la vie entière du TAG est d'environ 5 %, avec une prédominance féminine (2 femmes pour un homme). (Source EDN Item 66b)",
+      "difficulte": 1,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 3,
+      "question": "[Item 66b] Question 3 - Moyen : Sur combien de thèmes différents au minimum les inquiétudes doivent-elles porter dans le trouble anxieux généralisé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sur un thème unique et phobogène",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Sur au moins 2 thèmes différents",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Sur au moins 5 thèmes différents",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a pas de thèmes, l'angoisse est flottante et sans objet",
+          "correct": false
+        }
+      ],
+      "explication": "L'anxiété est dirigée sur au moins deux thèmes différents (santé, travail, argent, proches), d'où l'appellation 'généralisé'. (Source EDN Item 66b)",
+      "difficulte": 2,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 4,
+      "question": "[Item 66b] Question 4 - Moyen : À quelle période de la vie le trouble anxieux généralisé débute-t-il le plus fréquemment ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Pendant l'enfance (avant 10 ans)",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "À l'adolescence (15-20 ans)",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Autour de 35-45 ans",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 65 ans exclusivement",
+          "correct": false
+        }
+      ],
+      "explication": "Le TAG peut débuter à tout âge, mais le plus souvent il apparaît autour de 35-45 ans. (Source EDN Item 66b)",
+      "difficulte": 2,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 5,
+      "question": "[Item 66b] Question 5 - Difficile : Lors d'un trouble anxieux généralisé chez l'adulte, combien de symptômes physiques ou psychiques (agitation, fatigabilité, etc.) parmi la liste de 6 du DSM-5 doivent être associés à l'anxiété pour poser le diagnostic ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au moins 1",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 2",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 3",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Au moins 5",
+          "correct": false
+        }
+      ],
+      "explication": "Selon les critères du DSM-5, l'anxiété et les soucis doivent être associés à trois (ou plus) des six symptômes listés (agitation, fatigabilité, concentration, irritabilité, tension musculaire, sommeil). (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 6,
+      "question": "[Item 66b] Question 6 - Difficile : Chez l'enfant et l'adolescent, sur quel thème les inquiétudes du TAG sont-elles très fréquemment centrées et s'associent à un trait de personnalité spécifique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La mort de leurs parents, associé à un fort narcissisme",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les compétences et la qualité des performances (sportives, scolaires), associé à un perfectionnisme",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Leur poids et leur apparence physique, associé à une dysmorphophobie",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'intégrité de leur corps face aux maladies, associé à une hypocondrie",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l'enfant et l'ado, les inquiétudes sont fréquemment centrées sur les compétences et la qualité des performances (sportives/scolaires). Un perfectionnisme est souvent associé au TAG. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 7,
+      "question": "[Item 66b] Question 7 - Difficile : Quel trouble anxieux, très proche cliniquement du TAG chez l'enfant, est caractérisé par un refus de quitter la maison et des cauchemars liés à l'éloignement des parents ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le trouble de la personnalité évitante",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble de l'adaptation avec anxiété",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'anxiété de séparation",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La phobie sociale généralisée",
+          "correct": false
+        }
+      ],
+      "explication": "L'anxiété de séparation est un trouble anxieux de l'enfant proche du TAG, caractérisé par la peur de perdre ses parents, un refus de quitter la maison et des cauchemars sur le thème de la séparation. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 8,
+      "question": "[Item 66b] Question 8 - Difficile : Quel concept psychologique central sous-tend la physiopathologie du TAG, expliquant les comportements de prévoyance ou d'évitement excessifs ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La phobie intéroceptive",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'intolérance à l'incertitude",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le conditionnement opérant de Skinner absolu",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'illusion de contrôle",
+          "correct": false
+        }
+      ],
+      "explication": "Les modèles actuels insistent sur le concept d''intolérance à l'incertitude' dans le TAG qui entraînerait une inquiétude anormale et des comportements de prévoyance excessifs. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 9,
+      "question": "[Item 66b] Question 9 - Difficile : Qu'est-ce qui différencie fondamentalement le TAG d'un Trouble de l'adaptation (TA) ou d'un Trouble Stress Post-Traumatique (TSPT) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le TAG ne répond jamais aux antidépresseurs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le TAG comprend toujours des hallucinations auditives mineures.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les patients souffrant de TAG présentent des inquiétudes permanentes, même en dehors de tout événement de vie stressant.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le TAG survient toujours après l'âge de 65 ans.",
+          "correct": false
+        }
+      ],
+      "explication": "Contrairement aux troubles 'réactionnels au stress' (TA, TSPT), les patients avec TAG présentent des inquiétudes permanentes, même en dehors de tout événement de vie stressant. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 10,
+      "question": "[Item 66b] Question 10 - Difficile : Quel trouble anxieux est considéré comme le plus fréquent chez le sujet âgé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La phobie sociale",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble panique",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le trouble anxieux généralisé (TAG)",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'agoraphobie isolée",
+          "correct": false
+        }
+      ],
+      "explication": "Le TAG est le trouble anxieux le plus fréquent chez le sujet âgé. (Source EDN Item 66b/70)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 11,
+      "question": "[Item 66b] Question 11 - Difficile : Dans la prise en charge pharmacologique de fond d'un TAG sévère et invalidant, quelle est la classe thérapeutique recommandée en première intention ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les neuroleptiques typiques (ex: Haldol)",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les benzodiazépines en traitement prolongé",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les thymorégulateurs (ex: Lithium)",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les antidépresseurs de type ISRS ou IRSNA",
+          "correct": true
+        }
+      ],
+      "explication": "Le traitement pharmacologique principal du TAG repose sur l'utilisation des antidépresseurs, en première intention les ISRS ou les IRSNA. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 12,
+      "question": "[Item 66b] Question 12 - Difficile : Quelle est la durée maximale de prescription (incluant le sevrage) des benzodiazépines s'il est décidé de les utiliser ponctuellement dans le cadre d'un TAG ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "4 semaines",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "12 semaines",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "6 mois",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Aucune limite légale",
+          "correct": false
+        }
+      ],
+      "explication": "Les benzodiazépines (anxiolytiques) peuvent être utilisées de manière ponctuelle et bien limitée dans le temps (maximum 12 semaines) en cas de manifestations intenses. (Source EDN Item 66b/74)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 13,
+      "question": "[Item 66b] Question 13 - Difficile : Parmi ces symptômes physiques et perturbations physiologiques, lequel est très fréquemment au premier plan dans le TAG et peut retarder le diagnostic psychiatrique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hyperphagie majeure",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La plainte d'insomnie (difficultés d'endormissement ou sommeil agité)",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'incontinence urinaire",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des paresthésies hémi-corporelles constantes",
+          "correct": false
+        }
+      ],
+      "explication": "Le TAG comporte des perturbations des fonctions physiologiques (appétit, sommeil) et des symptômes physiques (myalgies). La plainte d'insomnie est souvent au premier plan et peut masquer l'anxiété. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 14,
+      "question": "[Item 66b] Question 14 - Difficile : Dans l'approche psychothérapeutique du TAG, quel type de thérapie a largement montré son intérêt et est privilégié (notamment chez l'enfant en 1ère intention) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La psychanalyse longue",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les thérapies cognitivo-comportementales (TCC)",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'EMDR (Eye Movement Desensitization and Reprocessing)",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La sismothérapie",
+          "correct": false
+        }
+      ],
+      "explication": "Les TCC doivent être privilégiées, ayant largement montré leur intérêt dans ce trouble, notamment par des stratégies centrées sur la gestion des émotions et des inquiétudes. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "question_numero": 15,
+      "question": "[Item 66b] Question 15 - Difficile : Quelle molécule anxiolytique, non apparentée aux benzodiazépines, peut constituer une alternative ponctuelle chez l'adulte dans la prise en charge des manifestations anxieuses du TAG ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le zolpidem",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La rispéridone",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hydroxyzine (Atarax)",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La venlafaxine",
+          "correct": false
+        }
+      ],
+      "explication": "L'hydroxyzine (un antihistaminique) peut constituer une alternative aux benzodiazépines pour le traitement ponctuel en cas de manifestations anxieuses intenses. (Source EDN Item 66b)",
+      "difficulte": 3,
+      "source": "EDN Item 66b"
+    }
+  ]
+}

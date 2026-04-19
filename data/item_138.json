@@ -1,0 +1,324 @@
+{
+  "qcm": [
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 1,
+      "question": "[Item 138] Question 1 - Facile : Quelles sont les quatre composantes de la douleur selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sensorielles, émotionnelles (ou affectives), cognitives et comportementales.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Aiguës, chroniques, nociceptives et neuropathiques.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Psychiques, somatiques, iatrogènes et idiopathiques.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Génétiques, environnementales, sociales et culturelles.",
+          "correct": false
+        }
+      ],
+      "explication": "La douleur se manifeste par des composantes sensorielles, émotionnelles ou affectives, cognitives et comportementales. (Source EDN Item 138, 52)",
+      "difficulte": 1,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 2,
+      "question": "[Item 138] Question 2 - Facile : À partir de quelle durée d'évolution une douleur est-elle classiquement considérée comme chronique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Plus de 1 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Plus de 3 mois.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Plus de 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 1 an.",
+          "correct": false
+        }
+      ],
+      "explication": "La douleur chronique est définie comme une douleur évoluant depuis plus de 3 mois. (Source EDN Item 138, 53)",
+      "difficulte": 1,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 3,
+      "question": "[Item 138] Question 3 - Moyen : Chez un patient souffrant de schizophrénie, quelle est la particularité classique de l'expression de la douleur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les plaintes douloureuses sont exacerbées et dramatisées de manière théâtrale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les plaintes douloureuses sont classiquement peu exprimées, entraînant un risque de retard au diagnostic (ulcère, infarctus).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les patients sont en demande constante et excessive d'antalgiques (hyperalgésie systématique).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a aucune modification de l'expression douloureuse par rapport à la population générale.",
+          "correct": false
+        }
+      ],
+      "explication": "Les plaintes douloureuses sont classiquement peu exprimées (notamment en cas de symptômes négatifs), avec une expression parfois inhabituelle, entraînant une négligence et un retard diagnostique grave. (Source EDN Item 138, 60)",
+      "difficulte": 2,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 4,
+      "question": "[Item 138] Question 4 - Moyen : Chez les patients douloureux chroniques, quelle est la prévalence de l'épisode dépressif caractérisé par rapport à la population générale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est identique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle est divisée par deux (effet protecteur de la focalisation somatique).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle est deux fois plus fréquente (10 à 20 %).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle est de 100 % (la douleur chronique implique toujours une dépression majeure).",
+          "correct": false
+        }
+      ],
+      "explication": "Un épisode dépressif caractérisé est deux fois plus fréquent chez les patients douloureux chroniques (10 à 20 %) que dans la population générale (5,5 %). (Source EDN Item 138, 61)",
+      "difficulte": 2,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 5,
+      "question": "[Item 138] Question 5 - Difficile : Chez un enfant présentant un trouble du spectre de l'autisme (TSA), comment peut se manifester la douleur de façon atypique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Exclusivement par des pleurs continus impossibles à consoler.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par des comportements inhabituels à type de retrait, d'agressivité et de mutilations.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Par un syndrome de conversion neurologique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les enfants avec TSA ont une analgésie congénitale et ne ressentent jamais la douleur.",
+          "correct": false
+        }
+      ],
+      "explication": "Face à la douleur, l'enfant avec TSA peut manifester des comportements inhabituels comme le retrait, l'agressivité et l'automutilation, malgré une apparente (et fausse) insensibilité. (Source EDN Item 138, 58)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 6,
+      "question": "[Item 138] Question 6 - Difficile : Quel outil est préconisé pour l'hétéro-évaluation de la douleur chez un adolescent ou un adulte polyhandicapé/dyscommunicant ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'échelle visuelle analogique (EVA).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'échelle des 6 visages.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'échelle EDAAP (Évaluation de l'expression de la Douleur chez l'Adulte et l'Adolescent Polyhandicapé).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le questionnaire AUDIT-C.",
+          "correct": false
+        }
+      ],
+      "explication": "En cas de troubles de la communication et selon l'âge, l'outil d'hétéro-évaluation EDAAP peut être utilisé à défaut d'évaluation spécifique à la psychiatrie. (Source EDN Item 138, 62)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 7,
+      "question": "[Item 138] Question 7 - Difficile : Comment une personnalité de type obsessionnelle exprime-t-elle typiquement la douleur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "De façon théâtrale, imprécise, dramatisée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "De manière floue, bizarre et avec une extrême méfiance.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "De manière précise, détaillée, avec une expression émotionnelle restreinte et une attitude rigide.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "De manière passive, en demande constante de réassurance.",
+          "correct": false
+        }
+      ],
+      "explication": "La personnalité obsessionnelle exprime la douleur de façon précise, détaillée, avec peu d'émotion et une attitude rigide, parfois agressive. À l'inverse, l'histrionique dramatise et reste imprécise. (Source EDN Item 138, 63)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 8,
+      "question": "[Item 138] Question 8 - Difficile : Dans le trouble bipolaire, quelle plainte d'allure non psychiatrique est la plus fréquente lors d'un épisode maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les troubles digestifs (diarrhée motrice).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les plaintes douloureuses (céphalées, dorsalgies ou arthralgies).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les paresthésies des membres inférieurs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les acouphènes pulsatiles.",
+          "correct": false
+        }
+      ],
+      "explication": "La plainte douloureuse est la plainte non psychiatrique la plus fréquente chez le patient avec un épisode maniaque. La probabilité de survenue de céphalées, dorsalgies ou arthralgies est multipliée par deux dans le trouble bipolaire. (Source EDN Item 138, 61)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 9,
+      "question": "[Item 138] Question 9 - Difficile : Lors de la prise en charge d'un patient douloureux chronique avec des antécédents addictologiques, quel signe doit motiver une consultation spécialisée en addictologie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'utilisation de l'antalgique uniquement lors des pics nociceptifs prouvés.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'escalade des doses d'analgésiques (en quantité, fréquence) ou leur utilisation pour d'autres problèmes que la douleur.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La présence d'un épisode dépressif associé léger.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le refus du patient d'augmenter son traitement antalgique par peur de la dépendance.",
+          "correct": false
+        }
+      ],
+      "explication": "Il est important de faire une consultation spécialisée en cas d'escalade de doses d'analgésiques, multiplication des prescripteurs, utilisation pour d'autres problèmes que la douleur, ou dépendance (alcool, cannabis). (Source EDN Item 138, 64)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "question_numero": 10,
+      "question": "[Item 138] Question 10 - Difficile : Quelle affirmation est vraie concernant l'évaluation conjointe de la douleur et des troubles psychiatriques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La plainte douloureuse chez un psychotique doit d'abord être considérée comme délirante jusqu'à preuve du contraire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La douleur aiguë comme symptôme d'anxiété (ex: attaque de panique) ne s'évoque qu'après avoir écarté une étiologie non psychiatrique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le seuil de perception de la douleur est toujours augmenté (hyposensibilité) chez le patient anxieux.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'outil d'évaluation de la douleur doit être changé à chaque évaluation pour éviter l'habituation du patient.",
+          "correct": false
+        }
+      ],
+      "explication": "On évoque une douleur aiguë comme symptôme d'anxiété seulement après avoir écarté une étiologie non psychiatrique. Un niveau élevé d'anxiété diminue le seuil de perception. Il ne faut pas considérer a priori la plainte d'un psychotique comme imaginaire/délirante. Le même outil doit être utilisé lors des évaluations répétées. (Source EDN Item 138, 65, 66, 67)",
+      "difficulte": 3,
+      "source": "EDN Item 138"
+    }
+  ]
+}

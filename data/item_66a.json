@@ -1,0 +1,1124 @@
+{
+  "qcm": [
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 1,
+      "question": "[Item 66a] Question 1 - Facile : Quelle est la prévalence de l'épisode dépressif caractérisé sur une année en France (chez les 18-75 ans) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 1 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 5 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 10 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Environ 25 %",
+          "correct": false
+        }
+      ],
+      "explication": "Il s'agit d'un trouble fréquent avec une prévalence des épisodes dépressifs caractérisés sur une année en France d'environ 10 % chez les 18-75 ans. (Source EDN Item 66a)",
+      "difficulte": 1,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 2,
+      "question": "[Item 66a] Question 2 - Facile : Quelle est la durée minimale d'évolution des symptômes requise pour poser le diagnostic d'un épisode dépressif caractérisé selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Au moins 4 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 15 jours (2 semaines).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 1 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Au moins 6 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "Le diagnostic nécessite que les symptômes soient présents pendant une même période d'une durée d'au moins 2 semaines (15 jours) et avoir représenté un changement par rapport à l'état antérieur. (Source EDN Item 66a)",
+      "difficulte": 1,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 3,
+      "question": "[Item 66a] Question 3 - Moyen : Selon les critères du DSM-5, quel symptôme doit obligatoirement être présent parmi les 5 symptômes requis pour le diagnostic d'EDC ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'insomnie ou l'hypersomnie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une perte ou un gain de poids significatif.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une humeur dépressive OU une diminution marquée de l'intérêt ou du plaisir.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Des idées de culpabilité ou d'indignité.",
+          "correct": false
+        }
+      ],
+      "explication": "Au moins un des symptômes doit être soit (1) une humeur dépressive, soit (2) une perte d'intérêt ou de plaisir (anhédonie) pour porter le diagnostic d'EDC. (Source EDN Item 66a)",
+      "difficulte": 2,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 4,
+      "question": "[Item 66a] Question 4 - Moyen : Comment définit-on un 'trouble dépressif récurrent' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une dépression qui résiste à plus de deux traitements antidépresseurs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence d'au moins 2 épisodes dépressifs caractérisés séparés par une période sans symptôme d'au moins 2 mois consécutifs.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'alternance d'un épisode maniaque et d'un épisode dépressif.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un épisode dépressif qui dure depuis plus de 2 ans sans rémission.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble dépressif récurrent est défini par la présence d'au moins 2 épisodes dépressifs caractérisés séparés d'une période sans symptôme d'au moins 2 mois consécutifs, en l'absence d'antécédent (hypo)maniaque. (Source EDN Item 66a)",
+      "difficulte": 2,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 5,
+      "question": "[Item 66a] Question 5 - Difficile : Quel pourcentage des patients décédés par suicide présentaient un épisode dépressif caractérisé au moment du passage à l'acte ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 10 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 30 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 50 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 80 %",
+          "correct": true
+        }
+      ],
+      "explication": "L'épisode dépressif caractérisé est associé à un risque suicidaire majeur : plus de 80 % des suicidés présentent un épisode dépressif caractérisé au moment du passage à l'acte. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 6,
+      "question": "[Item 66a] Question 6 - Difficile : Parmi les éléments suivants, lequel est typique de l'épisode dépressif avec 'caractéristiques mélancoliques' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hyperphagie majeure avec prise de poids.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une absence de ralentissement psychomoteur.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une anesthésie affective (manque de réactivité aux stimuli agréables) et des symptômes plus marqués le matin.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La présence exclusive de délires d'influence.",
+          "correct": false
+        }
+      ],
+      "explication": "La mélancolie se caractérise par une intensité particulièrement sévère, une anesthésie affective (manque de réactivité), des symptômes plus marqués le matin, des réveils précoces, un ralentissement majeur ou une agitation, et une culpabilité excessive. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 7,
+      "question": "[Item 66a] Question 7 - Difficile : Qu'est-ce que le Syndrome de Cotard observé dans certaines dépressions sévères avec caractéristiques psychotiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une idée délirante de persécution avec hallucinations auditives prédominantes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un ensemble d'idées délirantes de négation d'organes, de négation du temps (immortalité) ou du monde.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une paralysie totale transitoire sans étiologie neurologique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une amnésie rétrograde massive suite à un stress majeur.",
+          "correct": false
+        }
+      ],
+      "explication": "Le Syndrome de Cotard est une forme clinique d'EDC avec caractéristiques psychotiques associant des idées délirantes de négation d'organes, de négation du temps (immortalité) ou du monde. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 8,
+      "question": "[Item 66a] Question 8 - Difficile : Sur quoi se base le DSM-5 pour déterminer si un épisode dépressif caractérisé est d'intensité 'sévère' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La présence quasiment de tous les symptômes et des perturbations sociales/professionnelles nettes.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Uniquement la présence d'idées suicidaires, quel que soit le reste du tableau.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La durée de l'épisode dépassant 2 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apparition du trouble avant l'âge de 18 ans.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intensité sévère est caractérisée par la présence de quasiment tous les symptômes et des perturbations sociales ou professionnelles nettes, contrairement à l'intensité légère ou moyenne. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 9,
+      "question": "[Item 66a] Question 9 - Difficile : Chez l'enfant et l'adolescent, par quel symptôme la perturbation de l'humeur peut-elle fréquemment se manifester au lieu de la tristesse ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une mégalomanie constante.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une irritabilité et des crises de colère.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hyperactivité motrice orientée vers un but.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une indifférence totale à la douleur physique.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l'enfant et l'adolescent, les perturbations de l'humeur peuvent ne pas se manifester par de la tristesse mais par de l'irritabilité épisodique, voire des crises de colère. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 10,
+      "question": "[Item 66a] Question 10 - Difficile : Lors de l'évaluation d'un sujet âgé, quels types de symptômes peuvent fréquemment occulter la tristesse de l'humeur et constituer le motif principal de consultation lors d'un EDC ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des délires érotomaniaques exclusifs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des plaintes d'allure non psychiatrique (algiques, somatiques) et des plaintes mnésiques.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un comportement de désinhibition sexuelle inexpliquée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des achats compulsifs massifs.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez le sujet âgé, les symptômes au premier plan sont souvent généraux d'allure non psychiatrique (douleurs gastro-intestinales, articulaires, troubles du sommeil) ou des plaintes mnésiques qui masquent la plainte thymique classique. (Source EDN Item 66a / 70)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 11,
+      "question": "[Item 66a] Question 11 - Difficile : Quelle affirmation concernant le risque suicidaire chez le sujet âgé souffrant de dépression est exacte ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le risque suicidaire est très faible par rapport aux adolescents.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le sujet âgé ne passe à l'acte qu'en cas de pathologie terminale associée.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le ratio tentatives de suicide/suicides aboutis est beaucoup plus faible (4/1) que dans la population générale (20/1).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Ils utilisent préférentiellement la phlébotomie bénigne.",
+          "correct": false
+        }
+      ],
+      "explication": "Le ratio tentatives de suicide/suicides est de 4/1 chez le sujet âgé (contre 20/1 en population générale) : lors d'un passage à l'acte, la probabilité de décès est beaucoup plus élevée, traduisant une forte létalité. (Source EDN Item 66a / 70)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 12,
+      "question": "[Item 66a] Question 12 - Difficile : Dans l'épisode dépressif avec caractéristiques psychotiques, quels sont les thèmes délirants classiquement observés s'ils sont 'congruents à l'humeur' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des idées de grandeur, de richesse ou d'invincibilité.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des idées de ruine, d'incapacité, de maladie, de mort, d'indignité et de culpabilité.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Des idées de jalousie exclusivement.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des idées de référence liées à la télévision ou aux médias.",
+          "correct": false
+        }
+      ],
+      "explication": "Les thématiques délirantes congruentes à l'humeur dans un EDC sont le plus souvent centrées sur la ruine, l'incapacité, la maladie, la mort, l'indignité et la culpabilité. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 13,
+      "question": "[Item 66a] Question 13 - Difficile : Lors d'un épisode dépressif avec 'caractéristiques anxieuses', quel danger majeur redoute-t-on cliniquement lié à l'agitation anxieuse ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une déshydratation fulgurante.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un raptus anxieux conduisant à un passage à l'acte suicidaire brutal.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une perte totale et irréversible de la mémoire épisodique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une évolution vers la maladie d'Alzheimer dans les 6 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "L'agitation anxieuse dans un EDC (caractéristiques anxieuses) peut être associée à un risque majeur de passage à l'acte suicidaire impulsif appelé raptus anxieux. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 14,
+      "question": "[Item 66a] Question 14 - Difficile : Que signifie un EDC 'avec caractéristiques mixtes' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La coexistence d'un trouble de l'usage de substances et d'un EDC.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence d'au moins 3 symptômes maniaques ou hypomaniaques pendant la majorité des jours de l'EDC.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un épisode mêlant des symptômes dépressifs et somatiques non expliqués.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une dépression qui touche le patient le jour et la nuit de façon mixte.",
+          "correct": false
+        }
+      ],
+      "explication": "Les caractéristiques mixtes signifient qu'au moins 3 symptômes maniaques/hypomaniaques sont présents pendant la majorité des jours de l'épisode dépressif. C'est associé à un risque suicidaire très augmenté. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 15,
+      "question": "[Item 66a] Question 15 - Difficile : Parmi les causes liées à une substance, laquelle est le diagnostic différentiel toxique le plus fréquent d'un épisode dépressif ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'intoxication au monoxyde de carbone.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le mésusage d'alcool, de cannabis, ou le sevrage de stimulants.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'intoxication aux opiacés prescrits.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La consommation de thé en excès.",
+          "correct": false
+        }
+      ],
+      "explication": "L'usage de substances (alcool, cannabis) et le sevrage de psychostimulants (amphétamines, cocaïne) représentent le diagnostic différentiel le plus fréquent d'un EDC. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 16,
+      "question": "[Item 66a] Question 16 - Difficile : Quelles molécules médicamenteuses classiques peuvent induire un syndrome dépressif iatrogène ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les antibiotiques de la famille des céphalosporines.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les inhibiteurs de la pompe à protons et les statines.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les corticoïdes, l'interféron-alpha, les bêta-bloquants et les contraceptions hormonales.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le paracétamol et les anti-inflammatoires non stéroïdiens.",
+          "correct": false
+        }
+      ],
+      "explication": "Les causes iatrogènes d'épisode dépressif comprennent classiquement : corticoïdes, interféron-alpha, bêta-bloquants, contraceptions hormonales. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 17,
+      "question": "[Item 66a] Question 17 - Difficile : Lors du bilan pré-thérapeutique avant prescription d'un ISRS (Inhibiteur Sélectif de la Recapture de la Sérotonine), quel examen paraclinique est systématiquement recommandé par le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un ECG systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un bilan hépatique complet.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un scanner cérébral.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Aucun examen paraclinique n'est systématique pour un ISRS.",
+          "correct": true
+        }
+      ],
+      "explication": "Pour les ISRS et IRSNA, il n'y a pas de bilan paraclinique systématique avant l'introduction. Le bilan est clinique, et paraclinique uniquement orienté par la clinique. (Les ECG/bilans hépatiques sont pour les imipraminiques, IMAO ou l'agomélatine). (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 18,
+      "question": "[Item 66a] Question 18 - Difficile : Quelle est la contre-indication absolue formelle à l'utilisation d'un antidépresseur ISRS ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le glaucome à angle fermé.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'association aux IMAO (Inhibiteurs de la Monoamine Oxydase).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La grossesse à n'importe quel stade.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'adénome de la prostate.",
+          "correct": false
+        }
+      ],
+      "explication": "L'association d'un ISRS (ou IRSNA, imipraminiques) à un IMAO est une contre-indication absolue car elle expose à un risque majeur de syndrome sérotoninergique mortel. Le glaucome et l'adénome concernent les imipraminiques (effets anticholinergiques). (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 19,
+      "question": "[Item 66a] Question 19 - Difficile : Après obtention de la rémission clinique d'un premier EDC isolé, combien de temps le traitement antidépresseur doit-il être poursuivi avant d'en discuter l'arrêt ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 à 2 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "6 à 8 mois.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Au moins 2 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "À vie systématiquement.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour un premier épisode dépressif isolé, le traitement antidépresseur doit être poursuivi au moins 6 à 8 mois après l'obtention de la rémission clinique pour éviter la rechute. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 20,
+      "question": "[Item 66a] Question 20 - Difficile : Dans le cadre d'un 'trouble dépressif récurrent' (notamment dès le 3ème épisode), quelle est la durée recommandée de la phase de maintien du traitement antidépresseur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "6 mois maximum.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "18 mois à 2 ans (voire plus).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Exactement 1 an.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "On ne prescrit plus de médicaments au 3ème épisode, uniquement de la psychothérapie.",
+          "correct": false
+        }
+      ],
+      "explication": "En cas de trouble dépressif récurrent (notamment dès le 3ème épisode), le traitement de maintien par antidépresseur est prescrit pendant une durée de 18 mois à 2 ans au moins après rémission, pour prévenir les récidives. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 21,
+      "question": "[Item 66a] Question 21 - Difficile : Quel est le délai d'action d'un traitement antidépresseur (avant d'en évaluer pleinement l'efficacité) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Quelques heures.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "48 à 72 heures.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "2 à 4 semaines.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "3 mois au minimum.",
+          "correct": false
+        }
+      ],
+      "explication": "Le délai d'action des antidépresseurs est de plusieurs semaines (2 à 4 semaines). Il est recommandé de ne pas interrompre le traitement pour inefficacité avant 4 semaines à dose efficace. (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 22,
+      "question": "[Item 66a] Question 22 - Difficile : Chez un enfant ou adolescent souffrant d'un EDC sévère, quel traitement pharmacologique est recommandé en première intention ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'amitriptyline (Laroxyl).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La fluoxétine (Prozac) en combinaison avec un traitement non pharmacologique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le lithium d'emblée.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Aucun, les médicaments sont formellement interdits avant 18 ans.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l'enfant/ado, en cas d'intensité modérée à sévère, la fluoxétine (ISRS) est recommandée en 1ère intention (en combinaison avec un traitement non pharmacologique). (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 23,
+      "question": "[Item 66a] Question 23 - Difficile : Lors de l'initiation d'un traitement antidépresseur chez un sujet âgé, quelle règle de prescription doit être appliquée concernant la posologie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La posologie doit être doublée pour pallier le métabolisme ralenti.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La posologie initiale doit être la moitié de celle utilisée chez l'adulte jeune.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il faut prescrire uniquement en injections intramusculaires.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a aucune différence de posologie avec l'adulte jeune.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez le sujet âgé, la posologie initiale doit être la moitié de celle utilisée chez l'adulte et augmentée progressivement, en privilégiant les molécules les mieux tolérées (ISRS). (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 24,
+      "question": "[Item 66a] Question 24 - Difficile : L'association d'antidépresseurs peut provoquer un syndrome sérotoninergique. Quel tableau clinique l'évoque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hypothermie avec bradycardie extrême et pâleur.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Confusion, agitation, myoclonies, hyperthermie, sueurs, diarrhée et tachycardie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un mutisme akinétique avec paralysie ascendante.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un ictère foudroyant indolore.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome sérotoninergique associe des signes digestifs (diarrhée), neurologiques (confusion, myoclonies, hyperréflexie, mydriase) et neurovégétatifs (tachycardie, hyperthermie, sueurs). C'est une urgence vitale. (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 25,
+      "question": "[Item 66a] Question 25 - Difficile : Lors de l'arrêt brutal d'un traitement antidépresseur, un syndrome d'arrêt peut apparaître. Comment se manifeste-t-il typiquement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par un état de délire paranoïaque sévère persistant 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par un syndrome pseudo-grippal, des vertiges, de l'anxiété et de l'irritabilité dans la semaine suivant l'arrêt.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Par des crises convulsives tonico-cloniques généralisées systématiques.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Par une obésité subite.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome d'arrêt aux antidépresseurs (lié à une diminution trop rapide) survient généralement dans la semaine suivant l'arrêt et associe anxiété, irritabilité, vertiges, troubles neurosensoriels ou syndrome pseudo-grippal. (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 26,
+      "question": "[Item 66a] Question 26 - Difficile : Quel phénomène paradoxal justifie une surveillance particulièrement étroite du risque suicidaire en début de traitement antidépresseur (surtout chez les jeunes) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La sédation excessive masquant un coma.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La levée de l'inhibition psychomotrice qui peut précéder l'amélioration de l'humeur.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La survenue d'un diabète insipide.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apparition d'obsessions impulsives sexuelles.",
+          "correct": false
+        }
+      ],
+      "explication": "En début de traitement, l'aggravation d'idées suicidaires (parfois liée à une levée de l'inhibition motrice avant l'amélioration de la tristesse) est possible et nécessite une surveillance étroite, surtout chez les moins de 24 ans. (Source EDN Item 66a / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 27,
+      "question": "[Item 66a] Question 27 - Difficile : Qu'est-ce que le 'trouble dysphorique prémenstruel' selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une douleur pelvienne chronique invalidante.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence de symptômes dépressifs, de labilité émotionnelle et de signes physiques au cours de la plupart des cycles menstruels.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une anorexie mentale survenant au moment des premières règles.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un syndrome hallucinatoire transitoire lié aux œstrogènes.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble dysphorique prémenstruel correspond à la présence de symptômes dépressifs associés à une labilité émotionnelle marquée ou anxiété et des signes physiques (tension mammaire) au cours de la plupart des cycles. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 28,
+      "question": "[Item 66a] Question 28 - Difficile : Comment définit-on la notion de 'résistance thérapeutique' dans la prise en charge de l'épisode dépressif caractérisé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'absence d'amélioration après 3 jours de traitement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'échec successif de 2 antidépresseurs à dose efficace durant une durée suffisante (au moins 6 semaines chacun).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le refus du patient de prendre son traitement.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une dépression qui s'aggrave l'hiver malgré une luminothérapie.",
+          "correct": false
+        }
+      ],
+      "explication": "La résistance thérapeutique se définit par les échecs successifs de 2 antidépresseurs prescrits à dose efficace durant une durée suffisante (au moins 6 semaines par traitement). (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 29,
+      "question": "[Item 66a] Question 29 - Difficile : Lequel de ces éléments est un facteur prédictif de mauvais pronostic (risque de rechute/récurrence élevé) d'un épisode dépressif ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un âge de début tardif après 60 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le sexe masculin exclusivement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un âge de début précoce, des épisodes antérieurs multiples et la persistance de symptômes résiduels.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence d'antécédents familiaux.",
+          "correct": false
+        }
+      ],
+      "explication": "Les facteurs de mauvais pronostic (rechute/récurrence) incluent : le sexe féminin, une histoire familiale, un âge de début précoce, des épisodes antérieurs multiples, une longue durée ou forte sévérité, et des symptômes résiduels. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 30,
+      "question": "[Item 66a] Question 30 - Difficile : Sur le plan physiopathologique, la dépression impliquerait une dysrégulation de plusieurs systèmes. Lesquels ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Uniquement une carence en iode sérique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le système GABAergique exclusif de la moelle épinière.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La neurotransmission monoaminergique (sérotonine, dopamine, noradrénaline), l'axe corticotrope et les neurotrophines (BDNF).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hypersécrétion pituitaire d'ocytocine.",
+          "correct": false
+        }
+      ],
+      "explication": "La physiopathologie implique des déséquilibres de la neurotransmission monoaminergique (sérotonine, noradrénaline, dopamine), de l'axe corticotrope, des biomarqueurs inflammatoires et des neurotrophines comme le BDNF. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 31,
+      "question": "[Item 66a] Question 31 - Difficile : Dans la sémiologie dépressive, à quoi correspond le terme 'ruminations' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des illusions perceptives de type auditif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Des pensées répétées, centrées sur soi et à contenu négatif.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un ralentissement moteur avec amimie totale.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'incapacité à avaler la nourriture par sensation de boule dans la gorge.",
+          "correct": false
+        }
+      ],
+      "explication": "Les ruminations correspondent à des altérations du cours de la pensée dans l'EDC, se manifestant par des pensées répétées, centrées sur soi et à contenu négatif. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 32,
+      "question": "[Item 66a] Question 32 - Difficile : Dans l'EDC, les perturbations physiologiques du sommeil sont fréquentes. Quel type de plainte d'insomnie est particulièrement classiquement associée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les éveils matinaux précoces avec incapacité de se rendormir.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une somnambulisme nocturne agressif.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un syndrome d'apnées du sommeil central d'apparition subite.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence totale et prolongée (des semaines) de sommeil sans fatigue diurne.",
+          "correct": false
+        }
+      ],
+      "explication": "La plainte d'insomnie (le plus fréquent dans l'EDC) est souvent à type de réveils matinaux précoces, de réveils nocturnes ou de difficultés d'endormissement. L'absence de sommeil sans fatigue signe plutôt la manie. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 33,
+      "question": "[Item 66a] Question 33 - Difficile : Quelle est la différence majeure entre le contenu des pensées lors d'un deuil normal et lors d'un épisode dépressif caractérisé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans le deuil normal, les idées suicidaires sont systématiques et planifiées.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans l'EDC, l'estime de soi est préservée, contrairement au deuil.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Dans le deuil normal, le contenu des pensées concerne des préoccupations du défunt, et l'estime de soi est généralement préservée.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a absolument aucune différence, le deuil est toujours un EDC.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le deuil normal, les pensées sont centrées sur la personne décédée, et l'estime de soi est généralement préservée. Dans l'EDC, le patient présente des ruminations autocritiques, une estime de soi effondrée et des idées de dévalorisation. (Source EDN Item 66a / 144)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 34,
+      "question": "[Item 66a] Question 34 - Difficile : Dans quel contexte d'épisode dépressif l'électroconvulsivothérapie (ECT) est-elle classiquement indiquée en première ligne ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une dépression légère réagissant aux TCC.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un épisode dépressif sévère avec risque vital à court terme (refus alimentaire/dénutrition, risque suicidaire majeur) ou résistance médicamenteuse.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "En cas d'association de la dépression avec une infection virale.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'ECT n'est plus autorisée en France pour la dépression.",
+          "correct": false
+        }
+      ],
+      "explication": "L'ECT est indiquée dans les formes les plus sévères d'EDC (caractéristiques mélancoliques, catatoniques, psychotiques), en cas d'urgence vitale (suicide, dénutrition) ou de résistance/contre-indication aux médicaments. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "question_numero": 35,
+      "question": "[Item 66a] Question 35 - Difficile : Parmi les éléments suivants, lequel constitue une indication d'hospitalisation formelle (ou à discuter fortement) pour un patient dépressif ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une fatigue occasionnelle en fin de journée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un épisode dépressif léger à modéré chez un patient très entouré par sa famille.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un épisode sévère, un risque suicidaire élevé ou des caractéristiques mélancoliques/psychotiques/catatoniques.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Uniquement si le patient demande lui-même son internement par écrit.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hospitalisation se justifie en cas de risque suicidaire élevé, d'EDC sévère, ou d'épisode avec caractéristiques mélancoliques, psychotiques ou catatoniques. (Source EDN Item 66a)",
+      "difficulte": 3,
+      "source": "EDN Item 66a"
+    }
+  ]
+}

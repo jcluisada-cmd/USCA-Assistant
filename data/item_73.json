@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 1,
+      "question": "[Item 73] Question 1 - Facile : Comment se définit la psychothérapie dans le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "C'est l'utilisation exclusive de traitements médicamenteux pour soigner l'âme.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "C'est toute utilisation de moyens psychologiques pour traiter un trouble psychiatrique ou une détresse psychologique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "C'est une simple conversation de réassurance par l'entourage amical.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "C'est une intervention chirurgicale du système nerveux central.",
+          "correct": false
+        }
+      ],
+      "explication": "La psychothérapie correspond à « toute utilisation de moyens psychologiques pour traiter un trouble psychiatrique ou pour tout autre problème entraînant une souffrance ou une détresse psychologique ». Ce n'est pas une simple conversation. (Source EDN Item 73)",
+      "difficulte": 1,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 2,
+      "question": "[Item 73] Question 2 - Facile : Par quelle instance le titre de psychothérapeute est-il réglementé et délivré en France depuis 2010 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les Agences Régionales de Santé (ARS).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "La Haute Autorité de Santé (HAS) exclusivement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'Ordre des infirmiers.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les caisses d'Assurance Maladie (CPAM).",
+          "correct": false
+        }
+      ],
+      "explication": "Depuis 2010, le titre de psychothérapeute est réglementé, et les professionnels doivent être inscrits sur un registre national géré par les agences régionales de santé (ARS). (Source EDN Item 73)",
+      "difficulte": 1,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 3,
+      "question": "[Item 73] Question 3 - Moyen : Quelles sont les trois « vagues » successives ayant construit les Thérapies Cognitivo-Comportementales (TCC) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La vague systémique, la vague psychanalytique et la vague humaniste.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La vague comportementale, la vague cognitive et la vague émotionnelle.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La vague introspective, la vague expressive et la vague suppressive.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La vague de Pavlov, la vague de Freud et la vague de Lacan.",
+          "correct": false
+        }
+      ],
+      "explication": "Les TCC ont connu trois évolutions : la vague comportementale (théories du conditionnement), la vague cognitive (schémas cognitifs de Beck) et la vague émotionnelle (acceptation et pleine conscience). (Source EDN Item 73)",
+      "difficulte": 2,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 4,
+      "question": "[Item 73] Question 4 - Moyen : Dans quel modèle théorique envisage-t-on les symptômes comme n'appartenant pas uniquement au « patient-désigné » mais traduisant un dysfonctionnement communicationnel du groupe ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le modèle cognitivo-comportemental.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le modèle psychanalytique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le modèle systémique (ou familial).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le modèle neurobiologique.",
+          "correct": false
+        }
+      ],
+      "explication": "Le modèle systémique envisage la famille comme un système en perpétuelle interaction. Les symptômes du « patient-désigné » relatent un dysfonctionnement communicationnel ou interrelationnel de ce système. (Source EDN Item 73)",
+      "difficulte": 2,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 5,
+      "question": "[Item 73] Question 5 - Difficile : Qu'est-ce que la remédiation cognitive ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'apprentissage par le patient des noms et posologies de tous ses médicaments psychotropes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'exploration des conflits inconscients liés à la petite enfance via l'association libre.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une technique rééducative permettant d'améliorer le fonctionnement cognitif en entraînant les fonctions déficitaires ou en compensant via les fonctions résiduelles.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une technique d'exposition brutale (flooding) aux stimuli phobogènes.",
+          "correct": false
+        }
+      ],
+      "explication": "La remédiation cognitive vise à améliorer le fonctionnement cognitif (attention, mémoire, fonctions exécutives) en entraînant les fonctions déficitaires ou en acquérant des stratégies compensatoires. Elle est particulièrement utile dans la schizophrénie. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 6,
+      "question": "[Item 73] Question 6 - Difficile : Selon le référentiel, quelle est une contre-indication classique de la psychothérapie psychodynamique/psychanalytique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les troubles de l'adaptation.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les troubles anxieux légers.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les troubles psychotiques sévères ou décompensés.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les troubles de la personnalité.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour une thérapie psychodynamique, le patient doit avoir un bon insight. Les troubles psychotiques sévères ou décompensés constituent donc une contre-indication. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 7,
+      "question": "[Item 73] Question 7 - Difficile : Dans la méthode comportementale des TCC, à quoi correspond l'immersion (flooding) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une confrontation en imagination uniquement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une confrontation très progressive aux stimuli les moins anxiogènes d'abord.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une confrontation directe, non graduée, à un stimulus anxiogène maximal.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'évitement total de la situation anxiogène jusqu'à disparition de la peur.",
+          "correct": false
+        }
+      ],
+      "explication": "L'immersion (flooding) est une confrontation directe, non graduée, à un stimulus anxiogène maximal, par opposition à l'exposition graduée. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 8,
+      "question": "[Item 73] Question 8 - Difficile : Quel concept psychologique n'est PAS un objectif de la psychothérapie de soutien ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Faciliter l'expression d'émotions douloureuses.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Modifier de façon structurelle l'inconscient refoulé.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Donner de l'espoir et valoriser les ressentis.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Améliorer l'estime de soi et le sentiment d'efficacité personnelle.",
+          "correct": false
+        }
+      ],
+      "explication": "La psychothérapie de soutien vise à accompagner face au stress, favoriser l'expression émotionnelle, donner de l'espoir et améliorer l'estime de soi. La modification de l'inconscient relève de la psychanalyse. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 9,
+      "question": "[Item 73] Question 9 - Difficile : Selon les principes de la méthode cognitive (Beck), que vise-t-on en priorité lors de la thérapie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'identification et la remise en question des pensées automatiques et des schémas cognitifs.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "L'extinction d'un comportement inadapté par la punition.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'exploration des rêves par la méthode d'association libre.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'amélioration de l'insight sans aucune exposition au stress.",
+          "correct": false
+        }
+      ],
+      "explication": "La méthode cognitive s'attaque à l'identification et la remise en question des pensées automatiques (ex: biais de surgénéralisation) et des schémas cognitifs sous-jacents. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 10,
+      "question": "[Item 73] Question 10 - Difficile : Pour quelles indications l'éducation thérapeutique du patient (ETP) a-t-elle formellement démontré une réduction des taux de rechute et de réadmission ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Uniquement pour le trouble panique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Pour la schizophrénie, notamment lorsqu'elle intervient précocement dans l'évolution de la pathologie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Pour les troubles de la personnalité obsessionnelle-compulsive.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'ETP n'a jamais montré de réduction des taux de rechute en psychiatrie.",
+          "correct": false
+        }
+      ],
+      "explication": "L'éducation thérapeutique (particulièrement dans la schizophrénie) réduit le taux de rechute, de réadmission et améliore l'observance, surtout si elle est précoce. (Source EDN Item 73/121)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 11,
+      "question": "[Item 73] Question 11 - Difficile : Quelle affirmation est vraie concernant les thérapies de la « troisième vague » des TCC ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles sont focalisées exclusivement sur le comportement moteur (conditionnement de Pavlov).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elles regroupent l'ACT (Acceptance and Commitment Therapy) et les thérapies basées sur la pleine conscience (MBCT, MBSR).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Elles ont été inventées par Sigmund Freud dans les années 1920.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Elles sont formellement contre-indiquées dans le trouble de la personnalité borderline.",
+          "correct": false
+        }
+      ],
+      "explication": "La troisième vague (émotionnelle) met l'accent sur l'acceptation et la pleine conscience. Elle inclut l'ACT, la MBCT, la MBSR et la DBT (cette dernière est spécifiquement indiquée pour la personnalité borderline). (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 12,
+      "question": "[Item 73] Question 12 - Difficile : Parmi ces indications, laquelle nécessite préférentiellement une thérapie familiale selon le référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un trouble dépressif léger de l'adulte célibataire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une anorexie mentale chez l'enfant et l'adolescent, un TOP ou un TDAH (programmes d'entraînement des habiletés parentales).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une phobie spécifique aux araignées chez un adulte.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un trouble de conversion d'apparition subite.",
+          "correct": false
+        }
+      ],
+      "explication": "Les thérapies familiales sont particulièrement indiquées pour les troubles ayant un retentissement familial ou nécessitant une implication familiale forte chez l'enfant/ado : TCA (anorexie), TOP, TC, TDAH, ou schizophrénie. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 13,
+      "question": "[Item 73] Question 13 - Difficile : Lors de la mise en place d'une TCC, quelle étape est indispensable initialement pour étudier la problématique du patient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'association libre des rêves.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hypnose éricksonienne.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'analyse fonctionnelle (évaluation objective des comportements, pensées et émotions dans les situations problèmes).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le test projectif de Rorschach.",
+          "correct": false
+        }
+      ],
+      "explication": "Les TCC font initialement appel à une analyse fonctionnelle de la problématique pour évaluer les comportements, pensées et émotions dans les situations problèmes, avant d'établir un « contrat » thérapeutique. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 14,
+      "question": "[Item 73] Question 14 - Difficile : Quel professionnel a l'accès direct et automatique au titre de psychothérapeute en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Tout infirmier diplômé d'État.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Tout médecin (quelle que soit sa spécialité) sans formation additionnelle.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les médecins psychiatres et les psychologues cliniciens.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les psychanalystes non-médecins sans formation clinique.",
+          "correct": false
+        }
+      ],
+      "explication": "Le titre de psychothérapeute est délivré automatiquement pour les médecins psychiatres et les psychologues cliniciens. Les autres doivent valider une formation en psychopathologie et un stage. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "question_numero": 15,
+      "question": "[Item 73] Question 15 - Difficile : Dans le principe commun à toutes les psychothérapies, l'alliance thérapeutique est primordiale. Sur quoi est-elle avant tout basée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sur l'empathie et la relation de confiance entre thérapeute et patient.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Sur la prescription conjointe d'un antidépresseur.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Sur la distance stricte et le refus de nommer les émotions.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Sur la capacité du patient à payer les séances non remboursées.",
+          "correct": false
+        }
+      ],
+      "explication": "Un point commun à toutes les psychothérapies est l'établissement d'une relation thérapeutique de qualité (alliance thérapeutique) basée sur l'empathie et un cadre sécurisant. (Source EDN Item 73)",
+      "difficulte": 3,
+      "source": "EDN Item 73"
+    }
+  ]
+}

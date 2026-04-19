@@ -1,0 +1,644 @@
+{
+  "qcm": [
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 1,
+      "question": "[Item 72] Question 1 - Facile : Comment définit-on de façon générale la caractéristique principale des troubles à symptomatologie somatique et apparentés selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La production volontaire de symptômes pour tromper l'entourage (simulation).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence de symptômes physiques chroniques, invalidants, associés à des pensées, émotions et comportements excessifs ou inappropriés.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'absence totale de symptômes physiques, remplacés par une psychose.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La présence systématique d'une maladie inflammatoire sévère.",
+          "correct": false
+        }
+      ],
+      "explication": "La caractéristique principale est la présence de symptômes physiques chroniques, invalidants, associés à une sémiologie mentale positive (pensées, émotions et comportements excessifs ou inappropriés). (Source EDN Item 72, p.232)",
+      "difficulte": 1,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 2,
+      "question": "[Item 72] Question 2 - Facile : Laquelle de ces entités fait officiellement partie des 3 troubles principaux à symptomatologie somatique et apparentés du DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La schizophrénie somatique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le trouble panique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La crainte excessive d'avoir une maladie (ancienne hypocondrie).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble factice de Münchhausen.",
+          "correct": false
+        }
+      ],
+      "explication": "Le DSM-5 décrit trois troubles principaux : le trouble à symptomatologie somatique, la crainte excessive d'avoir une maladie et le trouble de conversion. (Source EDN Item 72, p.233)",
+      "difficulte": 1,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 3,
+      "question": "[Item 72] Question 3 - Moyen : Quelle est la principale caractéristique d'un Trouble de Conversion (ou trouble à symptomatologie neurologique fonctionnelle) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un déficit moteur ou sensoriel incompatible avec une maladie neurologique mais suggérant sa présence.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "La conviction délirante d'avoir un organe manquant.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une douleur chronique généralisée inexpliquée aux membres inférieurs uniquement.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hyperthermie maligne lors de la prise d'antipsychotiques.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble de conversion se caractérise par un ou des déficits moteurs ou sensoriels incompatibles avec la systématisation du système nerveux, souvent associés à des mécanismes de dissociation. (Source EDN Item 72, p.237)",
+      "difficulte": 2,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 4,
+      "question": "[Item 72] Question 4 - Moyen : En quoi le Trouble Factice (Syndrome de Münchhausen) diffère-t-il de la Simulation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans le trouble factice, les symptômes sont réels d'origine infectieuse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dans la simulation, les symptômes sont produits involontairement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La simulation a un but externe (indemnité, échapper à la justice) conscient, tandis que le trouble factice a une motivation psychologique inconsciente (jouer le rôle de malade).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le trouble factice est exclusif à la pédiatrie.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans la simulation et les troubles factices, la production de symptômes est consciente/intentionnelle. Mais la simulation a un but/mobile externe conscient, alors que dans le trouble factice, la motivation est inconsciente (jouer le rôle de malade). (Source EDN Item 72, p.234)",
+      "difficulte": 2,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 5,
+      "question": "[Item 72] Question 5 - Difficile : Dans le modèle physiopathologique des troubles à symptomatologie somatique, quel mécanisme comportemental de type skinnerien (conditionnement opérant) renforce négativement et pérennise le trouble ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'alexithymie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'évitement des symptômes somatiques (ou des situations les favorisant).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperventilation réactionnelle.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le refoulement psychanalytique.",
+          "correct": false
+        }
+      ],
+      "explication": "Les mécanismes comportementaux sont dominés par le conditionnement et l'évitement. L'évitement des symptômes somatiques renforce négativement ceux-ci par conditionnement opérant (skinnerien), empêchant l'extinction du conditionnement. (Source EDN Item 72, p.236)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 6,
+      "question": "[Item 72] Question 6 - Difficile : L'Intolérance Environnementale Idiopathique (ex: électrosensibilité, sensibilité chimique multiple) se caractérise par :",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une lésion organique mesurable des organes sensoriels affectés.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'attribution par le patient de ses troubles à des facteurs environnementaux tolérés par la majorité de la population, sans niveau de nocivité avéré.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une allergie croisée de type I (IgE médiée) démontrée aux ondes radio.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une amnésie rétrograde isolée post-exposition.",
+          "correct": false
+        }
+      ],
+      "explication": "L'Intolérance Environnementale Idiopathique regroupe des syndromes attribués à des facteurs environnementaux tolérés par la majorité (sans nocivité avérée pour la population générale), avec évitement progressif. (Source EDN Item 72, p.233)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 7,
+      "question": "[Item 72] Question 7 - Difficile : Lors de la communication du diagnostic au patient, quelle phrase (ou type d'attitude) le médecin doit-il ABSOLUMENT éviter ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "« Vous n'avez rien, c'est dans la tête. »",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "« Il s'agit de troubles fonctionnels dont le retentissement est réel. »",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "« Vos symptômes sont physiques mais majorés par l'anxiété et l'attention que vous y portez. »",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "« Nous allons nous concentrer sur l'amélioration de votre qualité de vie. »",
+          "correct": false
+        }
+      ],
+      "explication": "Il faut éviter de dire « vous n'avez rien » ou « c'est dans la tête » même pour rassurer, car cela disqualifie la plainte. Il faut reconnaître que les symptômes sont véritables et proposer un diagnostic positif (troubles fonctionnels). (Source EDN Item 72, p.239)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 8,
+      "question": "[Item 72] Question 8 - Difficile : Parmi ces syndromes somatiques fonctionnels, lequel est classiquement géré par la rhumatologie et peut être soulagé en partie par les antidépresseurs IRSNA ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le syndrome de l'intestin irritable.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les céphalées de tension.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La fibromyalgie.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le syndrome algodysfonctionnel de l'appareil manducateur.",
+          "correct": false
+        }
+      ],
+      "explication": "La fibromyalgie est un syndrome somatique fonctionnel de rhumatologie (douleurs diffuses). Les IRSNA peuvent soulager certains patients souffrant de troubles à symptomatologie somatique avec douleur prédominante comme la fibromyalgie. (Source EDN Item 72, p.234/240)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 9,
+      "question": "[Item 72] Question 9 - Difficile : Qu'est-ce qui caractérise la 'crainte excessive d'avoir une maladie' par rapport au 'trouble à symptomatologie somatique' selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La présence systématique de douleurs articulaires diffuses.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'absence de signes et symptômes physiques pénibles ou invalidants par eux-mêmes, le problème central étant l'anticipation anxieuse d'avoir la maladie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le fait de simuler sciemment une maladie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une anesthésie en gants et chaussettes isolée.",
+          "correct": false
+        }
+      ],
+      "explication": "La crainte excessive d'avoir une maladie se caractérise par des préoccupations anxieuses intenses concernant la santé en l'absence de signes physiques pénibles ou invalidants par eux-mêmes (le trouble se centre sur l'idée/l'anticipation). (Source EDN Item 72, p.237)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 10,
+      "question": "[Item 72] Question 10 - Difficile : Quel est l'objectif principal de la coordination de la prise en charge par le médecin traitant (médecin référent) face à ces patients ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Prendre en charge la détresse en prescrivant un scanner corps entier annuel.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Éviter la répétition et la multiplication au-delà du raisonnable d'investigations (et de consultations spécialisées) qui contribuent à pérenniser le trouble et l'intolérance à l'incertitude.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Prouver au patient que ses symptômes sont purement inventés.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Organiser une hospitalisation prolongée systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "La coordination par un médecin référent est indispensable pour éviter de multiplier les examens complémentaires inutiles qui renforcent l'anxiété, le doute et les représentations erronées (« si on répète l'examen, c'est que c'est grave »). (Source EDN Item 72, p.239)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 11,
+      "question": "[Item 72] Question 11 - Difficile : Sur quoi reposent les interventions thérapeutiques cognitivo-comportementales (TCC) dans ces troubles ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'exploration des traumatismes de la petite enfance via l'association libre.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La prise de conscience du catastrophisme, la diminution de l'attention aux sensations corporelles et l'exposition pour limiter les conduites d'évitement.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La prescription de placebos à l'insu du patient.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'utilisation systématique de l'électroconvulsivothérapie.",
+          "correct": false
+        }
+      ],
+      "explication": "Les TCC visent sur le plan cognitif une meilleure prise de conscience de la focalisation de l'attention et du catastrophisme, et sur le plan comportemental une exposition pour limiter les conduites d'évitement. (Source EDN Item 72, p.241)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 12,
+      "question": "[Item 72] Question 12 - Difficile : Lors d'un syndrome de fatigue chronique, quelle mesure physique comportementale non médicamenteuse est essentielle, bien que souvent difficile à mettre en œuvre du fait du manque de motivation ou de la peur de l'aggravation ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le repos strict au lit de 22h par jour.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'application de glace sur les muscles endoloris.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La promotion et la reprise de l'activité physique (exercice physique gradué).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'utilisation de corsets rigides.",
+          "correct": false
+        }
+      ],
+      "explication": "La promotion de l'activité physique est essentielle dans les tableaux dominés par la fatigue et/ou la douleur, malgré une motivation parfois insuffisante ou la peur du patient d'aggraver sa fatigue. (Source EDN Item 72, p.241)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 13,
+      "question": "[Item 72] Question 13 - Difficile : Quelle affirmation est vraie concernant l'évaluation des enfants présentant des troubles à symptomatologie somatique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il faut exclure formellement les parents de l'évaluation.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est important d'impliquer la famille car les parents peuvent continuer à attribuer les symptômes à une maladie non psychiatrique (représentations familiales).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les enfants ne simulent jamais, donc les examens somatiques sont superflus.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le traitement pharmacologique lourd est la première ligne thérapeutique pédiatrique.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l'enfant, il faut tenir compte des représentations des parents qui peuvent attribuer les symptômes à une pathologie médicale. L'implication de la famille à chaque étape est indispensable. (Source EDN Item 72, p.240)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 14,
+      "question": "[Item 72] Question 14 - Difficile : En psychiatrie, quelle caractéristique psychologique, souvent présente, désigne la difficulté du sujet à différencier son état émotionnel des sensations corporelles et à exprimer ses émotions verbalement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La somatisation hystérique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'alexithymie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'apragmatisme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'aboulie.",
+          "correct": false
+        }
+      ],
+      "explication": "L'alexithymie désigne la difficulté à différencier son état émotionnel des sensations corporelles qui l'accompagnent et à exprimer de manière non somatique des états émotionnels désagréables. (Source EDN Item 72, p.235)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 15,
+      "question": "[Item 72] Question 15 - Difficile : Lors de la suspicion d'une crise non épileptique dite 'psychogène' (Trouble de conversion), quel examen est nécessaire mais n'exclut pas une comorbidité ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'IRM médullaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'électroencéphalogramme (EEG) montrant l'absence d'activité épileptiforme pendant l'apparition de la symptomatologie.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La ponction lombaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le test au Tensilon.",
+          "correct": false
+        }
+      ],
+      "explication": "Un EEG pendant la crise montrant l'absence d'activité épileptiforme est nécessaire. Il n'exclut cependant pas une comorbidité épileptique associée (qui est fréquente). (Source EDN Item 72, p.237)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 16,
+      "question": "[Item 72] Question 16 - Difficile : Que stipule le concept de 'bénéfices secondaires' dans les troubles à symptomatologie somatique que le thérapeute doit prendre en charge en psychothérapie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'argent de la Sécurité Sociale perçu consciemment par fraude.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le fait d'obtenir le soutien, l'attention d'autrui et le statut de malade induit par les symptômes somatiques.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'amélioration du système immunitaire par le stress corporel.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le fait de maigrir sans effort.",
+          "correct": false
+        }
+      ],
+      "explication": "Les mécanismes sociaux peuvent renforcer les symptômes (attention d'autrui, statut de malade). Trouver de nouveaux modes d'interactions pour obtenir du soutien sans le statut de malade fait partie de la prise en charge des 'bénéfices secondaires'. (Source EDN Item 72, p.236/241)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 17,
+      "question": "[Item 72] Question 17 - Difficile : Parmi les symptômes du 'Syndrome de détresse corporelle', lequel appartient à l'activation gastro-intestinale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les palpitations et essoufflements.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyperventilation.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les douleurs abdominales, selles molles et fréquentes, nausées.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les sensations de parésie localisée.",
+          "correct": false
+        }
+      ],
+      "explication": "L'activation gastro-intestinale comprend: douleurs abdominales, selles molles et fréquentes, sensations de ballonnement, régurgitation, diarrhée, nausée, etc. (Source EDN Item 72, p.233)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 18,
+      "question": "[Item 72] Question 18 - Difficile : À quelle classe nosographique appartiennent les 'facteurs psychologiques influençant une autre affection médicale' (anciennement troubles psychosomatiques) selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Ce sont de purs troubles à symptomatologie somatique avec lésion imaginaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Ils rejoignent la section des troubles à symptomatologie somatique mais ce sont des pathologies médicales non psychiatriques (avec lésion identifiable) où le psychologique joue un rôle déclenchant/entretenant.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Ils sont classés dans les troubles délirants.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Ils sont considérés comme des troubles de la personnalité.",
+          "correct": false
+        }
+      ],
+      "explication": "Ce sont des pathologies médicales non psychiatriques (lésion identifiable, ex: maladie coronarienne et stress) où des facteurs psychologiques jouent un rôle prépondérant. Ils sont dans la même section DSM mais avec des mécanismes différents. (Source EDN Item 72, p.234)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 19,
+      "question": "[Item 72] Question 19 - Difficile : Quelle attitude le médecin doit-il avoir face à un patient qui est convaincu de souffrir de 'maladie de Lyme chronique' ou d' 'électrosensibilité' sans preuve médicale causale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "S'opposer violemment et refuser le suivi s'il maintient ce terme.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Valider le mécanisme causal externe pour ne pas le froisser.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Chercher à comprendre ce qui l'a conduit à ce diagnostic, l'aider à prendre conscience du piège de cette catégorisation arbitraire sans récuser d'emblée la souffrance.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Prescrire des antibiotiques au long cours par sécurité.",
+          "correct": false
+        }
+      ],
+      "explication": "Il convient de chercher à comprendre ce qui a conduit le patient à investir ce diagnostic et l'aider à prendre conscience du piège que peut constituer une catégorisation arbitraire (alliance thérapeutique), en ne disqualifiant pas la plainte. (Source EDN Item 72, p.239)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "question_numero": 20,
+      "question": "[Item 72] Question 20 - Difficile : Dans les troubles de conversion (neurologiques fonctionnels), quels symptômes psychologiques sont souvent sous-jacents, impliqués dans la physiopathologie de la perte des fonctions sensori-motrices ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des mécanismes de dissociation (déréalisation, dépersonnalisation).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un délire mégalomaniaque avec hyper-vigilance.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une peur phobique de l'avion.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une obsession d'erreur et de symétrie.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble de conversion est plus associé à des mécanismes de dissociation (déréalisation, dépersonnalisation) qu'à des cognitions ou émotions anxieuses pures. Ces phénomènes seraient impliqués dans la physiopathologie. (Source EDN Item 72, p.237)",
+      "difficulte": 3,
+      "source": "EDN Item 72"
+    }
+  ]
+}

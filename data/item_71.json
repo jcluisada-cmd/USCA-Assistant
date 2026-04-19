@@ -1,0 +1,484 @@
+{
+  "qcm": [
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 1,
+      "question": "[Item 71] Question 1 - Facile : Selon le DSM-5, quels sont les trois grands troubles des conduites alimentaires (TCA) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'anorexie mentale, la boulimie et l'hyperphagie boulimique.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "L'anorexie mentale, l'orthorexie et la potomanie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La boulimie, le pica et le mérycisme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'anorexie mentale, la boulimie et la dysmorphophobie.",
+          "correct": false
+        }
+      ],
+      "explication": "La classification DSM-5 retient l'existence de trois grands TCA : l'anorexie mentale, la boulimie, et l'accès hyperphagique ou hyperphagie boulimique (Binge Eating Disorder). (Source EDN Item 71)",
+      "difficulte": 1,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 2,
+      "question": "[Item 71] Question 2 - Facile : Quel est le sex-ratio estimé pour l'anorexie mentale selon les données épidémiologiques du référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 homme pour 2 femmes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 homme pour 8 femmes.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Sex-ratio équilibré (1/1).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "1 homme pour 20 femmes.",
+          "correct": false
+        }
+      ],
+      "explication": "La prévalence sur la vie est estimée à 1,4 % chez les femmes et à 0,2 % chez les hommes. Le sex-ratio est de 1 homme pour 8 femmes. (Source EDN Item 71)",
+      "difficulte": 1,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 3,
+      "question": "[Item 71] Question 3 - Moyen : Dans l'anorexie mentale, à quel grade de dénutrition correspond un Indice de Masse Corporelle (IMC) strictement inférieur à 10 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dénutrition grade I",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dénutrition grade III",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Dénutrition grade V",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Obésité morbide",
+          "correct": false
+        }
+      ],
+      "explication": "Selon la classification de l'IMC, un IMC < 10 correspond à une dénutrition de grade V (extrême). (Source EDN Item 71)",
+      "difficulte": 2,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 4,
+      "question": "[Item 71] Question 4 - Moyen : Quelle est la différence diagnostique fondamentale entre la boulimie et l'hyperphagie boulimique (Binge Eating Disorder) selon le DSM-5 ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La boulimie concerne des prises alimentaires moins importantes que l'hyperphagie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyperphagie boulimique ne s'accompagne jamais d'un sentiment de perte de contrôle.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La boulimie implique des comportements compensatoires inappropriés (vomissements, laxatifs, jeûne), contrairement à l'hyperphagie boulimique.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hyperphagie boulimique entraîne systématiquement une perte de poids sévère.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans l'hyperphagie boulimique, le trouble n'est pas associé à l'utilisation récurrente de comportements compensatoires inappropriés (comme c'est le cas dans la boulimie), ce qui explique l'association quasi-systématique avec un surpoids ou une obésité. (Source EDN Item 71)",
+      "difficulte": 2,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 5,
+      "question": "[Item 71] Question 5 - Difficile : Quelle est la principale caractéristique de la mortalité liée à l'anorexie mentale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est marginale, le risque suicidaire étant quasi nul dans l'anorexie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "C'est la maladie psychiatrique qui a le taux de mortalité le plus élevé (environ 5 % à 10 ans), avec un fort taux de suicide.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La mortalité est uniquement due aux complications digestives.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle est de 50 % à 5 ans, exclusivement due à des troubles du rythme cardiaque.",
+          "correct": false
+        }
+      ],
+      "explication": "L'anorexie mentale est la maladie psychiatrique qui a le taux de mortalité le plus élevé (environ 5 % 10 ans après le début de la maladie), avec le taux de suicide associé le plus important de toutes les maladies psychiatriques. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 6,
+      "question": "[Item 71] Question 6 - Difficile : Lors de la prise en charge d'une anorexie mentale, quel paramètre anamnestique isolé justifie à lui seul une hospitalisation (critère d'hospitalisation) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une perte de poids supérieure ou égale à 20 % en 3 mois chez l'adulte.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence d'une aménorrhée primaire.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une perte de poids de 5 % sur une année entière.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un IMC à 18 kg/m².",
+          "correct": false
+        }
+      ],
+      "explication": "Une perte de poids >= 20 % en 3 mois chez l'adulte (ou plus de 2 kg/semaine chez l'adolescente) est un critère anamnestique d'hospitalisation formel. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 7,
+      "question": "[Item 71] Question 7 - Difficile : Quel trouble ionique majeur redoute-t-on particulièrement lors du Syndrome de Renutrition Inapproprié (SRI) chez une patiente anorexique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypercalcémie maligne.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyperkaliémie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hypophosphorémie.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hypernatrémie.",
+          "correct": false
+        }
+      ],
+      "explication": "La renutrition doit être prudente pour éviter le Syndrome de Renutrition Inapproprié (SRI) qui se caractérise notamment par une hypophosphorémie, hypokaliémie, hypomagnésémie et un risque d'insuffisance cardiaque. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 8,
+      "question": "[Item 71] Question 8 - Difficile : Physiopathologiquement, à quoi est due l'aménorrhée fréquemment observée dans l'anorexie mentale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un hyperandrogénisme ovarien primaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un panhypopituitarisme d'origine hypothalamique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hyperprolactinémie médicamenteuse systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une insuffisance ovarienne prématurée irréversible.",
+          "correct": false
+        }
+      ],
+      "explication": "L'aménorrhée (primaire ou secondaire) dans l'anorexie est due à un panhypopituitarisme d'origine hypothalamique avec une infertilité associée. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 9,
+      "question": "[Item 71] Question 9 - Difficile : Face à une patiente souffrant d'anorexie mentale avec aménorrhée prolongée, à partir de quel délai est-il recommandé de prescrire une ostéodensitométrie osseuse ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dès le premier mois d'aménorrhée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dès 6 mois d'aménorrhée (à renouveler tous les 2 ans).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Seulement si une fracture spontanée survient.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'ostéodensitométrie est contre-indiquée dans l'anorexie.",
+          "correct": false
+        }
+      ],
+      "explication": "Le bilan paraclinique de l'anorexie mentale inclut une ostéodensitométrie osseuse dès 6 mois d'aménorrhée, à renouveler tous les deux ans (pour dépister l'ostéoporose liée à la carence œstrogénique et l'hypercatabolisme). (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 10,
+      "question": "[Item 71] Question 10 - Difficile : Quelle est la seule molécule ayant l'AMM spécifiquement pour le traitement pharmacologique de la boulimie en France ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'olanzapine.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le lithium.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La fluoxétine.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le méthylphénidate.",
+          "correct": false
+        }
+      ],
+      "explication": "Un seul médicament a l'AMM spécifiquement pour la boulimie : la fluoxétine, à une dose plus élevée que dans l'épisode dépressif caractérisé. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 11,
+      "question": "[Item 71] Question 11 - Difficile : Lors de l'examen clinique d'un patient suspect de comportements purgatifs (vomissements), quel signe ORL ou maxillo-facial peut être évocateur ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hypertrophie des glandes salivaires donnant un aspect de 'mâchoires carrées' et des érosions dentaires.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un nystagmus rotatoire permanent.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une paralysie faciale périphérique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une macroglossie majeure sans érosion dentaire.",
+          "correct": false
+        }
+      ],
+      "explication": "Les troubles digestifs liés aux vomissements provoqués incluent des brûlures œsophagiennes, une hypertrophie des glandes salivaires (mâchoires carrées) et des érosions dentaires. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 12,
+      "question": "[Item 71] Question 12 - Difficile : Comment définit-on spécifiquement le Pica ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'ingestion de quantités astronomiques d'aliments caloriques en moins de 2 heures.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'ingestion répétée de substances non nutritives (plâtre, sable, cailloux) pendant au moins 1 mois.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La régurgitation répétée de nourriture suivie de remastication.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La consommation compulsive de liquides non caloriques (eau) entraînant une hyponatrémie.",
+          "correct": false
+        }
+      ],
+      "explication": "Le pica se définit par l'ingestion répétée de substances non nutritives pendant au moins 1 mois (plâtre, plomb, sable, cailloux, cheveux...). (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 13,
+      "question": "[Item 71] Question 13 - Difficile : Quel trouble de l'ingestion d'aliments se caractérise par des régurgitations répétées de nourriture pendant au moins 1 mois (aliments remastiqués, ré-avalés ou recrachés) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le pica.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'orthorexie.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le mérycisme.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'anorexie restrictive.",
+          "correct": false
+        }
+      ],
+      "explication": "Le mérycisme correspond aux régurgitations répétées de nourriture pendant une période d'au moins 1 mois (aliments remastiqués, ré-avalés ou recrachés), touchant principalement les jeunes enfants. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 14,
+      "question": "[Item 71] Question 14 - Difficile : À quel danger vital immédiat expose spécifiquement la potomanie fréquemment observée dans l'anorexie mentale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypernatrémie avec déshydratation intracellulaire.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hyponatrémie de dilution avec risque de convulsions et de coma.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hyperkaliémie avec asystolie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une thrombose veineuse profonde foudroyante.",
+          "correct": false
+        }
+      ],
+      "explication": "La potomanie (consommation excessive de liquides) peut aboutir à une hyponatrémie de dilution avec un risque sévère de convulsions et de coma. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "question_numero": 15,
+      "question": "[Item 71] Question 15 - Difficile : Chez un patient souffrant d'obésité, quelle est la prévalence estimée de l'hyperphagie boulimique (Binge Eating Disorder) selon les études ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 1 %.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 10 %.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Près de 30 à 50 %.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "100 %, l'obésité étant synonyme d'hyperphagie boulimique.",
+          "correct": false
+        }
+      ],
+      "explication": "Selon diverses études, près de 30 à 50 % des personnes souffrant d'obésité souffriraient également d'hyperphagie boulimique. Le dépistage devrait être systématique chez ces patients. (Source EDN Item 71)",
+      "difficulte": 3,
+      "source": "EDN Item 71"
+    }
+  ]
+}

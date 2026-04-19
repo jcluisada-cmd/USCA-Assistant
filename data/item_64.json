@@ -1,0 +1,964 @@
+{
+  "qcm": [
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 1,
+      "question": "[Item 64] Question 1 - Facile : À quel âge débute classiquement le trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Avant 10 ans, dès la petite enfance.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Entre 15 et 25 ans, juste après la puberté.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Entre 35 et 45 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 60 ans, sous forme de trouble bipolaire à début tardif.",
+          "correct": false
+        }
+      ],
+      "explication": "L'âge de début du trouble bipolaire se situe habituellement entre 15 et 25 ans (juste après la puberté). Plus de la moitié des cas débutent avant 21 ans. (Source EDN Item 64)",
+      "difficulte": 1,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 2,
+      "question": "[Item 64] Question 2 - Facile : Quelle est la durée minimale d'élévation anormale de l'humeur ou de l'énergie requise pour définir un épisode maniaque selon le DSM-5 (en l'absence d'hospitalisation) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "2 jours consécutifs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "4 jours consécutifs.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "1 semaine.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "1 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour l'épisode maniaque, l'élévation de l'humeur et de l'énergie doit persister la plupart du temps, presque tous les jours, pendant au moins une semaine (ou toute autre durée si une hospitalisation est nécessaire). (Source EDN Item 64)",
+      "difficulte": 1,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 3,
+      "question": "[Item 64] Question 3 - Moyen : Qu'est-ce qui caractérise obligatoirement un trouble bipolaire de type I comparativement au type II ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La présence d'au moins un épisode dépressif caractérisé sévère.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La survenue d'un ou plusieurs épisodes maniaques.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'absence totale d'épisode dépressif tout au long de la vie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La présence de cycles rapides (au moins 4 épisodes par an).",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble bipolaire de type I est défini par la survenue d'un ou plusieurs épisodes maniaques (même en l'absence d'épisode dépressif). Le type II nécessite au moins un épisode hypomaniaque ET un épisode dépressif caractérisé, sans jamais d'épisode maniaque. (Source EDN Item 64)",
+      "difficulte": 2,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 4,
+      "question": "[Item 64] Question 4 - Moyen : Quelle est la principale différence clinique entre un épisode maniaque et un épisode hypomaniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'épisode hypomaniaque nécessite systématiquement une hospitalisation sous contrainte.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'épisode hypomaniaque s'accompagne obligatoirement d'idées délirantes de grandeur.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La sévérité de l'épisode hypomaniaque n'est pas suffisante pour entraîner une altération marquée du fonctionnement ou nécessiter une hospitalisation.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'épisode hypomaniaque doit durer au minimum 2 semaines complètes.",
+          "correct": false
+        }
+      ],
+      "explication": "L'épisode hypomaniaque dure au moins 4 jours et sa sévérité n'entraîne pas d'altération marquée du fonctionnement, ne nécessite pas d'hospitalisation et ne comporte jamais de caractéristiques psychotiques (sinon, c'est une manie). (Source EDN Item 64)",
+      "difficulte": 2,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 5,
+      "question": "[Item 64] Question 5 - Difficile : Quel pourcentage de patients souffrant d'un trouble bipolaire décède par suicide selon les données épidémiologiques du référentiel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "1 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "5 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "15 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "30 %",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble bipolaire est une pathologie très pourvoyeuse de suicides (2ème après l'anorexie mentale). 15 % des patients ayant un trouble bipolaire décèdent par suicide. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 6,
+      "question": "[Item 64] Question 6 - Difficile : Lequel de ces critères est particulièrement évocateur d'un épisode dépressif s'inscrivant dans le cadre d'un trouble bipolaire (dépression bipolaire) plutôt qu'unipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un âge de début très tardif (après 50 ans).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'apparition de l'épisode de manière brutale ou dans la période du post-partum.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une excellente réponse prolongée aux antidépresseurs en monothérapie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'absence totale d'antécédents familiaux de troubles de l'humeur.",
+          "correct": false
+        }
+      ],
+      "explication": "Les caractéristiques évocatrices d'un trouble bipolaire devant une dépression sont : début avant 25 ans, début brutal, apparition en post-partum, antécédents familiaux, multiplicité des épisodes (>3), et réponse inadéquate aux antidépresseurs (aggravation ou virage maniaque). (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 7,
+      "question": "[Item 64] Question 7 - Difficile : Quel traitement pharmacologique d'attaque peut être prescrit d'emblée en combinaison pour un épisode maniaque aigu sévère ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un antidépresseur ISRS à forte dose associé à un anxiolytique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un thymorégulateur (lithium ou valproate) associé à un antipsychotique de 2ème génération.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un antipsychotique de 1ère génération (ex: Haldol) associé à la lamotrigine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une benzodiazépine seule en intraveineuse sur 4 semaines.",
+          "correct": false
+        }
+      ],
+      "explication": "Il est possible de prescrire une combinaison associant un thymorégulateur (lithium ou valproate) et un antipsychotique de 2ème génération d'emblée pour les épisodes maniaques sévères. Les antidépresseurs doivent être arrêtés. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 8,
+      "question": "[Item 64] Question 8 - Difficile : Quelle molécule est spécifiquement indiquée comme thymorégulateur dans le traitement de l'épisode dépressif caractérisé dans le cadre d'un trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le divalproate de sodium (Depakote).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La carbamazépine (Tegretol).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La lamotrigine (Lamictal).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La fluoxétine (Prozac) en monothérapie.",
+          "correct": false
+        }
+      ],
+      "explication": "Les options de traitement de l'épisode dépressif bipolaire aigu sont le Lithium, la Lamotrigine ou la Quétiapine. Le Valproate et la Carbamazépine sont plutôt indiqués dans l'épisode maniaque. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 9,
+      "question": "[Item 64] Question 9 - Difficile : Que signifie la spécification 'avec caractéristiques mixtes' lors d'un épisode maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le patient présente un trouble de l'usage d'une substance associé à la manie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'association de symptômes maniaques et de symptômes psychotiques schizophréniformes.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Des symptômes dépressifs d'une durée variable apparaissent au cours de l'épisode maniaque.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le patient présente une alternance de cycles rapides sur une même journée.",
+          "correct": false
+        }
+      ],
+      "explication": "On parle d'épisode maniaque avec caractéristique mixte lorsque des symptômes dépressifs apparaissent au cours de l'épisode maniaque. Cette caractéristique est associée à un risque suicidaire très augmenté. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 10,
+      "question": "[Item 64] Question 10 - Difficile : Comment définit-on la spécification 'avec cycles rapides' dans le trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'alternance ultra-rapide de rires et de pleurs dans une même heure.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence sur les 12 derniers mois d'au moins 4 épisodes de l'humeur (toutes polarités confondues).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La survenue d'un épisode maniaque immédiatement après la prise d'un antidépresseur.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La guérison complète de l'épisode en moins d'une semaine de traitement.",
+          "correct": false
+        }
+      ],
+      "explication": "La spécification avec cycles rapides (touchant 25% des patients, associée à une résistance thérapeutique) est définie par la présence sur les 12 derniers mois d'au moins 4 épisodes de l'humeur. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 11,
+      "question": "[Item 64] Question 11 - Difficile : Quel est le risque majeur lié à l'utilisation inadéquate d'un traitement antidépresseur chez un patient souffrant de trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'induction d'une pharmacodépendance sévère avec syndrome de sevrage physique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le virage maniaque (ou hypomaniaque) et l'accélération des cycles (cycles rapides).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le développement d'un syndrome malin des neuroleptiques.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'apparition systématique d'une démence précoce.",
+          "correct": false
+        }
+      ],
+      "explication": "Les antidépresseurs peuvent induire un virage maniaque (réponse inadéquate) et, prescrits au long cours, peuvent favoriser les rechutes et l'accélération des cycles. Ils doivent idéalement être arrêtés en cas de manie. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 12,
+      "question": "[Item 64] Question 12 - Difficile : Quelle est l'héritabilité estimée du trouble bipolaire (part de l'expression clinique liée aux gènes) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "10 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "30 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "70 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "100 %",
+          "correct": false
+        }
+      ],
+      "explication": "L'étiopathogénie implique des facteurs génétiques et environnementaux. L'héritabilité de la maladie (part liée aux gènes) est très forte, estimée à environ 70 %. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 13,
+      "question": "[Item 64] Question 13 - Difficile : Dans l'épisode maniaque, comment caractérise-t-on une idée délirante 'congruente à l'humeur' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une conviction inébranlable d'être ruiné financièrement.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une idée délirante dont le thème est l'hypocondrie ou la culpabilité.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une idée délirante consistante avec l'euphorie, comme la mégalomanie, l'invulnérabilité ou le thème messianique.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hallucination acoustico-verbale commentant les actes du patient.",
+          "correct": false
+        }
+      ],
+      "explication": "Les idées délirantes congruentes à l'humeur dans la manie ont un contenu consistant avec l'épisode, par exemple des idées de grandeur, d'invulnérabilité, ou des thèmes messianiques. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 14,
+      "question": "[Item 64] Question 14 - Difficile : Quelle mesure de protection médico-légale est la plus appropriée en urgence face à un épisode maniaque avec dépenses excessives ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La curatelle renforcée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La tutelle aux biens.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La sauvegarde de justice.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'interdiction bancaire immédiate gérée par le psychiatre.",
+          "correct": false
+        }
+      ],
+      "explication": "La mesure de sauvegarde de justice est préconisée en urgence en cas de dépenses ou achats excessifs (il n'y a pas de curatelle ni de tutelle prononcée en urgence). (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 15,
+      "question": "[Item 64] Question 15 - Difficile : Parmi ces comorbidités non psychiatriques, laquelle est particulièrement fréquente chez le patient bipolaire et participe à la surmortalité ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La sclérose latérale amyotrophique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome métabolique et le risque cardiovasculaire.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le cancer gastrique primitif.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La polyarthrite rhumatoïde.",
+          "correct": false
+        }
+      ],
+      "explication": "Les comorbidités non psychiatriques sont fréquentes et grèvent l'espérance de vie : syndrome métabolique, risque cardiovasculaire, syndrome d'apnées du sommeil, pathologies endocriniennes. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 16,
+      "question": "[Item 64] Question 16 - Difficile : Quelle est l'indication principale de l'électroconvulsivothérapie (ECT) dans le cadre d'un trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est formellement contre-indiquée en raison du risque d'épilepsie induite.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle n'est utilisée qu'à visée préventive (en traitement de consolidation).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle est recommandée en traitement curatif des épisodes sévères avec pronostic vital engagé, formes mélancoliques, catatoniques ou résistance médicamenteuse.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle est le traitement de première ligne systématique de l'épisode hypomaniaque.",
+          "correct": false
+        }
+      ],
+      "explication": "L'ECT est recommandée comme traitement curatif lorsqu'une amélioration rapide est indispensable (pronostic vital engagé, dénutrition, suicide), dans les formes sévères (mélancolie, catatonie, cycles rapides) ou après échec des autres options. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 17,
+      "question": "[Item 64] Question 17 - Difficile : Quel symptôme physiologique est très souvent prodromique de l'entrée dans un nouvel épisode maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'hypersomnie diurne majeure.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La réduction du temps de sommeil sans sensation de fatigue.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La survenue d'un syndrome pseudo-grippal.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hyperphagie avec prise de poids fulgurante.",
+          "correct": false
+        }
+      ],
+      "explication": "Les altérations du sommeil, en particulier la réduction du temps de sommeil (se sentir reposé après seulement 3 heures) sans fatigue, sont très souvent prodromiques d'un nouvel épisode maniaque. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 18,
+      "question": "[Item 64] Question 18 - Difficile : Quelle est la prévalence estimée des formes typiques (I et II) du trouble bipolaire en population générale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "0,1 à 0,5 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 à 4 %",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "8 à 10 %",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 15 %",
+          "correct": false
+        }
+      ],
+      "explication": "On considère que 1 à 4 % de la population générale souffre des formes typiques du trouble bipolaire (sous-types I ou II). (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 19,
+      "question": "[Item 64] Question 19 - Difficile : Quelle particularité sémiologique est souvent au premier plan lors d'un syndrome maniaque chez l'enfant et l'adolescent ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un délire mystique très structuré.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une jovialité et une euphorie pures sans aucun trouble du comportement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'irritabilité, voire l'agressivité.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Des idées délirantes hypocondriaques.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome maniaque est difficile à diagnostiquer chez l'enfant et l'adolescent. On s'appuiera sur l'irritabilité, voire l'agressivité qui sont souvent au premier plan. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 20,
+      "question": "[Item 64] Question 20 - Difficile : Chez un patient présentant un tableau d'allure maniaque, quelles substances médicamenteuses iatrogènes doivent systématiquement être recherchées à l'interrogatoire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les antibiotiques macrolides et les inhibiteurs de la pompe à protons.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les corticoïdes, les antidépresseurs, la L-Dopa et l'interféron-alpha.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le paracétamol et les anti-inflammatoires non stéroïdiens.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les statines et les antidiabétiques oraux.",
+          "correct": false
+        }
+      ],
+      "explication": "Les diagnostics différentiels iatrogéniques d'un syndrome maniaque incluent la prise de corticoïdes, antidépresseurs, interféron-alpha, L-Dopa, contraceptions hormonales. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 21,
+      "question": "[Item 64] Question 21 - Difficile : Devant un patient non connu comme bipolaire présentant une manie aiguë, quel diagnostic différentiel addictologique est le plus urgent à éliminer en premier lieu ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'intoxication aux opiacés (héroïne).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'intoxication aux psychostimulants (cocaïne, amphétamines) ou cannabis.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le syndrome de sevrage aux benzodiazépines.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le tabagisme sévère.",
+          "correct": false
+        }
+      ],
+      "explication": "L'usage de substances psychoactives (cannabis, amphétamines, cocaïne, hallucinogènes) est le diagnostic différentiel le plus fréquent pouvant induire ou mimer un syndrome maniaque. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 22,
+      "question": "[Item 64] Question 22 - Difficile : Quelle est l'évolution spontanée (sans traitement de fond) à 2 ans d'un patient ayant fait un premier épisode maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La guérison complète et définitive sans récidive.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une évolution vers la schizophrénie dans 50 % des cas.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une probabilité de récidive thymique estimée à 70-80 %.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le développement systématique d'une maladie de Parkinson.",
+          "correct": false
+        }
+      ],
+      "explication": "Le trouble bipolaire est une maladie chronique. On estime que 70 à 80 % des patients non traités ou traités présenteront une récidive thymique dans les deux ans qui suivent un épisode caractérisé (et plus de 90% auront d'autres épisodes sur la vie entière). (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 23,
+      "question": "[Item 64] Question 23 - Difficile : Quelle conséquence est classiquement associée à la présence de la spécification 'caractère saisonnier' dans le trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un pronostic plus sévère.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Une meilleure réponse globale aux traitements antidépresseurs.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une absence totale de risque suicidaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle indique toujours une origine purement iatrogène du trouble.",
+          "correct": false
+        }
+      ],
+      "explication": "La spécification avec caractère saisonnier concerne un quart des personnes avec trouble bipolaire et est associée avec un pronostic plus sévère. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 24,
+      "question": "[Item 64] Question 24 - Difficile : Quelle est l'espérance de vie perdue chez un patient souffrant de trouble bipolaire en raison de la surmortalité ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins d'un an.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 3 à 5 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 10 à 20 années de vie perdues.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a pas de diminution de l'espérance de vie.",
+          "correct": false
+        }
+      ],
+      "explication": "Il existe 10 à 20 années de vie perdues en raison d'une mortalité précoce, principalement d'origine cardiovasculaire et par suicide. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 25,
+      "question": "[Item 64] Question 25 - Difficile : Quel est l'objectif principal de la remédiation cognitive chez les patients bipolaires qui en bénéficient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Modifier les schémas inconscients refoulés depuis l'enfance.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Pallier les conséquences des troubles cognitifs (attention, mémoire, fonctions exécutives) présents chez un tiers des patients.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Diminuer l'agitation psychomotrice en urgence.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Traiter le syndrome d'apnées obstructives du sommeil.",
+          "correct": false
+        }
+      ],
+      "explication": "La remédiation cognitive est destinée à pallier les conséquences des troubles cognitifs (attention, mémoire, fonctions exécutives, visuospatiales) présents chez environ un tiers des patients avec trouble bipolaire. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 26,
+      "question": "[Item 64] Question 26 - Difficile : Lors de la phase de consolidation (après rémission de l'épisode aigu), quelle affirmation est exacte concernant les anxiolytiques et hypnotiques ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Ils doivent être maintenus à vie pour prévenir les rechutes.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Ils doivent être systématiquement arrêtés si possible, une fois la rémission symptomatique obtenue.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Ils constituent le socle du traitement prophylactique à long terme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Leur posologie doit être doublée en consolidation.",
+          "correct": false
+        }
+      ],
+      "explication": "Durant la phase de consolidation et le traitement prophylactique au long cours, les anxiolytiques et les hypnotiques (introduits en phase aiguë) doivent être arrêtés si possible. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 27,
+      "question": "[Item 64] Question 27 - Difficile : Parmi les éléments sémiologiques suivants, lequel signe spécifiquement une fuite des idées dans le cours de la pensée maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le patient oublie de quoi il parlait à cause d'un déficit mnésique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une sensation subjective que les pensées défilent à toute vitesse (tachypsychie) avec passage d'une idée à l'autre.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Un mutisme absolu avec refus de répondre.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'invention de mots nouveaux (néologismes) de manière systématique.",
+          "correct": false
+        }
+      ],
+      "explication": "La fuite des idées correspond à une altération du cours de la pensée (accélération/tachypsychie) où le patient a l'impression que ses idées fusent, en passant rapidement d'une idée à l'autre. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 28,
+      "question": "[Item 64] Question 28 - Difficile : En quoi la psychothérapie cognitivo-comportementale (TCC) est-elle particulièrement indiquée dans le trouble bipolaire au long cours ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle remplace définitivement l'utilisation du Lithium.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elle explore les traumatismes de la petite enfance par l'association libre.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle aide à aménager les rythmes de vie (sommeil, activités) et à corriger les distorsions cognitives.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle agit comme un remède physique en stimulant le cortex préfrontal.",
+          "correct": false
+        }
+      ],
+      "explication": "La TCC dans le trouble bipolaire permet d'apprendre à aménager les rythmes de vie (limiter/augmenter l'activité selon la phase), de corriger les cognitions déformées, et d'apprendre à réguler les émotions. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 29,
+      "question": "[Item 64] Question 29 - Difficile : Quel antipsychotique de 2ème génération est reconnu et indiqué (seul) dans le traitement de l'épisode dépressif aigu du trouble bipolaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'halopéridol (Haldol).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'amisulpride (Solian).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La quétiapine (Xeroquel).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La clozapine (Leponex).",
+          "correct": false
+        }
+      ],
+      "explication": "La quétiapine (Xeroquel) est l'antipsychotique indiqué en monothérapie (ou association) pour le traitement de l'épisode dépressif caractérisé dans le cadre d'un trouble bipolaire. (Source EDN Item 64/74)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "question_numero": 30,
+      "question": "[Item 64] Question 30 - Difficile : Quelle est la particularité des hallucinations dans le cadre d'un syndrome maniaque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles sont exceptionnelles, présentes dans moins de 5 % des cas.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elles sont présentes dans 40 à 50 % des syndromes maniaques et peuvent être confondues avec un épisode psychotique bref.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Elles signent systématiquement l'évolution vers une démence irréversible.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Elles sont exclusivement olfactives et gustatives.",
+          "correct": false
+        }
+      ],
+      "explication": "Des symptômes psychotiques (idées délirantes, hallucinations) peuvent être associés au syndrome maniaque. Les hallucinations sont fréquentes, présentes dans 40 à 50 % des syndromes maniaques. (Source EDN Item 64)",
+      "difficulte": 3,
+      "source": "EDN Item 64"
+    }
+  ]
+}

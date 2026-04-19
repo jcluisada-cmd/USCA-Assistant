@@ -1239,10 +1239,10 @@ function App() {
         </div>}
 
         {/* 4 grandes cartes mises en valeur */}
+        {/* Carte "Livret IFSI" retirée 2026-04-19 — accès suffisant via dashboard admin (carte "Mon élève") */}
         {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
           {l:"ELSA",desc:"Liaisons, admission, fiches réflexes",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
-          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`},
-          {l:"Livret IFSI",desc:"Aperçu du contenu pédagogique élève·s IDE",i:I.book,v:"livret_ifsi_preview",c:"#4F46E5",bg:`linear-gradient(135deg, #EEF2FF, ${C.bg})`}
+          {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`}
         ].map(item=>
           <div key={item.v} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>{
             if(item.v==='postcure_medecin'){window.open('../postcure/medecin.html','_blank');return;}

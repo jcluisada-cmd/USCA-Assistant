@@ -1,0 +1,146 @@
+{
+  "version": "1.0",
+  "generated": "2026-04-19",
+  "total_questions": 477,
+  "total_items": 23,
+  "items": [
+    {
+      "item": "Item 01",
+      "domaine": "Relation médecin-malade",
+      "fichier": "item_01.json",
+      "nb_questions": 10
+    },
+    {
+      "item": "Item 64",
+      "domaine": "Troubles bipolaires de l'adolescent et de l'adulte",
+      "fichier": "item_64.json",
+      "nb_questions": 30
+    },
+    {
+      "item": "Item 65",
+      "domaine": "Troubles psychotiques",
+      "fichier": "item_65.json",
+      "nb_questions": 20
+    },
+    {
+      "item": "Item 67",
+      "domaine": "TSA et TDAH",
+      "fichier": "item_67.json",
+      "nb_questions": 20
+    },
+    {
+      "item": "Item 68",
+      "domaine": "Troubles du comportement de l'enfant et de l'adolescent",
+      "fichier": "item_68.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 69",
+      "domaine": "Troubles psychiques de la grossesse et du post-partum",
+      "fichier": "item_69.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 70",
+      "domaine": "Troubles psychiques du sujet âgé",
+      "fichier": "item_70.json",
+      "nb_questions": 10
+    },
+    {
+      "item": "Item 71",
+      "domaine": "Troubles des conduites alimentaires",
+      "fichier": "item_71.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 72",
+      "domaine": "Troubles à symptomatologie somatique et apparentés",
+      "fichier": "item_72.json",
+      "nb_questions": 20
+    },
+    {
+      "item": "Item 73",
+      "domaine": "Techniques psychothérapeutiques",
+      "fichier": "item_73.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 74",
+      "domaine": "Prescription et surveillance des psychotropes",
+      "fichier": "item_74.json",
+      "nb_questions": 25
+    },
+    {
+      "item": "Item 75",
+      "domaine": "Addiction au tabac",
+      "fichier": "item_75.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 76",
+      "domaine": "Addiction à l'alcool",
+      "fichier": "item_76.json",
+      "nb_questions": 57
+    },
+    {
+      "item": "Item 77",
+      "domaine": "Addiction aux médicaments psychotropes",
+      "fichier": "item_77.json",
+      "nb_questions": 30
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "fichier": "item_78.json",
+      "nb_questions": 40
+    },
+    {
+      "item": "Item 79",
+      "domaine": "Addictions comportementales",
+      "fichier": "item_79.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "fichier": "item_80.json",
+      "nb_questions": 10
+    },
+    {
+      "item": "Item 110",
+      "domaine": "Troubles du sommeil",
+      "fichier": "item_110.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 138",
+      "domaine": "Douleur chez la personne vulnérable",
+      "fichier": "item_138.json",
+      "nb_questions": 10
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "fichier": "item_353.json",
+      "nb_questions": 20
+    },
+    {
+      "item": "Item 66a",
+      "domaine": "Episode dépressif caractérisé et trouble dépressif récurrent",
+      "fichier": "item_66a.json",
+      "nb_questions": 35
+    },
+    {
+      "item": "Item 66b",
+      "domaine": "Trouble anxieux généralisé",
+      "fichier": "item_66b.json",
+      "nb_questions": 15
+    },
+    {
+      "item": "Item 66c",
+      "domaine": "Trouble panique",
+      "fichier": "item_66c.json",
+      "nb_questions": 20
+    }
+  ]
+}

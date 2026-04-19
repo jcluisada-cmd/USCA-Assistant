@@ -1,0 +1,644 @@
+{
+  "qcm": [
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 1,
+      "question": "[Item 353] Question 1 - Facile : Comment définit-on une tentative de suicide (TS) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un comportement auto-infligé sans aucune intention de mourir.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un comportement auto-infligé avec intention de mourir sans issue fatale.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le décès intentionnel de la personne.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le fait d'exprimer des idées noires sans jamais agir.",
+          "correct": false
+        }
+      ],
+      "explication": "La tentative de suicide (TS) est un comportement auto-infligé avec intention de mourir sans issue fatale. Elle se différencie des automutilations non suicidaires. (Source EDN Item 353)",
+      "difficulte": 1,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 2,
+      "question": "[Item 353] Question 2 - Facile : En France, quelle est l'ampleur estimée de la mortalité par suicide chaque année ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 1 000 décès par an.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 9 000 décès par an (soit 1 suicide toutes les 40 minutes).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 25 000 décès par an.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Moins de 500 décès par an.",
+          "correct": false
+        }
+      ],
+      "explication": "On dénombre environ 9 000 décès par suicide par an en France (chiffres 2019), soit en moyenne un suicide toutes les 40 minutes. (Source EDN Item 353)",
+      "difficulte": 1,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 3,
+      "question": "[Item 353] Question 3 - Moyen : Sur quels trois axes (acronyme) repose l'évaluation systématique de la crise suicidaire en psychiatrie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "RUD (Risque, Urgence, Dangerosité).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "PIC (Poids, Intention, Capacité).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "SAD (Souffrance, Angoisse, Dépression).",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "RAP (Risque, Agitation, Pression).",
+          "correct": false
+        }
+      ],
+      "explication": "L'évaluation de la crise suicidaire suit classiquement le guide RUD : Risque (facteurs prédisposants/protecteurs), Urgence (scénario et délai) et Dangerosité (létalité et accessibilité du moyen). (Source EDN Item 353)",
+      "difficulte": 2,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 4,
+      "question": "[Item 353] Question 4 - Moyen : À quel phénomène fait appel le \"syndrome pré-suicidaire de Ringel\", qui est un signe de passage à l'acte imminent ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une agitation maniaque majeure avec logorrhée inépuisable.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une levée brutale des freins moraux sous l'effet de l'alcool exclusif.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un calme apparent, une attitude de retrait et une diminution de la réactivité émotionnelle (fausse réassurance).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Des appels téléphoniques incessants aux urgences pour demander de l'aide.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome pré-suicidaire de Ringel se caractérise par un calme apparent et un retrait affectif (le patient ayant pris sa décision, la crise semble apaisée). Cela fait craindre un passage à l'acte imminent. (Source EDN Item 353)",
+      "difficulte": 2,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 5,
+      "question": "[Item 353] Question 5 - Difficile : Lors de l'évaluation de la dimension \"Urgence\" du RUD, quel tableau correspond à une Urgence Élevée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le patient pense au suicide sans scénario précis et cherche des solutions.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le patient envisage un scénario mais l'exécution est reportée, il présente un équilibre émotionnel fragile.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le patient a un scénario précis, a pris des dispositions (lettre testamentaire), l'acte est planifié pour les jours qui viennent et n'envisage plus d'alternative.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le patient fait part d'idées suicidaires passives (ex: 'j'aimerais ne pas me réveiller').",
+          "correct": false
+        }
+      ],
+      "explication": "L'urgence est élevée si le scénario est précis, planifié, l'intention claire, le moyen accessible immédiatement, et le patient coupé de ses émotions ou extrêmement agité, sans alternative. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 6,
+      "question": "[Item 353] Question 6 - Difficile : Quelle est la prévalence estimée des troubles psychiatriques comorbides chez les personnes décédées par suicide (autopsie psychologique) chez l'adulte ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 20 %",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 50 %",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Près de 90 %",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "100 % (tout suicide est une maladie psychiatrique).",
+          "correct": false
+        }
+      ],
+      "explication": "Les études d'autopsie psychologique montrent que près de 90 % des personnes suicidées présentaient au moins un trouble psychiatrique (souvent non diagnostiqué ou non traité) au moment de l'acte. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 7,
+      "question": "[Item 353] Question 7 - Difficile : Quel est le taux de récidive estimé après une première tentative de suicide (TS) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Environ 5 % à 10 ans.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 15 %.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 40 % (dont la moitié survient dans l'année suivant la TS).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Près de 90 %.",
+          "correct": false
+        }
+      ],
+      "explication": "On estime à 40 % la fréquence de récidive après une TS, dont la moitié survient dans l'année (période à très haut risque de récidive ou de suicide abouti). (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 8,
+      "question": "[Item 353] Question 8 - Difficile : Quel dispositif de prévention secondaire et tertiaire est spécifiquement déployé en France pour maintenir le lien après une TS et éviter la réitération suicidaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le programme VigilanS.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le réseau Sentinelle exclusif.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le Samu Social Systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les injonctions thérapeutiques par le JLD.",
+          "correct": false
+        }
+      ],
+      "explication": "VigilanS est un dispositif national proposant une veille active (appels, cartes postales, relances) aux personnes ayant fait une TS, pour prévenir la réitération. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 9,
+      "question": "[Item 353] Question 9 - Difficile : Comment se caractérisent cliniquement les conduites suicidaires de la personne âgée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une intentionnalité suicidaire très faible avec un fort chantage affectif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une grande impulsivité avec de nombreuses tentatives antérieures (TS à répétition).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une intentionnalité suicidaire élevée, une létalité importante, un faible niveau d'impulsivité et peu d'antécédents personnels de TS.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le moyen utilisé est quasi-exclusivement l'intoxication médicamenteuse aux benzodiazépines.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez le sujet âgé, le ratio tentatives/suicides aboutis est faible (4/1 contre 20/1 chez les jeunes). L'intention est claire, la létalité forte, sans grande impulsivité préalable. La dépression est quasi-constante. (Source EDN Item 353/70)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 10,
+      "question": "[Item 353] Question 10 - Difficile : Lors de la conduite d'un entretien psychiatrique chez un patient suspecté d'être en crise, que recommande le référentiel concernant le dépistage des idées suicidaires ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il faut éviter de poser la question directement pour ne pas induire l'idée du passage à l'acte.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il ne faut poser la question que si le patient aborde lui-même le sujet de la mort.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il ne faut jamais hésiter à questionner le patient directement et explicitement sur l'existence d'idées de suicide, car cela favorise leur expression et prévient le passage à l'acte.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'évaluation ne doit être faite que par un psychiatre et non par un médecin généraliste.",
+          "correct": false
+        }
+      ],
+      "explication": "Interroger directement sur les idées de suicide ne les fait pas émerger et ne donne pas d'idées. Au contraire, cela permet de soulager le patient, d'évaluer le risque et de protéger le sujet. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 11,
+      "question": "[Item 353] Question 11 - Difficile : Quel phénomène social (ou psychosocial) est défini par une augmentation du risque suicidaire suite à l'exposition directe ou médiatisée au suicide d'un proche ou d'une personnalité publique ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le phénomène de résilience.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le phénomène de 'contagion' (ou Effet Werther).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le syndrome de glissement.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La postvention d'urgence.",
+          "correct": false
+        }
+      ],
+      "explication": "Le phénomène de contagion décrit le mimétisme suicidaire suite à la médiatisation d'un suicide (effet Werther). Améliorer le traitement médiatique (postvention) fait partie de la prévention. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 12,
+      "question": "[Item 353] Question 12 - Difficile : Chez l'enfant prépubère (ex: 8 ans), est-il possible d'observer de véritables conduites suicidaires ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Non, l'enfant ne conceptualise pas la mort de manière réversible.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Oui, dès l'âge de 5-6 ans les enfants peuvent exprimer des idées et intentions suicidaires, et des passages à l'acte (ex: strangulation, défenestration) existent.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Oui, mais uniquement par intoxication médicamenteuse volontaire mineure.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Non, la tentative de suicide n'existe qu'à partir du déclenchement pubertaire (11-12 ans).",
+          "correct": false
+        }
+      ],
+      "explication": "Les enfants peuvent exprimer des idées suicidaires dès 5-6 ans. Les TS et suicides aboutis existent (pendaison, défenestration sont les moyens les plus fréquents). Tout propos suicidaire d'un enfant doit être évalué très sérieusement. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 13,
+      "question": "[Item 353] Question 13 - Difficile : Lequel de ces facteurs constitue un facteur de \"dangerosité\" élevé dans l'évaluation d'un risque suicidaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le fait que le patient présente des antécédents familiaux de TS.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La présence et l'accessibilité immédiate d'une arme à feu au domicile.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La planification du passage à l'acte pour le lendemain.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le chômage prolongé.",
+          "correct": false
+        }
+      ],
+      "explication": "La dangerosité s'évalue sur la létalité du moyen et son accessibilité. L'urgence s'évalue sur le scénario et le délai (C). Le risque s'évalue sur les facteurs prédisposants (A, D). (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 14,
+      "question": "[Item 353] Question 14 - Difficile : Lors de la prévention primaire du suicide selon l'OMS, quelle mesure a formellement démontré son efficacité au niveau des populations à risque ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La diffusion massive et détaillée des méthodes de suicide dans la presse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Restreindre l'accès aux moyens létaux (armes à feu, quantité de paracétamol par boîte, sécurisation des ponts).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'hospitalisation sous contrainte de tout patient évoquant la mort.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "La prescription d'antidépresseurs à l'ensemble de la population.",
+          "correct": false
+        }
+      ],
+      "explication": "Restreindre l'accès aux moyens (sécurisation des lieux publics, conditionnement des médicaments toxiques, contrôle des armes) est une des mesures phares de l'OMS en prévention primaire. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 15,
+      "question": "[Item 353] Question 15 - Difficile : Quelle est la démarche thérapeutique immédiate si un patient en crise suicidaire avec urgence élevée refuse les soins (refus d'hospitalisation) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le laisser rentrer à domicile avec un traitement anxiolytique léger.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Initier une procédure de Soins Psychiatriques Sans Consentement (SPDT en urgence ou SPPI) pour le protéger.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Prévenir la police pour un placement en garde à vue prophylactique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Demander au patient de signer une décharge engageant sa seule responsabilité.",
+          "correct": false
+        }
+      ],
+      "explication": "Le refus de soin face à un péril vital psychiatrique imminent (crise suicidaire majeure non différable) justifie la mise en place de Soins Psychiatriques Sans Consentement (SPPI ou SPDTu) pour mise en protection. (Source EDN Item 353/15)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 16,
+      "question": "[Item 353] Question 16 - Difficile : Quelle est la proportion des passages à l'acte suicidaires aboutis chez l'adulte qui ont lieu directement dans un établissement de soins (hospitalisation) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "0 %, l'hospitalisation prévient la totalité des suicides.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Environ 5 %, ce qui implique d'instaurer des mesures de surveillance rapprochée et la suppression des moyens dans les services.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Environ 25 %.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Plus de 50 %.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hospitalisation ne prévient pas tous les suicides : environ 5% des suicides ont lieu dans des établissements de soins. Des précautions (inventaire, suppression des objets dangereux, blocage fenêtres) sont capitales. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 17,
+      "question": "[Item 353] Question 17 - Difficile : Qu'est-ce qu'un \"plan de sécurité personnalisé\" élaboré avec le patient en crise suicidaire (mais à risque faible/moyen ne nécessitant pas d'hospitalisation immédiate) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une ordonnance d'hospitalisation sous contrainte pré-rédigée pour la police.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un contrat moral où le patient s'engage par signature à ne pas se suicider (contrat de non-suicide, sans autre mesure).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une liste de ressources (personnes, numéros d'urgence comme le 3114, activités apaisantes, techniques de réassurance) que le patient identifie et peut utiliser avant/pendant une crise.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une attestation de décharge de responsabilité du médecin.",
+          "correct": false
+        }
+      ],
+      "explication": "Le plan de sécurité identifie concrètement les signaux d'alerte et fournit des stratégies internes et des contacts externes (numéros d'urgence) pour faire face à la recrudescence de la crise. (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 18,
+      "question": "[Item 353] Question 18 - Difficile : Le risque de suicide est notablement augmenté en présence d'un diagnostic d'Épisode Dépressif Caractérisé (EDC). Quelle forme ou \"caractéristique\" de l'EDC augmente très sévèrement l'urgence d'un passage à l'acte de type \"raptus\" ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'EDC avec caractéristiques atypiques (hypersomnie).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'EDC avec caractéristiques mixtes et/ou l'agitation anxieuse majeure.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'EDC saisonnier en été.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'EDC d'intensité légère avec inhibition psychomotrice totale.",
+          "correct": false
+        }
+      ],
+      "explication": "La présence d'une composante anxieuse majeure (raptus anxieux) ou de caractéristiques mixtes (énergie augmentée + humeur dépressive) lève l'inhibition et augmente considérablement le risque de passage à l'acte impulsif. (Source EDN Item 353/66a)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 19,
+      "question": "[Item 353] Question 19 - Difficile : Dans la sémiologie de l'adolescent, quel comportement à risque peut souvent masquer une souffrance dépressive sous-jacente constituant l'amorce d'une crise suicidaire ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le surinvestissement scolaire extrême sans fatigue.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les conduites à risque (usage de toxiques, blessures auto-infligées, troubles alimentaires, mises en danger sur la voie publique).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'adhésion excessive et rigide aux règles parentales.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le développement exclusif de tics moteurs simples.",
+          "correct": false
+        }
+      ],
+      "explication": "Chez l'adolescent, la dépression et la crise suicidaire peuvent s'exprimer par des comportements externalisés : conduites à risque, transgressions, usage de toxiques, scarifications (blessures auto-infligées non suicidaires qui augmentent néanmoins le risque de TS ultérieure). (Source EDN Item 353/66a)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    },
+    {
+      "item": "Item 353",
+      "domaine": "Risque et conduites suicidaires",
+      "question_numero": 20,
+      "question": "[Item 353] Question 20 - Difficile : Quelle est la conduite à tenir systématique aux Urgences face à un patient \"suicidant\" (qui vient de faire une TS par intoxication médicamenteuse), après avoir stabilisé ses constantes vitales ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le laisser sortir dès le réveil si le patient le demande.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'hospitaliser d'office systématiquement pour une durée incompressible de 1 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Solliciter obligatoirement un avis psychiatrique pour évaluer le risque de récidive, traiter le trouble sous-jacent et orienter la prise en charge.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Prescrire un traitement neuroleptique à vie pour éviter la rechute.",
+          "correct": false
+        }
+      ],
+      "explication": "Tout patient suicidant (après stabilisation somatique) doit bénéficier d'une évaluation psychiatrique pour comprendre la crise, diagnostiquer un trouble sous-jacent, évaluer l'urgence et décider des suites (hospitalisation ou ambulatoire avec suivi). (Source EDN Item 353)",
+      "difficulte": 3,
+      "source": "EDN Item 353"
+    }
+  ]
+}

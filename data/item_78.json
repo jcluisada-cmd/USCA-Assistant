@@ -1,0 +1,1284 @@
+{
+  "qcm": [
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 1,
+      "question": "[Item 78] Question 1 - Facile : Quel est le principal principe psychoactif responsable des effets psychotropes du cannabis ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le cannabidiol (CBD).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le delta-9-tétra-hydro-cannabinol (delta-9-THC).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'anandamide.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le gamma-hydroxybutyrate (GHB).",
+          "correct": false
+        }
+      ],
+      "explication": "Le principe psychoactif essentiellement responsable des effets psychotropes du cannabis est le delta-9-THC. (Source EDN Item 78)",
+      "difficulte": 1,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 2,
+      "question": "[Item 78] Question 2 - Facile : Quelle est la substance stimulante illicite la plus fréquemment utilisée en Europe ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le cannabis.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La MDMA/ecstasy.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La cocaïne.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le LSD.",
+          "correct": false
+        }
+      ],
+      "explication": "La cocaïne est la substance stimulante illicite la plus fréquemment utilisée en Europe. (Source EDN Item 78)",
+      "difficulte": 1,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 3,
+      "question": "[Item 78] Question 3 - Moyen : Quelle est la principale cause de décès après une ou plusieurs consommation(s) de MDMA/ecstasy ou d'amphétamines, constituant une urgence médicale vitale ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La dépression respiratoire sévère.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'infarctus mésentérique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le coma hépatique fulminant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hyperthermie maligne (syndrome sérotoninergique).",
+          "correct": true
+        }
+      ],
+      "explication": "L'hyperthermie maligne (tableau de syndrome sérotoninergique) est la principale cause de décès après consommation de MDMA/ecstasy/amphétamines. (Source EDN Item 78)",
+      "difficulte": 2,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 4,
+      "question": "[Item 78] Question 4 - Moyen : Face à un coma calme avec myosis serré et bradypnée, quel est l'antidote spécifique à administrer en urgence ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le flumazénil.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La naloxone.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "La N-acétylcystéine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le glucagon.",
+          "correct": false
+        }
+      ],
+      "explication": "La triade myosis serré, dépression respiratoire et trouble de la conscience signe une overdose aux opiacés. L'antidote spécifique est la naloxone (Narcan). (Source EDN Item 78)",
+      "difficulte": 2,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 5,
+      "question": "[Item 78] Question 5 - Difficile : Concernant le syndrome amotivationnel lié au cannabis, quelle affirmation est exacte ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il est la conséquence d'une intoxication aiguë isolée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il associe indifférence affective, désinvestissement des relations sociales et baisse des performances (scolaires/travail).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il se manifeste exclusivement par des hallucinations visuelles persistantes.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il constitue un diagnostic différentiel de la schizophrénie, sans lien possible avec cette dernière.",
+          "correct": false
+        }
+      ],
+      "explication": "L'usage chronique de cannabis peut entraîner un syndrome amotivationnel : indifférence affective, désinvestissement social, baisse des performances, troubles mnésiques. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 6,
+      "question": "[Item 78] Question 6 - Difficile : Quelle est la durée typique des principaux symptômes du syndrome de sevrage au cannabis (irritabilité, anxiété, anorexie) après l'arrêt des consommations ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Moins de 24 heures.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "1 à 3 semaines (les troubles du sommeil pouvant durer plusieurs mois).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Exactement 6 mois.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a pas de syndrome de sevrage reconnu pour le cannabis.",
+          "correct": false
+        }
+      ],
+      "explication": "La plupart des symptômes de sevrage cannabique apparaissent en 24-72h, sont maximaux la première semaine et durent 1 à 3 semaines. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 7,
+      "question": "[Item 78] Question 7 - Difficile : Quel trouble psychiatrique peut être spécifiquement induit par une intoxication aiguë au cannabis chez un sujet vulnérable (pharmacopsychose) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un trouble obsessionnel compulsif sévère.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un trouble bipolaire à cycles rapides systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un trouble psychotique bref (hallucinations, idées délirantes).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Une narcolepsie de type 1.",
+          "correct": false
+        }
+      ],
+      "explication": "Un trouble psychotique peut apparaître pendant ou peu après une intoxication aiguë au cannabis (symptomatologie proche du trouble psychotique bref). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 8,
+      "question": "[Item 78] Question 8 - Difficile : Quel est le traitement de substitution avec AMM validé en France pour la dépendance au cannabis ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le dronabinol.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le cannabidiol (CBD) à haute dose.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La buprénorphine.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Aucun médicament n'a d'AMM dans le traitement de la dépendance au cannabis.",
+          "correct": true
+        }
+      ],
+      "explication": "Aucun médicament n'a d'AMM en France dans le traitement de la dépendance au cannabis. La prise en charge combine TCC, entretiens motivationnels et traitements symptomatiques. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 9,
+      "question": "[Item 78] Question 9 - Difficile : Comment se caractérise cliniquement la \"descente\" (phase transitoire de dysrégulation hédonique) suivant l'euphorie dans l'intoxication à la cocaïne ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Par un état maniaque hyperactif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Par une dysphorie, une asthénie, une irritabilité, et une anxiété.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Par des hallucinations auditives isolées persistantes.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Par une bradycardie extrême et un myosis serré.",
+          "correct": false
+        }
+      ],
+      "explication": "À la suite de l'euphorie succède une phase de dysrégulation hédonique (« descente ») avec dysphorie, asthénie, irritabilité, perte de l'estime de soi, anxiété. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 10,
+      "question": "[Item 78] Question 10 - Difficile : Quelle pathologie pulmonaire sévère est spécifiquement décrite suite à l'inhalation de crack ou de free base ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'emphysème panlobulaire juvénile.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome respiratoire aigu ou \"crack lung\".",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le mésothéliome pleural malin.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hypertension artérielle pulmonaire idiopathique exclusivement.",
+          "correct": false
+        }
+      ],
+      "explication": "Parmi les complications pulmonaires, le syndrome respiratoire aigu suite à l'inhalation de crack (crack lung) est classiquement décrit. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 11,
+      "question": "[Item 78] Question 11 - Difficile : Quel risque médical MAJEUR est potentialisé par l'association simultanée d'alcool et de cocaïne ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La diminution immédiate et totale de l'envie de consommer.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le syndrome coronarien aigu, les arythmies et le risque d'AVC.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une bradycardie sinusale protectrice du myocarde.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'hépatite auto-immune fulminante.",
+          "correct": false
+        }
+      ],
+      "explication": "L'association alcool + cocaïne augmente l'envie de consommer, les syndromes coronariens aigus, les arythmies et le risque d'AVC. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 12,
+      "question": "[Item 78] Question 12 - Difficile : Quel est le traitement médicamenteux ayant l'AMM en France pour la dépendance à la cocaïne ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La méthadone.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le baclofène.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Le bupropion.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Aucun médicament n'a d'AMM.",
+          "correct": true
+        }
+      ],
+      "explication": "Aucun médicament n'a d'autorisation de mise sur le marché (AMM) en France dans le traitement de l'usage nocif et de la dépendance à la cocaïne. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 13,
+      "question": "[Item 78] Question 13 - Difficile : À quelle famille de substances appartiennent la méphédrone, la MDPV et la méthylone (les \"3M\") ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les cannabinoïdes de synthèse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les opiacés semi-synthétiques.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les cathinones de synthèse (Nouveaux Produits de Synthèse).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les hallucinogènes naturels.",
+          "correct": false
+        }
+      ],
+      "explication": "Les 3M (méphédrone, MDPV, méthylone) sont les principales cathinones de synthèse, faisant partie des Nouveaux Produits de Synthèse (NPS). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 14,
+      "question": "[Item 78] Question 14 - Difficile : Que désigne le terme \"Slam\" en addictologie ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'inhalation de crack avec une pipe à eau.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'injection intraveineuse de substances (surtout cathinones/meth) en contexte sexuel (chemsex).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'ingestion massive de champignons hallucinogènes.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le sevrage brutal aux opiacés en milieu carcéral.",
+          "correct": false
+        }
+      ],
+      "explication": "Le slam correspond à la pratique d'injection intraveineuse de NPS (cathinones, méthamphétamine) lors de fêtes sexuelles privées (chemsex). (Source EDN Item 78 / 79)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 15,
+      "question": "[Item 78] Question 15 - Difficile : Concernant l'intoxication au GHB/GBL, quelle affirmation est exacte ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Ses effets durent généralement plus de 24 heures.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il induit une mydriase bilatérale irréversible.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il a un effet euphorisant, désinhibiteur et aphrodisiaque, avec un risque de dépression respiratoire et de coma en surdosage (G-Hole).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Il s'agit d'un puissant stimulant cardiaque provoquant systématiquement une hypertension artérielle majeure.",
+          "correct": false
+        }
+      ],
+      "explication": "Le GHB/GBL a des effets euphorisants, désinhibiteurs et aphrodisiaques d'environ 3-4h. En surdosage (G-Hole), il provoque dépression respiratoire, coma, bradypnée. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 16,
+      "question": "[Item 78] Question 16 - Difficile : Quel est le tableau clinique du syndrome de sevrage aux opiacés ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Coma calme, myosis et bradypnée.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Myalgies, diarrhée, mydriase, rhinorrhée, anxiété, et insomnie (syndrome pseudo-grippal sévère).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Bradycardie sévère, hypothermie et hypersomnie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Constipation opiniâtre, rétention urinaire et hallucinations visuelles.",
+          "correct": false
+        }
+      ],
+      "explication": "Le sevrage opiacé associe signes pseudo-grippaux (frissons, myalgies, diarrhée, nausées), neurovégétatifs (mydriase, rhinorrhée, bâillements) et psy (anxiété, insomnie, craving). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 17,
+      "question": "[Item 78] Question 17 - Difficile : Quel est le délai d'apparition classique du syndrome de sevrage après la dernière prise chez un usager d'héroïne ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Dans l'heure qui suit.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "6 à 12 heures après la dernière dose.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Après 2 à 4 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Après 1 mois d'abstinence.",
+          "correct": false
+        }
+      ],
+      "explication": "Pour des produits à courte durée d'action comme l'héroïne, les symptômes de sevrage surviennent 6 à 12 heures après la dernière dose (contre 2-4 jours pour la méthadone). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 18,
+      "question": "[Item 78] Question 18 - Difficile : Comment doit être rédigée une ordonnance de traitement de substitution aux opiacés (TSO) comme la buprénorphine ou la méthadone ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Sur une ordonnance simple, sans mention particulière.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Sur ordonnance bizone exclusivement.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Sur ordonnance sécurisée avec nom, posologie et durée écrits en toutes lettres, avec mention obligatoire du pharmacien.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La prescription est réservée aux seuls centres d'addictologie (CSAPA) sans ordonnance à remettre au patient.",
+          "correct": false
+        }
+      ],
+      "explication": "Les TSO nécessitent une prescription sécurisée : nom, posologie, durée en toutes lettres, mention du pharmacien. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 19,
+      "question": "[Item 78] Question 19 - Difficile : Quelle est la durée maximale légale de prescription pour la buprénorphine haut dosage (Subutex) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "7 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "14 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "28 jours.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "3 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée maximale de prescription pour la buprénorphine haut dosage est de 28 jours, avec délivrance fractionnée par périodes de 7 jours sauf mention contraire. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 20,
+      "question": "[Item 78] Question 20 - Difficile : Qui est autorisé à faire la prescription INITIALE de gélules de méthadone ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Tout médecin généraliste.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Uniquement les pharmaciens d'officine.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Exclusivement les médecins exerçant en CSAPA ou services spécialisés, en relais de la forme sirop chez un patient stabilisé depuis 1 an.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "L'initiation des gélules est le traitement de première ligne pour tout patient sevré.",
+          "correct": false
+        }
+      ],
+      "explication": "La prescription initiale de gélules de méthadone est réservée aux médecins de CSAPA/services spécialisés, en relais de la forme sirop chez des patients traités et stabilisés depuis au moins 1 an. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 21,
+      "question": "[Item 78] Question 21 - Difficile : Quel est le mécanisme d'action de la buprénorphine haut dosage ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Agoniste entier des récepteurs opiacés.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Agoniste partiel des récepteurs opiacés.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Antagoniste strict des récepteurs opiacés.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Inhibiteur de la recapture de la dopamine.",
+          "correct": false
+        }
+      ],
+      "explication": "La buprénorphine haut dosage est un agoniste partiel des récepteurs aux opiacés (contrairement à la méthadone qui est un agoniste complet et à la naloxone qui est antagoniste). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 22,
+      "question": "[Item 78] Question 22 - Difficile : Qu'est-ce que le syndrome hyperémétique cannabinoïde ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Des nausées et vomissements sévères chez l'usager chronique, soulagés par la prise de douches ou bains chauds.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un besoin compulsif de manger sucré lors du sevrage cannabique.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une anorexie sévère menant à la cachexie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Des vomissements induits par la première prise de cannabis uniquement.",
+          "correct": false
+        }
+      ],
+      "explication": "Le syndrome hyperémétique cannabinoïde, dû à la consommation chronique, associe des épisodes de nausées et vomissements sévères, souvent soulagés par des douches ou bains chauds. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 23,
+      "question": "[Item 78] Question 23 - Difficile : Lors de l'intoxication à la kétamine, quel état clinique spécifique, proche du 'bad trip' du LSD, peut être observé ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le 'G-Hole'.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le 'K-hole' (trous noirs avec troubles cognitifs, comportementaux, hallucinations, cauchemars).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le syndrome sérotoninergique fulminant.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une amnésie antérograde totale et définitive.",
+          "correct": false
+        }
+      ],
+      "explication": "L'intoxication à la kétamine peut provoquer un 'K-hole' : trous noirs avec troubles cognitifs, du comportement, hallucinations et cauchemars proches du bad trip. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 24,
+      "question": "[Item 78] Question 24 - Difficile : En cas de surdosage (overdose) massif aux opiacés nécessitant l'administration de Naloxone, comment doit être géré ce traitement ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une seule injection intraveineuse suffit toujours pour lever l'intoxication.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il doit être administré uniquement par voie orale.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Il est administré en IV (ou IM/IN) et doit souvent être maintenu à la seringue électrique aussi longtemps que nécessaire, parfois plusieurs jours (ex: intoxication méthadone).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "La naloxone est contre-indiquée en cas de coma avéré.",
+          "correct": false
+        }
+      ],
+      "explication": "La Naloxone a une demi-vie plus courte que beaucoup d'opiacés (comme la méthadone). Le traitement doit donc être maintenu à la seringue électrique aussi longtemps que nécessaire pour éviter une rechute en dépression respiratoire. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 25,
+      "question": "[Item 78] Question 25 - Difficile : Quel paramètre biologique infectieux doit être systématiquement recherché chez un usager de drogues par voie intraveineuse en France, compte tenu de sa prévalence élevée (environ 30 %) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le Virus de l'Hépatite C (VHC).",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Le Paludisme.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La maladie de Lyme.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Le virus Ebola.",
+          "correct": false
+        }
+      ],
+      "explication": "Les taux d'infection chez les usagers de drogue par voie veineuse en France sont de l'ordre de 10 % pour le VIH et de l'ordre de 30 % pour le VHC. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 26,
+      "question": "[Item 78] Question 26 - Difficile : Quel est le principal effet indésirable lié à la consommation chronique de MDMA/ecstasy ou de cathinones à distance des prises ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une hyperphagie massive avec obésité morbide.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un syndrome dépressif caractérisé (dysphorie, anhédonie, asthénie) lié à l'épuisement sérotoninergique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une schizophrénie paranoïde systématique.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Un syndrome de Korsakoff.",
+          "correct": false
+        }
+      ],
+      "explication": "À distance des prises, l'épuisement des stocks en sérotonine ou dopamine induit fréquemment un syndrome dépressif, une asthénie intense, de l'anhédonie, et un risque suicidaire. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 27,
+      "question": "[Item 78] Question 27 - Difficile : Devant une suspicion de syndrome sérotoninergique sévère consécutif à la prise d'amphétamines, quelle est la prise en charge de première intention ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une sédation par antidépresseur ISRS.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le transfert en urgence en réanimation, arrêt des toxiques, lutte contre l'hyperthermie et rééquilibration hydro-électrolytique.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "L'administration d'halopéridol à forte dose.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'injection de naloxone.",
+          "correct": false
+        }
+      ],
+      "explication": "L'hyperthermie maligne/syndrome sérotoninergique est une urgence vitale nécessitant un transfert en réanimation, un refroidissement externe et une réhydratation. (Source EDN Item 78 / 74)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 28,
+      "question": "[Item 78] Question 28 - Difficile : Lors de la mise en route d'un traitement de substitution par buprénorphine (Subutex) chez un sujet dépendant aux opiacés, quand la première dose doit-elle être administrée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Immédiatement en même temps que la dernière prise d'héroïne.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Au moins 4 heures après la dernière prise d'opiacé ou lors de l'apparition des premiers signes de manque (pour éviter un syndrome de sevrage précipité).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Seulement après 7 jours d'abstinence stricte confirmée par bandelette urinaire.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "En systématique le soir au coucher.",
+          "correct": false
+        }
+      ],
+      "explication": "La buprénorphine étant un agoniste partiel, elle a une forte affinité et déplace les opiacés en place. Elle doit être débutée au moins 4 heures après la dernière prise, ou aux premiers signes de manque, pour ne pas déclencher un syndrome de sevrage précipité. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 29,
+      "question": "[Item 78] Question 29 - Difficile : Quelle est l'indication spécifique de l'association Buprénorphine + Naloxone (Suboxone) par rapport à la Buprénorphine seule ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elle est plus efficace par voie intraveineuse.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "La naloxone (antagoniste) est inactive par voie sublinguale mais active si le comprimé est détourné et injecté en IV, déclenchant alors un syndrome de sevrage (effet dissuasif de l'injection).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Elle est réservée aux mineurs.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Elle guérit l'addiction en 1 semaine.",
+          "correct": false
+        }
+      ],
+      "explication": "La Suboxone a été créée pour limiter les mésusages par injection (détournement). La naloxone, mal absorbée en sublingual, est active en IV et déclenche un effet antagoniste aversif. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 30,
+      "question": "[Item 78] Question 30 - Difficile : Parmi les mesures de Réduction des Risques et des Dommages (RDRD) proposées en CAARUD, laquelle est fondamentale pour limiter la propagation du VHC et VIH ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La délivrance d'antibiotiques à large spectre.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'obligation de sevrage complet avant l'accès au centre.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "La distribution et promotion de matériels stériles d'injection et de prévention (seringues, préservatifs, kits crack) sans condition de sevrage.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le signalement systématique aux autorités policières.",
+          "correct": false
+        }
+      ],
+      "explication": "La RDRD implique l'accueil sans condition et la distribution de matériels de prévention (seringues stériles, préservatifs) aux populations ne voulant/pouvant pas arrêter l'usage. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 31,
+      "question": "[Item 78] Question 31 - Difficile : Lors de la grossesse d'une femme dépendante aux opiacés (héroïne), quelle est la prise en charge recommandée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un sevrage opiacé brutal immédiat.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'instauration ou le maintien rapide d'un Traitement de Substitution Opiacée (TSO), le sevrage étant contre-indiqué en raison du risque d'arrêt naturel de la grossesse.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le passage exclusif au CBD.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "L'injection intraveineuse encadrée d'héroïne médicale.",
+          "correct": false
+        }
+      ],
+      "explication": "Le sevrage brutal des opiacés est contre-indiqué chez la femme enceinte en raison du risque élevé d'avortement/mort fœtale in utero. Il faut instaurer ou maintenir un TSO (méthadone ou buprénorphine). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 32,
+      "question": "[Item 78] Question 32 - Difficile : Qu'est-ce qui caractérise les \"Nouvelles Substances Psychoactives\" (NPS) ou \"Nouveaux Produits de Synthèse\" ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Elles sont vendues en pharmacie sur ordonnance bizone.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Elles sont principalement d'origine végétale et naturelle comme le peyotl.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Elles sont souvent synthétisées pour mimer les effets des drogues classiques (stimulants, cannabinoïdes) tout en essayant de contourner la législation sur les stupéfiants, et sont beaucoup vendues sur internet.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Elles n'ont aucun potentiel addictif connu.",
+          "correct": false
+        }
+      ],
+      "explication": "Les NPS sont des drogues de synthèse (cathinones, cannabinoïdes de synthèse) visant à imiter les drogues classiques en contournant initialement la législation (souvent vendues sur internet comme 'sels de bains' ou 'encens'). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 33,
+      "question": "[Item 78] Question 33 - Difficile : Quel est le risque cardiovasculaire classique d'un jeune adulte (20-30 ans) sans antécédent et admis aux urgences pour une douleur thoracique après une soirée avec consommation intranasale de poudre blanche stimulante ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Un syndrome coronarien aigu ou une dissection aortique secondaire à la prise de cocaïne.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Un anévrysme mycotique de la valve mitrale secondaire au GHB.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Un bloc auriculo-ventriculaire complet secondaire au cannabis.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une hypotension artérielle majeure réfractaire due aux cathinones.",
+          "correct": false
+        }
+      ],
+      "explication": "La cocaïne (et autres stimulants comme les amphétamines) a un puissant effet vasoconstricteur et pro-thrombotique. Le SCA (infarctus) ou la dissection aortique chez un sujet jeune doit systématiquement faire évoquer une consommation de cocaïne. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 34,
+      "question": "[Item 78] Question 34 - Difficile : À quelle classe appartient la méthamphétamine (Crystal meth, Ice) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Opiacés.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Dépresseurs du SNC.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Psychostimulants (drogue de synthèse de la famille des amphétamines).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Hallucinogènes naturels.",
+          "correct": false
+        }
+      ],
+      "explication": "La méthamphétamine est une drogue de synthèse de la famille des amphétamines, ayant des effets psychostimulants majeurs, durables et très addictogènes. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 35,
+      "question": "[Item 78] Question 35 - Difficile : Lors de la prescription de la Méthadone, quelle est la durée maximale de prescription sur l'ordonnance sécurisée ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "7 jours.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "14 jours pour le sirop (28 jours pour les gélules).",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "28 jours systématiquement pour toutes les formes.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "3 mois.",
+          "correct": false
+        }
+      ],
+      "explication": "La durée maximale de prescription de la Méthadone est de 14 jours pour la forme sirop et de 28 jours pour les gélules (qui sont un relais réservé aux spécialistes). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 36,
+      "question": "[Item 78] Question 36 - Difficile : Quel signe clinique n'est PAS attendu dans une intoxication aiguë sévère aux amphétamines/ecstasy ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une mydriase.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Un myosis bilatéral en tête d'épingle.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Une hyperthermie.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Une tachycardie.",
+          "correct": false
+        }
+      ],
+      "explication": "Le myosis serré est caractéristique des opiacés. Les psychostimulants comme les amphétamines/ecstasy provoquent à l'inverse une mydriase, avec hyperthermie et tachycardie. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 37,
+      "question": "[Item 78] Question 37 - Difficile : Quel effet clinique est spécifiquement recherché par les usagers de MDMA/ecstasy et qui le classe parmi les 'entactogènes' ou 'empathogènes' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Une anesthésie douloureuse totale.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Une sédation profonde avec sommeil prolongé.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Une sensation d'euphorie, d'empathie (facilité de communication et à se mettre à la place d'autrui) et de sociabilité accrue.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Des hallucinations visuelles effrayantes.",
+          "correct": false
+        }
+      ],
+      "explication": "La MDMA/ecstasy provoque une euphorie et des effets empathogènes (se mettre à la place d'autrui, sociabilité facilitée). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 38,
+      "question": "[Item 78] Question 38 - Difficile : Quelle est la particularité des cannabinoïdes de synthèse par rapport au THC naturel ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Ils sont totalement inoffensifs et non psychoactifs.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Ils sont administrés uniquement par voie intraveineuse.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Ils ont une action pharmacologique similaire au THC mais sont souvent beaucoup plus puissants, avec des complications médicales graves (convulsions, SCA, décès) plus fréquentes.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Leurs effets cliniques durent plusieurs semaines.",
+          "correct": false
+        }
+      ],
+      "explication": "Les cannabinoïdes de synthèse (Spice) sont des agonistes puissants des récepteurs CB. Leurs effets sont plus intenses, de plus courte durée, et exposent à des risques sévères (convulsions, insuffisance rénale, décès) non vus avec le cannabis naturel. (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 39,
+      "question": "[Item 78] Question 39 - Difficile : Lors du sevrage du cannabis en ambulatoire, l'apparition d'une angoisse majeure avec agitation nécessite un traitement symptomatique. Quelle molécule doit-on privilégier en première intention ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le diazépam IV.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les anxiolytiques histaminergiques de type hydroxyzine (Atarax) pour éviter l'usage de benzodiazépines.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Le méthylphénidate.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les morphiniques à faible dose.",
+          "correct": false
+        }
+      ],
+      "explication": "Dans le sevrage au cannabis/cocaïne, on traite l'anxiété symptomatiquement en évitant les benzodiazépines (risque de transfert d'addiction), en privilégiant l'hydroxyzine (Atarax). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    },
+    {
+      "item": "Item 78",
+      "domaine": "Addictions aux substances illicites",
+      "question_numero": 40,
+      "question": "[Item 78] Question 40 - Difficile : Chez un patient admis aux urgences, quelle drogue illicite peut causer à la fois une vasoconstriction sévère périphérique (pâleur, HTA), une hyperthermie et une rhabdomyolyse massive pouvant induire une insuffisance rénale aiguë ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le cannabis.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'héroïne.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les psychostimulants comme les amphétamines, la MDMA ou la cocaïne.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le LSD à petite dose.",
+          "correct": false
+        }
+      ],
+      "explication": "Les psychostimulants (amphétamines, cocaïne, MDMA) induisent une hyperactivité sympathique menant à l'hypertension, la vasoconstriction, l'hyperthermie, et la rhabdomyolyse (conséquence de l'hyperthermie, de l'agitation ou de la toxicité musculaire directe). (Source EDN Item 78)",
+      "difficulte": 3,
+      "source": "EDN Item 78"
+    }
+  ]
+}

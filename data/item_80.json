@@ -1,0 +1,324 @@
+{
+  "qcm": [
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 1,
+      "question": "[Item 80] Question 1 - Facile : Comment se différencie strictement le 'dopage' des 'conduites dopantes' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Le dopage ne concerne que l'amélioration des capacités intellectuelles, les conduites dopantes ciblent le physique.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Le dopage ne concerne que les sportifs en compétition avec des substances inscrites sur la liste de l'AMA.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Les conduites dopantes sont toujours illégales, le dopage est toléré hors compétition.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'y a aucune différence, ce sont deux synonymes stricts dans le référentiel.",
+          "correct": false
+        }
+      ],
+      "explication": "Le dopage concerne spécifiquement les sportifs utilisant des substances/méthodes de la liste de l'AMA lors de compétitions, alors que les conduites dopantes visent l'amélioration de performances (physiques/intellectuelles) par toute personne affrontant un obstacle. (Source EDN Item 80, 48)",
+      "difficulte": 1,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 2,
+      "question": "[Item 80] Question 2 - Facile : Quel organisme est responsable de la publication annuelle de la liste des produits et méthodes considérés comme dopants au niveau mondial ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "L'OMS (Organisation Mondiale de la Santé).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'AFLD (Agence Française de Lutte contre le Dopage).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'AMA (Agence Mondiale Antidopage).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Le CIO (Comité International Olympique).",
+          "correct": false
+        }
+      ],
+      "explication": "Les produits et méthodes considérés comme dopants sont inscrits sur une liste mise à jour chaque année par l'AMA. (Source EDN Item 80, 48, 49)",
+      "difficulte": 1,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 3,
+      "question": "[Item 80] Question 3 - Moyen : Que signifie l'acronyme AUT dans le contexte de la lutte antidopage ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Autorité Universelle de Toxicologie.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Agence des Usages Thérapeutiques.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Autorisation d'Usage à des fins Thérapeutiques.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Administration des Urgences Traumatologiques.",
+          "correct": false
+        }
+      ],
+      "explication": "L'AUT (Autorisation d'usage à des fins thérapeutiques) permet aux sportifs de suivre un traitement avec une substance interdite s'ils souffrent d'un état pathologique diagnostiqué. (Source EDN Item 80, 50)",
+      "difficulte": 2,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 4,
+      "question": "[Item 80] Question 4 - Moyen : Les Bêta-2-agonistes sont globalement interdits. Cependant, certaines molécules sont autorisées sous forme inhalée en dessous d'un certain seuil. Lesquelles ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Salbutamol, formotérol, salmétérol.",
+          "correct": true
+        },
+        {
+          "lettre": "B",
+          "texte": "Terbutaline, bambutérol, clenbutérol.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Propranolol, aténolol, sotalol.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Salbutamol uniquement (tous les autres sont absolument proscrits).",
+          "correct": false
+        }
+      ],
+      "explication": "La liste des exceptions pour les bêta-2-agonistes comprend le salbutamol, le formotérol et le salmétérol sous forme inhalée et sous un certain seuil. (Source EDN Item 80, 51)",
+      "difficulte": 2,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 5,
+      "question": "[Item 80] Question 5 - Difficile : Le passeport biologique de l'athlète comprend principalement deux modules pour dépister les méthodes de dopage. Lesquels ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Cardiologique (ECG) et Pulmonaire (EFR).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Neurologique (EEG) et Musculaire (EMG).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Hématologique (sang) et Endocrinien (urines).",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Hépatique (ASAT/ALAT) et Rénal (Créatininémie).",
+          "correct": false
+        }
+      ],
+      "explication": "Le passeport biologique comprend un module hématologique (dépiste les transfusions/EPO) basé sur le sang, et un module endocrinien (stéroïdes anabolisants) basé sur les urines. (Source EDN Item 80, 52)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 6,
+      "question": "[Item 80] Question 6 - Difficile : Quel est le rôle des Antennes médicales de prévention et de lutte contre le dopage (AMPD) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Prononcer les sanctions sportives et financières en cas de contrôle positif.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Assurer des consultations anonymes, un suivi médical spécifique et la coordination de la prise en charge.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Organiser exclusivement les contrôles inopinés hors compétition.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Réaliser l'analyse toxicologique des prélèvements sanguins des athlètes.",
+          "correct": false
+        }
+      ],
+      "explication": "Les AMPD sont des centres ressources pour le suivi médical, la prévention, les consultations anonymes et la coordination multidisciplinaire. Elles ne prononcent pas de sanctions (rôle de l'AFLD/Fédérations). (Source EDN Item 80, 53-54)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 7,
+      "question": "[Item 80] Question 7 - Difficile : Parmi ces catégories de substances, laquelle est interdite UNIQUEMENT EN compétition (et non hors compétition) ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Les agents anabolisants (Stéroïdes).",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Les hormones peptidiques (EPO, GH).",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Les diurétiques et agents masquants.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Les glucocorticoïdes (selon certaines voies).",
+          "correct": true
+        }
+      ],
+      "explication": "Les glucocorticoïdes, les stimulants, les narcotiques et les cannabinoïdes font partie des substances interdites uniquement EN compétition. Anabolisants, EPO et diurétiques sont interdits en tout temps (en et hors compétition). (Source EDN Item 80, 55-56)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 8,
+      "question": "[Item 80] Question 8 - Difficile : Comment le référentiel définit-il officiellement le 'dopage génétique' ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "La sélection d'embryons in vitro pour obtenir des aptitudes athlétiques.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "L'utilisation de stéroïdes anabolisants pour modifier le phénotype musculaire.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "L'utilisation d'acides nucléiques modifiant les séquences génomiques et l'utilisation de cellules normales ou génétiquement modifiées.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Les transfusions sanguines de sang hétérologue génétiquement modifié.",
+          "correct": false
+        }
+      ],
+      "explication": "Le dopage génétique est l'utilisation d'acides nucléiques pour modifier les séquences génomiques/altérer l'expression génétique, et l'utilisation de cellules normales ou génétiquement modifiées. (Source EDN Item 80, 57)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 9,
+      "question": "[Item 80] Question 9 - Difficile : Quelle est l'obligation légale du médecin traitant s'il décèle des signes évoquant une pratique de dopage chez son patient ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Il doit dénoncer immédiatement le sportif à la police nationale pour trafic.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Il est tenu de refuser la délivrance du certificat médical, informer le patient des risques, l'orienter vers une AMPD et transmettre les données au médecin responsable de l'AMPD.",
+          "correct": true
+        },
+        {
+          "lettre": "C",
+          "texte": "Il doit prescrire des agents masquants pour protéger le patient et préserver le secret médical absolu.",
+          "correct": false
+        },
+        {
+          "lettre": "D",
+          "texte": "Il n'a aucune obligation spécifique en dehors du conseil oral, le dopage relevant de la seule responsabilité de la fédération.",
+          "correct": false
+        }
+      ],
+      "explication": "Le médecin doit refuser le certificat, informer des risques, orienter vers une AMPD et transmettre les données au médecin de l'AMPD de la région (dans le respect du secret médical). Des sanctions disciplinaires existent en cas de non-signalement. (Source EDN Item 80, 58)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    },
+    {
+      "item": "Item 80",
+      "domaine": "Dopage et conduites dopantes",
+      "question_numero": 10,
+      "question": "[Item 80] Question 10 - Difficile : Dans certains sports, les bêta-bloquants sont spécifiquement interdits pour réduire la fréquence cardiaque et les tremblements. Dans quels sports sont-ils interdits à la fois en et hors compétition ?",
+      "type": "qcm",
+      "reponses": [
+        {
+          "lettre": "A",
+          "texte": "Automobile et billard.",
+          "correct": false
+        },
+        {
+          "lettre": "B",
+          "texte": "Golf et ski.",
+          "correct": false
+        },
+        {
+          "lettre": "C",
+          "texte": "Tir et tir à l'arc.",
+          "correct": true
+        },
+        {
+          "lettre": "D",
+          "texte": "Fléchettes et sports subaquatiques.",
+          "correct": false
+        }
+      ],
+      "explication": "Les bêta-bloquants sont interdits en et hors compétition pour le tir et le tir à l'arc. (Pour automobile, billard, fléchettes, golf, ski, sports subaquatiques, ils sont interdits uniquement en compétition). (Source EDN Item 80, 59)",
+      "difficulte": 3,
+      "source": "EDN Item 80"
+    }
+  ]
+}
