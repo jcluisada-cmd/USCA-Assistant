@@ -23,7 +23,9 @@
       "Bash(git restore *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs -I{} python3 -c \" import sys, json path = sys.argv[1] try: with open\\(path\\) as f: for line in f: try: obj = json.loads\\(line\\) if obj.get\\('type'\\) == 'assistant': for item in obj.get\\('message', {}\\).get\\('content', []\\): if item.get\\('type'\\) == 'tool_use': name = item.get\\('name', ''\\) if name == 'Bash': cmd = item.get\\('input', {}\\).get\\('command', ''\\) print\\('BASH|||' + cmd[:200]\\) elif name not in \\('Read','Write','Edit','Glob','Grep','Agent','Skill','ToolSearch','ScheduleWakeup'\\): print\\('MCP|||' + name\\) except: pass except: pass \" {})"
     ]
   }
 }
