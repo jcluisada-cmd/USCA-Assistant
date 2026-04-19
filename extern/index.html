@@ -190,45 +190,6 @@
       </div>
     </section>
 
-    <!-- LIGNE 2 PETITES CARTES : Signalements + Export (masquées en mode tuteur) -->
-    <div id="section-small-cards" class="grid grid-cols-2 gap-3">
-      <!-- Signalements -->
-      <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-        <button class="w-full px-4 py-3 flex items-start gap-2 accordion-toggle" data-target="flags-body">
-          <div class="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-          </div>
-          <div class="text-left flex-1 min-w-0">
-            <p class="text-xs font-bold text-slate-800 leading-tight">Signalements</p>
-            <p id="flags-count" class="text-[10px] text-slate-500 truncate">—</p>
-          </div>
-          <svg class="accordion-icon transition-transform flex-shrink-0 mt-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="flags-body" class="hidden border-t border-slate-100 max-h-56 overflow-y-auto">
-          <div id="flags-list"><p class="text-xs text-slate-400 px-4 py-4 text-center">Aucun signalement.</p></div>
-        </div>
-      </section>
-      <!-- Export QCM -->
-      <section id="section-export" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-        <div class="px-4 py-3 flex items-start gap-2">
-          <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-xs font-bold text-slate-800 leading-tight">Exporter QCM</p>
-            <p class="text-[10px] text-slate-500">Hors-ligne · 477 questions</p>
-          </div>
-        </div>
-        <div class="px-4 pb-3 flex-1 flex flex-col justify-end">
-          <button id="btn-export-qcm" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Générer et télécharger
-          </button>
-          <p id="export-status" class="text-[10px] text-slate-400 text-center mt-1.5 hidden"></p>
-        </div>
-      </section>
-    </div>
-
     <!-- CARTE 4 : MA CHECKLIST (masquée en mode tuteur) -->
     <section id="section-checklist" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       <button class="w-full px-5 py-4 flex items-center justify-between accordion-toggle" data-target="checklist-body">
@@ -274,6 +235,41 @@
         </div>
       </div>
     </section>
+
+    <!-- LIGNE 2 PETITES CARTES : Message au tuteur + Exporter QCM -->
+    <div id="section-small-cards" class="grid grid-cols-2 gap-3">
+      <!-- Message au tuteur (raccourci vers accordion Questions au tuteur) -->
+      <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+        <button type="button" class="w-full px-4 py-3 flex items-start gap-2 text-left hover:bg-slate-50 transition-colors h-full" onclick="if(document.getElementById('questions-body').classList.contains('hidden'))document.querySelector('[data-target=questions-body]').click();document.getElementById('section-questions').scrollIntoView({behavior:'smooth',block:'start'});">
+          <div class="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold text-slate-800 leading-tight">Message au tuteur</p>
+            <p class="text-[10px] text-slate-500">Envoyer un message</p>
+          </div>
+        </button>
+      </section>
+      <!-- Export QCM -->
+      <section id="section-export" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+        <div class="px-4 py-3 flex items-start gap-2">
+          <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold text-slate-800 leading-tight">Exporter QCM</p>
+            <p class="text-[10px] text-slate-500">Hors-ligne · 477 questions</p>
+          </div>
+        </div>
+        <div class="px-4 pb-3 flex-1 flex flex-col justify-end">
+          <button id="btn-export-qcm" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Générer et télécharger
+          </button>
+          <p id="export-status" class="text-[10px] text-slate-400 text-center mt-1.5 hidden"></p>
+        </div>
+      </section>
+    </div>
 
   </main>
 
@@ -2020,6 +2016,7 @@ document.getElementById('question-submit').addEventListener('click', async funct
 async function loadFlags() {
   var box = document.getElementById('flags-list');
   var counter = document.getElementById('flags-count');
+  if (!box || !counter) return;
   try {
     var flags = await QCMEngine.getMyFlags();
     if (!flags.length) {
