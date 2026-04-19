@@ -1326,7 +1326,7 @@ function App() {
           <button onClick={()=>setSelFiche(null)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer"}}>{I.chevL(C.n[600])}</button>
           <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{selFiche.n}</span>
         </div>
-        <iframe src={"../fiches-traitements/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
+        <iframe className="fiche-iframe" src={"../fiches-traitements/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
       </div> : <div className="fade-in">
         <BackBtn onClick={()=>nav("home")}/>
         <SectionHead icon={I.heart(C.a[300])} title="Traitements" sub="Fiches d'information patients"/>
@@ -1402,7 +1402,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 // Mode embarqué : masquer la navigation V1 quand chargé dans l'iframe staff
 if (new URLSearchParams(window.location.search).has('embedded')) {
   const style = document.createElement('style');
-  style.textContent = '.bottom-nav, .top-bar { display: none !important; } .content { padding-top: 8px; padding-bottom: 16px; }';
+  style.textContent = '.bottom-nav, .top-bar { display: none !important; } .content { padding-top: 8px; padding-bottom: 16px; } .fiche-iframe { height: calc(100vh - 56px) !important; }';
   document.head.appendChild(style);
 }
 
