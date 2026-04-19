@@ -702,6 +702,17 @@ window.db = {
     return data;
   },
 
+  /** Supprime toutes les sessions, réponses et signalements QCM d'un externe (pour changement d'externe) */
+  async resetExterneData(externeId) {
+    const { data: sessions } = await sb.from('qcm_sessions').select('id').eq('user_id', externeId);
+    if (sessions && sessions.length) {
+      const ids = sessions.map(s => s.id);
+      await sb.from('qcm_reponses').delete().in('session_id', ids);
+    }
+    await sb.from('qcm_sessions').delete().eq('user_id', externeId);
+    await sb.from('qcm_flags').delete().eq('user_id', externeId);
+  },
+
   // ══════════════════════════════════════════════════
 
   /** Marquer une question comme vue par la tutrice (ou la démarquer) */

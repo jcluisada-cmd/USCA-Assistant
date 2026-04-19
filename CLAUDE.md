@@ -26,7 +26,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.75 |
+| **Service Worker** | usca-v3.76 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -364,7 +364,7 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
 - [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF).
-- [ ] **QCM EDN — lien tuteur↔externe** : UI dans gestion comptes admin pour insérer une ligne `tuteur_etudiant` au moment de la création d'un compte externe (sélecteur tuteur parmi médecins/IDE).
+- [ ] **QCM EDN — réinitialisation externe** : ✅ bouton ↺ dans "Mon externe" → supprime sessions/réponses/flags pour changement d'externe (analogue au reset livret IFSI). (v3.76)
 - [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
 
 ---

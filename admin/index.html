@@ -3430,6 +3430,19 @@ function renderExterne(list) {
       })(ext.id, ext.nom, sessions));
       actionsRow.appendChild(btnStats);
     }
+    var btnReset = createEl('button', 'text-[11px] font-bold px-2 py-1.5 bg-white border border-red-200 rounded-lg text-red-500 hover:bg-red-50', '↺');
+    btnReset.title = 'Réinitialiser les données QCM (changement d\'externe)';
+    btnReset.addEventListener('click', (function(extId, extNom) {
+      return async function() {
+        if (!confirm('Supprimer toutes les sessions QCM de ' + (extNom || 'l\'externe') + ' ?\nCette action est irréversible.')) return;
+        btnReset.disabled = true;
+        try {
+          await db.resetExterneData(extId);
+          await loadEleves();
+        } catch(e) { alert('Erreur : ' + e.message); btnReset.disabled = false; }
+      };
+    })(ext.id, ext.nom));
+    actionsRow.appendChild(btnReset);
     card.appendChild(actionsRow);
 
     container.appendChild(card);
