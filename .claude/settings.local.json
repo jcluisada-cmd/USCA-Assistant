@@ -11,7 +11,19 @@
       "Bash(node -e ' *)",
       "Bash(node *)",
       "Bash(grep -n '\\\\\\\\u00[a-f0-9]\\\\{2\\\\}' admin/index.html)",
-      "Bash(ls *)"
+      "Bash(ls *)",
+      "mcp__plugin_supabase_supabase__list_projects",
+      "mcp__plugin_supabase_supabase__list_tables",
+      "mcp__plugin_supabase_supabase__apply_migration",
+      "mcp__plugin_supabase_supabase__execute_sql",
+      "Bash(git fetch *)",
+      "Bash(git stash *)",
+      "Bash(git pull *)",
+      "Bash(git add *)",
+      "Bash(git restore *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git mv *)"
     ]
   }
 }
