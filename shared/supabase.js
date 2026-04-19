@@ -522,6 +522,16 @@ window.db = {
     return data;
   },
 
+  /** Supprime une présence (remet à "non renseigné") */
+  async deletePresenceReunion(reunionSlug, dateStr, userId) {
+    const { error } = await sb.from('presences_reunions')
+      .delete()
+      .eq('reunion_slug', reunionSlug)
+      .eq('date_reunion', dateStr)
+      .eq('user_id', userId);
+    if (error) throw error;
+  },
+
   // ── Liste d'attente ──
 
   /** Récupère la liste d'attente triée par date d'entrée prévue */
@@ -651,6 +661,48 @@ window.db = {
     if (error) throw error;
     return data;
   },
+
+  // ══════════ Module QCM EDN — vue tuteur ══════════
+
+  /** Tous les profils avec role='externe' */
+  async getExterneProfiles() {
+    const { data, error } = await sb.from('profiles').select('id, nom, email').eq('role', 'externe').order('nom');
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Sessions QCM d'un externe (accessible via RLS medecin_read_externe_sessions) */
+  async getExterneStats(externeId) {
+    const { data, error } = await sb.from('qcm_sessions')
+      .select('item, mode, nb_questions, score, created_at')
+      .eq('user_id', externeId)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Signalements d'un externe (accessible via RLS medecin_read_externe_flags) */
+  async getExterneFlags(externeId) {
+    const { data, error } = await sb.from('qcm_flags')
+      .select('*')
+      .eq('user_id', externeId)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Répondre à un signalement externe et le marquer comme traité */
+  async respondToFlag(flagId, tuteurReponse) {
+    const { data, error } = await sb.from('qcm_flags')
+      .update({ tuteur_reponse: tuteurReponse, statut: 'traite', traite_at: new Date().toISOString() })
+      .eq('id', flagId)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
+  // ══════════════════════════════════════════════════
 
   /** Marquer une question comme vue par la tutrice (ou la démarquer) */
   async markProgressionVue(stageId, questionId, vu, tuteurProfileId) {

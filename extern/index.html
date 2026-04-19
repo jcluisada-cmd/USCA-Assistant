@@ -134,6 +134,26 @@
       </div>
     </section>
 
+    <!-- CARTE 4 : EXPORT MODULE PÉDAGOGIQUE -->
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="px-5 py-4 flex items-center gap-3">
+        <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm font-bold text-slate-800">Exporter mon module QCM</p>
+          <p class="text-[11px] text-slate-500">App hors-ligne avec toutes vos données et les 477 questions</p>
+        </div>
+      </div>
+      <div class="px-5 pb-4">
+        <button id="btn-export-qcm" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl transition flex items-center justify-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Générer et télécharger
+        </button>
+        <p id="export-status" class="text-[11px] text-slate-400 text-center mt-2 hidden"></p>
+      </div>
+    </section>
+
   </main>
 
   <!-- MODAL JOUEUR QCM -->
@@ -464,6 +484,229 @@ async function finishSession() {
   } catch(e) {
     document.getElementById('save-status').textContent = '⚠ Échec enregistrement : ' + e.message;
   }
+}
+
+// ════════════════ EXPORT MODULE QCM ════════════════
+
+document.getElementById('btn-export-qcm').addEventListener('click', async function() {
+  var btn = this;
+  var statusEl = document.getElementById('export-status');
+  btn.disabled = true;
+  statusEl.textContent = 'Chargement du catalogue…';
+  statusEl.classList.remove('hidden');
+
+  try {
+    var sessions = await QCMEngine.getMyStats();
+    var nom = document.getElementById('hdr-nom').textContent || 'Externe';
+    var dateExport = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    statusEl.textContent = 'Chargement des 477 questions…';
+    var idx = await QCMEngine.loadIndex();
+    var allItems = {};
+    await Promise.all(idx.items.map(async function(it) {
+      try { allItems[it.item] = await QCMEngine.loadItem(it.item); } catch(e) {}
+    }));
+
+    var statsByItem = {};
+    sessions.forEach(function(s) {
+      var key = s.item || 'Tous items';
+      if (!statsByItem[key]) statsByItem[key] = { n: 0, total: 0 };
+      statsByItem[key].n++;
+      statsByItem[key].total += s.nb_questions ? Math.round(100 * s.score / s.nb_questions) : 0;
+    });
+
+    statusEl.textContent = 'Génération du fichier…';
+    var html = buildExportHTML(nom, dateExport, sessions, statsByItem, allItems, idx);
+    var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'QCM-EDN-' + nom.replace(/\s+/g, '-') + '-' + new Date().toISOString().slice(0, 10) + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    statusEl.textContent = '✓ Fichier téléchargé';
+  } catch(e) {
+    statusEl.textContent = '⚠ Erreur : ' + e.message;
+  }
+  btn.disabled = false;
+});
+
+function buildExportHTML(nom, dateExport, sessions, statsByItem, allItems, idx) {
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  var statsRows = Object.entries(statsByItem).map(function(e) {
+    var item = e[0], s = e[1];
+    var moy = Math.round(s.total / s.n);
+    var color = moy >= 70 ? '#10B981' : moy >= 50 ? '#F59E0B' : '#EF4444';
+    return '<tr><td style="padding:6px 12px;font-weight:600">' + esc(item) + '</td>' +
+      '<td style="padding:6px 12px;text-align:center">' + s.n + '</td>' +
+      '<td style="padding:6px 12px;text-align:center;color:' + color + ';font-weight:700">' + moy + '%</td></tr>';
+  }).join('');
+
+  var recentRows = sessions.slice(0, 20).map(function(s) {
+    var d = new Date(s.created_at).toLocaleDateString('fr-FR');
+    var pct = s.nb_questions ? Math.round(100 * s.score / s.nb_questions) : 0;
+    var color = pct >= 70 ? '#10B981' : pct >= 50 ? '#F59E0B' : '#EF4444';
+    return '<tr><td style="padding:5px 10px">' + esc(d) + '</td>' +
+      '<td style="padding:5px 10px">' + esc(s.item || 'Mixte') + '</td>' +
+      '<td style="padding:5px 10px;text-align:center">' + esc(s.mode) + '</td>' +
+      '<td style="padding:5px 10px;text-align:center;color:' + color + ';font-weight:700">' +
+        s.score + '/' + s.nb_questions + ' (' + pct + '%)</td></tr>';
+  }).join('');
+
+  var itemOptions = idx.items.map(function(it) {
+    return '<option value="' + esc(it.item) + '">' + esc(it.item) + ' \u00b7 ' + esc(it.domaine) + ' (' + it.nb_questions + ')</option>';
+  }).join('');
+
+  var statsBlock = statsRows ? (
+    '<div class="card"><div class="card-header">Performances par item</div>' +
+    '<table><thead><tr><th>Item</th><th style="text-align:center">Sessions</th><th style="text-align:center">Moy.</th></tr></thead>' +
+    '<tbody>' + statsRows + '</tbody></table></div>'
+  ) : '';
+
+  var recentBlock = recentRows ? (
+    '<div class="card"><div class="card-header">20 derni\u00e8res sessions</div>' +
+    '<table><thead><tr><th>Date</th><th>Item</th><th style="text-align:center">Mode</th><th style="text-align:center">Score</th></tr></thead>' +
+    '<tbody>' + recentRows + '</tbody></table></div>'
+  ) : '';
+
+  var dataScript = '<script>var ALL_ITEMS=' + JSON.stringify(allItems) + ';<\/script>';
+
+  return '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+    '<title>QCM EDN \u2014 ' + esc(nom) + '<\/title>\n' +
+    '<style>\n* { box-sizing: border-box; margin: 0; padding: 0; }\n' +
+    'body { font-family: system-ui, -apple-system, sans-serif; background: #F8FAFC; color: #1e293b; }\n' +
+    'header { background: #4F46E5; color: white; padding: 20px 24px; }\n' +
+    'header h1 { font-size: 1.2rem; font-weight: 800; }\n' +
+    'header p { font-size: 0.72rem; opacity: 0.8; margin-top: 2px; }\n' +
+    'main { max-width: 800px; margin: 0 auto; padding: 20px 16px; }\n' +
+    '.card { background: white; border: 1px solid #e2e8f0; border-radius: 14px; margin-bottom: 16px; overflow: hidden; }\n' +
+    '.card-header { padding: 12px 18px; border-bottom: 1px solid #f1f5f9; font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }\n' +
+    'table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }\n' +
+    'thead th { padding: 7px 12px; text-align: left; font-size: 0.68rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; background: #f8fafc; }\n' +
+    'tbody tr:not(:last-child) { border-bottom: 1px solid #f1f5f9; }\n' +
+    '.qcm-section { padding: 16px 18px; }\n' +
+    'select { width: 100%; padding: 9px 12px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 0.85rem; margin-bottom: 10px; background: white; }\n' +
+    '.btn { width: 100%; padding: 11px; background: #4F46E5; color: white; border: none; border-radius: 11px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-bottom: 8px; }\n' +
+    '.btn:hover { background: #4338CA; } .btn:disabled { opacity: 0.5; cursor: not-allowed; }\n' +
+    '.btn-sm { padding: 8px 18px; background: #f1f5f9; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; color: #475569; }\n' +
+    '#qcm-player { display: none; }\n' +
+    '.q-text { font-size: 0.88rem; font-weight: 600; line-height: 1.5; margin-bottom: 12px; }\n' +
+    '.choice { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px; cursor: pointer; background: white; width: 100%; text-align: left; }\n' +
+    '.choice.correct { border-color: #10B981; background: #F0FDF4; }\n' +
+    '.choice.wrong { border-color: #EF4444; background: #FEF2F2; }\n' +
+    '.choice.reveal { border-color: #10B981; background: #F0FDF4; }\n' +
+    '.letter { width: 26px; height: 26px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }\n' +
+    '.correct .letter, .reveal .letter { background: #10B981; color: white; }\n' +
+    '.wrong .letter { background: #EF4444; color: white; }\n' +
+    '.meta { font-size: 0.68rem; color: #94a3b8; margin-bottom: 14px; }\n' +
+    '.progress { font-size: 0.72rem; font-weight: 700; color: #4F46E5; margin-bottom: 6px; }\n' +
+    '.btn-next { padding: 9px 22px; background: #4F46E5; color: white; border: none; border-radius: 9px; font-weight: 700; cursor: pointer; font-size: 0.82rem; }\n' +
+    '.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }\n' +
+    '.score-final { text-align: center; padding: 20px; }\n' +
+    '.score-big { font-size: 2.8rem; font-weight: 800; }\n' +
+    '<\/style>\n<\/head>\n<body>\n' +
+    '<header><h1>QCM EDN Psychiatrie-Addictologie \u2014 ' + esc(nom) + '<\/h1>' +
+    '<p>Export\u00e9 le ' + esc(dateExport) + ' \u00b7 Mode hors ligne \u00b7 477 questions embed\u00e9es<\/p><\/header>\n' +
+    '<main>\n' + statsBlock + '\n' + recentBlock + '\n' +
+    '<div class="card"><div class="card-header">R\u00e9vision interactive (hors ligne)<\/div>\n' +
+    '<div class="qcm-section">\n' +
+    '<select id="ex-item"><option value="">Tous les items<\/option>' + itemOptions + '<\/select>\n' +
+    '<select id="ex-diff"><option value="">Toutes difficult\u00e9s<\/option>' +
+    '<option value="1">1 \u2014 Facile<\/option><option value="2">2 \u2014 Moyen<\/option><option value="3">3 \u2014 Difficile<\/option><\/select>\n' +
+    '<select id="ex-n"><option value="10">10 questions<\/option><option value="20">20<\/option>' +
+    '<option value="30">30<\/option><option value="50">50<\/option><\/select>\n' +
+    '<button class="btn" id="ex-start">Lancer la r\u00e9vision<\/button>\n' +
+    '<div id="qcm-player">\n' +
+    '<p id="ex-progress" class="progress"><\/p>\n' +
+    '<p id="ex-meta" class="meta"><\/p>\n' +
+    '<p id="ex-question" class="q-text"><\/p>\n' +
+    '<div id="ex-choices"><\/div>\n' +
+    '<div id="ex-explication" style="display:none;margin:12px 0;padding:10px 14px;background:#EFF6FF;border-radius:10px;font-size:0.8rem;color:#1d4ed8"><\/div>\n' +
+    '<div style="text-align:right;margin-top:12px"><button id="ex-next" class="btn-next" disabled>Suivant<\/button><\/div>\n' +
+    '<div id="ex-score" class="score-final" style="display:none"><\/div>\n' +
+    '<\/div><\/div><\/div>\n<\/main>\n' +
+    dataScript + '\n' +
+    '<script>\n(function(){\n' +
+    'function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}\n' +
+    'var state=null;\n' +
+    'document.getElementById("ex-start").addEventListener("click",function(){\n' +
+    '  var ik=document.getElementById("ex-item").value;\n' +
+    '  var diff=parseInt(document.getElementById("ex-diff").value)||null;\n' +
+    '  var n=parseInt(document.getElementById("ex-n").value)||10;\n' +
+    '  var pool=[];var keys=ik?[ik]:Object.keys(ALL_ITEMS);\n' +
+    '  keys.forEach(function(k){(ALL_ITEMS[k]||[]).forEach(function(q){\n' +
+    '    if(!diff||q.difficulte===diff)pool.push(Object.assign({},q,{_item:k}));\n' +
+    '  });});\n' +
+    '  pool=shuffle(pool).slice(0,n);\n' +
+    '  if(!pool.length){alert("Aucune question pour ces critères.");return;}\n' +
+    '  state={questions:pool,idx:0,score:0};\n' +
+    '  document.getElementById("qcm-player").style.display="block";\n' +
+    '  document.getElementById("ex-score").style.display="none";\n' +
+    '  showQ();\n' +
+    '});\n' +
+    'function showQ(){\n' +
+    '  var q=state.questions[state.idx];\n' +
+    '  document.getElementById("ex-progress").textContent="Question "+(state.idx+1)+" / "+state.questions.length;\n' +
+    '  document.getElementById("ex-meta").textContent=(q._item||"")+" \u00b7 Difficult\u00e9 "+q.difficulte;\n' +
+    '  document.getElementById("ex-question").textContent=q.question;\n' +
+    '  document.getElementById("ex-explication").style.display="none";\n' +
+    '  document.getElementById("ex-next").disabled=true;\n' +
+    '  var cbox=document.getElementById("ex-choices");\n' +
+    '  while(cbox.firstChild)cbox.removeChild(cbox.firstChild);\n' +
+    '  q.reponses.forEach(function(r){\n' +
+    '    var btn=document.createElement("button");btn.className="choice";\n' +
+    '    btn.dataset.correct=r.correct;\n' +
+    '    var lt=document.createElement("span");lt.className="letter";lt.textContent=r.lettre;\n' +
+    '    var tx=document.createElement("span");tx.textContent=r.texte;\n' +
+    '    btn.appendChild(lt);btn.appendChild(tx);\n' +
+    '    btn.addEventListener("click",function(){\n' +
+    '      if(btn.dataset.answered)return;\n' +
+    '      cbox.querySelectorAll(".choice").forEach(function(b){b.dataset.answered="1";});\n' +
+    '      var ok=btn.dataset.correct==="true";\n' +
+    '      if(ok){state.score++;btn.classList.add("correct");}else btn.classList.add("wrong");\n' +
+    '      cbox.querySelectorAll(".choice").forEach(function(b){\n' +
+    '        if(b.dataset.correct==="true"&&!b.classList.contains("wrong"))b.classList.add("reveal");\n' +
+    '      });\n' +
+    '      if(q.explication){var ex=document.getElementById("ex-explication");ex.textContent="\uD83D\uDCA1 "+q.explication;ex.style.display="block";}\n' +
+    '      document.getElementById("ex-next").disabled=false;\n' +
+    '    });\n' +
+    '    cbox.appendChild(btn);\n' +
+    '  });\n' +
+    '}\n' +
+    'document.getElementById("ex-next").addEventListener("click",function(){\n' +
+    '  state.idx++;if(state.idx>=state.questions.length)showScore();else showQ();\n' +
+    '});\n' +
+    'function showScore(){\n' +
+    '  var sc=document.getElementById("ex-score");\n' +
+    '  var pct=Math.round(100*state.score/state.questions.length);\n' +
+    '  var color=pct>=70?"#10B981":pct>=50?"#F59E0B":"#EF4444";\n' +
+    '  while(sc.firstChild)sc.removeChild(sc.firstChild);\n' +
+    '  var lbl=document.createElement("p");lbl.style.cssText="font-size:0.75rem;font-weight:700;color:#94a3b8;margin-bottom:8px";lbl.textContent="RÉSULTAT";sc.appendChild(lbl);\n' +
+    '  var big=document.createElement("p");big.className="score-big";big.style.color=color;big.textContent=state.score+" / "+state.questions.length;sc.appendChild(big);\n' +
+    '  var sub=document.createElement("p");sub.style.cssText="color:#64748b;margin-top:4px";sub.textContent=pct+"% de bonnes réponses";sc.appendChild(sub);\n' +
+    '  var reset=document.createElement("button");reset.className="btn-sm";reset.style.marginTop="16px";reset.textContent="Nouvelle session";\n' +
+    '  reset.addEventListener("click",function(){\n' +
+    '    sc.style.display="none";\n' +
+    '    document.getElementById("qcm-player").style.display="none";\n' +
+    '    document.getElementById("ex-next").disabled=true;\n' +
+    '    state=null;\n' +
+    '  });\n' +
+    '  sc.appendChild(reset);\n' +
+    '  sc.style.display="block";\n' +
+    '  var cbox=document.getElementById("ex-choices");while(cbox.firstChild)cbox.removeChild(cbox.firstChild);\n' +
+    '  document.getElementById("ex-question").textContent="";\n' +
+    '  document.getElementById("ex-explication").style.display="none";\n' +
+    '  document.getElementById("ex-next").disabled=true;\n' +
+    '  state=null;\n' +
+    '}\n' +
+    '})();\n' +
+    '<\/script>\n<\/body>\n<\/html>';
 }
 
 if ('serviceWorker' in navigator) {

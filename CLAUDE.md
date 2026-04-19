@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 19 avril 2026 (session v3.70 → v3.71 — module QCM EDN externe)
+> Dernière mise à jour : 19 avril 2026 (session v3.71 → v3.72 — Mon externe dashboard + export HTML autonome)
 > Fusionne : INSTRUCTIONS_PROJET.md, PLAN_V2.md, SPEC_PATIENT_V3.md, PROJECT_PENDING.md, parametrage_login.md, fix-auth-complete.md, DEPLOY.md, NEXT_SESSION_QCM.md
 
 ---
@@ -346,11 +346,10 @@ Ordre des cartes (haut-gauche → bas-droite) : Programme, Journal, Traitements,
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
-- [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF). Actuellement seule l'auto-évaluation manque.
-- [ ] **Livret IFSI — PDF basique** : export progression élève (questions + ses réponses) pour archivage fin de stage si pas de portfolio complet.
-- [ ] **QCM EDN — vue tuteur** : section "Mes externes" dans `admin/index.html` (analogue à "Mon élève"). Lister `qcm_flags` ouverts via jointure `tuteur_etudiant`, agréger stats `qcm_sessions` par item/externe (% de réussite, dernière session, signalements en attente). Permettre au tuteur de répondre via `qcm_flags.tuteur_reponse` + bascule statut → `traite`.
-- [ ] **QCM EDN — lien tuteur↔externe** : UI dans gestion comptes admin pour insérer une ligne `tuteur_etudiant` au moment de la création d'un compte externe (sélecteur tuteur parmi médecins/IDE).
-- [ ] **QCM EDN — affichage tuteur dans en-tête `extern/`** : la requête est faite (jointure `tuteur_etudiant` → `profiles`) mais la jointure peut échouer si le nom de FK n'est pas exactement `tuteur_etudiant_tuteur_id_fkey` — à valider une fois que des liens existent.
+- [ ] **Livret IFSI — PDF basique** : export progression élève (questions + ses réponses) pour archivage fin de stage.
+- [x] **QCM EDN — vue tuteur** : section "Mon externe" dans `admin/index.html` pour médecin/admin. Tous les médecins voient l'externe (pas de tuteur désigné). Stats sessions, signalements, réponse aux flags. (v3.72)
+- [x] **QCM EDN — export app autonome** : bouton dans `extern/index.html` génère un HTML standalone avec 477 questions embarquées + joueur interactif + historique sessions. Sans feature tuteur (signalements). (v3.72)
+- [ ] **Bug planning — présence réunion** : cocher présence/absence sur une réunion ne peut pas être décoché, et s'applique à toutes les semaines (pas isolé par date de semaine).
 - [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
 
 ---

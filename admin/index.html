@@ -210,14 +210,41 @@
           </div>
         </div>
 
-        <!-- ═══ Mon élève (livret IFSI) ═══ -->
+        <!-- ═══ Mes élèves / Mon externe (accordion unifié) ═══ -->
         <div id="section-eleves" class="mb-4 hidden">
           <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
             <div class="flex items-center justify-between px-3 py-2.5 border-b border-slate-200">
-              <h3 class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
+              <h3 id="eleves-section-title" class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
               <span id="eleves-count" class="text-[10px] text-slate-400"></span>
             </div>
-            <div id="eleves-list" class="p-3 space-y-2"></div>
+            <!-- Sous-section IFSI (IDE + admin) -->
+            <div id="eleves-ifsi-wrap">
+              <div id="eleves-ifsi-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">📘 Livret IFSI</span>
+              </div>
+              <div id="eleves-list" class="p-3 space-y-2"></div>
+            </div>
+            <!-- Sous-section QCM externe (médecin + admin) -->
+            <div id="eleves-externe-wrap" class="hidden">
+              <div id="eleves-externe-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">🩺 Externe — QCM EDN</span>
+              </div>
+              <div id="externe-list" class="p-3 space-y-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal réponse signalement externe -->
+        <div id="modal-flag-response" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+          <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3">
+            <h4 class="text-sm font-bold text-slate-800">Répondre au signalement</h4>
+            <p id="modal-flag-question" class="text-[11px] font-semibold text-slate-700"></p>
+            <p id="modal-flag-message" class="text-xs text-slate-500 italic"></p>
+            <textarea id="modal-flag-text" rows="3" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-indigo-400" placeholder="Votre réponse…"></textarea>
+            <div class="flex gap-2">
+              <button id="modal-flag-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
+              <button id="modal-flag-submit" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm">Envoyer</button>
+            </div>
           </div>
         </div>
 
@@ -2351,17 +2378,20 @@ async function renderGroupesTab() {
           var presDiv = createEl('div', 'mt-3 pt-2 border-t border-indigo-200/60');
           presDiv.id = 'reu-pres-' + reu.slug;
           rCard.appendChild(presDiv);
-          (async function(slug, container, reuJour) {
+          // Date réelle de la réunion dans la semaine affichée (pas todayStr)
+          var reuDateStr = reuDate.getFullYear() + '-' +
+            String(reuDate.getMonth() + 1).padStart(2, '0') + '-' +
+            String(reuDate.getDate()).padStart(2, '0');
+          (async function(slug, container, reuJour, dateStr) {
             try {
-              var presences = await db.getPresencesReunion(slug, todayStr);
+              var presences = await db.getPresencesReunion(slug, dateStr);
               var profiles = await db.getAllProfiles();
               var medecins = profiles.filter(function(p) {
                 if (p.role !== 'medecin') return false;
-                // Filtrer par jours de présence si défini
                 if (p.jours_presence && p.jours_presence.length > 0) {
                   return p.jours_presence.indexOf(reuJour) !== -1;
                 }
-                return true; // null = présent tous les jours
+                return true;
               });
               var presMap = {};
               presences.forEach(function(pr) { presMap[pr.user_id] = pr; });
@@ -2371,28 +2401,38 @@ async function renderGroupesTab() {
                 row.appendChild(createEl('span', 'text-xs font-semibold text-slate-700', med.nom));
                 var btns = createEl('div', 'flex gap-1.5');
                 var btnP = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
-                  (pr && pr.present ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
-                  pr && pr.present ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
+                  (pr && pr.present === true ? 'bg-emerald-600 text-white' : 'bg-white border border-emerald-300 text-emerald-600'),
+                  pr && pr.present === true ? '\u2713 Pr\u00e9sent' : 'Pr\u00e9sent');
                 var btnA = createEl('button', 'px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ' +
                   (pr && pr.present === false ? 'bg-slate-600 text-white' : 'bg-white border border-slate-300 text-slate-500'),
                   pr && pr.present === false ? '\u2713 Absent' : 'Absent');
-                (function(s, uid) {
+                (function(s, uid, ds) {
                   btnP.addEventListener('click', async function() {
-                    await db.upsertPresenceReunion(s, todayStr, uid, true);
+                    // Toggle : si déjà Présent → supprimer (décocher)
+                    if (btnP.classList.contains('bg-emerald-600')) {
+                      await db.deletePresenceReunion(s, ds, uid);
+                    } else {
+                      await db.upsertPresenceReunion(s, ds, uid, true);
+                    }
                     renderGroupesTab();
                   });
                   btnA.addEventListener('click', async function() {
-                    await db.upsertPresenceReunion(s, todayStr, uid, false);
+                    // Toggle : si déjà Absent → supprimer (décocher)
+                    if (btnA.classList.contains('bg-slate-600')) {
+                      await db.deletePresenceReunion(s, ds, uid);
+                    } else {
+                      await db.upsertPresenceReunion(s, ds, uid, false);
+                    }
                     renderGroupesTab();
                   });
-                })(slug, med.id);
+                })(slug, med.id, dateStr);
                 btns.appendChild(btnP);
                 btns.appendChild(btnA);
                 row.appendChild(btns);
                 container.appendChild(row);
               });
             } catch(e) {}
-          })(reu.slug, presDiv, reu.jour);
+          })(reu.slug, presDiv, reu.jour, reuDateStr);
         }
         reunionsList.appendChild(rCard);
       }
@@ -3125,44 +3165,84 @@ document.getElementById('modal-groupe-actions').addEventListener('click', functi
   document.getElementById('login-screen').classList.remove('hidden');
 })();
 
-// ══════════════ MES ÉLÈVES (Livret IFSI — vue tuteur) ══════════════
+// ══════════════ MES ÉLÈVES / MON EXTERNE (vue tuteur) ══════════════
 
 async function loadEleves() {
-  // Visible pour IDE, médecin, admin
-  var visible = currentProfile && (currentProfile.is_admin || currentProfile.role === 'ide' || currentProfile.role === 'medecin');
-  if (!visible) return;
+  if (!currentProfile) return;
+  var isAdmin = currentProfile.is_admin === true;
+  var role = currentProfile.role;
+  var showIFSI = isAdmin || role === 'ide' || role === 'medecin';
+  var showQCM = isAdmin || role === 'medecin';
+  if (!showIFSI && !showQCM) return;
 
-  try {
-    var stages = await db.getAllStages();
-    if (!stages || stages.length === 0) return;
+  // Titre dynamique
+  var titleEl = document.getElementById('eleves-section-title');
+  if (isAdmin) titleEl.textContent = '🎓 Mes élèves';
+  else if (role === 'ide') titleEl.textContent = '🎓 Mon élève';
+  else titleEl.textContent = '🩺 Mon externe';
 
+  var hasContent = false;
+
+  // ── IFSI livret ──
+  if (showIFSI) {
+    try {
+      var stages = await db.getAllStages();
+      if (stages && stages.length > 0) {
+        if (isAdmin) document.getElementById('eleves-ifsi-subheader').classList.remove('hidden');
+        var enriched = await Promise.all(stages.map(async function(s) {
+          var prof = null;
+          try { var res = await sb.from('profiles').select('nom, email').eq('id', s.user_id).single(); prof = res.data; } catch(e) {}
+          var progression = [];
+          try { progression = await db.getProgressionStage(s.id); } catch(e) {}
+          return {
+            stage: s,
+            profil: prof || { nom: '(nom inconnu)' },
+            nb_repondu: progression.filter(function(p) { return p.reponse_etudiant || p.reponse_json; }).length,
+            nb_a_revoir: progression.filter(function(p) { return (p.reponse_etudiant || p.reponse_json) && !p.vu_tuteur; }).length
+          };
+        }));
+        enriched.sort(function(a, b) {
+          return new Date(b.stage.date_debut) - new Date(a.stage.date_debut);
+        });
+        renderEleves(enriched);
+        hasContent = true;
+      }
+    } catch(e) { console.warn('loadEleves IFSI', e); }
+  }
+
+  // ── QCM externe ──
+  if (showQCM) {
+    try {
+      var externes = await db.getExterneProfiles();
+      if (externes && externes.length > 0) {
+        document.getElementById('eleves-externe-wrap').classList.remove('hidden');
+        if (isAdmin) document.getElementById('eleves-externe-subheader').classList.remove('hidden');
+        var externeData = await Promise.all(externes.map(async function(ext) {
+          var sessions = [], flags = [];
+          try { sessions = await db.getExterneStats(ext.id); } catch(e) {}
+          try { flags = await db.getExterneFlags(ext.id); } catch(e) {}
+          return { profil: ext, sessions: sessions, flags: flags };
+        }));
+        renderExterne(externeData);
+        hasContent = true;
+      }
+    } catch(e) { console.warn('loadEleves QCM', e); }
+  }
+
+  if (hasContent) {
     document.getElementById('section-eleves').classList.remove('hidden');
-
-    // Pour chaque stage on récupère : le profil de l'élève, le total de questions livret, et le nb de réponses / à revoir
-    var enriched = await Promise.all(stages.map(async function(s) {
-      var prof = null;
-      try { var res = await sb.from('profiles').select('nom, email').eq('id', s.user_id).single(); prof = res.data; } catch(e) {}
-      var progression = [];
-      try { progression = await db.getProgressionStage(s.id); } catch(e) {}
-      return {
-        stage: s,
-        profil: prof || { nom: '(nom inconnu)' },
-        nb_repondu: progression.filter(function(p) { return p.reponse_etudiant || p.reponse_json; }).length,
-        nb_a_revoir: progression.filter(function(p) { return (p.reponse_etudiant || p.reponse_json) && !p.vu_tuteur; }).length
-      };
-    }));
-
-    // Mon élève en premier, puis les autres
-    enriched.sort(function(a, b) {
-      var aMine = a.stage.tuteur_id === currentProfile.id ? 0 : 1;
-      var bMine = b.stage.tuteur_id === currentProfile.id ? 0 : 1;
-      if (aMine !== bMine) return aMine - bMine;
-      return new Date(b.stage.date_debut) - new Date(a.stage.date_debut);
-    });
-
-    document.getElementById('eleves-count').textContent = enriched.length === 0 ? 'aucune' : (enriched.length === 1 ? '1 en cours' : enriched.length + ' en cours');
-    renderEleves(enriched);
-  } catch(e) { console.warn('loadEleves', e); }
+    // Compteur dans l'en-tête
+    var parts = [];
+    if (showIFSI) {
+      var nb = document.getElementById('eleves-list').children.length;
+      if (nb) parts.push(nb + ' élève' + (nb > 1 ? 's' : ''));
+    }
+    if (showQCM) {
+      var nbExt = document.getElementById('externe-list').children.length;
+      if (nbExt) parts.push(nbExt + ' externe' + (nbExt > 1 ? 's' : ''));
+    }
+    document.getElementById('eleves-count').textContent = parts.join(' · ');
+  }
 }
 
 function renderEleves(list) {
@@ -3253,6 +3333,160 @@ async function openEleveEditForm(item) {
   } catch(e) { console.warn(e); }
   document.getElementById('modal-eleve-edit').classList.remove('hidden');
 }
+
+// ── Rendu section QCM externe ──
+function renderExterne(list) {
+  var container = document.getElementById('externe-list');
+  container.textContent = '';
+
+  if (!list || !list.length) {
+    container.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucun compte externe actif.'));
+    return;
+  }
+
+  list.forEach(function(item) {
+    var ext = item.profil;
+    var sessions = item.sessions;
+    var flags = item.flags;
+
+    var nbSessions = sessions.length;
+    var nbFlags = flags.length;
+    var nbFlagsOuverts = flags.filter(function(f) { return f.statut === 'ouvert'; }).length;
+
+    // Score moyen
+    var scoreMoyen = 0;
+    if (nbSessions) {
+      var total = sessions.reduce(function(acc, s) {
+        return acc + (s.nb_questions ? Math.round(100 * s.score / s.nb_questions) : 0);
+      }, 0);
+      scoreMoyen = Math.round(total / nbSessions);
+    }
+
+    // Dernière session
+    var derniereSession = sessions.length ? new Date(sessions[0].created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) : null;
+
+    // Itemss couverts (uniques)
+    var itemsCoverts = [...new Set(sessions.map(function(s) { return s.item; }).filter(Boolean))];
+
+    var card = createEl('div', 'bg-slate-50 rounded-lg p-3 border border-slate-200');
+
+    // Header
+    var header = createEl('div', 'flex items-center justify-between gap-2 mb-2');
+    header.appendChild(createEl('span', 'text-sm font-bold text-slate-800', ext.nom || ext.email));
+    if (nbFlagsOuverts > 0) {
+      header.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700', nbFlagsOuverts + ' signalement' + (nbFlagsOuverts > 1 ? 's' : '') + ' en attente'));
+    }
+    card.appendChild(header);
+
+    // Stats ligne
+    if (nbSessions) {
+      var statLine = createEl('div', 'flex gap-3 mb-2 flex-wrap');
+      statLine.appendChild(createEl('span', 'text-[11px] text-slate-600', '📝 ' + nbSessions + ' session' + (nbSessions > 1 ? 's' : '')));
+      statLine.appendChild(createEl('span', 'text-[11px] text-slate-600', '🎯 Moy. ' + scoreMoyen + '%'));
+      statLine.appendChild(createEl('span', 'text-[11px] text-slate-600', '📚 ' + itemsCoverts.length + ' item' + (itemsCoverts.length > 1 ? 's' : '') + ' travaillé' + (itemsCoverts.length > 1 ? 's' : '')));
+      if (derniereSession) statLine.appendChild(createEl('span', 'text-[11px] text-slate-400', 'Dernière : ' + derniereSession));
+      card.appendChild(statLine);
+    } else {
+      card.appendChild(createEl('p', 'text-[11px] text-slate-400 mb-2', 'Aucune session QCM.'));
+    }
+
+    // Signalements ouverts
+    var flagsOuverts = flags.filter(function(f) { return f.statut === 'ouvert'; });
+    if (flagsOuverts.length > 0) {
+      var flagTitle = createEl('p', 'text-[10px] font-bold text-amber-700 uppercase tracking-wide mb-1.5', 'Signalements en attente');
+      card.appendChild(flagTitle);
+      flagsOuverts.forEach(function(f) {
+        var fRow = createEl('div', 'bg-amber-50 rounded-lg p-2 mb-1.5 border border-amber-100');
+        fRow.appendChild(createEl('p', 'text-[11px] font-semibold text-slate-700', f.question_source));
+        var typeLabel = f.type === 'erreur_question' ? '⚠ Erreur signalée' : '❓ Demande d\'explication';
+        fRow.appendChild(createEl('p', 'text-[11px] text-slate-500 mt-0.5', typeLabel));
+        if (f.message) fRow.appendChild(createEl('p', 'text-[11px] text-slate-600 italic mt-1', '« ' + f.message + ' »'));
+        var btnRepondre = createEl('button', 'mt-2 text-[11px] font-bold px-3 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors', 'Répondre');
+        btnRepondre.addEventListener('click', (function(flagId, question, message) {
+          return function() { openFlagResponseModal(flagId, question, message); };
+        })(f.id, f.question_source, f.message));
+        fRow.appendChild(btnRepondre);
+        card.appendChild(fRow);
+      });
+    }
+
+    // Bouton stats détaillées
+    var actionsRow = createEl('div', 'flex gap-2 mt-2');
+    var btnStats = createEl('button', 'flex-1 text-[11px] font-bold py-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-colors', '📊 Voir toutes les sessions');
+    btnStats.addEventListener('click', (function(extId, extNom, extSessions) {
+      return function() { showExterneSessionsModal(extId, extNom, extSessions); };
+    })(ext.id, ext.nom, sessions));
+    actionsRow.appendChild(btnStats);
+    card.appendChild(actionsRow);
+
+    container.appendChild(card);
+  });
+}
+
+// ── Modal détail sessions externe ──
+function showExterneSessionsModal(extId, extNom, sessions) {
+  var overlay = createEl('div', 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4');
+  var box = createEl('div', 'bg-white rounded-2xl max-w-sm w-full max-h-[80vh] flex flex-col overflow-hidden');
+
+  var hdr = createEl('div', 'flex items-center justify-between px-4 py-3 border-b border-slate-200');
+  hdr.appendChild(createEl('span', 'text-sm font-bold text-slate-800', '📊 Sessions de ' + (extNom || 'l\'externe')));
+  var close = createEl('button', 'text-slate-400 hover:text-slate-600 font-bold text-lg', '×');
+  close.addEventListener('click', function() { document.body.removeChild(overlay); });
+  hdr.appendChild(close);
+  box.appendChild(hdr);
+
+  var body = createEl('div', 'overflow-y-auto p-4 space-y-2');
+  if (!sessions.length) {
+    body.appendChild(createEl('p', 'text-sm text-slate-400 text-center py-4', 'Aucune session.'));
+  } else {
+    sessions.slice(0, 30).forEach(function(s) {
+      var d = new Date(s.created_at).toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+      var pct = s.nb_questions ? Math.round(100 * s.score / s.nb_questions) : 0;
+      var color = pct >= 70 ? 'text-emerald-600' : pct >= 50 ? 'text-amber-600' : 'text-red-500';
+      var row = createEl('div', 'flex items-center justify-between py-1.5 border-b border-slate-100');
+      row.appendChild(createEl('div', 'flex-1 min-w-0', [
+        createEl('p', 'text-xs font-semibold text-slate-700 truncate', s.item || 'Tous items'),
+        createEl('p', 'text-[10px] text-slate-400', d + ' · ' + s.mode)
+      ]));
+      row.appendChild(createEl('span', 'text-xs font-bold ' + color, s.score + '/' + s.nb_questions + ' (' + pct + '%)'));
+      body.appendChild(row);
+    });
+  }
+  box.appendChild(body);
+  overlay.appendChild(box);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) document.body.removeChild(overlay); });
+  document.body.appendChild(overlay);
+}
+
+// ── Modal réponse signalement ──
+var _pendingFlagId = null;
+
+function openFlagResponseModal(flagId, question, message) {
+  _pendingFlagId = flagId;
+  document.getElementById('modal-flag-question').textContent = question;
+  document.getElementById('modal-flag-message').textContent = message ? '« ' + message + ' »' : '';
+  document.getElementById('modal-flag-text').value = '';
+  document.getElementById('modal-flag-response').classList.remove('hidden');
+}
+
+document.getElementById('modal-flag-cancel').addEventListener('click', function() {
+  document.getElementById('modal-flag-response').classList.add('hidden');
+  _pendingFlagId = null;
+});
+
+document.getElementById('modal-flag-submit').addEventListener('click', async function() {
+  var btn = this;
+  var reponse = document.getElementById('modal-flag-text').value.trim();
+  if (!reponse || !_pendingFlagId) return;
+  btn.disabled = true; btn.textContent = 'Envoi…';
+  try {
+    await db.respondToFlag(_pendingFlagId, reponse);
+    document.getElementById('modal-flag-response').classList.add('hidden');
+    _pendingFlagId = null;
+    await loadEleves();
+  } catch(e) { alert('Erreur : ' + e.message); }
+  btn.disabled = false; btn.textContent = 'Envoyer';
+});
 
 document.getElementById('eleve-edit-cancel').addEventListener('click', function() {
   document.getElementById('modal-eleve-edit').classList.add('hidden');
