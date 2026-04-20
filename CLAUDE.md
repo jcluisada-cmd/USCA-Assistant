@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.89 — 3 tableaux PDF → HTML (équivalences BZD, CPZ, comparatif antipsy) · Messages admin unifiés (compose inline) · spec AI pdf2html.md)
+> Dernière mise à jour : 20 avril 2026 (v3.94 — liste d'attente enrichie : pré-admission, destination prévue, DDN libre, date sortie prévue)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.89 |
+| **Service Worker** | usca-v3.94 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -159,7 +159,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `presences_reunions` — Présences aux réunions staff (médecins)
 
 ### Tables gestion lits
-- `liste_attente` — Patients en attente d'admission (age, addressage, date_entree_prevue, commentaire)
+- `liste_attente` — Patients en attente d'admission (age, ddn, addressage, date_entree_prevue, date_sortie_prevue, pre_admission, destination_prevue JSONB, commentaire). Migration v22 : ajout `pre_admission`, `destination_prevue`, `ddn`, `date_sortie_prevue`.
 
 ### Tables livret IFSI
 - `etudiants_stages` — Stage de l'étudiant·e IDE (nom, IFSI, promo, dates, IDE référent·e)
@@ -272,7 +272,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
-- [ ] **Liste d'attente enrichie** : ajouter quatre champs au formulaire "Ajouter en liste d'attente" (accordion Attente du dashboard admin) — (1) case à cocher "Passé par une pré-admission", (2) **destination prévue** (picker identique à celui des sorties : RAD / Post-cure + sélecteur de centre / SSR polyvalent / HDJ / Autre), (3) date de sortie prévue (optionnel, si connue dès l'admission), (4) date de naissance au format libre "JJMMAAAA" ou "JJ/MM/AAAA" en saisie texte (pas de date picker — les soignants peuvent taper rapidement, les slash sont ignorés). Garder la possibilité de saisir directement l'âge. Migration SQL nécessaire sur table `liste_attente` (v22) pour ajouter colonnes `pre_admission BOOLEAN`, `destination_prevue JSONB` (même shape que `sortie_info`), `ddn TEXT`, `date_sortie_prevue DATE`. Objectif : admettre plus vite dès qu'un lit se libère en ayant déjà l'info d'orientation post-séjour.
+- [ ] **(Priorité basse) Toolbox — performances & dark mode instantané** : la Toolbox a ~500 ms de latence au chargement (transpilation Babel in-browser du JSX) et au toggle dark mode (reload de l'iframe forcé car les couleurs sont figées dans les constantes JS `C.n[]`, `C.t[]`…). Fix racine commun : introduire un bundler (Vite ou esbuild) pour pré-compiler le JSX et passer les couleurs en variables CSS (`var(--n-800)` au lieu de `C.n[800]`). Contrevient à la règle "pas de bundler" §9 — à reconsidérer quand la latence deviendra vraiment gênante.
 - [ ] **Ressources Toolbox — GitHub Action pour regénérer `index.json`** : aujourd'hui le manifest est maintenu à la main (ajouter un PDF = ajouter une entrée au JSON). Ajouter une Action qui scanne `ressources_doc/fiches|articles|recos|algos/` et regénère `index.json` à chaque push, pour un "vrai" zéro-code workflow. Inférence raisonnable : type depuis le sous-dossier, nom de fichier → titre (humanisé), date = dernière modif git. Garder les overrides `tag` et `meta` dans un YAML frontmatter optionnel dans le nom/fichier si nécessaire.
 - [ ] **Toolbox — Fiches Expert hors antipsychotiques** : enrichir `fiches_expert/` avec synthèses cliniques pour les autres familles (BZD, TSO/méthadone-BHD, thymorégulateurs, stimulants, antidépresseurs). Structure d'accordion déjà en place dans `TraitementsView` — il suffit d'ajouter les PDFs et les entrées dans `FICHES_EXPERT_CATS`.
 

@@ -175,16 +175,38 @@
               <!-- Formulaire ajout/édition attente -->
               <div id="form-attente" class="hidden mt-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
                 <h5 id="form-attente-title" class="text-xs font-bold text-indigo-700 mb-2">Nouveau patient</h5>
+
+                <!-- Âge + DDN libre -->
                 <div class="grid grid-cols-2 gap-2 mb-2">
                   <div>
                     <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Âge</label>
                     <input type="number" id="att-age" placeholder="65" min="18" max="100" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
                   </div>
                   <div>
-                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date d'entrée prévue</label>
-                    <input type="date" id="att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">DDN (optionnel)</label>
+                    <input type="text" id="att-ddn" placeholder="01/01/1980" inputmode="numeric" maxlength="10" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
                   </div>
                 </div>
+
+                <!-- Dates entrée / sortie prévues -->
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Entrée prévue</label>
+                    <input type="date" id="att-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Sortie prévue (optionnel)</label>
+                    <input type="date" id="att-date-sortie" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                  </div>
+                </div>
+
+                <!-- Pré-admission -->
+                <label class="flex items-center gap-2 mb-2 p-2 bg-white border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                  <input type="checkbox" id="att-pre-admission" class="w-4 h-4 accent-indigo-600 flex-shrink-0">
+                  <span class="text-xs font-semibold text-slate-700">Passé par une pré-admission</span>
+                </label>
+
+                <!-- Adressage -->
                 <div class="mb-2">
                   <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Adressage</label>
                   <select id="att-addressage" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
@@ -197,10 +219,35 @@
                     <option value="Psychiatre">Psychiatre</option>
                   </select>
                 </div>
+
+                <!-- Destination prévue -->
+                <div class="mb-2">
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Destination prévue</label>
+                  <div class="flex gap-2 flex-wrap" id="att-dest-radios">
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="" class="accent-indigo-600"><span>—</span></label>
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="rad" class="accent-indigo-600"><span>RAD</span></label>
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="postcure" class="accent-indigo-600"><span>Post-cure</span></label>
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="ssr" class="accent-indigo-600"><span>SSR polyvalent</span></label>
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="hdj" class="accent-indigo-600"><span>HDJ</span></label>
+                    <label class="flex items-center gap-1 text-xs"><input type="radio" name="att-dest" value="autre" class="accent-indigo-600"><span>Autre</span></label>
+                  </div>
+                </div>
+                <div id="att-postcure-wrap" class="mb-2 hidden">
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Centre post-cure</label>
+                  <select id="att-postcure-centre" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400"></select>
+                </div>
+                <div id="att-autre-wrap" class="mb-2 hidden">
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Précision (autre)</label>
+                  <input type="text" id="att-autre-precision" placeholder="Ex : foyer, transfert..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
+                </div>
+
+                <!-- Commentaire -->
                 <div class="mb-2">
                   <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
                   <input type="text" id="att-commentaire" placeholder="Détails..." class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
                 </div>
+
+                <p id="att-error" class="text-xs text-red-600 mb-2 hidden"></p>
                 <div class="flex gap-2">
                   <button id="btn-cancel-attente" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
                   <button id="btn-save-attente" class="flex-1 py-2 bg-indigo-600 text-white font-bold rounded-lg text-xs hover:bg-indigo-700 transition-colors">Enregistrer</button>
@@ -1086,13 +1133,38 @@ function renderAttente() {
     top.appendChild(topRight);
     row.appendChild(top);
 
-    // Ligne 2 : badge adressage + bouton Admettre
-    var bottom = createEl('div', 'flex items-center justify-between gap-1 mt-1.5');
-    bottom.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded', item.addressage));
+    // Ligne 2 : badges (adressage + pré-admission + destination) + bouton Admettre
+    var bottom = createEl('div', 'flex items-center justify-between gap-1 mt-1.5 flex-wrap');
+    var badges = createEl('div', 'flex items-center gap-1 flex-wrap');
+    badges.appendChild(createEl('span', 'text-[10px] font-semibold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded', item.addressage));
+    if (item.pre_admission) {
+      badges.appendChild(createEl('span', 'text-[10px] font-semibold bg-teal-100 text-teal-700 px-1.5 py-0.5 rounded', '✓ Pré-adm'));
+    }
+    if (item.destination_prevue && item.destination_prevue.destination) {
+      var destLabels = { rad:'RAD', postcure:'Post-cure', ssr:'SSR polyv.', hdj:'HDJ', autre:'Autre' };
+      var dest = item.destination_prevue;
+      var destTxt = destLabels[dest.destination] || dest.destination;
+      if (dest.destination === 'postcure' && dest.postcure_centre && window.POSTCURE_STRUCTS && window.POSTCURE_STRUCTS[dest.postcure_centre]) {
+        destTxt = 'PC : ' + window.POSTCURE_STRUCTS[dest.postcure_centre].nom;
+      } else if (dest.destination === 'autre' && dest.autre_precision) {
+        destTxt = 'Autre : ' + dest.autre_precision;
+      }
+      badges.appendChild(createEl('span', 'text-[10px] font-semibold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded', '→ ' + destTxt));
+    }
+    bottom.appendChild(badges);
+
     var btnAdm = createEl('button', 'text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors whitespace-nowrap flex-shrink-0', 'Admettre');
     (function(id) { btnAdm.addEventListener('click', function(e) { e.stopPropagation(); startAdmettre(id); }); })(item.id);
     bottom.appendChild(btnAdm);
     row.appendChild(bottom);
+
+    // Ligne 3 : DDN + sortie prévue (si renseignées)
+    if (item.ddn || item.date_sortie_prevue) {
+      var ddnLine = createEl('div', 'flex items-center gap-2 mt-1 text-[10px] text-slate-500');
+      if (item.ddn) ddnLine.appendChild(createEl('span', '', 'DDN : ' + item.ddn));
+      if (item.date_sortie_prevue) ddnLine.appendChild(createEl('span', '', 'Sortie : ' + new Date(item.date_sortie_prevue).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })));
+      row.appendChild(ddnLine);
+    }
 
     if (item.commentaire) {
       row.appendChild(createEl('p', 'text-[11px] text-slate-500 mt-1 truncate', item.commentaire));
@@ -1101,13 +1173,65 @@ function renderAttente() {
   });
 }
 
+// Normalise une saisie DDN "01011980" ou "01/01/1980" → "01/01/1980"
+function normalizeDdn(raw) {
+  if (!raw) return '';
+  var digits = String(raw).replace(/\D/g, '');
+  if (digits.length !== 8) return raw.trim();
+  return digits.slice(0,2) + '/' + digits.slice(2,4) + '/' + digits.slice(4,8);
+}
+// Calcule l'âge depuis une DDN normalisée "JJ/MM/AAAA"
+function ageFromDdn(ddnText) {
+  var m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(ddnText);
+  if (!m) return null;
+  var day = parseInt(m[1],10), month = parseInt(m[2],10), year = parseInt(m[3],10);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  var today = new Date();
+  var age = today.getFullYear() - year;
+  if (today.getMonth()+1 < month || (today.getMonth()+1 === month && today.getDate() < day)) age--;
+  return age > 0 && age < 130 ? age : null;
+}
+function populateAttPostcureCentres() {
+  var sel = document.getElementById('att-postcure-centre');
+  if (!sel || !window.POSTCURE_STRUCTS) return;
+  sel.innerHTML = '';
+  sel.appendChild(new Option('Centre à préciser', ''));
+  Object.keys(window.POSTCURE_STRUCTS).forEach(function(k) {
+    var c = window.POSTCURE_STRUCTS[k];
+    sel.appendChild(new Option(c.nom, k));
+  });
+}
+function syncAttDestWraps() {
+  var checked = document.querySelector('input[name="att-dest"]:checked');
+  var val = checked ? checked.value : '';
+  document.getElementById('att-postcure-wrap').classList.toggle('hidden', val !== 'postcure');
+  document.getElementById('att-autre-wrap').classList.toggle('hidden', val !== 'autre');
+}
+document.getElementById('att-ddn').addEventListener('blur', function() {
+  var norm = normalizeDdn(this.value);
+  this.value = norm;
+  var computed = ageFromDdn(norm);
+  if (computed) document.getElementById('att-age').value = computed;
+});
+document.querySelectorAll('input[name="att-dest"]').forEach(function(r) {
+  r.addEventListener('change', syncAttDestWraps);
+});
+
 document.getElementById('btn-add-attente').addEventListener('click', function() {
   editingAttenteId = null;
   document.getElementById('form-attente-title').textContent = 'Nouveau patient';
   document.getElementById('att-age').value = '';
+  document.getElementById('att-ddn').value = '';
   document.getElementById('att-date').value = '';
+  document.getElementById('att-date-sortie').value = '';
+  document.getElementById('att-pre-admission').checked = false;
   document.getElementById('att-addressage').value = 'Médecin Traitant';
   document.getElementById('att-commentaire').value = '';
+  populateAttPostcureCentres();
+  document.getElementById('att-autre-precision').value = '';
+  document.querySelectorAll('input[name="att-dest"]').forEach(function(r) { r.checked = (r.value === ''); });
+  syncAttDestWraps();
+  document.getElementById('att-error').classList.add('hidden');
   document.getElementById('form-attente').classList.remove('hidden');
 });
 
@@ -1117,22 +1241,60 @@ document.getElementById('btn-cancel-attente').addEventListener('click', function
 });
 
 document.getElementById('btn-save-attente').addEventListener('click', async function() {
+  var errEl = document.getElementById('att-error');
   var age = parseInt(document.getElementById('att-age').value);
+  var ddnRaw = document.getElementById('att-ddn').value.trim();
+  var ddn = ddnRaw ? normalizeDdn(ddnRaw) : '';
+  if (ddn && !/^\d{2}\/\d{2}\/\d{4}$/.test(ddn)) {
+    errEl.textContent = 'DDN invalide (format JJ/MM/AAAA ou JJMMAAAA)'; errEl.classList.remove('hidden'); return;
+  }
+  if (!age && ddn) age = ageFromDdn(ddn);
+  if (!age || age < 1) {
+    errEl.textContent = 'Âge requis (saisir l\'âge ou une DDN complète)'; errEl.classList.remove('hidden'); return;
+  }
+  errEl.classList.add('hidden');
+
   var date = document.getElementById('att-date').value;
+  var dateSortie = document.getElementById('att-date-sortie').value;
+  var preAdm = document.getElementById('att-pre-admission').checked;
   var addressage = document.getElementById('att-addressage').value;
   var commentaire = document.getElementById('att-commentaire').value.trim();
-  if (!age || age < 1) return;
+
+  var destRadio = document.querySelector('input[name="att-dest"]:checked');
+  var destVal = destRadio ? destRadio.value : '';
+  var destObj = null;
+  if (destVal) {
+    destObj = {
+      destination: destVal,
+      postcure_centre: destVal === 'postcure' ? (document.getElementById('att-postcure-centre').value || null) : null,
+      autre_precision: destVal === 'autre' ? (document.getElementById('att-autre-precision').value.trim() || null) : null
+    };
+  }
+
+  var payload = {
+    age: age,
+    ddn: ddn || null,
+    date_entree_prevue: date || null,
+    date_sortie_prevue: dateSortie || null,
+    pre_admission: preAdm,
+    addressage: addressage,
+    commentaire: commentaire,
+    destination_prevue: destObj
+  };
+
   try {
     if (editingAttenteId) {
-      await db.updateListeAttente(editingAttenteId, { age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+      await db.updateListeAttente(editingAttenteId, payload);
     } else {
-      await db.addListeAttente({ age: age, date_entree_prevue: date || null, addressage: addressage, commentaire: commentaire });
+      await db.addListeAttente(payload);
     }
     document.getElementById('form-attente').classList.add('hidden');
     editingAttenteId = null;
     await loadListeAttente();
   } catch (err) {
     console.error('Erreur liste attente :', err);
+    errEl.textContent = err.message || 'Erreur à l\'enregistrement';
+    errEl.classList.remove('hidden');
   }
 });
 
@@ -1142,9 +1304,19 @@ function editAttente(id) {
   editingAttenteId = id;
   document.getElementById('form-attente-title').textContent = 'Modifier le patient';
   document.getElementById('att-age').value = item.age;
+  document.getElementById('att-ddn').value = item.ddn || '';
   document.getElementById('att-date').value = item.date_entree_prevue || '';
+  document.getElementById('att-date-sortie').value = item.date_sortie_prevue || '';
+  document.getElementById('att-pre-admission').checked = !!item.pre_admission;
   document.getElementById('att-addressage').value = item.addressage;
   document.getElementById('att-commentaire').value = item.commentaire || '';
+  populateAttPostcureCentres();
+  var dest = (item.destination_prevue || {}).destination || '';
+  document.querySelectorAll('input[name="att-dest"]').forEach(function(r) { r.checked = (r.value === dest); });
+  document.getElementById('att-postcure-centre').value = (item.destination_prevue || {}).postcure_centre || '';
+  document.getElementById('att-autre-precision').value = (item.destination_prevue || {}).autre_precision || '';
+  syncAttDestWraps();
+  document.getElementById('att-error').classList.add('hidden');
   document.getElementById('form-attente').classList.remove('hidden');
 }
 
@@ -1164,7 +1336,14 @@ var admettreAttenteId = null;
 function startAdmettre(id) {
   admettreAttenteId = id;
   document.getElementById('adm-chambre').value = '';
-  document.getElementById('adm-ddn').value = '';
+  // Pré-remplir la DDN depuis l'entrée liste d'attente si disponible (format JJ/MM/AAAA → YYYY-MM-DD)
+  var item = loadedAttente.find(function(a) { return a.id === id; });
+  var prefilledDdn = '';
+  if (item && item.ddn) {
+    var m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(item.ddn);
+    if (m) prefilledDdn = m[3] + '-' + m[2] + '-' + m[1];
+  }
+  document.getElementById('adm-ddn').value = prefilledDdn;
   document.getElementById('adm-error').classList.add('hidden');
   document.getElementById('form-admettre').classList.remove('hidden');
   document.getElementById('form-attente').classList.add('hidden');
@@ -1185,13 +1364,25 @@ document.getElementById('btn-save-admettre').addEventListener('click', async fun
   errEl.classList.add('hidden');
 
   try {
-    // Créer le patient
-    await db.createPatient({
+    // Récupérer l'entrée liste d'attente pour transférer destination_prevue + date_sortie_prevue
+    var waitItem = admettreAttenteId ? loadedAttente.find(function(a) { return a.id === admettreAttenteId; }) : null;
+    var payloadPatient = {
       numero_chambre: chambre,
       date_naissance: ddn,
       date_admission: new Date().toISOString().split('T')[0],
-      date_sortie_prevue: null
-    });
+      date_sortie_prevue: waitItem && waitItem.date_sortie_prevue ? waitItem.date_sortie_prevue : null
+    };
+    // Transférer la destination prévue si renseignée dans la liste d'attente
+    if (waitItem && waitItem.destination_prevue) {
+      var dp = waitItem.destination_prevue;
+      payloadPatient.sortie_info = {
+        destination: dp.destination || null,
+        postcure_centre: dp.postcure_centre || null,
+        autre_precision: dp.autre_precision || null,
+        checklist: { ordonnance: false, transport: false, bulletin: false, crh: false }
+      };
+    }
+    await db.createPatient(payloadPatient);
     // Supprimer de la liste d'attente
     if (admettreAttenteId) {
       await db.deleteListeAttente(admettreAttenteId);
