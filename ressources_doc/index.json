@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "updated": "2026-04-20",
+  "note": "Manifest des ressources Toolbox. Pour ajouter une ressource : 1) placer le PDF/HTML dans le bon sous-dossier (fiches/ articles/ recos/ algos/) 2) ajouter une entrée ci-dessous 3) commit + push. Les tags valides sont définis dans RESSOURCE_TAGS (staff/toolbox.html).",
+  "ressources": [
+    {
+      "type": "fiche",
+      "titre": "Benzodiazépines — système étoilé",
+      "meta": "Fiche pratique USCA · 2026",
+      "tag": "BZD",
+      "fichier": "fiches/benzodiazepines_etoiles_print_A4.pdf",
+      "date": "2026-03-04"
+    },
+    {
+      "type": "fiche",
+      "titre": "Benzodiazépines — équivalences diazépam",
+      "meta": "Table de conversion USCA · v2 · 2026",
+      "tag": "BZD",
+      "fichier": "fiches/benzodiazepines_equivalences_diazepam_v2.pdf",
+      "date": "2026-04-20"
+    },
+    {
+      "type": "fiche",
+      "titre": "Antipsychotiques — système étoilé",
+      "meta": "Fiche pratique USCA · 2026",
+      "tag": "Général",
+      "fichier": "fiches/antipsychotiques_etoiles.pdf",
+      "date": "2026-04-20"
+    },
+    {
+      "type": "fiche",
+      "titre": "Antipsychotiques — équivalences chlorpromazine",
+      "meta": "Table de conversion USCA · 2026",
+      "tag": "Général",
+      "fichier": "fiches/antipsychotiques_equivalences_cpz.pdf",
+      "date": "2026-04-20"
+    },
+    {
+      "type": "fiche",
+      "titre": "Antipsychotiques — comparatif",
+      "meta": "Tableau comparatif USCA · v2 · 2026",
+      "tag": "Général",
+      "fichier": "fiches/comparatif_antipsychotiques_v2.pdf",
+      "date": "2026-04-20"
+    },
+    {
+      "type": "article",
+      "titre": "INCAS — Prédicteurs de succès TUS + TDAH",
+      "meta": "Brynte et al. · Eur Neuropsychopharm · 2026",
+      "tag": "TDAH",
+      "fichier": "articles/INCAS_resume_clinique.pdf",
+      "date": "2026-04-20"
+    }
+  ]
+}

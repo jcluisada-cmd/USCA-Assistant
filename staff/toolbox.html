@@ -419,6 +419,27 @@ const BZD_EQ = [
   {nom:"Zolpidem (Stilnox)",eq:10,t:"2-3h"}
 ];
 
+/* Équivalences antipsychotiques — référence 100 mg chlorpromazine (CPZ-eq).
+   Sources : Woods 2003, Gardner 2010 (DDD), Atkins 1997, Leucht 2016.
+   cls = classe thérapeutique (G1 = 1ère génération / G2 = 2e génération).
+   eq = dose en mg équivalant à 100 mg CPZ. */
+const CPZ_EQ = [
+  {nom:"Chlorpromazine (Largactil)",cls:"G1",eq:100},
+  {nom:"Halopéridol (Haldol)",cls:"G1",eq:2},
+  {nom:"Lévomépromazine (Nozinan)",cls:"G1",eq:100},
+  {nom:"Cyamémazine (Tercian)",cls:"G1",eq:100},
+  {nom:"Loxapine (Loxapac)",cls:"G1",eq:10},
+  {nom:"Zuclopenthixol (Clopixol)",cls:"G1",eq:20},
+  {nom:"Flupentixol (Fluanxol)",cls:"G1",eq:2},
+  {nom:"Rispéridone (Risperdal)",cls:"G2",eq:2},
+  {nom:"Palipéridone (Xeplion)",cls:"G2",eq:1.5},
+  {nom:"Olanzapine (Zyprexa)",cls:"G2",eq:5},
+  {nom:"Quétiapine (Xeroquel)",cls:"G2",eq:150},
+  {nom:"Aripiprazole (Abilify)",cls:"G2",eq:7.5},
+  {nom:"Clozapine (Leponex)",cls:"G2",eq:50},
+  {nom:"Amisulpride (Solian)",cls:"G2",eq:100}
+];
+
 const ELSA = [
   {title:"Sevrage OH aux urgences",motif:"Patient en sevrage alcoolique aux urgences",conduite:["Évaluer : Cushman ou CIWA-Ar","Cushman < 4 : surveillance, hydratation, thiamine PO","Cushman 4-7 : Diazépam 10 mg PO, rééval 1h, thiamine IV","Cushman ≥ 8 : Diazépam 10-20 mg IV, lit monitoré, thiamine IV 500 mg","DT ou convulsions : protocole urgence, avis réa","Systématique : glycémie, iono, Mg²⁺, BH, NFS","Orientation ELSA si hospit > 24h"]},
   {title:"Patient sous TSO en chirurgie",motif:"Maintien TSO en péri-opératoire",conduite:["NE JAMAIS ARRÊTER LE TSO","Maintenir même posologie pendant hospitalisation","Si BHD : arrêt 8-12h avant chirurgie si morphiniques prévus","Si MTD : maintenir, fractionner, ajuster antalgiques (doses + élevées)","Associer antalgiques non opioïdes systématiquement","Contacter prescripteur TSO","Avis ELSA systématique"]},
@@ -511,6 +532,143 @@ function BZDCalc({onBack}) {
         <div style={{fontSize:11,color:C.n[600],marginTop:2}}>{dzp<50?"Taper hyperbolique : -10% tous les 3-7 jours":"Taper lent : -5%/semaine + carbamazépine ou gabapentine"}</div>
       </div>
     </div>}
+  </div>;
+}
+
+/* ─── CONVERTISSEUR CHLORPROMAZINE (équivalences antipsychotiques) ─── */
+function CPZCalc({onBack}) {
+  const [sel, setSel] = useState(null);
+  const [dose, setDose] = useState("");
+  const cpz = sel!==null && dose ? (parseFloat(dose)/CPZ_EQ[sel].eq)*100 : null;
+
+  const GROUPS = [
+    {key:"G1", label:"Neuroleptiques classiques (1ʳᵉ génération)"},
+    {key:"G2", label:"Antipsychotiques atypiques (2ᵉ génération)"}
+  ];
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.scale(C.t[300])} title="Convertisseur CPZ" sub="Équivalences chlorpromazine (100 mg CPZ)"/>
+    <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Antipsychotique du patient :</div>
+      {GROUPS.map(g => <div key={g.key} style={{marginBottom:10}}>
+        <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:4,textTransform:"uppercase"}}>{g.label}</div>
+        {CPZ_EQ.map((b,i) => b.cls === g.key && <button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:C.bg,marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
+          <span style={{fontWeight:600,color:C.n[800]}}>{b.nom}</span>
+          <span style={{fontSize:11,color:C.n[400]}}>{b.eq} mg ≈ 100 CPZ</span>
+        </button>)}
+      </div>)}
+    </div>
+    {sel!==null && <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>Dose journalière (mg) :</div>
+      <input type="number" value={dose} onChange={e=>setDose(e.target.value)} placeholder="Ex: 10"
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],background:C.bg,outline:"none"}}/>
+    </div>}
+    {cpz>0 && <div className="card" style={{padding:16,borderWidth:2,borderColor:cpz>1000?C.r[500]:C.t[500]}}>
+      <div style={{fontSize:12,color:C.n[500]}}>Équivalent chlorpromazine</div>
+      <div style={{fontSize:40,fontWeight:900,color:cpz>1000?C.r[600]:C.t[600]}}>{cpz.toFixed(0)} mg/j</div>
+      {cpz>1000 && <Badge color={C.r[600]}>Haute dose (&gt;1000 mg CPZ-eq) — risque EI majorés</Badge>}
+      <div style={{marginTop:10,padding:10,borderRadius:8,background:C.n[50]}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[700]}}>Points de vigilance :</div>
+        <div style={{fontSize:11,color:C.n[600],marginTop:2}}>
+          {cpz<300 && "Dose basse / introduction. Surveillance standard."}
+          {cpz>=300 && cpz<=600 && "Dose thérapeutique usuelle. Surveillance ECG (QT), métabolique (glycémie, BMI), SEP."}
+          {cpz>600 && cpz<=1000 && "Dose haute. ECG + iono avant toute majoration. Réévaluer la monothérapie."}
+          {cpz>1000 && "Très haute dose. Privilégier rotation ou clozapine plutôt qu'escalade. Risque CV ↑↑."}
+        </div>
+      </div>
+      <div style={{marginTop:8,padding:10,borderRadius:8,background:C.a[50],border:`1px solid ${C.a[200]}`}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.a[700]}}>⚠ En addictologie :</div>
+        <div style={{fontSize:11,color:C.n[700],marginTop:2}}>Association OH / BZD / opioïdes = dépression respiratoire, hypotension orthostatique, chutes. Clozapine CI si sevrage OH sévère.</div>
+      </div>
+    </div>}
+    <div style={{fontSize:10,color:C.n[400],textAlign:"center",marginTop:12,padding:"0 8px",lineHeight:1.4}}>
+      Équivalences approximatives (Woods 2003, Gardner 2010, Leucht 2016). À moduler selon indication, voie, tolérance individuelle.
+    </div>
+  </div>;
+}
+
+/* ─── TRAITEMENTS — Fiches Patient (HTML) + Fiches Expert (PDF) ─── */
+const FICHES_PATIENT_CATS = [
+  {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
+  {cat:"TSO",fiches:[{s:"buprenorphine",n:"Buprénorphine (Subutex)"},{s:"methadone",n:"Méthadone"},{s:"naloxone",n:"Naloxone (kit d'urgence)"}]},
+  {cat:"Benzodiazépines",fiches:[{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"}]},
+  {cat:"Psychotropes",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"},{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"},{s:"aripiprazole",n:"Aripiprazole (Abilify)"}]},
+  {cat:"Hypnotiques / Sédatifs",fiches:[{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"}]}
+];
+
+// Les PDFs expert sont servis depuis ../fiches-traitements/fiches_expert/fiche_<slug>.pdf
+const FICHES_EXPERT_CATS = [
+  {cat:"Neuroleptiques classiques (1ʳᵉ génération)", fiches:[
+    {s:"chlorpromazine", n:"Chlorpromazine (Largactil)"},
+    {s:"haloperidol",    n:"Halopéridol (Haldol)"}
+  ]},
+  {cat:"Antipsychotiques atypiques (2ᵉ génération)", fiches:[
+    {s:"amisulpride",   n:"Amisulpride (Solian)"},
+    {s:"aripiprazole",  n:"Aripiprazole (Abilify)"},
+    {s:"clozapine",     n:"Clozapine (Leponex)"},
+    {s:"olanzapine",    n:"Olanzapine (Zyprexa)"},
+    {s:"quetiapine",    n:"Quétiapine (Xeroquel)"},
+    {s:"risperidone",   n:"Rispéridone (Risperdal)"}
+  ]}
+];
+
+function TraitementsView({onBack, onPickPatient}) {
+  // "patient" ouvert par défaut (usage courant), "expert" repliable
+  const [open, setOpen] = useState("patient");
+
+  const renderPatientSection = () =>
+    FICHES_PATIENT_CATS.map(group => <div key={group.cat} style={{marginBottom:14}}>
+      <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>{group.cat}</div>
+      {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient(f)}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:18}}>💊</span>
+          <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+        </div>
+        {I.chevR(C.n[300])}
+      </div>)}
+    </div>);
+
+  const renderExpertSection = () =>
+    FICHES_EXPERT_CATS.map(group => <div key={group.cat} style={{marginBottom:14}}>
+      <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>{group.cat}</div>
+      {group.fiches.map(f => <a key={f.s} href={"../fiches-traitements/fiches_expert/fiche_"+f.s+".pdf"} target="_blank" rel="noopener noreferrer"
+        className="card card-tap"
+        style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between",textDecoration:"none"}}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:18}}>📄</span>
+          <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+        </div>
+        <span style={{fontSize:9,fontWeight:800,color:C.n[400],letterSpacing:"0.5px"}}>PDF ↗</span>
+      </a>)}
+    </div>);
+
+  const ACC = [
+    {key:"patient", icon:"💊", title:"Fiches Patient", sub:"Fiches d'information à remettre au patient (HTML)"},
+    {key:"expert",  icon:"🎓", title:"Fiches Expert",  sub:"Synthèses cliniques (PDF, ouverture nouvel onglet)"}
+  ];
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.heart(C.a[300])} title="Traitements" sub="Fiches patient + fiches expert"/>
+    {ACC.map(a => {
+      const isOpen = open === a.key;
+      return <div key={a.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+        <button className="section-btn" onClick={()=>setOpen(isOpen?null:a.key)}>
+          <div style={{textAlign:"left",display:"flex",alignItems:"center",gap:10}}>
+            <span style={{fontSize:20}}>{a.icon}</span>
+            <div>
+              <div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{a.title}</div>
+              <div style={{fontSize:11,color:C.n[400]}}>{a.sub}</div>
+            </div>
+          </div>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"10px 12px",borderTop:`1px solid ${C.bdr}`}}>
+          {a.key === "patient" ? renderPatientSection() : renderExpertSection()}
+        </div>}
+      </div>;
+    })}
   </div>;
 }
 
@@ -933,41 +1091,48 @@ const RESSOURCE_TAGS = {
   "Général":    {label:"Général",    color:"#94A3B8"}
 };
 
-const RESSOURCES = [
-  {
-    type: "fiche",
-    titre: "Benzodiazépines — système étoilé",
-    meta: "Fiche pratique USCA · 2026",
-    tag: "BZD",
-    fichier: "../ressources_doc/benzodiazepines_etoiles_print_A4.pdf",
-    date: "2026-03-04"
-  },
-  {
-    type: "article",
-    titre: "INCAS — Prédicteurs de succès TUS + TDAH",
-    meta: "Brynte et al. · Eur Neuropsychopharm · 2026",
-    tag: "TDAH",
-    fichier: "../ressources_doc/INCAS_resume_clinique.pdf",
-    date: "2026-04-20"
-  }
-];
+// Les ressources sont chargées dynamiquement depuis ressources_doc/index.json.
+// Pour ajouter une ressource : déposer le fichier dans ressources_doc/{fiches|articles|recos|algos}/
+// puis compléter le manifest index.json. Aucun changement à ce composant n'est nécessaire.
 
 function RessourcesView({onBack}) {
   const GROUPS = [
     {key:"fiche",   label:"Fiches pratiques",  icon:"📑", sub:"Aides-mémoire imprimables"},
     {key:"article", label:"Résumés d'articles", icon:"🧪", sub:"Evidence-based, veille scientifique"},
-    {key:"reco",    label:"Recommandations",   icon:"📘", sub:"HAS, SFA, NICE"}
+    {key:"reco",    label:"Recommandations",   icon:"📘", sub:"HAS, SFA, NICE"},
+    {key:"algo",    label:"Algos / arbres décisionnels", icon:"🧩", sub:"Arbres cliquables"}
   ];
   const [op, setOp] = useState("fiche");
+  const [ressources, setRessources] = useState(null);
+  const [error, setError] = useState(null);
 
-  const byType = (t) => RESSOURCES
+  useEffect(() => {
+    // Cache-buster pour que les ajouts soient visibles immédiatement après un push
+    // (le fichier JSON bouge peu mais le service worker peut le cacher)
+    fetch("../ressources_doc/index.json?t=" + Date.now())
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => setRessources(Array.isArray(data.ressources) ? data.ressources : []))
+      .catch(e => setError(e.message || "Chargement impossible"));
+  }, []);
+
+  const byType = (t) => (ressources || [])
     .filter(r => r.type === t)
     .sort((a,b) => (b.date||"").localeCompare(a.date||""));
 
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
     <SectionHead icon={I.book(C.t[300])} title="Ressources" sub="Articles, fiches, recommandations"/>
-    {GROUPS.map(g => {
+
+    {error && <div className="card" style={{padding:12,marginBottom:10,borderColor:C.r[500],background:C.r[100]}}>
+      <div style={{fontSize:12,color:C.r[700],fontWeight:700}}>Chargement impossible</div>
+      <div style={{fontSize:11,color:C.r[600],marginTop:2}}>{error}</div>
+    </div>}
+
+    {ressources === null && !error && <div className="card" style={{padding:20,textAlign:"center",marginBottom:10}}>
+      <div style={{fontSize:12,color:C.n[400]}}>Chargement…</div>
+    </div>}
+
+    {ressources !== null && GROUPS.map(g => {
       const list = byType(g.key);
       const open = op === g.key;
       return <div key={g.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
@@ -988,7 +1153,8 @@ function RessourcesView({onBack}) {
             </div>
           ) : list.map((r,i) => {
             const tag = RESSOURCE_TAGS[r.tag] || RESSOURCE_TAGS["Général"];
-            return <a key={i} href={r.fichier} target="_blank" rel="noopener noreferrer"
+            const href = r.fichier.startsWith("http") ? r.fichier : "../ressources_doc/" + r.fichier;
+            return <a key={i} href={href} target="_blank" rel="noopener noreferrer"
               className="card card-tap"
               style={{display:"flex",alignItems:"center",gap:10,padding:10,marginBottom:i===list.length-1?0:6,textDecoration:"none",borderColor:C.bdr}}>
               <span style={{fontSize:18,flexShrink:0}}>{g.icon}</span>
@@ -1005,9 +1171,10 @@ function RessourcesView({onBack}) {
         </div>}
       </div>;
     })}
-    <div style={{fontSize:11,color:C.n[400],textAlign:"center",marginTop:16,padding:"0 8px"}}>
+
+    {ressources !== null && <div style={{fontSize:11,color:C.n[400],textAlign:"center",marginTop:16,padding:"0 8px"}}>
       Les ressources s'ouvrent dans un nouvel onglet. Rotation paysage gérée par le navigateur.
-    </div>
+    </div>}
   </div>;
 }
 
@@ -1039,7 +1206,7 @@ function AdmView({onBack}) {
 
 /* ─── FEEDBACK ─── */
 function FeedbackView({onBack}) {
-  const MODULES = ["Protocoles USCA","ELSA / Liaisons","Traitements","Scores","Interactions","Convertisseur BZD","Général / Autre"];
+  const MODULES = ["Protocoles USCA","ELSA / Liaisons","Traitements","Scores","Interactions","Convertisseur BZD","Convertisseur CPZ","Ressources","Général / Autre"];
   const TYPES = [{id:"bug",label:"🐛 Bug / Erreur",desc:"Quelque chose ne marche pas"},{id:"content",label:"📝 Correction contenu",desc:"Posologie, protocole, CI inexacte"},{id:"feature",label:"💡 Suggestion",desc:"Nouvelle fonctionnalité ou amélioration"},{id:"ux",label:"🎨 Ergonomie",desc:"Navigation, lisibilité, design"}];
   const PRIORITIES = ["Faible","Normale","Haute","Urgente"];
 
@@ -1203,6 +1370,7 @@ function App() {
     {id:"fiches_traitements",label:"Traitements",icon:I.heart},
     {id:"interactions",label:"Interactions",icon:I.alert},
     {id:"bzdcalc",label:"Convertisseur BZD",icon:I.scale},
+    {id:"cpzcalc",label:"Convertisseur CPZ",icon:I.scale},
     {id:"feedback",label:"💬 Feedback",icon:I.msgSquare}
   ];
 
@@ -1295,8 +1463,12 @@ function App() {
           {I.chevR(C.n[300])}
         </div>)}
         <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>OUTILS</div>
-        <div className="card card-tap" style={{padding:12,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("bzdcalc")}>
+        <div className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("bzdcalc")}>
           <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Convertisseur BZD</div><div style={{fontSize:11,color:C.n[400]}}>Équivalences diazépam + stratégie taper</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+        <div className="card card-tap" style={{padding:12,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("cpzcalc")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Convertisseur CPZ</div><div style={{fontSize:11,color:C.n[400]}}>Équivalences chlorpromazine (antipsychotiques)</div></div>
           {I.chevR(C.n[300])}
         </div>
       </div>;
@@ -1311,29 +1483,10 @@ function App() {
           <button onClick={()=>setSelFiche(null)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer"}}>{I.chevL(C.n[600])}</button>
           <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{selFiche.n}</span>
         </div>
-        <iframe className="fiche-iframe" src={"../fiches-traitements/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
-      </div> : <div className="fade-in">
-        <BackBtn onClick={()=>nav("home")}/>
-        <SectionHead icon={I.heart(C.a[300])} title="Traitements" sub="Fiches d'information patients"/>
-        <p style={{fontSize:12,color:C.n[400],marginBottom:16}}>Fiches d'information à remettre aux patients. Cliquez pour consulter.</p>
-        {[
-          {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
-          {cat:"TSO",fiches:[{s:"buprenorphine",n:"Buprénorphine (Subutex)"},{s:"methadone",n:"Méthadone"},{s:"naloxone",n:"Naloxone (kit d'urgence)"}]},
-          {cat:"Benzodiazépines",fiches:[{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"}]},
-          {cat:"Psychotropes",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"},{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"},{s:"aripiprazole",n:"Aripiprazole (Abilify)"}]},
-          {cat:"Hypnotiques / Sédatifs",fiches:[{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"}]}
-        ].map(group=><div key={group.cat} style={{marginBottom:16}}>
-          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:4}}>{group.cat.toUpperCase()}</div>
-          {group.fiches.map(f=><div key={f.s} className="card card-tap" style={{padding:12,marginBottom:6,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelFiche(f)}>
-            <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <span style={{fontSize:18}}>💊</span>
-              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
-            </div>
-            {I.chevR(C.n[300])}
-          </div>)}
-        </div>)}
-      </div>;
+        <iframe className="fiche-iframe" src={"../fiches-traitements/fiches_patient/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
+      </div> : <TraitementsView onBack={()=>nav("home")} onPickPatient={setSelFiche}/>;
       case "bzdcalc": return <BZDCalc onBack={()=>nav("scores")}/>;
+      case "cpzcalc": return <CPZCalc onBack={()=>nav("scores")}/>;
       case "feedback": return <FeedbackView onBack={()=>nav("home")}/>;
     }
   };

@@ -1,0 +1,31 @@
+TYPE : ALGOS / ARBRES DÉCISIONNELS (🧩)
+=======================================
+
+À déposer ici : arbres décisionnels cliniques, algos d'orientation,
+diagrammes de flux — privilégier l'interactivité cliquable.
+
+Exemples typiques :
+- algo d'orientation sevrage OH (ambulatoire vs USCA vs réa)
+- arbre décisionnel TSO (méthadone vs BHD-naloxone)
+- algo de choix antidépresseur selon comorbidités (TDAH, TSPT, bipo)
+- arbre de conduite devant un craving résistant
+- flowchart admission/sortie USCA
+
+Format préféré : **HTML interactif** (cliquable, branches pliables,
+liens vers fiches traitements / recos / scores). Un algo figé en PDF
+perd 80% de sa valeur versus un algo cliquable.
+
+PDF accepté uniquement si :
+- publication officielle (HAS) qu'on ne peut pas redessiner
+- arbre d'une fois qui ne sera pas réutilisé en boucle
+
+Nommage : algo_<situation-clinique>.<ext>
+  ex. algo_sevrage_oh_orientation.html
+      algo_choix_tso.html
+
+⚠ Après dépôt : ajouter une entrée dans ../index.json
+   type = "algo", meta = "Algo USCA · 2026" (ou source officielle)
+
+💡 À venir : l'accordion "Algos / arbres décisionnels" est déjà présent
+   dans la Toolbox (Protocoles USCA → Ressources) et affichera automatiquement
+   ce dossier dès qu'une ressource y sera ajoutée.

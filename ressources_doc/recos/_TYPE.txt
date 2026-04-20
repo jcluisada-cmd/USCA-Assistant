@@ -1,0 +1,28 @@
+TYPE : RECOMMANDATIONS (📘)
+===========================
+
+À déposer ici : recommandations officielles des sociétés savantes et
+autorités sanitaires, ou leurs synthèses adaptées USCA.
+
+Sources acceptées (par ordre de priorité clinique USCA) :
+  1. HAS (Haute Autorité de Santé)
+  2. SFA (Société Française d'Alcoologie)
+  3. AFU, ANSM, DGS, CNAM (France)
+  4. NICE, EMCDDA, WHO (international)
+  5. guidelines APA, WFSBP, BAP
+
+Exemples typiques :
+- Recommandations HAS "Arrêt des benzodiazépines au long cours"
+- SFA "Mésusage de l'alcool : repérage, diagnostic, prise en charge"
+- NICE guideline CG115 "Alcohol-use disorders"
+- Synthèses USCA de ces recos (1-2 pages action-oriented)
+
+Format préféré : HTML (les recos officielles sont souvent longues → ancres,
+recherche, dark mode, mobile-first). PDF accepté pour les synthèses courtes.
+
+Nommage : <organisme>_<sujet-court>.<ext>
+  ex. has_arret_bzd_long_cours.html
+      sfa_synthese_sevrage_oh.pdf
+
+⚠ Après dépôt : ajouter une entrée dans ../index.json
+   type = "reco", meta = "HAS · 2024" (organisme + année)

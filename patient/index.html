@@ -1903,7 +1903,7 @@ async function loadTraitements() {
       (function(slug, nom) {
         btn.addEventListener('click', function() {
           traitListView.classList.add('hidden');
-          ficheIframe.src = '../fiches-traitements/fiche_' + slug + '_patient.html';
+          ficheIframe.src = '../fiches-traitements/fiches_patient/fiche_' + slug + '_patient.html';
           ficheIframe.classList.remove('hidden');
           traitHeaderText.textContent = nom;
           viewingFiche = true;
@@ -1944,7 +1944,7 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
     var fiche = FICHES_CATALOGUE.find(function(f) { return f.slug === slug; });
     if (!fiche) continue;
     try {
-      var resp = await fetch('../fiches-traitements/fiche_' + slug + '_patient.html');
+      var resp = await fetch('../fiches-traitements/fiches_patient/fiche_' + slug + '_patient.html');
       if (resp.ok) fichesData.push({ nom: fiche.nom, cat: fiche.categorie, slug: slug, html: await resp.text() });
     } catch(e) {}
   }

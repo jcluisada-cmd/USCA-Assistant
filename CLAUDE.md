@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.86 — Ressources Toolbox livrées + messages bidirectionnels patient ↔ équipe)
+> Dernière mise à jour : 20 avril 2026 (v3.88 — arborescence `ressources_doc/` (manifest JSON + 4 sous-dossiers) + convertisseur CPZ + accordion Fiches Expert)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.86 |
+| **Service Worker** | usca-v3.88 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -95,9 +95,16 @@ USCA-Assistant/
 │   └── api/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
-│   └── fiche_*.html            ← 20 fiches patient par médicament
-├── ressources_doc/             ← PDFs/HTML de ressources Toolbox (articles, fiches, recos) — voir TOOLBOX_RESSOURCES.md
-├── migrations/                 ← Scripts SQL (v1 à v20)
+│   ├── fiches_patient/         ← 20 fiches HTML à partager au patient (Aotal, baclofène, BZD, TSO, psychotropes…)
+│   └── fiches_expert/          ← 8 fiches expert PDF (antipsychotiques : amisulpride, aripiprazole, chlorpromazine, clozapine, halopéridol, olanzapine, quétiapine, rispéridone)
+├── ressources_doc/             ← Ressources Toolbox — manifest-driven (index.json)
+│   ├── index.json              ← Liste les ressources exposées (type, titre, meta, tag, fichier, date)
+│   ├── fiches/                 ← 📑 aides-mémoire imprimables (PDF/HTML)
+│   ├── articles/               ← 🧪 résumés cliniques d'articles (PDF/HTML)
+│   ├── recos/                  ← 📘 recommandations HAS/SFA/NICE (HTML préféré)
+│   ├── algos/                  ← 🧩 algos/arbres décisionnels (HTML interactif)
+│   └── */_TYPE.txt             ← descriptifs d'upload (non exposés dans l'app)
+├── migrations/                 ← Scripts SQL (v1 à v21)
 ├── assets/                     ← Images sources (icon-source.png, splash-source.png)
 ├── affiche-equipe.html         ← Affiche A4 imprimable avec QR code
 ├── icon-512.png, splash.png    ← Images servies par l'app
@@ -250,7 +257,9 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 ### Toolbox Soignant V1
 - ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
-- ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (3 accordions par type : Fiches / Articles / Recos, tags thématiques colorés, ouverture `target="_blank"` pour rotation paysage native). 2 ressources intégrées : benzodiazépines étoiles + INCAS TUS/TDAH.
+- ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (4 accordions : Fiches / Articles / Recos / Algos, tags thématiques colorés, ouverture `target="_blank"`). Manifest-driven : `ressources_doc/index.json` fetch au mount, 6 ressources actuellement (BZD étoiles + BZD équivalences v2, antipsy étoiles + antipsy CPZ + comparatif antipsy, INCAS TUS/TDAH).
+- ✅ **Traitements** → 2 accordions : **Fiches Patient** (20 HTML, ouvertes par défaut, répartis en 5 catégories Sevrage/TSO/BZD/Psychotropes/Hypnotiques) + **Fiches Expert** (8 PDFs antipsychotiques classés G1 neuroleptiques classiques / G2 atypiques, ouverture `target="_blank"`).
+- ✅ **Scores → OUTILS** : Convertisseur BZD (→ diazépam, seuil hospit >40 mg DZP-eq) + **Convertisseur CPZ** (→ chlorpromazine, 14 molécules G1/G2, alerte haute dose >1000 mg CPZ-eq/j, vigilance addicto OH/BZD/opioïdes).
 - ✅ **ELSA** → hub : Liaisons en cours (ToDo list + drag-and-drop + checklist), Admission & Orientation, Fiches réflexes (5)
 - ✅ Dark mode complet
 
@@ -264,7 +273,9 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
 - [ ] **Liste d'attente enrichie** : ajouter trois champs au formulaire "Ajouter en liste d'attente" (accordion Attente du dashboard admin) — (1) case à cocher "Passé par une pré-admission", (2) date de sortie prévue (optionnel, si connue dès l'admission), (3) date de naissance au format libre "JJMMAAAA" ou "JJ/MM/AAAA" en saisie texte (pas de date picker — les soignants peuvent taper rapidement, les slash sont ignorés). Garder la possibilité de saisir directement l'âge. Objectif : admettre plus vite dès qu'un lit se libère.
-- [ ] **Toolbox — Fiches Traitements en 2 accordions** : séparer "Fiches Expert" (synthèse clinique, posologies, mécanismes, niveaux de preuve — à créer) et "Fiches Patient" (les 20 existantes). Accordions repliables, même moteur de navigation.
+- [ ] **Messages unifiés admin** : fusionner le bouton "Partager du contenu" avec l'accordion Messages. Un seul endroit **"Messages"** avec chat bidirectionnel + compose intégrée (textarea + sélecteur de type note/lien/consigne + bouton envoyer), comme côté patient. Supprimer le modal `modal-contenu` et le bouton `btn-action-contenu`.
+- [ ] **Ressources Toolbox — GitHub Action pour regénérer `index.json`** : aujourd'hui le manifest est maintenu à la main (ajouter un PDF = ajouter une entrée au JSON). Ajouter une Action qui scanne `ressources_doc/fiches|articles|recos|algos/` et regénère `index.json` à chaque push, pour un "vrai" zéro-code workflow. Inférence raisonnable : type depuis le sous-dossier, nom de fichier → titre (humanisé), date = dernière modif git. Garder les overrides `tag` et `meta` dans un YAML frontmatter optionnel dans le nom/fichier si nécessaire.
+- [ ] **Toolbox — Fiches Expert hors antipsychotiques** : enrichir `fiches_expert/` avec synthèses cliniques pour les autres familles (BZD, TSO/méthadone-BHD, thymorégulateurs, stimulants, antidépresseurs). Structure d'accordion déjà en place dans `TraitementsView` — il suffit d'ajouter les PDFs et les entrées dans `FICHES_EXPERT_CATS`.
 
 ---
 
@@ -274,17 +285,18 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 | Carte | Type | Contenu |
 |---|---|---|
-| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) + Ressources (fiches, articles, recos avec tags thématiques) |
+| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) + Ressources (manifest-driven, 4 accordions, tags thématiques) |
 | **ELSA** | Hub (grande carte) | → Liaisons en cours (ToDo), Admission & Orientation, Fiches réflexes (5) + scores repérage |
 | **Dossier post-cure** | Grande carte | → Ouvre le volet médecin (postcure/medecin.html) |
-| **Traitements** | Petite carte | 20 fiches patient par médicament |
-| **Scores** | Petite carte | Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseur BZD |
+| **Traitements** | Petite carte | 2 accordions : Fiches Patient (20 HTML) + Fiches Expert (8 PDFs antipsychotiques) |
+| **Scores** | Petite carte | Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseurs BZD et CPZ |
 | **Interactions** | Petite carte | 18 interactions critiques, sélection multiple |
 | **Feedback** | Barre en bas | Bug, suggestion, correction → email |
 
 ### Pharmacopée
 - **Sevrage/maintien** : diazépam, oxazépam, baclofène, acamprosate, naltrexone, nalméfène, topiramate, NAC, méthadone, buprénorphine, disulfirame
 - **Psychotropes** : méthylphénidate, lisdexamfétamine, sertraline, venlafaxine, vortioxétine, cyamémazine, chlorpromazine, alimémazine
+- **Convertisseurs** : BZD → diazépam (seuil hospitalisation >40 mg DZP-eq) · Antipsychotiques → chlorpromazine (alerte haute dose >1000 mg CPZ-eq/j, 14 molécules G1/G2)
 - **Non pharmaco** : NADA, hypnose, TRV, tDCS
 
 ### Règles cliniques

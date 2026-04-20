@@ -1,0 +1,20 @@
+TYPE : FICHES PRATIQUES (📑)
+============================
+
+À déposer ici : aides-mémoire cliniques quotidiens, imprimables en salle de soin.
+
+Exemples typiques :
+- systèmes étoilés (BZD, antipsychotiques, ISRS…)
+- tableaux d'équivalences (diazépam-eq, CPZ-eq, morphine-eq…)
+- tableaux comparatifs (efficacité/tolérance de familles de molécules)
+- posologies synthétiques d'un protocole (sevrage OH, rotation opioïde…)
+- checklists cliniques courtes (1-2 pages A4)
+
+Format préféré : PDF paysage A4, prêt à imprimer (police lisible >10pt).
+HTML accepté si la fiche gagne à être responsive / cliquable.
+
+Nommage : kebab-case, pas d'accent, suffixe _vN si versions multiples.
+  ex. benzodiazepines_equivalences_diazepam_v2.pdf
+
+⚠ Après dépôt : ajouter une entrée dans ../index.json
+   type = "fiche", tag = BZD/OH/TDAH/Général/…

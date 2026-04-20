@@ -1,0 +1,28 @@
+TYPE : RÉSUMÉS D'ARTICLES (🧪)
+==============================
+
+À déposer ici : résumés cliniques d'articles scientifiques (PubMed,
+revues type Lancet Psychiatry, AJP, Addiction, Eur Neuropsychopharm…),
+préparés pour lecture rapide entre 2 consultations.
+
+Exemples typiques :
+- résumé d'un essai clinique phare (INCAS, COMBINE, PREVAIL…)
+- synthèse d'une méta-analyse récente
+- digest de conférence (SFA, ISAM, ECNP)
+- fiche de veille scientifique (nouvelle cible pharmaco, biomarqueur…)
+
+Format préféré : PDF A4 portrait, 1-2 pages, structure fixe :
+  - titre article + auteurs + journal + année (méta)
+  - question clinique (1 phrase)
+  - méthode (4-5 lignes)
+  - résultats (chiffres clés)
+  - implications USCA (2-3 lignes, à qui ça s'applique, quand l'utiliser)
+
+HTML accepté pour les articles avec liens internes (vers une fiche
+traitement, un score, une reco HAS…).
+
+Nommage : <nom-etude-ou-acronyme>_resume_clinique.<ext>
+  ex. INCAS_resume_clinique.pdf
+
+⚠ Après dépôt : ajouter une entrée dans ../index.json
+   type = "article", meta = "Auteur et al. · Journal · Année"
