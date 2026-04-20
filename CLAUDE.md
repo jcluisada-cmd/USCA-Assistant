@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.82 — extraction historique vers `CLAUDE_ARCHIVE.md`)
+> Dernière mise à jour : 20 avril 2026 (v3.84 — nettoyage Toolbox + spec carte « Ressources » prête dans `TOOLBOX_RESSOURCES.md`)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -96,6 +96,7 @@ USCA-Assistant/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
 │   └── fiche_*.html            ← 20 fiches patient par médicament
+├── ressources_doc/             ← PDFs/HTML de ressources Toolbox (articles, fiches, recos) — voir TOOLBOX_RESSOURCES.md
 ├── migrations/                 ← Scripts SQL (v1 à v20)
 ├── assets/                     ← Images sources (icon-source.png, splash-source.png)
 ├── affiche-equipe.html         ← Affiche A4 imprimable avec QR code
@@ -239,7 +240,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - ✅ **Lazy-load data** : `index.json` au démarrage, `item_*.json` à la sélection (cache mémoire session)
 
 ### Vue tuteur dans admin
-- ✅ Section "Mon externe" pour médecin/admin — stats sessions, signalements en attente, réponse aux flags, questions de l'externe avec réponse inline. Tous les médecins voient l'externe.
+- ✅ Section "Mon externe" pour médecin/admin — stats sessions, signalements en attente, réponse aux flags, questions de l'externe avec réponse inline, bouton ↺ réinitialisation (supprime sessions/réponses/flags au changement d'externe). Tous les médecins voient l'externe.
 - ✅ Accordion "Mes élèves" unifié : IFSI + QCM en sous-sections
 
 ### Auth avancée
@@ -249,7 +250,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 ### Toolbox Soignant V1
 - ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
-- ✅ **Protocoles USCA** → hub : Substances (7), Checklist Séjour J1-J12, Comorbidités psy
+- ✅ **Protocoles USCA** → hub : Substances (7) [prévu : ressources addicto PubMed / HAS]
 - ✅ **ELSA** → hub : Liaisons en cours (ToDo list + drag-and-drop + checklist), Admission & Orientation, Fiches réflexes (5)
 - ✅ Dark mode complet
 
@@ -261,10 +262,9 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
-- [ ] **Livret IFSI — compléter contenu** : relecture équipe (3 IDE) pour valider réponses, étoffer chapitre Motivation (1 seule question), éventuellement remplir présentation équipe + activités + objectifs de stage dans `presentation`.
-- [ ] **Livret IFSI — P4** : bilan fin de stage + commentaire tuteur signé + export PDF portfolio (jsPDF).
-- [ ] **QCM EDN — réinitialisation externe** : bouton ↺ dans "Mon externe" → supprime sessions/réponses/flags pour changement d'externe.
-- [ ] Tester toutes les nouvelles features en conditions réelles (notamment Safari iOS — SW parfois capricieux au bump de version)
+- [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
+- [ ] **Toolbox — carte « Ressources » dans Protocoles USCA** : spec complète dans `TOOLBOX_RESSOURCES.md` (3 accordions par type — Fiches / Articles / Recos, tags thématiques, ouverture `target="_blank"` pour gestion native paysage desktop + mobile). 2 PDFs prêts dans `ressources_doc/`.
+- [ ] **Toolbox — Fiches Traitements en 2 accordions** : séparer "Fiches Expert" (synthèse clinique, posologies, mécanismes, niveaux de preuve — à créer) et "Fiches Patient" (les 20 existantes). Accordions repliables, même moteur de navigation.
 
 ---
 
@@ -274,7 +274,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 | Carte | Type | Contenu |
 |---|---|---|
-| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles), Checklist Séjour J1-J12, Comorbidités psy |
+| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) — à enrichir (ressources addicto PubMed / HAS) |
 | **ELSA** | Hub (grande carte) | → Liaisons en cours (ToDo), Admission & Orientation, Fiches réflexes (5) + scores repérage |
 | **Dossier post-cure** | Grande carte | → Ouvre le volet médecin (postcure/medecin.html) |
 | **Traitements** | Petite carte | 20 fiches patient par médicament |
@@ -347,3 +347,4 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 | Supabase | pydxfoqxgvbmknzjzecn.supabase.co |
 | Affiche équipe | affiche-equipe.html (A4, QR code) |
 | **Archive historique** | `CLAUDE_ARCHIVE.md` (à lire à la demande) |
+| **Spec carte Ressources Toolbox** | `TOOLBOX_RESSOURCES.md` (à lire quand on attaquera le chantier) |

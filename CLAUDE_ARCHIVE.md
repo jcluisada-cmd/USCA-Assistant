@@ -105,6 +105,22 @@
 - [x] **sw.js** : v3.81 → v3.82.
 - [x] **admin/index.html** : onglet "Patients" renommé "Dashboard", icône Toolbox passée en clé.
 
+### Session 20/04 (v3.82 → v3.83) — Message au tuteur + archive CLAUDE.md
+- [x] **Extern** : carte "Signalements" remplacée par "Message au tuteur" (canal texte libre externe ↔ tuteur).
+- [x] **Extern** : rechargement `loadExternData()` à chaque ouverture de l'accordion Patients (évite données obsolètes).
+- [x] **CLAUDE.md** : extraction de l'historique détaillé (migrations v1-v20, sessions précédentes, spec vision patient V3, spec auth P9) vers `CLAUDE_ARCHIVE.md`. CLAUDE.md passe de document fleuve à référence concise chargée en contexte, archive lue à la demande.
+- [x] **sw.js** : v3.82 → v3.83.
+
+### Session 20/04 (suite) — Bouton ↺ réinitialisation externe + ménage todo
+- [x] **Admin — Mon externe** : bouton ↺ ajouté, supprime `qcm_sessions` + `qcm_reponses` + `qcm_flags` + `questions_tuteur` de l'externe courant (changement d'externe).
+- [x] **dashboard.md** supprimé (chantier v3.81 clos).
+- [x] **LIVRET_IFSI_IMPLEMENTATION.md — P4 simplifiée** : retrait du bilan d'auto-évaluation, du commentaire tuteur signé et de la table `bilans_stage`. P4 = export PDF du livret rempli, point.
+
+### Session 20/04 (v3.83 → v3.84) — Nettoyage Toolbox
+- [x] **Toolbox / Protocoles USCA** : suppression de "Checklist Séjour J1-J12" (jamais utilisée) et de "Comorbidités psy" (contenu insatisfaisant). Retrait du composant `SejourView`, de la const `SEJOUR`, du composant `ComorView`, des routes `case "sejour"` / `case "comorbidites"`, des entrées du hub `ProtocolesHub`, mise à jour `protoViews` et du sous-titre de la carte d'accueil.
+- [x] Le hub Protocoles USCA ne contient plus que "Substances" — prépare l'arrivée des ressources addicto (PubMed / HAS) dans un prochain chantier.
+- [x] **sw.js** : v3.83 → v3.84.
+
 ---
 
 ## C. SPEC MODULE PATIENT V3 — VISION LONG TERME

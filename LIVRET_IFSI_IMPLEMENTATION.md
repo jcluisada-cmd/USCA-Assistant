@@ -17,7 +17,7 @@ Intégrer un module **« Mon livret de stage »** dans USCA Connect pour les ét
 - Renvoi systématique vers les ressources réelles (Toolbox, fiches traitements, Référentiel USCA, recos HAS).
 - Progression trackée, visible pour la tutrice IDE.
 - Études de cas structurées avec validation tuteur.
-- Export PDF portfolio en fin de stage.
+- Export PDF du livret rempli en fin de stage.
 
 **Ce que ça ne fait PAS** :
 - Remplacer l'entretien hebdomadaire avec la tutrice IDE.
@@ -40,14 +40,14 @@ Intégrer un module **« Mon livret de stage »** dans USCA Connect pour les ét
 
 ## 3. PHASAGE
 
-La cible est un **module complet intégré** : dashboard étudiante dédié avec persistance Supabase, vue tuteur accessible à toutes les IDE, études de cas avec workflow de validation, export PDF portfolio. Le découpage en phases est technique (pour livrer proprement), pas fonctionnel (pas de version bridée).
+La cible est un **module complet intégré** : dashboard étudiante dédié avec persistance Supabase, vue tuteur accessible à toutes les IDE, études de cas avec workflow de validation, export PDF du livret rempli. Le découpage en phases est technique (pour livrer proprement), pas fonctionnel (pas de version bridée).
 
 | Phase | Livrable | Priorité |
 |---|---|---|
 | **P1** | Socle fonctionnel : migration Supabase v15, auth et redirection rôle `etudiant_ide`, dashboard étudiante (accueil + lexique + chapitres substances + tableaux), persistance progression, export PDF basique | **Commencer ici** |
 | **P2** | Vue tuteur : tous les profils IDE voient leurs étudiantes, progression par chapitre, case « vu avec le tuteur » | Après validation P1 |
 | **P3** | Études de cas : bibliothèque de 10 cas pré-rédigés + mode cas vécu anonymisé + workflow soumission/validation | Après P2 |
-| **P4** | Bilan de stage + commentaire tuteur signé + export PDF portfolio complet | Après P3 |
+| **P4** | Export PDF du livret rempli à la fin du stage | Après P3 |
 
 **Ne pas tout implémenter d'un coup.** Stopper après P1 et attendre validation de JC avant de continuer.
 
@@ -138,7 +138,7 @@ Single-page application, vanilla JS (pas de framework), Tailwind CDN, même sque
 [Accueil] [Lexique] [Alcool] [Tabac] [Cannabis] [Cocaïne] [MDMA] [Cathinones/NPS] [GHB] [Héroïne] [Médicaments] [TSO] [Motivation] [Questionnaires]
 ```
 
-L'onglet **[Cas cliniques]** n'est PAS visible en P1 (il arrive en P3). L'onglet **[Bilan]** n'est pas visible non plus (P4).
+L'onglet **[Cas cliniques]** n'est PAS visible en P1 (il arrive en P3).
 
 **Section Accueil** :
 - Bandeau de bienvenue : « Bienvenue, [Prénom]. Stage du [date] au [date], tutrice : [Prénom Nom IDE]. »
@@ -198,7 +198,7 @@ Bouton accueil → génère un PDF A4 contenant :
 
 Format graphique identique aux PDFs post-cure existants (police 9pt, titres 14pt, marges 20mm, barre latérale colorée pour sections).
 
-Le PDF portfolio complet (avec commentaire tuteur + bilan) arrive en P4.
+Le PDF complet du livret rempli (avec sommaire + études de cas) arrive en P4.
 
 ### 5.9. Carte « Livret IFSI (aperçu soignant) » dans la Toolbox
 
@@ -864,7 +864,7 @@ Nouvel onglet dans le dashboard soignant, visible dès que `profile.role === 'id
 - Pour chaque question : énoncé, réponse de l'étudiante, réponse attendue, bouton « ✓ Marquer comme vu » (met à jour `vu_tuteur = true, vu_par = auth.uid(), vu_le = now()`).
 - Zone commentaire libre (table optionnelle `progression_commentaires` — à prévoir si besoin, sinon skip en P2).
 
-**Ne PAS inclure en P2** : les études de cas (arrivent en P3), le bilan final (P4).
+**Ne PAS inclure en P2** : les études de cas (arrivent en P3), l'export PDF complet (P4).
 
 ### 7.3. Vue médecin
 
@@ -980,51 +980,23 @@ Toute IDE peut valider, pas seulement la tutrice référente (permet continuité
 
 ---
 
-## 9. PHASE 4 — BILAN ET PORTFOLIO PDF
+## 9. PHASE 4 — EXPORT PDF DU LIVRET
 
-### 9.1. Auto-évaluation fin de stage
+> Simplifié le 2026-04-20 — plus de bilan/auto-éval ni de commentaire tuteur signé. Juste l'export PDF du livret rempli à la fin du stage.
 
-Dans le dashboard étudiante, nouvel onglet **[Bilan]** (visible uniquement quand `date_fin < aujourd'hui + 7 jours` ou bouton manuel « Ouvrir le bilan »). Trois champs texte libre :
-- Acquis principaux pendant le stage.
-- Points restant flous / à approfondir.
-- Situation clinique la plus marquante (anonymisée).
+### 9.1. Export PDF du livret rempli
 
-### 9.2. Commentaire tuteur
+Bouton « Exporter mon livret » dans le dashboard étudiante (visible en permanence, utile surtout en fin de stage). Génère un PDF A4 :
 
-Nouvelle table :
-
-```sql
-CREATE TABLE bilans_stage (
-  stage_id UUID PRIMARY KEY REFERENCES etudiants_stages(id) ON DELETE CASCADE,
-  auto_eval_acquis TEXT,
-  auto_eval_a_approfondir TEXT,
-  auto_eval_situation_marquante TEXT,
-  commentaire_tuteur TEXT,
-  tuteur_signataire_id UUID REFERENCES profiles(id),
-  signe_le TIMESTAMPTZ,
-  portfolio_genere_le TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
-
-ALTER TABLE bilans_stage ENABLE ROW LEVEL SECURITY;
--- L'étudiante édite son auto-éval ; les IDE éditent le commentaire tuteur
--- (policies similaires aux précédentes)
-```
-
-Depuis la vue « Mes étudiantes » du dashboard IDE, onglet « Bilan » : champ texte + bouton « Signer et finaliser » → verrouille le commentaire, enregistre `tuteur_signataire_id` et `signe_le`. Toute IDE peut signer (pas uniquement la tutrice référente).
-
-### 9.3. Export PDF portfolio
-
-Bouton « Exporter mon portfolio » visible dans l'onglet Bilan de l'étudiante, accessible uniquement une fois le commentaire tuteur signé. Génère un PDF A4 complet :
-
-- Page de garde : identité étudiante, dates stage, IDE tutrice référente, IDE signataire du bilan, logo USCA.
-- Sommaire.
-- Par chapitre : questions + réponses étudiante. Les réponses attendues peuvent être mises en annexe (case cochable à l'export).
-- Études de cas validées (uniquement les statuts `valide`).
-- Bilan : auto-évaluation étudiante + commentaire tuteur signé.
+- Page de garde : identité étudiante, IFSI, promo, dates stage, IDE tutrice référente, logo USCA.
+- Sommaire des chapitres.
+- Par chapitre : questions + réponses étudiante + (optionnel, case cochable) réponses attendues et explications.
+- Études de cas validées si P3 est livré.
 - Footer USCA Pitié-Salpêtrière + numérotation.
 
-Format graphique identique aux PDFs post-cure.
+Format graphique identique aux PDFs post-cure (jsPDF).
+
+Pas de table `bilans_stage`, pas de signature tuteur : l'évaluation de fin de stage reste gérée par l'IFSI hors de l'application.
 
 ---
 
@@ -1081,7 +1053,7 @@ Ces questions doivent recevoir une réponse de JC avant de commencer le code :
 2. **Contenu pédagogique** : relu/validé par JC seul avant publication, ou relecture partagée avec les 3 IDE (Di Cicco / Vatan-Jallier / Bonnamy) ?
 3. **Cas pré-rédigés** (P3) : la liste de 10 proposée te convient ou à ajuster ?
 4. **Anonymisation des cas vécus** : simple validation IDE, ou double regard médecin obligatoire en plus ?
-5. **Portfolio** : usage strict interne USCA ou transmissible à l'IFSI d'origine comme preuve de compétences ?
+5. **PDF du livret rempli** : usage strict interne USCA ou transmissible à l'IFSI d'origine comme trace de stage ?
 6. **Devenir du livret papier** : substitution complète ou cohabitation (les étudiantes récalcitrantes à l'outil numérique gardent le papier) ?
 7. **Accueil nouvelle étudiante** : le livret commence rempli (accueil pré-rempli avec présentation du service), ou totalement vierge et elle lit la présentation en premier onglet ?
 

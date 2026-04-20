@@ -419,23 +419,6 @@ const BZD_EQ = [
   {nom:"Zolpidem (Stilnox)",eq:10,t:"2-3h"}
 ];
 
-const SEJOUR = [
-  {phase:"SEVRAGE AIGU",jours:"J1-J3",color:C.r[500],items:[
-    {j:"J1",tasks:["Accueil, anamnèse, examen clinique complet","Bilan bio : NFS, iono, BH, BR, Mg²⁺, P, GGT, CDT, VGM","Sérologies VIH/VHB/VHC si FdR","ECG systématique","Score initial (Cushman / COWS)","Initiation protocole sevrage","Thiamine IV 500 mg/j (OH)","Évaluation psy initiale","NADA (acupuncture) si disponible"]},
-    {j:"J2",tasks:["Rééval. score sevrage /4-6h","Ajustement BZD selon score","Hydratation, correction électrolytique","NADA J2","PHQ-9 + GAD-7 (baseline)","Entretien IDE d'accueil"]},
-    {j:"J3",tasks:["Rééval. sevrage","Début stabilisation pharmaco","NADA J3","1er entretien psychologue/TCC","Bilan social (AS si besoin)"]}
-  ]},
-  {phase:"STABILISATION",jours:"J4-J8",color:C.a[500],items:[
-    {j:"J4-J5",tasks:["Stabilisation sevrage (↓ BZD)","Introduction tt de fond anti-craving à J5","Bilan comorbidités psy","Début hypnose si indiquée","Début TCC craving / EM","Atelier psychoéducation (groupe)"]},
-    {j:"J5-J7",tasks:["tDCS si indiquée (5 séances/j × 5j)","TRV : début exposition graduée","Éval. TDAH si suspicion (ASRS) — pas avant J7","Dépistage TSPT (PCL-5), bipolarité (MDQ)","Rééval. bio à J7 si anomalies J1"]},
-    {j:"J8",tasks:["⭐ DÉCISION STAFF : tt de fond définitif","Éval. craving (VAS)","Si TDAH confirmé : discussion MPH/LDX","Discussion orientation : ambulatoire / post-cure / SSR","Lien structures d'aval (dossier pré-admission)"]}
-  ]},
-  {phase:"PRÉPARATION SORTIE",jours:"J9-J12",color:C.t[500],items:[
-    {j:"J9-J10",tasks:["Consolidation tt de fond","TRV : cue-exposure, skills training","Autohypnose : enseignement patient","Rédaction plan prévention rechute","tDCS consolidation si en cours","Préparation ordonnance sortie"]},
-    {j:"J11-J12",tasks:["Finalisation plan sortie","Remise fiche prévention rechute","Ordonnance + calendrier taper BZD si besoin","RDV suivi : addictologue J30, MT J7, psy si comorbidité","Distribution naloxone (opioïdes)","Coordonnées : CSAPA, CAARUD, AA/NA, 3114, ELSA","Courrier sortie → MT, addictologue, psy"]}
-  ]}
-];
-
 const ELSA = [
   {title:"Sevrage OH aux urgences",motif:"Patient en sevrage alcoolique aux urgences",conduite:["Évaluer : Cushman ou CIWA-Ar","Cushman < 4 : surveillance, hydratation, thiamine PO","Cushman 4-7 : Diazépam 10 mg PO, rééval 1h, thiamine IV","Cushman ≥ 8 : Diazépam 10-20 mg IV, lit monitoré, thiamine IV 500 mg","DT ou convulsions : protocole urgence, avis réa","Systématique : glycémie, iono, Mg²⁺, BH, NFS","Orientation ELSA si hospit > 24h"]},
   {title:"Patient sous TSO en chirurgie",motif:"Maintien TSO en péri-opératoire",conduite:["NE JAMAIS ARRÊTER LE TSO","Maintenir même posologie pendant hospitalisation","Si BHD : arrêt 8-12h avant chirurgie si morphiniques prévus","Si MTD : maintenir, fractionner, ajuster antalgiques (doses + élevées)","Associer antalgiques non opioïdes systématiquement","Contacter prescripteur TSO","Avis ELSA systématique"]},
@@ -636,40 +619,6 @@ function InterCheck({onBack}) {
         <div style={{fontSize:12,color:C.n[600]}}>{inter.desc}</div>
       </div>)}
     </div>}
-  </div>;
-}
-
-/* ─── SEJOUR ─── */
-function SejourView({onBack}) {
-  const [op, setOp] = useState(0);
-  const [chk, setChk] = useState({});
-  return <div className="fade-in">
-    <BackBtn onClick={onBack}/>
-    <SectionHead icon={I.calendar(C.t[300])} title="Séjour J1-J12" sub="Timeline & checklist"/>
-    {SEJOUR.map((ph,pi)=><div key={pi} className="card" style={{marginBottom:10,overflow:"hidden"}}>
-      <button className="section-btn" onClick={()=>setOp(op===pi?-1:pi)} style={{background:ph.color+"15"}}>
-        <div style={{display:"flex",alignItems:"center",gap:8}}>
-          <div style={{width:10,height:10,borderRadius:99,background:ph.color}}/>
-          <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{ph.phase}</span>
-          <Badge color={ph.color}>{ph.jours}</Badge>
-        </div>
-        {op===pi?I.chevD(C.n[400]):I.chevR(C.n[400])}
-      </button>
-      {op===pi && <div style={{padding:12}}>
-        {ph.items.map((day,di)=><div key={di} style={{marginBottom:12}}>
-          <span style={{fontSize:11,fontWeight:800,padding:"3px 8px",borderRadius:6,background:ph.color+"20",color:ph.color}}>{day.j}</span>
-          <div style={{marginTop:6,marginLeft:4}}>
-            {day.tasks.map((task,ti)=>{
-              const k=`${pi}-${di}-${ti}`;
-              return <div key={ti} onClick={()=>setChk(p=>({...p,[k]:!p[k]}))} style={{display:"flex",alignItems:"flex-start",gap:8,padding:6,borderRadius:6,cursor:"pointer"}}>
-                <div className={`check-box ${chk[k]?'checked':''}`} style={{marginTop:1}}>{chk[k]&&I.check("#fff")}</div>
-                <span style={{fontSize:12,color:C.n[700],textDecoration:chk[k]?"line-through":"none",opacity:chk[k]?.5:1}}>{task}</span>
-              </div>;
-            })}
-          </div>
-        </div>)}
-      </div>}
-    </div>)}
   </div>;
 }
 
@@ -951,67 +900,10 @@ function LiaisonsView({onBack}) {
   </div>;
 }
 
-/* ─── COMORBIDITES ─── */
-function ComorView({onBack}) {
-  const [op, setOp] = useState("diff");
-  const secs = [
-    {id:"diff",title:"Trouble induit vs primaire",icon:I.brain(C.t[600]),content:
-      <div>
-        <div style={{padding:10,borderRadius:8,background:C.t[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.t[700]}}>Trouble INDUIT</div><div style={{fontSize:11,color:C.n[600]}}>Apparaît pendant intoxication/sevrage. Résolution 2-4 sem abstinence. Pas d'ATCD avant consommations</div></div>
-        <div style={{padding:10,borderRadius:8,background:C.a[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>Trouble PRIMAIRE</div><div style={{fontSize:11,color:C.n[600]}}>Précède les consommations. Persiste après 4 sem abstinence. ATCD familiaux. Sémiologie typique</div></div>
-        <div style={{padding:10,borderRadius:8,background:C.n[50],marginBottom:6}}><div style={{fontSize:11,fontWeight:800,color:C.n[700]}}>Pathologie DUALE</div><div style={{fontSize:11,color:C.n[600]}}>Coexistence des deux troubles. Interaction mutuelle. Traitement intégré simultané</div></div>
-        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.a[300]}`,fontSize:11}}><b style={{color:C.a[700]}}>⏱️ Règle pratique :</b> <span style={{color:C.n[600]}}>Réévaluer à 2-4 sem post-sevrage avant diagnostic définitif de trouble primaire</span></div>
-      </div>},
-    {id:"tdah",title:"TDAH + Addiction",icon:I.zap(C.t[600]),content:
-      <div>
-        <div style={{padding:10,borderRadius:8,background:C.a[50],marginBottom:8}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>Quand évaluer ?</div><div style={{fontSize:11,color:C.n[600]}}>Pas avant J7-J14 de sevrage (symptômes miment le TDAH)</div></div>
-        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Outils :</div>
-        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>• ASRS v1.1 (dépistage 6 items) • DIVA 2.0 (gold standard) • WURS (enfance) • Anamnèse enfance ++</div>
-        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Traitement :</div>
-        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.bdr}`,fontSize:11,color:C.n[600]}}>
-          <b>1ère int :</b> Méthylphénidate LP 18-54 mg/j (titration 4-6 sem)<br/>
-          <b>2ème int :</b> Lisdexamfétamine 30-70 mg/j<br/>
-          <span style={{color:C.r[600]}}><b>Précautions :</b> Risque mésusage (faible avec LP). Surv. CV. CI relative si stimulants actifs. PIH</span>
-        </div>
-      </div>},
-    {id:"tspt",title:"TSPT + Addiction",icon:I.shield(C.t[600]),content:
-      <div>
-        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>Prévalence TSPT chez TUS : 25-50%. Auto-médication fréquente</div>
-        <div style={{padding:10,borderRadius:8,background:C.n[50],marginBottom:8}}>
-          <div style={{fontSize:11,fontWeight:800,color:C.n[700]}}>Séquençage :</div>
-          <div style={{fontSize:11,color:C.n[600]}}>1. Stabilisation addictologique → 2. Traitement intégré simultané (meilleurs résultats) → 3. Pas d'EMDR en sevrage aigu</div>
-        </div>
-        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Pharmaco :</div>
-        <div style={{fontSize:11,color:C.n[600]}}>• Sertraline 50-200 mg — 1ère int TSPT+TUS<br/>• Venlafaxine 75-225 mg — 2ème int<br/>• Prazosine 1-15 mg coucher — cauchemars<br/>• Dépistage : PCL-5 ≥ 33 → TSPT probable</div>
-      </div>},
-    {id:"humeur",title:"Troubles de l'humeur",icon:I.trend(C.t[600]),content:
-      <div>
-        <div style={{padding:8,borderRadius:8,background:C.a[50],marginBottom:8}}><div style={{fontSize:11,fontWeight:800,color:C.a[700]}}>EDC induit vs primaire</div><div style={{fontSize:11,color:C.n[600]}}>PHQ-9 à J1 puis J14. Si ≥ 10 persistant à J14 → EDC probable, AD</div></div>
-        <div style={{fontSize:11,fontWeight:800,color:C.n[700],marginBottom:4}}>Choix AD :</div>
-        <div style={{fontSize:11,color:C.n[600],marginBottom:8}}>• Sertraline 50-200 mg — 1ère int<br/>• Vortioxétine 10-20 mg — profil procognitif<br/>• Venlafaxine 75-225 mg — 2ème int, si TAG<br/>• Éviter tricycliques et IMAO</div>
-        <div style={{padding:8,borderRadius:8,border:`1px solid ${C.r[500]}`,fontSize:11}}><b style={{color:C.r[600]}}>Bipolarité :</b> <span style={{color:C.n[600]}}>Toujours dépister (MDQ) avant AD seul → risque virage maniaque</span></div>
-      </div>}
-  ];
-
-  return <div className="fade-in">
-    <BackBtn onClick={onBack}/>
-    <SectionHead icon={I.brain(C.t[300])} title="Comorbidités psy" sub="Double diagnostic"/>
-    {secs.map(s=><div key={s.id} className="card" style={{marginBottom:10,overflow:"hidden"}}>
-      <button className="section-btn" onClick={()=>setOp(op===s.id?null:s.id)} style={{background:op===s.id?C.n[50]:C.bg}}>
-        <div style={{display:"flex",alignItems:"center",gap:8}}>{s.icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{s.title}</span></div>
-        {op===s.id?I.chevD(C.n[400]):I.chevR(C.n[400])}
-      </button>
-      {op===s.id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>{s.content}</div>}
-    </div>)}
-  </div>;
-}
-
 /* ─── PROTOCOLES USCA HUB ─── */
 function ProtocolesHub({onNav, onBack}) {
   const items = [
-    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]},
-    {l:"Checklist Séjour",desc:"Timeline J1-J12 & checklist",i:I.calendar,v:"sejour",c:C.a[600]},
-    {l:"Comorbidités psy",desc:"Double diagnostic & TDAH",i:I.brain,v:"comorbidites",c:C.t[700]}
+    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]}
   ];
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
@@ -1240,7 +1132,7 @@ function App() {
 
         {/* 4 grandes cartes mises en valeur */}
         {/* Carte "Livret IFSI" retirée 2026-04-19 — accès suffisant via dashboard admin (carte "Mon élève") */}
-        {[{l:"Protocoles USCA",desc:"Substances, séjour J1-J12, comorbidités",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
+        {[{l:"Protocoles USCA",desc:"Protocoles par substance",i:I.pill,v:"protocoles_hub",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
           {l:"ELSA",desc:"Liaisons, admission, fiches réflexes",i:I.steth,v:"elsa_hub",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
           {l:"Dossier post-cure",desc:"Post-cure — volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",c:C.a[600],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`}
         ].map(item=>
@@ -1288,7 +1180,6 @@ function App() {
         </div>)}
       </div>;
 
-      case "sejour": return <SejourView onBack={()=>nav("protocoles_hub")}/>;
 
       case "scores": return <div className="fade-in">
         <BackBtn onClick={()=>nav("home")}/>
@@ -1316,7 +1207,6 @@ function App() {
       </div>;
 
       case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
-      case "comorbidites": return <ComorView onBack={()=>nav("protocoles_hub")}/>;
       case "elsa_hub": return <ELSAHub onNav={nav} onBack={()=>nav("home")}/>;
       case "elsa_fiches": return <ELSAFichesView onBack={()=>nav("elsa_hub")}/>;
       case "admission": return <AdmView onBack={()=>nav("elsa_hub")}/>;
@@ -1379,7 +1269,7 @@ function App() {
     <div className="bottom-nav">
       <div className="bottom-nav-inner">
         {navItems.map(item=>{
-          const protoViews = ["protocoles_hub","substances","sejour","comorbidites"];
+          const protoViews = ["protocoles_hub","substances"];
           const elsaViews = ["elsa_hub","elsa_fiches","admission","liaisons"];
           const act = item.id==="more"?menuOpen:
             item.id==="protocoles_hub"?(protoViews.includes(view)||selSub):
