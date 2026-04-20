@@ -901,7 +901,7 @@ function sortieDestLabel(info) {
   if (info.destination === 'rad') return { text: 'RAD', cls: 'text-slate-700 bg-slate-100' };
   if (info.destination === 'postcure') {
     var centre = info.postcure_centre && window.POSTCURE_STRUCTS && window.POSTCURE_STRUCTS[info.postcure_centre];
-    return { text: centre ? 'PC : ' + centre.nom : 'Post-cure ?', cls: 'text-indigo-700 bg-indigo-100' };
+    return { text: centre ? 'PC : ' + centre.nom : 'Post-cure', cls: 'text-indigo-700 bg-indigo-100' };
   }
   if (info.destination === 'autre') {
     return { text: info.autre_precision ? 'Autre : ' + info.autre_precision : 'Autre ?', cls: 'text-purple-700 bg-purple-100' };
