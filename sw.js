@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v3.88';
+const CACHE_NAME = 'usca-v3.89';
 
 // Fichiers locaux — pré-cachés à l'installation
 const LOCAL_ASSETS = [

@@ -341,7 +341,7 @@
             <div id="detail-perms-list"></div>
           </div>
 
-          <!-- Accordion : Messages (conversation bidirectionnelle patient ↔ équipe) -->
+          <!-- Accordion : Messages (conversation bidirectionnelle + compose intégrée) -->
           <button id="acc-messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
               <div id="messages-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
@@ -353,7 +353,26 @@
             <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div id="acc-messages-content" class="hidden mb-2 pl-2">
-            <div id="detail-messages-list" class="space-y-2 max-h-[400px] overflow-y-auto pr-1"></div>
+            <!-- Conversation -->
+            <div id="detail-messages-list" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 mb-2"></div>
+            <!-- Compose intégrée : type + titre + texte + envoi -->
+            <div class="bg-white border border-slate-200 rounded-xl p-2.5">
+              <div class="flex gap-1.5 mb-2">
+                <select id="msg-inline-type" class="text-[11px] px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg">
+                  <option value="note">📝 Note</option>
+                  <option value="lien">🔗 Lien</option>
+                  <option value="consigne">⚠️ Consigne</option>
+                </select>
+                <input id="msg-inline-titre" type="text" placeholder="Titre (optionnel)" class="flex-1 text-[12px] px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg" maxlength="80">
+              </div>
+              <div class="flex items-end gap-2">
+                <textarea id="msg-inline-texte" rows="1" placeholder="Écrire au patient…" class="flex-1 resize-none px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[13px] focus:outline-none focus:border-purple-400" style="max-height:120px"></textarea>
+                <button id="msg-inline-send" class="w-9 h-9 rounded-full bg-purple-600 text-white flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+                </button>
+              </div>
+              <p id="msg-inline-error" class="text-[11px] text-red-600 mt-1 hidden"></p>
+            </div>
           </div>
 
           <!-- Actions -->
@@ -370,12 +389,6 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
               </div>
               <div><p class="text-sm font-semibold text-slate-700">Annoncer une permission</p><p class="text-[11px] text-slate-400">48h max, retour 20h</p></div>
-            </button>
-            <button id="btn-action-contenu" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
-              <div class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
-              </div>
-              <div><p class="text-sm font-semibold text-slate-700">Partager du contenu</p><p class="text-[11px] text-slate-400">Note, lien, consigne</p></div>
             </button>
             <button id="btn-action-sortie" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -516,26 +529,7 @@
           </div>
         </div>
 
-        <!-- Modal Contenu -->
-        <div id="modal-contenu" class="fixed inset-0 z-[100] bg-black/50 flex items-end justify-center hidden">
-          <div class="bg-white w-full max-w-lg rounded-t-2xl p-5 pb-8">
-            <h3 class="text-base font-bold text-slate-800 mb-3">Partager du contenu</h3>
-            <div class="space-y-3">
-              <select id="contenu-type" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-                <option value="note">Note / Message</option>
-                <option value="lien">Lien URL</option>
-                <option value="consigne">Consigne</option>
-              </select>
-              <input type="text" id="contenu-titre" placeholder="Titre" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
-              <textarea id="contenu-texte" rows="3" placeholder="Contenu, message ou lien URL..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm resize-none"></textarea>
-            </div>
-            <div class="flex gap-2 mt-4">
-              <button id="contenu-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
-              <button id="contenu-save" class="flex-1 py-2.5 bg-purple-600 text-white font-bold rounded-xl text-sm">Partager</button>
-            </div>
-            <p id="contenu-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
-          </div>
-        </div>
+        <!-- (modal-contenu supprimé — fusionné dans l'accordion Messages via compose inline) -->
 
         <!-- Modal Modifier élève (admin) -->
         <div id="modal-eleve-edit" class="fixed inset-0 z-[110] bg-black/50 flex items-end justify-center hidden">
@@ -1566,8 +1560,7 @@ document.getElementById('btn-action-event').addEventListener('click', function()
 document.getElementById('evt-cancel').addEventListener('click', function() { document.getElementById('modal-event').classList.add('hidden'); });
 document.getElementById('btn-action-perm').addEventListener('click', function() { document.getElementById('modal-perm').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('perm-date-debut').value = today; document.getElementById('perm-date-retour').value = today; });
 document.getElementById('perm-cancel').addEventListener('click', function() { document.getElementById('modal-perm').classList.add('hidden'); });
-document.getElementById('btn-action-contenu').addEventListener('click', function() { document.getElementById('modal-contenu').classList.remove('hidden'); });
-document.getElementById('contenu-cancel').addEventListener('click', function() { document.getElementById('modal-contenu').classList.add('hidden'); });
+// btn-action-contenu + modal-contenu supprimés — compose inline dans l'accordion Messages
 document.getElementById('btn-action-sortie').addEventListener('click', function() {
   openSortieModal(selectedPatientForDetail);
 });
@@ -1662,23 +1655,57 @@ document.getElementById('perm-save').addEventListener('click', async function() 
   this.disabled = false; this.textContent = 'Annoncer';
 });
 
-// ── Save contenu ──
-document.getElementById('contenu-save').addEventListener('click', async function() {
-  var titre = document.getElementById('contenu-titre').value.trim();
-  var texte = document.getElementById('contenu-texte').value.trim();
-  var errEl = document.getElementById('contenu-error');
-  if (!titre || !texte) { errEl.textContent = 'Titre et contenu obligatoires'; errEl.classList.remove('hidden'); return; }
-  errEl.classList.add('hidden');
-  this.disabled = true; this.textContent = 'Envoi...';
-  try {
-    await db.createContenu({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, titre: titre, contenu: texte, type: document.getElementById('contenu-type').value });
-    document.getElementById('modal-contenu').classList.add('hidden');
-    document.getElementById('contenu-titre').value = ''; document.getElementById('contenu-texte').value = '';
-    // Rafraîchir la conversation dans l'accordion Messages
-    renderPatientMessages(selectedPatientForDetail.id);
-  } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
-  this.disabled = false; this.textContent = 'Partager';
-});
+// ── Compose inline Messages (soignant → patient) ──
+(function() {
+  var input = document.getElementById('msg-inline-texte');
+  var sendBtn = document.getElementById('msg-inline-send');
+  var titreInput = document.getElementById('msg-inline-titre');
+  var typeSelect = document.getElementById('msg-inline-type');
+  var errEl = document.getElementById('msg-inline-error');
+  if (!input || !sendBtn) return;
+
+  // Auto-resize du textarea
+  input.addEventListener('input', function() {
+    sendBtn.disabled = !input.value.trim() || !selectedPatientForDetail;
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  });
+
+  // Entrée = envoi, Shift+Entrée = nouvelle ligne
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendBtn.click();
+    }
+  });
+
+  sendBtn.addEventListener('click', async function() {
+    var texte = input.value.trim();
+    if (!texte || !selectedPatientForDetail) return;
+    var type = typeSelect.value || 'note';
+    // Titre auto selon le type si non renseigné — le patient voit l'emoji + titre
+    var titreAuto = { note:'Message', lien:'Lien partagé', consigne:'Consigne' };
+    var titre = titreInput.value.trim() || titreAuto[type] || 'Message';
+    errEl.classList.add('hidden');
+    sendBtn.disabled = true;
+    try {
+      await db.createContenu({
+        patient_id: selectedPatientForDetail.id,
+        cree_par: currentProfile ? currentProfile.id : null,
+        titre: titre,
+        contenu: texte,
+        type: type
+      });
+      input.value = ''; titreInput.value = '';
+      input.style.height = 'auto';
+      renderPatientMessages(selectedPatientForDetail.id);
+    } catch(e) {
+      errEl.textContent = 'Erreur : ' + (e.message || 'réessayez');
+      errEl.classList.remove('hidden');
+      sendBtn.disabled = false;
+    }
+  });
+})();
 
 // ── Save date de sortie ──
 document.getElementById('sortie-save').addEventListener('click', async function() {
@@ -1791,6 +1818,14 @@ async function showPatientDetail(patient) {
 
   // Charger les messages (conversation bidirectionnelle)
   renderPatientMessages(patient.id);
+
+  // Réinitialiser la compose inline
+  var inlineInput = document.getElementById('msg-inline-texte');
+  var inlineSend = document.getElementById('msg-inline-send');
+  var inlineTitre = document.getElementById('msg-inline-titre');
+  if (inlineInput) { inlineInput.value = ''; inlineInput.style.height = 'auto'; }
+  if (inlineTitre) inlineTitre.value = '';
+  if (inlineSend) inlineSend.disabled = true;
 }
 
 function renderFichesChecklist(patientId) {
@@ -3271,7 +3306,7 @@ document.getElementById('modal-groupe-actions').addEventListener('click', functi
 });
 
 // Fermeture modals au clic sur le fond noir
-['modal-delete', 'modal-event', 'modal-perm', 'modal-contenu', 'modal-sortie'].forEach(function(id) {
+['modal-delete', 'modal-event', 'modal-perm', 'modal-sortie'].forEach(function(id) {
   var el = document.getElementById(id);
   if (el) el.addEventListener('click', function(e) {
     if (e.target === this) this.classList.add('hidden');

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antipsychotiques — Système étoilé · USCA</title>
+<link rel="stylesheet" href="../../shared/ressource-doc.css">
+<style>
+  .stars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 720px) {
+    .stars-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1000px) {
+    .stars-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .mol {
+    background: var(--card);
+    border: 1px solid var(--bdr);
+    border-radius: 12px;
+    padding: 12px;
+    border-top: 4px solid var(--t-500);
+  }
+  .mol.fga { border-top-color: #b91c1c; }
+  .mol.sga { border-top-color: var(--t-500); }
+  .mol.sga3 { border-top-color: #6366f1; }
+  .mol h3 {
+    margin: 0 0 2px 0;
+    font-size: 15px;
+    color: var(--n-900);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .mol .spec { font-size: 11px; color: var(--n-500); font-style: italic; margin-bottom: 6px; }
+  .mol .cpz-eq { font-size: 12px; font-weight: 700; color: var(--t-700); margin-bottom: 4px; }
+  .mol .subtitle { font-size: 11px; color: var(--n-600); margin-bottom: 8px; }
+  .axes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 11px;
+  }
+  .axes li {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+    border-bottom: 1px dashed var(--bdr);
+  }
+  .axes li:last-child { border-bottom: none; }
+  .axes .bar {
+    display: inline-block;
+    font-family: monospace;
+    letter-spacing: -1px;
+    color: var(--n-700);
+  }
+  .axes .bar .on { color: var(--t-600); font-weight: 800; }
+  .mol.fga .axes .bar .on { color: #b91c1c; }
+  .mol.sga3 .axes .bar .on { color: #6366f1; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--n-600);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Les antipsychotiques et leurs étoiles</h1>
+  <p class="meta">Scores 0–4 sur 6 axes récepteurs · Classés du plus typique (FGA) au plus atypique (SGA) · Source : Stahl's Essential Psychopharmacology (5ᵉ éd. — 2024)</p>
+</header>
+
+<div class="card">
+  <h2>Axes &amp; échelle</h2>
+  <p style="font-size:12px; color:var(--n-700);">
+    <strong>D2</strong> = blocage dopaminergique · <strong>5HT2A</strong> = atypicalité sérotoninergique ·
+    <strong>H1</strong> = sédation histaminergique · <strong>M</strong> = anticholinergique ·
+    <strong>α1</strong> = hypotension orthostatique · <strong>SPC</strong> = risque extrapyramidal (EPS)
+  </p>
+  <p style="font-size:12px; color:var(--n-700);">
+    <strong>Échelle</strong> : 0 = absent · 1 = faible · 2 = modéré · 3 = élevé · 4 = puissant
+  </p>
+  <div class="legend" style="margin-top:8px;">
+    <span><span class="dot" style="background:#b91c1c;"></span>FGA — Typiques</span>
+    <span><span class="dot" style="background:var(--t-500);"></span>SGA — Atypiques</span>
+    <span><span class="dot" style="background:#6366f1;"></span>SGA 3ᵉ gén. (agoniste partiel)</span>
+  </div>
+</div>
+
+<div class="stars-grid">
+
+  <div class="mol fga">
+    <h3>Chlorpromazine</h3>
+    <div class="spec">Largactil®</div>
+    <div class="cpz-eq">Éq. CPZ : 100 ★ mg · FGA</div>
+    <div class="subtitle">Phénothiazine · 1952 · Référence universelle</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>M</span>     <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">███</span>░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol fga">
+    <h3>Halopéridol</h3>
+    <div class="spec">Haldol®</div>
+    <div class="cpz-eq">Éq. CPZ : 2 mg · FGA</div>
+    <div class="subtitle">Butyrophénone · D2 dominant · Gold standard typiques</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>H1</span>    <span class="bar">░░░░░</span></li>
+      <li><span>M</span>     <span class="bar">░░░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">████</span>░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol fga">
+    <h3>Sulpiride</h3>
+    <div class="spec">Barnéril®</div>
+    <div class="cpz-eq">Éq. CPZ : 200 mg · FGA/SGA</div>
+    <div class="subtitle">Benzamide · D2/D3 sélectif</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>5HT2A</span> <span class="bar">░░░░░</span></li>
+      <li><span>H1</span>    <span class="bar">░░░░░</span></li>
+      <li><span>M</span>     <span class="bar">░░░░░</span></li>
+      <li><span>α1</span>    <span class="bar">░░░░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">██</span>░░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga">
+    <h3>Amisulpride</h3>
+    <div class="spec">Solian®</div>
+    <div class="cpz-eq">Éq. CPZ : 100 mg · SGA</div>
+    <div class="subtitle">Benzamide · Profil dose-dépendant</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>5HT2A</span> <span class="bar">░░░░░</span></li>
+      <li><span>H1</span>    <span class="bar">░░░░░</span></li>
+      <li><span>M</span>     <span class="bar">░░░░░</span></li>
+      <li><span>α1</span>    <span class="bar">░░░░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">██</span>░░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga">
+    <h3>Rispéridone</h3>
+    <div class="spec">Risperdal®</div>
+    <div class="cpz-eq">Éq. CPZ : 2 mg · SGA</div>
+    <div class="subtitle">Benzisoxazole · Prolactine +++</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>M</span>     <span class="bar">░░░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">██</span>░░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga">
+    <h3>Olanzapine</h3>
+    <div class="spec">Zyprexa®</div>
+    <div class="cpz-eq">Éq. CPZ : 5 mg · SGA</div>
+    <div class="subtitle">Thiénobenzodiazépine · H1 &gt; D2</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>M</span>     <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">█</span>░░░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga">
+    <h3>Quétiapine</h3>
+    <div class="spec">Xeroquel®</div>
+    <div class="cpz-eq">Éq. CPZ : 75 mg · SGA</div>
+    <div class="subtitle">Dibenzothiazépine · Dose-dépendant</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">████</span>░</span></li>
+      <li><span>M</span>     <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>SPC</span>   <span class="bar">░░░░░</span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga3">
+    <h3>Aripiprazole</h3>
+    <div class="spec">Abilify®</div>
+    <div class="cpz-eq">Éq. CPZ : 7,5 mg · SGA 3ᵉ gén.</div>
+    <div class="subtitle">Quinolinone · Agoniste partiel D2</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">███</span>░░ <em style="font-size:9px;color:var(--n-400);">(ag. partiel)</em></span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>M</span>     <span class="bar">░░░░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>SPC</span>   <span class="bar"><span class="on">█</span>░░░░ <em style="font-size:9px;color:var(--n-400);">akathisie</em></span></li>
+    </ul>
+  </div>
+
+  <div class="mol sga">
+    <h3>Clozapine</h3>
+    <div class="spec">Leponex®</div>
+    <div class="cpz-eq">Éq. CPZ : 50–75 mg · SGA</div>
+    <div class="subtitle">Dibenzodiazépine · Schizophrénie résistante</div>
+    <ul class="axes">
+      <li><span>D2</span>    <span class="bar"><span class="on">█</span>░░░░</span></li>
+      <li><span>5HT2A</span> <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>H1</span>    <span class="bar"><span class="on">██</span>░░░</span></li>
+      <li><span>M</span>     <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>α1</span>    <span class="bar"><span class="on">███</span>░░</span></li>
+      <li><span>SPC</span>   <span class="bar">░░░░░</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="alert info">
+  Scores basés sur les profils réceptoriels de Stahl. Usage clinique — ne se substitue pas aux RCP officiels. La représentation en « étoile » permet de comparer d'un coup d'œil le profil de tolérance attendu : plus les axes SPC, H1, M ou α1 sont marqués, plus les effets associés (extrapyramidaux, sédation, anticholinergiques, hypotension) sont attendus.
+</div>
+
+<footer class="src">Stahl's Essential Psychopharmacology (5ᵉ édition — 2024) · Usage clinique.</footer>
+
+</div>
+</body>
+</html>

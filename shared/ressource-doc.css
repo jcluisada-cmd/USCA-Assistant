@@ -1,0 +1,226 @@
+/* ─────────────────────────────────────────────────────────────────────
+   USCA — Stylesheet commun pour les ressources converties (fiches,
+   articles, recos) et les fiches expert. Chemin depuis un fichier
+   dans `ressources_doc/<sous-dossier>/` ou `fiches-traitements/fiches_expert/` :
+   <link rel="stylesheet" href="../../shared/ressource-doc.css">
+
+   Design : mobile-first, palette USCA teal/navy, print-friendly,
+   dark mode automatique via prefers-color-scheme.
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  --n-50:#f0f4f8; --n-100:#d9e2ec; --n-200:#bcccdc; --n-300:#9fb3c8;
+  --n-400:#7b8faa; --n-500:#627d98; --n-600:#486581; --n-700:#334e68;
+  --n-800:#243b53; --n-900:#102a43;
+  --t-50:#effcf6; --t-100:#c6f7e2; --t-300:#65d6ad; --t-500:#27ab83;
+  --t-600:#199473; --t-700:#147d64; --t-800:#0c6b58;
+  --a-50:#fffbea; --a-100:#fff3c4; --a-200:#fce588; --a-500:#f0b429;
+  --a-700:#cb6e17;
+  --r-50:#fff0f0; --r-100:#fee2e2; --r-500:#ef4444; --r-600:#dc2626; --r-700:#b91c1c;
+  --bg:#ffffff; --bdr:#e2e8f0; --card:#ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --n-50:#0f172a; --n-100:#1e293b; --n-200:#334155; --n-300:#475569;
+    --n-400:#94a3b8; --n-500:#cbd5e1; --n-600:#e2e8f0; --n-700:#f1f5f9;
+    --n-800:#f8fafc; --n-900:#ffffff;
+    --bg:#0b1220; --bdr:#1e293b; --card:#0b1220;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--n-800);
+  background: var(--bg);
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+header.doc-head {
+  background: var(--n-800);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+header.doc-head h1 {
+  margin: 0 0 4px 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+header.doc-head .meta {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--t-700);
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--bdr);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+h2 .h-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--n-400);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+
+h3 {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--n-700);
+  margin: 10px 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+p { margin: 0 0 6px 0; }
+
+/* Tables responsive : scroll horizontal sur mobile */
+.t-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+th, td {
+  padding: 7px 9px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--bdr);
+}
+th {
+  background: var(--n-100);
+  color: var(--n-700);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+tr.sub-head th {
+  background: var(--t-600);
+  color: #fff;
+  font-size: 11px;
+}
+tr.sub-head-warm th {
+  background: var(--a-500);
+  color: #fff;
+}
+tr.sub-head-alert th {
+  background: var(--r-600);
+  color: #fff;
+}
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.center, th.center { text-align: center; }
+td.hl {
+  background: var(--t-50);
+  font-weight: 700;
+  color: var(--t-700);
+}
+td strong { color: var(--n-900); }
+
+/* Boîtes d'alerte */
+.alert {
+  border-left: 4px solid var(--a-500);
+  background: var(--a-50);
+  color: var(--n-800);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 12.5px;
+}
+.alert.crit {
+  border-left-color: var(--r-500);
+  background: var(--r-50);
+}
+.alert.info {
+  border-left-color: var(--t-500);
+  background: var(--t-50);
+}
+.alert strong { color: var(--n-900); }
+
+/* Pastilles et badges */
+.pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.pill.teal { background: var(--t-100); color: var(--t-800); }
+.pill.amber { background: var(--a-100); color: var(--a-700); }
+.pill.red { background: var(--r-100); color: var(--r-700); }
+.pill.slate { background: var(--n-100); color: var(--n-700); }
+
+/* Grille 2-col pour les fiches expert (profil réceptoriel + encadrés) */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 720px) {
+  .grid2 { grid-template-columns: 3fr 2fr; }
+  body { font-size: 15px; }
+}
+
+footer.src {
+  font-size: 11px;
+  color: var(--n-400);
+  text-align: center;
+  padding: 10px 14px 20px;
+  line-height: 1.4;
+}
+
+/* Impression : forcer blanc/noir lisible, pas de fond coloré superflu */
+@media print {
+  body { background: #fff; color: #000; padding: 0; font-size: 10.5pt; }
+  header.doc-head { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card { break-inside: avoid; border-color: #999; background: #fff; }
+  tr.sub-head th, tr.sub-head-warm th, tr.sub-head-alert th {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .alert { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h2 { color: #000; }
+  footer.src { color: #666; }
+}

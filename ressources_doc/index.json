@@ -6,7 +6,7 @@
     {
       "type": "fiche",
       "titre": "Benzodiazépines — système étoilé",
-      "meta": "Fiche pratique USCA · 2026",
+      "meta": "Fiche pratique USCA · PDF · 2026",
       "tag": "BZD",
       "fichier": "fiches/benzodiazepines_etoiles_print_A4.pdf",
       "date": "2026-03-04"
@@ -16,13 +16,13 @@
       "titre": "Benzodiazépines — équivalences diazépam",
       "meta": "Table de conversion USCA · v2 · 2026",
       "tag": "BZD",
-      "fichier": "fiches/benzodiazepines_equivalences_diazepam_v2.pdf",
+      "fichier": "fiches/benzodiazepines_equivalences_diazepam_v2.html",
       "date": "2026-04-20"
     },
     {
       "type": "fiche",
       "titre": "Antipsychotiques — système étoilé",
-      "meta": "Fiche pratique USCA · 2026",
+      "meta": "Fiche pratique USCA · PDF · 2026",
       "tag": "Général",
       "fichier": "fiches/antipsychotiques_etoiles.pdf",
       "date": "2026-04-20"
@@ -32,7 +32,7 @@
       "titre": "Antipsychotiques — équivalences chlorpromazine",
       "meta": "Table de conversion USCA · 2026",
       "tag": "Général",
-      "fichier": "fiches/antipsychotiques_equivalences_cpz.pdf",
+      "fichier": "fiches/antipsychotiques_equivalences_cpz.html",
       "date": "2026-04-20"
     },
     {
@@ -40,13 +40,13 @@
       "titre": "Antipsychotiques — comparatif",
       "meta": "Tableau comparatif USCA · v2 · 2026",
       "tag": "Général",
-      "fichier": "fiches/comparatif_antipsychotiques_v2.pdf",
+      "fichier": "fiches/comparatif_antipsychotiques_v2.html",
       "date": "2026-04-20"
     },
     {
       "type": "article",
       "titre": "INCAS — Prédicteurs de succès TUS + TDAH",
-      "meta": "Brynte et al. · Eur Neuropsychopharm · 2026",
+      "meta": "Brynte et al. · Eur Neuropsychopharm · PDF · 2026",
       "tag": "TDAH",
       "fichier": "articles/INCAS_resume_clinique.pdf",
       "date": "2026-04-20"

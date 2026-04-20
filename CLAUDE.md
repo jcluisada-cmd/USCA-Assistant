@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.88 — arborescence `ressources_doc/` (manifest JSON + 4 sous-dossiers) + convertisseur CPZ + accordion Fiches Expert)
+> Dernière mise à jour : 20 avril 2026 (v3.89 — 3 tableaux PDF → HTML (équivalences BZD, CPZ, comparatif antipsy) · Messages admin unifiés (compose inline) · spec AI pdf2html.md)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.88 |
+| **Service Worker** | usca-v3.89 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -195,7 +195,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance, historique, stats, animateur/lieu affichés
 - ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
-- ✅ **Messages** : conversation bidirectionnelle patient ↔ équipe (compose box + chat-style, patient à droite, soignant à gauche). Migration v21 (policy INSERT `contenus_partages` ouverte anon). Convention `cree_par IS NULL` = patient.
+- ✅ **Messages** : conversation bidirectionnelle patient ↔ équipe (compose box + chat-style, patient à droite, soignant à gauche). Migration v21 (policy INSERT `contenus_partages` ouverte anon). Convention `cree_par IS NULL` = patient. Côté admin : **compose inline unifiée** dans l'accordion Messages (sélecteur type note/lien/consigne + titre + texte + envoi), le bouton "Partager du contenu" et le modal séparé ont été supprimés.
 - ✅ **Mon avis** : feedback structuré sur l'application (email ou copie)
 - ✅ **Faire une demande de post-cure** : lien vers formulaire patient standalone
 - ✅ **Badges notification** : ronds rouges sur Messages, Traitements, Programme, Ateliers
@@ -257,7 +257,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 ### Toolbox Soignant V1
 - ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
-- ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (4 accordions : Fiches / Articles / Recos / Algos, tags thématiques colorés, ouverture `target="_blank"`). Manifest-driven : `ressources_doc/index.json` fetch au mount, 6 ressources actuellement (BZD étoiles + BZD équivalences v2, antipsy étoiles + antipsy CPZ + comparatif antipsy, INCAS TUS/TDAH).
+- ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (4 accordions : Fiches / Articles / Recos / Algos, tags thématiques colorés, ouverture `target="_blank"`). Manifest-driven : `ressources_doc/index.json` fetch au mount, 6 ressources actuellement (BZD étoiles PDF + BZD équivalences HTML, antipsy étoiles PDF + antipsy CPZ HTML + comparatif antipsy HTML, INCAS TUS/TDAH PDF). Design system partagé `shared/ressource-doc.css` pour tous les HTMLs (responsive mobile, dark mode auto, impression).
 - ✅ **Traitements** → 2 accordions : **Fiches Patient** (20 HTML, ouvertes par défaut, répartis en 5 catégories Sevrage/TSO/BZD/Psychotropes/Hypnotiques) + **Fiches Expert** (8 PDFs antipsychotiques classés G1 neuroleptiques classiques / G2 atypiques, ouverture `target="_blank"`).
 - ✅ **Scores → OUTILS** : Convertisseur BZD (→ diazépam, seuil hospit >40 mg DZP-eq) + **Convertisseur CPZ** (→ chlorpromazine, 14 molécules G1/G2, alerte haute dose >1000 mg CPZ-eq/j, vigilance addicto OH/BZD/opioïdes).
 - ✅ **ELSA** → hub : Liaisons en cours (ToDo list + drag-and-drop + checklist), Admission & Orientation, Fiches réflexes (5)
@@ -273,7 +273,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
 - [ ] **Liste d'attente enrichie** : ajouter trois champs au formulaire "Ajouter en liste d'attente" (accordion Attente du dashboard admin) — (1) case à cocher "Passé par une pré-admission", (2) date de sortie prévue (optionnel, si connue dès l'admission), (3) date de naissance au format libre "JJMMAAAA" ou "JJ/MM/AAAA" en saisie texte (pas de date picker — les soignants peuvent taper rapidement, les slash sont ignorés). Garder la possibilité de saisir directement l'âge. Objectif : admettre plus vite dès qu'un lit se libère.
-- [ ] **Messages unifiés admin** : fusionner le bouton "Partager du contenu" avec l'accordion Messages. Un seul endroit **"Messages"** avec chat bidirectionnel + compose intégrée (textarea + sélecteur de type note/lien/consigne + bouton envoyer), comme côté patient. Supprimer le modal `modal-contenu` et le bouton `btn-action-contenu`.
+- [ ] **AI pdf2html (script + GitHub Action)** : conversion automatique des PDFs Ressources/Expert en HTML fit-for-app via Mistral Large (RGPD), déclenchée sur push. Spec complète dans `AI_pdf2html.md`. Prérequis déjà présents : CSS design system `shared/ressource-doc.css` + 3 fiches HTML de référence. Mitigations : branche `ressources-auto/*` + PR + review clinique obligatoire avant merge. Coût estimé ~0,10 €/mois.
 - [ ] **Ressources Toolbox — GitHub Action pour regénérer `index.json`** : aujourd'hui le manifest est maintenu à la main (ajouter un PDF = ajouter une entrée au JSON). Ajouter une Action qui scanne `ressources_doc/fiches|articles|recos|algos/` et regénère `index.json` à chaque push, pour un "vrai" zéro-code workflow. Inférence raisonnable : type depuis le sous-dossier, nom de fichier → titre (humanisé), date = dernière modif git. Garder les overrides `tag` et `meta` dans un YAML frontmatter optionnel dans le nom/fichier si nécessaire.
 - [ ] **Toolbox — Fiches Expert hors antipsychotiques** : enrichir `fiches_expert/` avec synthèses cliniques pour les autres familles (BZD, TSO/méthadone-BHD, thymorégulateurs, stimulants, antidépresseurs). Structure d'accordion déjà en place dans `TraitementsView` — il suffit d'ajouter les PDFs et les entrées dans `FICHES_EXPERT_CATS`.
 
