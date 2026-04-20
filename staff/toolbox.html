@@ -903,7 +903,8 @@ function LiaisonsView({onBack}) {
 /* ─── PROTOCOLES USCA HUB ─── */
 function ProtocolesHub({onNav, onBack}) {
   const items = [
-    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]}
+    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]},
+    {l:"Ressources",desc:"Articles, fiches, recos",i:I.book,v:"ressources",c:C.t[500]}
   ];
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
@@ -915,6 +916,98 @@ function ProtocolesHub({onNav, onBack}) {
       </div>
       {I.chevR(C.n[300])}
     </div>)}
+  </div>;
+}
+
+/* ─── RESSOURCES (articles, fiches, recos) ─── */
+const RESSOURCE_TAGS = {
+  "OH":         {label:"OH",         color:"#EF4444"},
+  "BZD":        {label:"BZD",        color:"#A855F7"},
+  "Opioïdes":   {label:"Opioïdes",   color:"#F97316"},
+  "TDAH":       {label:"TDAH",       color:"#4F46E5"},
+  "TSPT":       {label:"TSPT",       color:"#3B82F6"},
+  "Humeur":     {label:"Humeur",     color:"#10B981"},
+  "Cannabis":   {label:"Cannabis",   color:"#65A30D"},
+  "Stimulants": {label:"Stimulants", color:"#EC4899"},
+  "Polyconso":  {label:"Polyconso",  color:"#64748B"},
+  "Général":    {label:"Général",    color:"#94A3B8"}
+};
+
+const RESSOURCES = [
+  {
+    type: "fiche",
+    titre: "Benzodiazépines — système étoilé",
+    meta: "Fiche pratique USCA · 2026",
+    tag: "BZD",
+    fichier: "../ressources_doc/benzodiazepines_etoiles_print_A4.pdf",
+    date: "2026-03-04"
+  },
+  {
+    type: "article",
+    titre: "INCAS — Prédicteurs de succès TUS + TDAH",
+    meta: "Brynte et al. · Eur Neuropsychopharm · 2026",
+    tag: "TDAH",
+    fichier: "../ressources_doc/INCAS_resume_clinique.pdf",
+    date: "2026-04-20"
+  }
+];
+
+function RessourcesView({onBack}) {
+  const GROUPS = [
+    {key:"fiche",   label:"Fiches pratiques",  icon:"📑", sub:"Aides-mémoire imprimables"},
+    {key:"article", label:"Résumés d'articles", icon:"🧪", sub:"Evidence-based, veille scientifique"},
+    {key:"reco",    label:"Recommandations",   icon:"📘", sub:"HAS, SFA, NICE"}
+  ];
+  const [op, setOp] = useState("fiche");
+
+  const byType = (t) => RESSOURCES
+    .filter(r => r.type === t)
+    .sort((a,b) => (b.date||"").localeCompare(a.date||""));
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.book(C.t[300])} title="Ressources" sub="Articles, fiches, recommandations"/>
+    {GROUPS.map(g => {
+      const list = byType(g.key);
+      const open = op === g.key;
+      return <div key={g.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+        <button className="section-btn" onClick={()=>setOp(open?null:g.key)}>
+          <div style={{textAlign:"left",display:"flex",alignItems:"center",gap:10}}>
+            <span style={{fontSize:20}}>{g.icon}</span>
+            <div>
+              <div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{g.label}</div>
+              <div style={{fontSize:11,color:C.n[400]}}>{list.length>0 ? `${list.length} ressource${list.length>1?"s":""}` : "Bientôt…"}</div>
+            </div>
+          </div>
+          {open ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {open && <div style={{padding:10,borderTop:`1px solid ${C.bdr}`}}>
+          {list.length === 0 ? (
+            <div style={{fontSize:12,color:C.n[400],fontStyle:"italic",padding:"10px 4px"}}>
+              Aucune ressource pour le moment. {g.sub}.
+            </div>
+          ) : list.map((r,i) => {
+            const tag = RESSOURCE_TAGS[r.tag] || RESSOURCE_TAGS["Général"];
+            return <a key={i} href={r.fichier} target="_blank" rel="noopener noreferrer"
+              className="card card-tap"
+              style={{display:"flex",alignItems:"center",gap:10,padding:10,marginBottom:i===list.length-1?0:6,textDecoration:"none",borderColor:C.bdr}}>
+              <span style={{fontSize:18,flexShrink:0}}>{g.icon}</span>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:C.n[800],lineHeight:1.3}}>{r.titre}</div>
+                <div style={{fontSize:11,color:C.n[400],marginTop:2}}>{r.meta}</div>
+              </div>
+              <span style={{
+                fontSize:10,fontWeight:800,color:"#fff",background:tag.color,
+                padding:"3px 8px",borderRadius:99,flexShrink:0,letterSpacing:"0.2px"
+              }}>{tag.label}</span>
+            </a>;
+          })}
+        </div>}
+      </div>;
+    })}
+    <div style={{fontSize:11,color:C.n[400],textAlign:"center",marginTop:16,padding:"0 8px"}}>
+      Les ressources s'ouvrent dans un nouvel onglet. Rotation paysage gérée par le navigateur.
+    </div>
   </div>;
 }
 
@@ -1181,6 +1274,8 @@ function App() {
       </div>;
 
 
+      case "ressources": return <RessourcesView onBack={()=>nav("protocoles_hub")}/>;
+
       case "scores": return <div className="fade-in">
         <BackBtn onClick={()=>nav("home")}/>
         <SectionHead icon={I.calc(C.t[300])} title="Scores & Calculateurs"/>
@@ -1269,7 +1364,7 @@ function App() {
     <div className="bottom-nav">
       <div className="bottom-nav-inner">
         {navItems.map(item=>{
-          const protoViews = ["protocoles_hub","substances"];
+          const protoViews = ["protocoles_hub","substances","ressources"];
           const elsaViews = ["elsa_hub","elsa_fiches","admission","liaisons"];
           const act = item.id==="more"?menuOpen:
             item.id==="protocoles_hub"?(protoViews.includes(view)||selSub):

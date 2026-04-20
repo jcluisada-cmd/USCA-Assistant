@@ -341,6 +341,21 @@
             <div id="detail-perms-list"></div>
           </div>
 
+          <!-- Accordion : Messages (conversation bidirectionnelle patient ↔ équipe) -->
+          <button id="acc-messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <div id="messages-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-slate-700">Messages</span>
+              <span id="messages-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
+            </div>
+            <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div id="acc-messages-content" class="hidden mb-2 pl-2">
+            <div id="detail-messages-list" class="space-y-2 max-h-[400px] overflow-y-auto pr-1"></div>
+          </div>
+
           <!-- Actions -->
           <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
           <div class="space-y-2 mb-4">
@@ -1400,6 +1415,11 @@ document.getElementById('acc-perms').addEventListener('click', function() {
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
+document.getElementById('acc-messages').addEventListener('click', function() {
+  var content = document.getElementById('acc-messages-content');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+});
 
 // ── Statut post-cure ──
 function renderPostcureStatut(patient) {
@@ -1654,6 +1674,8 @@ document.getElementById('contenu-save').addEventListener('click', async function
     await db.createContenu({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, titre: titre, contenu: texte, type: document.getElementById('contenu-type').value });
     document.getElementById('modal-contenu').classList.add('hidden');
     document.getElementById('contenu-titre').value = ''; document.getElementById('contenu-texte').value = '';
+    // Rafraîchir la conversation dans l'accordion Messages
+    renderPatientMessages(selectedPatientForDetail.id);
   } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
   this.disabled = false; this.textContent = 'Partager';
 });
@@ -1766,6 +1788,9 @@ async function showPatientDetail(patient) {
 
   // Charger les permissions
   renderPatientPerms(patient.id);
+
+  // Charger les messages (conversation bidirectionnelle)
+  renderPatientMessages(patient.id);
 }
 
 function renderFichesChecklist(patientId) {
@@ -1949,6 +1974,89 @@ async function renderPatientPerms(patientId) {
 
       list.appendChild(card);
     });
+  } catch(e) {
+    list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
+  }
+}
+
+// ── Rendu messages (conversation bidirectionnelle patient ↔ équipe) ──
+async function renderPatientMessages(patientId) {
+  var list = document.getElementById('detail-messages-list');
+  var msgIcon = document.getElementById('messages-icon');
+  var msgBadge = document.getElementById('messages-count-badge');
+  if (!list) return;
+  list.textContent = '';
+
+  try {
+    var contenus = await db.getContenus(patientId);
+    // Messages envoyés par le patient (cree_par null)
+    var patientMsgs = contenus.filter(function(c) { return !c.cree_par; });
+
+    if (patientMsgs.length > 0) {
+      msgIcon.className = 'w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center';
+      msgIcon.querySelector('svg').setAttribute('stroke', '#7c3aed');
+      msgBadge.textContent = patientMsgs.length + ' patient';
+      msgBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700';
+    } else {
+      msgIcon.className = 'w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center';
+      msgIcon.querySelector('svg').setAttribute('stroke', '#94a3b8');
+      msgBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden';
+    }
+
+    if (contenus.length === 0) {
+      list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun message. Utilisez "Partager du contenu" pour écrire au patient.'));
+      return;
+    }
+
+    // Tri chronologique croissant
+    var ordered = contenus.slice().sort(function(a,b) { return new Date(a.created_at) - new Date(b.created_at); });
+    var typeIcons = { note:'📝', lien:'🔗', consigne:'⚠️', document:'📄' };
+
+    ordered.forEach(function(c) {
+      var isPatient = !c.cree_par;
+      var row = createEl('div', 'flex ' + (isPatient ? 'justify-start' : 'justify-end'));
+      // Côté admin : patient à gauche (interlocuteur), soignant à droite (moi)
+      var bubble = createEl('div',
+        'max-w-[85%] rounded-2xl px-3 py-2 ' +
+        (isPatient
+          ? 'bg-purple-100 text-slate-800 rounded-bl-sm border border-purple-200'
+          : 'bg-slate-100 text-slate-800 rounded-br-sm border border-slate-200'));
+
+      // Entête
+      var head = createEl('div', 'flex items-center gap-1.5 mb-0.5');
+      if (isPatient) {
+        head.appendChild(createEl('span', 'text-[10px] font-bold uppercase tracking-wide text-purple-700', '👤 Patient'));
+      } else {
+        head.appendChild(createEl('span', 'text-xs', typeIcons[c.type] || '📝'));
+        head.appendChild(createEl('span', 'text-[10px] font-bold text-slate-600', c.titre));
+      }
+      bubble.appendChild(head);
+
+      // Contenu
+      if (c.type === 'lien') {
+        var link = createEl('a', 'text-xs text-indigo-600 underline break-all', c.contenu);
+        link.href = c.contenu.startsWith('http') ? c.contenu : 'https://' + c.contenu;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        bubble.appendChild(link);
+      } else {
+        bubble.appendChild(createEl('p', 'text-xs leading-relaxed whitespace-pre-wrap', c.contenu));
+      }
+
+      // Horodatage
+      var date = new Date(c.created_at);
+      var today = new Date();
+      var sameDay = date.toDateString() === today.toDateString();
+      var stamp = sameDay
+        ? date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})
+        : date.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'}) + ' ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+      bubble.appendChild(createEl('div', 'text-[9px] text-slate-400 mt-0.5 ' + (isPatient ? '' : 'text-right'), stamp));
+
+      row.appendChild(bubble);
+      list.appendChild(row);
+    });
+
+    requestAnimationFrame(function() { list.scrollTop = list.scrollHeight; });
   } catch(e) {
     list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
   }

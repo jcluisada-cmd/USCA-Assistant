@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.84 — nettoyage Toolbox + spec carte « Ressources » prête dans `TOOLBOX_RESSOURCES.md`)
+> Dernière mise à jour : 20 avril 2026 (v3.86 — Ressources Toolbox livrées + messages bidirectionnels patient ↔ équipe)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.82 |
+| **Service Worker** | usca-v3.86 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -137,7 +137,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `strategies` — Stratégies de prévention patient (5 catégories Marlatt)
 - `evenements` — Événements (patient_id nullable : individuels + équipe). Types : entretien, consultation, familial, rdv_externe, reunion, staff, labo, supervision
 - `permissions_sortie` — Demandes de permission (statut, date/heure sortie/retour, motif)
-- `messages` — Contenus partagés par le soignant (notes, liens, consignes)
+- `contenus_partages` — Messages bidirectionnels patient ↔ équipe (notes, liens, consignes). `cree_par IS NULL` = envoyé par le patient, sinon = soignant. Migration v21 : policy INSERT ouverte anon.
 - `fiches_traitements_patient` — Fiches traitements prescrites (checklist)
 
 ### Tables groupes
@@ -188,7 +188,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance, historique, stats, animateur/lieu affichés
 - ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
-- ✅ **Messages** : contenus partagés par le soignant
+- ✅ **Messages** : conversation bidirectionnelle patient ↔ équipe (compose box + chat-style, patient à droite, soignant à gauche). Migration v21 (policy INSERT `contenus_partages` ouverte anon). Convention `cree_par IS NULL` = patient.
 - ✅ **Mon avis** : feedback structuré sur l'application (email ou copie)
 - ✅ **Faire une demande de post-cure** : lien vers formulaire patient standalone
 - ✅ **Badges notification** : ronds rouges sur Messages, Traitements, Programme, Ateliers
@@ -250,7 +250,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 ### Toolbox Soignant V1
 - ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
-- ✅ **Protocoles USCA** → hub : Substances (7) [prévu : ressources addicto PubMed / HAS]
+- ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (3 accordions par type : Fiches / Articles / Recos, tags thématiques colorés, ouverture `target="_blank"` pour rotation paysage native). 2 ressources intégrées : benzodiazépines étoiles + INCAS TUS/TDAH.
 - ✅ **ELSA** → hub : Liaisons en cours (ToDo list + drag-and-drop + checklist), Admission & Orientation, Fiches réflexes (5)
 - ✅ Dark mode complet
 
@@ -263,7 +263,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte
 - [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
-- [ ] **Toolbox — carte « Ressources » dans Protocoles USCA** : spec complète dans `TOOLBOX_RESSOURCES.md` (3 accordions par type — Fiches / Articles / Recos, tags thématiques, ouverture `target="_blank"` pour gestion native paysage desktop + mobile). 2 PDFs prêts dans `ressources_doc/`.
+- [ ] **Liste d'attente enrichie** : ajouter trois champs au formulaire "Ajouter en liste d'attente" (accordion Attente du dashboard admin) — (1) case à cocher "Passé par une pré-admission", (2) date de sortie prévue (optionnel, si connue dès l'admission), (3) date de naissance au format libre "JJMMAAAA" ou "JJ/MM/AAAA" en saisie texte (pas de date picker — les soignants peuvent taper rapidement, les slash sont ignorés). Garder la possibilité de saisir directement l'âge. Objectif : admettre plus vite dès qu'un lit se libère.
 - [ ] **Toolbox — Fiches Traitements en 2 accordions** : séparer "Fiches Expert" (synthèse clinique, posologies, mécanismes, niveaux de preuve — à créer) et "Fiches Patient" (les 20 existantes). Accordions repliables, même moteur de navigation.
 
 ---
@@ -274,7 +274,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 | Carte | Type | Contenu |
 |---|---|---|
-| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) — à enrichir (ressources addicto PubMed / HAS) |
+| **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) + Ressources (fiches, articles, recos avec tags thématiques) |
 | **ELSA** | Hub (grande carte) | → Liaisons en cours (ToDo), Admission & Orientation, Fiches réflexes (5) + scores repérage |
 | **Dossier post-cure** | Grande carte | → Ouvre le volet médecin (postcure/medecin.html) |
 | **Traitements** | Petite carte | 20 fiches patient par médicament |
@@ -347,4 +347,3 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 | Supabase | pydxfoqxgvbmknzjzecn.supabase.co |
 | Affiche équipe | affiche-equipe.html (A4, QR code) |
 | **Archive historique** | `CLAUDE_ARCHIVE.md` (à lire à la demande) |
-| **Spec carte Ressources Toolbox** | `TOOLBOX_RESSOURCES.md` (à lire quand on attaquera le chantier) |

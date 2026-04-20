@@ -598,16 +598,29 @@
       <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <span class="text-sm font-bold">Messages de l'équipe</span>
+      <span class="text-sm font-bold">Messages</span>
     </header>
-    <div class="flex-1 p-5 max-w-lg mx-auto w-full">
-      <div id="messages-list" class="space-y-3"></div>
-      <div id="messages-empty" class="text-center py-12 hidden">
-        <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+    <div class="flex-1 flex flex-col max-w-lg mx-auto w-full" style="min-height:0">
+      <div id="messages-list" class="flex-1 overflow-y-auto px-4 py-4 space-y-2" style="min-height:0"></div>
+      <div id="messages-empty" class="flex-1 flex items-center justify-center hidden">
+        <div class="text-center py-8 px-4">
+          <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+          </div>
+          <p class="text-sm text-slate-500">Aucun message pour le moment</p>
+          <p class="text-xs text-slate-400 mt-1">Écrivez un message ci-dessous pour contacter l'équipe.</p>
         </div>
-        <p class="text-sm text-slate-500">Aucun message pour le moment</p>
       </div>
+      <!-- Compose box -->
+      <div class="border-t border-slate-200 bg-white px-3 py-2 flex items-end gap-2">
+        <textarea id="msg-compose-input" rows="1" placeholder="Écrire à l'équipe…"
+          class="flex-1 resize-none px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-purple-400"
+          style="max-height:120px"></textarea>
+        <button id="msg-compose-send" class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+        </button>
+      </div>
+      <p id="msg-compose-error" class="text-xs text-red-600 px-4 py-1 hidden"></p>
     </div>
   </div>
 
@@ -868,47 +881,118 @@ async function loadMessages() {
 
   try {
     var contenus = await db.getContenus(currentPatient.id);
-    if (contenus.length === 0) { empty.classList.remove('hidden'); return; }
+    if (contenus.length === 0) {
+      empty.classList.remove('hidden');
+      list.classList.add('hidden');
+      document.getElementById('messages-count').textContent = 'Envoyer un message';
+      return;
+    }
     empty.classList.add('hidden');
+    list.classList.remove('hidden');
     document.getElementById('messages-count').textContent = contenus.length + ' message(s)';
 
     var typeIcons = {
-      note: { bg: 'bg-purple-50 border-purple-200', icon: '\ud83d\udcdd', label: 'Note' },
-      lien: { bg: 'bg-indigo-50 border-indigo-200', icon: '\ud83d\udd17', label: 'Lien' },
-      consigne: { bg: 'bg-amber-50 border-amber-200', icon: '\u26a0\ufe0f', label: 'Consigne' },
-      document: { bg: 'bg-slate-50 border-slate-200', icon: '\ud83d\udcc4', label: 'Document' }
+      note: '\ud83d\udcdd',
+      lien: '\ud83d\udd17',
+      consigne: '\u26a0\ufe0f',
+      document: '\ud83d\udcc4'
     };
 
-    contenus.forEach(function(c) {
-      var style = typeIcons[c.type] || typeIcons.note;
-      var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-4');
+    // Tri chronologique croissant (plus ancien en haut, dernier en bas — format chat)
+    var ordered = contenus.slice().sort(function(a,b) { return new Date(a.created_at) - new Date(b.created_at); });
 
-      var header = createEl('div', 'flex items-center justify-between mb-2');
-      var left = createEl('div', 'flex items-center gap-2');
-      left.appendChild(createEl('span', 'text-lg', style.icon));
-      left.appendChild(createEl('span', 'text-sm font-bold text-slate-800', c.titre));
-      header.appendChild(left);
-      var date = new Date(c.created_at);
-      header.appendChild(createEl('span', 'text-[10px] text-slate-400', date.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'})));
-      card.appendChild(header);
+    ordered.forEach(function(c) {
+      var isPatient = !c.cree_par; // cree_par null ou undefined = envoyé par le patient
+      var row = createEl('div', 'flex ' + (isPatient ? 'justify-end' : 'justify-start'));
+      var bubble = createEl('div',
+        'max-w-[80%] rounded-2xl px-3.5 py-2.5 shadow-sm ' +
+        (isPatient
+          ? 'bg-purple-600 text-white rounded-br-sm'
+          : 'bg-white text-slate-800 border border-slate-200 rounded-bl-sm'));
+
+      // Entête (type + titre pour soignant, rien pour patient) — on garde léger pour le chat
+      if (!isPatient) {
+        var head = createEl('div', 'flex items-center gap-1.5 mb-1');
+        head.appendChild(createEl('span', 'text-sm', typeIcons[c.type] || typeIcons.note));
+        head.appendChild(createEl('span', 'text-[11px] font-bold text-slate-700', c.titre));
+        bubble.appendChild(head);
+      }
 
       // Contenu
       if (c.type === 'lien') {
-        var link = createEl('a', 'text-sm text-indigo-600 underline break-all', c.contenu);
+        var link = createEl('a', 'text-sm break-all ' + (isPatient ? 'text-white underline' : 'text-indigo-600 underline'), c.contenu);
         link.href = c.contenu.startsWith('http') ? c.contenu : 'https://' + c.contenu;
         link.target = '_blank';
         link.rel = 'noopener';
-        card.appendChild(link);
+        bubble.appendChild(link);
       } else {
-        card.appendChild(createEl('p', 'text-sm text-slate-600 leading-relaxed', c.contenu));
+        bubble.appendChild(createEl('p', 'text-sm leading-relaxed whitespace-pre-wrap', c.contenu));
       }
 
-      list.appendChild(card);
+      // Horodatage
+      var date = new Date(c.created_at);
+      var today = new Date();
+      var sameDay = date.toDateString() === today.toDateString();
+      var stamp = sameDay
+        ? date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})
+        : date.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'}) + ' ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+      bubble.appendChild(createEl('div', 'text-[10px] mt-1 ' + (isPatient ? 'text-purple-200 text-right' : 'text-slate-400'), stamp));
+
+      row.appendChild(bubble);
+      list.appendChild(row);
     });
+
+    // Auto-scroll en bas pour voir le dernier message
+    requestAnimationFrame(function() { list.scrollTop = list.scrollHeight; });
   } catch(e) {
     empty.classList.remove('hidden');
   }
 }
+
+// ── Compose : envoi d'un message par le patient ──
+(function() {
+  var input = document.getElementById('msg-compose-input');
+  var sendBtn = document.getElementById('msg-compose-send');
+  var errEl = document.getElementById('msg-compose-error');
+
+  // Auto-resize du textarea (1 à 4 lignes visuelles)
+  input.addEventListener('input', function() {
+    sendBtn.disabled = !input.value.trim();
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  });
+
+  // Envoi sur Entrée (Shift+Entrée = nouvelle ligne)
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendBtn.click();
+    }
+  });
+
+  sendBtn.addEventListener('click', async function() {
+    var texte = input.value.trim();
+    if (!texte || !currentPatient) return;
+    errEl.classList.add('hidden');
+    sendBtn.disabled = true;
+    try {
+      await db.createContenu({
+        patient_id: currentPatient.id,
+        cree_par: null, // null = envoyé par le patient
+        titre: 'Message du patient',
+        contenu: texte,
+        type: 'note'
+      });
+      input.value = '';
+      input.style.height = 'auto';
+      await loadMessages();
+    } catch(e) {
+      errEl.textContent = 'Erreur d\'envoi : ' + (e.message || 'réessayez.');
+      errEl.classList.remove('hidden');
+      sendBtn.disabled = false;
+    }
+  });
+})();
 
 // ══════════════ PERMISSIONS ══════════════
 

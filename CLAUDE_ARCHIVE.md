@@ -121,6 +121,30 @@
 - [x] Le hub Protocoles USCA ne contient plus que "Substances" — prépare l'arrivée des ressources addicto (PubMed / HAS) dans un prochain chantier.
 - [x] **sw.js** : v3.83 → v3.84.
 
+### Session 20/04 (v3.84 → v3.85) — Carte « Ressources » dans Toolbox
+- [x] **Toolbox / Protocoles USCA** : nouvelle carte **Ressources** (`RessourcesView`) avec 3 accordions par type : 📑 Fiches pratiques, 🧪 Résumés d'articles, 📘 Recommandations (accordion "Bientôt…" si vide).
+- [x] **Tags thématiques colorés** (pastilles) : OH, BZD, Opioïdes, TDAH, TSPT, Humeur, Cannabis, Stimulants, Polyconso, Général. Définis dans const `RESSOURCE_TAGS`.
+- [x] **2 ressources initiales** dans `ressources_doc/` : `benzodiazepines_etoiles_print_A4.pdf` (fiche BZD système étoilé) et `INCAS_resume_clinique.pdf` (article TUS+TDAH, Brynte et al. 2026, tag TDAH).
+- [x] **Ouverture `target="_blank"`** : le viewer natif du navigateur gère la rotation paysage sur mobile + desktop — `manifest.json` inchangé (`"orientation": "portrait"` préservé pour le reste de l'app). Solutions écartées : `orientation: any` (casse les autres vues), `screen.orientation.lock('landscape')` (pas supporté iOS Safari), iframe + rotation CSS (UX dégradée).
+- [x] **Service Worker** : PDFs non pré-cachés (poids cumulé), mise en cache automatique cache-first au 1er clic.
+- [x] **Navigation** : entrée "Ressources" dans `ProtocolesHub`, route `case "ressources"` dans `renderContent()`, `"ressources"` ajouté à `protoViews` pour que l'onglet du bas reste actif.
+- [x] Spec d'origine → archivée ici depuis `TOOLBOX_RESSOURCES.md` (supprimé). Questions ouvertes tranchées : libellé court "Ressources", icône `I.book` (existait), pas de badge "Nouveau" en v1, accordion vide → placeholder "Bientôt…".
+- [x] **sw.js** : v3.84 → v3.85.
+
+### Session 20/04 (v3.85 → v3.86) — Messages bidirectionnels patient ↔ équipe
+- [x] **Migration v21** (`supabase-migration-v21.sql`) : policy INSERT `contenus_partages` passée de `auth.role() = 'authenticated'` à `WITH CHECK (true)` pour autoriser le patient anon (session localStorage chambre + DDN).
+- [x] **Convention auteur** : `cree_par IS NULL` = message du patient, `cree_par = <uuid>` = message du soignant. Aucun changement de schéma, aucune colonne ajoutée.
+- [x] **Patient** (`patient/index.html`) :
+  - Panel "Messages" devient bidirectionnel. Header renommé "Messages" (plus "Messages de l'équipe").
+  - Compose box en bas : `<textarea>` auto-resize + bouton envoi rond violet. Entrée = envoi, Shift+Entrée = saut de ligne.
+  - Affichage **chat-style** : patient à droite (bulle violette pleine, arrondi `rounded-br-sm`), soignant à gauche (bulle blanche avec bordure). Titre + icône type conservés pour les messages soignant.
+  - Tri chronologique croissant + auto-scroll en bas après chargement / envoi.
+- [x] **Admin** (`admin/index.html`) :
+  - Nouvel accordion **Messages** dans le détail patient (entre Permissions et Actions), icône violette + badge "N patient" quand le patient a envoyé ≥1 message (différencié visuellement du badge neutre).
+  - `renderPatientMessages(patientId)` : chat-style inversé côté admin (patient à gauche, soignant à droite), scroll interne `max-h-[400px]`.
+  - Refresh automatique après envoi via le modal "Partager du contenu" existant (pas de nouveau bouton — réutilisation).
+- [x] **sw.js** : v3.85 → v3.86.
+
 ---
 
 ## C. SPEC MODULE PATIENT V3 — VISION LONG TERME
