@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.94 — liste d'attente enrichie : pré-admission, destination prévue, DDN libre, date sortie prévue)
+> Dernière mise à jour : 20 avril 2026 (v3.95 — refonte UX détail patient : Messages → modale chat in-app, fusion Permissions, grid sorties, dark mode post-cure, accordion élèves replié, retrait titre événement)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.94 |
+| **Service Worker** | usca-v3.95 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -267,7 +267,8 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 ## 7. À FAIRE
 
-- [ ] **P5** — Personnalisation modules soignant (choix des cartes affichées par rôle)
+**🎯 Prochain chantier : P5 — Personnalisation modules soignant** (plan d'implémentation à définir lors de la prochaine session). Principe : chaque profil (médecin / IDE / psychologue / pharmacien / secrétaire / externe / étudiant IDE) ne voit que les cartes pertinentes pour son rôle (dans dashboard, toolbox, etc.). Stockage : colonne `modules_actifs` (JSONB ou TEXT[]) déjà présente dans `profiles`.
+
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte

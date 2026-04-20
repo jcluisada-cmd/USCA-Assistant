@@ -24,6 +24,10 @@
   html.dark .bg-indigo-50 { background-color: rgba(79,70,229,0.1) !important; }
   html.dark .bg-indigo-100 { background-color: rgba(79,70,229,0.15) !important; }
   html.dark .border-indigo-200 { border-color: rgba(79,70,229,0.3) !important; }
+  /* Dossier post-cure : forcer un contraste lisible dans les 2 modes */
+  #postcure-statut-zone { background-color: #f0fdfa; }
+  html.dark #postcure-statut-zone { background-color: rgba(13,148,136,0.1) !important; border-color: rgba(13,148,136,0.25) !important; }
+  html.dark #btn-action-postcure:hover { background-color: rgba(13,148,136,0.1) !important; }
 </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -264,10 +268,10 @@
               <h3 id="eleves-section-title" class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
               <div class="flex items-center gap-2">
                 <span id="eleves-count" class="text-[10px] text-slate-400"></span>
-                <svg id="eleves-chevron" class="w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                <svg id="eleves-chevron" class="w-4 h-4 text-slate-400 transition-transform" style="transform:rotate(-90deg)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </div>
             </button>
-            <div id="eleves-body" class="border-t border-slate-200">
+            <div id="eleves-body" class="border-t border-slate-200 hidden">
               <!-- Sous-section IFSI (IDE + admin) -->
               <div id="eleves-ifsi-wrap">
                 <div id="eleves-ifsi-subheader" class="hidden px-3 pt-2 pb-1.5 border-b border-slate-100">
@@ -385,57 +389,29 @@
             <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div id="acc-perms-content" class="hidden mb-2 pl-2">
+            <button id="btn-add-perm-inline" class="w-full py-2 mb-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              Annoncer une permission
+            </button>
             <div id="detail-perms-list"></div>
-          </div>
-
-          <!-- Accordion : Messages (conversation bidirectionnelle + compose intégrée) -->
-          <button id="acc-messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
-            <div class="flex items-center gap-2.5">
-              <div id="messages-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
-              </div>
-              <span class="text-sm font-semibold text-slate-700">Messages</span>
-              <span id="messages-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden"></span>
-            </div>
-            <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div id="acc-messages-content" class="hidden mb-2 pl-2">
-            <!-- Conversation -->
-            <div id="detail-messages-list" class="space-y-2 max-h-[380px] overflow-y-auto pr-1 mb-2"></div>
-            <!-- Compose intégrée : type + titre + texte + envoi -->
-            <div class="bg-white border border-slate-200 rounded-xl p-2.5">
-              <div class="flex gap-1.5 mb-2">
-                <select id="msg-inline-type" class="text-[11px] px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg">
-                  <option value="note">📝 Note</option>
-                  <option value="lien">🔗 Lien</option>
-                  <option value="consigne">⚠️ Consigne</option>
-                </select>
-                <input id="msg-inline-titre" type="text" placeholder="Titre (optionnel)" class="flex-1 text-[12px] px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg" maxlength="80">
-              </div>
-              <div class="flex items-end gap-2">
-                <textarea id="msg-inline-texte" rows="1" placeholder="Écrire au patient…" class="flex-1 resize-none px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[13px] focus:outline-none focus:border-purple-400" style="max-height:120px"></textarea>
-                <button id="msg-inline-send" class="w-9 h-9 rounded-full bg-purple-600 text-white flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
-                </button>
-              </div>
-              <p id="msg-inline-error" class="text-[11px] text-red-600 mt-1 hidden"></p>
-            </div>
           </div>
 
           <!-- Actions -->
           <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
           <div class="space-y-2 mb-4">
+            <!-- Messages (ouvre une modale chat in-app) -->
+            <button id="btn-action-messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+              <div id="messages-icon" class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-700">Messages</p><p id="messages-action-sub" class="text-[11px] text-slate-400">Conversation patient ↔ équipe</p></div>
+              <span id="messages-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden flex-shrink-0"></span>
+            </button>
             <button id="btn-action-event" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
               </div>
               <div><p class="text-sm font-semibold text-slate-700">Planifier un événement</p><p class="text-[11px] text-slate-400">Entretien, consultation, RDV externe...</p></div>
-            </button>
-            <button id="btn-action-perm" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
-              <div class="w-8 h-8 bg-cyan-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-              </div>
-              <div><p class="text-sm font-semibold text-slate-700">Annoncer une permission</p><p class="text-[11px] text-slate-400">48h max, retour 20h</p></div>
             </button>
             <button id="btn-action-sortie" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -453,7 +429,7 @@
                 <div class="flex-1"><p class="text-sm font-semibold text-slate-700 dark:text-slate-200">Dossier post-cure</p><p id="postcure-subtitle" class="text-[11px] text-slate-400">Volet médical, statut, structure</p></div>
                 <svg id="postcure-chevron" class="w-4 h-4 text-slate-400 transition-transform flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div id="postcure-statut-zone" class="hidden border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-3 space-y-3">
+              <div id="postcure-statut-zone" class="hidden border-t border-slate-100 dark:border-slate-700 p-3 space-y-3">
                 <!-- Structure + date -->
                 <div id="postcure-meta" class="space-y-2"></div>
                 <!-- Checkboxes statut -->
@@ -463,19 +439,19 @@
               </div>
             </div>
 
-            <!-- Exports de sortie -->
-            <div id="sortie-exports" class="hidden space-y-2">
-              <button id="btn-export-pdf-admin" class="w-full bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3.5 flex items-center gap-3 hover:opacity-95 transition-all active:scale-[0.98] text-left">
+            <!-- Exports de sortie (moitié / moitié sur la même ligne) -->
+            <div id="sortie-exports" class="hidden grid grid-cols-2 gap-2">
+              <button id="btn-export-pdf-admin" class="bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:opacity-95 transition-all active:scale-[0.98]">
                 <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                 </div>
-                <div><p class="text-sm font-semibold">Fiche de sortie (PDF)</p><p class="text-[11px] text-white/70">Craving, stratégies, contacts</p></div>
+                <div><p class="text-xs font-semibold leading-tight">Fiche de sortie</p><p class="text-[10px] text-white/80">PDF</p></div>
               </button>
-              <button id="btn-export-html-admin" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-all active:scale-[0.98] text-left">
+              <button id="btn-export-html-admin" class="bg-white rounded-xl border border-slate-200 p-3 flex flex-col items-center text-center gap-1.5 hover:bg-slate-50 transition-all active:scale-[0.98]">
                 <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
                 </div>
-                <div><p class="text-sm font-semibold text-slate-700">App de sortie (HTML)</p><p class="text-[11px] text-slate-400">Application autonome hors-ligne</p></div>
+                <div><p class="text-xs font-semibold text-slate-700 leading-tight">App de sortie</p><p class="text-[10px] text-slate-400">HTML autonome</p></div>
               </button>
             </div>
           </div>
@@ -525,7 +501,6 @@
                 <option value="rdv_externe">RDV externe</option>
                 <option value="autre">Autre</option>
               </select>
-              <input type="text" id="evt-titre" placeholder="Titre (optionnel, ex: avec Dr X)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
               <div class="grid grid-cols-2 gap-2">
                 <input type="date" id="evt-date" class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
                 <input type="time" id="evt-heure" class="px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm">
@@ -651,6 +626,32 @@
               <button id="sortie-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-xl text-sm">Annuler</button>
               <button id="sortie-save" class="flex-1 py-2.5 bg-emerald-600 text-white font-bold rounded-xl text-sm">Confirmer</button>
             </div>
+          </div>
+        </div>
+
+        <!-- Modal Messages (chat in-app fullscreen, style patient) -->
+        <div id="modal-messages" class="fixed inset-0 z-[100] bg-black/60 hidden flex flex-col">
+          <div class="bg-white dark:bg-slate-900 w-full max-w-lg mx-auto h-full md:h-[90vh] md:my-auto md:rounded-2xl flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="sticky top-0 z-10 bg-purple-600 text-white px-4 py-3 flex items-center gap-3 flex-shrink-0">
+              <button id="msg-modal-close" class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-bold">Messages</div>
+                <div id="msg-modal-patient" class="text-[11px] text-white/80 truncate">Patient</div>
+              </div>
+            </header>
+            <!-- Liste des messages -->
+            <div id="detail-messages-list" class="flex-1 overflow-y-auto px-4 py-3 space-y-2 bg-slate-50 dark:bg-slate-900" style="min-height:0"></div>
+            <!-- Compose (textarea + envoi uniquement) -->
+            <div class="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 flex items-end gap-2 flex-shrink-0">
+              <textarea id="msg-inline-texte" rows="1" placeholder="Écrire au patient…" class="flex-1 resize-none px-3 py-2 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-sm dark:text-slate-100 focus:outline-none focus:border-purple-400" style="max-height:120px"></textarea>
+              <button id="msg-inline-send" class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+              </button>
+            </div>
+            <p id="msg-inline-error" class="text-[11px] text-red-600 px-4 py-1 hidden"></p>
           </div>
         </div>
 
@@ -1600,10 +1601,27 @@ document.getElementById('acc-perms').addEventListener('click', function() {
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
-document.getElementById('acc-messages').addEventListener('click', function() {
-  var content = document.getElementById('acc-messages-content');
-  content.classList.toggle('hidden');
-  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+// Bouton "+ Annoncer une permission" inline dans l'accordion Permissions
+document.getElementById('btn-add-perm-inline').addEventListener('click', function(e) {
+  e.stopPropagation();
+  document.getElementById('modal-perm').classList.remove('hidden');
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('perm-date-debut').value = today;
+  document.getElementById('perm-date-retour').value = today;
+});
+
+// Ouverture/fermeture de la modale Messages (chat in-app fullscreen)
+document.getElementById('btn-action-messages').addEventListener('click', function() {
+  if (!selectedPatientForDetail) return;
+  var modal = document.getElementById('modal-messages');
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('msg-modal-patient').textContent = 'Chambre ' + (selectedPatientForDetail.numero_chambre || '—');
+  renderPatientMessages(selectedPatientForDetail.id);
+});
+document.getElementById('msg-modal-close').addEventListener('click', function() {
+  document.getElementById('modal-messages').classList.add('hidden');
+  document.body.style.overflow = '';
 });
 
 // ── Statut post-cure ──
@@ -1749,7 +1767,7 @@ document.getElementById('btn-open-medecin').addEventListener('click', function()
 // ── Modals ──
 document.getElementById('btn-action-event').addEventListener('click', function() { document.getElementById('modal-event').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('evt-date').value = today; });
 document.getElementById('evt-cancel').addEventListener('click', function() { document.getElementById('modal-event').classList.add('hidden'); });
-document.getElementById('btn-action-perm').addEventListener('click', function() { document.getElementById('modal-perm').classList.remove('hidden'); var today = new Date().toISOString().split('T')[0]; document.getElementById('perm-date-debut').value = today; document.getElementById('perm-date-retour').value = today; });
+// btn-action-perm retiré — l'action "+ Annoncer une permission" est désormais dans l'accordion Permissions
 document.getElementById('perm-cancel').addEventListener('click', function() { document.getElementById('modal-perm').classList.add('hidden'); });
 // btn-action-contenu + modal-contenu supprimés — compose inline dans l'accordion Messages
 document.getElementById('btn-action-sortie').addEventListener('click', function() {
@@ -1801,11 +1819,11 @@ document.getElementById('evt-save').addEventListener('click', async function() {
   this.disabled = true; this.textContent = 'Enregistrement...';
   var type = document.getElementById('evt-type').value;
   var typeLabels = { entretien:'Entretien', consultation:'Consultation', familial:'Entretien familial', rdv_externe:'RDV externe', autre:'Événement' };
-  var titre = document.getElementById('evt-titre').value.trim() || typeLabels[type] || 'Événement';
+  var titre = typeLabels[type] || 'Événement';
   try {
     await db.createEvenement({ patient_id: selectedPatientForDetail.id, cree_par: currentProfile ? currentProfile.id : null, titre: titre, description: document.getElementById('evt-desc').value.trim() || null, date_heure: date + 'T' + heure + ':00', lieu: document.getElementById('evt-lieu').value.trim() || null, type: type });
     document.getElementById('modal-event').classList.add('hidden');
-    document.getElementById('evt-titre').value = ''; document.getElementById('evt-desc').value = ''; document.getElementById('evt-lieu').value = '';
+    document.getElementById('evt-desc').value = ''; document.getElementById('evt-lieu').value = '';
   } catch(e) { errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden'); }
   this.disabled = false; this.textContent = 'Planifier';
 });
@@ -1846,12 +1864,10 @@ document.getElementById('perm-save').addEventListener('click', async function() 
   this.disabled = false; this.textContent = 'Annoncer';
 });
 
-// ── Compose inline Messages (soignant → patient) ──
+// ── Compose Messages (modale chat in-app, soignant → patient) ──
 (function() {
   var input = document.getElementById('msg-inline-texte');
   var sendBtn = document.getElementById('msg-inline-send');
-  var titreInput = document.getElementById('msg-inline-titre');
-  var typeSelect = document.getElementById('msg-inline-type');
   var errEl = document.getElementById('msg-inline-error');
   if (!input || !sendBtn) return;
 
@@ -1873,21 +1889,17 @@ document.getElementById('perm-save').addEventListener('click', async function() 
   sendBtn.addEventListener('click', async function() {
     var texte = input.value.trim();
     if (!texte || !selectedPatientForDetail) return;
-    var type = typeSelect.value || 'note';
-    // Titre auto selon le type si non renseigné — le patient voit l'emoji + titre
-    var titreAuto = { note:'Message', lien:'Lien partagé', consigne:'Consigne' };
-    var titre = titreInput.value.trim() || titreAuto[type] || 'Message';
     errEl.classList.add('hidden');
     sendBtn.disabled = true;
     try {
       await db.createContenu({
         patient_id: selectedPatientForDetail.id,
         cree_par: currentProfile ? currentProfile.id : null,
-        titre: titre,
+        titre: 'Message',
         contenu: texte,
-        type: type
+        type: 'note'
       });
-      input.value = ''; titreInput.value = '';
+      input.value = '';
       input.style.height = 'auto';
       renderPatientMessages(selectedPatientForDetail.id);
     } catch(e) {
@@ -2013,9 +2025,7 @@ async function showPatientDetail(patient) {
   // Réinitialiser la compose inline
   var inlineInput = document.getElementById('msg-inline-texte');
   var inlineSend = document.getElementById('msg-inline-send');
-  var inlineTitre = document.getElementById('msg-inline-titre');
   if (inlineInput) { inlineInput.value = ''; inlineInput.style.height = 'auto'; }
-  if (inlineTitre) inlineTitre.value = '';
   if (inlineSend) inlineSend.disabled = true;
 }
 
@@ -2230,7 +2240,7 @@ async function renderPatientMessages(patientId) {
     }
 
     if (contenus.length === 0) {
-      list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Aucun message. Utilisez "Partager du contenu" pour écrire au patient.'));
+      list.appendChild(createEl('p', 'text-xs text-slate-400 text-center py-6', 'Aucun message pour le moment.'));
       return;
     }
 
