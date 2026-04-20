@@ -18,6 +18,9 @@
   --a-700:#cb6e17;
   --r-50:#fff0f0; --r-100:#fee2e2; --r-500:#ef4444; --r-600:#dc2626; --r-700:#b91c1c;
   --bg:#ffffff; --bdr:#e2e8f0; --card:#ffffff;
+  /* Couleurs FIXES (ne swappent pas en dark mode) — utilisées par header/footer */
+  --head-bg:#243b53; --head-fg:#ffffff; --head-meta:#bcccdc;
+  --foot-fg:#64748b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,6 +29,9 @@
     --n-400:#94a3b8; --n-500:#cbd5e1; --n-600:#e2e8f0; --n-700:#f1f5f9;
     --n-800:#f8fafc; --n-900:#ffffff;
     --bg:#0b1220; --bdr:#1e293b; --card:#0b1220;
+    /* Header reste dark navy lisible ; footer passe à un gris plus clair pour contraste */
+    --head-bg:#1e293b; --head-fg:#ffffff; --head-meta:#94a3b8;
+    --foot-fg:#94a3b8;
   }
 }
 
@@ -53,8 +59,8 @@ body {
 }
 
 header.doc-head {
-  background: var(--n-800);
-  color: #fff;
+  background: var(--head-bg);
+  color: var(--head-fg);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 14px;
@@ -64,11 +70,12 @@ header.doc-head h1 {
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.3px;
+  color: var(--head-fg);
 }
 header.doc-head .meta {
   margin: 0;
   font-size: 12px;
-  opacity: 0.85;
+  color: var(--head-meta);
   font-weight: 500;
 }
 
@@ -206,7 +213,7 @@ td strong { color: var(--n-900); }
 
 footer.src {
   font-size: 11px;
-  color: var(--n-400);
+  color: var(--foot-fg);
   text-align: center;
   padding: 10px 14px 20px;
   line-height: 1.4;
