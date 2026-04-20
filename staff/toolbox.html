@@ -1343,10 +1343,21 @@ function FeedbackView({onBack}) {
 
 /* ══════════════════════ MAIN APP ══════════════════════ */
 function App() {
-  const [view, setView] = useState("home");
-  const [selSub, setSelSub] = useState(null);
-  const [selScore, setSelScore] = useState(null);
-  const [selFiche, setSelFiche] = useState(null);
+  // Restauration éventuelle de la vue après un reload provoqué par un toggle dark mode
+  // (les couleurs JS C.* sont figées au chargement, on doit recharger l'iframe ; on
+  // sauvegarde la vue courante dans sessionStorage juste avant pour la restaurer ici).
+  const restored = (() => {
+    try {
+      const raw = sessionStorage.getItem('usca-tb-view');
+      if (!raw) return null;
+      sessionStorage.removeItem('usca-tb-view');
+      return JSON.parse(raw);
+    } catch(e) { return null; }
+  })();
+  const [view, setView] = useState(restored?.view || "home");
+  const [selSub, setSelSub] = useState(restored?.selSub ?? null);
+  const [selScore, setSelScore] = useState(restored?.selScore ?? null);
+  const [selFiche, setSelFiche] = useState(restored?.selFiche ?? null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
 
@@ -1355,6 +1366,13 @@ function App() {
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
   }, []);
+
+  // Expose la vue courante pour que le handler dark-mode (hors React) puisse la sauvegarder
+  // dans sessionStorage avant reload.
+  useEffect(() => {
+    window.__uscaToolboxState = () => ({ view, selSub, selScore, selFiche });
+    return () => { delete window.__uscaToolboxState; };
+  }, [view, selSub, selScore, selFiche]);
 
   const nav = (v) => { setView(v); setSelSub(null); setSelScore(null); setMenuOpen(false); window.scrollTo(0,0); };
 
@@ -1556,17 +1574,25 @@ if (new URLSearchParams(window.location.search).has('embedded')) {
   // Appliquer au chargement
   if (localStorage.getItem('usca_theme') === 'dark') applyToolboxDark(true);
 
+  // Sauvegarde la vue courante dans sessionStorage avant reload pour que React puisse
+  // la restaurer au remount (voir le useState() avec restored dans le composant racine).
+  function saveViewThenReload() {
+    try {
+      if (window.__uscaToolboxState) {
+        sessionStorage.setItem('usca-tb-view', JSON.stringify(window.__uscaToolboxState()));
+      }
+    } catch(e) {}
+    window.location.reload();
+  }
+
   // Écouter les changements depuis le parent via postMessage
-  // Recharger l'iframe pour que le swap de C soit appliqué
+  // Recharger l'iframe pour que le swap de C soit appliqué (couleurs JS figées au chargement)
   window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'usca-theme') {
-      // Le swap de C se fait au chargement, donc on recharge
-      window.location.reload();
-    }
+    if (e.data && e.data.type === 'usca-theme') saveViewThenReload();
   });
   // Aussi écouter les changements localStorage (autres onglets)
   window.addEventListener('storage', function(e) {
-    if (e.key === 'usca_theme') window.location.reload();
+    if (e.key === 'usca_theme') saveViewThenReload();
   });
 })();
 // Register Service Worker
