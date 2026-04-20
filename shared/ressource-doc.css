@@ -9,6 +9,7 @@
    ───────────────────────────────────────────────────────────────────── */
 
 :root {
+  /* ─── LIGHT MODE (par défaut) ─── */
   --n-50:#f0f4f8; --n-100:#d9e2ec; --n-200:#bcccdc; --n-300:#9fb3c8;
   --n-400:#7b8faa; --n-500:#627d98; --n-600:#486581; --n-700:#334e68;
   --n-800:#243b53; --n-900:#102a43;
@@ -18,21 +19,21 @@
   --a-700:#cb6e17;
   --r-50:#fff0f0; --r-100:#fee2e2; --r-500:#ef4444; --r-600:#dc2626; --r-700:#b91c1c;
   --bg:#ffffff; --bdr:#e2e8f0; --card:#ffffff;
-  /* Couleurs FIXES (ne swappent pas en dark mode) — utilisées par header/footer */
+  /* Header/footer — couleurs dédiées, indépendantes du swap light/dark de la palette */
   --head-bg:#243b53; --head-fg:#ffffff; --head-meta:#bcccdc;
-  --foot-fg:#64748b;
+  --foot-fg:#475569;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --n-50:#0f172a; --n-100:#1e293b; --n-200:#334155; --n-300:#475569;
-    --n-400:#94a3b8; --n-500:#cbd5e1; --n-600:#e2e8f0; --n-700:#f1f5f9;
-    --n-800:#f8fafc; --n-900:#ffffff;
-    --bg:#0b1220; --bdr:#1e293b; --card:#0b1220;
-    /* Header reste dark navy lisible ; footer passe à un gris plus clair pour contraste */
-    --head-bg:#1e293b; --head-fg:#ffffff; --head-meta:#94a3b8;
-    --foot-fg:#94a3b8;
-  }
+/* ─── DARK MODE — activé par la classe .dark sur <html> (pas par prefers-color-scheme) ───
+   Rationale : l'app USCA a son propre toggle de thème et ne doit PAS dépendre de la
+   préférence OS/navigateur. Un toggle ☀️/🌙 dédié est injecté par shared/ressource-doc.js. */
+html.dark {
+  --n-50:#0f172a; --n-100:#1e293b; --n-200:#334155; --n-300:#475569;
+  --n-400:#94a3b8; --n-500:#cbd5e1; --n-600:#e2e8f0; --n-700:#f1f5f9;
+  --n-800:#f8fafc; --n-900:#ffffff;
+  --bg:#0b1220; --bdr:#1e293b; --card:#0b1220;
+  --head-bg:#1e293b; --head-fg:#ffffff; --head-meta:#94a3b8;
+  --foot-fg:#cbd5e1;
 }
 
 * { box-sizing: border-box; }
@@ -218,6 +219,29 @@ footer.src {
   padding: 10px 14px 20px;
   line-height: 1.4;
 }
+
+/* Toggle ☀️ / 🌙 flottant en haut à droite — injecté par shared/ressource-doc.js */
+.theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease;
+  color: var(--n-700);
+}
+.theme-toggle:hover { transform: scale(1.08); }
+@media print { .theme-toggle { display: none; } }
 
 /* Impression : forcer blanc/noir lisible, pas de fond coloré superflu */
 @media print {
