@@ -2479,19 +2479,28 @@ async function renderComptes() {
           btnDel.addEventListener('click', async function() {
             if (!confirm('Supprimer définitivement le compte de ' + nom + ' ?\n\nCette action supprime le profil ET le compte de connexion.')) return;
             try {
-              // 1. Supprimer le profil dans la table profiles
+              // 1. Retirer la personne des animateurs de groupes (belt-and-suspenders : la FK CASCADE sur profiles s'en charge aussi depuis v23)
+              await sb.from('groupe_animateurs').delete().eq('user_id', profileId);
+              // 2. Supprimer le profil (CASCADE → groupe_animateurs)
               var { error } = await sb.from('profiles').delete().eq('id', profileId);
               if (error) throw error;
-              // 2. Supprimer le compte Auth via la Cloudflare Function
+              // 3. Supprimer le compte Auth via la Cloudflare Function
               var session = await sb.auth.getSession();
               var token = session.data.session ? session.data.session.access_token : null;
+              var authDeleted = false;
               if (token) {
                 var res = await fetch('/api/delete-user', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                   body: JSON.stringify({ userId: profileId })
                 });
-                if (!res.ok) console.warn('Compte Auth non supprimé (configurer SUPABASE_SERVICE_ROLE_KEY dans Cloudflare)');
+                authDeleted = res.ok;
+                if (!authDeleted) {
+                  var errBody = await res.json().catch(function() { return {}; });
+                  alert('⚠️ Profil supprimé, mais le compte de connexion n\'a PAS été supprimé.\n\nRaison : ' + (errBody.error || ('HTTP ' + res.status)) + '\n\nCette personne peut encore se connecter. Contacter l\'admin pour finaliser (variable SUPABASE_SERVICE_ROLE_KEY dans Cloudflare).');
+                }
+              } else {
+                alert('⚠️ Profil supprimé, mais le compte de connexion n\'a PAS été supprimé (session expirée).');
               }
               renderComptes();
             } catch(e) { alert('Erreur : ' + e.message); }

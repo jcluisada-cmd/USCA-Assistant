@@ -1,6 +1,6 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 20 avril 2026 (v3.95 — refonte UX détail patient : Messages → modale chat in-app, fusion Permissions, grid sorties, dark mode post-cure, accordion élèves replié, retrait titre événement)
+> Dernière mise à jour : 21 avril 2026 (v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue)
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +27,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.95 |
+| **Service Worker** | usca-v3.97 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -148,7 +148,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `fiches_traitements_patient` — Fiches traitements prescrites (checklist)
 
 ### Tables groupes
-- `groupe_animateurs` — Soignants désignés animateurs (groupe_slug, user_id)
+- `groupe_animateurs` — Soignants désignés animateurs (groupe_slug, user_id). Migration v23 : FK → `profiles(id) ON DELETE CASCADE` (au lieu d'auth.users) + policy DELETE ouverte aux admins.
 - `groupe_modifications` — Modifications par date (annulation, changement heure, exclusions, horaires_individuels JSONB)
 - `groupe_rappels` — Rappels envoyés par l'animateur
 - `participations` — Présences/absences aux groupes (patient ou animateur)
