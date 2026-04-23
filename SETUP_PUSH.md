@@ -1,118 +1,130 @@
-# Setup Notifications Push — USCA Connect
+# Setup infrastructure Supabase — USCA Connect
 
-Ce document décrit **les 6 étapes manuelles** pour activer les notifications Push côté JC. Le code applicatif est déjà commité (v3.99).
+> **Pour Claude (future session)** : ce document est la **source de vérité de l'état du setup**. À chaque nouvelle fonctionnalité avec migration ou Edge Function, mettre à jour la checklist ci-dessous. Quand JC dit « lis setup_push.md », commence par afficher la checklist et proposer les actions restantes (cases non cochées) **avant** d'attaquer le chantier en cours.
+
+---
+
+## ✅ État actuel du setup (à jour au 2026-04-24)
+
+### Migrations Supabase (SQL Editor)
+
+| Migration | But | Exécutée |
+|---|---|---|
+| v23 | Robustification animateurs (FK groupe_animateurs→profiles CASCADE + policy DELETE admin) | ✅ |
+| v24 | Agenda perso privé (type='personnel' + RLS cree_par=auth.uid()) | ✅ |
+| v25 | Vue tuteur : accès aux `qcm_reponses` des externes (RLS) | ✅ |
+| v26 | Tables `push_subscriptions`, `push_last_message`, `push_reminders_sent` | ✅ |
+| v27 | pg_cron + pg_net, job `usca-push-reminders` toutes les minutes | ✅ |
+| v28 | Colonne `sexe` sur `patients` (label Patient/Patiente/Patient·e) | ✅ |
+
+### Edge Functions Supabase
+
+| Function | État | JWT verify |
+|---|---|---|
+| `send-push` | ✅ Déployée | ✅ Activé (appelée depuis navigateur avec JWT anon) |
+| `cron-reminders` | ✅ Déployée | ❌ Désactivé (protégée par CRON_SECRET via header) |
+
+### Secrets Edge Functions
+
+| Secret | État |
+|---|---|
+| `VAPID_PUBLIC_KEY` | ✅ Configuré |
+| `VAPID_PRIVATE_KEY` | ✅ Configuré |
+| `VAPID_SUBJECT` | ✅ Configuré (`mailto:jc.luisada@gmail.com`) |
+| `CRON_SECRET` | ✅ Configuré (même valeur que dans migration v27) |
+
+### Tests
+
+- [ ] Test end-to-end notifs Push (voir section "Test" ci-dessous) — à faire par JC
+
+### En attente d'implémentation
+
+- [ ] **V2 notifs staff (médecins uniquement)** — migration v29 à venir : `push_subscriptions.patient_id` nullable + ajout `profile_id`, table `push_last_message_staff`, table `push_reminders_sent_groupe`
+- [ ] **Paramètres côté admin** (engrenage header, activation push soignant)
+- [ ] **Cron étendu** : rappels 5 min pour groupes A/B (aux animateurs) + consultations perso (au créateur)
+- [ ] **Trigger message patient → push médecins abonnés**
+
+---
 
 ## 🔑 Clés VAPID (générées 2026-04-23)
 
-- **Clé publique** (déjà dans le code, `patient/index.html` → `VAPID_PUBLIC_KEY`) :
+- **Publique** (`patient/index.html` → `VAPID_PUBLIC_KEY`, partagée avec tout le monde) :
   ```
   BKomckT8drI5ai09njWpOnZG0Dt9A9mMxtr71KTeB43oQ8c6n0pUv5OcsxQaSLXnYp4a95GB9rC2LFNsnLZn6Q4
   ```
 
-- **Clé privée** (secret — à configurer dans Supabase Edge Functions) :
+- **Privée** (secret Supabase, **JAMAIS en Cloudflare Pages**) :
   ```
   lfoamm6eSxJGaoRN6U4ca0pSOXgldwhhQyuSkJWXF4M
   ```
 
-> ⚠ Si tu as déjà mis la clé privée dans Cloudflare Pages par erreur, retire-la de là (elle ne sert à rien dans Cloudflare pour cette architecture).
+---
 
-## 📋 Étapes dans le dashboard Supabase
+## 📋 Procédure détaillée (pour futures migrations / fonctions)
 
-### 1. Exécuter les migrations (SQL Editor)
+### 1. Exécuter une migration Supabase
+Dashboard Supabase → **SQL Editor** → New query → coller le contenu de `migrations/supabase-migration-vXX.sql` → Run.
 
-Dans l'ordre :
-1. `migrations/supabase-migration-v24.sql` (agenda perso — déjà fait)
-2. `migrations/supabase-migration-v25.sql` (QCM tuteur réponses)
-3. `migrations/supabase-migration-v26.sql` (tables push_subscriptions, push_last_message, push_reminders_sent)
-4. `migrations/supabase-migration-v27.sql` (pg_cron — **mais d'abord** : remplacer `<PROJECT_REF>` par `pydxfoqxgvbmknzjzecn` et `<CRON_SECRET>` par une chaîne aléatoire que tu gardes)
+### 2. Déployer une Edge Function via le dashboard (sans CLI)
+Dashboard → **Edge Functions** → **Deploy a new function** → "Via Editor" → nommer (ex: `send-push`) → coller le contenu du fichier `supabase/functions/<nom>/index.ts` → **Deploy function**.
 
-### 2. Déployer l'Edge Function `send-push`
+### 3. Désactiver JWT verify sur une fonction invoquée par pg_cron
+Dashboard → Edge Functions → `<nom>` → **Details** → toggle **"Verify JWT with legacy secret"** → Save.
+(À faire systématiquement pour les fonctions appelées par pg_cron, jamais pour celles appelées depuis le navigateur.)
 
-Dashboard Supabase → Edge Functions → New function → nommer `send-push`.
-Coller le contenu de `supabase/functions/send-push/index.ts` dans l'éditeur web.
-Cliquer **Deploy**.
+### 4. Ajouter un secret Edge Function
+Dashboard → Edge Functions → **Secrets** (ou Settings → Edge Functions → Add secret) → Name + Value → Save. Partagé par toutes les fonctions.
 
-### 3. Déployer l'Edge Function `cron-reminders`
+---
 
-Idem : New function → `cron-reminders` → coller `supabase/functions/cron-reminders/index.ts` → Deploy.
+## 🧪 Test end-to-end notifs Push V1
 
-**⚠ Important : désactiver la vérification JWT pour `cron-reminders` uniquement.**
-Par défaut Supabase impose un header `Authorization: Bearer …` sur toutes les
-Edge Functions. pg_cron n'en envoie pas (on utilise `X-Cron-Secret` à la place,
-vérifié dans le code). Sans ça : 401 UNAUTHORIZED_NO_AUTH_HEADER.
+1. Sur ton téléphone : ouvre la PWA patient (iPhone : Safari → bouton partage → Ajouter à l'écran d'accueil).
+2. Connecte-toi en tant que **patient** (chambre + DDN).
+3. Bouton engrenage ⚙️ en haut à droite → **Paramètres** → "Activer les notifications" → accepter le prompt.
+4. Verrouille l'écran du téléphone.
+5. Depuis un ordi, connecte-toi en **soignant** → détail du patient → envoie un message.
+6. Le téléphone doit recevoir "💬 Nouveau message" en 1-3 sec.
+7. Planifie un événement dans 6 min → attendre 1 min, le rappel "⏰ Rappel : …" doit arriver à T-5.
 
-Dashboard → Edge Functions → `cron-reminders` → **Details** → désactiver
-**"Verify JWT with legacy secret"** (ou toggle équivalent selon version UI) → Save.
+---
 
-`send-push` **garde** le JWT activé (appelée depuis navigateur admin/patient avec
-le JWT anon, c'est correct).
+## 🐛 Débogage
 
-### 4. Configurer les secrets Edge Functions
-
-Dashboard Supabase → Edge Functions → **Secrets** (ou Settings → Edge Functions → Add secret). Ajouter :
-
-| Secret | Valeur |
-|---|---|
-| `VAPID_PUBLIC_KEY` | `BKomckT8drI5ai09njWpOnZG0Dt9A9mMxtr71KTeB43oQ8c6n0pUv5OcsxQaSLXnYp4a95GB9rC2LFNsnLZn6Q4` |
-| `VAPID_PRIVATE_KEY` | `lfoamm6eSxJGaoRN6U4ca0pSOXgldwhhQyuSkJWXF4M` |
-| `VAPID_SUBJECT` | `mailto:jc.luisada@gmail.com` |
-| `CRON_SECRET` | *(la même chaîne aléatoire que dans la migration v27)* |
-
-Ces secrets sont partagés par toutes les fonctions du projet (OK).
-
-### 5. Vérifier pg_cron
-
-SQL Editor :
+### Cron qui tourne mais en échec
 ```sql
--- Le job est-il bien planifié ?
-SELECT jobname, schedule, active FROM cron.job;
--- doit afficher : usca-push-reminders | * * * * * | t
-
--- Historique des exécutions (via JOIN car cron.job_run_details n'a que jobid)
+-- Historique des exécutions pg_cron
 SELECT d.start_time, d.status, d.return_message
 FROM cron.job_run_details d
 JOIN cron.job j ON j.jobid = d.jobid
 WHERE j.jobname = 'usca-push-reminders'
-ORDER BY d.start_time DESC
-LIMIT 5;
--- doit afficher 'succeeded' + return_message = '1' (= pg_net request_id)
+ORDER BY d.start_time DESC LIMIT 5;
+-- 'succeeded' + return_message = '1' (= pg_net request_id async)
 
--- Réponses HTTP effectives de l'Edge Function
+-- Réponses HTTP effectives
 SELECT id, created, status_code, content, error_msg
 FROM net._http_response
-ORDER BY created DESC
-LIMIT 5;
--- doit afficher status_code 200 + content '{"scanned":0}' (ou plus si events proches)
+ORDER BY created DESC LIMIT 5;
+-- 200 + {"scanned":0} = OK
+-- 401 UNAUTHORIZED_NO_AUTH_HEADER = oublie de désactiver JWT verify
+-- 404 NOT_FOUND = fonction pas déployée
 ```
 
-### 6. Test end-to-end
+### Notif pas reçue
+- `SELECT * FROM push_subscriptions;` → la sub est-elle enregistrée ?
+- Dashboard → Edge Functions → `send-push` → Logs → erreur ?
+- DevTools navigateur → Application → Service Workers → message reçu ?
 
-1. Ouvre la PWA patient sur téléphone (iPhone : Safari → partage → Ajouter à l'écran d'accueil).
-2. Dans l'app patient, bouton engrenage en haut à droite → Paramètres → **Activer les notifications**.
-3. Accepter la permission navigateur.
-4. Connecte-toi côté admin → envoie un message au patient → la notif doit apparaître en ~1-2 sec.
-5. Planifie un événement dans 6 min → attendre 1 min, le rappel "⏰ Rappel : …" doit arriver dans les 5 min avant.
+### iOS
+- PWA installée depuis l'écran d'accueil obligatoire (pas Safari).
+- iOS ≥ 16.4 requis.
+- Mode avion / batterie faible peut bloquer.
 
-## 🐛 Débogage
+---
 
-- **Notif pas reçue** :
-  - SQL Editor : `SELECT * FROM push_subscriptions;` — la sub est-elle enregistrée ?
-  - Supabase → Edge Functions → `send-push` → Logs — erreur ?
-  - Service Worker dans DevTools (Application → Service Workers) — message reçu ?
+## 📌 Limitations V1 (à adresser en V2)
 
-- **Cron qui ne tourne pas** :
-  - `SELECT * FROM cron.job_run_details WHERE status = 'failed' ORDER BY start_time DESC LIMIT 10;`
-  - Vérifie que `pg_net` est bien activée : `SELECT * FROM pg_extension WHERE extname IN ('pg_cron', 'pg_net');`
-
-- **iOS ne reçoit rien** :
-  - Vérifier que l'app est bien installée depuis l'écran d'accueil (pas Safari).
-  - iOS ≥ 16.4 requis.
-  - Mode avion / batterie faible peut bloquer.
-
-## 📌 Limitations connues (V1)
-
-- **Groupes thérapeutiques** (planning A/B) : pas de rappel 5 min (le planning est statique côté client). Workaround : un soignant peut planifier un événement explicite dans la BD.
-- **Séances de thérapie complémentaire** : idem, pas de rappel automatique.
+- **Groupes thérapeutiques** (planning A/B) : pas de rappel 5 min (le planning est côté client). À porter dans l'Edge Function pour la V2.
+- **Séances de thérapie complémentaire** : idem.
 - **Craving** : pas de push (décision JC).
-
-Ces 2 premiers points seront adressés dans une V2 si besoin.
+- **Soignants** : pas encore destinataires (V2 prévue : médecins uniquement).

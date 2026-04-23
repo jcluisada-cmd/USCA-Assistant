@@ -6,6 +6,8 @@
 > v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue.
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
+>
+> **📌 Setup infrastructure Supabase (migrations, Edge Functions, secrets) : voir `SETUP_PUSH.md`.** Au début de chaque session, si du travail a été fait sur des features nécessitant des migrations/Edge Functions, consulter la checklist d'état pour identifier ce qui reste à faire côté JC avant le chantier courant.
 
 ---
 
