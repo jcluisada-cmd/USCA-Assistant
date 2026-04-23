@@ -35,6 +35,31 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 });
 window.sb = sb;
 
+// ── Helpers d'affichage patient ──
+// Âge en années pleines depuis une date de naissance ISO (YYYY-MM-DD) ou Date.
+window.computePatientAge = function(isoDate) {
+  if (!isoDate) return null;
+  const d = isoDate instanceof Date ? isoDate : new Date(isoDate);
+  if (isNaN(d.getTime())) return null;
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  const m = now.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
+  return (age > 0 && age < 130) ? age : null;
+};
+
+// Label inclusif du patient : "Patient de 53 ans" / "Patiente de 53 ans" / "Patient·e de 53 ans".
+// Sexe : 'F' → Patiente, 'M' → Patient, autre/null → Patient·e.
+window.formatPatientLabel = function(patient) {
+  if (!patient) return 'Patient·e';
+  let noun;
+  if (patient.sexe === 'F') noun = 'Patiente';
+  else if (patient.sexe === 'M') noun = 'Patient';
+  else noun = 'Patient·e';
+  const age = window.computePatientAge(patient.date_naissance);
+  return age ? (noun + ' de ' + age + ' ans') : noun;
+};
+
 // ── CRUD Helpers ──
 window.db = {
 

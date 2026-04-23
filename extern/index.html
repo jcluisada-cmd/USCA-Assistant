@@ -964,7 +964,7 @@ function renderExternPatients() {
     card.appendChild(avatar);
 
     var info = createEl('div', 'flex-1 min-w-0');
-    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', 'Chambre ' + p.numero_chambre));
+    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', window.formatPatientLabel(p)));
     var details = [];
     if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
     if (details.length) info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5 truncate', details.join(' \u00b7 ')));
@@ -1017,7 +1017,7 @@ function renderSorties() {
     var header = createEl('div', 'flex items-center justify-between gap-2 p-2.5 cursor-pointer hover:bg-slate-100 transition-colors');
     var left = createEl('div', 'flex items-center gap-2 min-w-0 flex-1');
     var chambreCls = allDone ? 'bg-emerald-500 text-white' : 'bg-indigo-100 text-indigo-700';
-    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-1 rounded flex-shrink-0 ' + chambreCls, 'Chambre ' + p.numero_chambre));
+    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-1 rounded flex-shrink-0 ' + chambreCls, window.formatPatientLabel(p)));
     var destInfo = sortieDestLabel(info);
     left.appendChild(createEl('span', 'text-[10px] font-semibold px-1.5 py-0.5 rounded truncate ' + destInfo.cls, destInfo.text));
     header.appendChild(left);
@@ -1611,7 +1611,7 @@ async function showPatientDetail(patient) {
   document.getElementById('postcure-statut-zone').classList.add('hidden');
   document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
 
-  document.getElementById('detail-patient-title').textContent = 'Chambre ' + patient.numero_chambre;
+  document.getElementById('detail-patient-title').textContent = window.formatPatientLabel(patient);
 
   var infoDiv = document.getElementById('detail-patient-info');
   infoDiv.textContent = '';

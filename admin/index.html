@@ -344,6 +344,20 @@
               <input type="date" id="new-ddn" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400">
             </div>
           </div>
+          <div class="mb-3">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Sexe (pour accord grammatical)</label>
+            <div class="flex gap-2">
+              <label class="flex-1 flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm cursor-pointer hover:bg-slate-100 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-400">
+                <input type="radio" name="new-sexe" value="M" class="accent-indigo-600"><span>Homme</span>
+              </label>
+              <label class="flex-1 flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm cursor-pointer hover:bg-slate-100 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-400">
+                <input type="radio" name="new-sexe" value="F" class="accent-indigo-600"><span>Femme</span>
+              </label>
+              <label class="flex-1 flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm cursor-pointer hover:bg-slate-100 has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-400">
+                <input type="radio" name="new-sexe" value="" checked class="accent-indigo-600"><span>Non précisé</span>
+              </label>
+            </div>
+          </div>
           <div class="flex gap-2">
             <button id="btn-cancel-patient" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
             <button id="btn-save-patient" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm hover:bg-indigo-700 transition-colors">Enregistrer</button>
@@ -1053,7 +1067,7 @@ function renderSorties() {
     var header = createEl('div', 'flex items-center justify-between gap-2 p-2.5 cursor-pointer hover:bg-slate-100 transition-colors');
     var left = createEl('div', 'flex items-center gap-2 min-w-0 flex-1');
     var chambreCls = allDone ? 'bg-emerald-500 text-white' : 'bg-indigo-100 text-indigo-700';
-    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-1 rounded flex-shrink-0 ' + chambreCls, 'Chambre ' + p.numero_chambre));
+    left.appendChild(createEl('span', 'text-xs font-bold px-2 py-1 rounded flex-shrink-0 ' + chambreCls, window.formatPatientLabel(p)));
     var destInfo = sortieDestLabel(info);
     left.appendChild(createEl('span', 'text-[10px] font-semibold px-1.5 py-0.5 rounded truncate ' + destInfo.cls, destInfo.text));
     header.appendChild(left);
@@ -1549,7 +1563,7 @@ function renderPatients() {
 
     // Infos
     var info = createEl('div', 'flex-1 min-w-0');
-    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', 'Chambre ' + p.numero_chambre));
+    info.appendChild(createEl('p', 'text-sm font-bold text-slate-800', window.formatPatientLabel(p)));
     var details = [];
     if (p.date_admission) details.push('Admis le ' + new Date(p.date_admission).toLocaleDateString('fr-FR'));
     if (details.length) info.appendChild(createEl('p', 'text-xs text-slate-500 mt-0.5 truncate', details.join(' \u00b7 ')));
@@ -1609,13 +1623,18 @@ document.getElementById('btn-save-patient').addEventListener('click', async func
   this.textContent = 'Enregistrement...';
 
   try {
+    var sexeRadio = document.querySelector('input[name="new-sexe"]:checked');
+    var sexe = sexeRadio ? (sexeRadio.value || null) : null;
     await db.createPatient({
       numero_chambre: chambre,
-      date_naissance: ddn
+      date_naissance: ddn,
+      sexe: sexe
     });
     document.getElementById('form-new-patient').classList.add('hidden');
     document.getElementById('new-chambre').value = '';
     document.getElementById('new-ddn').value = '';
+    var defaultSexe = document.querySelector('input[name="new-sexe"][value=""]');
+    if (defaultSexe) defaultSexe.checked = true;
     // Rafraîchir
     await loadDashboardStats();
     renderPatients();
@@ -1723,7 +1742,7 @@ document.getElementById('btn-action-messages').addEventListener('click', functio
   var modal = document.getElementById('modal-messages');
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
-  document.getElementById('msg-modal-patient').textContent = 'Chambre ' + (selectedPatientForDetail.numero_chambre || '—');
+  document.getElementById('msg-modal-patient').textContent = window.formatPatientLabel(selectedPatientForDetail);
   // Marquer comme lus puis re-render pour masquer le badge dans l'accordion
   markPatientMsgsSeen(selectedPatientForDetail.id);
   renderPatientMessages(selectedPatientForDetail.id);
@@ -2090,12 +2109,13 @@ async function showPatientDetail(patient) {
   document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
 
   // Titre
-  document.getElementById('detail-patient-title').textContent = 'Chambre ' + patient.numero_chambre;
+  document.getElementById('detail-patient-title').textContent = window.formatPatientLabel(patient);
 
   // Infos
   var infoDiv = document.getElementById('detail-patient-info');
   infoDiv.textContent = '';
-  var infos = [['Admission', patient.date_admission ? new Date(patient.date_admission).toLocaleDateString('fr-FR') : '\u2014']];
+  var infos = [['Chambre', patient.numero_chambre || '\u2014'],
+               ['Admission', patient.date_admission ? new Date(patient.date_admission).toLocaleDateString('fr-FR') : '\u2014']];
   if (patient.date_sortie_prevue) infos.push(['Sortie', new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR')]);
   infos.forEach(function(item) {
     var row = createEl('div', 'flex justify-between py-1.5');
@@ -2103,6 +2123,32 @@ async function showPatientDetail(patient) {
     row.appendChild(createEl('span', 'text-xs font-semibold text-slate-800', item[1]));
     infoDiv.appendChild(row);
   });
+
+  // S\u00e9lecteur sexe (\u00e9ditable inline)
+  var sexeRow = createEl('div', 'flex items-center justify-between py-1.5');
+  sexeRow.appendChild(createEl('span', 'text-xs text-slate-500', 'Sexe'));
+  var sexeSel = document.createElement('select');
+  sexeSel.className = 'text-xs font-semibold text-slate-800 bg-white border border-slate-200 rounded-md px-2 py-0.5 focus:outline-none focus:border-indigo-400';
+  [['', 'Non pr\u00e9cis\u00e9'], ['M', 'Homme'], ['F', 'Femme']].forEach(function(opt) {
+    var o = document.createElement('option');
+    o.value = opt[0]; o.textContent = opt[1];
+    if ((patient.sexe || '') === opt[0]) o.selected = true;
+    sexeSel.appendChild(o);
+  });
+  sexeSel.addEventListener('change', async function() {
+    var newSexe = this.value || null;
+    try {
+      await db.updatePatient(patient.id, { sexe: newSexe });
+      patient.sexe = newSexe;
+      document.getElementById('detail-patient-title').textContent = window.formatPatientLabel(patient);
+      // Rafra\u00eechir le cache + la liste pour r\u00e9percuter le label
+      var idx = loadedPatients.findIndex(function(x) { return x.id === patient.id; });
+      if (idx !== -1) loadedPatients[idx].sexe = newSexe;
+      renderPatients();
+    } catch(e) { alert('Erreur : ' + (e.message || e)); }
+  });
+  sexeRow.appendChild(sexeSel);
+  infoDiv.appendChild(sexeRow);
 
   // Date sortie dans le bouton
   document.getElementById('sortie-current').textContent = patient.date_sortie_prevue ? 'Sortie : ' + new Date(patient.date_sortie_prevue).toLocaleDateString('fr-FR') : 'Non d\u00e9finie';

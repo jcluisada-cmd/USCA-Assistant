@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 23 avril 2026 (v3.99 — notifications Push patient (migrations v25+v26+v27, Edge Functions Supabase, VAPID, pg_cron rappels 5 min) ; page Paramètres patient ; QCM tuteur : clic sur session → voir toutes les réponses avec propositions + correction)
+> Dernière mise à jour : 24 avril 2026 (v4.00 — label inclusif patient "Patient·e de 53 ans" : colonne `sexe` sur `patients` (migration v28, F/M/NULL), radios dans nouveau patient, select inline dans détail patient, remplacement partout côté admin + extern ; chambre conservée dans le header patient (repère personnel) et sur l'avatar indigo)
+> v3.99 — notifications Push patient (migrations v25+v26+v27, Edge Functions Supabase, VAPID, pg_cron rappels 5 min) ; page Paramètres patient ; QCM tuteur : clic sur session → voir toutes les réponses avec propositions + correction.
 > v3.98 — agenda perso privé par soignant (migration v24), accordions Planning/Dashboard repliables, Toolbox Ressources "Fiches" replié, correctifs QCM externe + badges messages + DDN + adressage libre.
 > v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue.
 >
@@ -29,7 +30,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.99 |
+| **Service Worker** | usca-v4.00 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
