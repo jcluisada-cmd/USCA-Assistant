@@ -490,15 +490,56 @@ window.db = {
     return data;
   },
 
-  /** Événements d'équipe pour une date (patient_id IS NULL) */
+  /** Événements d'équipe pour une date (patient_id IS NULL, type ≠ personnel) */
   async getEvenementsEquipe(dateStr) {
-    const { data, error } = await sb.from('evenements').select('*').is('patient_id', null).gte('date_heure', dateStr + 'T00:00:00').lte('date_heure', dateStr + 'T23:59:59').order('date_heure');
+    const { data, error } = await sb.from('evenements').select('*').is('patient_id', null).neq('type', 'personnel').gte('date_heure', dateStr + 'T00:00:00').lte('date_heure', dateStr + 'T23:59:59').order('date_heure');
     if (error) throw error;
     return data;
   },
 
   /** Supprimer un événement d'équipe */
   async deleteEvenementEquipe(id) {
+    const { error } = await sb.from('evenements').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  // ════════════════ AGENDA PERSONNEL (type='personnel', RLS cree_par=auth.uid()) ════════════════
+
+  /** Liste les consultations personnelles du soignant courant entre deux dates (inclus) */
+  async getEvenementsPerso(dateDebut, dateFin) {
+    let q = sb.from('evenements').select('*').eq('type', 'personnel').order('date_heure');
+    if (dateDebut) q = q.gte('date_heure', dateDebut + 'T00:00:00');
+    if (dateFin) q = q.lte('date_heure', dateFin + 'T23:59:59');
+    const { data, error } = await q;
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Crée une consultation personnelle */
+  async addEvenementPerso({ titre, date_heure, duree_minutes, description, creeParId }) {
+    const payload = {
+      patient_id: null,
+      cree_par: creeParId,
+      titre: titre,
+      description: description || null,
+      date_heure: date_heure,
+      duree_minutes: duree_minutes || 30,
+      type: 'personnel'
+    };
+    const { data, error } = await sb.from('evenements').insert(payload).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Met à jour une consultation personnelle (RLS : seul le créateur) */
+  async updateEvenementPerso(id, patch) {
+    const { data, error } = await sb.from('evenements').update(patch).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime une consultation personnelle (RLS : seul le créateur) */
+  async deleteEvenementPerso(id) {
     const { error } = await sb.from('evenements').delete().eq('id', id);
     if (error) throw error;
   },

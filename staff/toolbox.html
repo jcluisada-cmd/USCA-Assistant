@@ -1102,7 +1102,7 @@ function RessourcesView({onBack}) {
     {key:"reco",    label:"Recommandations",   icon:"📘", sub:"HAS, SFA, NICE"},
     {key:"algo",    label:"Algos / arbres décisionnels", icon:"🧩", sub:"Arbres cliquables"}
   ];
-  const [op, setOp] = useState("fiche");
+  const [op, setOp] = useState(null);
   const [ressources, setRessources] = useState(null);
   const [error, setError] = useState(null);
 

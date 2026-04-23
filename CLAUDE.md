@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 21 avril 2026 (v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue)
+> Dernière mise à jour : 23 avril 2026 (v3.98 — agenda perso privé par soignant (migration v24, RLS cree_par=auth.uid()) ; accordions Planning "À venir cette semaine" + Dashboard "Sorties/Liste d'attente" repliables (dépliés par défaut) ; accordion Toolbox Ressources replié par défaut ; correctifs QCM externe (item complet + modale signalement avec texte), badges messages admin/patient = compteur non lus, DDN liste d'attente auto-formatée, adressage libre ; notifications Push ajoutées à la roadmap)
+> v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue.
 >
 > **Pour l'historique détaillé des sessions, les specs déjà implémentées (vision patient V3, auth P9) et le détail des migrations : voir `CLAUDE_ARCHIVE.md` (à lire à la demande).**
 
@@ -27,7 +28,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v3.97 |
+| **Service Worker** | usca-v3.98 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -269,6 +270,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 **🎯 Prochain chantier : P5 — Personnalisation modules soignant** (plan d'implémentation à définir lors de la prochaine session). Principe : chaque profil (médecin / IDE / psychologue / pharmacien / secrétaire / externe / étudiant IDE) ne voit que les cartes pertinentes pour son rôle (dans dashboard, toolbox, etc.). Stockage : colonne `modules_actifs` (JSONB ou TEXT[]) déjà présente dans `profiles`.
 
+- [ ] **Notifications Push** — alertes craving temps réel, messages patient, demandes de permission (Web Push API + service worker + table `device_push_subscriptions` + Cloudflare Worker VAPID). Prioriser : craving (rouge) + message patient (purple) + permission (cyan). iOS Safari ≥ 16.4 requis, PWA installée obligatoire.
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte

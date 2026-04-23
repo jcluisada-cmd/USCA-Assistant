@@ -2312,11 +2312,11 @@ async function refreshBadges() {
   if (!currentPatient) return;
   var pid = currentPatient.id;
 
-  // Messages : contenus partagés plus récents que le dernier vu
+  // Messages : uniquement ceux envoyés par les soignants (cree_par non null), plus récents que le dernier vu
   try {
     var contenus = await db.getContenus(pid);
     var lastSeenMsg = getLastSeen('messages');
-    var newMsgs = contenus.filter(function(c) { return c.created_at > lastSeenMsg; });
+    var newMsgs = contenus.filter(function(c) { return c.cree_par && c.created_at > lastSeenMsg; });
     showBadge('messages', newMsgs.length);
   } catch(e) {}
 

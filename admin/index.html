@@ -140,7 +140,11 @@
 
         <!-- ═══ Entrées / Sorties ═══ -->
         <div id="section-entrees-sorties" class="mb-4">
-          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <button id="btn-toggle-es" class="w-full flex items-center justify-between text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 hover:text-slate-700 transition-colors">
+            <span>Sorties prévues / Liste d'attente</span>
+            <span id="es-chevron" class="text-xs">&#9660;</span>
+          </button>
+          <div id="es-body" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
             <!-- Onglets Sorties / Liste d'attente -->
             <div class="flex border-b border-slate-200">
               <button id="tab-sorties-btn" class="flex-1 text-xs font-bold py-2.5 text-center text-indigo-600 border-b-2 border-indigo-600" onclick="switchESTab('sorties')">Sorties prévues</button>
@@ -222,7 +226,9 @@
                     <option value="Cardiologie">Cardiologie</option>
                     <option value="Neurologie">Neurologie</option>
                     <option value="Psychiatre">Psychiatre</option>
+                    <option value="__autre">+ Autre (texte libre)…</option>
                   </select>
+                  <input type="text" id="att-addressage-autre" placeholder="Ex : Urgences, Gastro-entéro…" class="w-full mt-1 px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 hidden">
                 </div>
 
                 <!-- Destination prévue -->
@@ -306,12 +312,19 @@
 
         <!-- Modal réponse signalement externe -->
         <div id="modal-flag-response" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-          <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3">
-            <h4 class="text-sm font-bold text-slate-800">Répondre au signalement</h4>
-            <p id="modal-flag-question" class="text-[11px] font-semibold text-slate-700"></p>
-            <p id="modal-flag-message" class="text-xs text-slate-500 italic"></p>
-            <textarea id="modal-flag-text" rows="3" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-indigo-400" placeholder="Votre réponse…"></textarea>
-            <div class="flex gap-2">
+          <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="px-5 pt-5 pb-3 border-b border-slate-200">
+              <h4 class="text-sm font-bold text-slate-800">Répondre au signalement</h4>
+              <p id="modal-flag-question" class="text-[11px] font-semibold text-indigo-700 mt-0.5"></p>
+            </div>
+            <div class="flex-1 overflow-y-auto px-5 py-3 space-y-3">
+              <div id="modal-flag-qtext" class="text-sm text-slate-800 bg-slate-50 rounded-lg p-3 whitespace-pre-wrap"></div>
+              <div id="modal-flag-choices" class="space-y-1.5"></div>
+              <div id="modal-flag-explication" class="text-[11px] text-slate-600 bg-emerald-50 border border-emerald-100 rounded-lg p-2 hidden"></div>
+              <p id="modal-flag-message" class="text-xs text-slate-600 italic bg-amber-50 border border-amber-100 rounded-lg p-2 hidden"></p>
+              <textarea id="modal-flag-text" rows="3" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm resize-none focus:outline-none focus:border-indigo-400" placeholder="Votre réponse au signalement…"></textarea>
+            </div>
+            <div class="flex gap-2 p-4 border-t border-slate-200">
               <button id="modal-flag-cancel" class="flex-1 py-2.5 bg-slate-100 text-slate-600 font-bold rounded-lg text-sm">Annuler</button>
               <button id="modal-flag-submit" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-lg text-sm">Envoyer</button>
             </div>
@@ -748,8 +761,53 @@
         <!-- Événements ponctuels du jour -->
         <div id="events-equipe-list" class="space-y-2 mb-6"></div>
 
-        <!-- Groupes thérapeutiques à venir -->
-        <h3 id="groupes-upcoming-title" class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">Groupes thérapeutiques</h3>
+        <!-- ═══ Mon agenda perso (privé, RLS cree_par=auth.uid()) ═══ -->
+        <div id="perso-section" class="mt-2 mb-4">
+          <button id="btn-toggle-perso" class="w-full flex items-center justify-between text-sm font-bold text-violet-600 uppercase tracking-wider mb-2 hover:text-violet-700 transition-colors">
+            <span>📋 Mon agenda perso</span>
+            <span id="perso-chevron" class="text-xs">&#9660;</span>
+          </button>
+          <div id="perso-body">
+            <button id="btn-add-perso" class="w-full mb-2 py-2 border-2 border-dashed border-violet-300 rounded-lg text-xs font-bold text-violet-600 hover:bg-violet-50 transition-colors">+ Nouvelle consultation perso</button>
+
+            <!-- Formulaire ajout/édition consultation perso -->
+            <div id="form-perso" class="hidden mb-2 p-3 bg-violet-50 rounded-lg border border-violet-200">
+              <h5 id="form-perso-title" class="text-xs font-bold text-violet-700 mb-2">Nouvelle consultation</h5>
+              <input type="text" id="perso-titre" placeholder="Titre (ex : Consult. M. D., téléphone…)" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm mb-2 focus:outline-none focus:border-violet-400">
+              <div class="grid grid-cols-2 gap-2 mb-2">
+                <div>
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Date</label>
+                  <input type="date" id="perso-date" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-violet-400">
+                </div>
+                <div>
+                  <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Heure début</label>
+                  <input type="time" id="perso-heure" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-violet-400">
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Durée (minutes)</label>
+                <input type="number" id="perso-duree" min="5" max="480" step="5" value="30" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-violet-400">
+              </div>
+              <div class="mb-2">
+                <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">Commentaire (optionnel)</label>
+                <textarea id="perso-commentaire" rows="2" placeholder="Notes privées…" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-violet-400 resize-none"></textarea>
+              </div>
+              <p id="perso-error" class="text-xs text-red-600 mb-2 hidden"></p>
+              <div class="flex gap-2">
+                <button id="btn-cancel-perso" class="flex-1 py-2 bg-white text-slate-600 font-bold rounded-lg text-xs border border-slate-200">Annuler</button>
+                <button id="btn-save-perso" class="flex-1 py-2 bg-violet-600 text-white font-bold rounded-lg text-xs hover:bg-violet-700 transition-colors">Enregistrer</button>
+              </div>
+            </div>
+
+            <div id="perso-list" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Groupes thérapeutiques à venir (accordion, déplié par défaut) -->
+        <button id="btn-toggle-upcoming" class="w-full flex items-center justify-between text-sm font-bold text-slate-500 uppercase tracking-wider mb-3 hover:text-slate-700 transition-colors">
+          <span id="groupes-upcoming-title">Groupes thérapeutiques</span>
+          <span id="upcoming-chevron" class="text-xs">&#9660;</span>
+        </button>
         <div id="groupes-list" class="space-y-3"></div>
 
         <!-- Historique de la semaine -->
@@ -813,6 +871,7 @@
 <script src="../shared/planning-groupes.js"></script>
 <script src="../shared/postcure-structures.js"></script>
 <script src="../shared/livret-ifsi-contenu.js"></script>
+<script src="../shared/qcm-engine.js"></script>
 
 <script>
 // ── Helpers DOM sûrs ──
@@ -1209,6 +1268,29 @@ function syncAttDestWraps() {
   document.getElementById('att-postcure-wrap').classList.toggle('hidden', val !== 'postcure');
   document.getElementById('att-autre-wrap').classList.toggle('hidden', val !== 'autre');
 }
+function syncAttAddressageAutre() {
+  var sel = document.getElementById('att-addressage');
+  var input = document.getElementById('att-addressage-autre');
+  var isAutre = sel.value === '__autre';
+  input.classList.toggle('hidden', !isAutre);
+  if (isAutre) input.focus();
+}
+document.getElementById('att-addressage').addEventListener('change', syncAttAddressageAutre);
+// Auto-formatage JJ/MM/AAAA pendant la frappe
+document.getElementById('att-ddn').addEventListener('input', function() {
+  var digits = this.value.replace(/\D/g, '');
+  if (digits.length > 8) digits = digits.slice(0, 8);
+  var formatted = '';
+  if (digits.length > 0) formatted = digits.slice(0, 2);
+  if (digits.length > 2) formatted += '/' + digits.slice(2, 4);
+  if (digits.length > 4) formatted += '/' + digits.slice(4, 8);
+  this.value = formatted;
+  // Auto-calcul de l'âge dès que la DDN est complète
+  if (digits.length === 8) {
+    var computed = ageFromDdn(formatted);
+    if (computed) document.getElementById('att-age').value = computed;
+  }
+});
 document.getElementById('att-ddn').addEventListener('blur', function() {
   var norm = normalizeDdn(this.value);
   this.value = norm;
@@ -1228,6 +1310,8 @@ document.getElementById('btn-add-attente').addEventListener('click', function() 
   document.getElementById('att-date-sortie').value = '';
   document.getElementById('att-pre-admission').checked = false;
   document.getElementById('att-addressage').value = 'Médecin Traitant';
+  document.getElementById('att-addressage-autre').value = '';
+  document.getElementById('att-addressage-autre').classList.add('hidden');
   document.getElementById('att-commentaire').value = '';
   populateAttPostcureCentres();
   document.getElementById('att-autre-precision').value = '';
@@ -1260,6 +1344,12 @@ document.getElementById('btn-save-attente').addEventListener('click', async func
   var dateSortie = document.getElementById('att-date-sortie').value;
   var preAdm = document.getElementById('att-pre-admission').checked;
   var addressage = document.getElementById('att-addressage').value;
+  if (addressage === '__autre') {
+    addressage = document.getElementById('att-addressage-autre').value.trim();
+    if (!addressage) {
+      errEl.textContent = 'Précisez le service d\'adressage'; errEl.classList.remove('hidden'); return;
+    }
+  }
   var commentaire = document.getElementById('att-commentaire').value.trim();
 
   var destRadio = document.querySelector('input[name="att-dest"]:checked');
@@ -1310,7 +1400,23 @@ function editAttente(id) {
   document.getElementById('att-date').value = item.date_entree_prevue || '';
   document.getElementById('att-date-sortie').value = item.date_sortie_prevue || '';
   document.getElementById('att-pre-admission').checked = !!item.pre_admission;
-  document.getElementById('att-addressage').value = item.addressage;
+  // Adressage : si la valeur n'existe pas dans les options prédéfinies, passer en mode "Autre"
+  var addrSel = document.getElementById('att-addressage');
+  var addrAutre = document.getElementById('att-addressage-autre');
+  var predefined = Array.prototype.map.call(addrSel.options, function(o) { return o.value; });
+  if (item.addressage && predefined.indexOf(item.addressage) !== -1 && item.addressage !== '__autre') {
+    addrSel.value = item.addressage;
+    addrAutre.value = '';
+    addrAutre.classList.add('hidden');
+  } else if (item.addressage) {
+    addrSel.value = '__autre';
+    addrAutre.value = item.addressage;
+    addrAutre.classList.remove('hidden');
+  } else {
+    addrSel.value = 'Médecin Traitant';
+    addrAutre.value = '';
+    addrAutre.classList.add('hidden');
+  }
   document.getElementById('att-commentaire').value = item.commentaire || '';
   populateAttPostcureCentres();
   var dest = (item.destination_prevue || {}).destination || '';
@@ -1618,6 +1724,8 @@ document.getElementById('btn-action-messages').addEventListener('click', functio
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
   document.getElementById('msg-modal-patient').textContent = 'Chambre ' + (selectedPatientForDetail.numero_chambre || '—');
+  // Marquer comme lus puis re-render pour masquer le badge dans l'accordion
+  markPatientMsgsSeen(selectedPatientForDetail.id);
   renderPatientMessages(selectedPatientForDetail.id);
 });
 document.getElementById('msg-modal-close').addEventListener('click', function() {
@@ -2216,6 +2324,14 @@ async function renderPatientPerms(patientId) {
   }
 }
 
+// ── Suivi des messages patient lus (par soignant, localStorage) ──
+function getLastMsgSeen(patientId) {
+  return localStorage.getItem('usca_admin_msg_seen_' + patientId) || '1970-01-01T00:00:00Z';
+}
+function markPatientMsgsSeen(patientId) {
+  localStorage.setItem('usca_admin_msg_seen_' + patientId, new Date().toISOString());
+}
+
 // ── Rendu messages (conversation bidirectionnelle patient ↔ équipe) ──
 async function renderPatientMessages(patientId) {
   var list = document.getElementById('detail-messages-list');
@@ -2226,13 +2342,14 @@ async function renderPatientMessages(patientId) {
 
   try {
     var contenus = await db.getContenus(patientId);
-    // Messages envoyés par le patient (cree_par null)
-    var patientMsgs = contenus.filter(function(c) { return !c.cree_par; });
+    // Messages envoyés par le patient (cree_par null), non encore lus par le soignant
+    var lastSeen = getLastMsgSeen(patientId);
+    var unreadPatientMsgs = contenus.filter(function(c) { return !c.cree_par && c.created_at > lastSeen; });
 
-    if (patientMsgs.length > 0) {
+    if (unreadPatientMsgs.length > 0) {
       msgIcon.className = 'w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center';
       msgIcon.querySelector('svg').setAttribute('stroke', '#7c3aed');
-      msgBadge.textContent = patientMsgs.length + ' patient';
+      msgBadge.textContent = unreadPatientMsgs.length > 9 ? '9+' : unreadPatientMsgs.length;
       msgBadge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700';
     } else {
       msgIcon.className = 'w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center';
@@ -2685,6 +2802,9 @@ async function renderGroupesTab() {
   var weekOffset = window._groupesWeekOffset || 0;
   var isCurrentWeek = weekOffset === 0;
   var isPastWeek = weekOffset < 0;
+
+  // Charge l'agenda personnel pour la semaine affichée (fire-and-forget)
+  renderPersoWeek();
 
   var weekType = window.getWeekType(viewedMonday);
   var planning = weekType === 'A' ? (window.PLANNING_A || []) : (window.PLANNING_B || []);
@@ -3508,6 +3628,146 @@ document.getElementById('btn-toggle-historique').addEventListener('click', funct
   chevron.textContent = isHidden ? '\u25B2' : '\u25BC';
 });
 
+// Toggle "Sorties prévues / Liste d'attente" (Dashboard)
+document.getElementById('btn-toggle-es').addEventListener('click', function() {
+  var body = document.getElementById('es-body');
+  var chevron = document.getElementById('es-chevron');
+  var isHidden = body.classList.contains('hidden');
+  body.classList.toggle('hidden');
+  chevron.textContent = isHidden ? '▼' : '▲';
+});
+
+// Toggle "À venir cette semaine" (groupes thérapeutiques)
+document.getElementById('btn-toggle-upcoming').addEventListener('click', function() {
+  var listEl = document.getElementById('groupes-list');
+  var chevron = document.getElementById('upcoming-chevron');
+  var isHidden = listEl.classList.contains('hidden');
+  listEl.classList.toggle('hidden');
+  chevron.textContent = isHidden ? '▼' : '▲';
+});
+
+// ══════════════ AGENDA PERSONNEL ══════════════
+var _editingPersoId = null;
+
+document.getElementById('btn-toggle-perso').addEventListener('click', function() {
+  var body = document.getElementById('perso-body');
+  var chevron = document.getElementById('perso-chevron');
+  var isHidden = body.classList.contains('hidden');
+  body.classList.toggle('hidden');
+  chevron.textContent = isHidden ? '▼' : '▲';
+});
+
+document.getElementById('btn-add-perso').addEventListener('click', function() {
+  _editingPersoId = null;
+  document.getElementById('form-perso-title').textContent = 'Nouvelle consultation';
+  document.getElementById('perso-titre').value = '';
+  var today = new Date();
+  document.getElementById('perso-date').value = today.toISOString().split('T')[0];
+  document.getElementById('perso-heure').value = String(today.getHours()).padStart(2,'0') + ':00';
+  document.getElementById('perso-duree').value = '30';
+  document.getElementById('perso-commentaire').value = '';
+  document.getElementById('perso-error').classList.add('hidden');
+  document.getElementById('form-perso').classList.remove('hidden');
+});
+
+document.getElementById('btn-cancel-perso').addEventListener('click', function() {
+  document.getElementById('form-perso').classList.add('hidden');
+  _editingPersoId = null;
+});
+
+document.getElementById('btn-save-perso').addEventListener('click', async function() {
+  var errEl = document.getElementById('perso-error');
+  errEl.classList.add('hidden');
+  var titre = document.getElementById('perso-titre').value.trim();
+  var date = document.getElementById('perso-date').value;
+  var heure = document.getElementById('perso-heure').value;
+  var duree = parseInt(document.getElementById('perso-duree').value, 10);
+  var commentaire = document.getElementById('perso-commentaire').value.trim();
+  if (!titre) { errEl.textContent = 'Titre requis'; errEl.classList.remove('hidden'); return; }
+  if (!date || !heure) { errEl.textContent = 'Date et heure requises'; errEl.classList.remove('hidden'); return; }
+  if (!duree || duree < 5) { errEl.textContent = 'Durée invalide (min. 5 min)'; errEl.classList.remove('hidden'); return; }
+  var dateHeure = new Date(date + 'T' + heure + ':00').toISOString();
+  try {
+    if (_editingPersoId) {
+      await db.updateEvenementPerso(_editingPersoId, { titre: titre, description: commentaire || null, date_heure: dateHeure, duree_minutes: duree });
+    } else {
+      await db.addEvenementPerso({ titre: titre, date_heure: dateHeure, duree_minutes: duree, description: commentaire, creeParId: currentProfile.id });
+    }
+    document.getElementById('form-perso').classList.add('hidden');
+    _editingPersoId = null;
+    await renderPersoWeek();
+  } catch(e) {
+    errEl.textContent = e.message || 'Erreur à l\'enregistrement';
+    errEl.classList.remove('hidden');
+  }
+});
+
+async function renderPersoWeek() {
+  var list = document.getElementById('perso-list');
+  if (!list) return;
+  list.textContent = '';
+  var viewedMonday = getViewedMonday();
+  var viewedSunday = new Date(viewedMonday);
+  viewedSunday.setDate(viewedSunday.getDate() + 6);
+  var debut = viewedMonday.toISOString().split('T')[0];
+  var fin = viewedSunday.toISOString().split('T')[0];
+  try {
+    var events = await db.getEvenementsPerso(debut, fin);
+    if (!events.length) {
+      list.appendChild(createEl('p', 'text-[11px] text-slate-400 italic py-1', 'Aucune consultation perso cette semaine.'));
+      return;
+    }
+    var joursLabels = ['dim','lun','mar','mer','jeu','ven','sam'];
+    events.forEach(function(ev) {
+      var d = new Date(ev.date_heure);
+      var jour = joursLabels[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth()+1);
+      var heure = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+      var row = createEl('div', 'bg-violet-50 border border-violet-200 rounded-lg p-2.5');
+      var top = createEl('div', 'flex items-center justify-between gap-2 mb-0.5');
+      var topLeft = createEl('div', 'flex-1 min-w-0');
+      topLeft.appendChild(createEl('p', 'text-xs font-bold text-violet-800 truncate', ev.titre));
+      topLeft.appendChild(createEl('p', 'text-[10px] text-violet-500', jour + ' · ' + heure + ' · ' + ev.duree_minutes + ' min'));
+      top.appendChild(topLeft);
+      var actions = createEl('div', 'flex items-center gap-1 flex-shrink-0');
+      var btnE = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-violet-400 hover:text-violet-700 hover:bg-violet-100', '✎');
+      btnE.addEventListener('click', (function(id, e) { return function() { editPerso(id, e); }; })(ev.id, ev));
+      actions.appendChild(btnE);
+      var btnD = createEl('button', 'w-6 h-6 flex items-center justify-center rounded text-slate-400 hover:text-red-500 hover:bg-red-50', '✕');
+      btnD.addEventListener('click', (function(id) { return function() { deletePerso(id); }; })(ev.id));
+      actions.appendChild(btnD);
+      top.appendChild(actions);
+      row.appendChild(top);
+      if (ev.description) {
+        row.appendChild(createEl('p', 'text-[11px] text-slate-600 mt-1 whitespace-pre-wrap', ev.description));
+      }
+      list.appendChild(row);
+    });
+  } catch(e) {
+    list.appendChild(createEl('p', 'text-[11px] text-red-500 py-1', 'Erreur : ' + (e.message || e)));
+  }
+}
+
+function editPerso(id, ev) {
+  _editingPersoId = id;
+  document.getElementById('form-perso-title').textContent = 'Modifier la consultation';
+  document.getElementById('perso-titre').value = ev.titre || '';
+  var d = new Date(ev.date_heure);
+  document.getElementById('perso-date').value = d.toISOString().split('T')[0];
+  document.getElementById('perso-heure').value = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  document.getElementById('perso-duree').value = ev.duree_minutes || 30;
+  document.getElementById('perso-commentaire').value = ev.description || '';
+  document.getElementById('perso-error').classList.add('hidden');
+  document.getElementById('form-perso').classList.remove('hidden');
+}
+
+async function deletePerso(id) {
+  if (!confirm('Supprimer cette consultation perso ?')) return;
+  try {
+    await db.deleteEvenementPerso(id);
+    await renderPersoWeek();
+  } catch(e) { alert('Erreur : ' + (e.message || e)); }
+}
+
 // Fermeture modal groupes
 document.getElementById('modal-groupe-close').addEventListener('click', function() {
   document.getElementById('modal-groupe-actions').classList.add('hidden');
@@ -3865,10 +4125,10 @@ function showExterneSessionsModal(extId, extNom, sessions) {
       var pct = s.nb_questions ? Math.round(100 * s.score / s.nb_questions) : 0;
       var color = pct >= 70 ? 'text-emerald-600' : pct >= 50 ? 'text-amber-600' : 'text-red-500';
       var row = createEl('div', 'flex items-center justify-between py-1.5 border-b border-slate-100');
-      row.appendChild(createEl('div', 'flex-1 min-w-0', [
-        createEl('p', 'text-xs font-semibold text-slate-700 truncate', s.item || 'Tous items'),
-        createEl('p', 'text-[10px] text-slate-400', d + ' · ' + s.mode)
-      ]));
+      var left = createEl('div', 'flex-1 min-w-0');
+      left.appendChild(createEl('p', 'text-xs font-semibold text-slate-700 truncate', s.item || 'Tous items'));
+      left.appendChild(createEl('p', 'text-[10px] text-slate-400', d + ' · ' + s.mode));
+      row.appendChild(left);
       row.appendChild(createEl('span', 'text-xs font-bold ' + color, s.score + '/' + s.nb_questions + ' (' + pct + '%)'));
       body.appendChild(row);
     });
@@ -3911,12 +4171,54 @@ document.getElementById('modal-question-submit').addEventListener('click', async
 // ── Modal réponse signalement ──
 var _pendingFlagId = null;
 
-function openFlagResponseModal(flagId, question, message) {
+async function openFlagResponseModal(flagId, questionSource, message) {
   _pendingFlagId = flagId;
-  document.getElementById('modal-flag-question').textContent = question;
-  document.getElementById('modal-flag-message').textContent = message ? '« ' + message + ' »' : '';
+  var headerEl = document.getElementById('modal-flag-question');
+  var qTextEl = document.getElementById('modal-flag-qtext');
+  var choicesEl = document.getElementById('modal-flag-choices');
+  var explicEl = document.getElementById('modal-flag-explication');
+  var msgEl = document.getElementById('modal-flag-message');
+
+  headerEl.textContent = questionSource;
+  qTextEl.textContent = 'Chargement de la question…';
+  choicesEl.textContent = '';
+  explicEl.classList.add('hidden');
+  explicEl.textContent = '';
+  if (message) {
+    msgEl.textContent = 'Commentaire de l\'externe : « ' + message + ' »';
+    msgEl.classList.remove('hidden');
+  } else {
+    msgEl.textContent = '';
+    msgEl.classList.add('hidden');
+  }
   document.getElementById('modal-flag-text').value = '';
   document.getElementById('modal-flag-response').classList.remove('hidden');
+
+  // Charger le texte de la question depuis data/item_XX.json
+  try {
+    var m = questionSource.match(/^(.+) - Q(\d+)$/);
+    if (!m || !window.QCMEngine) { qTextEl.textContent = questionSource; return; }
+    var itemLabel = m[1];
+    var numero = parseInt(m[2], 10);
+    var questions = await QCMEngine.loadItem(itemLabel);
+    var q = questions.find(function(x) { return x.question_numero === numero; });
+    if (!q) { qTextEl.textContent = '(question introuvable dans le catalogue)'; return; }
+
+    qTextEl.textContent = q.question;
+    (q.reponses || []).forEach(function(r) {
+      var row = createEl('div', 'text-xs px-2.5 py-1.5 rounded-lg border ' + (r.correct
+        ? 'bg-emerald-50 border-emerald-200 text-emerald-800 font-semibold'
+        : 'bg-white border-slate-200 text-slate-600'));
+      row.textContent = (r.correct ? '✓ ' : '') + r.lettre + '. ' + r.texte;
+      choicesEl.appendChild(row);
+    });
+    if (q.explication) {
+      explicEl.textContent = '💡 ' + q.explication;
+      explicEl.classList.remove('hidden');
+    }
+  } catch(e) {
+    qTextEl.textContent = '(impossible de charger la question : ' + (e.message || e) + ')';
+  }
 }
 
 // ── Accordion Mes élèves ──

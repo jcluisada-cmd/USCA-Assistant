@@ -2952,7 +2952,7 @@ document.getElementById('qcm-start').addEventListener('click', async function() 
       }
       await QCMEngine.abandonSession(existing.id);
     }
-    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential' });
+    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential', n: 999 });
     if (!questions.length) { alert('Aucune question pour cet item.'); return; }
     await startFreshSession(item, questions);
   } catch(e) {
@@ -2975,7 +2975,7 @@ async function startFreshSession(item, questions) {
 async function resumeSession(session) {
   try {
     var item = session.item || null;
-    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential' });
+    var questions = await QCMEngine.getQuestions({ item: item, mode: 'sequential', n: 999 });
     // Construire un index source → question
     var srcMap = {};
     questions.forEach(function(q) { srcMap[q._source] = q; });
