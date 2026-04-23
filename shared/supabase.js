@@ -544,6 +544,42 @@ window.db = {
     if (error) throw error;
   },
 
+  // ════════════════ PUSH NOTIFICATIONS ════════════════
+
+  /** Enregistre ou met à jour une souscription Push (upsert sur endpoint) */
+  async savePushSubscription({ patient_id, endpoint, p256dh, auth_key, user_agent }) {
+    const payload = { patient_id, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
+    const { data, error } = await sb.from('push_subscriptions')
+      .upsert(payload, { onConflict: 'endpoint' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Supprime une souscription Push par endpoint */
+  async deletePushSubscription(endpoint) {
+    const { error } = await sb.from('push_subscriptions').delete().eq('endpoint', endpoint);
+    if (error) throw error;
+  },
+
+  /** Déclenche l'envoi d'un push au patient via l'Edge Function send-push */
+  async sendPushToPatient({ patient_id, title, body, url, tag }) {
+    const resp = await fetch(SUPABASE_URL + '/functions/v1/send-push', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify({ patient_id, title, body, url, tag })
+    });
+    if (!resp.ok) {
+      const t = await resp.text();
+      throw new Error('send-push ' + resp.status + ': ' + t);
+    }
+    return await resp.json();
+  },
+
   // ════════════════ PRÉSENCES RÉUNIONS STAFF ════════════════
 
   /** Upsert présence à une réunion */
@@ -715,9 +751,20 @@ window.db = {
   /** Sessions QCM d'un externe (accessible via RLS medecin_read_externe_sessions) */
   async getExterneStats(externeId) {
     const { data, error } = await sb.from('qcm_sessions')
-      .select('item, mode, nb_questions, score, created_at')
+      .select('id, item, mode, nb_questions, score, created_at, questions_json')
       .eq('user_id', externeId)
+      .eq('statut', 'terminee')
       .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
+  /** Réponses détaillées d'une session externe (RLS v25 : tuteur médecin/IDE/admin) */
+  async getExterneSessionReponses(sessionId) {
+    const { data, error } = await sb.from('qcm_reponses')
+      .select('*')
+      .eq('session_id', sessionId)
+      .order('created_at', { ascending: true });
     if (error) throw error;
     return data || [];
   },

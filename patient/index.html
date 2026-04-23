@@ -82,6 +82,9 @@
           <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
           <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
+        <button id="btn-params" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-200 transition-colors" title="Paramètres">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
         <button id="btn-logout" class="text-xs text-slate-400 hover:text-red-500 transition-colors font-semibold">Déconnexion</button>
       </div>
     </header>
@@ -734,6 +737,42 @@
       <!-- Historique -->
       <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Historique</h3>
       <div id="ateliers-history" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- Panel Paramètres -->
+  <div id="panel-params" class="panel">
+    <header class="sticky top-0 z-10 bg-slate-700 text-white px-4 py-3 flex items-center gap-3">
+      <button class="panel-back w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <span class="text-sm font-bold">Paramètres</span>
+    </header>
+    <div class="flex-1 p-5 max-w-lg mx-auto w-full pb-24 space-y-4">
+
+      <!-- Notifications Push -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4">
+        <div class="flex items-start gap-3 mb-3">
+          <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-bold text-slate-800">Notifications</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Recevoir les rappels, messages et mises à jour de programme</p>
+          </div>
+        </div>
+        <p id="push-status" class="text-xs text-slate-500 mb-3"></p>
+        <button id="btn-push-toggle" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98] disabled:opacity-50">
+          Activer les notifications
+        </button>
+        <p id="push-hint" class="text-[10px] text-slate-400 mt-2 text-center"></p>
+      </div>
+
+      <!-- À venir : autres paramètres (P5) -->
+      <div class="bg-slate-50 rounded-2xl border border-slate-200 p-4 text-center">
+        <p class="text-[11px] text-slate-400 italic">D'autres paramètres bientôt disponibles…</p>
+      </div>
+
     </div>
   </div>
 
@@ -2349,6 +2388,117 @@ async function refreshBadges() {
     showBadge('ateliers', missing.length);
   } catch(e) {}
 }
+
+// ══════════════ PARAMÈTRES + NOTIFICATIONS PUSH ══════════════
+
+// Clé publique VAPID — la clé privée correspondante est dans Supabase Edge Function secrets
+var VAPID_PUBLIC_KEY = 'BKomckT8drI5ai09njWpOnZG0Dt9A9mMxtr71KTeB43oQ8c6n0pUv5OcsxQaSLXnYp4a95GB9rC2LFNsnLZn6Q4';
+
+function urlBase64ToUint8Array(b64url) {
+  var pad = '='.repeat((4 - (b64url.length % 4)) % 4);
+  var b64 = (b64url + pad).replace(/-/g, '+').replace(/_/g, '/');
+  var bin = atob(b64);
+  var arr = new Uint8Array(bin.length);
+  for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return arr;
+}
+function arrayBufferToB64url(buf) {
+  var bin = '';
+  var bytes = new Uint8Array(buf);
+  for (var i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+document.getElementById('btn-params').addEventListener('click', function() {
+  openPanel('params');
+  refreshPushStatus();
+});
+
+async function refreshPushStatus() {
+  var statusEl = document.getElementById('push-status');
+  var btnEl = document.getElementById('btn-push-toggle');
+  var hintEl = document.getElementById('push-hint');
+  btnEl.disabled = true;
+
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+    statusEl.textContent = '❌ Notifications non supportées sur cet appareil';
+    hintEl.textContent = 'Sur iPhone, installe d\'abord l\'app en "Ajouter à l\'écran d\'accueil" (Safari → bouton partage) et iOS ≥ 16.4.';
+    btnEl.classList.add('hidden');
+    return;
+  }
+
+  if (Notification.permission === 'denied') {
+    statusEl.textContent = '🚫 Les notifications sont bloquées dans ton navigateur';
+    hintEl.textContent = 'Autorise-les dans les paramètres du navigateur pour cette app.';
+    btnEl.classList.add('hidden');
+    return;
+  }
+
+  try {
+    var reg = await navigator.serviceWorker.ready;
+    var sub = await reg.pushManager.getSubscription();
+    if (sub) {
+      statusEl.textContent = '✅ Notifications activées sur cet appareil';
+      btnEl.textContent = 'Désactiver';
+      btnEl.className = 'w-full py-3 bg-white border-2 border-red-200 text-red-600 font-bold rounded-xl text-sm hover:bg-red-50 transition-colors active:scale-[0.98]';
+      btnEl.classList.remove('hidden');
+      btnEl.disabled = false;
+    } else {
+      statusEl.textContent = 'Les notifications ne sont pas encore activées.';
+      btnEl.textContent = 'Activer les notifications';
+      btnEl.className = 'w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98]';
+      btnEl.classList.remove('hidden');
+      btnEl.disabled = false;
+    }
+    hintEl.textContent = '';
+  } catch(e) {
+    statusEl.textContent = 'Erreur : ' + e.message;
+    btnEl.disabled = true;
+  }
+}
+
+document.getElementById('btn-push-toggle').addEventListener('click', async function() {
+  var btn = this;
+  btn.disabled = true;
+  try {
+    var reg = await navigator.serviceWorker.ready;
+    var existing = await reg.pushManager.getSubscription();
+    if (existing) {
+      // Désabonnement
+      var endpoint = existing.endpoint;
+      await existing.unsubscribe();
+      try { await db.deletePushSubscription(endpoint); } catch(e) {}
+      await refreshPushStatus();
+      return;
+    }
+    // Demande de permission
+    var perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+      await refreshPushStatus();
+      return;
+    }
+    // Subscription
+    var sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+    });
+    var json = sub.toJSON();
+    await db.savePushSubscription({
+      patient_id: currentPatient.id,
+      endpoint: sub.endpoint,
+      p256dh: json.keys.p256dh,
+      auth_key: json.keys.auth,
+      user_agent: navigator.userAgent.slice(0, 200)
+    });
+    // Stocke patient_id dans le SW pour qu'il puisse fetcher le dernier message
+    if (reg.active) reg.active.postMessage({ type: 'set-patient-id', patient_id: currentPatient.id });
+    await refreshPushStatus();
+  } catch(e) {
+    console.error('Push toggle error:', e);
+    document.getElementById('push-status').textContent = 'Erreur : ' + e.message;
+    btn.disabled = false;
+  }
+});
 
 // ══════════════ FEEDBACK ══════════════
 
