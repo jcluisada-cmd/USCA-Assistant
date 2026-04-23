@@ -36,6 +36,17 @@ Cliquer **Deploy**.
 
 Idem : New function → `cron-reminders` → coller `supabase/functions/cron-reminders/index.ts` → Deploy.
 
+**⚠ Important : désactiver la vérification JWT pour `cron-reminders` uniquement.**
+Par défaut Supabase impose un header `Authorization: Bearer …` sur toutes les
+Edge Functions. pg_cron n'en envoie pas (on utilise `X-Cron-Secret` à la place,
+vérifié dans le code). Sans ça : 401 UNAUTHORIZED_NO_AUTH_HEADER.
+
+Dashboard → Edge Functions → `cron-reminders` → **Details** → désactiver
+**"Verify JWT with legacy secret"** (ou toggle équivalent selon version UI) → Save.
+
+`send-push` **garde** le JWT activé (appelée depuis navigateur admin/patient avec
+le JWT anon, c'est correct).
+
 ### 4. Configurer les secrets Edge Functions
 
 Dashboard Supabase → Edge Functions → **Secrets** (ou Settings → Edge Functions → Add secret). Ajouter :
@@ -53,11 +64,25 @@ Ces secrets sont partagés par toutes les fonctions du projet (OK).
 
 SQL Editor :
 ```sql
+-- Le job est-il bien planifié ?
 SELECT jobname, schedule, active FROM cron.job;
 -- doit afficher : usca-push-reminders | * * * * * | t
 
-SELECT * FROM cron.job_run_details ORDER BY start_time DESC LIMIT 5;
--- doit afficher des exécutions réussies toutes les minutes
+-- Historique des exécutions (via JOIN car cron.job_run_details n'a que jobid)
+SELECT d.start_time, d.status, d.return_message
+FROM cron.job_run_details d
+JOIN cron.job j ON j.jobid = d.jobid
+WHERE j.jobname = 'usca-push-reminders'
+ORDER BY d.start_time DESC
+LIMIT 5;
+-- doit afficher 'succeeded' + return_message = '1' (= pg_net request_id)
+
+-- Réponses HTTP effectives de l'Edge Function
+SELECT id, created, status_code, content, error_msg
+FROM net._http_response
+ORDER BY created DESC
+LIMIT 5;
+-- doit afficher status_code 200 + content '{"scanned":0}' (ou plus si events proches)
 ```
 
 ### 6. Test end-to-end
