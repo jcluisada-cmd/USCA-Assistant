@@ -597,6 +597,21 @@ window.db = {
     return !!data;
   },
 
+  /** Lit push_pause_until (DATE) d'un profil (null = pas de pause) */
+  async getPushPauseUntil(profile_id) {
+    const { data, error } = await sb.from('profiles')
+      .select('push_pause_until').eq('id', profile_id).maybeSingle();
+    if (error) throw error;
+    return data ? data.push_pause_until : null;
+  },
+
+  /** Met à jour push_pause_until pour un profil ; passer null pour reprendre immédiatement */
+  async setPushPauseUntil(profile_id, isoDateOrNull) {
+    const { error } = await sb.from('profiles')
+      .update({ push_pause_until: isoDateOrNull }).eq('id', profile_id);
+    if (error) throw error;
+  },
+
   /** Déclenche l'envoi d'un push au patient via l'Edge Function send-push */
   async sendPushToPatient({ patient_id, title, body, url, tag }) {
     return await this._invokeSendPush({ patient_id, title, body, url, tag });

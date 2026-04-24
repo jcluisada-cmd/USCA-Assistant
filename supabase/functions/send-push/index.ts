@@ -209,6 +209,29 @@ Deno.serve(async (req) => {
     let subs: any[] = [];
     const defaultUrl = patient_id ? '/patient/' : '/admin/';
 
+    // Pour le mode staff, on filtre en amont les profiles en pause vacances
+    // (push_pause_until ≥ today_paris → skip). Cette vérif est portée par
+    // l'Edge Function — aucune action serveur n'est nécessaire à la reprise.
+    let activeStaffIds: string[] | null = null;
+    if (!patient_id) {
+      const requestedIds: string[] = profile_ids && profile_ids.length ? profile_ids : [profile_id];
+      const { data: profRows, error: profErr } = await supabase
+        .from('profiles').select('id, push_pause_until').in('id', requestedIds);
+      if (profErr) throw profErr;
+      const todayParis = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).format(new Date());
+      activeStaffIds = (profRows || [])
+        .filter(p => !p.push_pause_until || String(p.push_pause_until) < todayParis)
+        .map(p => p.id);
+      if (!activeStaffIds.length) {
+        return new Response(JSON.stringify({ sent: 0, reason: 'all_on_vacation' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+    }
+
     if (patient_id) {
       const { data, error } = await supabase
         .from('push_subscriptions').select('*').eq('patient_id', patient_id);
@@ -221,7 +244,7 @@ Deno.serve(async (req) => {
         }, { onConflict: 'patient_id' });
       }
     } else {
-      const targetIds: string[] = profile_ids && profile_ids.length ? profile_ids : [profile_id];
+      const targetIds = activeStaffIds!; // déjà filtrés plus haut (non vide)
       const { data, error } = await supabase
         .from('push_subscriptions').select('*').in('profile_id', targetIds);
       if (error) throw error;

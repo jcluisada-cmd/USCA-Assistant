@@ -17,12 +17,13 @@
 | v27 | pg_cron + pg_net, job `usca-push-reminders` toutes les minutes | ✅ |
 | v28 | Colonne `sexe` sur `patients` (label Patient/Patiente/Patient·e) | ✅ |
 | v29 | Push V2 soignants : `push_subscriptions.patient_id` nullable + `profile_id` (CHECK XOR), tables `push_last_message_staff` et `push_reminders_sent_groupe` | ✅ |
+| v30 | Push V2 pause vacances : `profiles.push_pause_until DATE` | ⏳ **À exécuter** |
 
 ### Edge Functions Supabase
 
 | Function | État | JWT verify |
 |---|---|---|
-| `send-push` | ⏳ **À redéployer** (V2.02 : ajout "silence soignant" hors heures ouvrables) | ❌ Désactivé (appelée par cron-reminders avec service_role ; JWT verify legacy rejette les appels serveur-à-serveur même avec service key. Sécurité côté obscurité des VAPID keys + identifiants non guessables.) |
+| `send-push` | ⏳ **À redéployer** (V2.03 : silence soignant + pause vacances) | ❌ Désactivé (appelée par cron-reminders avec service_role ; JWT verify legacy rejette les appels serveur-à-serveur même avec service key. Sécurité côté obscurité des VAPID keys + identifiants non guessables.) |
 | `cron-reminders` | ✅ Déployée V2 (3 scans : patients + events perso + groupes A/B) | ❌ Désactivé (protégée par CRON_SECRET via header) |
 
 ### Secrets Edge Functions
@@ -179,3 +180,14 @@ La fonction renvoie alors `{ sent: 0, reason: 'staff_quiet_hours', detail: 'befo
 Les notifs patients (patient_id) ne sont **jamais** bloquées par cette règle.
 
 Pour modifier : éditer `FERIES_FR` et la fonction `isStaffQuietHours` dans `supabase/functions/send-push/index.ts`, puis redéployer via le dashboard.
+
+## 🏖️ Pause vacances (v4.03)
+
+Chaque soignant peut suspendre temporairement ses notifs push via **Modal Paramètres → section "Pause vacances"** :
+- Date picker "Dernier jour d'absence" (inclus) + bouton "Mettre en pause"
+- Une fois en pause : bandeau orange "📴 Notifications en pause jusqu'au [date]" + bouton "Reprendre maintenant"
+- **Reprise automatique** le lendemain sans action (check `today_paris > push_pause_until` dans send-push)
+- La sub push en base est **préservée** (pas de désinscription navigateur)
+
+Côté BDD : `profiles.push_pause_until DATE NULL` (migration v30).
+Côté Edge Function : `send-push` fetch les profiles ciblés, filtre ceux en pause, renvoie `{ reason: 'all_on_vacation' }` si tout le monde est absent.

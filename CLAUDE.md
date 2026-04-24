@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 24 avril 2026 (v4.02 — Notifications Push V2 : silence soignant (push staff autorisés uniquement lundi-vendredi 8h30→16h hors jours fériés France — patients jamais bloqués) dans Edge Function `send-push` ; fix défensif anti-orphelin (vérif BDD post-save + unsubscribe automatique en cas d'échec) côté admin et patient ; garde-fou XOR : `profile_id: null` et `patient_id: null` explicites dans les helpers `savePushSubscription*`.)
+> Dernière mise à jour : 24 avril 2026 (v4.03 — Push V2 Pause vacances : migration v30 ajoute `profiles.push_pause_until DATE` ; section "Pause vacances" dans modal Paramètres admin (date picker "dernier jour d'absence" + bouton reprise immédiate) ; Edge Function `send-push` filtre les profile_ids en pause (`reason: all_on_vacation`). Reprise auto le lendemain, sub BDD préservée.)
+> v4.02 — Notifications Push V2 : silence soignant (push staff autorisés uniquement lundi-vendredi 8h30→16h hors jours fériés France — patients jamais bloqués) dans Edge Function `send-push` ; fix défensif anti-orphelin (vérif BDD post-save + unsubscribe automatique en cas d'échec) côté admin et patient ; garde-fou XOR : `profile_id: null` et `patient_id: null` explicites dans les helpers `savePushSubscription*`.
 > v4.01 — Notifications Push V2 médecins : migration v29 (`push_subscriptions.patient_id` nullable + `profile_id` avec CHECK XOR, tables `push_last_message_staff` et `push_reminders_sent_groupe`) ; Edge Function `send-push` accepte maintenant `patient_id` | `profile_id` | `profile_ids[]` ; SW sw.js priorise `profile_id` puis fallback `patient_id` (clés IndexedDB séparées, cleanup au logout via `clear-push-identity`) ; engrenage ⚙️ dans le header admin → modal Paramètres avec toggle activation push ; message patient → push automatique à tous les médecins abonnés (fire-and-forget) ; cron-reminders étendu : +rappels consultations perso au créateur, +rappels groupes A/B aux animateurs (avec gestion annulation et nouvelle_heure via `groupe_modifications`). Planning A/B dupliqué en TS dans l'Edge Function — TODO priorité basse pour migrer en BDD.
 > v4.00 — label inclusif patient "Patient·e de 53 ans" : colonne `sexe` sur `patients` (migration v28, F/M/NULL), radios dans nouveau patient, select inline dans détail patient, remplacement partout côté admin + extern ; chambre conservée dans le header patient (repère personnel) et sur l'avatar indigo.
 > v3.99 — notifications Push patient (migrations v25+v26+v27, Edge Functions Supabase, VAPID, pg_cron rappels 5 min) ; page Paramètres patient ; QCM tuteur : clic sur session → voir toutes les réponses avec propositions + correction.
@@ -34,7 +35,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.02 |
+| **Service Worker** | usca-v4.03 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

@@ -537,6 +537,26 @@
                 <button id="btn-admin-push-toggle" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98] hidden"></button>
                 <p id="admin-push-hint" class="text-xs text-slate-400 dark:text-slate-500 mt-2"></p>
               </div>
+
+              <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Pause vacances</h4>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Suspendre temporairement les notifications jusqu'à une date donnée. Reprise automatique le lendemain.</p>
+
+                <div id="push-pause-active" class="hidden mb-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+                  <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">📴 Notifications en pause</p>
+                  <p class="text-xs text-amber-700 dark:text-amber-300 mt-0.5">Jusqu'au <span id="push-pause-until-label" class="font-semibold"></span> inclus</p>
+                </div>
+
+                <div id="push-pause-form" class="space-y-2">
+                  <label class="text-xs text-slate-500 dark:text-slate-400" for="push-pause-until-input">Dernier jour d'absence :</label>
+                  <input type="date" id="push-pause-until-input" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-sm">
+                  <button id="btn-push-pause-set" class="w-full py-2.5 bg-amber-500 text-white font-bold rounded-xl text-sm hover:bg-amber-600 transition-colors active:scale-[0.98] disabled:opacity-50" disabled>Mettre en pause</button>
+                </div>
+
+                <button id="btn-push-pause-clear" class="hidden w-full py-2.5 bg-white dark:bg-slate-700 border-2 border-emerald-200 text-emerald-700 dark:text-emerald-400 font-bold rounded-xl text-sm hover:bg-emerald-50 transition-colors active:scale-[0.98]">Reprendre maintenant</button>
+
+                <p id="push-pause-err" class="text-xs text-red-600 dark:text-red-400 mt-2 hidden"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -2814,6 +2834,7 @@ function adminUrlBase64ToUint8Array(b64url) {
 document.getElementById('btn-params').addEventListener('click', function() {
   document.getElementById('modal-params').classList.remove('hidden');
   refreshAdminPushStatus();
+  refreshPushPause();
 });
 
 document.getElementById('btn-params-close').addEventListener('click', function() {
@@ -2912,6 +2933,89 @@ document.getElementById('btn-admin-push-toggle').addEventListener('click', async
     console.error('Admin push toggle error:', e);
     document.getElementById('admin-push-status').textContent = 'Erreur : ' + e.message;
     btn.disabled = false;
+  }
+});
+
+// ── Pause vacances (push) ──
+
+function formatDatePausePretty(isoDate) {
+  try {
+    var d = new Date(isoDate + 'T00:00:00');
+    return d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  } catch(e) { return isoDate; }
+}
+
+function pushPauseIsActive(isoDate) {
+  if (!isoDate) return false;
+  // Comparaison lex avec date du jour en Europe/Paris (YYYY-MM-DD)
+  var todayParis = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  return String(isoDate) >= todayParis;
+}
+
+async function refreshPushPause() {
+  if (!currentProfile) return;
+  var activeBox = document.getElementById('push-pause-active');
+  var formBox = document.getElementById('push-pause-form');
+  var clearBtn = document.getElementById('btn-push-pause-clear');
+  var errEl = document.getElementById('push-pause-err');
+  errEl.classList.add('hidden');
+
+  try {
+    var until = await db.getPushPauseUntil(currentProfile.id);
+    if (pushPauseIsActive(until)) {
+      document.getElementById('push-pause-until-label').textContent = formatDatePausePretty(until);
+      activeBox.classList.remove('hidden');
+      formBox.classList.add('hidden');
+      clearBtn.classList.remove('hidden');
+    } else {
+      activeBox.classList.add('hidden');
+      formBox.classList.remove('hidden');
+      clearBtn.classList.add('hidden');
+      // Pré-rempli avec demain pour éviter de saisir aujourd'hui par erreur
+      var tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+      document.getElementById('push-pause-until-input').value = tomorrow.toISOString().split('T')[0];
+      document.getElementById('btn-push-pause-set').disabled = false;
+    }
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+  }
+}
+
+document.getElementById('push-pause-until-input').addEventListener('change', function() {
+  document.getElementById('btn-push-pause-set').disabled = !this.value;
+});
+
+document.getElementById('btn-push-pause-set').addEventListener('click', async function() {
+  var input = document.getElementById('push-pause-until-input');
+  var errEl = document.getElementById('push-pause-err');
+  errEl.classList.add('hidden');
+  if (!input.value || !currentProfile) return;
+  this.disabled = true;
+  try {
+    await db.setPushPauseUntil(currentProfile.id, input.value);
+    await refreshPushPause();
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+    this.disabled = false;
+  }
+});
+
+document.getElementById('btn-push-pause-clear').addEventListener('click', async function() {
+  var errEl = document.getElementById('push-pause-err');
+  errEl.classList.add('hidden');
+  if (!currentProfile) return;
+  this.disabled = true;
+  try {
+    await db.setPushPauseUntil(currentProfile.id, null);
+    await refreshPushPause();
+  } catch(e) {
+    errEl.textContent = 'Erreur : ' + e.message;
+    errEl.classList.remove('hidden');
+    this.disabled = false;
   }
 });
 
