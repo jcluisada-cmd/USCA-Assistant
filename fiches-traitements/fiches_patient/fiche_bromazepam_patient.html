@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Lexomil (Bromazépam)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--teal);opacity:.12;border-radius:50%}.header-badge{display:inline-block;background:var(--amber);color:var(--navy);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--amber-pale);border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:#B07A20}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#F0F7F6,var(--teal-pale));border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--teal);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* QUARTER PILL */
+  .quarter-box{background:var(--teal-pale);border:2px solid var(--teal);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:center}
+  .quarter-icon{font-size:2.5rem;flex-shrink:0}.quarter-text{font-size:.92rem;line-height:1.55}.quarter-text strong{color:var(--teal)}
+  /* DEP TIMELINE */
+  .dep-box{background:var(--amber-pale);border:2px solid var(--amber);border-radius:14px;padding:1.3rem 1.5rem}
+  .dep-title{font-weight:700;font-size:1rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+  .dep-timeline{display:flex;align-items:center;gap:0;position:relative;margin-bottom:1rem}.dep-timeline::before{content:'';position:absolute;top:18px;left:10%;right:10%;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--teal) 0%,var(--amber) 50%,var(--red-soft) 100%)}
+  .dep-step{flex:1;text-align:center;position:relative;padding-top:2.5rem}.dep-dot{width:16px;height:16px;border-radius:50%;position:absolute;top:11px;left:50%;transform:translateX(-50%);z-index:1}.dep-dot.green{background:var(--teal);box-shadow:0 0 0 4px var(--teal-pale)}.dep-dot.orange{background:var(--amber);box-shadow:0 0 0 4px var(--amber-pale)}.dep-dot.red{background:var(--red-soft);box-shadow:0 0 0 4px var(--red-pale)}
+  .dep-label{font-size:.78rem;font-weight:600}.dep-desc{font-size:.7rem;color:var(--gray-600);margin-top:.1rem}
+  .dep-note{font-size:.88rem;color:var(--gray-600);line-height:1.55;text-align:center}.dep-note strong{color:var(--navy)}
+  .taper-box{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}.taper-icon{font-size:2rem;flex-shrink:0}.taper-title{font-weight:700;font-size:.95rem;color:var(--amber-light);margin-bottom:.3rem}.taper-text{font-size:.84rem;opacity:.9;line-height:1.5}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.quarter-box,.taper-box{flex-direction:column;text-align:center}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">⚠️ Fiche médicament — Comprendre pour mieux arrêter</div><h1>Lexomil® <span>(Bromazépam)</span></h1><div class="subtitle">L'anxiolytique le plus prescrit en France — mais pas sans risques</div></div>
+  <div class="content">
+
+    <div class="intro-box">Le <strong>Lexomil</strong> (bromazépam) est l'un des anxiolytiques les plus prescrits en France. C'est une <strong>benzodiazépine</strong> efficace contre l'anxiété, mais qui <strong>crée une dépendance</strong> en quelques semaines d'utilisation quotidienne. Si vous le prenez depuis longtemps, votre médecin vous accompagnera vers un <strong>sevrage progressif</strong> et des alternatives sans dépendance.</div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">😰</div><div class="label">Anxiété importante</div><div class="sublabel">Tension, angoisse, nervosité</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">Le Lexomil renforce le GABA</div><div class="sublabel">Le « frein » naturel du cerveau</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">🧘</div><div class="label">Apaisement rapide</div><div class="sublabel">Mais tolérance en quelques semaines</div></div>
+      </div>
+      <p class="mechanism-caption">Le bromazépam, comme toutes les BZD, se fixe sur les récepteurs GABA-A et renforce l'action du GABA (le « frein » du cerveau). L'anxiété diminue rapidement — c'est justement ce qui rend ces médicaments si populaires. Mais le cerveau s'adapte vite : en quelques semaines, il faut augmenter la dose pour obtenir le même effet (tolérance), et l'arrêt déclenche un rebond d'anxiété pire que l'anxiété initiale (dépendance).</p>
+    </div>
+
+    <!-- QUARTER PILL -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--teal-pale)">💊</div>Le comprimé quadrisécable — une particularité du Lexomil</div>
+      <div class="quarter-box"><div class="quarter-icon">✂️</div><div class="quarter-text">Le comprimé de Lexomil (6 mg) est <strong>quadrisécable</strong> : il peut être cassé en 4 quarts de 1,5 mg. C'est très pratique pour la <strong>décroissance progressive</strong> — on peut réduire par petits paliers de quart de comprimé. Votre médecin utilisera cette propriété pour adapter finement la diminution à votre rythme.<br><br><strong>Équivalence :</strong> 6 mg de bromazépam ≈ 10 mg de diazépam (Valium).</div></div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">⚠️</div>Le piège de la dépendance</div>
+      <div class="dep-box">
+        <div class="dep-title">⏳ Le même piège que toutes les BZD</div>
+        <div class="dep-timeline">
+          <div class="dep-step"><div class="dep-dot green"></div><div class="dep-label">Premières semaines</div><div class="dep-desc">Effet anxiolytique rapide et net. Le Lexomil « marche bien ».</div></div>
+          <div class="dep-step"><div class="dep-dot orange"></div><div class="dep-label">Après 4 à 8 semaines</div><div class="dep-desc">Tolérance : il faut plus pour le même effet. L'anxiété revient entre les prises.</div></div>
+          <div class="dep-step"><div class="dep-dot red"></div><div class="dep-label">Usage prolongé</div><div class="dep-desc">Dépendance installée. L'arrêt provoque un rebond d'anxiété, insomnie, voire convulsions.</div></div>
+        </div>
+        <p class="dep-note">La HAS recommande de <strong>limiter la prescription à 12 semaines maximum</strong> (décroissance incluse). Si vous le prenez depuis plus longtemps, l'objectif est d'organiser une décroissance progressive et accompagnée.</p>
+      </div>
+      <div class="taper-box"><div class="taper-icon">📉</div><div><div class="taper-title">La décroissance progressive : quart par quart</div><div class="taper-text">La réduction se fait <strong>par paliers d'un quart de comprimé</strong>, espacés de 1 à 2 semaines minimum. En cas de difficulté, votre médecin peut faire un <strong>switch vers le diazépam</strong> (demi-vie plus longue, décroissance plus douce). Si un palier est difficile, on ralentit — on ne recule jamais. L'objectif est atteignable, à votre rythme.</div></div></div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables</div>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Troubles de la mémoire</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la vigilance</div>
+        <div class="effect-item"><span class="dot"></span> Faiblesse musculaire</div>
+        <div class="effect-item"><span class="dot"></span> Vertiges</div>
+        <div class="effect-item"><span class="dot"></span> Réactions paradoxales (agitation, agressivité — rare)</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">🔄</div><div class="card-title">Des alternatives sans dépendance</div><div class="card-text">Atarax (hydroxyzine), Tercian à faible dose, buspirone, antidépresseurs ISRS/IRSNa pour le fond, psychothérapie TCC — des solutions efficaces pour gérer l'anxiété sans le risque de dépendance.</div></div>
+        <div class="info-card green"><div class="card-icon">📊</div><div class="card-title">Réduire, c'est déjà gagner</div><div class="card-text">Même si l'arrêt complet n'est pas possible immédiatement, chaque réduction de dose est un progrès. Diminuer de moitié, c'est déjà un excellent résultat.</div></div>
+        <div class="info-card orange"><div class="card-icon">🍷</div><div class="card-title">Alcool strictement interdit</div><div class="card-text">L'association Lexomil + alcool est dangereuse : sédation excessive, risque de dépression respiratoire. Double importance en contexte de sevrage alcoolique.</div></div>
+        <div class="info-card orange"><div class="card-icon">🚗</div><div class="card-title">Conduite et vigilance</div><div class="card-text">Le Lexomil altère les réflexes et la vigilance. Pictogramme de niveau 3 (danger) : la conduite est formellement déconseillée.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Prévenez l'équipe si…</div><p>Vous ressentez une <strong>anxiété qui augmente fortement</strong> lors de la décroissance (on ralentit le rythme), des <strong>tremblements</strong>, des <strong>sueurs</strong>, des <strong>troubles du sommeil majeurs</strong>, ou si vous avez <strong>envie d'augmenter les doses</strong>. Ces situations nécessitent un ajustement — ce n'est ni un échec ni une faiblesse, c'est prévu et pris en charge.</p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

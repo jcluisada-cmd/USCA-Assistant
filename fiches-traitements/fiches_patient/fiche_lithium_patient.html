@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Téralithe (Lithium)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--red:#D94040;--steel:#4A6FA5;--steel-pale:#EAF0F8}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--steel);opacity:.12;border-radius:50%}.header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--steel-pale);border-left:4px solid var(--steel);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--steel)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-steel{background:var(--steel-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--steel-pale),#DCE7F3);border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--steel);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* THERAPEUTIC WINDOW */
+  .window-box{background:var(--white);border:2px solid var(--red);border-radius:14px;padding:1.4rem 1.5rem}
+  .window-title{font-weight:700;font-size:1rem;margin-bottom:1rem;text-align:center;color:var(--red)}
+  .window-visual{position:relative;height:60px;background:linear-gradient(90deg,#FDF0EC 0%,#E6F5EE 20%,var(--teal-pale) 40%,var(--teal-pale) 60%,#E6F5EE 75%,var(--red-pale) 85%,#F5C0B0 100%);border-radius:30px;margin-bottom:.8rem;display:flex;align-items:center;overflow:hidden}
+  .wz{flex:1;text-align:center;font-size:.7rem;font-weight:600;z-index:1;line-height:1.2}
+  .wz.danger{color:var(--red-soft)}.wz.ok{color:var(--teal)}.wz.toxic{color:var(--red)}
+  .window-values{display:flex;justify-content:space-between;font-size:.75rem;color:var(--gray-600);margin-bottom:.6rem;padding:0 .5rem}
+  .window-note{font-size:.88rem;color:var(--gray-600);line-height:1.55;text-align:center}.window-note strong{color:var(--navy)}
+  /* RULES */
+  .rules-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.6rem}.rule-item{text-align:center;padding:.9rem .5rem;background:var(--gray-50);border-radius:12px;border:1px solid var(--gray-200)}.rule-icon{font-size:1.5rem;margin-bottom:.3rem}.rule-label{font-size:.78rem;font-weight:700;line-height:1.25;margin-bottom:.15rem}.rule-desc{font-size:.68rem;color:var(--gray-600);line-height:1.3}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  /* TOXICITY */
+  .toxic-box{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}.toxic-icon{font-size:2rem;flex-shrink:0}.toxic-title{font-weight:700;font-size:.95rem;color:#FF8A80;margin-bottom:.3rem}.toxic-text{font-size:.84rem;opacity:.9;line-height:1.5}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.rules-grid{grid-template-columns:1fr 1fr}.toxic-box{flex-direction:column}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">Fiche médicament — Patient</div><h1>Téralithe® <span>(Lithium)</span></h1><div class="subtitle">Le traitement de référence pour stabiliser l'humeur</div></div>
+  <div class="content">
+
+    <div class="intro-box">Le <strong>lithium</strong> est le plus ancien et le plus efficace des <strong>stabilisateurs de l'humeur</strong>. Il est prescrit pour traiter et prévenir les épisodes du <strong>trouble bipolaire</strong> — les phases de « hauts » (manie) et de « bas » (dépression) qui s'alternent. Chez les patients ayant une addiction, le trouble bipolaire non traité est un facteur majeur de consommation. <strong>Stabiliser l'humeur, c'est protéger le sevrage.</strong></div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-steel">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">🎢</div><div class="label">Trouble bipolaire</div><div class="sublabel">L'humeur fait les montagnes russes</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">Le lithium régule les neurones</div><div class="sublabel">Stabilise les messagers chimiques</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">〰️</div><div class="label">Humeur stabilisée</div><div class="sublabel">Moins de hauts, moins de bas</div></div>
+      </div>
+      <p class="mechanism-caption">Le lithium est un <strong>ion naturel</strong> (un sel minéral) qui agit en profondeur sur les neurones. Il module plusieurs systèmes de signalisation intracellulaire, stabilise les membranes neuronales et protège les neurones. Son mécanisme exact reste partiellement mystérieux, mais son efficacité est prouvée depuis plus de 70 ans. Il prévient à la fois les épisodes maniaques et dépressifs, et possède un <strong>effet anti-suicidaire unique</strong> parmi tous les psychotropes.</p>
+    </div>
+
+    <!-- THERAPEUTIC WINDOW -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--red-pale)">🎯</div>La « fenêtre thérapeutique » : le point clé du lithium</div>
+      <div class="window-box">
+        <div class="window-title">La marge entre efficacité et toxicité est étroite</div>
+        <div class="window-visual">
+          <div class="wz danger">Inefficace</div>
+          <div class="wz ok">✅ Zone<br>thérapeutique</div>
+          <div class="wz toxic">⚠️ Zone<br>toxique</div>
+        </div>
+        <div class="window-values">
+          <span>0,4 mmol/L</span>
+          <span style="color:var(--teal);font-weight:700">0,6 – 0,8 mmol/L</span>
+          <span style="color:var(--red);font-weight:700">> 1,2 mmol/L</span>
+        </div>
+        <p class="window-note">C'est pourquoi le lithium nécessite des <strong>prises de sang régulières</strong> (lithiémie) pour vérifier que votre taux reste dans la zone efficace et sûre. Trop bas = pas d'effet. Trop haut = toxicité.</p>
+      </div>
+    </div>
+
+    <!-- 4 RULES -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E4E8F0">🔑</div>Les 4 règles d'or du lithium</div>
+      <div class="rules-grid">
+        <div class="rule-item"><div class="rule-icon">🩸</div><div class="rule-label">Prises de sang régulières</div><div class="rule-desc">Lithiémie, fonction rénale, thyroïde. Tous les 3 à 6 mois minimum.</div></div>
+        <div class="rule-item"><div class="rule-icon">💧</div><div class="rule-label">Boire suffisamment</div><div class="rule-desc">1,5 à 2 L d'eau/jour. La déshydratation fait monter le taux de lithium dangereusement.</div></div>
+        <div class="rule-item"><div class="rule-icon">🧂</div><div class="rule-label">Sel stable</div><div class="rule-desc">Ne changez pas brutalement votre consommation de sel. Pas de régime sans sel sans avis médical.</div></div>
+        <div class="rule-item"><div class="rule-icon">💊</div><div class="rule-label">Même heure chaque jour</div><div class="rule-desc">Toujours à la même heure, sans sauter de prise. La lithiémie se dose 12h après la dernière prise.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Fréquents surtout en début de traitement ou si le taux est un peu élevé :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Soif / envies d'uriner fréquentes</div>
+        <div class="effect-item"><span class="dot"></span> Tremblement fin des mains</div>
+        <div class="effect-item"><span class="dot"></span> Nausées / diarrhée</div>
+        <div class="effect-item"><span class="dot"></span> Prise de poids</div>
+        <div class="effect-item"><span class="dot"></span> Hypothyroïdie (à long terme)</div>
+        <div class="effect-item"><span class="dot"></span> Acné / peau sèche</div>
+      </div>
+    </div>
+
+    <!-- TOXICITY -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--red-pale)">⚠️</div>Précautions essentielles</div>
+      <div class="toxic-box"><div class="toxic-icon">🚨</div><div><div class="toxic-title">Reconnaître les signes de surdosage (intoxication au lithium)</div><div class="toxic-text">Si votre taux de lithium monte trop haut, vous pouvez ressentir : <strong>tremblements importants, diarrhée profuse, vomissements, confusion, troubles de l'élocution, somnolence sévère, vision trouble</strong>. C'est une urgence — <strong>arrêtez le lithium, buvez de l'eau et consultez immédiatement</strong> (15 ou Urgences).<br><br><strong>Situations à risque</strong> : déshydratation (diarrhée, vomissements, forte chaleur, fièvre), régime sans sel, prise d'AINS (ibuprofène, Advil, Nurofen) ou de diurétiques → font monter le lithium.</div></div></div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">🛡️</div><div class="card-title">Effet anti-suicidaire unique</div><div class="card-text">Le lithium est le seul médicament psychiatrique ayant démontré une réduction du risque suicidaire. C'est un bénéfice supplémentaire majeur.</div></div>
+        <div class="info-card green"><div class="card-icon">⏳</div><div class="card-title">Traitement au long cours</div><div class="card-text">Le lithium se prend souvent pendant des années, parfois toute la vie. C'est un traitement préventif — il fonctionne tant qu'on le prend. L'arrêt expose à une rechute.</div></div>
+        <div class="info-card orange"><div class="card-icon">🚫</div><div class="card-title">Ibuprofène interdit</div><div class="card-text">Les anti-inflammatoires (Advil, Nurofen, ibuprofène) augmentent le lithium dangereusement. En cas de douleur, prenez du paracétamol et demandez toujours à votre pharmacien.</div></div>
+        <div class="info-card orange"><div class="card-icon">🤰</div><div class="card-title">Grossesse : consultation urgente</div><div class="card-text">Le lithium est tératogène au 1er trimestre (malformation cardiaque). Si vous êtes enceinte ou envisagez une grossesse, consultez immédiatement votre psychiatre.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Consultez en urgence si…</div><p>Vous ressentez des <strong>tremblements majeurs</strong>, des <strong>vomissements ou diarrhée importante</strong>, une <strong>confusion</strong>, des <strong>troubles de l'élocution</strong>, ou une <strong>somnolence anormale</strong>. Ce sont des signes possibles d'intoxication au lithium. <strong>Arrêtez le lithium, buvez de l'eau et appelez le 15 ou rendez-vous aux Urgences.</strong></p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

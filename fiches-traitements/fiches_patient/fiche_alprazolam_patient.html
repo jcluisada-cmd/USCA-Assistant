@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Xanax (Alprazolam)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--red:#D94040;--red-deep:#B52A2A}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--red-soft);opacity:.15;border-radius:50%}.header-badge{display:inline-block;background:var(--red);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--red-pale);border-left:4px solid var(--red);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--red)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--red-pale),#F5D5CC);border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--red-soft);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* DANGER HIGHLIGHT */
+  .danger-box{background:linear-gradient(135deg,var(--red-deep),var(--red));color:var(--white);border-radius:14px;padding:1.4rem 1.5rem;display:flex;gap:1rem;align-items:flex-start}
+  .danger-icon{font-size:2.5rem;flex-shrink:0}.danger-title{font-weight:700;font-size:1.05rem;margin-bottom:.4rem}.danger-text{font-size:.88rem;opacity:.95;line-height:1.55}
+  /* ROLLER COASTER */
+  .roller-box{background:var(--amber-pale);border:2px solid var(--amber);border-radius:14px;padding:1.3rem 1.5rem}
+  .roller-title{font-weight:700;font-size:1rem;margin-bottom:.8rem;text-align:center}
+  .roller-visual{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:.8rem}
+  .rv-step{text-align:center;padding:.4rem .6rem;flex:1}
+  .rv-emoji{font-size:1.6rem;margin-bottom:.2rem}
+  .rv-label{font-size:.72rem;font-weight:600;line-height:1.2}
+  .rv-time{font-size:.65rem;color:var(--gray-600);margin-top:.1rem}
+  .rv-arrow{font-size:1.2rem;color:var(--amber);flex-shrink:0}
+  .roller-note{font-size:.88rem;color:var(--gray-600);line-height:1.55;text-align:center}.roller-note strong{color:var(--navy)}
+  .taper-box{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}.taper-icon{font-size:2rem;flex-shrink:0}.taper-title{font-weight:700;font-size:.95rem;color:var(--amber-light);margin-bottom:.3rem}.taper-text{font-size:.84rem;opacity:.9;line-height:1.5}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.danger-box,.taper-box{flex-direction:column;text-align:center}.roller-visual{flex-wrap:wrap}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">⚠️ Fiche médicament — Haut risque de dépendance</div><h1>Xanax® <span>(Alprazolam)</span></h1><div class="subtitle">La benzodiazépine la plus addictogène — comprendre pour s'en libérer</div></div>
+  <div class="content">
+
+    <div class="intro-box">Le <strong>Xanax</strong> (alprazolam) est une benzodiazépine à <strong>action rapide et courte durée</strong>. C'est ce qui le rend si efficace contre l'anxiété aiguë — mais aussi ce qui en fait la <strong>BZD la plus addictogène</strong>. Son effet rapide crée un soulagement immédiat que le cerveau apprend vite à rechercher, et sa courte durée d'action provoque un « mini-sevrage » entre chaque prise. Le piège se referme très vite.</div>
+
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--red-pale)">🧠</div>Pourquoi le Xanax crée-t-il plus de dépendance ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">⚡</div><div class="label">Début d'action très rapide</div><div class="sublabel">Soulagement en 15-30 min</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">⏱️</div><div class="label">Durée courte (4-6 heures)</div><div class="sublabel">L'anxiété revient vite entre les prises</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">🔄</div><div class="label">Cycle pics / creux</div><div class="sublabel">Le cerveau réclame la dose suivante</div></div>
+      </div>
+      <p class="mechanism-caption">Toutes les benzodiazépines créent de la dépendance, mais l'alprazolam combine deux caractéristiques qui maximisent le risque : un <strong>début d'action rapide</strong> (le cerveau associe le comprimé au soulagement immédiat — renforcement positif puissant) et une <strong>demi-vie courte</strong> (~6h, la plus courte des BZD anxiolytiques). Entre les prises, l'anxiété revient souvent plus forte qu'avant — c'est le phénomène de « rebond inter-doses ».</p>
+    </div>
+
+    <!-- DANGER HIGHLIGHT -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--red-pale)">🚨</div>Pourquoi c'est un problème en addictologie</div>
+      <div class="danger-box"><div class="danger-icon">⚠️</div><div><div class="danger-title">L'alprazolam est la BZD au plus fort potentiel addictif</div><div class="danger-text">Son profil pharmacologique (onset rapide + offset rapide) est celui qui se rapproche le plus d'une substance addictive classique. En addictologie, l'alprazolam est souvent considéré comme la <strong>BZD à remplacer en priorité</strong>. Ce n'est pas un jugement sur vous — c'est une propriété du médicament lui-même. Beaucoup de patients très motivés ont du mal à l'arrêter précisément à cause de ce profil.</div></div></div>
+    </div>
+
+    <!-- ROLLER COASTER -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">🎢</div>Les « montagnes russes » du Xanax</div>
+      <div class="roller-box">
+        <div class="roller-title">Un cycle qui se répète plusieurs fois par jour</div>
+        <div class="roller-visual">
+          <div class="rv-step"><div class="rv-emoji">😰</div><div class="rv-label">Anxiété</div><div class="rv-time">Avant la prise</div></div>
+          <div class="rv-arrow">→</div>
+          <div class="rv-step"><div class="rv-emoji">💊</div><div class="rv-label">Prise</div><div class="rv-time">T0</div></div>
+          <div class="rv-arrow">→</div>
+          <div class="rv-step"><div class="rv-emoji">😌</div><div class="rv-label">Soulagement</div><div class="rv-time">+15-30 min</div></div>
+          <div class="rv-arrow">→</div>
+          <div class="rv-step"><div class="rv-emoji">📉</div><div class="rv-label">L'effet chute</div><div class="rv-time">+4-6 heures</div></div>
+          <div class="rv-arrow">→</div>
+          <div class="rv-step"><div class="rv-emoji">😰😰</div><div class="rv-label">Rebond +++</div><div class="rv-time">Anxiété pire</div></div>
+        </div>
+        <p class="roller-note">Ce cycle de <strong>pics et de creux</strong> entretient et aggrave la dépendance. Le cerveau apprend que le seul soulagement possible vient du comprimé. L'objectif du sevrage est de <strong>casser ce cycle</strong>.</p>
+      </div>
+    </div>
+
+    <!-- TAPER STRATEGY -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--teal-pale)">📉</div>La stratégie de sortie</div>
+      <div class="taper-box"><div class="taper-icon">🔄</div><div><div class="taper-title">Étape 1 : Switch vers une BZD à longue durée d'action</div><div class="taper-text">Votre médecin remplacera l'alprazolam par du <strong>diazépam (Valium)</strong>, une BZD à longue demi-vie (~40-100h). Le diazépam procure un effet stable et régulier, sans les pics et les creux du Xanax. L'anxiété inter-doses disparaît. C'est la base d'un sevrage confortable.<br><br><strong>Équivalence :</strong> 0,5 mg d'alprazolam ≈ 10 mg de diazépam.<br><br><strong>Étape 2 :</strong> Décroissance progressive du diazépam par paliers de 10 %, sur plusieurs semaines à mois, avec relais par des alternatives sans dépendance (Atarax, Tercian, ISRS, psychothérapie TCC).</div></div></div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables</div>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Somnolence</div>
+        <div class="effect-item"><span class="dot"></span> Troubles de la mémoire (amnésie antérograde)</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la vigilance</div>
+        <div class="effect-item"><span class="dot"></span> Dépression (usage prolongé)</div>
+        <div class="effect-item"><span class="dot"></span> Faiblesse musculaire</div>
+        <div class="effect-item"><span class="dot"></span> Réactions paradoxales (agressivité, désinhibition)</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">💪</div><div class="card-title">C'est faisable</div><div class="card-text">Le sevrage de l'alprazolam est l'un des plus difficiles parmi les BZD, mais il est tout à fait réalisable avec un accompagnement médical. Le switch vers le diazépam rend la décroissance beaucoup plus confortable.</div></div>
+        <div class="info-card green"><div class="card-icon">🔄</div><div class="card-title">Des alternatives efficaces</div><div class="card-text">Atarax (action rapide, 0 dépendance), Tercian (anxiolyse sans BZD), ISRS/IRSNa (traitement de fond), TCC (restructuration cognitive) — il existe des solutions durables.</div></div>
+        <div class="info-card orange"><div class="card-icon">🍷</div><div class="card-title">Alcool : danger majeur</div><div class="card-text">L'association Xanax + alcool est particulièrement dangereuse (sédation profonde, dépression respiratoire, amnésie). Les deux agissent sur les mêmes récepteurs et se potentialisent.</div></div>
+        <div class="info-card orange"><div class="card-icon">🚫</div><div class="card-title">Jamais d'arrêt brutal</div><div class="card-text">L'arrêt brutal de l'alprazolam peut provoquer des convulsions, une confusion sévère, voire un état de mal épileptique. Le sevrage se fait TOUJOURS progressivement sous surveillance médicale.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Prévenez l'équipe immédiatement si…</div><p>Vous ressentez des <strong>tremblements</strong>, des <strong>sueurs profuses</strong>, une <strong>anxiété intolérable</strong>, des <strong>hallucinations</strong>, une <strong>sensation de déréalisation</strong>, ou des <strong>symptômes évoquant une convulsion</strong>. Ces signes indiquent que le sevrage va trop vite — le rythme sera ralenti et des mesures de protection seront mises en place.</p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

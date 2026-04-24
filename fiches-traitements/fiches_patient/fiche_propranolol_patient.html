@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Propranolol (Avlocardyl)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--coral:#E8735A;--coral-pale:#FDF2EF;--blue:#3B7DD8;--blue-pale:#EAF1FB}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--coral);opacity:.12;border-radius:50%}.header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--coral-pale);border-left:4px solid var(--coral);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--coral)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-coral{background:var(--coral-pale)}
+  /* MECHANISM */
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--coral-pale),#F8E4DD);border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--coral);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* KEY MESSAGE */
+  .key-box{background:linear-gradient(135deg,var(--teal-pale),#E6F5EE);border:2px solid var(--teal);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:center}.key-icon{font-size:2.5rem;flex-shrink:0}.key-text{font-size:.95rem;line-height:1.55}.key-text strong{color:var(--teal)}
+  /* INDICATIONS */
+  .indic-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.indic-card{padding:1rem;border-radius:12px;border:2px solid var(--gray-200);text-align:center}.indic-card.active{border-color:var(--coral);background:var(--coral-pale)}.indic-icon{font-size:1.6rem;margin-bottom:.3rem}.indic-label{font-weight:700;font-size:.88rem;line-height:1.3;margin-bottom:.2rem}.indic-desc{font-size:.76rem;color:var(--gray-600);line-height:1.4}
+  /* DOSAGE */
+  .dosage-card{background:var(--white);border:2px solid var(--amber);border-radius:14px;padding:1.4rem 1.5rem}
+  .dosage-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.8rem}
+  .dosage-phase{padding:.8rem 1rem;background:var(--gray-50);border-radius:10px}
+  .phase-label{font-weight:700;font-size:.88rem;margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem}
+  .phase-dot{width:10px;height:10px;border-radius:50%}.dot-prn{background:var(--coral)}.dot-reg{background:var(--teal)}
+  .phase-text{font-size:.85rem;color:var(--gray-600);line-height:1.5}.phase-text strong{color:var(--navy)}
+  .dosage-note{font-size:.82rem;background:var(--coral-pale);padding:.5rem .8rem;border-radius:8px}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.key-box{flex-direction:column;text-align:center}.indic-grid,.dosage-row,.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">Fiche médicament — Patient</div><h1>Propranolol <span>(Avlocardyl®)</span></h1><div class="subtitle">Calmer les symptômes physiques de l'anxiété — sans toucher au cerveau</div></div>
+  <div class="content">
+
+    <div class="intro-box">Le <strong>propranolol</strong> est à l'origine un médicament du cœur (bêta-bloquant). En psychiatrie, il est utilisé pour un tout autre usage : <strong>calmer les manifestations physiques de l'anxiété</strong> — cœur qui s'emballe, tremblements, transpiration, boule au ventre. Il n'agit pas sur l'anxiété « dans la tête » mais sur le corps, ce qui suffit souvent à <strong>casser le cercle vicieux anxieux</strong>.</div>
+
+    <!-- MECHANISM -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-coral">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">😰</div><div class="label">L'anxiété déclenche l'adrénaline</div><div class="sublabel">Cœur rapide, tremblements, sueurs</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">Le propranolol bloque l'adrénaline</div><div class="sublabel">Il « éteint » les récepteurs bêta</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">🧘</div><div class="label">Le corps se calme</div><div class="sublabel">Le cœur ralentit, les tremblements cessent</div></div>
+      </div>
+      <p class="mechanism-caption">Quand vous êtes anxieux, votre corps produit de l'<strong>adrénaline</strong> (la « hormone du stress ») qui accélère le cœur, provoque des tremblements et de la transpiration. Le propranolol <strong>bloque les récepteurs bêta-adrénergiques</strong>, empêchant l'adrénaline de produire ces effets. Votre corps se calme — et souvent, quand le corps se calme, l'anxiété mentale diminue aussi.</p>
+    </div>
+
+    <!-- KEY MESSAGE -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E6F5EE">✅</div>Pourquoi c'est intéressant en addictologie</div>
+      <div class="key-box"><div class="key-icon">🛡️</div><div class="key-text">Le propranolol <strong>n'est pas un psychotrope</strong> au sens classique : il ne modifie pas l'activité cérébrale, ne provoque <strong>aucune dépendance</strong>, <strong>aucune sédation</strong> et <strong>aucun risque d'abus</strong>. C'est un outil supplémentaire précieux quand on veut traiter l'anxiété sans recourir aux benzodiazépines — particulièrement chez les patients ayant un trouble addictif.</div></div>
+    </div>
+
+    <!-- INDICATIONS -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E4E8F0">🎯</div>Quand vous est-il prescrit ?</div>
+      <div class="indic-grid">
+        <div class="indic-card active"><div class="indic-icon">💓</div><div class="indic-label">Tachycardie et palpitations anxieuses</div><div class="indic-desc">Cœur qui s'emballe dans les situations d'anxiété ou de sevrage — le propranolol le ralentit efficacement.</div></div>
+        <div class="indic-card active"><div class="indic-icon">🤲</div><div class="indic-label">Tremblements</div><div class="indic-desc">Tremblement fin des mains lié au sevrage, à l'anxiété, ou comme effet secondaire du lithium ou du valproate.</div></div>
+        <div class="indic-card"><div class="indic-icon">🎤</div><div class="indic-label">Anxiété de performance</div><div class="indic-desc">Trac, anxiété sociale situationnelle — prise ponctuelle avant une situation redoutée (entretien, groupe, prise de parole).</div></div>
+        <div class="indic-card"><div class="indic-icon">🦵</div><div class="indic-label">Akathisie</div><div class="indic-desc">Impatience motrice (besoin irrépressible de bouger) causée par un neuroleptique comme l'aripiprazole — le propranolol la soulage.</div></div>
+      </div>
+    </div>
+
+    <!-- DOSAGE -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">💊</div>Comment le prendre ?</div>
+      <div class="dosage-card">
+        <div class="dosage-row">
+          <div class="dosage-phase">
+            <div class="phase-label"><span class="phase-dot dot-prn"></span> En « si besoin » (ponctuel)</div>
+            <div class="phase-text"><strong>20 à 40 mg</strong> pris 30 à 60 minutes avant la situation anxiogène (entretien, groupe thérapeutique, etc.).</div>
+          </div>
+          <div class="dosage-phase">
+            <div class="phase-label"><span class="phase-dot dot-reg"></span> En traitement régulier</div>
+            <div class="phase-text"><strong>40 à 120 mg/jour</strong> répartis en 2 à 3 prises pour les tremblements de sevrage, l'akathisie ou l'anxiété somatique chronique.</div>
+          </div>
+        </div>
+        <div class="dosage-note">ℹ️ &nbsp;Se prend avec un verre d'eau, de préférence au moment des repas. L'effet sur le cœur (ralentissement) se ressent en 30 à 60 minutes. Votre médecin adaptera la dose selon votre fréquence cardiaque et votre tension.</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Généralement bien toléré aux doses psychiatriques :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Fatigue / sensation de ralentissement</div>
+        <div class="effect-item"><span class="dot"></span> Mains et pieds froids</div>
+        <div class="effect-item"><span class="dot"></span> Baisse de la tension artérielle</div>
+        <div class="effect-item"><span class="dot"></span> Vertiges (en se levant)</div>
+        <div class="effect-item"><span class="dot"></span> Troubles digestifs (nausées, diarrhée)</div>
+        <div class="effect-item"><span class="dot"></span> Troubles du sommeil / cauchemars (rare)</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">🛡️</div><div class="card-title">Zéro dépendance, zéro sédation</div><div class="card-text">Le propranolol n'agit pas sur les récepteurs GABA ni sur le cerveau directement. Pas de dépendance, pas de tolérance, pas d'abus possible. Et il ne fait pas dormir.</div></div>
+        <div class="info-card green"><div class="card-icon">🧰</div><div class="card-title">Un outil polyvalent</div><div class="card-text">Tremblements du lithium, akathisie de l'aripiprazole, tachycardie de sevrage, trac social — un seul médicament pour plusieurs situations courantes en addictologie.</div></div>
+        <div class="info-card orange"><div class="card-icon">🫁</div><div class="card-title">Asthme : contre-indiqué</div><div class="card-text">Le propranolol est contre-indiqué chez les asthmatiques (risque de bronchospasme). Signalez tout antécédent d'asthme ou de BPCO à votre médecin.</div></div>
+        <div class="info-card orange"><div class="card-icon">🍬</div><div class="card-title">Diabète : prudence</div><div class="card-text">Le propranolol peut masquer les signes d'hypoglycémie (palpitations, tremblements). Si vous êtes diabétique, une surveillance glycémique renforcée est nécessaire.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Prévenez votre médecin si…</div><p>Vous ressentez un <strong>ralentissement excessif du cœur</strong> (pouls très lent, en-dessous de 50/min), des <strong>vertiges en position debout</strong>, un <strong>essoufflement inhabituel</strong>, ou des <strong>extrémités très froides et douloureuses</strong>. Si vous êtes asthmatique, n'hésitez jamais à le signaler — même si on ne vous a pas posé la question.</p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

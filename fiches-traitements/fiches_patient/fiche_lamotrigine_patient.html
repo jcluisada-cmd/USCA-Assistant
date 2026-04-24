@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Lamictal (Lamotrigine)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--red:#D94040;--jade:#3DA585;--jade-pale:#E6F5EF}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--jade);opacity:.12;border-radius:50%}.header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--jade-pale);border-left:4px solid var(--jade);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--jade)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-jade{background:var(--jade-pale)}
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--jade-pale),#D0EDE2);border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--jade);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* BIPOLAR FOCUS */
+  .bipolar-box{background:linear-gradient(135deg,var(--teal-pale),#E6F5EE);border:2px solid var(--teal);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:center}.bp-icon{font-size:2.5rem;flex-shrink:0}.bp-text{font-size:.95rem;line-height:1.55}.bp-text strong{color:var(--teal)}
+  /* TITRATION */
+  .titration-card{background:var(--white);border:2px solid var(--amber);border-radius:14px;padding:1.5rem}
+  .titration-title{font-weight:700;font-size:1rem;margin-bottom:1rem}
+  .titration-steps{display:flex;align-items:flex-end;gap:0;justify-content:center;margin-bottom:1rem}
+  .stair{display:flex;flex-direction:column;align-items:center}.stair-block{width:110px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:.5rem .3rem;border-radius:8px 8px 0 0}
+  .stair-block.s1{height:50px;background:#E6F5EF}.stair-block.s2{height:75px;background:#C8E8D8}.stair-block.s3{height:100px;background:#A0D9BF}.stair-block.s4{height:125px;background:var(--jade);color:white}
+  .stair-dose{font-size:.85rem;font-weight:700;line-height:1.2}.stair-label{font-size:.65rem;opacity:.8;margin-top:.1rem}.stair-period{font-size:.68rem;color:var(--gray-600);margin-top:.4rem;font-weight:500;text-align:center}
+  .titration-note{font-size:.88rem;color:var(--gray-600);line-height:1.55;text-align:center}.titration-note strong{color:var(--navy)}
+  /* RASH WARNING */
+  .rash-box{background:linear-gradient(135deg,#B52A2A,var(--red));color:var(--white);border-radius:14px;padding:1.4rem 1.5rem;display:flex;gap:1rem;align-items:flex-start;margin-top:.8rem}
+  .rash-icon{font-size:2.5rem;flex-shrink:0}
+  .rash-title{font-weight:700;font-size:1.05rem;margin-bottom:.4rem}
+  .rash-text{font-size:.88rem;opacity:.95;line-height:1.55}
+  .rash-text strong{color:var(--amber-light)}
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.bipolar-box,.rash-box{flex-direction:column;text-align:center}.titration-steps{flex-wrap:wrap;gap:.4rem}.stair-block{width:80px}.stair-block.s1{height:40px}.stair-block.s2{height:55px}.stair-block.s3{height:70px}.stair-block.s4{height:85px}.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">Fiche médicament — Patient</div><h1>Lamictal® <span>(Lamotrigine)</span></h1><div class="subtitle">Prévenir les rechutes dépressives du trouble bipolaire</div></div>
+  <div class="content">
+
+    <div class="intro-box">La <strong>lamotrigine</strong> est un <strong>stabilisateur de l'humeur</strong> utilisé pour prévenir les rechutes du <strong>trouble bipolaire</strong>, en particulier les <strong>épisodes dépressifs</strong>. Initialement développée comme antiépileptique, elle s'est révélée très efficace pour maintenir une humeur stable au long cours. Elle est bien tolérée et ne provoque ni prise de poids, ni sédation, ni dépendance.</div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-jade">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">🎢</div><div class="label">Trouble bipolaire</div><div class="sublabel">Surtout les phases dépressives</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">La lamotrigine stabilise les neurones</div><div class="sublabel">↓ glutamate (excitateur excessif)</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">〰️</div><div class="label">Moins de rechutes dépressives</div><div class="sublabel">Humeur plus stable au quotidien</div></div>
+      </div>
+      <p class="mechanism-caption">La lamotrigine bloque les canaux sodiques des neurones et réduit la libération excessive de <strong>glutamate</strong> (neurotransmetteur excitateur). En freinant cette excitation, elle stabilise l'activité neuronale et prévient les épisodes dépressifs. Son efficacité est surtout démontrée sur la <strong>prévention des rechutes dépressives</strong> du trouble bipolaire — c'est sa spécialité, là où le lithium excelle davantage sur les épisodes maniaques.</p>
+    </div>
+
+    <!-- BIPOLAR FOCUS -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E6F5EE">✅</div>Pourquoi la lamotrigine en addictologie ?</div>
+      <div class="bipolar-box"><div class="bp-icon">🎯</div><div class="bp-text">Beaucoup de patients ayant une addiction souffrent aussi d'un trouble bipolaire, souvent à prédominance dépressive. Les phases dépressives poussent à consommer pour « se soulager ». La lamotrigine <strong>prévient ces rechutes dépressives</strong> et stabilise l'humeur, ce qui protège votre sevrage. C'est aussi une option quand le lithium n'est pas toléré ou quand on souhaite <strong>éviter la prise de poids</strong> (fréquente avec d'autres thymorégulateurs).</div></div>
+    </div>
+
+    <!-- TITRATION -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📈</div>Comment le prendre ? Une montée très lente</div>
+      <div class="titration-card">
+        <div class="titration-title">⚠️ La montée est volontairement lente — c'est pour votre sécurité (prévention du rash cutané)</div>
+        <div class="titration-steps">
+          <div class="stair"><div class="stair-block s1"><div class="stair-dose">25 mg/j</div></div><div class="stair-period">Semaines 1-2</div></div>
+          <div class="stair"><div class="stair-block s2"><div class="stair-dose">50 mg/j</div></div><div class="stair-period">Semaines 3-4</div></div>
+          <div class="stair"><div class="stair-block s3"><div class="stair-dose">100 mg/j</div></div><div class="stair-period">Semaine 5</div></div>
+          <div class="stair"><div class="stair-block s4"><div class="stair-dose">200 mg/j</div><div class="stair-label">dose cible</div></div><div class="stair-period">Semaine 6+</div></div>
+        </div>
+        <p class="titration-note">En <strong>1 à 2 prises par jour</strong>. La titration est <strong>plus lente</strong> si vous prenez aussi du <strong>valproate</strong> (Dépakine). Ne sautez jamais d'étape — c'est la montée trop rapide qui augmente le risque de réaction cutanée grave.</p>
+      </div>
+    </div>
+
+    <!-- RASH WARNING -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:var(--red-pale)">⚠️</div>Le point de vigilance n°1 : l'éruption cutanée</div>
+      <div class="rash-box">
+        <div class="rash-icon">🚨</div>
+        <div>
+          <div class="rash-title">Surveillez votre peau — surtout les 8 premières semaines</div>
+          <div class="rash-text">
+            La lamotrigine peut rarement provoquer une <strong>réaction cutanée grave</strong> (syndrome de Stevens-Johnson ou nécrolyse épidermique toxique) — potentiellement dangereuse. Le risque est maximal pendant les <strong>8 premières semaines</strong> de traitement et est lié à une montée trop rapide.<br><br>
+            <strong>Consultez immédiatement si vous observez :</strong> une éruption cutanée (rougeurs, boutons, cloques), surtout si elle s'accompagne de fièvre, de douleurs des muqueuses (bouche, yeux), d'un mal de gorge, ou d'un malaise général.<br><br>
+            <strong>C'est pourquoi la montée est si lente</strong> — respecter les paliers de dose réduit considérablement ce risque. La grande majorité des patients tolèrent très bien la lamotrigine.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles (hors rash)</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Globalement très bien tolérée :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot"></span> Maux de tête</div>
+        <div class="effect-item"><span class="dot"></span> Vertiges</div>
+        <div class="effect-item"><span class="dot"></span> Nausées</div>
+        <div class="effect-item"><span class="dot"></span> Vision double ou floue</div>
+        <div class="effect-item"><span class="dot"></span> Insomnie</div>
+        <div class="effect-item"><span class="dot"></span> Fatigue</div>
+      </div>
+    </div>
+
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">⚖️</div><div class="card-title">Pas de prise de poids</div><div class="card-text">Contrairement au lithium, au valproate et à la quétiapine, la lamotrigine n'entraîne pas de prise de poids. C'est un avantage majeur pour l'observance au long cours.</div></div>
+        <div class="info-card green"><div class="card-icon">☀️</div><div class="card-title">Pas de sédation</div><div class="card-text">La lamotrigine n'est pas sédative. Elle ne fait pas dormir et ne ralentit pas la pensée — beaucoup de patients la trouvent « transparente » au quotidien.</div></div>
+        <div class="info-card orange"><div class="card-icon">🤰</div><div class="card-title">Grossesse : un profil favorable</div><div class="card-text">Parmi les thymorégulateurs, la lamotrigine est celui qui a le meilleur profil de sécurité pendant la grossesse (sous surveillance). Consultez votre psychiatre si une grossesse est envisagée.</div></div>
+        <div class="info-card orange"><div class="card-icon">💊</div><div class="card-title">Attention aux interactions</div><div class="card-text">Le valproate (Dépakine) double le taux de lamotrigine — la titration doit être deux fois plus lente. Certains contraceptifs oraux peuvent baisser son efficacité. Signalez tous vos traitements.</div></div>
+      </div>
+    </div>
+
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Consultez immédiatement si…</div><p>Vous observez une <strong>éruption cutanée</strong> (quelle qu'elle soit), de la <strong>fièvre</strong>, des <strong>douleurs dans la bouche ou les yeux</strong>, un <strong>gonflement du visage</strong>, ou un <strong>malaise inexpliqué</strong> — surtout pendant les 2 premiers mois. En cas de doute, il vaut toujours mieux consulter. Votre médecin décidera s'il faut arrêter ou non le traitement.</p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

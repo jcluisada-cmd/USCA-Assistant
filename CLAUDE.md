@@ -35,7 +35,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.03 |
+| **Service Worker** | usca-v4.04 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -94,7 +94,7 @@ USCA-Assistant/
 │   ├── planning-groupes.js     ← Planning semaine A+B + réunions
 │   ├── postcure-structures.js  ← 14 structures post-cure (engagements, checklists)
 │   ├── craving-agenda.js       ← Composant agenda craving
-│   ├── fiches-catalogue.js     ← Catalogue des 20 fiches traitements
+│   ├── fiches-catalogue.js     ← Catalogue des 29 fiches traitements
 │   ├── livret-ifsi-contenu.js  ← Contenu pédagogique livret IFSI (14 chapitres, ~90 questions)
 │   ├── qcm-engine.js           ← Moteur QCM EDN (lazy-load index/items, scoring, signalements)
 │   ├── theme.css               ← Variables CSS dark mode
@@ -103,7 +103,7 @@ USCA-Assistant/
 │   └── api/
 │       └── delete-user.js      ← Cloudflare Function proxy suppression compte
 ├── fiches-traitements/
-│   ├── fiches_patient/         ← 20 fiches HTML à partager au patient (Aotal, baclofène, BZD, TSO, psychotropes…)
+│   ├── fiches_patient/         ← 29 fiches HTML à partager au patient (Aotal, baclofène, BZD, TSO, psychotropes…)
 │   └── fiches_expert/          ← 8 fiches expert PDF (antipsychotiques : amisulpride, aripiprazole, chlorpromazine, clozapine, halopéridol, olanzapine, quétiapine, rispéridone)
 ├── ressources_doc/             ← Ressources Toolbox — manifest-driven (index.json)
 │   ├── index.json              ← Liste les ressources exposées (type, titre, meta, tag, fichier, date)
@@ -199,7 +199,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 - ✅ **J'ai un craving** : bouton pleine largeur rouge (en haut)
 - ✅ **Programme** : timeline, navigation date, routine, groupes semaine A+B colorés, badge semaine A/B, horaires individuels, boutons Présent/Absent, "Demander une séance"
 - ✅ **Mon journal** : agenda craving (semaine/mois/3mois/1an), courbe tendance, stats
-- ✅ **Traitements** : fiches prescrites, 20 fiches HTML, navigation par catégorie
+- ✅ **Traitements** : fiches prescrites, 29 fiches HTML, navigation par catégorie
 - ✅ **Ateliers** : navigation date, Présent/Absent par groupe, demande de séance, historique, stats, animateur/lieu affichés
 - ✅ **Mes stratégies** : plan prévention guidé (5 catégories Marlatt), section éducative
 - ✅ **Permission** : demande sortie (48h max, 20h retour), statut en attente/validée/refusée
@@ -266,7 +266,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 ### Toolbox Soignant V1
 - ✅ **Accueil** : 3 grandes cartes (Protocoles USCA, ELSA, Dossier post-cure) + 3 petites (Traitements, Scores, Interactions) + Feedback
 - ✅ **Protocoles USCA** → hub : Substances (7) + **Ressources** (4 accordions : Fiches / Articles / Recos / Algos, tags thématiques colorés, ouverture `target="_blank"`). Manifest-driven : `ressources_doc/index.json` fetch au mount, 6 ressources actuellement (BZD étoiles PDF + BZD équivalences HTML, antipsy étoiles PDF + antipsy CPZ HTML + comparatif antipsy HTML, INCAS TUS/TDAH PDF). Design system partagé `shared/ressource-doc.css` pour tous les HTMLs (responsive mobile, dark mode auto, impression).
-- ✅ **Traitements** → 2 accordions : **Fiches Patient** (20 HTML, ouvertes par défaut, répartis en 5 catégories Sevrage/TSO/BZD/Psychotropes/Hypnotiques) + **Fiches Expert** (8 PDFs antipsychotiques classés G1 neuroleptiques classiques / G2 atypiques, ouverture `target="_blank"`).
+- ✅ **Traitements** → 2 accordions : **Fiches Patient** (29 HTML, ouvertes par défaut, répartis en 5 catégories Sevrage/TSO/BZD/Psychotropes/Hypnotiques) + **Fiches Expert** (8 PDFs antipsychotiques classés G1 neuroleptiques classiques / G2 atypiques, ouverture `target="_blank"`).
 - ✅ **Scores → OUTILS** : Convertisseur BZD (→ diazépam, seuil hospit >40 mg DZP-eq) + **Convertisseur CPZ** (→ chlorpromazine, 14 molécules G1/G2, alerte haute dose >1000 mg CPZ-eq/j, vigilance addicto OH/BZD/opioïdes).
 - ✅ **ELSA** → hub : Liaisons en cours (ToDo list + drag-and-drop + checklist), Admission & Orientation, Fiches réflexes (5)
 - ✅ Dark mode complet
@@ -299,7 +299,7 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 | **Protocoles USCA** | Hub (grande carte) | → Substances (7 protocoles) + Ressources (manifest-driven, 4 accordions, tags thématiques) |
 | **ELSA** | Hub (grande carte) | → Liaisons en cours (ToDo), Admission & Orientation, Fiches réflexes (5) + scores repérage |
 | **Dossier post-cure** | Grande carte | → Ouvre le volet médecin (postcure/medecin.html) |
-| **Traitements** | Petite carte | 2 accordions : Fiches Patient (20 HTML) + Fiches Expert (8 PDFs antipsychotiques) |
+| **Traitements** | Petite carte | 2 accordions : Fiches Patient (29 HTML) + Fiches Expert (8 PDFs antipsychotiques) |
 | **Scores** | Petite carte | Cushman, COWS, AUDIT, PHQ-9, GAD-7, convertisseurs BZD et CPZ |
 | **Interactions** | Petite carte | 18 interactions critiques, sélection multiple |
 | **Feedback** | Barre en bas | Bug, suggestion, correction → email |
