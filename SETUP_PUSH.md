@@ -18,7 +18,7 @@
 | v28 | Colonne `sexe` sur `patients` (label Patient/Patiente/Patient·e) | ✅ |
 | v29 | Push V2 soignants : `push_subscriptions.patient_id` nullable + `profile_id` (CHECK XOR), tables `push_last_message_staff` et `push_reminders_sent_groupe` | ✅ |
 | v30 | Push V2 pause vacances : `profiles.push_pause_until DATE` | ⏳ **À exécuter** |
-| v31 | Fix RLS push_subscriptions : SELECT ouverte (débloque activation patient + notif message patient→médecin) | ⏳ **À exécuter** |
+| v31 | Fix RLS push_subscriptions : SELECT ouverte (débloque activation patient + notif message patient→médecin) | ✅ |
 
 ### Edge Functions Supabase
 
@@ -58,7 +58,7 @@
 - [x] Redéployer `send-push` (2026-04-24)
 - [x] Redéployer `cron-reminders` (2026-04-24)
 - [ ] Exécuter migration v30 (pause vacances)
-- [ ] Exécuter migration v31 (fix RLS SELECT — **débloque l'activation des notifs patient + le trigger message patient→médecin**)
+- [x] Exécuter migration v31 (fix RLS SELECT — débloque activation patient + trigger message patient→médecin) (2026-04-24)
 - [ ] Lancer les tests ci-dessous (voir section "Test end-to-end notifs Push V2")
 
 ---
