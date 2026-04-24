@@ -50,7 +50,8 @@ function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: s
   const timeStr = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
   }).format(now);
-  const [hh] = timeStr.split(':').map(Number);
+  const [hh, mm] = timeStr.split(':').map(Number);
+  const minutesSinceMidnight = hh * 60 + mm;
   const wdStr = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Europe/Paris', weekday: 'short'
   }).format(now);
@@ -59,7 +60,9 @@ function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: s
 
   if (wd === 0 || wd === 6) return { quiet: true, reason: 'weekend' };
   if (FERIES_FR.has(dateStr)) return { quiet: true, reason: 'ferie' };
-  if (hh >= 16) return { quiet: true, reason: 'after_16h' };
+  // Plage ouverte : 8h30 ≤ heure < 16h00 (Paris)
+  if (minutesSinceMidnight < 8 * 60 + 30) return { quiet: true, reason: 'before_830' };
+  if (minutesSinceMidnight >= 16 * 60) return { quiet: true, reason: 'after_16h' };
   return { quiet: false };
 }
 

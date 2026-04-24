@@ -166,12 +166,15 @@ ORDER BY created DESC LIMIT 5;
 
 ## 🔕 Silence soignant (v4.02)
 
-Les notifs push à un soignant (profile_id ou profile_ids) sont bloquées dans `send-push` quand on est :
-- En **semaine après 16h00** (heure Paris)
+Les notifs push à un soignant (profile_id ou profile_ids) sont bloquées dans `send-push` sauf dans la plage **lundi-vendredi, 8h30 → 16h00** (heure Europe/Paris), en dehors des jours fériés France.
+
+Donc blocage si :
+- En **semaine avant 8h30**
+- En **semaine à partir de 16h00**
 - Le **weekend** (toute la journée)
 - Un **jour férié** France (liste `FERIES_FR` hardcodée dans la fonction, à étendre année par année)
 
-La fonction renvoie alors `{ sent: 0, reason: 'staff_quiet_hours', detail: 'weekend'|'ferie'|'after_16h' }` avec status 200. Aucune ligne n'est écrite dans `push_last_message_staff` (pas de notif fantôme).
+La fonction renvoie alors `{ sent: 0, reason: 'staff_quiet_hours', detail: 'before_830'|'after_16h'|'weekend'|'ferie' }` avec status 200. Aucune ligne n'est écrite dans `push_last_message_staff` (pas de notif fantôme).
 
 Les notifs patients (patient_id) ne sont **jamais** bloquées par cette règle.
 
