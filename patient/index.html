@@ -1026,6 +1026,25 @@ async function loadMessages() {
       input.value = '';
       input.style.height = 'auto';
       await loadMessages();
+      // Notifie les médecins abonnés (V2) — fire-and-forget, ne doit pas bloquer l'UI patient
+      (async function() {
+        try {
+          var ids = await db.getSubscribedMedecinIds();
+          if (ids && ids.length) {
+            var label = 'Ch.' + (currentPatient.chambre || '?');
+            var preview = texte.length > 80 ? texte.slice(0, 77) + '…' : texte;
+            await db.sendPushToStaff({
+              profile_ids: ids,
+              title: '💬 Message de ' + label,
+              body: preview,
+              url: '/admin/',
+              tag: 'msg-' + currentPatient.id
+            });
+          }
+        } catch (pushErr) {
+          console.warn('Push médecins échoué:', pushErr);
+        }
+      })();
     } catch(e) {
       errEl.textContent = 'Erreur d\'envoi : ' + (e.message || 'réessayez.');
       errEl.classList.remove('hidden');

@@ -589,6 +589,45 @@ window.db = {
 
   /** Déclenche l'envoi d'un push au patient via l'Edge Function send-push */
   async sendPushToPatient({ patient_id, title, body, url, tag }) {
+    return await this._invokeSendPush({ patient_id, title, body, url, tag });
+  },
+
+  // ─── V2 : souscriptions et envois côté soignant ───
+
+  /** Enregistre/upsert une souscription Push pour un soignant (profile_id) */
+  async savePushSubscriptionStaff({ profile_id, endpoint, p256dh, auth_key, user_agent }) {
+    const payload = { profile_id, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
+    const { data, error } = await sb.from('push_subscriptions')
+      .upsert(payload, { onConflict: 'endpoint' })
+      .select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Push vers un ou plusieurs soignants (profile_id ou profile_ids[]) */
+  async sendPushToStaff({ profile_id, profile_ids, title, body, url, tag }) {
+    const payload = { title, body, url, tag };
+    if (Array.isArray(profile_ids) && profile_ids.length) payload.profile_ids = profile_ids;
+    else if (profile_id) payload.profile_id = profile_id;
+    else throw new Error('sendPushToStaff : profile_id ou profile_ids requis');
+    return await this._invokeSendPush(payload);
+  },
+
+  /** Retourne les profile_id distincts des médecins actuellement abonnés au Push */
+  async getSubscribedMedecinIds() {
+    // Jointure implicite via profile_id → profiles (role = 'medecin')
+    const { data, error } = await sb
+      .from('push_subscriptions')
+      .select('profile_id, profiles!inner(role)')
+      .not('profile_id', 'is', null)
+      .eq('profiles.role', 'medecin');
+    if (error) throw error;
+    const ids = (data || []).map(r => r.profile_id).filter(Boolean);
+    return Array.from(new Set(ids));
+  },
+
+  /** Helper interne : POST vers send-push */
+  async _invokeSendPush(payload) {
     const resp = await fetch(SUPABASE_URL + '/functions/v1/send-push', {
       method: 'POST',
       headers: {
@@ -596,7 +635,7 @@ window.db = {
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
         'apikey': SUPABASE_ANON_KEY
       },
-      body: JSON.stringify({ patient_id, title, body, url, tag })
+      body: JSON.stringify(payload)
     });
     if (!resp.ok) {
       const t = await resp.text();

@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 24 avril 2026 (v4.00 — label inclusif patient "Patient·e de 53 ans" : colonne `sexe` sur `patients` (migration v28, F/M/NULL), radios dans nouveau patient, select inline dans détail patient, remplacement partout côté admin + extern ; chambre conservée dans le header patient (repère personnel) et sur l'avatar indigo)
+> Dernière mise à jour : 24 avril 2026 (v4.01 — Notifications Push V2 médecins : migration v29 (`push_subscriptions.patient_id` nullable + `profile_id` avec CHECK XOR, tables `push_last_message_staff` et `push_reminders_sent_groupe`) ; Edge Function `send-push` accepte maintenant `patient_id` | `profile_id` | `profile_ids[]` ; SW sw.js priorise `profile_id` puis fallback `patient_id` (clés IndexedDB séparées, cleanup au logout via `clear-push-identity`) ; engrenage ⚙️ dans le header admin → modal Paramètres avec toggle activation push ; message patient → push automatique à tous les médecins abonnés (fire-and-forget) ; cron-reminders étendu : +rappels consultations perso au créateur, +rappels groupes A/B aux animateurs (avec gestion annulation et nouvelle_heure via `groupe_modifications`). Planning A/B dupliqué en TS dans l'Edge Function — TODO priorité basse pour migrer en BDD.)
+> v4.00 — label inclusif patient "Patient·e de 53 ans" : colonne `sexe` sur `patients` (migration v28, F/M/NULL), radios dans nouveau patient, select inline dans détail patient, remplacement partout côté admin + extern ; chambre conservée dans le header patient (repère personnel) et sur l'avatar indigo.
 > v3.99 — notifications Push patient (migrations v25+v26+v27, Edge Functions Supabase, VAPID, pg_cron rappels 5 min) ; page Paramètres patient ; QCM tuteur : clic sur session → voir toutes les réponses avec propositions + correction.
 > v3.98 — agenda perso privé par soignant (migration v24), accordions Planning/Dashboard repliables, Toolbox Ressources "Fiches" replié, correctifs QCM externe + badges messages + DDN + adressage libre.
 > v3.97 — fix animateurs fantômes : migration v23 FK groupe_animateurs → profiles(CASCADE), policy DELETE admin, alerte bloquante si suppression Auth échoue.
@@ -32,7 +33,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.00 |
+| **Service Worker** | usca-v4.01 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -274,7 +275,8 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 
 **🎯 Prochain chantier : P5 — Personnalisation modules soignant** (plan d'implémentation à définir lors de la prochaine session). Principe : chaque profil (médecin / IDE / psychologue / pharmacien / secrétaire / externe / étudiant IDE) ne voit que les cartes pertinentes pour son rôle (dans dashboard, toolbox, etc.). Stockage : colonne `modules_actifs` (JSONB ou TEXT[]) déjà présente dans `profiles`.
 
-- [ ] **Notifications Push V2** — étendre aux groupes thérapeutiques (rappel 5 min avant pour les patients hospitalisés) et aux séances de thérapie complémentaire. Nécessite de porter le planning A/B dans Supabase ou d'encoder chaque session comme `evenement` en base. V1 shippée v3.99 : events planifiés + messages + permissions + rappels 5 min (events uniquement).
+- [ ] **Notifications Push V2 — étape suivante** : étendre aux groupes thérapeutiques (rappel 5 min avant pour les patients hospitalisés) et aux séances de thérapie complémentaire. V2 médecins en cours (migration v29 + send-push + SW + UI admin + cron étendu — voir `SETUP_PUSH.md`). V1 shippée v3.99 : events planifiés + messages + permissions + rappels 5 min (events uniquement).
+- [ ] **(Priorité basse) Planning A/B stocké en BDD** : aujourd'hui le planning A/B est côté client (`shared/planning-groupes.js`). La V2 Push médecins (cron-reminders) duplique une copie minimale en TS dans l'Edge Function — c'est pragmatique mais ça crée 2 sources de vérité. Migrer le planning dans une table Supabase (ex: `groupes_planning(slug, jour, heure_debut, heure_fin, semaine, actif)`) permettrait au cron de la lire directement et supprimerait la duplication. À faire quand un autre module aura besoin du planning côté serveur.
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max)
 - [ ] **Annuaire patients** — répertoire post-sortie
 - [ ] UI "Mes appareils de confiance" dans paramètres du compte

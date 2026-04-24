@@ -1,9 +1,18 @@
 // ══════════════════════════════════════════════════════════
 // Supabase Edge Function : send-push
-// Envoie une notification Web Push à TOUS les appareils d'un patient.
+// Envoie une notification Web Push aux appareils d'un destinataire.
 //
-// Payload attendu (POST JSON) :
-//   { patient_id: string, title: string, body: string, url?: string, tag?: string }
+// Payload (POST JSON) — 3 modes mutuellement exclusifs :
+//   V1 patient :
+//     { patient_id: string, title, body?, url?, tag? }
+//   V2 soignant unique :
+//     { profile_id: string, title, body?, url?, tag? }
+//   V2 broadcast soignants (ex: message patient → médecins abonnés) :
+//     { profile_ids: string[], title, body?, url?, tag? }
+//
+// Pour profile_ids, le même body+title est envoyé à tous. Le dernier message
+// est stocké dans push_last_message_staff (1 ligne / profile_id) pour que le
+// SW puisse le fetcher au moment du push event.
 //
 // Secrets requis (Supabase → Edge Functions → Secrets) :
 //   VAPID_PRIVATE_KEY  — scalar ECDSA P-256 en base64url (32 bytes)
@@ -11,7 +20,7 @@
 //   VAPID_SUBJECT      — ex: "mailto:jc.luisada@gmail.com"
 //
 // Headers :
-//   Soit le JWT anon de l'app (pour les appels admin depuis le navigateur)
+//   Soit le JWT anon de l'app (pour les appels depuis le navigateur)
 //   Soit la service_role key (pour l'appel cron interne).
 // ══════════════════════════════════════════════════════════
 
@@ -115,11 +124,20 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { patient_id, title, body, url, tag } = await req.json();
-    if (!patient_id || !title) {
-      return new Response(JSON.stringify({ error: 'patient_id + title requis' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
+    const payload = await req.json();
+    const { patient_id, profile_id, title, body, url, tag } = payload;
+    const profile_ids: string[] | undefined = Array.isArray(payload.profile_ids) ? payload.profile_ids : undefined;
+
+    if (!title) {
+      return new Response(JSON.stringify({ error: 'title requis' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    // Exactement un des trois doit être fourni
+    const modes = [!!patient_id, !!profile_id, !!(profile_ids && profile_ids.length)].filter(Boolean).length;
+    if (modes !== 1) {
+      return new Response(JSON.stringify({ error: 'fournir exactement un de : patient_id | profile_id | profile_ids' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -130,36 +148,50 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: 'VAPID keys manquantes dans les secrets' }), { status: 500 });
     }
 
-    // Client Supabase (service_role via env dans Edge Functions)
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') || '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
     );
 
-    // Récupère toutes les subs du patient
-    const { data: subs, error } = await supabase
-      .from('push_subscriptions')
-      .select('*')
-      .eq('patient_id', patient_id);
+    // ── Résolution des subscriptions + écriture du last_message ──
+    let subs: any[] = [];
+    const defaultUrl = patient_id ? '/patient/' : '/admin/';
 
-    if (error) throw error;
-    if (!subs || !subs.length) {
+    if (patient_id) {
+      const { data, error } = await supabase
+        .from('push_subscriptions').select('*').eq('patient_id', patient_id);
+      if (error) throw error;
+      subs = data || [];
+      if (subs.length) {
+        await supabase.from('push_last_message').upsert({
+          patient_id, title, body: body || '', url: url || defaultUrl,
+          tag: tag || 'default', sent_at: new Date().toISOString()
+        }, { onConflict: 'patient_id' });
+      }
+    } else {
+      const targetIds: string[] = profile_ids && profile_ids.length ? profile_ids : [profile_id];
+      const { data, error } = await supabase
+        .from('push_subscriptions').select('*').in('profile_id', targetIds);
+      if (error) throw error;
+      subs = data || [];
+      if (subs.length) {
+        // Une ligne last_message_staff par profile_id destinataire (upsert par profile_id)
+        const rows = targetIds.map(pid => ({
+          profile_id: pid, title, body: body || '', url: url || defaultUrl,
+          tag: tag || 'default', sent_at: new Date().toISOString()
+        }));
+        await supabase.from('push_last_message_staff').upsert(rows, { onConflict: 'profile_id' });
+      }
+    }
+
+    if (!subs.length) {
       return new Response(JSON.stringify({ sent: 0, reason: 'no_subscriptions' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
       });
     }
 
-    // Stocke le dernier message dans la table pour que le SW puisse le fetcher
-    await supabase.from('push_last_message').upsert({
-      patient_id,
-      title,
-      body: body || '',
-      url: url || '/patient/',
-      tag: tag || 'default',
-      sent_at: new Date().toISOString()
-    }, { onConflict: 'patient_id' });
-
+    // ── Envoi push à chaque endpoint ──
     let sent = 0;
     let failed = 0;
     const deadEndpoints: string[] = [];
@@ -173,7 +205,6 @@ Deno.serve(async (req) => {
         if (resp.status === 201 || resp.status === 200 || resp.status === 204) {
           sent++;
         } else if (resp.status === 404 || resp.status === 410) {
-          // Subscription expirée → suppression
           deadEndpoints.push(sub.endpoint);
           failed++;
         } else {
@@ -186,7 +217,6 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Nettoyage des subscriptions mortes
     if (deadEndpoints.length) {
       await supabase.from('push_subscriptions').delete().in('endpoint', deadEndpoints);
     }

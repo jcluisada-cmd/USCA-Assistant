@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.00';
+const CACHE_NAME = 'usca-v4.01';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -108,70 +108,91 @@ self.addEventListener('fetch', e => {
 
 // ══════════════════════════════════════════════════════════
 // PUSH NOTIFICATIONS (pattern "empty push + fetch last message")
-// Le push arrive sans data ; on fetch le dernier message du patient
-// depuis Supabase via son patient_id stocké en IndexedDB/localStorage.
+// Le push arrive sans data ; on fetch le dernier message depuis Supabase.
+// Le destinataire est identifié via IndexedDB :
+//   - profile_id (soignant, V2) prioritaire si présent
+//   - patient_id (V1) fallback
+// Table cible :
+//   - push_last_message_staff si profile_id
+//   - push_last_message si patient_id
 // ══════════════════════════════════════════════════════════
 
-async function getPatientIdFromIdb() {
+// Ouvre (ou crée) le store IndexedDB 'usca-push' → 'kv'
+function openPushIdb() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('usca-push', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+
+async function idbGet(key) {
   try {
-    const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    for (const client of clients) {
-      // On demande au client d'envoyer son patient_id (localStorage only main thread)
-      const chan = new MessageChannel();
-      const reply = new Promise(resolve => {
-        chan.port1.onmessage = (ev) => resolve(ev.data && ev.data.patient_id);
-        setTimeout(() => resolve(null), 500);
-      });
-      client.postMessage({ type: 'get-patient-id' }, [chan.port2]);
-      const pid = await reply;
-      if (pid) return pid;
-    }
-  } catch (e) {}
-  // Fallback : IndexedDB géré par le client via 'push-patient-id'
-  try {
-    const db = await new Promise((res, rej) => {
-      const r = indexedDB.open('usca-push', 1);
-      r.onupgradeneeded = () => r.result.createObjectStore('kv');
-      r.onsuccess = () => res(r.result);
-      r.onerror = () => rej(r.error);
-    });
-    const tx = db.transaction('kv', 'readonly');
-    const store = tx.objectStore('kv');
-    const pid = await new Promise(res => {
-      const g = store.get('patient_id');
+    const db = await openPushIdb();
+    const val = await new Promise(res => {
+      const g = db.transaction('kv', 'readonly').objectStore('kv').get(key);
       g.onsuccess = () => res(g.result);
       g.onerror = () => res(null);
     });
     db.close();
-    return pid || null;
+    return val || null;
   } catch (e) {
     return null;
   }
 }
 
+async function idbSet(key, value) {
+  try {
+    const db = await openPushIdb();
+    db.transaction('kv', 'readwrite').objectStore('kv').put(value, key);
+    db.close();
+  } catch (e) {}
+}
+
+async function idbDel(key) {
+  try {
+    const db = await openPushIdb();
+    db.transaction('kv', 'readwrite').objectStore('kv').delete(key);
+    db.close();
+  } catch (e) {}
+}
+
+// Récupère l'identifiant du destinataire : profile_id (V2) prioritaire sur patient_id (V1).
+// Retourne { kind: 'staff'|'patient', id: string } ou null.
+async function getRecipientId() {
+  const profileId = await idbGet('profile_id');
+  if (profileId) return { kind: 'staff', id: profileId };
+  const patientId = await idbGet('patient_id');
+  if (patientId) return { kind: 'patient', id: patientId };
+  return null;
+}
+
 self.addEventListener('push', (event) => {
   event.waitUntil((async () => {
-    const patientId = await getPatientIdFromIdb();
+    const recipient = await getRecipientId();
     let title = 'USCA Connect';
     let options = {
       body: 'Nouvelle notification',
       icon: '/icon-512.png',
       badge: '/icon-512.png',
       tag: 'default',
-      data: { url: '/patient/' }
+      data: { url: recipient && recipient.kind === 'staff' ? '/admin/' : '/patient/' }
     };
 
-    // Si payload inclus, on le parse ; sinon on fetch
     try {
       if (event.data) {
+        // Payload inline (cas rare, crypto RFC 8291 non implémentée côté Edge Function)
         const payload = event.data.json();
         if (payload.title) title = payload.title;
         if (payload.body) options.body = payload.body;
         if (payload.url) options.data.url = payload.url;
         if (payload.tag) options.tag = payload.tag;
-      } else if (patientId) {
+      } else if (recipient) {
+        const table = recipient.kind === 'staff' ? 'push_last_message_staff' : 'push_last_message';
+        const col = recipient.kind === 'staff' ? 'profile_id' : 'patient_id';
         const resp = await fetch(
-          SUPABASE_URL_BASE + '/rest/v1/push_last_message?patient_id=eq.' + patientId + '&select=*',
+          SUPABASE_URL_BASE + '/rest/v1/' + table + '?' + col + '=eq.' + recipient.id + '&select=*',
           { headers: { 'apikey': SUPABASE_ANON_KEY_SW, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY_SW } }
         );
         if (resp.ok) {
@@ -192,36 +213,38 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = (event.notification.data && event.notification.data.url) || '/patient/';
+  const url = (event.notification.data && event.notification.data.url) || '/';
   event.waitUntil((async () => {
     const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    // Si une fenêtre patient existe, la focus
-    for (const client of clients) {
-      if (client.url.includes('/patient') && 'focus' in client) {
-        client.postMessage({ type: 'push-clicked', url });
-        return client.focus();
+    // Essaie de focus une fenêtre déjà ouverte sur le bon scope
+    const wantedScope = url.startsWith('/admin') ? '/admin' : url.startsWith('/patient') ? '/patient' : null;
+    if (wantedScope) {
+      for (const client of clients) {
+        if (client.url.includes(wantedScope) && 'focus' in client) {
+          client.postMessage({ type: 'push-clicked', url });
+          return client.focus();
+        }
       }
     }
-    // Sinon ouvrir
     if (self.clients.openWindow) return self.clients.openWindow(url);
   })());
 });
 
-// Réception du patient_id depuis le client principal (pour IndexedDB)
+// Messages depuis le client principal pour synchroniser l'IndexedDB
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'set-patient-id' && event.data.patient_id) {
-    (async () => {
-      try {
-        const db = await new Promise((res, rej) => {
-          const r = indexedDB.open('usca-push', 1);
-          r.onupgradeneeded = () => r.result.createObjectStore('kv');
-          r.onsuccess = () => res(r.result);
-          r.onerror = () => rej(r.error);
-        });
-        const tx = db.transaction('kv', 'readwrite');
-        tx.objectStore('kv').put(event.data.patient_id, 'patient_id');
-        db.close();
-      } catch (e) {}
-    })();
+  const msg = event.data;
+  if (!msg || !msg.type) return;
+  if (msg.type === 'set-patient-id' && msg.patient_id) {
+    // Mode patient : on s'assure de nettoyer profile_id pour éviter l'ambiguïté
+    idbSet('patient_id', msg.patient_id);
+    idbDel('profile_id');
+  } else if (msg.type === 'set-profile-id' && msg.profile_id) {
+    // Mode soignant (V2) : idem côté opposé
+    idbSet('profile_id', msg.profile_id);
+    idbDel('patient_id');
+  } else if (msg.type === 'clear-push-identity') {
+    // Appelé au logout pour ne pas notifier l'ex-utilisateur
+    idbDel('patient_id');
+    idbDel('profile_id');
   }
 });
