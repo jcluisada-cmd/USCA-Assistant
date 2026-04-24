@@ -26,6 +26,43 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+// ══════════════════════════════════════════════════════════
+// "Silence soignant" : on bloque les notifs staff hors heures
+// ouvrées (en semaine après 16h, weekend, jours fériés).
+// Les notifs patients ne sont JAMAIS bloquées par ces règles.
+// ══════════════════════════════════════════════════════════
+
+// Jours fériés France (à maintenir année par année).
+// Pâques/Ascension/Pentecôte sont variables — calcul non implémenté, on liste.
+const FERIES_FR = new Set([
+  // 2026
+  '2026-01-01', '2026-04-06', '2026-05-01', '2026-05-08', '2026-05-14', '2026-05-25',
+  '2026-07-14', '2026-08-15', '2026-11-01', '2026-11-11', '2026-12-25',
+  // 2027
+  '2027-01-01', '2027-03-29', '2027-05-01', '2027-05-06', '2027-05-08', '2027-05-17',
+  '2027-07-14', '2027-08-15', '2027-11-01', '2027-11-11', '2027-12-25',
+]);
+
+function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: string } {
+  const dateStr = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(now);
+  const timeStr = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
+  }).format(now);
+  const [hh] = timeStr.split(':').map(Number);
+  const wdStr = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Europe/Paris', weekday: 'short'
+  }).format(now);
+  const dayMap: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  const wd = dayMap[wdStr] ?? 1;
+
+  if (wd === 0 || wd === 6) return { quiet: true, reason: 'weekend' };
+  if (FERIES_FR.has(dateStr)) return { quiet: true, reason: 'ferie' };
+  if (hh >= 16) return { quiet: true, reason: 'after_16h' };
+  return { quiet: false };
+}
+
 // ── Helpers base64url ──
 function b64urlToUint8Array(b64url: string): Uint8Array {
   const pad = '='.repeat((4 - (b64url.length % 4)) % 4);
@@ -152,6 +189,18 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_URL') || '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
     );
+
+    // ── Silence soignant : bloque les push staff hors heures ouvrables ──
+    // Les push patient ne sont jamais bloqués.
+    if (!patient_id) {
+      const quiet = isStaffQuietHours();
+      if (quiet.quiet) {
+        return new Response(JSON.stringify({ sent: 0, reason: 'staff_quiet_hours', detail: quiet.reason }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+    }
 
     // ── Résolution des subscriptions + écriture du last_message ──
     let subs: any[] = [];

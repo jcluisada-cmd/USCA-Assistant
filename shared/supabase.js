@@ -571,9 +571,11 @@ window.db = {
 
   // ════════════════ PUSH NOTIFICATIONS ════════════════
 
-  /** Enregistre ou met à jour une souscription Push (upsert sur endpoint) */
+  /** Enregistre ou met à jour une souscription Push côté patient (upsert sur endpoint) */
   async savePushSubscription({ patient_id, endpoint, p256dh, auth_key, user_agent }) {
-    const payload = { patient_id, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
+    // profile_id: null explicite pour que l'upsert nettoie un éventuel profile_id
+    // hérité d'une ancienne souscription côté soignant (CHECK XOR sinon violé)
+    const payload = { patient_id, profile_id: null, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
     const { data, error } = await sb.from('push_subscriptions')
       .upsert(payload, { onConflict: 'endpoint' })
       .select().single();
@@ -587,6 +589,14 @@ window.db = {
     if (error) throw error;
   },
 
+  /** Vérifie en BDD qu'une souscription existe pour un endpoint (anti-orphelin) */
+  async hasPushSubscription(endpoint) {
+    const { data, error } = await sb.from('push_subscriptions')
+      .select('id').eq('endpoint', endpoint).maybeSingle();
+    if (error) throw error;
+    return !!data;
+  },
+
   /** Déclenche l'envoi d'un push au patient via l'Edge Function send-push */
   async sendPushToPatient({ patient_id, title, body, url, tag }) {
     return await this._invokeSendPush({ patient_id, title, body, url, tag });
@@ -596,7 +606,9 @@ window.db = {
 
   /** Enregistre/upsert une souscription Push pour un soignant (profile_id) */
   async savePushSubscriptionStaff({ profile_id, endpoint, p256dh, auth_key, user_agent }) {
-    const payload = { profile_id, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
+    // patient_id: null explicite pour que l'upsert nettoie un éventuel patient_id
+    // hérité d'une ancienne souscription côté patient (CHECK XOR sinon violé)
+    const payload = { profile_id, patient_id: null, endpoint, p256dh, auth_key, user_agent, last_seen: new Date().toISOString() };
     const { data, error } = await sb.from('push_subscriptions')
       .upsert(payload, { onConflict: 'endpoint' })
       .select().single();

@@ -2889,13 +2889,22 @@ document.getElementById('btn-admin-push-toggle').addEventListener('click', async
       applicationServerKey: adminUrlBase64ToUint8Array(ADMIN_VAPID_PUBLIC_KEY)
     });
     var json = sub.toJSON();
-    await db.savePushSubscriptionStaff({
-      profile_id: currentProfile.id,
-      endpoint: sub.endpoint,
-      p256dh: json.keys.p256dh,
-      auth_key: json.keys.auth,
-      user_agent: navigator.userAgent.slice(0, 200)
-    });
+    try {
+      await db.savePushSubscriptionStaff({
+        profile_id: currentProfile.id,
+        endpoint: sub.endpoint,
+        p256dh: json.keys.p256dh,
+        auth_key: json.keys.auth,
+        user_agent: navigator.userAgent.slice(0, 200)
+      });
+      // Anti-orphelin : re-vérifie en BDD que la ligne existe bien
+      var saved = await db.hasPushSubscription(sub.endpoint);
+      if (!saved) throw new Error('Souscription non confirmée en base');
+    } catch (saveErr) {
+      // Nettoyage : unsubscribe côté navigateur pour éviter une sub orpheline
+      try { await sub.unsubscribe(); } catch(_) {}
+      throw saveErr;
+    }
     // Rappelle au SW qui est le destinataire (au cas où la première sync a raté)
     if (reg.active) reg.active.postMessage({ type: 'set-profile-id', profile_id: currentProfile.id });
     await refreshAdminPushStatus();

@@ -22,7 +22,7 @@
 
 | Function | État | JWT verify |
 |---|---|---|
-| `send-push` | ✅ Déployée V2 (accepte patient_id \| profile_id \| profile_ids) | ✅ Activé (appelée depuis navigateur avec JWT anon) |
+| `send-push` | ⏳ **À redéployer** (V2.02 : ajout "silence soignant" hors heures ouvrables) | ❌ Désactivé (appelée par cron-reminders avec service_role ; JWT verify legacy rejette les appels serveur-à-serveur même avec service key. Sécurité côté obscurité des VAPID keys + identifiants non guessables.) |
 | `cron-reminders` | ✅ Déployée V2 (3 scans : patients + events perso + groupes A/B) | ❌ Désactivé (protégée par CRON_SECRET via header) |
 
 ### Secrets Edge Functions
@@ -37,7 +37,9 @@
 ### Tests
 
 - [ ] Test end-to-end notifs Push V1 patient (voir section "Test" ci-dessous) — à faire par JC
-- [ ] Test end-to-end notifs Push V2 soignant (activation, réception message patient, rappel groupe) — après commit 5
+- [x] Test V2 soignant : rappel event perso (validé 2026-04-24 après fix JWT verify send-push)
+- [ ] Test V2 soignant : message patient → notif médecin
+- [ ] Test V2 soignant : rappel groupe A/B aux animateurs
 
 ### État V2 (code livré 2026-04-24)
 
@@ -161,3 +163,16 @@ ORDER BY created DESC LIMIT 5;
 - **Séances de thérapie complémentaire** : idem.
 - **Craving** : pas de push (décision JC).
 - **Soignants** : pas encore destinataires (V2 prévue : médecins uniquement).
+
+## 🔕 Silence soignant (v4.02)
+
+Les notifs push à un soignant (profile_id ou profile_ids) sont bloquées dans `send-push` quand on est :
+- En **semaine après 16h00** (heure Paris)
+- Le **weekend** (toute la journée)
+- Un **jour férié** France (liste `FERIES_FR` hardcodée dans la fonction, à étendre année par année)
+
+La fonction renvoie alors `{ sent: 0, reason: 'staff_quiet_hours', detail: 'weekend'|'ferie'|'after_16h' }` avec status 200. Aucune ligne n'est écrite dans `push_last_message_staff` (pas de notif fantôme).
+
+Les notifs patients (patient_id) ne sont **jamais** bloquées par cette règle.
+
+Pour modifier : éditer `FERIES_FR` et la fonction `isStaffQuietHours` dans `supabase/functions/send-push/index.ts`, puis redéployer via le dashboard.
