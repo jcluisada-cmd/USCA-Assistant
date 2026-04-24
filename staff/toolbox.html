@@ -592,9 +592,12 @@ function CPZCalc({onBack}) {
 const FICHES_PATIENT_CATS = [
   {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
   {cat:"TSO",fiches:[{s:"buprenorphine",n:"Buprénorphine (Subutex)"},{s:"methadone",n:"Méthadone"},{s:"naloxone",n:"Naloxone (kit d'urgence)"}]},
-  {cat:"Benzodiazépines",fiches:[{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"}]},
-  {cat:"Psychotropes",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"},{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"},{s:"aripiprazole",n:"Aripiprazole (Abilify)"}]},
-  {cat:"Hypnotiques / Sédatifs",fiches:[{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"}]}
+  {cat:"Anxiolytiques",fiches:[{s:"alprazolam",n:"Alprazolam (Xanax)"},{s:"bromazepam",n:"Bromazépam (Lexomil)"},{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"},{s:"propranolol",n:"Propranolol (Avlocardyl)"}]},
+  {cat:"Hypnotiques / Sédatifs",fiches:[{s:"agomelatine",n:"Agomélatine (Valdoxan)"},{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"},{s:"atarax",n:"Hydroxyzine (Atarax)"},{s:"zopiclone",n:"Zopiclone (Imovane)"}]},
+  {cat:"Antidépresseurs",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"}]},
+  {cat:"Antipsychotiques",fiches:[{s:"aripiprazole",n:"Aripiprazole (Abilify)"},{s:"quetiapine",n:"Quétiapine (Xeroquel)"}]},
+  {cat:"Thymorégulateurs",fiches:[{s:"lamotrigine",n:"Lamotrigine (Lamictal)"},{s:"lithium",n:"Lithium (Téralithe)"}]},
+  {cat:"Stimulants",fiches:[{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"}]}
 ];
 
 // Les PDFs expert sont servis depuis ../fiches-traitements/fiches_expert/fiche_<slug>.pdf
@@ -616,18 +619,32 @@ const FICHES_EXPERT_CATS = [
 function TraitementsView({onBack, onPickPatient}) {
   // "patient" ouvert par défaut (usage courant), "expert" repliable
   const [open, setOpen] = useState("patient");
+  // Classes médicamenteuses : repliées par défaut, plusieurs ouvertes possibles
+  const [openCats, setOpenCats] = useState({});
+  const toggleCat = (cat) => setOpenCats(prev => ({...prev, [cat]: !prev[cat]}));
 
   const renderPatientSection = () =>
-    FICHES_PATIENT_CATS.map(group => <div key={group.cat} style={{marginBottom:14}}>
-      <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>{group.cat}</div>
-      {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient(f)}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <span style={{fontSize:18}}>💊</span>
-          <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
-        </div>
-        {I.chevR(C.n[300])}
-      </div>)}
-    </div>);
+    FICHES_PATIENT_CATS.map(group => {
+      const isOpen = !!openCats[group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat(group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient(f)}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>💊</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>)}
+        </div>}
+      </div>;
+    });
 
   const renderExpertSection = () =>
     FICHES_EXPERT_CATS.map(group => <div key={group.cat} style={{marginBottom:14}}>
