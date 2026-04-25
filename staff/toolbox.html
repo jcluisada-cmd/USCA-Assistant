@@ -1124,9 +1124,8 @@ function RessourcesView({onBack}) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Cache-buster pour que les ajouts soient visibles immédiatement après un push
-    // (le fichier JSON bouge peu mais le service worker peut le cacher)
-    fetch("../ressources_doc/index.json?t=" + Date.now())
+    // SW : ce manifest est en stratégie network-first sans écriture cache (sw.js NO_CACHE_WRITE).
+    fetch("../ressources_doc/index.json")
       .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(data => setRessources(Array.isArray(data.ressources) ? data.ressources : []))
       .catch(e => setError(e.message || "Chargement impossible"));

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.05';
+const CACHE_NAME = 'usca-v4.06';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -42,11 +42,31 @@ const NETWORK_ONLY = [
   '/api/delete-user'
 ];
 
-// ── INSTALL : cache les fichiers locaux ──
+// Chemins network-first sans écriture en cache (manifests qui changent souvent côté serveur)
+const NO_CACHE_WRITE = [
+  '/ressources_doc/index.json'
+];
+
+// ── INSTALL : cache les fichiers locaux + tous les items QCM (offline complet) ──
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(c => c.addAll(LOCAL_ASSETS))
-  );
+  e.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(LOCAL_ASSETS);
+    // Pré-cache tous les items QCM listés dans data/index.json — ainsi la PWA
+    // installée fonctionne hors ligne même pour des items jamais ouverts.
+    try {
+      const resp = await fetch('./data/index.json', { cache: 'no-cache' });
+      if (resp.ok) {
+        const idx = await resp.json();
+        const files = (idx.items || [])
+          .map(it => it.fichier)
+          .filter(Boolean)
+          .map(f => './data/' + f);
+        // addAll est atomique : on tolère un échec partiel pour ne pas bloquer l'install
+        await Promise.all(files.map(f => cache.add(f).catch(() => {})));
+      }
+    } catch (err) { /* offline à l'install : on continuera à fonctionner online */ }
+  })());
   self.skipWaiting();
 });
 
@@ -70,6 +90,14 @@ self.addEventListener('fetch', e => {
   // Requêtes API/Realtime → toujours réseau, jamais de cache
   if (NETWORK_ONLY.some(domain => url.includes(domain))) {
     e.respondWith(fetch(e.request));
+    return;
+  }
+
+  // Manifests qui changent côté serveur → network-first, fallback cache (pas d'écriture)
+  if (NO_CACHE_WRITE.some(path => url.includes(path))) {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
     return;
   }
 

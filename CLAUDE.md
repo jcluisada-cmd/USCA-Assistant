@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 24 avril 2026 (v4.05 — Reclassification fiches patient : "Benzodiazépines" → "Anxiolytiques" (+ propranolol), split "Psychotropes" en "Antidépresseurs" / "Antipsychotiques" / "Thymorégulateurs" / "Stimulants", agomélatine déplacée en "Hypnotiques/Sédatifs". Toolbox `FICHES_PATIENT_CATS` resynchronisé avec `shared/fiches-catalogue.js` (29 fiches complètes, fini la divergence curée). Classes médicamenteuses repliables/dépliables dans la vue Traitements→Fiches Patient (état local par catégorie, repliées par défaut).)
+> Dernière mise à jour : 25 avril 2026 (v4.06 — Fixes SW : (1) pré-cache de tous les `data/item_*.json` à l'install (dérivé dynamiquement de `data/index.json`) → QCM EDN entièrement utilisable hors ligne après installation PWA ; (2) `ressources_doc/index.json` passé en stratégie network-first sans écriture cache via nouvelle liste `NO_CACHE_WRITE`, cache-buster `?t=Date.now()` retiré côté toolbox → plus de bloat cache au fil des ouvertures de RessourcesView.)
+> v4.05 — Reclassification fiches patient : "Benzodiazépines" → "Anxiolytiques" (+ propranolol), split "Psychotropes" en "Antidépresseurs" / "Antipsychotiques" / "Thymorégulateurs" / "Stimulants", agomélatine déplacée en "Hypnotiques/Sédatifs". Toolbox `FICHES_PATIENT_CATS` resynchronisé avec `shared/fiches-catalogue.js` (29 fiches complètes, fini la divergence curée). Classes médicamenteuses repliables/dépliables dans la vue Traitements→Fiches Patient (état local par catégorie, repliées par défaut).
 > v4.04 — Fix RLS push_subscriptions : migration v31 remplace `push_subs_read_staff` (SELECT réservée authenticated) par `push_subs_read_public` (SELECT `true`). Débloque deux bugs : (1) activation notifs patient échouait avec "row violates RLS policy" — le `.upsert(...).select()` déclenche un RETURNING évalué contre la policy SELECT, refus en anon ; (2) trigger message patient→médecin : `getSubscribedMedecinIds()` retournait `[]` silencieusement côté anon, aucune notif envoyée. Endpoints/clés push non secrets — seule la clé privée VAPID permet l'envoi.
 > v4.03 — Push V2 Pause vacances : migration v30 ajoute `profiles.push_pause_until DATE` ; section "Pause vacances" dans modal Paramètres admin (date picker "dernier jour d'absence" + bouton reprise immédiate) ; Edge Function `send-push` filtre les profile_ids en pause (`reason: all_on_vacation`). Reprise auto le lendemain, sub BDD préservée.
 > v4.02 — Notifications Push V2 : silence soignant (push staff autorisés uniquement lundi-vendredi 8h30→16h hors jours fériés France — patients jamais bloqués) dans Edge Function `send-push` ; fix défensif anti-orphelin (vérif BDD post-save + unsubscribe automatique en cas d'échec) côté admin et patient ; garde-fou XOR : `profile_id: null` et `patient_id: null` explicites dans les helpers `savePushSubscription*`.
@@ -37,7 +38,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.05 |
+| **Service Worker** | usca-v4.06 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
