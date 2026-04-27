@@ -1,7 +1,7 @@
 # P5 — Personnalisation des modules soignant (spec design)
 
-> **Statut** : design validé le 2026-04-24 par JC. Prêt pour implémentation.
-> **Version d'app cible** : v4.06 (bump SW requis).
+> **Statut** : design validé le 2026-04-24 par JC. Ajustements 2026-04-27 (3 modules retirés de l'inventaire, déclencheur edit mode déplacé dans modale Paramètres). Prêt pour implémentation.
+> **Version d'app cible** : v4.07 (bump SW requis — v4.06 déjà occupé par le fix offline QCM du 25/04).
 > **Migration SQL** : v32 (`role_modules_hidden`).
 
 ---
@@ -41,7 +41,9 @@ Un soignant avec `is_admin=true` bypass complètement le filtrage, quel que soit
 
 ---
 
-## 3. Inventaire des modules (21 IDs)
+## 3. Inventaire des modules (18 IDs)
+
+> Note historique : la première version (2026-04-24) listait 21 modules. Trois ont été retirés le 2026-04-27 car JC a confirmé qu'ils doivent rester toujours visibles : `dashboard_nouveau_patient` (le secrétaire doit pouvoir créer un patient), `patient_voir_comme_patient` (utilitaire admin/médecin transverse), `patient_supprimer_sejour` (action critique, pas de variation par rôle).
 
 Source de vérité : `shared/modules-config.js` (nouveau fichier).
 
@@ -51,7 +53,6 @@ Source de vérité : `shared/modules-config.js` (nouveau fichier).
 | Onglets | `tab_planning` | Onglet Planning | `admin/index.html` bottom nav `[data-tab="groupes"]` |
 | Dashboard | `dashboard_entrees_sorties` | Sorties prévues + liste d'attente | `#section-entrees-sorties` |
 | Dashboard | `dashboard_patients_list` | Liste chambres + détail patient | section racine patients |
-| Dashboard | `dashboard_nouveau_patient` | Bouton "+ Nouveau" | `#btn-new-patient` |
 | Dashboard | `dashboard_mes_eleves` | Mes élèves / Mon externe | `#section-eleves` |
 | Patient | `patient_craving` | Journal craving | `#acc-craving` + content |
 | Patient | `patient_fiches` | Fiches traitements | `#acc-fiches` + content |
@@ -60,8 +61,6 @@ Source de vérité : `shared/modules-config.js` (nouveau fichier).
 | Patient | `patient_evenements` | Planifier un événement | `#btn-action-event` |
 | Patient | `patient_sortie` | Annoncer sortie + exports | `#btn-action-sortie` + `#sortie-exports` |
 | Patient | `patient_postcure` | Dossier post-cure | accordion `#btn-action-postcure` wrapper |
-| Patient | `patient_voir_comme_patient` | Voir comme patient | `#btn-view-as-patient` |
-| Patient | `patient_supprimer_sejour` | Supprimer séjour | `#btn-delete-patient` |
 | Toolbox | `toolbox_protocoles` | Protocoles USCA (hub) | carte "Protocoles USCA" JSX |
 | Toolbox | `toolbox_elsa` | ELSA (hub) | carte "ELSA" JSX |
 | Toolbox | `toolbox_postcure` | Dossier post-cure | carte "Dossier post-cure" JSX |
@@ -74,7 +73,7 @@ Source de vérité : `shared/modules-config.js` (nouveau fichier).
 window.MODULES_CONFIG = [
   { id: 'tab_toolbox', label: 'Onglet Toolbox', strate: 'Onglets' },
   { id: 'tab_planning', label: 'Onglet Planning', strate: 'Onglets' },
-  // ... 21 entrées
+  // ... 18 entrées
 ];
 window.MODULES_ROLES = ['medecin', 'ide', 'psychologue', 'pharmacien', 'secretaire'];
 ```
@@ -187,10 +186,10 @@ window.moduleVisibility = {
 
 ### 4.4 Admin edit mode — UI inline
 
-**Déclencheur** : bouton ✏️ dans `#admin-app header` (visible uniquement si `is_admin`, à côté du ⚙️ Paramètres existant).
+**Déclencheur** : entrée "🔧 Mode édition modules" dans la modale Paramètres ⚙️ existante (visible uniquement si `is_admin`). Justification : éviter d'ajouter un bouton dédié dans le header pour une fonction admin rare ; ⚙️ est déjà l'endroit où l'admin va régler ses paramètres (push, pause vacances).
 
 **Activation** :
-1. Clic ✏️ → `body.classList.toggle('module-edit')`
+1. Clic sur l'entrée → ferme la modale + `body.classList.add('module-edit')` + injection d'un bandeau indigo sticky en haut du dashboard : "✏️ Mode édition modules actif — [Terminer]" (fond `bg-indigo-50`, bordure `border-indigo-300`, bouton "Terminer" en lien indigo). Le bandeau garantit la visibilité du mode actif et un point de sortie clair sans dépendre de la modale Paramètres.
 2. Le style `#module-visibility-style` passe `disabled=true` → tout redevient visible.
 3. Une fonction `moduleVisibility.mountEditButtons()` parcourt tous les `[data-module]` et injecte un vrai bouton DOM `<button class="module-edit-gear">⚙️</button>` dans chacun (avant `appendChild`, on vérifie `position:relative` — sinon on l'ajoute).
 4. CSS (ajouté dans `shared/theme.css`) :
@@ -246,7 +245,7 @@ body.module-edit [data-module].has-hides {
 ```
 Application : après `fetchHiddenMap()`, ajouter la classe `has-hides` aux `[data-module]` concernés.
 
-**Sortie** : clic ✏️ de nouveau → retire `body.module-edit`, réactive le style de masquage, retire la classe `has-hides`.
+**Sortie** : clic "Terminer" dans le bandeau (ou ré-ouverture de la modale Paramètres ⚙️ + re-clic sur l'entrée "Mode édition modules" qui agit comme toggle) → retire `body.module-edit` + supprime le bandeau, réactive le style de masquage, retire la classe `has-hides` des `[data-module]`.
 
 ### 4.5 Matrix Comptes — vue d'ensemble
 
@@ -285,17 +284,17 @@ Les cartes d'accueil React ajoutent `data-module="<id>"` sur leur wrapper. Comme
 
 1. **Migration v32** — `migrations/supabase-migration-v32.sql` (création table + RLS)
 2. **Applique v32** côté JC (checklist dans `SETUP_PUSH.md` ou checklist dédiée)
-3. **Config** — `shared/modules-config.js` (inventaire des 21 modules + 5 rôles)
+3. **Config** — `shared/modules-config.js` (inventaire des 18 modules + 5 rôles)
 4. **Helpers** — `shared/module-visibility.js` (apply, toggle, fetchMap)
-5. **Markup** — injecter `data-module` sur les 21 éléments :
+5. **Markup** — injecter `data-module` sur les 18 éléments :
    - `admin/index.html` (onglets + dashboard + patient détail + boutons)
    - `staff/toolbox.html` (cartes JSX d'accueil)
 6. **Runtime** — appel `moduleVisibility.apply(profile)` :
    - `admin/index.html` dans `showAdminApp()`
    - `staff/toolbox.html` au chargement iframe
-7. **Edit mode UI** — bouton ✏️, CSS `body.module-edit`, popover, event listener
+7. **Edit mode UI** — entrée "Mode édition modules" dans modale Paramètres + bandeau sticky "Terminer", CSS `body.module-edit`, popover par module, event listener
 8. **Matrix Comptes** — nouvelle section, rendu tableau
-9. **Bump SW** → `v4.06`
+9. **Bump SW** → `v4.07`
 10. **Test manuel** : login médecin/IDE/psy/pharma/secrétaire de test, vérifier visibilité ; edit mode en admin, toggles, matrix cohérente
 11. **Doc** — update CLAUDE.md header + `7. À FAIRE` (retirer P5)
 
