@@ -787,6 +787,18 @@
             <p id="new-compte-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
           </div>
           <div id="comptes-list" class="space-y-2"></div>
+
+          <!-- P5 -- Matrix Modules par rôle (admin only) -->
+          <div id="comptes-matrix-modules" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 mt-4 hidden">
+            <button id="btn-comptes-matrix-toggle" class="w-full p-3.5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left">
+              <span class="text-sm font-bold text-slate-800 dark:text-slate-100">Modules par rôle</span>
+              <svg id="comptes-matrix-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div id="comptes-matrix-content" class="hidden p-4 border-t border-slate-200 dark:border-slate-700">
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Coche = visible. Décoche = masqué pour ce rôle. Admins (toi inclus) bypass total.</p>
+              <div id="comptes-matrix-table-wrap" class="overflow-x-auto"></div>
+            </div>
+          </div>
         </section>
       </div>
     </div>
@@ -1018,6 +1030,8 @@ function showAdminApp(profile) {
   currentProfile = profile;
   // P5 -- applique le filtrage des modules selon le rôle (no-op pour admin)
   if (window.moduleVisibility) window.moduleVisibility.apply(profile);
+  // P5 -- init de l'accordion matrix Modules par rôle (admin only)
+  if (typeof initModulesMatrix === 'function') initModulesMatrix();
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-app').classList.remove('hidden');
   var rl = { medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
@@ -2993,6 +3007,115 @@ function closeModulePopover() {
     _modulePopoverEl.remove();
     _modulePopoverEl = null;
   }
+}
+
+// ── P5 ── Matrix Modules par rôle (Comptes, createElement no innerHTML) ──
+async function renderModulesMatrix() {
+  var wrap = document.getElementById('comptes-matrix-table-wrap');
+  if (!wrap) return;
+  wrap.replaceChildren();
+  var loading = document.createElement('p');
+  loading.className = 'text-xs text-slate-400';
+  loading.textContent = 'Chargement…';
+  wrap.appendChild(loading);
+
+  var map = await window.moduleVisibility.fetchHiddenMap();
+  var roles = window.MODULES_ROLES || [];
+  var roleLabels = window.MODULES_ROLE_LABELS || {};
+  var config = window.MODULES_CONFIG || [];
+
+  var strates = {};
+  config.forEach(function(m) {
+    if (!strates[m.strate]) strates[m.strate] = [];
+    strates[m.strate].push(m);
+  });
+
+  var table = document.createElement('table');
+  table.className = 'w-full text-sm';
+
+  // Head
+  var thead = document.createElement('thead');
+  var headRow = document.createElement('tr');
+  headRow.className = 'text-xs text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700';
+  var thMod = document.createElement('th');
+  thMod.className = 'text-left py-2 pr-3 font-semibold';
+  thMod.textContent = 'Module';
+  headRow.appendChild(thMod);
+  roles.forEach(function(r) {
+    var th = document.createElement('th');
+    th.className = 'text-center py-2 px-2 font-semibold';
+    th.textContent = roleLabels[r] || r;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  // Body
+  var tbody = document.createElement('tbody');
+  Object.keys(strates).forEach(function(strate) {
+    var sepRow = document.createElement('tr');
+    var sepCell = document.createElement('td');
+    sepCell.colSpan = roles.length + 1;
+    sepCell.className = 'pt-3 pb-1 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider';
+    sepCell.textContent = '── ' + strate + ' ──';
+    sepRow.appendChild(sepCell);
+    tbody.appendChild(sepRow);
+
+    strates[strate].forEach(function(m) {
+      var row = document.createElement('tr');
+      row.className = 'border-b border-slate-100 dark:border-slate-800';
+
+      var labCell = document.createElement('td');
+      labCell.className = 'py-2 pr-3 text-slate-700 dark:text-slate-200';
+      labCell.textContent = m.label;
+      row.appendChild(labCell);
+
+      roles.forEach(function(r) {
+        var td = document.createElement('td');
+        td.className = 'text-center py-2 px-2';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.dataset.role = r;
+        cb.dataset.moduleId = m.id;
+        cb.checked = !(map[r] && map[r].has(m.id)); // checked = visible
+        cb.className = 'cursor-pointer';
+        cb.addEventListener('change', async function() {
+          var shouldHide = !cb.checked;
+          cb.disabled = true;
+          var res = await window.moduleVisibility.toggleHidden(r, m.id, shouldHide);
+          cb.disabled = false;
+          if (!res.ok) {
+            cb.checked = !cb.checked;
+            alert('Erreur : ' + (res.error || 'inconnue') + '\nVérifier migration v32 dans Supabase.');
+          }
+        });
+        td.appendChild(cb);
+        row.appendChild(td);
+      });
+      tbody.appendChild(row);
+    });
+  });
+  table.appendChild(tbody);
+
+  wrap.replaceChildren(table);
+}
+
+function initModulesMatrix() {
+  var isAdmin = currentProfile && currentProfile.is_admin === true;
+  var wrap = document.getElementById('comptes-matrix-modules');
+  if (wrap) wrap.classList.toggle('hidden', !isAdmin);
+
+  var btn = document.getElementById('btn-comptes-matrix-toggle');
+  if (!btn || btn._p5wired) return;
+  btn._p5wired = true;
+  btn.addEventListener('click', function() {
+    var content = document.getElementById('comptes-matrix-content');
+    var chev = document.getElementById('comptes-matrix-chev');
+    var isOpen = !content.classList.contains('hidden');
+    content.classList.toggle('hidden');
+    if (chev) chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    if (!isOpen) renderModulesMatrix();
+  });
 }
 
 async function refreshAdminPushStatus() {
