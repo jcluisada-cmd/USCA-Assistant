@@ -2911,9 +2911,89 @@ function renderModuleEditBanner() {
   });
 })();
 
-// Stubs T9 (remplacés en T9 par l'implémentation popover)
-function openModulePopover(moduleId, anchorEl) { console.log('TODO T9: popover', moduleId); }
-function closeModulePopover() {}
+// ── P5 ── Popover de sélection rôle (createElement, no innerHTML) ──
+let _modulePopoverEl = null;
+
+async function openModulePopover(moduleId, anchorEl) {
+  closeModulePopover();
+  var map = await window.moduleVisibility.fetchHiddenMap();
+  var config = (window.MODULES_CONFIG || []).find(function(m) { return m.id === moduleId; });
+  var label = (config && config.label) || moduleId;
+
+  var pop = document.createElement('div');
+  pop.className = 'module-popover';
+
+  var h = document.createElement('h4');
+  h.textContent = 'Masquer "' + label + '" pour :';
+  pop.appendChild(h);
+
+  (window.MODULES_ROLES || []).forEach(function(role) {
+    var roleLabel = (window.MODULES_ROLE_LABELS || {})[role] || role;
+    var lab = document.createElement('label');
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.dataset.role = role;
+    cb.checked = !!(map[role] && map[role].has(moduleId));
+    cb.addEventListener('change', async function() {
+      var shouldHide = cb.checked;
+      cb.disabled = true;
+      var res = await window.moduleVisibility.toggleHidden(role, moduleId, shouldHide);
+      cb.disabled = false;
+      if (!res.ok) {
+        cb.checked = !shouldHide;
+        alert('Erreur lors de la sauvegarde : ' + (res.error || 'inconnue') + '\n\nVérifie que la migration v32 est bien appliquée dans Supabase.');
+        return;
+      }
+      var newMap = await window.moduleVisibility.fetchHiddenMap();
+      var hasAnyHide = (window.MODULES_ROLES || []).some(function(r) {
+        return newMap[r] && newMap[r].has(moduleId);
+      });
+      document.querySelectorAll('[data-module="' + moduleId + '"]').forEach(function(el) {
+        el.classList.toggle('has-hides', hasAnyHide);
+      });
+    });
+    lab.appendChild(cb);
+    lab.appendChild(document.createTextNode(' ' + roleLabel));
+    pop.appendChild(lab);
+  });
+
+  var closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'close-btn';
+  closeBtn.textContent = 'Fermer';
+  closeBtn.addEventListener('click', closeModulePopover);
+  pop.appendChild(closeBtn);
+
+  // Position : aligné au coin haut-droit de l'anchor
+  var rect = anchorEl.getBoundingClientRect();
+  pop.style.top  = (window.scrollY + rect.bottom + 6) + 'px';
+  pop.style.left = (window.scrollX + Math.max(8, rect.right - 220)) + 'px';
+  document.body.appendChild(pop);
+  _modulePopoverEl = pop;
+
+  setTimeout(function() {
+    document.addEventListener('click', _outsidePopoverHandler, { once: true });
+  }, 0);
+}
+
+function _outsidePopoverHandler(e) {
+  if (!_modulePopoverEl) return;
+  if (_modulePopoverEl.contains(e.target)) {
+    setTimeout(function() {
+      document.addEventListener('click', _outsidePopoverHandler, { once: true });
+    }, 0);
+    return;
+  }
+  if (e.target.classList && e.target.classList.contains('module-edit-gear')) return;
+  closeModulePopover();
+}
+
+function closeModulePopover() {
+  if (_modulePopoverEl) {
+    _modulePopoverEl.remove();
+    _modulePopoverEl = null;
+  }
+}
 
 async function refreshAdminPushStatus() {
   var statusEl = document.getElementById('admin-push-status');
