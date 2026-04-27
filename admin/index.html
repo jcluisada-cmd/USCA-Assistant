@@ -142,7 +142,7 @@
         </div>
 
         <!-- ═══ Entrées / Sorties ═══ -->
-        <div id="section-entrees-sorties" class="mb-4">
+        <div id="section-entrees-sorties" data-module="dashboard_entrees_sorties" class="mb-4">
           <button id="btn-toggle-es" class="w-full flex items-center justify-between text-sm font-bold text-slate-500 uppercase tracking-wider mb-2 hover:text-slate-700 transition-colors">
             <span>Sorties prévues / Liste d'attente</span>
             <span id="es-chevron" class="text-xs">&#9660;</span>
@@ -272,7 +272,7 @@
         </div>
 
         <!-- ═══ Mes élèves / Mon externe (accordion unifié) ═══ -->
-        <div id="section-eleves" class="mb-4 hidden">
+        <div id="section-eleves" data-module="dashboard_mes_eleves" class="mb-4 hidden">
           <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
             <button id="eleves-accordion-btn" class="w-full flex items-center justify-between px-3 py-2.5 hover:bg-slate-50 transition-colors">
               <h3 id="eleves-section-title" class="text-xs font-bold text-slate-700">🎓 Mon élève</h3>
@@ -369,10 +369,10 @@
         </div>
 
         <!-- Liste des patients -->
-        <div id="patients-list" class="space-y-2"></div>
+        <div id="patients-list" data-module="dashboard_patients_list" class="space-y-2"></div>
 
         <!-- Section Détail Patient -->
-        <section id="section-patient-detail" class="hidden">
+        <section id="section-patient-detail" data-module="dashboard_patients_list" class="hidden">
           <div class="flex items-center justify-between mb-3">
             <h3 id="detail-patient-title" class="text-lg font-bold text-slate-800"></h3>
             <button id="btn-back-patients" class="text-xs text-slate-400 hover:text-slate-600 font-semibold">Retour</button>
@@ -380,7 +380,7 @@
           <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
 
           <!-- Accordion : Journal craving -->
-          <button id="acc-craving" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+          <button id="acc-craving" data-module="patient_craving" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
               <div id="craving-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
@@ -390,12 +390,12 @@
             </div>
             <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div id="acc-craving-content" class="hidden mb-2 pl-2">
+          <div id="acc-craving-content" data-module="patient_craving" class="hidden mb-2 pl-2">
             <div id="detail-craving-log"></div>
           </div>
 
           <!-- Accordion : Fiches traitements -->
-          <button id="acc-fiches" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+          <button id="acc-fiches" data-module="patient_fiches" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
               <div class="w-7 h-7 bg-amber-50 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
@@ -404,12 +404,12 @@
             </div>
             <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div id="acc-fiches-content" class="hidden mb-2 pl-2">
+          <div id="acc-fiches-content" data-module="patient_fiches" class="hidden mb-2 pl-2">
             <div id="fiches-checklist" class="space-y-1"></div>
           </div>
 
           <!-- Accordion : Permissions -->
-          <button id="acc-perms" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+          <button id="acc-perms" data-module="patient_permissions" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
               <div id="perm-icon" class="w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -419,7 +419,7 @@
             </div>
             <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div id="acc-perms-content" class="hidden mb-2 pl-2">
+          <div id="acc-perms-content" data-module="patient_permissions" class="hidden mb-2 pl-2">
             <button id="btn-add-perm-inline" class="w-full py-2 mb-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
               Annoncer une permission
@@ -431,20 +431,20 @@
           <p class="text-[10px] font-bold text-slate-400 uppercase mt-4 mb-2">Actions</p>
           <div class="space-y-2 mb-4">
             <!-- Messages (ouvre une modale chat in-app) -->
-            <button id="btn-action-messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+            <button id="btn-action-messages" data-module="patient_messages" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div id="messages-icon" class="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
               </div>
               <div class="flex-1 min-w-0"><p class="text-sm font-semibold text-slate-700">Messages</p><p id="messages-action-sub" class="text-[11px] text-slate-400">Conversation patient ↔ équipe</p></div>
               <span id="messages-count-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 hidden flex-shrink-0"></span>
             </button>
-            <button id="btn-action-event" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+            <button id="btn-action-event" data-module="patient_evenements" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
               </div>
               <div><p class="text-sm font-semibold text-slate-700">Planifier un événement</p><p class="text-[11px] text-slate-400">Entretien, consultation, RDV externe...</p></div>
             </button>
-            <button id="btn-action-sortie" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
+            <button id="btn-action-sortie" data-module="patient_sortie" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center gap-3 hover:bg-slate-50 transition-colors text-left">
               <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
               </div>
@@ -452,7 +452,7 @@
             </button>
 
             <!-- Accordion Dossier post-cure -->
-            <div class="w-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <div data-module="patient_postcure" class="w-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
               <button id="btn-action-postcure" class="w-full p-3.5 flex items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors text-left">
                 <div class="w-8 h-8 bg-teal-50 dark:bg-teal-900 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
@@ -471,7 +471,7 @@
             </div>
 
             <!-- Exports de sortie (moitié / moitié sur la même ligne) -->
-            <div id="sortie-exports" class="hidden grid grid-cols-2 gap-2">
+            <div id="sortie-exports" data-module="patient_sortie" class="hidden grid grid-cols-2 gap-2">
               <button id="btn-export-pdf-admin" class="bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl p-3 flex flex-col items-center text-center gap-1.5 hover:opacity-95 transition-all active:scale-[0.98]">
                 <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
@@ -909,11 +909,11 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
           <span class="text-[10px] font-semibold mt-0.5">Dashboard</span>
         </button>
-        <button data-tab="toolbox" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <button data-tab="toolbox" data-module="tab_toolbox" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
           <span class="text-[10px] font-semibold mt-0.5">Toolbox</span>
         </button>
-        <button data-tab="groupes" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
+        <button data-tab="groupes" data-module="tab_planning" class="admin-tab flex flex-col items-center py-1.5 px-3 rounded-xl transition-colors text-slate-400">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span class="text-[10px] font-semibold mt-0.5">Planning</span>
         </button>
