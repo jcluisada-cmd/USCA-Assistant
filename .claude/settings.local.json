@@ -25,7 +25,32 @@
       "Bash(git push *)",
       "Bash(git mv *)",
       "Bash(awk '{print $2}')",
-      "Bash(xargs -I{} python3 -c \" import sys, json path = sys.argv[1] try: with open\\(path\\) as f: for line in f: try: obj = json.loads\\(line\\) if obj.get\\('type'\\) == 'assistant': for item in obj.get\\('message', {}\\).get\\('content', []\\): if item.get\\('type'\\) == 'tool_use': name = item.get\\('name', ''\\) if name == 'Bash': cmd = item.get\\('input', {}\\).get\\('command', ''\\) print\\('BASH|||' + cmd[:200]\\) elif name not in \\('Read','Write','Edit','Glob','Grep','Agent','Skill','ToolSearch','ScheduleWakeup'\\): print\\('MCP|||' + name\\) except: pass except: pass \" {})"
+      "Bash(xargs -I{} python3 -c \" import sys, json path = sys.argv[1] try: with open\\(path\\) as f: for line in f: try: obj = json.loads\\(line\\) if obj.get\\('type'\\) == 'assistant': for item in obj.get\\('message', {}\\).get\\('content', []\\): if item.get\\('type'\\) == 'tool_use': name = item.get\\('name', ''\\) if name == 'Bash': cmd = item.get\\('input', {}\\).get\\('command', ''\\) print\\('BASH|||' + cmd[:200]\\) elif name not in \\('Read','Write','Edit','Glob','Grep','Agent','Skill','ToolSearch','ScheduleWakeup'\\): print\\('MCP|||' + name\\) except: pass except: pass \" {})",
+      "Bash(git checkout *)",
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(git *)",
+      "Bash(GIT_EDITOR=\":\" git rebase *)",
+      "Bash(GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git rebase *)",
+      "Skill(remember)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(rm -rf /tmp/wiki-brain-skill)",
+      "Bash(chmod +x ~/.claude/skills/wiki-brain/hooks/session-end.sh)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(mkdir -p \"C:/Users/jclui/Documents/ObsidianVaults/wiki-brain\")",
+      "Read(//c/Users/jclui/Documents/**)",
+      "Bash(graphify --help)",
+      "Read(//c/Users/jclui/.claude/skills/wiki-brain/**)",
+      "Bash(pip --version)",
+      "Read(//c/Users/jclui/OneDrive/Documents/**)",
+      "Read(//c/Users/jclui/AppData/Roaming/obsidian/**)",
+      "Skill(update-config)",
+      "Bash(pip show *)",
+      "Bash(pipx --version)",
+      "Bash(bash ~/.claude/skills/wiki-brain/hooks/session-end.sh)",
+      "Bash(echo \"EXIT=$?\")"
     ]
   }
 }
