@@ -557,6 +557,15 @@
 
                 <p id="push-pause-err" class="text-xs text-red-600 dark:text-red-400 mt-2 hidden"></p>
               </div>
+
+              <!-- P5 -- Mode édition modules (admin only) -->
+              <div id="settings-section-modules-edit" class="pt-4 border-t border-slate-200 dark:border-slate-700 hidden">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Personnalisation</h4>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Activer le mode édition pour cliquer sur les modules à masquer pour chaque rôle (médecin, IDE, psy, pharmacien, secrétaire). Vue d'ensemble disponible aussi dans Comptes &rarr; Modules par rôle.</p>
+                <button id="btn-toggle-module-edit" class="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98]">
+                  Activer le mode édition modules
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2839,11 +2848,72 @@ document.getElementById('btn-params').addEventListener('click', function() {
   document.getElementById('modal-params').classList.remove('hidden');
   refreshAdminPushStatus();
   refreshPushPause();
+  // P5 -- visibilité admin only de la section "Personnalisation"
+  var isAdmin = currentProfile && currentProfile.is_admin === true;
+  var sec = document.getElementById('settings-section-modules-edit');
+  if (sec) sec.classList.toggle('hidden', !isAdmin);
 });
 
 document.getElementById('btn-params-close').addEventListener('click', function() {
   document.getElementById('modal-params').classList.add('hidden');
 });
+
+// ── P5 ── Edit mode toggle (admin only) ───────────────────
+function isModuleEditActive() {
+  return document.body.classList.contains('module-edit');
+}
+
+async function enterModuleEditMode() {
+  document.body.classList.add('module-edit');
+  if (window.moduleVisibility) window.moduleVisibility.setEnabled(false);
+  renderModuleEditBanner();
+  if (window.moduleVisibility) {
+    await window.moduleVisibility.mountEditButtons(openModulePopover);
+  }
+  document.getElementById('modal-params').classList.add('hidden');
+  var btn = document.getElementById('btn-toggle-module-edit');
+  if (btn) btn.textContent = 'Désactiver le mode édition modules';
+}
+
+function exitModuleEditMode() {
+  document.body.classList.remove('module-edit');
+  if (window.moduleVisibility) window.moduleVisibility.setEnabled(true);
+  var banner = document.getElementById('module-edit-banner');
+  if (banner) banner.remove();
+  document.querySelectorAll('[data-module].has-hides').forEach(function(el) { el.classList.remove('has-hides'); });
+  closeModulePopover();
+  var btn = document.getElementById('btn-toggle-module-edit');
+  if (btn) btn.textContent = 'Activer le mode édition modules';
+}
+
+function renderModuleEditBanner() {
+  if (document.getElementById('module-edit-banner')) return;
+  var banner = document.createElement('div');
+  banner.id = 'module-edit-banner';
+  var span = document.createElement('span');
+  span.textContent = "Mode édition modules actif -- clique sur l'icône d'engrenage d'un module pour configurer sa visibilité par rôle.";
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'btn-exit-module-edit';
+  btn.textContent = 'Terminer';
+  btn.addEventListener('click', exitModuleEditMode);
+  banner.appendChild(span);
+  banner.appendChild(btn);
+  document.body.insertBefore(banner, document.body.firstChild);
+}
+
+(function() {
+  var btn = document.getElementById('btn-toggle-module-edit');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    if (isModuleEditActive()) exitModuleEditMode();
+    else enterModuleEditMode();
+  });
+})();
+
+// Stubs T9 (remplacés en T9 par l'implémentation popover)
+function openModulePopover(moduleId, anchorEl) { console.log('TODO T9: popover', moduleId); }
+function closeModulePopover() {}
 
 async function refreshAdminPushStatus() {
   var statusEl = document.getElementById('admin-push-status');
