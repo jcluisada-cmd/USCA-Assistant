@@ -13,6 +13,22 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script>
+  // P5 -- alias parent's Supabase client into iframe scope (same-origin)
+  try { window.sb = window.parent && window.parent.sb; } catch (_) {}
+</script>
+<script src="../shared/modules-config.js"></script>
+<script src="../shared/module-visibility.js"></script>
+<script>
+(function() {
+  try {
+    const profile = window.parent && window.parent.currentProfile;
+    if (profile && window.moduleVisibility) {
+      window.moduleVisibility.apply(profile);
+    }
+  } catch (e) { console.warn('[toolbox] moduleVisibility init failed:', e); }
+})();
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

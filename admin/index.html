@@ -925,6 +925,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../shared/supabase.js"></script>
 <script src="../shared/auth.js"></script>
+<script src="../shared/modules-config.js"></script>
+<script src="../shared/module-visibility.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
 <script src="../shared/postcure-structures.js"></script>
@@ -1005,6 +1007,8 @@ let _adminCredentials = null; // Pour re-login après signUp
 // ── Afficher l'app admin ──
 function showAdminApp(profile) {
   currentProfile = profile;
+  // P5 -- applique le filtrage des modules selon le rôle (no-op pour admin)
+  if (window.moduleVisibility) window.moduleVisibility.apply(profile);
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('admin-app').classList.remove('hidden');
   var rl = { medecin:'M\u00e9decin', ide:'IDE', psychologue:'Psychologue', pharmacien:'Pharmacien', secretaire:'Secr\u00e9taire', externe:'Externe', etudiant_ide:'\u00c9tudiant.e IDE' };
