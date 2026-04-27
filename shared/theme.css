@@ -50,3 +50,100 @@ html.dark nav.sticky { background-color: rgba(15,23,42,0.97) !important; border-
 html.dark .card { background-color: #1e293b !important; border-color: #334155 !important; }
 /* Panels */
 html.dark .panel { background-color: #0f172a; }
+
+/* ═══════════════════════════════════════════════════════
+   P5 -- Edit mode des modules (admin only)
+   Activé via body.module-edit (toggle depuis modale Paramètres).
+   ═══════════════════════════════════════════════════════ */
+
+body.module-edit [data-module] {
+  outline: 1px dashed rgba(79, 70, 229, 0.4); /* indigo #4F46E5 */
+  outline-offset: 2px;
+}
+
+body.module-edit [data-module].has-hides {
+  outline-color: rgba(239, 68, 68, 0.6); /* rouge si >= 1 rôle masque déjà */
+}
+
+.module-edit-gear {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 100;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  display: none; /* caché par défaut, affiché uniquement en edit mode */
+  line-height: 1;
+}
+body.module-edit .module-edit-gear { display: inline-block; }
+
+/* Bandeau sticky en haut quand edit mode actif */
+#module-edit-banner {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #EEF2FF; /* indigo-50 */
+  border-bottom: 1px solid #C7D2FE; /* indigo-200 */
+  color: #3730A3; /* indigo-800 */
+  font-size: 13px;
+  font-weight: 600;
+}
+#module-edit-banner button {
+  background: white;
+  border: 1px solid #C7D2FE;
+  color: #4F46E5;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Popover de sélection rôle (T9) */
+.module-popover {
+  position: absolute;
+  z-index: 200;
+  background: white;
+  border: 1px solid #E2E8F0; /* slate-200 */
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 12px 14px;
+  min-width: 220px;
+}
+.module-popover h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 8px;
+}
+.module-popover label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #334155;
+  padding: 4px 0;
+  cursor: pointer;
+}
+.module-popover label input[type="checkbox"] { margin: 0; }
+.module-popover .close-btn {
+  margin-top: 10px;
+  width: 100%;
+  background: #F1F5F9;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #475569;
+}
