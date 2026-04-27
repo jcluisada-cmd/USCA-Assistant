@@ -1,6 +1,7 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 25 avril 2026 (v4.06 — Fixes SW : (1) pré-cache de tous les `data/item_*.json` à l'install (dérivé dynamiquement de `data/index.json`) → QCM EDN entièrement utilisable hors ligne après installation PWA ; (2) `ressources_doc/index.json` passé en stratégie network-first sans écriture cache via nouvelle liste `NO_CACHE_WRITE`, cache-buster `?t=Date.now()` retiré côté toolbox → plus de bloat cache au fil des ouvertures de RessourcesView.)
+> Dernière mise à jour : 27 avril 2026 (v4.07 — P5 Personnalisation modules soignant : migration v32 (`role_modules_hidden`, modèle "absence=visible"), `shared/modules-config.js` (inventaire 18 modules), `shared/module-visibility.js` (apply/toggle/fetchMap/mountEditButtons), `data-module` sur 17 anchors HTML admin + 6 cartes JSX toolbox. Edit mode admin via modale Paramètres → bandeau sticky + bouton ⚙️ par module + popover 5 checkboxes par rôle. Matrix Comptes "Modules par rôle" (accordion 18×5, même store BDD). Admin `is_admin=true` bypass total. Masquage UI uniquement — RLS sur les données patient/messages inchangées.)
+> v4.06 — Fixes SW : (1) pré-cache de tous les `data/item_*.json` à l'install (dérivé dynamiquement de `data/index.json`) → QCM EDN entièrement utilisable hors ligne après installation PWA ; (2) `ressources_doc/index.json` passé en stratégie network-first sans écriture cache via nouvelle liste `NO_CACHE_WRITE`, cache-buster `?t=Date.now()` retiré côté toolbox → plus de bloat cache au fil des ouvertures de RessourcesView.
 > v4.05 — Reclassification fiches patient : "Benzodiazépines" → "Anxiolytiques" (+ propranolol), split "Psychotropes" en "Antidépresseurs" / "Antipsychotiques" / "Thymorégulateurs" / "Stimulants", agomélatine déplacée en "Hypnotiques/Sédatifs". Toolbox `FICHES_PATIENT_CATS` resynchronisé avec `shared/fiches-catalogue.js` (29 fiches complètes, fini la divergence curée). Classes médicamenteuses repliables/dépliables dans la vue Traitements→Fiches Patient (état local par catégorie, repliées par défaut).
 > v4.04 — Fix RLS push_subscriptions : migration v31 remplace `push_subs_read_staff` (SELECT réservée authenticated) par `push_subs_read_public` (SELECT `true`). Débloque deux bugs : (1) activation notifs patient échouait avec "row violates RLS policy" — le `.upsert(...).select()` déclenche un RETURNING évalué contre la policy SELECT, refus en anon ; (2) trigger message patient→médecin : `getSubscribedMedecinIds()` retournait `[]` silencieusement côté anon, aucune notif envoyée. Endpoints/clés push non secrets — seule la clé privée VAPID permet l'envoi.
 > v4.03 — Push V2 Pause vacances : migration v30 ajoute `profiles.push_pause_until DATE` ; section "Pause vacances" dans modal Paramètres admin (date picker "dernier jour d'absence" + bouton reprise immédiate) ; Edge Function `send-push` filtre les profile_ids en pause (`reason: all_on_vacation`). Reprise auto le lendemain, sub BDD préservée.
@@ -38,7 +39,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.06 |
+| **Service Worker** | usca-v4.07 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -277,8 +278,6 @@ Ordre des cartes : Programme, Journal, Traitements, Ateliers, Stratégies, Permi
 ---
 
 ## 7. À FAIRE
-
-**🎯 Prochain chantier : P5 — Personnalisation modules soignant** (plan d'implémentation à définir lors de la prochaine session). Principe : chaque profil (médecin / IDE / psychologue / pharmacien / secrétaire / externe / étudiant IDE) ne voit que les cartes pertinentes pour son rôle (dans dashboard, toolbox, etc.). Stockage : colonne `modules_actifs` (JSONB ou TEXT[]) déjà présente dans `profiles`.
 
 - [ ] **Notifications Push V2 — étape suivante** : étendre aux groupes thérapeutiques (rappel 5 min avant pour les patients hospitalisés) et aux séances de thérapie complémentaire. V2 médecins en cours (migration v29 + send-push + SW + UI admin + cron étendu — voir `SETUP_PUSH.md`). V1 shippée v3.99 : events planifiés + messages + permissions + rappels 5 min (events uniquement).
 - [ ] **(Priorité basse) Planning A/B stocké en BDD** : aujourd'hui le planning A/B est côté client (`shared/planning-groupes.js`). La V2 Push médecins (cron-reminders) duplique une copie minimale en TS dans l'Edge Function — c'est pragmatique mais ça crée 2 sources de vérité. Migrer le planning dans une table Supabase (ex: `groupes_planning(slug, jour, heure_debut, heure_fin, semaine, actif)`) permettrait au cron de la lire directement et supprimerait la duplication. À faire quand un autre module aura besoin du planning côté serveur.

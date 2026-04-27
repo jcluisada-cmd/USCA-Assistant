@@ -19,7 +19,7 @@
 | v29 | Push V2 soignants : `push_subscriptions.patient_id` nullable + `profile_id` (CHECK XOR), tables `push_last_message_staff` et `push_reminders_sent_groupe` | ✅ |
 | v30 | Push V2 pause vacances : `profiles.push_pause_until DATE` | ⏳ **À exécuter** |
 | v31 | Fix RLS push_subscriptions : SELECT ouverte (débloque activation patient + notif message patient→médecin) | ✅ |
-| v32 | P5 Personnalisation modules : table `role_modules_hidden` (absence=visible) + RLS (SELECT auth, INSERT/UPDATE/DELETE admin) | ⏳ **À exécuter** |
+| v32 | P5 Personnalisation modules : table `role_modules_hidden` (absence=visible) + RLS (SELECT auth, INSERT/UPDATE/DELETE admin) | ✅ |
 
 ### Edge Functions Supabase
 
