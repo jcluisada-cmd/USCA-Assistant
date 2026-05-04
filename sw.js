@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.08';
+const CACHE_NAME = 'usca-v4.09';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';

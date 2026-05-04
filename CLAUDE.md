@@ -1,6 +1,9 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 4 mai 2026 (v4.08 — Fiches substances poussées au patient + fixes PWA install + QCM externe auto-extend + toolbox accordions repliés.
+> Dernière mise à jour : 4 mai 2026 (v4.09 — Mode paysage activé (orientation libre).
+> 0. **Mode paysage** : `manifest.json` passé de `"orientation": "portrait"` à `"orientation": "any"` → la PWA suit désormais l'orientation physique de l'appareil (Android Chrome + iOS Safari ≥ 16.4 en mode standalone). Cible principale : Galaxy Tab S7 FE en paysage (1366×853, le layout Tailwind responsive s'adapte naturellement). Garde-fou ajouté dans `shared/theme.css` via media query `(orientation: landscape) and (max-height: 500px)` pour téléphones tournés sur le côté (compactage headers/footers stickys + modales 92vh + splash logo 40vh max).
+>
+> v4.08 — Fiches substances poussées au patient + fixes PWA install + QCM externe auto-extend + toolbox accordions repliés.
 > 1. **Fiches substances (16)** : nouveau dossier `fiches-substances/`, table `substances_patient` (migration v33, RLS calquée sur `prescriptions`), `shared/substances-catalogue.js` (16 fiches × 6 catégories : Dépresseurs SNC / Stimulants / Opioïdes / Psychodysleptiques / Mésusage médicamenteux / Tabac), helpers `db.getSubstancesPatient` / `db.addSubstancePatient` / `db.removeSubstancePatient`. Côté admin : 2ème checklist "Fiches substances" (catégorisée violet) dans détail patient. Côté patient : carte Traitements → 2 sections (traitements catégorisés ambre + substances liste plate alphabétique violet). Côté toolbox : 3ème accordion "Fiches Substances" dans `TraitementsView` (FICHES_SUBSTANCES_CATS, dispatch via `selFiche.kind === "substance"` pour servir le bon path). Export HTML autonome patient embarque aussi les fiches substances prescrites. SW : 16 HTML pré-cachées.
 > 2. **PWA install** : ajout `icon-192.png` (généré bicubique HQ depuis `icon-512.png`), manifest mis à jour avec 4 entrées (192/512 × `any` + `maskable`) — débloque le bouton "Installer" sur Chrome Android stricts (versions anciennes, Samsung Internet…) qui exigent les deux tailles. Notifications push fonctionnent dans tous les cas (raccourci suffit sur Android).
 > 3. **QCM externe auto-extend** : sessions en cours créées avant le fix v3.98 (cap 10 questions dans `questions_json`) sont automatiquement étendues à toutes les questions de l'item lors du "Reprendre" (compare `sessionQuestions.length` vs `questions.length`, append manquantes, `UPDATE qcm_sessions SET questions_json, nb_questions`). Aucune perte des réponses déjà enregistrées.
@@ -44,7 +47,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.08 |
+| **Service Worker** | usca-v4.09 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

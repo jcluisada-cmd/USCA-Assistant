@@ -147,3 +147,28 @@ body.module-edit .module-edit-gear { display: inline-block; }
   cursor: pointer;
   color: #475569;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Paysage — adaptations
+   - Tablettes (Galaxy Tab S7 FE = 1366x853 paysage) :
+     aucune règle ici, le layout Tailwind responsive s'adapte
+     naturellement (largeur >= 1024 = breakpoint lg).
+   - Téléphones tournés sur le côté (hauteur <= 500px) :
+     compacter headers/paddings sticky pour préserver la zone
+     de contenu utile.
+   ═══════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Headers stickys plus compacts */
+  header.sticky { padding-top: 6px !important; padding-bottom: 6px !important; }
+  header.sticky h1 { font-size: 1rem !important; }
+
+  /* Footers/nav stickys plus discrets */
+  nav.sticky, footer.sticky { padding-top: 4px !important; padding-bottom: 4px !important; }
+
+  /* Modales : laisser plus de place au contenu */
+  .modal-content, [role="dialog"] > div { max-height: 92vh !important; }
+
+  /* Splash screen plein écran : réduire le logo pour qu'il rentre */
+  .splash-logo { max-height: 40vh !important; }
+}
