@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Opioïdes de prescription — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --navy-light: #2A3F6B;
+    --teal: #2A9D8F;
+    --teal-pale: #E8F6F4;
+    --amber: #E9A84C;
+    --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F;
+    --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB;
+    --gray-100: #EEF1F4;
+    --gray-200: #D9DFE6;
+    --gray-600: #5A6678;
+
+    /* Couleur dominante opioïdes de prescription — mauve / prune doux */
+    --substance: #5C2D7A;
+    --substance-light: #7A3E9A;
+    --substance-pale: #F5EFF9;
+    --substance-mid: #9B5EC4;
+    --substance-accent: #C49AE0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--navy);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px rgba(27,42,74,0.10);
+    overflow: hidden;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #2D0F45 0%, var(--substance) 55%, #3D1A5E 100%);
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(196,154,224,0.07);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 30%;
+    width: 280px; height: 100px;
+    border-radius: 50%;
+    background: rgba(196,154,224,0.04);
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.20);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.1rem;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .header h1 .substance-names {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.58);
+    margin-top: 0.25rem;
+    font-style: italic;
+  }
+  .header-subtitle {
+    color: rgba(255,255,255,0.80);
+    font-size: 1rem;
+    margin-top: 0.6rem;
+    max-width: 580px;
+  }
+  .header-warning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(233,168,76,0.22);
+    border: 1px solid rgba(233,168,76,0.48);
+    color: #F5C878;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    margin-top: 1rem;
+  }
+
+  .content { padding: 2rem 2.5rem 1.5rem; }
+
+  .intro-box {
+    border-left: 4px solid var(--substance-mid);
+    background: var(--substance-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 2rem;
+  }
+  .intro-box p { color: var(--navy); font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .intro-box p:last-child { margin-bottom: 0; }
+  .intro-box strong { color: var(--substance); }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--gray-100);
+  }
+  .section-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; flex-shrink: 0;
+  }
+  .section-icon.subst  { background: var(--substance-pale); }
+  .section-icon.teal   { background: var(--teal-pale); }
+  .section-icon.amber  { background: var(--amber-pale); }
+  .section-icon.red    { background: var(--red-pale); }
+  .section-icon.navy   { background: rgba(27,42,74,0.08); }
+
+  /* Tableau des molécules */
+  .molecule-table-wrap { overflow-x: auto; margin: 1rem 0; }
+  table.molecule-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  table.molecule-table th {
+    background: var(--substance);
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
+  table.molecule-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--gray-100);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  table.molecule-table tr:last-child td { border-bottom: none; }
+  table.molecule-table tr:nth-child(even) td { background: var(--gray-50); }
+  .potency-high   { color: #C0392B; font-weight: 600; }
+  .potency-medium { color: #B87A20; font-weight: 600; }
+  .potency-low    { color: var(--gray-600); }
+
+  /* Spectre dépendance → tolérance */
+  .spectrum-bar {
+    margin: 1rem 0 0.5rem;
+    display: flex;
+    height: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  .spectrum-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  .spectrum-segment.low   { background: var(--teal); flex: 2; }
+  .spectrum-segment.mod   { background: var(--amber); flex: 3; color: #5A3408; }
+  .spectrum-segment.high  { background: var(--red-soft); flex: 3; }
+  .spectrum-segment.vhigh { background: #8B0000; flex: 2; }
+  .spectrum-labels {
+    display: flex;
+    font-size: 0.72rem;
+    color: var(--gray-600);
+    margin-top: 0.3rem;
+    justify-content: space-between;
+  }
+
+  .mechanism-visual {
+    display: flex; align-items: flex-start; gap: 0; margin: 1rem 0 0.5rem;
+  }
+  .mech-step {
+    flex: 1; text-align: center; padding: 1rem 0.8rem;
+    background: var(--gray-50); border-radius: 10px;
+  }
+  .mech-step .emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .mech-step .label {
+    font-size: 0.78rem; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;
+  }
+  .mech-step .sublabel { font-size: 0.78rem; color: var(--gray-600); line-height: 1.4; }
+  .mech-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 0.5rem; color: var(--substance-accent);
+    font-size: 1.3rem; padding-top: 1.5rem; flex-shrink: 0;
+  }
+  .mech-caption {
+    font-size: 0.8rem; color: var(--gray-600); font-style: italic;
+    text-align: center; margin-top: 0.6rem; line-height: 1.5;
+  }
+
+  .effects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .effects-col h4 {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--gray-600); margin-bottom: 0.6rem;
+  }
+  .effects-col ul { list-style: none; padding: 0; }
+  .effects-col ul li {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    font-size: 0.88rem; color: var(--navy); margin-bottom: 0.45rem; line-height: 1.4;
+  }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-top: 0.3em; flex-shrink: 0; }
+  .dot-green  { background: var(--teal); }
+  .dot-orange { background: var(--amber); }
+  .dot-red    { background: var(--red-soft); }
+  .dot-navy   { background: var(--substance-mid); }
+
+  .timeline { display: flex; gap: 0; margin: 1rem 0; overflow: hidden; border-radius: 10px; border: 1px solid var(--gray-200); }
+  .tl-step { flex: 1; padding: 1rem 0.9rem; border-right: 1px solid var(--gray-200); background: #fff; }
+  .tl-step:last-child { border-right: none; }
+  .tl-step.critical { background: var(--red-pale); }
+  .tl-step.urgent   { background: var(--amber-pale); }
+  .tl-step.moderate { background: var(--gray-50); }
+  .tl-step.recovery { background: var(--teal-pale); }
+  .tl-period { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--substance-mid); margin-bottom: 0.4rem; }
+  .tl-step.recovery .tl-period { color: var(--teal); }
+  .tl-title { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .tl-items { font-size: 0.78rem; color: var(--gray-600); line-height: 1.5; }
+
+  /* Frontière douleur / dépendance — spécifique à cette fiche */
+  .frontier-box {
+    background: linear-gradient(135deg, #F5EFF9 0%, #EDE0F5 100%);
+    border-radius: 10px;
+    border: 1px solid var(--substance-accent);
+    padding: 1.3rem 1.5rem;
+    margin: 1rem 0;
+  }
+  .frontier-box h4 {
+    font-size: 0.88rem; font-weight: 700; color: var(--substance); margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .frontier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .frontier-col h5 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-600); margin-bottom: 0.5rem; }
+  .frontier-col ul { list-style: none; padding: 0; font-size: 0.82rem; color: var(--navy); line-height: 1.5; }
+  .frontier-col ul li { margin-bottom: 0.3rem; }
+  .frontier-col.dep ul li::before { content: "→ "; color: var(--substance-mid); font-weight: 600; }
+  .frontier-col.norm ul li::before { content: "✓ "; color: var(--teal); font-weight: 600; }
+
+  .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .info-card { padding: 1rem 1.1rem; border-radius: 8px; border-left: 3px solid; }
+  .info-card.green  { background: var(--teal-pale); border-color: var(--teal); }
+  .info-card.orange { background: var(--amber-pale); border-color: var(--amber); }
+  .info-card.subst  { background: var(--substance-pale); border-color: var(--substance-mid); }
+  .info-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-card.green h4  { color: var(--teal); }
+  .info-card.orange h4 { color: #B87A20; }
+  .info-card.subst h4  { color: var(--substance); }
+  .info-card p, .info-card ul { font-size: 0.84rem; color: var(--navy); line-height: 1.5; }
+  .info-card ul { list-style: none; padding: 0; }
+  .info-card.green  ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+  .info-card.orange ul li::before { content: "→ "; color: var(--amber); font-weight: 600; }
+  .info-card.subst  ul li::before { content: "→ "; color: var(--substance-mid); font-weight: 600; }
+
+  .alert-box { border-left: 4px solid var(--red-soft); background: var(--red-pale); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .alert-box .alert-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red-soft); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .alert-box ul, .alert-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .alert-box ul { list-style: none; padding: 0; }
+  .alert-box ul li { margin-bottom: 0.3rem; }
+  .alert-box ul li::before { content: "⚠ "; }
+
+  .dark-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1rem 0; color: #fff; }
+  .dark-box .dark-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #F5C878; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+  .dark-box ul { list-style: none; padding: 0; font-size: 0.88rem; line-height: 1.6; }
+  .dark-box ul li { margin-bottom: 0.3rem; }
+  .dark-box ul li::before { content: "• "; color: var(--amber); font-weight: 700; }
+  .dark-number { display: inline-block; background: rgba(255,255,255,0.15); border-radius: 6px; padding: 0.1em 0.5em; font-weight: 700; font-size: 1rem; color: #fff; }
+
+  .naloxone-box {
+    background: linear-gradient(135deg, #8B0000 0%, #6B0000 100%);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin: 1rem 0;
+    color: #fff;
+    border-left: 4px solid #FF6B6B;
+  }
+  .naloxone-box .nalo-title { font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #FFB3B3; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
+  .naloxone-box p { font-size: 0.88rem; color: rgba(255,255,255,0.88); line-height: 1.6; margin-bottom: 0.5rem; }
+  .naloxone-box p:last-child { margin-bottom: 0; }
+  .naloxone-box strong { color: #FFB3B3; }
+  .naloxone-box ul { list-style: none; padding: 0; font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  .naloxone-box ul li { margin-bottom: 0.3rem; }
+  .naloxone-box ul li::before { content: "→ "; color: #FFB3B3; font-weight: 600; }
+
+  .teal-box { background: var(--teal-pale); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .teal-box .teal-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .teal-box ul, .teal-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .teal-box ul { list-style: none; padding: 0; }
+  .teal-box ul li { margin-bottom: 0.3rem; }
+  .teal-box ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+
+  .treatment-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; }
+  .treatment-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3em 0.8em; border-radius: 20px; font-size: 0.8rem; font-weight: 500; border: 1.5px solid; }
+  .tag-navy  { background: rgba(27,42,74,0.06); border-color: var(--navy-light); color: var(--navy); }
+  .tag-teal  { background: var(--teal-pale); border-color: var(--teal); color: #1A6B60; }
+  .tag-subst { background: var(--substance-pale); border-color: var(--substance-mid); color: var(--substance); }
+  .tag-red   { background: var(--red-pale); border-color: var(--red-soft); color: #C0392B; }
+
+  table.interaction-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 0.8rem; }
+  table.interaction-table th { background: var(--navy); color: #fff; padding: 0.5rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.03em; }
+  table.interaction-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--gray-100); vertical-align: top; line-height: 1.45; }
+  table.interaction-table tr:last-child td { border-bottom: none; }
+  table.interaction-table tr:nth-child(even) td { background: var(--gray-50); }
+  .risk-high { color: #C0392B; font-weight: 600; }
+  .risk-mod  { color: #B87A20; font-weight: 600; }
+  .risk-low  { color: var(--gray-600); }
+
+  .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.8rem; }
+  .resource-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--gray-100); }
+  .resource-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .resource-label { font-size: 0.78rem; color: var(--gray-600); line-height: 1.3; }
+  .resource-number { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; border-top: 1px solid var(--gray-100); background: var(--gray-50); }
+  .footer-left { font-size: 0.78rem; color: var(--gray-600); line-height: 1.5; }
+  .footer-badge { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--substance-mid); border: 1.5px solid var(--substance-mid); padding: 0.3em 0.8em; border-radius: 20px; }
+
+  @media (max-width: 600px) {
+    .content { padding: 1.4rem 1.2rem; }
+    .header  { padding: 1.8rem 1.2rem 1.4rem; }
+    .header h1 { font-size: 1.7rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns: 1fr; }
+    .frontier-grid { grid-template-columns: 1fr; }
+    .mechanism-visual { flex-direction: column; }
+    .mech-arrow { transform: rotate(90deg); padding: 0.3rem 0; align-self: center; }
+    .timeline { flex-direction: column; }
+    .tl-step { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; border-radius: 0; margin: 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>
+      Opioïdes de prescription
+      <span class="substance-names">codéine · tramadol · morphine · oxycodone · fentanyl transdermique · tapentadol</span>
+    </h1>
+    <p class="header-subtitle">
+      Comprendre la dépendance aux antidouleurs opioïdes, comment elle se développe, et comment s'en sortir.
+    </p>
+    <div class="header-warning-badge">
+      ⚡ La dépendance peut survenir même avec une prescription médicale — ce n'est pas une faiblesse
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- INTRO -->
+    <div class="intro-box">
+      <p>Les opioïdes de prescription sont des médicaments antidouleurs puissants, légalement prescrits pour des douleurs aiguës ou chroniques. Ils agissent sur les mêmes récepteurs que l'héroïne. <strong>Une dépendance physique peut se développer même en suivant scrupuleusement sa prescription médicale</strong>, en particulier après plusieurs semaines de traitement.</p>
+      <p>Si vous êtes ici, c'est que votre relation à ces médicaments est devenue problématique — que ce soit par une prescription devenue trop forte, une utilisation pour gérer autre chose que la douleur, ou un mésusage franc. <strong>Il n'y a pas de jugement ici</strong> : la dépendance aux opioïdes de prescription est un phénomène médical bien documenté, qui touche des personnes de tous profils.</p>
+      <p>Un défi particulier : <strong>vous pouvez avoir une vraie douleur qui nécessite un traitement antidouleur</strong>, tout en développant une dépendance. L'USCA travaille avec vous sur les deux aspects simultanément.</p>
+    </div>
+
+    <!-- TABLEAU DES MOLÉCULES -->
+    <div class="section-title">
+      <div class="section-icon subst">💊</div>
+      Les principaux opioïdes de prescription
+    </div>
+
+    <div class="molecule-table-wrap">
+      <table class="molecule-table">
+        <thead>
+          <tr>
+            <th>Molécule</th>
+            <th>Noms commerciaux</th>
+            <th>Puissance relative</th>
+            <th>Forme / usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Codéine</strong></td>
+            <td>Codéine seule, Néocodion, dans Dafalgan Codéiné, Efferalgan Codéiné</td>
+            <td class="potency-low">Faible</td>
+            <td>Comprimés, sirop — antitussif, antidouleur</td>
+          </tr>
+          <tr>
+            <td><strong>Tramadol</strong></td>
+            <td>Topalgic, Contramal, Ixprim, Zaldiar</td>
+            <td class="potency-low">Faible à modéré</td>
+            <td>Comprimés LP et IR — douleurs modérées</td>
+          </tr>
+          <tr>
+            <td><strong>Morphine</strong></td>
+            <td>Moscontin, Skenan, Actiskenan, Oramorph</td>
+            <td class="potency-medium">Modéré à fort</td>
+            <td>LP et LP — douleurs sévères, cancéreuses</td>
+          </tr>
+          <tr>
+            <td><strong>Oxycodone</strong></td>
+            <td>Oxycontin, Oxynorm, Targinact</td>
+            <td class="potency-medium">Fort (1,5× morphine)</td>
+            <td>LP et IR — douleurs chroniques sévères</td>
+          </tr>
+          <tr>
+            <td><strong>Fentanyl</strong></td>
+            <td>Durogesic (patch), Actiq, Abstral (sublingual)</td>
+            <td class="potency-high">Très fort (100× morphine)</td>
+            <td>Patch transdermique, sublingual</td>
+          </tr>
+          <tr>
+            <td><strong>Tapentadol</strong></td>
+            <td>Palexia</td>
+            <td class="potency-medium">Modéré à fort</td>
+            <td>LP — douleurs neuropathiques</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box" style="margin-top:0.5rem;">
+      <div class="alert-title">⚠ Fentanyl : risque de surdose extrême</div>
+      <p style="font-size:0.88rem;color:var(--navy);line-height:1.5;">Le fentanyl est 100 fois plus puissant que la morphine. Un patch usagé contient encore assez de fentanyl pour tuer un adulte non tolérant. <strong>Ne jamais mâcher, couper ou utiliser autrement qu'indiqué.</strong> Le fentanyl illicite contamine de nombreuses drogues de rue — voir la fiche héroïne.</p>
+    </div>
+
+    <!-- FRONTIÈRE DÉPENDANCE / USAGE THÉRAPEUTIQUE -->
+    <div class="section-title">
+      <div class="section-icon subst">⚖️</div>
+      Tolérance, dépendance physique et trouble addictif : comprendre la différence
+    </div>
+
+    <div class="frontier-box">
+      <h4>🔍 Ces trois choses ne sont pas la même chose</h4>
+      <div class="frontier-grid">
+        <div class="frontier-col norm">
+          <h5>Usage thérapeutique adapté</h5>
+          <ul>
+            <li>La dose est stable dans le temps</li>
+            <li>Le médicament soulage une douleur réelle</li>
+            <li>Pas de comportement de recherche compulsif</li>
+            <li>La vie quotidienne n'est pas organisée autour du médicament</li>
+            <li>Pas de prise en dehors de la douleur</li>
+          </ul>
+        </div>
+        <div class="frontier-col dep">
+          <h5>Signes d'un trouble addictif</h5>
+          <ul>
+            <li>Doses croissantes pour le même effet (tolérance)</li>
+            <li>Prise en dehors de la douleur (anxiété, ennui, émotions)</li>
+            <li>Achats hors prescription ou auprès de tiers</li>
+            <li>Médecins multiples pour obtenir des ordonnances</li>
+            <li>Incapacité à diminuer malgré la volonté</li>
+            <li>Peur panique à l'idée de manquer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="teal-box">
+      <div class="teal-title">💬 La dépendance physique ≠ trouble addictif</div>
+      <p>Toute personne sous opioïdes au long cours développe une <strong>dépendance physique</strong> (le corps s'adapte et il y a un sevrage à l'arrêt). Ce n'est pas la même chose qu'un trouble addictif — qui implique une perte de contrôle et un usage compulsif malgré les conséquences négatives. Les deux peuvent coexister, et l'équipe peut vous aider à distinguer.</p>
+    </div>
+
+    <!-- MÉCANISME -->
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment les opioïdes de prescription agissent-ils sur le cerveau ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">🔑</span>
+        <div class="label">Prise thérapeutique</div>
+        <div class="sublabel">Les opioïdes se fixent sur les récepteurs µ (mu) et bloquent la transmission de la douleur. Ils libèrent aussi de la dopamine → effet de bien-être et soulagement au-delà de la douleur.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">📉</span>
+        <div class="label">Avec le temps</div>
+        <div class="sublabel">Le cerveau réduit ses propres endorphines et désensibilise ses récepteurs. La douleur peut paradoxalement s'amplifier (hyperalgésie opioïde). La tolérance oblige à augmenter les doses.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">⚡</span>
+        <div class="label">À l'arrêt</div>
+        <div class="sublabel">Sevrage : douleurs amplifiées (rebond), anxiété, crampes, insomnie. Le manque est intense — difficile à distinguer de la douleur initiale, ce qui entretient le cycle.</div>
+      </div>
+    </div>
+    <p class="mech-caption">Le paradoxe des opioïdes au long cours : ils peuvent finir par augmenter la sensibilité à la douleur et entretenir le besoin qu'ils sont censés traiter.</p>
+
+    <!-- EFFETS -->
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Les effets des opioïdes de prescription
+    </div>
+
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets thérapeutiques / recherchés</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Soulagement de la douleur physique</li>
+          <li><span class="dot dot-green"></span>Anxiolyse, apaisement émotionnel</li>
+          <li><span class="dot dot-green"></span>Sensation de bien-être et de chaleur</li>
+          <li><span class="dot dot-green"></span>Réduction de l'hypervigilance (TSPT)</li>
+          <li><span class="dot dot-green"></span>Facilitation du sommeil</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Effets indésirables</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Constipation chronique (quasi-systématique)</li>
+          <li><span class="dot dot-orange"></span>Somnolence, ralentissement cognitif</li>
+          <li><span class="dot dot-orange"></span>Nausées, vomissements</li>
+          <li><span class="dot dot-red"></span>Dépression respiratoire (surdosage)</li>
+          <li><span class="dot dot-red"></span>Hyperalgésie paradoxale au long cours</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SEVRAGE -->
+    <div class="section-title">
+      <div class="section-icon red">⏱</div>
+      Le syndrome de sevrage
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:0.6rem;">Le délai de début et la durée du sevrage dépendent de la demi-vie du médicament : rapide pour la codéine et le tramadol, plus progressif pour les formes LP ou le fentanyl patch.</p>
+
+    <div class="timeline">
+      <div class="tl-step critical">
+        <div class="tl-period">H12–H48</div>
+        <div class="tl-title">Début du manque</div>
+        <div class="tl-items">
+          Anxiété · Agitation<br>
+          Larmoiements · Rhinorrhée<br>
+          Sueurs · Chair de poule<br>
+          Douleurs amplifiées
+        </div>
+      </div>
+      <div class="tl-step urgent">
+        <div class="tl-period">J2 – J5</div>
+        <div class="tl-title">Pic du sevrage</div>
+        <div class="tl-items">
+          Crampes musculaires<br>
+          Diarrhées · Vomissements<br>
+          Insomnie totale<br>
+          Douleur rebond intense
+        </div>
+      </div>
+      <div class="tl-step moderate">
+        <div class="tl-period">J5 – J14</div>
+        <div class="tl-title">Amélioration</div>
+        <div class="tl-items">
+          Diminution progressive<br>
+          Fatigue · Dysphorie<br>
+          Craving persistant<br>
+          Douleur résiduelle
+        </div>
+      </div>
+      <div class="tl-step recovery">
+        <div class="tl-period">Semaines – mois</div>
+        <div class="tl-title">Stabilisation</div>
+        <div class="tl-items">
+          Sommeil qui revient<br>
+          Gestion de la douleur<br>
+          alternatives<br>
+          Suivi au long cours
+        </div>
+      </div>
+    </div>
+
+    <!-- NALOXONE -->
+    <div class="section-title">
+      <div class="section-icon red">🚑</div>
+      La naloxone — aussi indispensable qu'avec l'héroïne
+    </div>
+
+    <div class="naloxone-box">
+      <div class="nalo-title">🚑 Naloxone (Nalscue® / Prenoxad®) — disponible sans ordonnance</div>
+      <p>Le risque de surdose existe avec tous les opioïdes puissants, pas seulement l'héroïne. <strong>Si vous prenez de la morphine, de l'oxycodone ou du fentanyl — ou si vous vivez avec quelqu'un qui en prend</strong>, avoir de la naloxone est une précaution indispensable.</p>
+      <ul>
+        <li>Gratuite sur prescription, disponible en pharmacie et CAARUD</li>
+        <li>En cas de perte de conscience avec respiration lente → administrer et appeler le 15</li>
+        <li>Spray nasal (Nalscue) : 1 dose dans une narine, répéter si nécessaire</li>
+        <li>L'entourage peut être formé — parlez-en à l'équipe</li>
+      </ul>
+    </div>
+
+    <!-- INTERACTIONS -->
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <div class="dark-box">
+      <div class="dark-title">🚫 Associations pouvant être mortelles</div>
+      <ul>
+        <li><strong>Opioïdes + alcool :</strong> dépression respiratoire cumulée — très fréquent dans les accidents mortels</li>
+        <li><strong>Opioïdes + benzodiazépines :</strong> l'association la plus souvent retrouvée dans les décès par surdose médicamenteuse</li>
+        <li><strong>Opioïdes + autres sédatifs</strong> (gabapentine, prégabaline, antihistaminiques) : sédation imprévisible</li>
+      </ul>
+    </div>
+
+    <table class="interaction-table">
+      <thead>
+        <tr><th>Association</th><th>Risque</th><th>Niveau</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Opioïdes + alcool</td><td>Dépression respiratoire, coma</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>Opioïdes + BZD</td><td>Surdose médicamenteuse (cause principale de décès)</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>Opioïdes + prégabaline / gabapentine</td><td>Majoration de la dépression respiratoire</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Tramadol + ISRS / venlafaxine</td><td>Syndrome sérotoninergique</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Opioïdes + paracétamol (grandes doses)</td><td>Hépatotoxicité (codéine + Dafalgan codéiné)</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>Opioïdes + cannabis</td><td>Sédation majorée, désorientation</td><td class="risk-low">Faible à modéré</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RdRD -->
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Bonnes pratiques</h4>
+        <ul>
+          <li>Informer tous vos médecins de tous les opioïdes pris</li>
+          <li>Ne jamais mélanger avec alcool ou BZD</li>
+          <li>Respecter les intervalles entre les prises des formes LP</li>
+          <li>Ne pas couper / écraser les formes LP (libération immédiate)</li>
+          <li>Avoir de la naloxone accessible</li>
+          <li>Ne pas conduire en cas de somnolence</li>
+        </ul>
+      </div>
+      <div class="info-card orange">
+        <h4>⚠ Signaux d'alarme à signaler</h4>
+        <ul>
+          <li>Vous prenez plus que prescrit pour le même effet</li>
+          <li>Vous prenez les opioïdes en dehors des douleurs</li>
+          <li>Vous avez peur de manquer et faites des réserves</li>
+          <li>Vous obtenez des ordonnances auprès de plusieurs médecins</li>
+          <li>Vous achetez des opioïdes hors prescription</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DOULEUR -->
+    <div class="section-title">
+      <div class="section-icon teal">🩹</div>
+      Et ma douleur ? Alternatives aux opioïdes
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--navy);margin-bottom:0.8rem;">Un des défis du sevrage des opioïdes de prescription est la gestion de la <strong>douleur sous-jacente réelle</strong>. Des alternatives existent, souvent sous-utilisées :</p>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>💊 Analgésiques non opioïdes</h4>
+        <ul>
+          <li>Paracétamol (doses adaptées)</li>
+          <li>Anti-inflammatoires (AINS) si tolérance digestive</li>
+          <li>Prégabaline / gabapentine (douleur neuropathique)</li>
+          <li>Antidépresseurs (douleur chronique : duloxétine, amitriptyline)</li>
+        </ul>
+      </div>
+      <div class="info-card green">
+        <h4>🌀 Approches non médicamenteuses</h4>
+        <ul>
+          <li>Hypnoanalgésie — efficace sur les douleurs chroniques</li>
+          <li>Acupuncture corporelle (douleurs ostéoarticulaires, neuropathiques)</li>
+          <li>Kinésithérapie, activité physique adaptée</li>
+          <li>TCC douleur chronique (psychologie de la douleur)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TRAITEMENTS USCA -->
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Traitements médicamenteux</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-subst">🟣 Méthadone — si dépendance sévère aux opioïdes forts</span>
+        <span class="treatment-tag tag-teal">🟢 Buprénorphine — alternative selon profil</span>
+        <span class="treatment-tag tag-navy">💊 Décroissance progressive guidée</span>
+        <span class="treatment-tag tag-navy">💊 Traitement de la douleur adapté</span>
+        <span class="treatment-tag tag-red">🚑 Kit naloxone de sortie</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Approches non médicamenteuses</h4>
+      <div class="info-cards">
+        <div class="info-card green">
+          <h4>🌀 Hypnoanalgésie</h4>
+          <p>L'hypnose thérapeutique est particulièrement indiquée ici. Elle peut réduire la perception de la douleur chronique et aider à développer une analgésie sans médicament.</p>
+        </div>
+        <div class="info-card green">
+          <h4>🪡 Acupuncture</h4>
+          <p>Efficace pour les douleurs de sevrage et la gestion de la douleur chronique associée. L'acupuncture corporelle cible les voies de la douleur et le système nerveux autonome.</p>
+        </div>
+      </div>
+      <div class="info-cards" style="margin-top:0.6rem;">
+        <div class="info-card green">
+          <h4>🥽 Réalité Virtuelle (TRV)</h4>
+          <p>La TRV de relaxation immersive a montré des effets analgésiques documentés. Elle peut réduire la perception de la douleur et le recours aux opioïdes pendant le séjour.</p>
+        </div>
+        <div class="info-card orange">
+          <h4>🧠 Psychologie de la douleur</h4>
+          <p>Travail sur la catastrophisation, la kinésiophobie, les émotions liées à la douleur chronique. Approche TCC spécifique douleur.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESSOURCES -->
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item">
+        <div class="resource-icon">🆘</div>
+        <div>
+          <div class="resource-number">15 (SAMU)</div>
+          <div class="resource-label">Surdose · Urgence vitale<br>Perte de conscience</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">📞</div>
+        <div>
+          <div class="resource-number">0 800 23 13 13</div>
+          <div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">💬</div>
+        <div>
+          <div class="resource-number">3114</div>
+          <div class="resource-label">Prévention suicide<br>24h/24</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🩺</div>
+        <div>
+          <div class="resource-number">Médecin traitant</div>
+          <div class="resource-label">Suivi de la douleur et du TSO<br>Coordination des soins</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🏠</div>
+        <div>
+          <div class="resource-number">CSAPA</div>
+          <div class="resource-label">Suivi ambulatoire TSO<br>Gratuit, confidentiel</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🤝</div>
+        <div>
+          <div class="resource-number">NA — Narcotiques Anonymes</div>
+          <div class="resource-label">narcotiquesanonymes.org<br>Groupes de parole</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand appeler le 15 immédiatement</div>
+      <ul>
+        <li>Difficultés respiratoires, respiration très lente</li>
+        <li>Perte de conscience ou impossibilité à rester éveillé·e</li>
+        <li>Lèvres ou ongles bleutés</li>
+        <li>Convulsions</li>
+        <li>Confusion intense, désorientation</li>
+        <li>Pensées de se faire du mal</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">
+        Administrez la naloxone si disponible · Placez en PLS · Appelez le <span class="dark-number">15</span> · Restez présent·e.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>
+      Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>
+      Contact : addicto.psl@aphp.fr
+    </div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>

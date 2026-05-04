@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Méthamphétamine — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A; --navy-light: #2A3F6B;
+    --teal: #2A9D8F; --teal-pale: #E8F6F4;
+    --amber: #E9A84C; --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F; --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB; --gray-100: #EEF1F4; --gray-200: #D9DFE6; --gray-600: #5A6678;
+    /* Cyan électrique / bleu glacial */
+    --substance: #006B8A; --substance-light: #0089B0; --substance-pale: #E5F6FA;
+    --substance-mid: #00A0C8; --substance-accent: #40C8E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--gray-50); color: var(--navy); font-size: 0.95rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 820px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 32px rgba(27,42,74,0.10); overflow: hidden; }
+
+  .header { background: linear-gradient(135deg, #001E28 0%, var(--substance) 55%, #003040 100%); padding: 2.5rem 2.5rem 2rem; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -50px; right: -50px; width: 240px; height: 240px; border-radius: 50%; background: rgba(64,200,232,0.08); }
+  .header::after  { content: ''; position: absolute; bottom: -20px; left: 25%; width: 300px; height: 110px; border-radius: 50%; background: rgba(64,200,232,0.04); }
+
+  .header-badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); color: #fff; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3em 0.9em; border-radius: 20px; margin-bottom: 1rem; }
+  .header h1 { font-family: 'DM Serif Display', serif; font-size: 2.3rem; color: #fff; line-height: 1.15; margin-bottom: 0.4rem; }
+  .header h1 .substance-names { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 400; color: rgba(255,255,255,0.58); margin-top: 0.2rem; font-style: italic; }
+  .header-subtitle { color: rgba(255,255,255,0.80); font-size: 1rem; margin-top: 0.6rem; max-width: 580px; }
+  .header-warning-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(224,122,95,0.25); border: 1px solid rgba(224,122,95,0.52); color: #F5A090; font-size: 0.75rem; font-weight: 600; padding: 0.3em 0.9em; border-radius: 20px; margin-top: 1rem; }
+
+  .content { padding: 2rem 2.5rem 1.5rem; }
+
+  .intro-box { border-left: 4px solid var(--substance-mid); background: var(--substance-pale); border-radius: 0 8px 8px 0; padding: 1.2rem 1.4rem; margin-bottom: 2rem; }
+  .intro-box p { color: var(--navy); font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .intro-box p:last-child { margin-bottom: 0; }
+  .intro-box strong { color: var(--substance); }
+
+  .section-title { display: flex; align-items: center; gap: 0.7rem; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 2rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--gray-100); }
+  .section-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; flex-shrink: 0; }
+  .section-icon.subst { background: var(--substance-pale); }
+  .section-icon.teal  { background: var(--teal-pale); }
+  .section-icon.amber { background: var(--amber-pale); }
+  .section-icon.red   { background: var(--red-pale); }
+  .section-icon.navy  { background: rgba(27,42,74,0.08); }
+
+  /* Voies d'administration */
+  .routes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.6rem; margin: 1rem 0; }
+  .route-card { padding: 0.9rem 0.7rem; border-radius: 8px; background: var(--gray-50); border: 1px solid var(--gray-100); text-align: center; }
+  .route-card .route-icon { font-size: 1.6rem; display: block; margin-bottom: 0.4rem; }
+  .route-card .route-name { font-size: 0.78rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .route-card .route-risk { font-size: 0.72rem; color: var(--gray-600); line-height: 1.3; }
+  .route-card.high-risk { border-color: var(--red-soft); background: var(--red-pale); }
+  .route-card.high-risk .route-risk { color: var(--red-soft); font-weight: 600; }
+
+  .mechanism-visual { display: flex; align-items: flex-start; gap: 0; margin: 1rem 0 0.5rem; }
+  .mech-step { flex: 1; text-align: center; padding: 1rem 0.8rem; background: var(--gray-50); border-radius: 10px; }
+  .mech-step .emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .mech-step .label { font-size: 0.78rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+  .mech-step .sublabel { font-size: 0.78rem; color: var(--gray-600); line-height: 1.4; }
+  .mech-arrow { display: flex; align-items: center; justify-content: center; padding: 0 0.5rem; color: var(--substance-accent); font-size: 1.3rem; padding-top: 1.5rem; flex-shrink: 0; }
+  .mech-caption { font-size: 0.8rem; color: var(--gray-600); font-style: italic; text-align: center; margin-top: 0.6rem; line-height: 1.5; }
+
+  .effects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .effects-col h4 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-600); margin-bottom: 0.6rem; }
+  .effects-col ul { list-style: none; padding: 0; }
+  .effects-col ul li { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.88rem; color: var(--navy); margin-bottom: 0.45rem; line-height: 1.4; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-top: 0.3em; flex-shrink: 0; }
+  .dot-green { background: var(--teal); } .dot-orange { background: var(--amber); } .dot-red { background: var(--red-soft); } .dot-navy { background: var(--substance-mid); }
+
+  .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .info-card { padding: 1rem 1.1rem; border-radius: 8px; border-left: 3px solid; }
+  .info-card.green  { background: var(--teal-pale); border-color: var(--teal); }
+  .info-card.orange { background: var(--amber-pale); border-color: var(--amber); }
+  .info-card.red    { background: var(--red-pale); border-color: var(--red-soft); }
+  .info-card.subst  { background: var(--substance-pale); border-color: var(--substance-mid); }
+  .info-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-card.green  h4 { color: var(--teal); }
+  .info-card.orange h4 { color: #B87A20; }
+  .info-card.red    h4 { color: var(--red-soft); }
+  .info-card.subst  h4 { color: var(--substance); }
+  .info-card p, .info-card ul { font-size: 0.84rem; color: var(--navy); line-height: 1.5; }
+  .info-card ul { list-style: none; padding: 0; }
+  .info-card.green  ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+  .info-card.orange ul li::before { content: "→ "; color: var(--amber); font-weight: 600; }
+  .info-card.red    ul li::before { content: "⚠ "; color: var(--red-soft); font-weight: 600; }
+  .info-card.subst  ul li::before { content: "→ "; color: var(--substance-mid); font-weight: 600; }
+
+  .alert-box { border-left: 4px solid var(--red-soft); background: var(--red-pale); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .alert-box .alert-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red-soft); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .alert-box ul, .alert-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .alert-box ul { list-style: none; padding: 0; }
+  .alert-box ul li { margin-bottom: 0.3rem; }
+  .alert-box ul li::before { content: "⚠ "; }
+
+  .dark-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1rem 0; color: #fff; }
+  .dark-box .dark-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #F5C878; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+  .dark-box ul { list-style: none; padding: 0; font-size: 0.88rem; line-height: 1.6; }
+  .dark-box ul li { margin-bottom: 0.3rem; }
+  .dark-box ul li::before { content: "• "; color: var(--amber); font-weight: 700; }
+  .dark-number { display: inline-block; background: rgba(255,255,255,0.15); border-radius: 6px; padding: 0.1em 0.5em; font-weight: 700; font-size: 1rem; color: #fff; }
+
+  .chemsex-box { background: linear-gradient(135deg, #1A1A2E 0%, #16213E 60%, #0F3460 100%); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1rem 0; color: #fff; border-left: 4px solid #6278C4; }
+  .chemsex-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #8BA3F5; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+  .chemsex-box p { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 0.6rem; }
+  .chemsex-box p:last-child { margin-bottom: 0; }
+  .chemsex-box strong { color: #8BA3F5; }
+  .chemsex-box ul { list-style: none; padding: 0; font-size: 0.88rem; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .chemsex-box ul li { margin-bottom: 0.3rem; }
+  .chemsex-box ul li::before { content: "→ "; color: #8BA3F5; font-weight: 600; }
+
+  .teal-box { background: var(--teal-pale); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .teal-box .teal-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .teal-box ul, .teal-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .teal-box ul { list-style: none; padding: 0; }
+  .teal-box ul li { margin-bottom: 0.3rem; }
+  .teal-box ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+
+  .treatment-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; }
+  .treatment-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3em 0.8em; border-radius: 20px; font-size: 0.8rem; font-weight: 500; border: 1.5px solid; }
+  .tag-navy  { background: rgba(27,42,74,0.06); border-color: var(--navy-light); color: var(--navy); }
+  .tag-teal  { background: var(--teal-pale); border-color: var(--teal); color: #1A6B60; }
+  .tag-amber { background: var(--amber-pale); border-color: var(--amber); color: #8A5A10; }
+  .tag-subst { background: var(--substance-pale); border-color: var(--substance-mid); color: var(--substance); }
+
+  table.interaction-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 0.8rem; }
+  table.interaction-table th { background: var(--navy); color: #fff; padding: 0.5rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.03em; }
+  table.interaction-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--gray-100); vertical-align: top; line-height: 1.45; }
+  table.interaction-table tr:last-child td { border-bottom: none; }
+  table.interaction-table tr:nth-child(even) td { background: var(--gray-50); }
+  .risk-high { color: #C0392B; font-weight: 600; }
+  .risk-mod  { color: #B87A20; font-weight: 600; }
+
+  .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.8rem; }
+  .resource-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--gray-100); }
+  .resource-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .resource-label { font-size: 0.78rem; color: var(--gray-600); line-height: 1.3; }
+  .resource-number { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; border-top: 1px solid var(--gray-100); background: var(--gray-50); }
+  .footer-left { font-size: 0.78rem; color: var(--gray-600); line-height: 1.5; }
+  .footer-badge { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--substance-mid); border: 1.5px solid var(--substance-mid); padding: 0.3em 0.8em; border-radius: 20px; }
+
+  @media (max-width: 600px) {
+    .content { padding: 1.4rem 1.2rem; } .header { padding: 1.8rem 1.2rem 1.4rem; } .header h1 { font-size: 1.8rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns: 1fr; }
+    .routes-grid { grid-template-columns: 1fr 1fr; }
+    .mechanism-visual { flex-direction: column; } .mech-arrow { transform: rotate(90deg); padding: 0.3rem 0; align-self: center; }
+    .footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+  }
+  @media print { body { background: #fff; } .page { box-shadow: none; border-radius: 0; margin: 0; } .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>Méthamphétamine<span class="substance-names">crystal meth · ice · tina · speed crystal · P · N-méthylamphétamine</span></h1>
+    <p class="header-subtitle">Comprendre la méthamphétamine, l'une des substances les plus addictives qui existent, ses risques psychiatriques et les approches disponibles à l'USCA.</p>
+    <div class="header-warning-badge">🚨 Dépendance parmi les plus intenses · Psychose fréquente · Risques infectieux si slam</div>
+  </div>
+
+  <div class="content">
+
+    <div class="intro-box">
+      <p>La méthamphétamine est un <strong>stimulant puissant du système nerveux central</strong>, structurellement proche de l'amphétamine mais avec une action plus intense et plus durable. Elle libère des quantités massives de dopamine — jusqu'à <strong>3 fois plus que la cocaïne</strong> — et ses effets durent 8 à 12 heures, contre 20 à 40 minutes pour la cocaïne.</p>
+      <p>Elle est consommée sous forme cristalline (crystal meth, « ice »), fumée, sniffée ou injectée. En France, elle est surtout présente dans les contextes de <strong>chemsex</strong> (souvent appelée « Tina ») et dans certains milieux festifs. Sa dépendance est parmi les plus redoutables connues — elle détruit rapidement le cerveau, le corps et le tissu social.</p>
+      <p><strong>Vous méritez de l'aide, quelle que soit la situation dans laquelle vous vous trouvez.</strong></p>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon subst">💉</div>
+      Voies d'administration et intensité du risque
+    </div>
+
+    <div class="routes-grid">
+      <div class="route-card">
+        <span class="route-icon">💨</span>
+        <div class="route-name">Sniff</div>
+        <div class="route-risk">Absorption intermédiaire · Lésions nasales</div>
+      </div>
+      <div class="route-card">
+        <span class="route-icon">🔥</span>
+        <div class="route-name">Fumé (ice)</div>
+        <div class="route-risk">Rush rapide · Poumons exposés</div>
+      </div>
+      <div class="route-card high-risk">
+        <span class="route-icon">💉</span>
+        <div class="route-name">Injection IV</div>
+        <div class="route-risk">Rush maximal · VIH, VHC, endocardite</div>
+      </div>
+      <div class="route-card high-risk">
+        <span class="route-icon">⚡</span>
+        <div class="route-name">Slam (chemsex)</div>
+        <div class="route-risk">Dépendance ultra-rapide · Risques infectieux cumulés</div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment la méthamphétamine agit-elle sur le cerveau ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">💥</span>
+        <div class="label">Prise aiguë</div>
+        <div class="sublabel">La méthamphétamine libère massivement la dopamine (3× la cocaïne), bloque sa recapture et inhibe sa dégradation. Euphorie intense, énergie surhumaine, confiance totale. Durée : 8–12 heures.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🏚</span>
+        <div class="label">Avec le temps</div>
+        <div class="sublabel">Les neurones dopaminergiques sont endommagés de façon potentiellement permanente. Le cerveau n'est plus capable de ressentir du plaisir normalement (anhedonie sévère). La dépendance s'installe en quelques semaines.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🌑</span>
+        <div class="label">Le crash et l'après</div>
+        <div class="sublabel">Après un binge : épuisement extrême, dépression profonde, paranoïa, parfois psychose qui peut persister des semaines. Insomnie prolongée. Risque suicidaire élevé dans les 48h suivant l'arrêt.</div>
+      </div>
+    </div>
+    <p class="mech-caption">La méthamphétamine est l'une des rares substances dont la consommation répétée provoque des dommages neurologiques documentés à l'imagerie cérébrale — réversibles partiellement après des mois ou années d'abstinence.</p>
+
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Les effets de la méthamphétamine
+    </div>
+
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets recherchés (8–12h)</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Euphorie intense et durable</li>
+          <li><span class="dot dot-green"></span>Énergie et endurance exceptionnelles</li>
+          <li><span class="dot dot-green"></span>Confiance, sentiment de toute-puissance</li>
+          <li><span class="dot dot-green"></span>Augmentation de l'excitation sexuelle</li>
+          <li><span class="dot dot-green"></span>Suppression de l'appétit et du sommeil</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Risques immédiats</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Tachycardie sévère, HTA, hyperthermie</li>
+          <li><span class="dot dot-orange"></span>Bruxisme, bouche sèche (meth mouth)</li>
+          <li><span class="dot dot-red"></span>Psychose aiguë — paranoïa, hallucinations</li>
+          <li><span class="dot dot-red"></span>Infarctus, AVC (même chez les jeunes)</li>
+          <li><span class="dot dot-red"></span>Comportements violents, automutilation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:0.8rem;">
+      <h4 style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-600);margin-bottom:0.6rem;">Effets de la consommation prolongée</h4>
+      <ul style="list-style:none;padding:0;columns:2;gap:1.5rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Dommages cérébraux documentés (IRM)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Psychose chronique, paranoia persistante</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Dégradation dentaire sévère (meth mouth)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Dénutrition, perte de poids extrême</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Risques infectieux majeurs si injection/slam</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Isolement social total, ruptures relationnelles</li>
+      </ul>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-title">🧠 La psychose meth — une urgence psychiatrique</div>
+      <p style="font-size:0.88rem;color:var(--navy);line-height:1.5;">La méthamphétamine provoque des épisodes psychotiques (paranoïa intense, hallucinations visuelles et auditives, idées de persécution) qui peuvent survenir lors d'une prise aiguë ou s'installer progressivement. <strong>Après un binge prolongé, l'état psychotique peut durer des jours à des semaines</strong>, même après arrêt de la substance. Une hospitalisation psychiatrique peut être nécessaire.</p>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon navy">🔵</div>
+      Méthamphétamine et chemsex / slam
+    </div>
+
+    <div class="chemsex-box">
+      <div class="chemsex-title">💬 Tina — en parler à l'équipe</div>
+      <p>La méthamphétamine est utilisée en chemsex sous le nom de « <strong>Tina</strong> ». Elle est la substance de chemsex dont le potentiel addictif est le plus élevé. La dépendance peut s'installer après seulement quelques épisodes de slam.</p>
+      <ul>
+        <li><strong>Slam (injection IV) :</strong> le rush est extrêmement intense et la dépendance peut s'installer en quelques semaines. Risques infectieux critiques.</li>
+        <li>Les épisodes de chemsex peuvent durer plusieurs jours sans sommeil — la psychose de privation de sommeil s'ajoute à la psychose meth</li>
+        <li>Altération du consentement et comportements sexuels à risque sous influence</li>
+        <li>Exposition VIH/VHC — PrEP et dépistage systématiques à l'USCA</li>
+        <li>Association fréquente avec GHB/GBL → risque vital (surdosage GHB difficile à évaluer quand stimulé par la meth)</li>
+        <li><strong>Kits d'injection stériles disponibles au CAARUD</strong></li>
+      </ul>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <div class="dark-box">
+      <div class="dark-title">🚫 Associations à risque vital</div>
+      <ul>
+        <li><strong>Méthamphétamine + GHB/GBL :</strong> la meth masque les effets sédatifs du GHB → surdosage GHB imprévisible et fréquent</li>
+        <li><strong>Méthamphétamine + IMAO :</strong> syndrome sérotoninergique/adrénergique sévère, mortel</li>
+        <li><strong>Méthamphétamine + cocaïne ou autres stimulants :</strong> surcharge cardiovasculaire massive</li>
+        <li><strong>Méthamphétamine + alcool :</strong> le stress cardiaque est sous-estimé car l'ivresse est masquée</li>
+      </ul>
+    </div>
+
+    <table class="interaction-table">
+      <thead><tr><th>Association</th><th>Risque principal</th><th>Niveau</th></tr></thead>
+      <tbody>
+        <tr><td>Méth + GHB/GBL</td><td>Surdosage GHB masqué par la stimulation</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>Méth + IMAO</td><td>Syndrome adrénergique/sérotoninergique sévère</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>Méth + cocaïne / MDMA / 3-MMC</td><td>Hyperthermie, infarctus, psychose</td><td class="risk-high">⚠ Très élevé</td></tr>
+        <tr><td>Méth + alcool</td><td>Stress cardiovasculaire sous-estimé</td><td class="risk-mod">⚡ Élevé</td></tr>
+        <tr><td>Méth + poppers</td><td>Hypotension paradoxale, arythmie</td><td class="risk-mod">⚡ Élevé</td></tr>
+        <tr><td>Méth + antipsychotiques</td><td>Allongement QT, interactions complexes</td><td class="risk-mod">⚡ Modéré</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Précautions essentielles</h4>
+        <ul>
+          <li>Ne jamais consommer seul·e</li>
+          <li>Matériel stérile si injection (CAARUD)</li>
+          <li>Éviter les sessions de plus de 24h sans sommeil</li>
+          <li>Manger et boire régulièrement pendant la session</li>
+          <li>Préservatifs systématiques en contexte chemsex</li>
+          <li>PrEP si exposition répétée au VIH</li>
+        </ul>
+      </div>
+      <div class="info-card red">
+        <h4>🚫 Situations d'arrêt immédiat</h4>
+        <ul>
+          <li>Début de paranoïa, de pensées de persécution</li>
+          <li>Fièvre élevée, transpiration excessive</li>
+          <li>Douleur thoracique, palpitations</li>
+          <li>Comportement agressif envers soi ou les autres</li>
+          <li>Pensées suicidaires</li>
+          <li>→ Appeler le 15 ou le 3114</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="teal-box">
+      <div class="teal-title">💬 Le cerveau peut récupérer — mais cela prend du temps</div>
+      <p>Des études d'imagerie cérébrale montrent que <strong>le cerveau se répare progressivement après arrêt de la méthamphétamine</strong> — la récupération des circuits dopaminergiques peut prendre 1 à 2 ans d'abstinence. Les troubles cognitifs, la dépression et la dysphorie s'améliorent significativement avec le temps.</p>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Traitements médicamenteux — symptomatiques et comorbidités</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-navy">💊 Antipsychotiques si psychose meth-induite</span>
+        <span class="treatment-tag tag-navy">💊 Traitement de la dépression post-binge</span>
+        <span class="treatment-tag tag-navy">💊 Traitement de l'insomnie sévère</span>
+        <span class="treatment-tag tag-teal">🩺 Dépistage VIH / VHC / IST systématique</span>
+        <span class="treatment-tag tag-subst">💊 Naltrexone — données préliminaires encourageantes</span>
+      </div>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>🥽 Réalité Virtuelle (TRV)</h4>
+        <p>Scénarios spécifiques chemsex et contextes festifs. Désensibilisation des déclencheurs situationnels. Entraînement aux compétences de refus dans des environnements virtuels reproduisant les contextes de consommation.</p>
+      </div>
+      <div class="info-card green">
+        <h4>🌀 Hypnose thérapeutique</h4>
+        <p>Travail sur les automatismes profondément ancrés (rituels du slam, chemsex). Gestion des envies impulsives. Reconstruction progressive de la capacité à ressentir du plaisir sans substance.</p>
+      </div>
+    </div>
+    <div class="info-cards" style="margin-top:0.6rem;">
+      <div class="info-card green">
+        <h4>🪡 Acupuncture (NADA)</h4>
+        <p>Aide à la gestion du craving, de l'insomnie sévère et de l'anxiété post-binge. Proposée après stabilisation psychiatrique.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>🧠 Psychologie — reconstruction</h4>
+        <p>Travail sur les traumas sous-jacents, la sexualité et les relations sans substances, la gestion de l'impulsivité et de la dysphorie. Accompagnement social si précarité.</p>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item"><div class="resource-icon">🆘</div><div><div class="resource-number">15 (SAMU)</div><div class="resource-label">Psychose aiguë, hyperthermie<br>Urgence cardiovasculaire</div></div></div>
+      <div class="resource-item"><div class="resource-icon">💬</div><div><div class="resource-number">3114</div><div class="resource-label">Prévention suicide<br>Post-binge, 24h/24</div></div></div>
+      <div class="resource-item"><div class="resource-icon">📞</div><div><div class="resource-number">0 800 23 13 13</div><div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🔵</div><div><div class="resource-number">Aides · 0 805 160 011</div><div class="resource-label">Chemsex, slam<br>aides.org — sans jugement</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🏠</div><div><div class="resource-number">CAARUD</div><div class="resource-label">Kits stériles, dépistage<br>Sans condition</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🩺</div><div><div class="resource-number">CSAPA</div><div class="resource-label">Suivi ambulatoire<br>Gratuit, confidentiel</div></div></div>
+    </div>
+
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand appeler le 15 immédiatement</div>
+      <ul>
+        <li>Agitation extrême, psychose, comportement dangereux</li>
+        <li>Température très élevée, sueurs abondantes</li>
+        <li>Douleur thoracique, palpitations, essoufflement</li>
+        <li>Perte de conscience, convulsions</li>
+        <li>Pensées de se faire du mal ou de faire du mal aux autres</li>
+        <li>Après un long binge : idées suicidaires dans les 24–48h suivant l'arrêt</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">Le <span class="dark-number">3114</span> est disponible 24h/24 pour les crises suicidaires. Le <span class="dark-number">15</span> pour toute urgence physique ou psychiatrique.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>

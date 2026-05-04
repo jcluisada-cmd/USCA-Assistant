@@ -2982,6 +2982,17 @@ async function resumeSession(session) {
     // Reconstruire la liste ordonnée à partir de questions_json
     var sessionQuestions = (session.questions_json || []).map(function(src) { return srcMap[src]; }).filter(Boolean);
     if (!sessionQuestions.length) { await startFreshSession(item, questions); return; }
+    // Auto-extension : sessions créées avec un cap de 10 (avant fix v3.98) sont étendues
+    // à la totalité des questions de l'item — sans perdre l'historique des réponses.
+    if (sessionQuestions.length < questions.length) {
+      var existingSources = new Set(sessionQuestions.map(function(q) { return q._source; }));
+      var missing = questions.filter(function(q) { return !existingSources.has(q._source); });
+      sessionQuestions = sessionQuestions.concat(missing);
+      var newQuestionsJson = sessionQuestions.map(function(q) { return q._source; });
+      try {
+        await sb.from('qcm_sessions').update({ questions_json: newQuestionsJson, nb_questions: sessionQuestions.length }).eq('id', session.id);
+      } catch(updErr) { console.warn('Extension session impossible :', updErr); }
+    }
     // Récupérer les réponses déjà enregistrées
     var existingReponses = await QCMEngine.getSessionReponses(session.id);
     var answeredSources = new Set(existingReponses.map(function(r) { return r.question_source; }));

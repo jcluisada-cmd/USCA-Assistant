@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Kétamine — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A; --navy-light: #2A3F6B;
+    --teal: #2A9D8F; --teal-pale: #E8F6F4;
+    --amber: #E9A84C; --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F; --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB; --gray-100: #EEF1F4; --gray-200: #D9DFE6; --gray-600: #5A6678;
+    /* Gris-bleu acier */
+    --substance: #2C4A6E; --substance-light: #3A5E8A;
+    --substance-pale: #EBF0F7; --substance-mid: #4A7AAE; --substance-accent: #7AAAD4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--gray-50); color: var(--navy); font-size: 0.95rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 820px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 32px rgba(27,42,74,0.10); overflow: hidden; }
+
+  .header { background: linear-gradient(135deg, #101E30 0%, var(--substance) 55%, #1A3050 100%); padding: 2.5rem 2.5rem 2rem; position: relative; overflow: hidden; }
+  .header::before { content:''; position:absolute; top:-50px; right:-50px; width:240px; height:240px; border-radius:50%; background:rgba(122,170,212,0.08); }
+  .header::after  { content:''; position:absolute; bottom:-20px; left:25%; width:300px; height:110px; border-radius:50%; background:rgba(122,170,212,0.04); }
+
+  .header-badge { display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); color:#fff; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.3em 0.9em; border-radius:20px; margin-bottom:1rem; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:2.4rem; color:#fff; line-height:1.15; margin-bottom:0.4rem; }
+  .header h1 .substance-names { display:block; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:400; color:rgba(255,255,255,0.58); margin-top:0.2rem; font-style:italic; }
+  .header-subtitle { color:rgba(255,255,255,0.80); font-size:1rem; margin-top:0.6rem; max-width:580px; }
+  .header-warning-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(233,168,76,0.22); border:1px solid rgba(233,168,76,0.48); color:#F5C878; font-size:0.75rem; font-weight:600; padding:0.3em 0.9em; border-radius:20px; margin-top:1rem; }
+
+  .content { padding:2rem 2.5rem 1.5rem; }
+
+  .intro-box { border-left:4px solid var(--substance-mid); background:var(--substance-pale); border-radius:0 8px 8px 0; padding:1.2rem 1.4rem; margin-bottom:2rem; }
+  .intro-box p { color:var(--navy); font-size:0.95rem; margin-bottom:0.5rem; }
+  .intro-box p:last-child { margin-bottom:0; }
+  .intro-box strong { color:var(--substance); }
+
+  .section-title { display:flex; align-items:center; gap:0.7rem; font-size:1.1rem; font-weight:600; color:var(--navy); margin:2rem 0 1rem; padding-bottom:0.6rem; border-bottom:2px solid var(--gray-100); }
+  .section-icon { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-size:1rem; flex-shrink:0; }
+  .section-icon.subst { background:var(--substance-pale); }
+  .section-icon.teal  { background:var(--teal-pale); }
+  .section-icon.amber { background:var(--amber-pale); }
+  .section-icon.red   { background:var(--red-pale); }
+  .section-icon.navy  { background:rgba(27,42,74,0.08); }
+
+  /* Paradoxe thérapeutique — élément spécifique kétamine */
+  .paradox-box {
+    display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:10px; overflow:hidden; border:2px solid var(--substance-mid); margin:1rem 0;
+  }
+  .paradox-side { padding:1.1rem 1.2rem; }
+  .paradox-side.treat { background:var(--teal-pale); border-right:2px solid var(--substance-mid); }
+  .paradox-side.addict { background:var(--red-pale); }
+  .paradox-side h4 { font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.6rem; display:flex; align-items:center; gap:0.4rem; }
+  .paradox-side.treat  h4 { color:var(--teal); }
+  .paradox-side.addict h4 { color:var(--red-soft); }
+  .paradox-side ul { list-style:none; padding:0; font-size:0.83rem; color:var(--navy); line-height:1.55; }
+  .paradox-side ul li { margin-bottom:0.35rem; display:flex; align-items:flex-start; gap:0.4rem; }
+  .paradox-side.treat  ul li::before { content:"✓"; color:var(--teal); font-weight:700; flex-shrink:0; }
+  .paradox-side.addict ul li::before { content:"→"; color:var(--red-soft); font-weight:700; flex-shrink:0; }
+
+  /* Dose-effets kétamine */
+  .dose-visual { margin:1rem 0; display:flex; flex-direction:column; gap:0.5rem; }
+  .dose-row { display:flex; align-items:center; gap:0.8rem; }
+  .dose-badge { min-width:90px; text-align:right; font-size:0.78rem; font-weight:700; color:var(--gray-600); flex-shrink:0; }
+  .dose-bar-wrap { flex:1; background:var(--gray-100); border-radius:6px; height:22px; overflow:hidden; position:relative; }
+  .dose-bar { height:100%; border-radius:6px; display:flex; align-items:center; padding-left:0.6rem; }
+  .dose-bar span { font-size:0.72rem; font-weight:600; color:#fff; }
+  .dose-bar.low    { background:var(--teal); width:25%; }
+  .dose-bar.mid    { background:var(--amber); width:55%; }
+  .dose-bar.high   { background:var(--red-soft); width:80%; }
+  .dose-bar.k-hole { background:#8B0000; width:100%; }
+
+  .mechanism-visual { display:flex; align-items:flex-start; gap:0; margin:1rem 0 0.5rem; }
+  .mech-step { flex:1; text-align:center; padding:1rem 0.8rem; background:var(--gray-50); border-radius:10px; }
+  .mech-step .emoji { font-size:2rem; display:block; margin-bottom:0.5rem; }
+  .mech-step .label { font-size:0.78rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.25rem; }
+  .mech-step .sublabel { font-size:0.78rem; color:var(--gray-600); line-height:1.4; }
+  .mech-arrow { display:flex; align-items:center; justify-content:center; padding:0 0.5rem; color:var(--substance-accent); font-size:1.3rem; padding-top:1.5rem; flex-shrink:0; }
+  .mech-caption { font-size:0.8rem; color:var(--gray-600); font-style:italic; text-align:center; margin-top:0.6rem; line-height:1.5; }
+
+  .effects-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .effects-col h4 { font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-600); margin-bottom:0.6rem; }
+  .effects-col ul { list-style:none; padding:0; }
+  .effects-col ul li { display:flex; align-items:flex-start; gap:0.5rem; font-size:0.88rem; color:var(--navy); margin-bottom:0.45rem; line-height:1.4; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-top:0.3em; flex-shrink:0; }
+  .dot-green  { background:var(--teal); }
+  .dot-orange { background:var(--amber); }
+  .dot-red    { background:var(--red-soft); }
+  .dot-dark   { background:#8B0000; }
+
+  .info-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .info-card { padding:1rem 1.1rem; border-radius:8px; border-left:3px solid; }
+  .info-card.green  { background:var(--teal-pale); border-color:var(--teal); }
+  .info-card.orange { background:var(--amber-pale); border-color:var(--amber); }
+  .info-card.red    { background:var(--red-pale); border-color:var(--red-soft); }
+  .info-card.subst  { background:var(--substance-pale); border-color:var(--substance-mid); }
+  .info-card h4 { font-size:0.8rem; font-weight:700; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.04em; }
+  .info-card.green  h4 { color:var(--teal); }
+  .info-card.orange h4 { color:#B87A20; }
+  .info-card.red    h4 { color:var(--red-soft); }
+  .info-card.subst  h4 { color:var(--substance); }
+  .info-card p, .info-card ul { font-size:0.84rem; color:var(--navy); line-height:1.5; }
+  .info-card ul { list-style:none; padding:0; }
+  .info-card.green  ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+  .info-card.orange ul li::before { content:"→ "; color:var(--amber); font-weight:600; }
+  .info-card.red    ul li::before { content:"⚠ "; color:var(--red-soft); font-weight:600; }
+  .info-card.subst  ul li::before { content:"→ "; color:var(--substance-mid); font-weight:600; }
+
+  .alert-box { border-left:4px solid var(--red-soft); background:var(--red-pale); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .alert-box .alert-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--red-soft); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .alert-box ul, .alert-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .alert-box ul { list-style:none; padding:0; }
+  .alert-box ul li { margin-bottom:0.3rem; }
+  .alert-box ul li::before { content:"⚠ "; }
+
+  .dark-box { background:linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius:10px; padding:1.4rem 1.6rem; margin:1rem 0; color:#fff; }
+  .dark-box .dark-title { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#F5C878; margin-bottom:0.7rem; display:flex; align-items:center; gap:0.4rem; }
+  .dark-box ul { list-style:none; padding:0; font-size:0.88rem; line-height:1.6; }
+  .dark-box ul li { margin-bottom:0.3rem; }
+  .dark-box ul li::before { content:"• "; color:var(--amber); font-weight:700; }
+  .dark-number { display:inline-block; background:rgba(255,255,255,0.15); border-radius:6px; padding:0.1em 0.5em; font-weight:700; font-size:1rem; color:#fff; }
+
+  .teal-box { background:var(--teal-pale); border-left:4px solid var(--teal); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .teal-box .teal-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .teal-box ul, .teal-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .teal-box ul { list-style:none; padding:0; }
+  .teal-box ul li { margin-bottom:0.3rem; }
+  .teal-box ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+
+  .treatment-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.7rem; }
+  .treatment-tag { display:inline-flex; align-items:center; gap:0.3rem; padding:0.3em 0.8em; border-radius:20px; font-size:0.8rem; font-weight:500; border:1.5px solid; }
+  .tag-navy  { background:rgba(27,42,74,0.06); border-color:var(--navy-light); color:var(--navy); }
+  .tag-teal  { background:var(--teal-pale); border-color:var(--teal); color:#1A6B60; }
+  .tag-amber { background:var(--amber-pale); border-color:var(--amber); color:#8A5A10; }
+  .tag-subst { background:var(--substance-pale); border-color:var(--substance-mid); color:var(--substance); }
+
+  table.interaction-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin-top:0.8rem; }
+  table.interaction-table th { background:var(--navy); color:#fff; padding:0.5rem 0.8rem; text-align:left; font-weight:600; font-size:0.78rem; letter-spacing:0.03em; }
+  table.interaction-table td { padding:0.55rem 0.8rem; border-bottom:1px solid var(--gray-100); vertical-align:top; line-height:1.45; }
+  table.interaction-table tr:last-child td { border-bottom:none; }
+  table.interaction-table tr:nth-child(even) td { background:var(--gray-50); }
+  .risk-high { color:#C0392B; font-weight:600; }
+  .risk-mod  { color:#B87A20; font-weight:600; }
+  .risk-low  { color:var(--gray-600); }
+
+  .resource-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:0.8rem; }
+  .resource-item { display:flex; align-items:center; gap:0.7rem; padding:0.7rem 1rem; background:var(--gray-50); border-radius:8px; border:1px solid var(--gray-100); }
+  .resource-icon { font-size:1.3rem; flex-shrink:0; }
+  .resource-label { font-size:0.78rem; color:var(--gray-600); line-height:1.3; }
+  .resource-number { font-size:0.9rem; font-weight:700; color:var(--navy); }
+
+  .footer { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 2.5rem; border-top:1px solid var(--gray-100); background:var(--gray-50); }
+  .footer-left { font-size:0.78rem; color:var(--gray-600); line-height:1.5; }
+  .footer-badge { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--substance-mid); border:1.5px solid var(--substance-mid); padding:0.3em 0.8em; border-radius:20px; }
+
+  @media (max-width:600px) {
+    .content { padding:1.4rem 1.2rem; } .header { padding:1.8rem 1.2rem 1.4rem; } .header h1 { font-size:1.8rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns:1fr; }
+    .paradox-box { grid-template-columns:1fr; }
+    .paradox-side.treat { border-right:none; border-bottom:2px solid var(--substance-mid); }
+    .mechanism-visual { flex-direction:column; } .mech-arrow { transform:rotate(90deg); padding:0.3rem 0; align-self:center; }
+    .footer { flex-direction:column; gap:0.8rem; text-align:center; }
+  }
+  @media print { body { background:#fff; } .page { box-shadow:none; border-radius:0; margin:0; } .header { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>Kétamine<span class="substance-names">kéta · spéciale K · K · vitamin K · dissociatif</span></h1>
+    <p class="header-subtitle">Comprendre la kétamine, ses usages médicaux et récréatifs, ses complications somatiques graves et les approches disponibles à l'USCA.</p>
+    <div class="header-warning-badge">⚠ Cystite kétaminique irréversible · Hépatotoxicité · Dépendance psychologique intense</div>
+  </div>
+
+  <div class="content">
+
+    <div class="intro-box">
+      <p>La kétamine est un <strong>anesthésique dissociatif</strong> utilisé en médecine depuis les années 1960. Elle est présente dans tous les blocs opératoires, en pédiatrie et en médecine d'urgence. Paradoxalement, elle fait aussi l'objet d'un usage récréatif pour ses effets dissociatifs et hallucinogènes.</p>
+      <p>Ce paradoxe se retrouve aujourd'hui dans les soins : la kétamine (sous forme d'eskétamine, Spravato®) est approuvée en France pour certaines formes de <strong>dépression résistante</strong>. Elle est aussi étudiée comme traitement du trouble de l'usage d'alcool. Vous vous trouvez donc dans une situation singulière : vous êtes soigné·e pour une dépendance à une substance qui est aussi un médicament.</p>
+      <p><strong>Cette fiche n'a pas pour but de vous juger, mais de vous informer — notamment sur les complications somatiques qui sont les plus préoccupantes avec la kétamine.</strong></p>
+    </div>
+
+    <!-- PARADOXE THÉRAPEUTIQUE -->
+    <div class="section-title">
+      <div class="section-icon subst">⚖️</div>
+      La kétamine : médicament et substance addictive
+    </div>
+
+    <div class="paradox-box">
+      <div class="paradox-side treat">
+        <h4>✅ Kétamine comme médicament</h4>
+        <ul>
+          <li>Anesthésique général en chirurgie et urgences</li>
+          <li>Eskétamine (Spravato®) : dépression résistante aux traitements</li>
+          <li>Études en cours : alcoolodépendance, TSPT, douleur chronique</li>
+          <li>Propriétés anti-inflammatoires et neuroprotectrices</li>
+          <li>Utilisée en soins palliatifs (douleurs réfractaires)</li>
+        </ul>
+      </div>
+      <div class="paradox-side addict">
+        <h4>⚠ Kétamine en usage récréatif / addictif</h4>
+        <ul>
+          <li>Dépendance psychologique intense, craving puissant</li>
+          <li>Cystite kétaminique — complication urinaire grave et irréversible</li>
+          <li>Hépatotoxicité avec usage fréquent</li>
+          <li>Dissociation chronique, troubles cognitifs</li>
+          <li>K-hole : état dissociatif profond à risque de trauma</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="teal-box">
+      <div class="teal-title">💬 Ce que ça change pour votre prise en charge</div>
+      <p>L'équipe ne vous proposera pas de kétamine comme traitement de votre dépendance à la kétamine. Mais si vous avez une <strong>dépression sévère associée</strong>, d'autres options thérapeutiques existent et seront évaluées avec vous.</p>
+    </div>
+
+    <!-- DOSES ET EFFETS -->
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Effets selon la dose — la kétamine est très dose-dépendante
+    </div>
+
+    <div class="dose-visual">
+      <div class="dose-row">
+        <div class="dose-badge">Faible dose</div>
+        <div class="dose-bar-wrap"><div class="dose-bar low"><span>Légère dissociation, analgésie, euphorie</span></div></div>
+      </div>
+      <div class="dose-row">
+        <div class="dose-badge">Dose moyenne</div>
+        <div class="dose-bar-wrap"><div class="dose-bar mid"><span>Dissociation modérée, hallucinations, déréalisation</span></div></div>
+      </div>
+      <div class="dose-row">
+        <div class="dose-badge">Dose élevée</div>
+        <div class="dose-bar-wrap"><div class="dose-bar high"><span>Dissociation profonde, perte du sens du corps</span></div></div>
+      </div>
+      <div class="dose-row">
+        <div class="dose-badge">K-hole</div>
+        <div class="dose-bar-wrap"><div class="dose-bar k-hole"><span>Détachement total, incapacité à bouger, expérience NDE</span></div></div>
+      </div>
+    </div>
+
+    <div class="alert-box" style="margin-top:0.5rem;">
+      <div class="alert-title">⚠ Le K-hole n'est pas sans danger</div>
+      <p style="font-size:0.88rem;color:var(--navy);line-height:1.5;">Un K-hole est un état dissociatif profond où la personne est incapable de se déplacer ou d'appeler à l'aide. Elle est entièrement vulnérable. Des chutes, des aspirations (vomissements), des agressions ou des accidents peuvent survenir sans que la personne puisse réagir. <strong>Ne jamais être seul·e en K-hole.</strong></p>
+    </div>
+
+    <!-- MÉCANISME -->
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment la kétamine agit-elle sur le cerveau ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">🔌</span>
+        <div class="label">Action principale</div>
+        <div class="sublabel">La kétamine bloque les récepteurs NMDA (glutamate). Elle dissocie la perception du corps et du monde extérieur. Elle stimule aussi les récepteurs opioïdes et sigma, expliquant ses effets antidouleur et euphoriants.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🔁</span>
+        <div class="label">Avec le temps</div>
+        <div class="sublabel">Le cerveau s'adapte au blocage NMDA. La tolérance s'installe rapidement. Le craving est lié aux effets dissociatifs eux-mêmes — recherche d'un état altéré de conscience plus que d'euphorie.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🌫</span>
+        <div class="label">À l'arrêt</div>
+        <div class="sublabel">Pas de sevrage physique grave (pas d'épilepsie). Mais : dysphorie, anhédonie, anxiété, insomnie, état de déréalisation persistant. Le craving psychologique peut être très intense.</div>
+      </div>
+    </div>
+    <p class="mech-caption">La kétamine est l'une des rares substances dont la dépendance est motivée par la dissociation elle-même — souvent une façon de fuir des souffrances psychiques intenses, un trauma, ou une douleur chronique.</p>
+
+    <!-- EFFETS -->
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets recherchés</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Dissociation, sentiment de flotter</li>
+          <li><span class="dot dot-green"></span>Analgésie — soulagement de la douleur</li>
+          <li><span class="dot dot-green"></span>Hallucinations visuelles et auditives</li>
+          <li><span class="dot dot-green"></span>Sentiment de détachement de soi et du monde</li>
+          <li><span class="dot dot-green"></span>Réduction de l'anxiété et des ruminations</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Risques immédiats</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Confusion, désorientation, vulnérabilité physique</li>
+          <li><span class="dot dot-orange"></span>Nausées, vomissements (risque d'inhalation)</span></li>
+          <li><span class="dot dot-red"></span>K-hole — immobilité totale, sans défense</li>
+          <li><span class="dot dot-red"></span>Tachycardie, HTA (effet sympathomimétique)</li>
+          <li><span class="dot dot-red"></span>Laryngospasme (rare mais grave)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COMPLICATIONS SOMATIQUES — cœur de la fiche kétamine -->
+    <div class="section-title">
+      <div class="section-icon red">🏥</div>
+      Les complications somatiques — à connaître absolument
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:0.8rem;">Ce sont les complications <strong>les plus spécifiques à la kétamine</strong> et les plus méconnues des patients. Elles sont directement liées à la fréquence et aux doses consommées.</p>
+
+    <div class="info-cards">
+      <div class="info-card red">
+        <h4>🚽 Cystite kétaminique</h4>
+        <p>C'est la complication la plus grave et la plus invalidante. La kétamine et ses métabolites sont excrétés dans les urines et endommagent directement la paroi vésicale. Symptômes : <strong>brûlures urinaires, urgenturie, pollakiurie extrême, sang dans les urines, douleurs pelviennes intenses</strong>. Dans les cas sévères : rétraction vésicale irréversible nécessitant une chirurgie (remplacement de la vessie). <strong>L'arrêt de la kétamine est le seul traitement efficace.</strong> Les dommages ne sont pas totalement réversibles si l'usage a été prolongé.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>🫀 Hépatotoxicité</h4>
+        <p>Un usage fréquent et à haute dose peut entraîner des <strong>lésions hépatiques</strong> avec élévation des enzymes hépatiques (transaminases, gamma-GT). Dans les cas graves : dilatation des voies biliaires, cholangiopathie. Surveillance biologique hépatique recommandée si usage régulier. L'arrêt entraîne en général une amélioration progressive.</p>
+      </div>
+    </div>
+    <div class="info-cards" style="margin-top:0.6rem;">
+      <div class="info-card orange">
+        <h4>🧠 Troubles cognitifs</h4>
+        <p>Usage régulier : troubles de la mémoire, difficultés de concentration, ralentissement cognitif. Un état de <strong>déréalisation chronique</strong> (sentiment permanent que le monde n'est pas réel) peut s'installer. Partiellement réversible à l'arrêt.</p>
+      </div>
+      <div class="info-card subst">
+        <h4>🔮 Flashbacks dissociatifs</h4>
+        <p>Des épisodes de déréalisation ou de dépersonnalisation peuvent survenir spontanément après l'arrêt, sans consommation récente — similaires aux HPPD (hallucinogen persisting perception disorder). Anxiogènes mais non dangereux pour la vie.</p>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-title">🚽 Signes d'alerte urinaires — consultez en urgence</div>
+      <ul>
+        <li>Uriner plus de 10 à 20 fois par jour</li>
+        <li>Douleurs lors de la miction ou douleurs pelviennes permanentes</li>
+        <li>Sang dans les urines (hématurie)</li>
+        <li>Incapacité à retenir les urines</li>
+      </ul>
+      <p style="font-size:0.88rem;color:var(--navy);margin-top:0.5rem;">→ Ces symptômes nécessitent une consultation urologiqueurgente et un bilan rénal. Plus tôt ils sont pris en charge, plus les dommages peuvent être limités.</p>
+    </div>
+
+    <!-- INTERACTIONS -->
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <div class="dark-box">
+      <div class="dark-title">🚫 Associations à risque élevé</div>
+      <ul>
+        <li><strong>Kétamine + dépresseurs SNC</strong> (alcool, BZD, GHB, opioïdes) : dépression respiratoire, coma</li>
+        <li><strong>Kétamine + stimulants</strong> (cocaïne, méthamphétamine) : surcharge cardiovasculaire, hyperthermie</li>
+        <li><strong>Kétamine + IMAO :</strong> syndrome adrénergique grave (HTA extrême)</li>
+      </ul>
+    </div>
+
+    <table class="interaction-table">
+      <thead><tr><th>Association</th><th>Risque principal</th><th>Niveau</th></tr></thead>
+      <tbody>
+        <tr><td>Kétamine + alcool</td><td>Dépression respiratoire, perte de conscience, aspiration</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Kétamine + GHB/GBL</td><td>Coma, arrêt respiratoire</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Kétamine + BZD / opioïdes</td><td>Sédation excessive, apnée</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Kétamine + IMAO</td><td>Crise hypertensive sévère</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Kétamine + cocaïne / méth</td><td>Tachycardie, HTA, hyperthermie</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>Kétamine + cannabis</td><td>Dissociation et paranoïa majorées</td><td class="risk-mod">⚡ Modéré</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RdRD -->
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Précautions essentielles</h4>
+        <ul>
+          <li>Ne jamais consommer seul·e, surtout à haute dose</li>
+          <li>Ne jamais mélanger avec alcool, GHB ou opioïdes</li>
+          <li>Position latérale de sécurité si K-hole observé</li>
+          <li>Limiter la fréquence — chaque prise aggrave la cystite</li>
+          <li>Bilan urinaire régulier si usage fréquent</li>
+          <li>Bilan hépatique si consommation régulière depuis plus de 6 mois</li>
+        </ul>
+      </div>
+      <div class="info-card red">
+        <h4>🚫 Avec la cystite kétaminique</h4>
+        <ul>
+          <li>Continuer la kétamine aggrave irréversiblement la vessie</li>
+          <li>Il n'existe pas de traitement médicamenteux curatif tant que la kétamine continue</li>
+          <li>La chirurgie (cystectomie, entérocystoplastie) peut être nécessaire</li>
+          <li>L'arrêt total est le seul moyen de stopper l'évolution</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TRAITEMENTS USCA -->
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Bilan somatique et traitements</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-red">🚽 Bilan urologique — cystoscopie si symptômes</span>
+        <span class="treatment-tag tag-subst">🫀 Bilan hépatique — transaminases, gamma-GT, bili</span>
+        <span class="treatment-tag tag-teal">😔 Évaluation psychiatrique — dépression, TSPT, douleur</span>
+        <span class="treatment-tag tag-navy">💊 Traitement symptomatique du craving et de l'anxiété</span>
+      </div>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>🌀 Hypnose thérapeutique</h4>
+        <p>Particulièrement indiquée : travail sur la dissociation elle-même, exploration de ce que la kétamine « procure » (fuite, analgésie psychique, détachement), développement d'états de conscience modifiés alternatifs et sécurisants.</p>
+      </div>
+      <div class="info-card green">
+        <h4>🥽 Réalité Virtuelle (TRV)</h4>
+        <p>La TRV peut offrir des expériences immersives alternatives à la dissociation kétaminique — relaxation profonde, visualisation, avec un sentiment de présence sans risque somatique.</p>
+      </div>
+    </div>
+    <div class="info-cards" style="margin-top:0.6rem;">
+      <div class="info-card green">
+        <h4>🪡 Acupuncture</h4>
+        <p>Aide à la gestion du craving, de la douleur chronique associée (souvent à l'origine de l'usage), de l'anxiété et des troubles du sommeil.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>🧠 Psychologie — douleur et dissociation</h4>
+        <p>Travail sur les souffrances qui ont conduit à chercher la dissociation. Exploration des traumas, des douleurs chroniques, de la dépression. La kétamine a souvent une fonction « anesthésiante » psychique à comprendre.</p>
+      </div>
+    </div>
+
+    <!-- RESSOURCES -->
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item"><div class="resource-icon">🆘</div><div><div class="resource-number">15 (SAMU)</div><div class="resource-label">Urgence vitale · K-hole avec détresse resp.<br>Perte de conscience</div></div></div>
+      <div class="resource-item"><div class="resource-icon">📞</div><div><div class="resource-number">0 800 23 13 13</div><div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div></div></div>
+      <div class="resource-item"><div class="resource-icon">💬</div><div><div class="resource-number">3114</div><div class="resource-label">Prévention suicide<br>24h/24</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🩺</div><div><div class="resource-number">Urologue / CSAPA</div><div class="resource-label">Suivi vésical et addictologique<br>En parallèle après sortie</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🏠</div><div><div class="resource-number">CAARUD</div><div class="resource-label">Réduction des risques<br>Sans jugement</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🤝</div><div><div class="resource-number">CSAPA</div><div class="resource-label">Suivi ambulatoire<br>Gratuit, confidentiel</div></div></div>
+    </div>
+
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand appeler le 15 immédiatement</div>
+      <ul>
+        <li>Personne en K-hole avec respiration lente ou bruyante — position latérale de sécurité puis appeler</li>
+        <li>Vomissements pendant une dissociation profonde (risque d'aspiration)</li>
+        <li>Douleurs thoraciques, palpitations intenses</li>
+        <li>Difficultés respiratoires</li>
+        <li>Convulsions</li>
+        <li>Pensées de se faire du mal</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">En cas de K-hole observé chez quelqu'un : placez-le en PLS, surveillez la respiration, appelez le <span class="dark-number">15</span>.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>

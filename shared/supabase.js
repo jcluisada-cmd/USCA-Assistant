@@ -292,6 +292,32 @@ window.db = {
     if (error) throw error;
   },
 
+  // ════════════════ FICHES SUBSTANCES (poussées au patient) ════════════════
+
+  /** Récupère les fiches substances partagées avec un patient */
+  async getSubstancesPatient(patientId) {
+    const { data, error } = await sb.from('substances_patient').select('*').eq('patient_id', patientId).order('created_at');
+    if (error) throw error;
+    return data;
+  },
+
+  /** Pousse une fiche substance à un patient */
+  async addSubstancePatient(patientId, ficheSlug, partagePar) {
+    const { data, error } = await sb.from('substances_patient').insert({
+      patient_id: patientId,
+      fiche_slug: ficheSlug,
+      partage_par: partagePar
+    }).select().single();
+    if (error) throw error;
+    return data;
+  },
+
+  /** Retire une fiche substance partagée */
+  async removeSubstancePatient(patientId, ficheSlug) {
+    const { error } = await sb.from('substances_patient').delete().eq('patient_id', patientId).eq('fiche_slug', ficheSlug);
+    if (error) throw error;
+  },
+
   // ════════════════ ÉVÉNEMENTS (RDV, entretiens, consultations) ════════════════
 
   async getEvenements(patientId) {

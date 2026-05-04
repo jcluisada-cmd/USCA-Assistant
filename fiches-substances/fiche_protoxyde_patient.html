@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Protoxyde d'azote — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A; --navy-light: #2A3F6B;
+    --teal: #2A9D8F; --teal-pale: #E8F6F4;
+    --amber: #E9A84C; --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F; --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB; --gray-100: #EEF1F4; --gray-200: #D9DFE6; --gray-600: #5A6678;
+    /* Gris métallique / argent */
+    --substance: #3D4E60; --substance-light: #506070;
+    --substance-pale: #EFF1F4; --substance-mid: #6A8099; --substance-accent: #9AB0C4;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--gray-50); color:var(--navy); font-size:0.95rem; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .page { max-width:820px; margin:2rem auto; background:#fff; border-radius:12px; box-shadow:0 4px 32px rgba(27,42,74,0.10); overflow:hidden; }
+
+  .header { background:linear-gradient(135deg, #1A2430 0%, var(--substance) 55%, #2A3848 100%); padding:2.5rem 2.5rem 2rem; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:-50px; right:-50px; width:240px; height:240px; border-radius:50%; background:rgba(154,176,196,0.08); }
+  .header::after  { content:''; position:absolute; bottom:-20px; left:25%; width:300px; height:110px; border-radius:50%; background:rgba(154,176,196,0.04); }
+
+  .header-badge { display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); color:#fff; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.3em 0.9em; border-radius:20px; margin-bottom:1rem; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:2.2rem; color:#fff; line-height:1.15; margin-bottom:0.4rem; }
+  .header h1 .substance-names { display:block; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:400; color:rgba(255,255,255,0.58); margin-top:0.2rem; font-style:italic; }
+  .header-subtitle { color:rgba(255,255,255,0.80); font-size:1rem; margin-top:0.6rem; max-width:580px; }
+  .header-warning-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(224,122,95,0.25); border:1px solid rgba(224,122,95,0.52); color:#F5A090; font-size:0.75rem; font-weight:600; padding:0.3em 0.9em; border-radius:20px; margin-top:1rem; }
+
+  .content { padding:2rem 2.5rem 1.5rem; }
+
+  .intro-box { border-left:4px solid var(--substance-mid); background:var(--substance-pale); border-radius:0 8px 8px 0; padding:1.2rem 1.4rem; margin-bottom:2rem; }
+  .intro-box p { color:var(--navy); font-size:0.95rem; margin-bottom:0.5rem; }
+  .intro-box p:last-child { margin-bottom:0; }
+  .intro-box strong { color:var(--substance); }
+
+  .section-title { display:flex; align-items:center; gap:0.7rem; font-size:1.1rem; font-weight:600; color:var(--navy); margin:2rem 0 1rem; padding-bottom:0.6rem; border-bottom:2px solid var(--gray-100); }
+  .section-icon { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-size:1rem; flex-shrink:0; }
+  .section-icon.subst { background:var(--substance-pale); }
+  .section-icon.teal  { background:var(--teal-pale); }
+  .section-icon.amber { background:var(--amber-pale); }
+  .section-icon.red   { background:var(--red-pale); }
+  .section-icon.navy  { background:rgba(27,42,74,0.08); }
+
+  /* Timeline neurologique B12 */
+  .neuro-timeline { display:flex; gap:0; margin:1rem 0; border-radius:10px; overflow:hidden; border:1px solid var(--gray-200); }
+  .nt-step { flex:1; padding:0.9rem 0.8rem; border-right:1px solid var(--gray-200); background:#fff; }
+  .nt-step:last-child { border-right:none; }
+  .nt-step.s1 { background:#EDFAEE; }
+  .nt-step.s2 { background:var(--amber-pale); }
+  .nt-step.s3 { background:var(--red-pale); }
+  .nt-step.s4 { background:#F3E8F8; }
+  .nt-period { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.3rem; }
+  .nt-step.s1 .nt-period { color:#1A6B2A; }
+  .nt-step.s2 .nt-period { color:#B87A20; }
+  .nt-step.s3 .nt-period { color:var(--red-soft); }
+  .nt-step.s4 .nt-period { color:#7B3F9E; }
+  .nt-title { font-size:0.82rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; }
+  .nt-items { font-size:0.76rem; color:var(--gray-600); line-height:1.5; }
+
+  .mechanism-visual { display:flex; align-items:flex-start; gap:0; margin:1rem 0 0.5rem; }
+  .mech-step { flex:1; text-align:center; padding:1rem 0.8rem; background:var(--gray-50); border-radius:10px; }
+  .mech-step .emoji { font-size:2rem; display:block; margin-bottom:0.5rem; }
+  .mech-step .label { font-size:0.78rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.25rem; }
+  .mech-step .sublabel { font-size:0.78rem; color:var(--gray-600); line-height:1.4; }
+  .mech-arrow { display:flex; align-items:center; justify-content:center; padding:0 0.5rem; color:var(--substance-accent); font-size:1.3rem; padding-top:1.5rem; flex-shrink:0; }
+  .mech-caption { font-size:0.8rem; color:var(--gray-600); font-style:italic; text-align:center; margin-top:0.6rem; line-height:1.5; }
+
+  .effects-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .effects-col h4 { font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-600); margin-bottom:0.6rem; }
+  .effects-col ul { list-style:none; padding:0; }
+  .effects-col ul li { display:flex; align-items:flex-start; gap:0.5rem; font-size:0.88rem; color:var(--navy); margin-bottom:0.45rem; line-height:1.4; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-top:0.3em; flex-shrink:0; }
+  .dot-green  { background:var(--teal); }
+  .dot-orange { background:var(--amber); }
+  .dot-red    { background:var(--red-soft); }
+  .dot-purple { background:#7B3F9E; }
+
+  /* Schéma B12 — spécifique protoxyde */
+  .b12-visual {
+    background:var(--gray-50); border-radius:10px; border:1px solid var(--gray-100);
+    padding:1.2rem 1.4rem; margin:1rem 0;
+  }
+  .b12-visual h4 { font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:0.8rem; }
+  .b12-chain { display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.8rem; }
+  .b12-node { padding:0.4em 0.8em; border-radius:20px; font-size:0.78rem; font-weight:600; white-space:nowrap; }
+  .b12-node.ok    { background:var(--teal-pale); color:#1A6B60; border:1.5px solid var(--teal); }
+  .b12-node.block { background:var(--red-pale); color:#C0392B; border:1.5px solid var(--red-soft); }
+  .b12-node.effect{ background:var(--amber-pale); color:#8A5A10; border:1.5px solid var(--amber); }
+  .b12-arrow { color:var(--substance-mid); font-size:1.1rem; flex-shrink:0; }
+  .b12-note { font-size:0.78rem; color:var(--gray-600); font-style:italic; line-height:1.5; }
+
+  .info-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .info-card { padding:1rem 1.1rem; border-radius:8px; border-left:3px solid; }
+  .info-card.green  { background:var(--teal-pale); border-color:var(--teal); }
+  .info-card.orange { background:var(--amber-pale); border-color:var(--amber); }
+  .info-card.red    { background:var(--red-pale); border-color:var(--red-soft); }
+  .info-card.subst  { background:var(--substance-pale); border-color:var(--substance-mid); }
+  .info-card.purple { background:#F3E8F8; border-color:#7B3F9E; }
+  .info-card h4 { font-size:0.8rem; font-weight:700; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.04em; }
+  .info-card.green  h4 { color:var(--teal); }
+  .info-card.orange h4 { color:#B87A20; }
+  .info-card.red    h4 { color:var(--red-soft); }
+  .info-card.subst  h4 { color:var(--substance); }
+  .info-card.purple h4 { color:#7B3F9E; }
+  .info-card p, .info-card ul { font-size:0.84rem; color:var(--navy); line-height:1.5; }
+  .info-card ul { list-style:none; padding:0; }
+  .info-card.green  ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+  .info-card.orange ul li::before { content:"→ "; color:var(--amber); font-weight:600; }
+  .info-card.red    ul li::before { content:"⚠ "; color:var(--red-soft); font-weight:600; }
+  .info-card.purple ul li::before { content:"→ "; color:#7B3F9E; font-weight:600; }
+
+  .alert-box { border-left:4px solid var(--red-soft); background:var(--red-pale); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .alert-box .alert-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--red-soft); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .alert-box ul, .alert-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .alert-box ul { list-style:none; padding:0; }
+  .alert-box ul li { margin-bottom:0.3rem; }
+  .alert-box ul li::before { content:"⚠ "; }
+
+  .dark-box { background:linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius:10px; padding:1.4rem 1.6rem; margin:1rem 0; color:#fff; }
+  .dark-box .dark-title { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#F5C878; margin-bottom:0.7rem; display:flex; align-items:center; gap:0.4rem; }
+  .dark-box ul { list-style:none; padding:0; font-size:0.88rem; line-height:1.6; }
+  .dark-box ul li { margin-bottom:0.3rem; }
+  .dark-box ul li::before { content:"• "; color:var(--amber); font-weight:700; }
+  .dark-number { display:inline-block; background:rgba(255,255,255,0.15); border-radius:6px; padding:0.1em 0.5em; font-weight:700; font-size:1rem; color:#fff; }
+
+  .teal-box { background:var(--teal-pale); border-left:4px solid var(--teal); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .teal-box .teal-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .teal-box ul, .teal-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .teal-box ul { list-style:none; padding:0; }
+  .teal-box ul li { margin-bottom:0.3rem; }
+  .teal-box ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+
+  .treatment-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.7rem; }
+  .treatment-tag { display:inline-flex; align-items:center; gap:0.3rem; padding:0.3em 0.8em; border-radius:20px; font-size:0.8rem; font-weight:500; border:1.5px solid; }
+  .tag-navy  { background:rgba(27,42,74,0.06); border-color:var(--navy-light); color:var(--navy); }
+  .tag-teal  { background:var(--teal-pale); border-color:var(--teal); color:#1A6B60; }
+  .tag-amber { background:var(--amber-pale); border-color:var(--amber); color:#8A5A10; }
+  .tag-purple { background:#F3E8F8; border-color:#7B3F9E; color:#7B3F9E; }
+
+  table.interaction-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin-top:0.8rem; }
+  table.interaction-table th { background:var(--navy); color:#fff; padding:0.5rem 0.8rem; text-align:left; font-weight:600; font-size:0.78rem; letter-spacing:0.03em; }
+  table.interaction-table td { padding:0.55rem 0.8rem; border-bottom:1px solid var(--gray-100); vertical-align:top; line-height:1.45; }
+  table.interaction-table tr:last-child td { border-bottom:none; }
+  table.interaction-table tr:nth-child(even) td { background:var(--gray-50); }
+  .risk-high { color:#C0392B; font-weight:600; }
+  .risk-mod  { color:#B87A20; font-weight:600; }
+  .risk-low  { color:var(--gray-600); }
+
+  .resource-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:0.8rem; }
+  .resource-item { display:flex; align-items:center; gap:0.7rem; padding:0.7rem 1rem; background:var(--gray-50); border-radius:8px; border:1px solid var(--gray-100); }
+  .resource-icon { font-size:1.3rem; flex-shrink:0; }
+  .resource-label { font-size:0.78rem; color:var(--gray-600); line-height:1.3; }
+  .resource-number { font-size:0.9rem; font-weight:700; color:var(--navy); }
+
+  .footer { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 2.5rem; border-top:1px solid var(--gray-100); background:var(--gray-50); }
+  .footer-left { font-size:0.78rem; color:var(--gray-600); line-height:1.5; }
+  .footer-badge { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--substance-mid); border:1.5px solid var(--substance-mid); padding:0.3em 0.8em; border-radius:20px; }
+
+  @media (max-width:600px) {
+    .content { padding:1.4rem 1.2rem; } .header { padding:1.8rem 1.2rem 1.4rem; } .header h1 { font-size:1.7rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns:1fr; }
+    .neuro-timeline { flex-direction:column; }
+    .nt-step { border-right:none; border-bottom:1px solid var(--gray-200); }
+    .mechanism-visual { flex-direction:column; } .mech-arrow { transform:rotate(90deg); padding:0.3rem 0; align-self:center; }
+    .b12-chain { flex-direction:column; align-items:flex-start; }
+    .footer { flex-direction:column; gap:0.8rem; text-align:center; }
+  }
+  @media print { body { background:#fff; } .page { box-shadow:none; border-radius:0; margin:0; } .header { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>Protoxyde d'azote<span class="substance-names">N₂O · gaz hilarant · proto · ballons · laughing gas · nanette</span></h1>
+    <p class="header-subtitle">Comprendre le protoxyde d'azote, ses risques neurologiques par carence en vitamine B12 et les approches disponibles à l'USCA.</p>
+    <div class="header-warning-badge">🧠 Atteintes neurologiques graves et irréversibles si carence B12 — souvent méconnues</div>
+  </div>
+
+  <div class="content">
+
+    <div class="intro-box">
+      <p>Le protoxyde d'azote (N₂O) est un <strong>gaz anesthésique et analgésique</strong> utilisé en médecine et en dentisterie depuis plus de 150 ans. Il est aussi présent dans les cartouches de chantilly. En usage récréatif, il est inhalé via des ballons ou des cartouches, pour ses effets dissociatifs et euphorisants très brefs (30 à 60 secondes).</p>
+      <p>Sa réputation de substance « douce » est trompeuse. Un usage <strong>fréquent ou en grande quantité</strong> entraîne une carence en vitamine B12 qui peut causer des <strong>atteintes neurologiques graves et parfois irréversibles</strong>, notamment des paralysies. Ces complications sont très sous-estimées, en particulier par les jeunes consommateurs.</p>
+      <p>En France, la vente aux mineurs est interdite depuis 2021 et la consommation dans l'espace public est prohibée. Le protoxyde est classé depuis 2021 comme <strong>produit stupéfiant</strong> en cas d'usage détourné.</p>
+    </div>
+
+    <!-- MÉCANISME -->
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment le protoxyde d'azote agit-il ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">💨</span>
+        <div class="label">Effet immédiat</div>
+        <div class="sublabel">Le N₂O bloque les récepteurs NMDA (glutamate) et stimule les récepteurs opioïdes. Effet dissociatif en quelques secondes : euphorie, sensations de légèreté, rires, altération auditive. Durée : 30 à 60 secondes.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🔁</span>
+        <div class="label">Le cycle de répétition</div>
+        <div class="sublabel">L'effet très court pousse à répéter les inhalations rapidement. Certains consommateurs enchaînent des dizaines voire des centaines de ballons lors d'une même session.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🧬</span>
+        <div class="label">Le mécanisme B12</div>
+        <div class="sublabel">Le N₂O oxyde irréversiblement la vitamine B12 et bloque la synthèse de myéline (la gaine des nerfs). Un usage régulier ou intensif épuise les réserves de B12 et démyélinise les nerfs.</div>
+      </div>
+    </div>
+    <p class="mech-caption">C'est ce mécanisme de destruction de la myéline qui explique les paralysies et les atteintes neurologiques — indépendamment de tout autre effet psychoactif.</p>
+
+    <!-- B12 SCHÉMA -->
+    <div class="section-title">
+      <div class="section-icon red">🧬</div>
+      La carence en vitamine B12 — comprendre le mécanisme
+    </div>
+
+    <div class="b12-visual">
+      <h4>Comment le N₂O détruit la myéline</h4>
+      <div class="b12-chain">
+        <span class="b12-node ok">Vitamine B12 active</span>
+        <span class="b12-arrow">→</span>
+        <span class="b12-node block">N₂O l'oxyde et la détruit</span>
+        <span class="b12-arrow">→</span>
+        <span class="b12-node effect">B12 inactive → méthionine ↓</span>
+        <span class="b12-arrow">→</span>
+        <span class="b12-node effect">Synthèse myéline ↓</span>
+        <span class="b12-arrow">→</span>
+        <span class="b12-node block">Démyélinisation des nerfs</span>
+      </div>
+      <p class="b12-note">La myéline est la gaine protectrice qui entoure les nerfs et permet la transmission de l'influx nerveux. Sa destruction provoque des symptômes neurologiques progressifs. Les reserves de B12 peuvent être épuisées en quelques semaines d'usage intensif — et la récupération, même après supplémentation, peut être incomplète.</p>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-title">⚠ Facteurs qui aggravent le risque neurologique</div>
+      <ul>
+        <li>Régime végétalien ou végétarien strict (réserves de B12 déjà basses)</li>
+        <li>Antécédent de carence en B12 connue</li>
+        <li>Gastrite atrophique, maladie de Biermer</li>
+        <li>Usage de metformine (réduit l'absorption de B12)</li>
+        <li>Jeune âge (myélinisation encore incomplète)</li>
+        <li>Consommation de grandes quantités en peu de temps (« sessions » intensives)</li>
+      </ul>
+    </div>
+
+    <!-- TIMELINE NEURO -->
+    <div class="section-title">
+      <div class="section-icon red">⏱</div>
+      Progression des atteintes neurologiques
+    </div>
+
+    <div class="neuro-timeline">
+      <div class="nt-step s1">
+        <div class="nt-period">Usage modéré</div>
+        <div class="nt-title">Symptômes discrets</div>
+        <div class="nt-items">Fourmillements mains/pieds<br>Fatigue inhabituelle<br>Légers troubles d'équilibre</div>
+      </div>
+      <div class="nt-step s2">
+        <div class="nt-period">Usage répété</div>
+        <div class="nt-title">Atteinte progressive</div>
+        <div class="nt-items">Engourdissements persistants<br>Faiblesse musculaire<br>Troubles de la marche</div>
+      </div>
+      <div class="nt-step s3">
+        <div class="nt-period">Usage intensif</div>
+        <div class="nt-title">Myélopathie</div>
+        <div class="nt-items">Paralysie partielle<br>Perte de sensibilité étendue<br>Troubles sphinctériens</div>
+      </div>
+      <div class="nt-step s4">
+        <div class="nt-period">Cas graves</div>
+        <div class="nt-title">Séquelles irréversibles</div>
+        <div class="nt-items">Paralysie permanente<br>Fauteuil roulant<br>Atteinte possible malgré traitement</div>
+      </div>
+    </div>
+
+    <div class="teal-box" style="margin-top:0.5rem;">
+      <div class="teal-title">💬 La récupération est possible — mais pas garantie</div>
+      <p>Si les symptômes neurologiques sont pris en charge tôt avec des <strong>injections de vitamine B12</strong> et un arrêt total du protoxyde, la récupération peut être complète ou partielle. En cas d'atteinte sévère ou tardive, des séquelles peuvent persister. <strong>Chaque semaine de délai aggrave le pronostic.</strong></p>
+    </div>
+
+    <!-- EFFETS -->
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Les effets du protoxyde d'azote
+    </div>
+
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets recherchés (très brefs)</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Euphorie intense, rires incontrôlables</li>
+          <li><span class="dot dot-green"></span>Sensation de légèreté, de flottement</li>
+          <li><span class="dot dot-green"></span>Légère dissociation, perception altérée des sons</li>
+          <li><span class="dot dot-green"></span>Réduction brève de l'anxiété</li>
+          <li><span class="dot dot-green"></span>Effet analgésique temporaire</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Risques immédiats</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Hypoxie si inhalation prolongée sans O₂</li>
+          <li><span class="dot dot-orange"></span>Pertes de connaissance, chutes</li>
+          <li><span class="dot dot-red"></span>Engelures / brûlures (cartouches sous pression, -40°C)</li>
+          <li><span class="dot dot-red"></span>Accident si inhalé en conduisant</li>
+          <li><span class="dot dot-red"></span>Asphyxie si inhalation dans un espace confiné</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:0.8rem;">
+      <h4 style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-600);margin-bottom:0.6rem;">Effets d'un usage fréquent ou intensif</h4>
+      <ul style="list-style:none;padding:0;columns:2;gap:1.5rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Atteinte neurologique (myélopathie B12)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Paralysies des membres inférieurs</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Anémie mégaloblastique (manque de B12)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Troubles de la mémoire et de la concentration</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-orange" style="margin-top:0.3em;flex-shrink:0;"></span>Dépression, irritabilité, troubles de l'humeur</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-orange" style="margin-top:0.3em;flex-shrink:0;"></span>Dépendance psychologique (craving conditionné)</li>
+      </ul>
+    </div>
+
+    <!-- COMPLICATIONS SPÉCIFIQUES -->
+    <div class="section-title">
+      <div class="section-icon red">🏥</div>
+      Complications — ce qu'il faut surveiller
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card red">
+        <h4>🧠 Myélopathie sous-aiguë combinée</h4>
+        <p>Atteinte des cordons postérieurs de la moelle épinière (sensibilité profonde) et des faisceaux pyramidaux (motricité). Se manifeste par des <strong>fourmillements ascendants, une faiblesse des membres, des troubles de l'équilibre, parfois une paraplégie</strong>. IRM médullaire indispensable en urgence si symptômes.</p>
+      </div>
+      <div class="info-card purple">
+        <h4>🩸 Anémie mégaloblastique</h4>
+        <p>La carence en B12 empêche la maturation normale des globules rouges. Symptômes : <strong>fatigue profonde, pâleur, essoufflement</strong>. Bilan sanguin (NFS, B12, homocystéine) à demander si usage régulier.</p>
+      </div>
+    </div>
+    <div class="info-cards" style="margin-top:0.6rem;">
+      <div class="info-card orange">
+        <h4>🦷 Engelures buccales et labiales</h4>
+        <p>Les cartouches sont sous très haute pression et à très basse température (-40°C). Inhalation directe : brûlures par le froid des lèvres, de la bouche et de la gorge. Toujours laisser s'échapper dans un ballon d'abord.</p>
+      </div>
+      <div class="info-card subst">
+        <h4>😟 Impact psychologique</h4>
+        <p>Usage massif associé à anxiété, dépression, irritabilité. Chez les jeunes : impact sur le développement cérébral. Dépendance psychologique possible avec craving situationnel (fêtes, stress).</p>
+      </div>
+    </div>
+
+    <!-- INTERACTIONS -->
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <table class="interaction-table">
+      <thead><tr><th>Association</th><th>Risque principal</th><th>Niveau</th></tr></thead>
+      <tbody>
+        <tr><td>Protoxyde + alcool</td><td>Perte de conscience, chute, hypoxie aggravée</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Protoxyde + BZD / opioïdes</td><td>Sédation profonde, apnée</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Protoxyde + kétamine</td><td>Dissociation profonde incontrôlable, K-hole</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Protoxyde + MDMA / stimulants</td><td>Tachycardie, hyperthermie accélérée</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>Protoxyde + cannabis</td><td>Dissociation et paranoïa majorées, désorientation</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>Protoxyde + metformine</td><td>Aggravation de la carence B12</td><td class="risk-mod">⚡ Modéré</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RdRD -->
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Précautions essentielles</h4>
+        <ul>
+          <li>Toujours inhaler via un ballon, jamais directement depuis la cartouche</li>
+          <li>Rester assis·e — les pertes de conscience peuvent survenir</li>
+          <li>Ne pas conduire après inhalation</li>
+          <li>Ne jamais inhaler dans un espace clos ou un sac plastique</li>
+          <li>Faire des pauses — ré-oxygéner entre les ballons</li>
+          <li>Dosage de la B12 si usage fréquent (>1 fois/semaine)</li>
+        </ul>
+      </div>
+      <div class="info-card red">
+        <h4>🚫 Signes neurologiques — consulter en urgence</div>
+        <ul>
+          <li>Fourmillements ou engourdissements des mains ou des pieds</li>
+          <li>Faiblesse musculaire, difficulté à marcher</li>
+          <li>Trouble de l'équilibre inhabituel</li>
+          <li>Sensation de courant électrique dans la colonne (signe de Lhermitte)</li>
+          <li>→ Urgences neurologiques ou médecin traitant immédiatement</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TRAITEMENTS USCA -->
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Bilan biologique et traitement</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-purple">🧬 Dosage vitamine B12 + homocystéine + NFS</span>
+        <span class="treatment-tag tag-teal">💉 Injections de vitamine B12 (hydroxocobalamine) si carence</span>
+        <span class="treatment-tag tag-amber">🧠 IRM médullaire si symptômes neurologiques</span>
+        <span class="treatment-tag tag-navy">💊 Traitement du craving et de l'anxiété sous-jacente</span>
+      </div>
+      <p style="font-size:0.78rem;color:var(--gray-600);margin-top:0.5rem;">⚠ Attention : la supplémentation orale en B12 est insuffisante si la carence est sévère — les injections intramusculaires sont nécessaires.</p>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>🌀 Hypnose thérapeutique</h4>
+        <p>Travail sur les déclencheurs du craving (contextes festifs, stress). Développement d'états de détente alternatifs. Autohypnose comme outil d'apaisement post-sortie.</p>
+      </div>
+      <div class="info-card green">
+        <h4>🪡 Acupuncture</h4>
+        <p>Gestion du craving, de l'anxiété et des troubles du sommeil. Peut accompagner la récupération neurologique en favorisant la détente du système nerveux.</p>
+      </div>
+    </div>
+    <div class="info-cards" style="margin-top:0.6rem;">
+      <div class="info-card green">
+        <h4>🥽 Réalité Virtuelle (TRV)</h4>
+        <p>Relaxation immersive et gestion du stress — alternative directe aux effets de détente recherchés dans le protoxyde, sans risque neurologique.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>🧠 Psychologie</h4>
+        <p>Compréhension du rôle du protoxyde dans la gestion du stress ou des émotions. Travail sur les contextes festifs et les mécanismes de coping alternatifs.</p>
+      </div>
+    </div>
+
+    <!-- RESSOURCES -->
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item"><div class="resource-icon">🆘</div><div><div class="resource-number">15 (SAMU)</div><div class="resource-label">Perte de conscience, paralysie aiguë<br>Urgence neurologique</div></div></div>
+      <div class="resource-item"><div class="resource-icon">📞</div><div><div class="resource-number">0 800 23 13 13</div><div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div></div></div>
+      <div class="resource-item"><div class="resource-icon">💬</div><div><div class="resource-number">3114</div><div class="resource-label">Prévention suicide<br>24h/24</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🩺</div><div><div class="resource-number">Médecin traitant</div><div class="resource-label">Bilan B12 et suivi neurologique<br>Interlocuteur clé post-sortie</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🏠</div><div><div class="resource-number">CAARUD</div><div class="resource-label">Réduction des risques<br>Information sans jugement</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🤝</div><div><div class="resource-number">CSAPA</div><div class="resource-label">Suivi ambulatoire<br>Gratuit, confidentiel</div></div></div>
+    </div>
+
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand consulter en urgence</div>
+      <ul>
+        <li>Fourmillements, engourdissements des membres qui persistent</li>
+        <li>Difficulté à marcher, faiblesse d'un membre</li>
+        <li>Sensation de choc électrique dans la colonne vertébrale à la flexion du cou</li>
+        <li>Perte de connaissance liée à une inhalation</li>
+        <li>Brûlures dans la gorge ou la bouche (cartouche directe)</li>
+        <li>Pensées de se faire du mal</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">Les symptômes neurologiques sont une urgence. Appelez le <span class="dark-number">15</span> ou rendez-vous aux urgences sans attendre. Chaque heure compte pour limiter les séquelles.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>

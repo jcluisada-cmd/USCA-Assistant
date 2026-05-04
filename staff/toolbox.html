@@ -616,6 +616,16 @@ const FICHES_PATIENT_CATS = [
   {cat:"Stimulants",fiches:[{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"}]}
 ];
 
+// Fiches substances poussées au patient — HTML servies depuis ../fiches-substances/fiche_<slug>_patient.html
+const FICHES_SUBSTANCES_CATS = [
+  {cat:"Dépresseurs du SNC",fiches:[{s:"alcool",n:"Alcool"},{s:"ghb",n:"GHB / GBL"}]},
+  {cat:"Stimulants",fiches:[{s:"3mmc",n:"3-MMC / Cathinones"},{s:"cocaine",n:"Cocaïne"},{s:"crack",n:"Crack"},{s:"mdma",n:"MDMA / Ecstasy"},{s:"methamphetamine",n:"Méthamphétamine"}]},
+  {cat:"Opioïdes",fiches:[{s:"heroine",n:"Héroïne"},{s:"opioides_prescription",n:"Opioïdes de prescription"}]},
+  {cat:"Psychodysleptiques",fiches:[{s:"cannabis",n:"Cannabis"},{s:"ketamine",n:"Kétamine"},{s:"lsd",n:"LSD"},{s:"psilocybine",n:"Psilocybine"}]},
+  {cat:"Mésusage médicamenteux",fiches:[{s:"bzd_mesusage",n:"Benzodiazépines (mésusage)"},{s:"protoxyde",n:"Protoxyde d'azote (N₂O)"}]},
+  {cat:"Tabac",fiches:[{s:"tabac",n:"Tabac / Nicotine"}]}
+];
+
 // Les PDFs expert sont servis depuis ../fiches-traitements/fiches_expert/fiche_<slug>.pdf
 const FICHES_EXPERT_CATS = [
   {cat:"Neuroleptiques classiques (1ʳᵉ génération)", fiches:[
@@ -633,8 +643,8 @@ const FICHES_EXPERT_CATS = [
 ];
 
 function TraitementsView({onBack, onPickPatient}) {
-  // "patient" ouvert par défaut (usage courant), "expert" repliable
-  const [open, setOpen] = useState("patient");
+  // Tous les accordions repliés par défaut (Fiches Patient / Substances / Expert)
+  const [open, setOpen] = useState(null);
   // Classes médicamenteuses : repliées par défaut, plusieurs ouvertes possibles
   const [openCats, setOpenCats] = useState({});
   const toggleCat = (cat) => setOpenCats(prev => ({...prev, [cat]: !prev[cat]}));
@@ -676,8 +686,32 @@ function TraitementsView({onBack, onPickPatient}) {
       </a>)}
     </div>);
 
+  const renderSubstancesSection = () =>
+    FICHES_SUBSTANCES_CATS.map(group => {
+      const isOpen = !!openCats["subst_"+group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat("subst_"+group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient({...f, kind:"substance"})}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>📖</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>)}
+        </div>}
+      </div>;
+    });
+
   const ACC = [
     {key:"patient", icon:"💊", title:"Fiches Patient", sub:"Fiches d'information à remettre au patient (HTML)"},
+    {key:"substances", icon:"📖", title:"Fiches Substances", sub:"Fiches d'information sur les substances (HTML)"},
     {key:"expert",  icon:"🎓", title:"Fiches Expert",  sub:"Synthèses cliniques (PDF, ouverture nouvel onglet)"}
   ];
 
@@ -698,7 +732,7 @@ function TraitementsView({onBack, onPickPatient}) {
           {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
         </button>
         {isOpen && <div style={{padding:"10px 12px",borderTop:`1px solid ${C.bdr}`}}>
-          {a.key === "patient" ? renderPatientSection() : renderExpertSection()}
+          {a.key === "patient" ? renderPatientSection() : a.key === "substances" ? renderSubstancesSection() : renderExpertSection()}
         </div>}
       </div>;
     })}
@@ -1533,7 +1567,7 @@ function App() {
           <button onClick={()=>setSelFiche(null)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer"}}>{I.chevL(C.n[600])}</button>
           <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{selFiche.n}</span>
         </div>
-        <iframe className="fiche-iframe" src={"../fiches-traitements/fiches_patient/fiche_"+selFiche.s+"_patient.html"} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
+        <iframe className="fiche-iframe" src={selFiche.kind === "substance" ? ("../fiches-substances/fiche_"+selFiche.s+"_patient.html") : ("../fiches-traitements/fiches_patient/fiche_"+selFiche.s+"_patient.html")} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
       </div> : <TraitementsView onBack={()=>nav("home")} onPickPatient={setSelFiche}/>;
       case "bzdcalc": return <BZDCalc onBack={()=>nav("scores")}/>;
       case "cpzcalc": return <CPZCalc onBack={()=>nav("scores")}/>;

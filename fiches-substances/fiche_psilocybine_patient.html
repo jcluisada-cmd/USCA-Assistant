@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Psilocybine — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A; --navy-light: #2A3F6B;
+    --teal: #2A9D8F; --teal-pale: #E8F6F4;
+    --amber: #E9A84C; --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F; --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB; --gray-100: #EEF1F4; --gray-200: #D9DFE6; --gray-600: #5A6678;
+    /* Ocre chaud / brun doré — terre, champignon */
+    --substance: #5A3510; --substance-light: #7A4A18;
+    --substance-pale: #FAF3E8; --substance-mid: #9A6025; --substance-accent: #C8903C;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--gray-50); color:var(--navy); font-size:0.95rem; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .page { max-width:820px; margin:2rem auto; background:#fff; border-radius:12px; box-shadow:0 4px 32px rgba(27,42,74,0.10); overflow:hidden; }
+
+  .header { background:linear-gradient(135deg, #1E0E04 0%, var(--substance) 55%, #3A1E08 100%); padding:2.5rem 2.5rem 2rem; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:-50px; right:-50px; width:240px; height:240px; border-radius:50%; background:rgba(200,144,60,0.08); }
+  .header::after  { content:''; position:absolute; bottom:-20px; left:25%; width:300px; height:110px; border-radius:50%; background:rgba(200,144,60,0.04); }
+
+  .header-badge { display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); color:#fff; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.3em 0.9em; border-radius:20px; margin-bottom:1rem; }
+  .header h1 { font-family:'DM Serif Display',serif; font-size:2.4rem; color:#fff; line-height:1.15; margin-bottom:0.4rem; }
+  .header h1 .substance-names { display:block; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:400; color:rgba(255,255,255,0.58); margin-top:0.2rem; font-style:italic; }
+  .header-subtitle { color:rgba(255,255,255,0.80); font-size:1rem; margin-top:0.6rem; max-width:580px; }
+  .header-warning-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(233,168,76,0.22); border:1px solid rgba(233,168,76,0.48); color:#F5C878; font-size:0.75rem; font-weight:600; padding:0.3em 0.9em; border-radius:20px; margin-top:1rem; }
+
+  .content { padding:2rem 2.5rem 1.5rem; }
+
+  .intro-box { border-left:4px solid var(--substance-mid); background:var(--substance-pale); border-radius:0 8px 8px 0; padding:1.2rem 1.4rem; margin-bottom:2rem; }
+  .intro-box p { color:var(--navy); font-size:0.95rem; margin-bottom:0.5rem; }
+  .intro-box p:last-child { margin-bottom:0; }
+  .intro-box strong { color:var(--substance); }
+
+  .section-title { display:flex; align-items:center; gap:0.7rem; font-size:1.1rem; font-weight:600; color:var(--navy); margin:2rem 0 1rem; padding-bottom:0.6rem; border-bottom:2px solid var(--gray-100); }
+  .section-icon { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:8px; font-size:1rem; flex-shrink:0; }
+  .section-icon.subst { background:var(--substance-pale); }
+  .section-icon.teal  { background:var(--teal-pale); }
+  .section-icon.amber { background:var(--amber-pale); }
+  .section-icon.red   { background:var(--red-pale); }
+  .section-icon.navy  { background:rgba(27,42,74,0.08); }
+
+  /* Données cliniques psilocybine */
+  .research-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin:1rem 0; }
+  .research-card { padding:0.9rem 0.9rem; border-radius:8px; background:var(--teal-pale); border:1px solid var(--teal); }
+  .research-card .r-indication { font-size:0.78rem; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.3rem; }
+  .research-card .r-result { font-size:0.82rem; color:var(--navy); line-height:1.4; }
+  .research-card .r-source { font-size:0.72rem; color:var(--gray-600); margin-top:0.3rem; font-style:italic; }
+
+  /* Timeline voyage psilocybine */
+  .trip-timeline { display:flex; gap:0; margin:1rem 0; overflow:hidden; border-radius:10px; border:1px solid var(--gray-200); }
+  .tt-step { flex:1; padding:0.9rem 0.8rem; border-right:1px solid var(--gray-200); background:#fff; }
+  .tt-step:last-child { border-right:none; }
+  .tt-step.onset { background:var(--substance-pale); }
+  .tt-step.peak  { background:#F5EFD0; }
+  .tt-step.come  { background:var(--teal-pale); }
+  .tt-step.after { background:var(--gray-50); }
+  .tt-period { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--substance-mid); margin-bottom:0.3rem; }
+  .tt-step.come .tt-period  { color:var(--teal); }
+  .tt-step.after .tt-period { color:var(--gray-600); }
+  .tt-title { font-size:0.82rem; font-weight:600; color:var(--navy); margin-bottom:0.3rem; }
+  .tt-items { font-size:0.76rem; color:var(--gray-600); line-height:1.5; }
+
+  /* Confusions dangereuses */
+  .confusion-box { background:linear-gradient(135deg, #2A0E0E 0%, #3A1810 100%); border-radius:10px; padding:1.4rem 1.6rem; margin:1rem 0; color:#fff; border-left:4px solid var(--red-soft); }
+  .confusion-title { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#F5A090; margin-bottom:0.7rem; display:flex; align-items:center; gap:0.4rem; }
+  .confusion-box p { font-size:0.88rem; color:rgba(255,255,255,0.88); line-height:1.6; margin-bottom:0.6rem; }
+  .confusion-box p:last-child { margin-bottom:0; }
+  .confusion-box strong { color:#F5A090; }
+  .confusion-box ul { list-style:none; padding:0; font-size:0.88rem; color:rgba(255,255,255,0.82); line-height:1.6; }
+  .confusion-box ul li { margin-bottom:0.4rem; }
+  .confusion-box ul li::before { content:"⚠ "; color:#F5A090; font-weight:600; }
+
+  .mechanism-visual { display:flex; align-items:flex-start; gap:0; margin:1rem 0 0.5rem; }
+  .mech-step { flex:1; text-align:center; padding:1rem 0.8rem; background:var(--gray-50); border-radius:10px; }
+  .mech-step .emoji { font-size:2rem; display:block; margin-bottom:0.5rem; }
+  .mech-step .label { font-size:0.78rem; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.25rem; }
+  .mech-step .sublabel { font-size:0.78rem; color:var(--gray-600); line-height:1.4; }
+  .mech-arrow { display:flex; align-items:center; justify-content:center; padding:0 0.5rem; color:var(--substance-accent); font-size:1.3rem; padding-top:1.5rem; flex-shrink:0; }
+  .mech-caption { font-size:0.8rem; color:var(--gray-600); font-style:italic; text-align:center; margin-top:0.6rem; line-height:1.5; }
+
+  .effects-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .effects-col h4 { font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-600); margin-bottom:0.6rem; }
+  .effects-col ul { list-style:none; padding:0; }
+  .effects-col ul li { display:flex; align-items:flex-start; gap:0.5rem; font-size:0.88rem; color:var(--navy); margin-bottom:0.45rem; line-height:1.4; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-top:0.3em; flex-shrink:0; }
+  .dot-green  { background:var(--teal); }
+  .dot-orange { background:var(--amber); }
+  .dot-red    { background:var(--red-soft); }
+
+  .info-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin-top:0.8rem; }
+  .info-card { padding:1rem 1.1rem; border-radius:8px; border-left:3px solid; }
+  .info-card.green  { background:var(--teal-pale); border-color:var(--teal); }
+  .info-card.orange { background:var(--amber-pale); border-color:var(--amber); }
+  .info-card.red    { background:var(--red-pale); border-color:var(--red-soft); }
+  .info-card.subst  { background:var(--substance-pale); border-color:var(--substance-mid); }
+  .info-card h4 { font-size:0.8rem; font-weight:700; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.04em; }
+  .info-card.green  h4 { color:var(--teal); }
+  .info-card.orange h4 { color:#B87A20; }
+  .info-card.red    h4 { color:var(--red-soft); }
+  .info-card.subst  h4 { color:var(--substance); }
+  .info-card p, .info-card ul { font-size:0.84rem; color:var(--navy); line-height:1.5; }
+  .info-card ul { list-style:none; padding:0; }
+  .info-card.green  ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+  .info-card.orange ul li::before { content:"→ "; color:var(--amber); font-weight:600; }
+  .info-card.red    ul li::before { content:"⚠ "; color:var(--red-soft); font-weight:600; }
+  .info-card.subst  ul li::before { content:"→ "; color:var(--substance-mid); font-weight:600; }
+
+  .alert-box { border-left:4px solid var(--red-soft); background:var(--red-pale); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .alert-box .alert-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--red-soft); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .alert-box ul, .alert-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .alert-box ul { list-style:none; padding:0; }
+  .alert-box ul li { margin-bottom:0.3rem; }
+  .alert-box ul li::before { content:"⚠ "; }
+
+  .dark-box { background:linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius:10px; padding:1.4rem 1.6rem; margin:1rem 0; color:#fff; }
+  .dark-box .dark-title { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:#F5C878; margin-bottom:0.7rem; display:flex; align-items:center; gap:0.4rem; }
+  .dark-box ul { list-style:none; padding:0; font-size:0.88rem; line-height:1.6; }
+  .dark-box ul li { margin-bottom:0.3rem; }
+  .dark-box ul li::before { content:"• "; color:var(--amber); font-weight:700; }
+  .dark-number { display:inline-block; background:rgba(255,255,255,0.15); border-radius:6px; padding:0.1em 0.5em; font-weight:700; font-size:1rem; color:#fff; }
+
+  .teal-box { background:var(--teal-pale); border-left:4px solid var(--teal); border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1rem 0; }
+  .teal-box .teal-title { font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+  .teal-box ul, .teal-box p { font-size:0.88rem; color:var(--navy); line-height:1.5; }
+  .teal-box ul { list-style:none; padding:0; }
+  .teal-box ul li { margin-bottom:0.3rem; }
+  .teal-box ul li::before { content:"✓ "; color:var(--teal); font-weight:700; }
+
+  .treatment-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.7rem; }
+  .treatment-tag { display:inline-flex; align-items:center; gap:0.3rem; padding:0.3em 0.8em; border-radius:20px; font-size:0.8rem; font-weight:500; border:1.5px solid; }
+  .tag-navy  { background:rgba(27,42,74,0.06); border-color:var(--navy-light); color:var(--navy); }
+  .tag-teal  { background:var(--teal-pale); border-color:var(--teal); color:#1A6B60; }
+  .tag-amber { background:var(--amber-pale); border-color:var(--amber); color:#8A5A10; }
+  .tag-subst { background:var(--substance-pale); border-color:var(--substance-mid); color:var(--substance); }
+
+  table.interaction-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin-top:0.8rem; }
+  table.interaction-table th { background:var(--navy); color:#fff; padding:0.5rem 0.8rem; text-align:left; font-weight:600; font-size:0.78rem; letter-spacing:0.03em; }
+  table.interaction-table td { padding:0.55rem 0.8rem; border-bottom:1px solid var(--gray-100); vertical-align:top; line-height:1.45; }
+  table.interaction-table tr:last-child td { border-bottom:none; }
+  table.interaction-table tr:nth-child(even) td { background:var(--gray-50); }
+  .risk-high { color:#C0392B; font-weight:600; }
+  .risk-mod  { color:#B87A20; font-weight:600; }
+  .risk-low  { color:var(--gray-600); }
+
+  .resource-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:0.8rem; }
+  .resource-item { display:flex; align-items:center; gap:0.7rem; padding:0.7rem 1rem; background:var(--gray-50); border-radius:8px; border:1px solid var(--gray-100); }
+  .resource-icon { font-size:1.3rem; flex-shrink:0; }
+  .resource-label { font-size:0.78rem; color:var(--gray-600); line-height:1.3; }
+  .resource-number { font-size:0.9rem; font-weight:700; color:var(--navy); }
+
+  .footer { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 2.5rem; border-top:1px solid var(--gray-100); background:var(--gray-50); }
+  .footer-left { font-size:0.78rem; color:var(--gray-600); line-height:1.5; }
+  .footer-badge { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--substance-mid); border:1.5px solid var(--substance-mid); padding:0.3em 0.8em; border-radius:20px; }
+
+  @media (max-width:600px) {
+    .content { padding:1.4rem 1.2rem; } .header { padding:1.8rem 1.2rem 1.4rem; } .header h1 { font-size:1.8rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns:1fr; }
+    .research-grid { grid-template-columns:1fr; }
+    .trip-timeline { flex-direction:column; } .tt-step { border-right:none; border-bottom:1px solid var(--gray-200); }
+    .mechanism-visual { flex-direction:column; } .mech-arrow { transform:rotate(90deg); padding:0.3rem 0; align-self:center; }
+    .footer { flex-direction:column; gap:0.8rem; text-align:center; }
+  }
+  @media print { body { background:#fff; } .page { box-shadow:none; border-radius:0; margin:0; } .header { -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>Psilocybine<span class="substance-names">champignons hallucinogènes · magic mushrooms · psilos · champi · truffes psychédéliques</span></h1>
+    <p class="header-subtitle">Comprendre la psilocybine, ses effets psychédéliques, les risques liés à la cueillette sauvage et son statut en recherche clinique.</p>
+    <div class="header-warning-badge">🍄 Substance illicite en France · Confusion avec champignons toxiques potentiellement mortelle · Pas de dépendance physique</div>
+  </div>
+
+  <div class="content">
+
+    <div class="intro-box">
+      <p>La psilocybine est la molécule psychoactive présente dans plusieurs dizaines d'espèces de champignons — principalement du genre <em>Psilocybe</em>. Elle est convertie dans l'organisme en <strong>psilocine</strong>, qui agit sur les mêmes récepteurs que le LSD (5-HT2A). Son usage rituel est documenté depuis des millénaires dans plusieurs cultures.</p>
+      <p>La psilocybine est classée stupéfiant en France et son usage est illicite. Elle fait cependant l'objet d'un <strong>retour majeur en recherche clinique</strong> — avec des résultats remarquables dans la dépression résistante et le trouble de l'usage d'alcool, notamment à Johns Hopkins, Imperial College London et dans plusieurs essais européens.</p>
+      <p><strong>Deux risques spécifiques à la psilocybine par rapport au LSD :</strong> la durée plus courte (4–6h vs 8–12h) facilite une utilisation plus fréquente, et la <strong>cueillette sauvage expose à des confusions mortelles</strong> avec des espèces toxiques.</p>
+    </div>
+
+    <!-- DONNÉES CLINIQUES -->
+    <div class="section-title">
+      <div class="section-icon teal">🔬</div>
+      Psilocybine en recherche clinique — des résultats prometteurs
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:0.8rem;">Ces recherches sont conduites dans des cadres très contrôlés avec préparation psychologique, accompagnement thérapeutique et intégration. Elles ne légitiment pas l'auto-traitement.</p>
+
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="r-indication">Dépression résistante</div>
+        <div class="r-result">Réduction significative des symptômes après 1 à 2 séances. Effets durables jusqu'à 12 mois dans plusieurs essais.</div>
+        <div class="r-source">Carhart-Harris et al., NEJM 2021 · Davis et al., JAMA Psychiatry 2021</div>
+      </div>
+      <div class="research-card">
+        <div class="r-indication">Alcoolodépendance</div>
+        <div class="r-result">Réduction de la consommation et augmentation des jours d'abstinence. Essai randomisé contrôlé (Bogenschutz et al., NEJM 2022).</div>
+        <div class="r-source">Bogenschutz et al., NEJM Evidence 2022</div>
+      </div>
+      <div class="research-card">
+        <div class="r-indication">Fin de vie / anxiété</div>
+        <div class="r-result">Réduction durable de l'anxiété et de la dépression chez des patients atteints de cancer en phase terminale.</div>
+        <div class="r-source">Ross et al., J Psychopharmacol 2016 · Griffiths et al. 2016</div>
+      </div>
+    </div>
+
+    <div class="teal-box">
+      <div class="teal-title">💬 Psilocybine et alcool — pertinent pour l'USCA</div>
+      <p>Les données sur la psilocybine dans la dépendance à l'alcool sont particulièrement intéressantes dans le contexte de l'USCA. Elles ne signifient pas que l'auto-médication est justifiée — mais si vous avez consommé de la psilocybine dans ce contexte, l'équipe peut en discuter avec vous sans jugement.</p>
+    </div>
+
+    <!-- MÉCANISME -->
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment la psilocybine agit-elle sur le cerveau ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">🍄</span>
+        <div class="label">Métabolisme</div>
+        <div class="sublabel">La psilocybine est convertie en psilocine dans le foie et l'intestin. La psilocine est le composé actif — elle atteint le cerveau et se fixe sur les récepteurs 5-HT2A de la sérotonine dans 20 à 40 minutes.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🌐</span>
+        <div class="label">Hyperconnectivité</div>
+        <div class="sublabel">La psilocybine augmente la connectivité entre régions cérébrales normalement peu connectées, et réduit l'activité du « réseau du mode par défaut » (self-reference). D'où la dissolution du moi et les insights profonds.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">🔓</span>
+        <div class="label">Plasticité neuronale</div>
+        <div class="sublabel">La psilocybine augmente la neuroplasticité — les connexions neuronales deviennent plus souples. C'est probablement ce mécanisme qui explique ses effets durables en psychiatrie après une seule séance.</div>
+      </div>
+    </div>
+    <p class="mech-caption">La psilocybine ne crée pas de dépendance physique. La tolérance croisée avec le LSD s'installe rapidement, limitant l'usage répété. Son potentiel addictif intrinsèque est très faible — mais l'usage compulsif existe chez certains profils.</p>
+
+    <!-- DURÉE DU VOYAGE -->
+    <div class="section-title">
+      <div class="section-icon amber">⏱</div>
+      La durée d'un voyage à la psilocybine
+    </div>
+
+    <div class="trip-timeline">
+      <div class="tt-step onset">
+        <div class="tt-period">H0 – H1</div>
+        <div class="tt-title">Montée</div>
+        <div class="tt-items">Nausées fréquentes<br>Légère anxiété<br>Fourmillements<br>Premières distorsions</div>
+      </div>
+      <div class="tt-step peak">
+        <div class="tt-period">H1 – H4</div>
+        <div class="tt-title">Pic</div>
+        <div class="tt-items">Hallucinations visuelles<br>Dissolution du moi<br>Émotions amplifiées<br>Insights profonds</div>
+      </div>
+      <div class="tt-step come">
+        <div class="tt-period">H4 – H6</div>
+        <div class="tt-title">Descente</div>
+        <div class="tt-items">Effets qui diminuent<br>Clarté émotionnelle<br>Légère fatigue<br>Réflexion</div>
+      </div>
+      <div class="tt-step after">
+        <div class="tt-period">J1 – J7</div>
+        <div class="tt-title">Afterglow</div>
+        <div class="tt-items">Bien-être persistant<br>Ouverture psychologique<br>OU anxiété résiduelle<br>Intégration</div>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--gray-600);font-style:italic;text-align:center;margin-top:0.3rem;">La durée plus courte que le LSD (4–6h vs 8–12h) est un avantage dans les protocoles thérapeutiques mais ne réduit pas les risques psychiatriques.</p>
+
+    <!-- DANGER CUEILLETTE -->
+    <div class="section-title">
+      <div class="section-icon red">🍄</div>
+      La cueillette sauvage — un risque vital
+    </div>
+
+    <div class="confusion-box">
+      <div class="confusion-title">☠ Confusions mortelles avec des champignons toxiques</div>
+      <p>La cueillette de champignons hallucinogènes sauvages expose à des <strong>confusions potentiellement mortelles</strong> avec des espèces très toxiques. Ces confusions ont provoqué des morts en France.</p>
+      <ul>
+        <li><strong>Psilocybe semilanceata (Strophaire à tête pointue)</strong> peut être confondu avec <em>Galerina marginata</em> — contenant des amatoxines mortelles (mêmes que l'Amanite phalloïde)</li>
+        <li><strong>Pholiotina rugosa</strong> : ressemble aux psilocybes, contient des amatoxines</li>
+        <li>Une intoxication aux amatoxines : vomissements, douleurs abdominales après 6–24h, puis hépatite fulminante mortelle en quelques jours sans transplantation</li>
+        <li>Les symptômes d'intoxication aux amatoxines peuvent survenir <strong>après une phase de latence</strong> — ne pas attendre pour consulter</li>
+      </ul>
+      <p style="margin-top:0.6rem;"><strong>→ Toute ingestion de champignons sauvages avec doute = appeler le 15 immédiatement, même en absence de symptômes.</strong></p>
+    </div>
+
+    <!-- EFFETS -->
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Les effets de la psilocybine
+    </div>
+
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets recherchés</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Expérience mystique, sentiment d'unité</li>
+          <li><span class="dot dot-green"></span>Dissolution du moi, insights profonds</li>
+          <li><span class="dot dot-green"></span>Hallucinations visuelles complexes</li>
+          <li><span class="dot dot-green"></span>Amplification émotionnelle, compassion</li>
+          <li><span class="dot dot-green"></span>Réduction perçue de l'anxiété et de la dépression</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Risques immédiats</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Nausées, vomissements (fréquents)</li>
+          <li><span class="dot dot-orange"></span>Bad trip — panique, paranoïa intense</li>
+          <li><span class="dot dot-red"></span>Épisode psychotique aigu</li>
+          <li><span class="dot dot-red"></span>Dépersonnalisation, déréalisation</li>
+          <li><span class="dot dot-red"></span>Intoxication mortelle si confusion botanique</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:0.8rem;">
+      <h4 style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-600);margin-bottom:0.6rem;">Complications possibles avec usage répété ou mauvaises expériences</h4>
+      <ul style="list-style:none;padding:0;columns:2;gap:1.5rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>HPPD — flashbacks visuels persistants</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Décompensation psychotique (vulnérabilité préexistante)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Anxiété chronique, dépersonnalisation persistante</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>TSPT après bad trip sévère</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-red" style="margin-top:0.3em;flex-shrink:0;"></span>Usage compulsif dans certains profils (rare mais existe)</li>
+      </ul>
+    </div>
+
+    <!-- INTERACTIONS -->
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <table class="interaction-table">
+      <thead><tr><th>Association</th><th>Risque principal</th><th>Niveau</th></tr></thead>
+      <tbody>
+        <tr><td>Psilocybine + lithium</td><td>Convulsions sévères — interaction documentée</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>Psilocybine + IMAO</td><td>Potentialisation massive et imprévisible, toxicité sérotoninergique</td><td class="risk-high">⚠ Très élevé</td></tr>
+        <tr><td>Psilocybine + MDMA (hippie flip)</td><td>Neurotoxicité sérotoninergique cumulative, hyperthermie</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Psilocybine + LSD (candy flip étendu)</td><td>Expérience imprévisible et incontrôlable, risque psychiatrique</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>Psilocybine + cannabis</td><td>Paranoïa et bad trip fortement majorés</td><td class="risk-mod">⚡ Élevé</td></tr>
+        <tr><td>Psilocybine + ISRS</td><td>Réduction ou blocage de l'effet psychédélique</td><td class="risk-low">Variable</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RdRD -->
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Set and setting — indispensable</h4>
+        <ul>
+          <li>Ne jamais cueillir sans identification botanique certaine</li>
+          <li>Utiliser des champignons cultivés (identification fiable) si malgré tout</li>
+          <li>Environnement sûr, personnes de confiance, trip-sitter sobre</li>
+          <li>Ne pas prendre en état de détresse psychique ou psychiatrique</li>
+          <li>Prévoir une période d'intégration dans les jours suivants</li>
+        </ul>
+      </div>
+      <div class="info-card red">
+        <h4>🚫 Contre-indications absolues</h4>
+        <ul>
+          <li>Antécédent personnel ou familial de schizophrénie, trouble bipolaire</li>
+          <li>Traitement par lithium ou IMAO</li>
+          <li>Grossesse</li>
+          <li>Antécédent de HPPD ou de bad trip sévère</li>
+          <li>Champignons sauvages non identifiés avec certitude</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TRAITEMENTS USCA -->
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--navy);margin-bottom:0.8rem;">Pas de sevrage médicamenteux nécessaire. La prise en charge porte sur les complications psychiatriques, les éventuelles confusions botaniques, et l'exploration du contexte d'usage.</p>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Traitements si nécessaire</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-navy">💊 Antipsychotiques si décompensation psychotique</span>
+        <span class="treatment-tag tag-amber">⚡ BZD si bad trip aigu incontrôlable</span>
+        <span class="treatment-tag tag-teal">🧠 Évaluation psychiatrique — HPPD, dépression, TSPT</span>
+        <span class="treatment-tag tag-subst">🍄 Bilan hépatique si suspicion d'intoxication botanique</span>
+      </div>
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>🌀 Hypnose thérapeutique</h4>
+        <p>Intégration des expériences psychédéliques difficiles ou traumatisantes. Exploration de ce que les expériences révèlent sur la souffrance sous-jacente. États modifiés de conscience dans un cadre sécurisé.</p>
+      </div>
+      <div class="info-card orange">
+        <h4>🧠 Psychologie d'intégration</h4>
+        <p>Travail de sens autour des expériences vécues. Compréhension des motivations à utiliser les psychédéliques (quête spirituelle, automédication, curiosité). Sans jugement sur l'expérience elle-même.</p>
+      </div>
+    </div>
+
+    <!-- RESSOURCES -->
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item"><div class="resource-icon">🆘</div><div><div class="resource-number">15 (SAMU)</div><div class="resource-label">Intoxication botanique suspectée<br>Crise psychotique, urgence</div></div></div>
+      <div class="resource-item"><div class="resource-icon">☠</div><div><div class="resource-number">Centre antipoison</div><div class="resource-label">0 800 59 59 59 (gratuit)<br>Intoxication champignons 24h/24</div></div></div>
+      <div class="resource-item"><div class="resource-icon">📞</div><div><div class="resource-number">0 800 23 13 13</div><div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div></div></div>
+      <div class="resource-item"><div class="resource-icon">💬</div><div><div class="resource-number">3114</div><div class="resource-label">Prévention suicide<br>24h/24</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🏠</div><div><div class="resource-number">CSAPA / CAARUD</div><div class="resource-label">Orientation, accueil<br>Sans jugement</div></div></div>
+      <div class="resource-item"><div class="resource-icon">🧠</div><div><div class="resource-number">CMP / Urgences psy</div><div class="resource-label">Suivi HPPD, décompensation<br>Complication psychiatrique</div></div></div>
+    </div>
+
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand appeler le 15 immédiatement</div>
+      <ul>
+        <li>Ingestion de champignons sauvages avec doute sur l'espèce — même sans symptômes (latence possible avec amatoxines)</li>
+        <li>Vomissements, douleurs abdominales après ingestion de champignons sauvages</li>
+        <li>Crise psychotique, comportement dangereux</li>
+        <li>Agitation extrême impossible à calmer</li>
+        <li>Pensées de se faire du mal</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">En cas de doute sur une intoxication aux champignons : appellez le Centre antipoison (<span class="dark-number">0 800 59 59 59</span>) ou le <span class="dark-number">15</span> sans attendre l'apparition des symptômes.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>

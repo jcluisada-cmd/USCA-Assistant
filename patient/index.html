@@ -529,12 +529,13 @@
     <!-- Liste des fiches prescrites -->
     <div id="traitements-list-view" class="flex-1 p-5 max-w-lg mx-auto w-full space-y-3">
       <div id="traitements-list"></div>
+      <div id="substances-list"></div>
       <div id="traitements-empty" class="flex flex-col items-center justify-center text-center py-12 hidden">
         <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
         </div>
-        <p class="text-base font-bold text-slate-800 mb-2">Aucun traitement prescrit</p>
-        <p class="text-sm text-slate-500">Votre médecin ajoutera vos fiches traitements ici.</p>
+        <p class="text-base font-bold text-slate-800 mb-2">Aucune fiche partagée</p>
+        <p class="text-sm text-slate-500">Votre médecin ajoutera ici vos fiches traitements et fiches d’information.</p>
       </div>
     </div>
     <!-- Iframe pour afficher une fiche -->
@@ -782,6 +783,7 @@
 <script src="../shared/auth.js"></script>
 <script src="../shared/craving-agenda.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
+<script src="../shared/substances-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
 <script src="../shared/postcure-structures.js"></script>
 
@@ -1925,32 +1927,38 @@ document.getElementById('btn-back-traitements').addEventListener('click', functi
 async function loadTraitements() {
   if (!currentPatient) return;
   var list = document.getElementById('traitements-list');
+  var substList = document.getElementById('substances-list');
   var empty = document.getElementById('traitements-empty');
   list.textContent = '';
+  substList.textContent = '';
 
   var prescriptions = [];
   try { prescriptions = await db.getPrescriptions(currentPatient.id); } catch(e) { prescriptions = []; }
 
-  if (prescriptions.length === 0) {
+  var substances = [];
+  try { substances = await db.getSubstancesPatient(currentPatient.id); } catch(e) { substances = []; }
+
+  if (prescriptions.length === 0 && substances.length === 0) {
     empty.classList.remove('hidden');
     return;
   }
   empty.classList.add('hidden');
 
-  // Résoudre les slugs en noms via le catalogue
-  var slugToFiche = {};
-  FICHES_CATALOGUE.forEach(function(f) { slugToFiche[f.slug] = f; });
+  // ── Section traitements (catégorisée comme avant) ──
+  if (prescriptions.length > 0) {
+    var slugToFiche = {};
+    FICHES_CATALOGUE.forEach(function(f) { slugToFiche[f.slug] = f; });
 
-  // Grouper par catégorie
-  var categories = {};
-  prescriptions.forEach(function(p) {
-    var fiche = slugToFiche[p.fiche_slug];
-    if (!fiche) return;
-    if (!categories[fiche.categorie]) categories[fiche.categorie] = [];
-    categories[fiche.categorie].push(fiche);
-  });
+    var categories = {};
+    prescriptions.forEach(function(p) {
+      var fiche = slugToFiche[p.fiche_slug];
+      if (!fiche) return;
+      if (!categories[fiche.categorie]) categories[fiche.categorie] = [];
+      categories[fiche.categorie].push(fiche);
+    });
 
-  Object.keys(categories).forEach(function(cat) {
+    list.appendChild(createEl('p', 'text-xs font-bold text-amber-700 uppercase tracking-wide mb-2', 'Mes traitements'));
+    Object.keys(categories).forEach(function(cat) {
     list.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase mt-3 mb-1.5', cat));
     categories[cat].forEach(function(fiche) {
       var btn = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md hover:border-amber-300 transition-all active:scale-[0.98]');
@@ -1971,6 +1979,38 @@ async function loadTraitements() {
       list.appendChild(btn);
     });
   });
+  } // fin if prescriptions.length > 0
+
+  // ── Section substances (liste plate alphabétique, accent violet) ──
+  if (substances.length > 0) {
+    var slugToSubst = {};
+    SUBSTANCES_CATALOGUE.forEach(function(s) { slugToSubst[s.slug] = s; });
+
+    var substFiches = substances
+      .map(function(row) { return slugToSubst[row.fiche_slug]; })
+      .filter(Boolean)
+      .sort(function(a, b) { return a.nom.localeCompare(b.nom, 'fr'); });
+
+    substList.appendChild(createEl('p', 'text-xs font-bold text-purple-700 uppercase tracking-wide mt-5 mb-2', 'Fiches d’information'));
+    substFiches.forEach(function(fiche) {
+      var btn = createEl('button', 'w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md hover:border-purple-300 transition-all active:scale-[0.98]');
+      var icon = createEl('div', 'w-9 h-9 bg-purple-50 rounded-lg flex items-center justify-center flex-shrink-0');
+      icon.appendChild(createEl('span', 'text-purple-600 text-lg', '📖'));
+      btn.appendChild(icon);
+      btn.appendChild(createEl('span', 'text-sm font-semibold text-slate-800 flex-1', fiche.nom));
+      btn.appendChild(createEl('span', 'text-slate-400 text-lg', '›'));
+      (function(slug, nom) {
+        btn.addEventListener('click', function() {
+          traitListView.classList.add('hidden');
+          ficheIframe.src = '../fiches-substances/fiche_' + slug + '_patient.html';
+          ficheIframe.classList.remove('hidden');
+          traitHeaderText.textContent = nom;
+          viewingFiche = true;
+        });
+      })(fiche.slug, fiche.nom);
+      substList.appendChild(btn);
+    });
+  }
 }
 
 // Charger les traitements quand on ouvre le panel
@@ -1995,6 +2035,9 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
   var prescriptions = [];
   try { prescriptions = await db.getPrescriptions(currentPatient.id); } catch(e) {}
 
+  var substancesPushed = [];
+  try { substancesPushed = await db.getSubstancesPatient(currentPatient.id); } catch(e) {}
+
   // Charger les fiches traitements HTML
   btnText.textContent = 'Chargement des fiches...';
   var fichesData = [];
@@ -2004,7 +2047,18 @@ document.getElementById('btn-export-html').addEventListener('click', async funct
     if (!fiche) continue;
     try {
       var resp = await fetch('../fiches-traitements/fiches_patient/fiche_' + slug + '_patient.html');
-      if (resp.ok) fichesData.push({ nom: fiche.nom, cat: fiche.categorie, slug: slug, html: await resp.text() });
+      if (resp.ok) fichesData.push({ nom: fiche.nom, cat: fiche.categorie, slug: slug, html: await resp.text(), kind: 'traitement' });
+    } catch(e) {}
+  }
+
+  // Charger les fiches substances HTML
+  for (var k = 0; k < substancesPushed.length; k++) {
+    var sslug = substancesPushed[k].fiche_slug;
+    var sfiche = SUBSTANCES_CATALOGUE.find(function(s) { return s.slug === sslug; });
+    if (!sfiche) continue;
+    try {
+      var sresp = await fetch('../fiches-substances/fiche_' + sslug + '_patient.html');
+      if (sresp.ok) fichesData.push({ nom: sfiche.nom, cat: sfiche.categorie, slug: sslug, html: await sresp.text(), kind: 'substance' });
     } catch(e) {}
   }
 

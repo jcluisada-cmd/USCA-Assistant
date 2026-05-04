@@ -408,6 +408,20 @@
             <div id="fiches-checklist" class="space-y-1"></div>
           </div>
 
+          <!-- Accordion : Fiches substances -->
+          <button id="acc-substances" data-module="patient_substances" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 bg-purple-50 rounded-full flex items-center justify-center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14.5 14.5 0 0 1 0 18"/><path d="M12 3a14.5 14.5 0 0 0 0 18"/></svg>
+              </div>
+              <span class="text-sm font-semibold text-slate-700">Fiches substances</span>
+            </div>
+            <svg class="acc-chevron w-4 h-4 text-slate-400 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div id="acc-substances-content" data-module="patient_substances" class="hidden mb-2 pl-2">
+            <div id="substances-checklist" class="space-y-1"></div>
+          </div>
+
           <!-- Accordion : Permissions -->
           <button id="acc-perms" data-module="patient_permissions" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
@@ -949,6 +963,7 @@
 <script src="../shared/modules-config.js"></script>
 <script src="../shared/module-visibility.js"></script>
 <script src="../shared/fiches-catalogue.js"></script>
+<script src="../shared/substances-catalogue.js"></script>
 <script src="../shared/planning-groupes.js"></script>
 <script src="../shared/postcure-structures.js"></script>
 <script src="../shared/livret-ifsi-contenu.js"></script>
@@ -1726,6 +1741,7 @@ document.getElementById('btn-save-patient').addEventListener('click', async func
 // ── Détail patient + checklist fiches ──
 var selectedPatientForDetail = null;
 var patientPrescriptions = [];
+var patientSubstances = [];
 
 document.getElementById('btn-back-patients').addEventListener('click', function() {
   document.getElementById('section-patient-detail').classList.add('hidden');
@@ -1796,6 +1812,11 @@ document.getElementById('acc-craving').addEventListener('click', async function(
 });
 document.getElementById('acc-fiches').addEventListener('click', function() {
   var content = document.getElementById('acc-fiches-content');
+  content.classList.toggle('hidden');
+  this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+});
+document.getElementById('acc-substances').addEventListener('click', function() {
+  var content = document.getElementById('acc-substances-content');
   content.classList.toggle('hidden');
   this.querySelector('.acc-chevron').style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
 });
@@ -2182,6 +2203,7 @@ async function showPatientDetail(patient) {
   // Fermer les accordions
   document.getElementById('acc-craving-content').classList.add('hidden');
   document.getElementById('acc-fiches-content').classList.add('hidden');
+  document.getElementById('acc-substances-content').classList.add('hidden');
   document.getElementById('postcure-statut-zone').classList.add('hidden');
   document.querySelectorAll('.acc-chevron').forEach(function(c) { c.style.transform = ''; });
 
@@ -2279,6 +2301,12 @@ async function showPatientDetail(patient) {
   } catch(e) { patientPrescriptions = []; }
   renderFichesChecklist(patient.id);
 
+  // Charger les fiches substances partagées
+  try {
+    patientSubstances = await db.getSubstancesPatient(patient.id);
+  } catch(e) { patientSubstances = []; }
+  renderSubstancesChecklist(patient.id);
+
   // Charger les permissions
   renderPatientPerms(patient.id);
 
@@ -2331,6 +2359,55 @@ function renderFichesChecklist(patientId) {
           } catch(e) {
             console.warn('Erreur prescription :', e);
             cb.checked = !cb.checked; // rollback
+          }
+          cb.disabled = false;
+        });
+      })(fiche.slug, checkbox);
+
+      row.appendChild(checkbox);
+      row.appendChild(createEl('span', 'text-sm text-slate-800', fiche.nom));
+      container.appendChild(row);
+    });
+  });
+}
+
+function renderSubstancesChecklist(patientId) {
+  var container = document.getElementById('substances-checklist');
+  container.textContent = '';
+  var sharedSlugs = patientSubstances.map(function(s) { return s.fiche_slug; });
+
+  // Grouper par catégorie clinique
+  var categories = {};
+  SUBSTANCES_CATALOGUE.forEach(function(s) {
+    if (!categories[s.categorie]) categories[s.categorie] = [];
+    categories[s.categorie].push(s);
+  });
+
+  Object.keys(categories).forEach(function(cat) {
+    container.appendChild(createEl('p', 'text-[10px] font-bold text-slate-500 uppercase mt-3 mb-1', cat));
+
+    categories[cat].forEach(function(fiche) {
+      var isChecked = sharedSlugs.indexOf(fiche.slug) !== -1;
+      var row = createEl('label', 'flex items-center gap-3 bg-white rounded-lg border border-slate-200 px-3 py-2.5 cursor-pointer hover:bg-slate-50 transition-colors');
+
+      var checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = isChecked;
+      checkbox.className = 'w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500 flex-shrink-0';
+
+      (function(slug, cb) {
+        cb.addEventListener('change', async function() {
+          cb.disabled = true;
+          try {
+            if (cb.checked) {
+              await db.addSubstancePatient(patientId, slug, currentProfile ? currentProfile.id : null);
+            } else {
+              await db.removeSubstancePatient(patientId, slug);
+            }
+            patientSubstances = await db.getSubstancesPatient(patientId);
+          } catch(e) {
+            console.warn('Erreur fiche substance :', e);
+            cb.checked = !cb.checked;
           }
           cb.disabled = false;
         });

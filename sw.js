@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.07';
+const CACHE_NAME = 'usca-v4.08';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -25,11 +25,29 @@ const LOCAL_ASSETS = [
   './shared/supabase.js',
   './shared/auth.js',
   './shared/fiches-catalogue.js',
+  './shared/substances-catalogue.js',
+  './fiches-substances/fiche_3mmc_patient.html',
+  './fiches-substances/fiche_alcool_patient.html',
+  './fiches-substances/fiche_bzd_mesusage_patient.html',
+  './fiches-substances/fiche_cannabis_patient.html',
+  './fiches-substances/fiche_cocaine_patient.html',
+  './fiches-substances/fiche_crack_patient.html',
+  './fiches-substances/fiche_ghb_patient.html',
+  './fiches-substances/fiche_heroine_patient.html',
+  './fiches-substances/fiche_ketamine_patient.html',
+  './fiches-substances/fiche_lsd_patient.html',
+  './fiches-substances/fiche_mdma_patient.html',
+  './fiches-substances/fiche_methamphetamine_patient.html',
+  './fiches-substances/fiche_opioides_prescription_patient.html',
+  './fiches-substances/fiche_protoxyde_patient.html',
+  './fiches-substances/fiche_psilocybine_patient.html',
+  './fiches-substances/fiche_tabac_patient.html',
   './shared/theme.css',
   './shared/theme.js',
   './shared/craving-agenda.js',
   './shared/planning-groupes.js',
   './shared/postcure-structures.js',
+  './icon-192.png',
   './icon-512.png',
   './splash.png',
   './manifest.json'

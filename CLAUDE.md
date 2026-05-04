@@ -1,6 +1,11 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 27 avril 2026 (v4.07 — P5 Personnalisation modules soignant : migration v32 (`role_modules_hidden`, modèle "absence=visible"), `shared/modules-config.js` (inventaire 18 modules), `shared/module-visibility.js` (apply/toggle/fetchMap/mountEditButtons), `data-module` sur 17 anchors HTML admin + 6 cartes JSX toolbox. Edit mode admin via modale Paramètres → bandeau sticky + bouton ⚙️ par module + popover 5 checkboxes par rôle. Matrix Comptes "Modules par rôle" (accordion 18×5, même store BDD). Admin `is_admin=true` bypass total. Masquage UI uniquement — RLS sur les données patient/messages inchangées.)
+> Dernière mise à jour : 4 mai 2026 (v4.08 — Fiches substances poussées au patient + fixes PWA install + QCM externe auto-extend + toolbox accordions repliés.
+> 1. **Fiches substances (16)** : nouveau dossier `fiches-substances/`, table `substances_patient` (migration v33, RLS calquée sur `prescriptions`), `shared/substances-catalogue.js` (16 fiches × 6 catégories : Dépresseurs SNC / Stimulants / Opioïdes / Psychodysleptiques / Mésusage médicamenteux / Tabac), helpers `db.getSubstancesPatient` / `db.addSubstancePatient` / `db.removeSubstancePatient`. Côté admin : 2ème checklist "Fiches substances" (catégorisée violet) dans détail patient. Côté patient : carte Traitements → 2 sections (traitements catégorisés ambre + substances liste plate alphabétique violet). Côté toolbox : 3ème accordion "Fiches Substances" dans `TraitementsView` (FICHES_SUBSTANCES_CATS, dispatch via `selFiche.kind === "substance"` pour servir le bon path). Export HTML autonome patient embarque aussi les fiches substances prescrites. SW : 16 HTML pré-cachées.
+> 2. **PWA install** : ajout `icon-192.png` (généré bicubique HQ depuis `icon-512.png`), manifest mis à jour avec 4 entrées (192/512 × `any` + `maskable`) — débloque le bouton "Installer" sur Chrome Android stricts (versions anciennes, Samsung Internet…) qui exigent les deux tailles. Notifications push fonctionnent dans tous les cas (raccourci suffit sur Android).
+> 3. **QCM externe auto-extend** : sessions en cours créées avant le fix v3.98 (cap 10 questions dans `questions_json`) sont automatiquement étendues à toutes les questions de l'item lors du "Reprendre" (compare `sessionQuestions.length` vs `questions.length`, append manquantes, `UPDATE qcm_sessions SET questions_json, nb_questions`). Aucune perte des réponses déjà enregistrées.
+> 4. **Toolbox** : `TraitementsView` ouvre désormais avec tous les accordions repliés (`useState(null)` au lieu de `useState("patient")`).)
+> v4.07 — P5 Personnalisation modules soignant : migration v32 (`role_modules_hidden`, modèle "absence=visible"), `shared/modules-config.js` (inventaire 18 modules), `shared/module-visibility.js` (apply/toggle/fetchMap/mountEditButtons), `data-module` sur 17 anchors HTML admin + 6 cartes JSX toolbox. Edit mode admin via modale Paramètres → bandeau sticky + bouton ⚙️ par module + popover 5 checkboxes par rôle. Matrix Comptes "Modules par rôle" (accordion 18×5, même store BDD). Admin `is_admin=true` bypass total. Masquage UI uniquement — RLS sur les données patient/messages inchangées.
 > v4.06 — Fixes SW : (1) pré-cache de tous les `data/item_*.json` à l'install (dérivé dynamiquement de `data/index.json`) → QCM EDN entièrement utilisable hors ligne après installation PWA ; (2) `ressources_doc/index.json` passé en stratégie network-first sans écriture cache via nouvelle liste `NO_CACHE_WRITE`, cache-buster `?t=Date.now()` retiré côté toolbox → plus de bloat cache au fil des ouvertures de RessourcesView.
 > v4.05 — Reclassification fiches patient : "Benzodiazépines" → "Anxiolytiques" (+ propranolol), split "Psychotropes" en "Antidépresseurs" / "Antipsychotiques" / "Thymorégulateurs" / "Stimulants", agomélatine déplacée en "Hypnotiques/Sédatifs". Toolbox `FICHES_PATIENT_CATS` resynchronisé avec `shared/fiches-catalogue.js` (29 fiches complètes, fini la divergence curée). Classes médicamenteuses repliables/dépliables dans la vue Traitements→Fiches Patient (état local par catégorie, repliées par défaut).
 > v4.04 — Fix RLS push_subscriptions : migration v31 remplace `push_subs_read_staff` (SELECT réservée authenticated) par `push_subs_read_public` (SELECT `true`). Débloque deux bugs : (1) activation notifs patient échouait avec "row violates RLS policy" — le `.upsert(...).select()` déclenche un RETURNING évalué contre la policy SELECT, refus en anon ; (2) trigger message patient→médecin : `getSubscribedMedecinIds()` retournait `[]` silencieusement côté anon, aucune notif envoyée. Endpoints/clés push non secrets — seule la clé privée VAPID permet l'envoi.
@@ -39,7 +44,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.07 |
+| **Service Worker** | usca-v4.08 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -99,6 +104,7 @@ USCA-Assistant/
 │   ├── postcure-structures.js  ← 14 structures post-cure (engagements, checklists)
 │   ├── craving-agenda.js       ← Composant agenda craving
 │   ├── fiches-catalogue.js     ← Catalogue des 29 fiches traitements
+│   ├── substances-catalogue.js ← Catalogue des 16 fiches substances (6 catégories)
 │   ├── livret-ifsi-contenu.js  ← Contenu pédagogique livret IFSI (14 chapitres, ~90 questions)
 │   ├── qcm-engine.js           ← Moteur QCM EDN (lazy-load index/items, scoring, signalements)
 │   ├── theme.css               ← Variables CSS dark mode
@@ -109,6 +115,7 @@ USCA-Assistant/
 ├── fiches-traitements/
 │   ├── fiches_patient/         ← 29 fiches HTML à partager au patient (Aotal, baclofène, BZD, TSO, psychotropes…)
 │   └── fiches_expert/          ← 8 fiches expert PDF (antipsychotiques : amisulpride, aripiprazole, chlorpromazine, clozapine, halopéridol, olanzapine, quétiapine, rispéridone)
+├── fiches-substances/          ← 16 fiches HTML d'information substances (alcool, GHB, opioïdes, stimulants, psychodysleptiques, BZD mésusage, N2O, tabac)
 ├── ressources_doc/             ← Ressources Toolbox — manifest-driven (index.json)
 │   ├── index.json              ← Liste les ressources exposées (type, titre, meta, tag, fichier, date)
 │   ├── fiches/                 ← 📑 aides-mémoire imprimables (PDF/HTML)
@@ -119,7 +126,7 @@ USCA-Assistant/
 ├── migrations/                 ← Scripts SQL (v1 à v21)
 ├── assets/                     ← Images sources (icon-source.png, splash-source.png)
 ├── affiche-equipe.html         ← Affiche A4 imprimable avec QR code
-├── icon-512.png, splash.png    ← Images servies par l'app
+├── icon-192.png, icon-512.png, splash.png ← Images servies par l'app (icônes any+maskable)
 ├── manifest.json               ← Manifeste PWA
 └── sw.js                       ← Service Worker multi-pages
 ```
@@ -158,6 +165,7 @@ Admin UUID JC : `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, ro
 - `permissions_sortie` — Demandes de permission (statut, date/heure sortie/retour, motif)
 - `contenus_partages` — Messages bidirectionnels patient ↔ équipe (notes, liens, consignes). `cree_par IS NULL` = envoyé par le patient, sinon = soignant. Migration v21 : policy INSERT ouverte anon.
 - `fiches_traitements_patient` — Fiches traitements prescrites (checklist)
+- `substances_patient` — Fiches substances poussées au patient (migration v33, RLS calquée sur `prescriptions` : SELECT public, INSERT/DELETE authenticated). Symétrique de `prescriptions` mais sémantique distincte (un traitement ≠ une substance consommée).
 
 ### Tables groupes
 - `groupe_animateurs` — Soignants désignés animateurs (groupe_slug, user_id). Migration v23 : FK → `profiles(id) ON DELETE CASCADE` (au lieu d'auth.users) + policy DELETE ouverte aux admins.

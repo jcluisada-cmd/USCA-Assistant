@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Benzodiazépines (mésusage) — Patient — USCA Pitié-Salpêtrière</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --navy-light: #2A3F6B;
+    --teal: #2A9D8F;
+    --teal-pale: #E8F6F4;
+    --amber: #E9A84C;
+    --amber-pale: #FEF5E7;
+    --red-soft: #E07A5F;
+    --red-pale: #FDF0EC;
+    --gray-50: #F8FAFB;
+    --gray-100: #EEF1F4;
+    --gray-200: #D9DFE6;
+    --gray-600: #5A6678;
+
+    /* Couleur dominante BZD — ambre foncé / ocre profond */
+    --substance: #7A4A0A;
+    --substance-light: #9A5E12;
+    --substance-pale: #FDF3E3;
+    --substance-mid: #C47B20;
+    --substance-accent: #E09A3A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--navy);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px rgba(27,42,74,0.10);
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, var(--substance) 0%, #5A3408 55%, #3A2008 100%);
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 25%;
+    width: 280px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .header h1 .substance-names {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.25rem;
+    font-style: italic;
+  }
+  .header-subtitle {
+    color: rgba(255,255,255,0.80);
+    font-size: 1rem;
+    margin-top: 0.6rem;
+    max-width: 580px;
+  }
+  .header-warning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(233,168,76,0.22);
+    border: 1px solid rgba(233,168,76,0.50);
+    color: #F5C878;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    margin-top: 1rem;
+  }
+
+  /* ── CONTENT ── */
+  .content { padding: 2rem 2.5rem 1.5rem; }
+
+  /* ── INTRO BOX ── */
+  .intro-box {
+    border-left: 4px solid var(--substance-mid);
+    background: var(--substance-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 2rem;
+  }
+  .intro-box p { color: var(--navy); font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .intro-box p:last-child { margin-bottom: 0; }
+  .intro-box strong { color: var(--substance); }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--gray-100);
+  }
+  .section-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px; font-size: 1rem; flex-shrink: 0;
+  }
+  .section-icon.subst  { background: var(--substance-pale); }
+  .section-icon.teal   { background: var(--teal-pale); }
+  .section-icon.amber  { background: var(--amber-pale); }
+  .section-icon.red    { background: var(--red-pale); }
+  .section-icon.navy   { background: rgba(27,42,74,0.08); }
+
+  /* ── BZD FAMILY TABLE — élément spécifique ── */
+  .bzd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin: 1rem 0;
+  }
+  .bzd-card {
+    padding: 0.8rem 0.9rem;
+    border-radius: 8px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-top: 3px solid;
+  }
+  .bzd-card.long   { border-top-color: var(--substance-mid); }
+  .bzd-card.medium { border-top-color: var(--amber); }
+  .bzd-card.short  { border-top-color: var(--teal); }
+  .bzd-card .bzd-type {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--gray-600); margin-bottom: 0.35rem;
+  }
+  .bzd-card.long   .bzd-type { color: var(--substance); }
+  .bzd-card.medium .bzd-type { color: #B87A20; }
+  .bzd-card.short  .bzd-type { color: var(--teal); }
+  .bzd-card .bzd-names {
+    font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; line-height: 1.4;
+  }
+  .bzd-card .bzd-eg {
+    font-size: 0.75rem; color: var(--gray-600); font-style: italic;
+  }
+
+  /* ── MECHANISM VISUAL ── */
+  .mechanism-visual {
+    display: flex; align-items: flex-start; gap: 0; margin: 1rem 0 0.5rem;
+  }
+  .mech-step {
+    flex: 1; text-align: center; padding: 1rem 0.8rem;
+    background: var(--gray-50); border-radius: 10px;
+  }
+  .mech-step .emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .mech-step .label {
+    font-size: 0.78rem; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;
+  }
+  .mech-step .sublabel { font-size: 0.78rem; color: var(--gray-600); line-height: 1.4; }
+  .mech-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 0.5rem; color: var(--substance-accent);
+    font-size: 1.3rem; padding-top: 1.5rem; flex-shrink: 0;
+  }
+  .mech-caption {
+    font-size: 0.8rem; color: var(--gray-600); font-style: italic;
+    text-align: center; margin-top: 0.6rem; line-height: 1.5;
+  }
+
+  /* ── EFFECTS GRID ── */
+  .effects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .effects-col h4 {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--gray-600); margin-bottom: 0.6rem;
+  }
+  .effects-col ul { list-style: none; padding: 0; }
+  .effects-col ul li {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    font-size: 0.88rem; color: var(--navy); margin-bottom: 0.45rem; line-height: 1.4;
+  }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-top: 0.3em; flex-shrink: 0; }
+  .dot-green  { background: var(--teal); }
+  .dot-orange { background: var(--amber); }
+  .dot-red    { background: var(--red-soft); }
+  .dot-navy   { background: var(--substance-mid); }
+
+  /* ── DÉGRESSIF SCHEME — élément spécifique BZD ── */
+  .taper-scheme {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.4rem;
+    padding: 1.2rem;
+    background: var(--gray-50);
+    border-radius: 10px;
+    border: 1px solid var(--gray-100);
+    margin: 1rem 0 0.5rem;
+    overflow-x: auto;
+  }
+  .taper-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+  }
+  .taper-bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    background: var(--substance-mid);
+    opacity: 0.85;
+    transition: height 0.3s;
+  }
+  .taper-label {
+    font-size: 0.68rem;
+    color: var(--gray-600);
+    text-align: center;
+    margin-top: 0.4rem;
+    line-height: 1.3;
+  }
+  .taper-pct {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--substance);
+    margin-bottom: 0.2rem;
+  }
+  .taper-caption {
+    font-size: 0.8rem; color: var(--gray-600); font-style: italic;
+    text-align: center; margin-top: 0.5rem; line-height: 1.5;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { display: flex; gap: 0; margin: 1rem 0; overflow: hidden; border-radius: 10px; border: 1px solid var(--gray-200); }
+  .tl-step { flex: 1; padding: 1rem 0.9rem; border-right: 1px solid var(--gray-200); background: #fff; }
+  .tl-step:last-child { border-right: none; }
+  .tl-step.critical { background: var(--red-pale); }
+  .tl-step.urgent   { background: var(--amber-pale); }
+  .tl-step.moderate { background: var(--gray-50); }
+  .tl-step.recovery { background: var(--teal-pale); }
+  .tl-period { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--substance-mid); margin-bottom: 0.4rem; }
+  .tl-step.recovery .tl-period { color: var(--teal); }
+  .tl-title { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+  .tl-items { font-size: 0.78rem; color: var(--gray-600); line-height: 1.5; }
+
+  /* ── INFO CARDS ── */
+  .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+  .info-card { padding: 1rem 1.1rem; border-radius: 8px; border-left: 3px solid; }
+  .info-card.green  { background: var(--teal-pale); border-color: var(--teal); }
+  .info-card.orange { background: var(--amber-pale); border-color: var(--amber); }
+  .info-card.subst  { background: var(--substance-pale); border-color: var(--substance-mid); }
+  .info-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-card.green  h4 { color: var(--teal); }
+  .info-card.orange h4 { color: #B87A20; }
+  .info-card.subst  h4 { color: var(--substance); }
+  .info-card p, .info-card ul { font-size: 0.84rem; color: var(--navy); line-height: 1.5; }
+  .info-card ul { list-style: none; padding: 0; }
+  .info-card.green  ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+  .info-card.orange ul li::before { content: "→ "; color: var(--amber); font-weight: 600; }
+  .info-card.subst  ul li::before { content: "→ "; color: var(--substance-mid); font-weight: 600; }
+
+  /* ── ALERT BOX ── */
+  .alert-box { border-left: 4px solid var(--red-soft); background: var(--red-pale); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .alert-box .alert-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--red-soft); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .alert-box ul, .alert-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .alert-box ul { list-style: none; padding: 0; }
+  .alert-box ul li { margin-bottom: 0.3rem; }
+  .alert-box ul li::before { content: "⚠ "; }
+
+  /* ── DARK BOX ── */
+  .dark-box { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 1rem 0; color: #fff; }
+  .dark-box .dark-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #F5C878; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+  .dark-box ul { list-style: none; padding: 0; font-size: 0.88rem; line-height: 1.6; }
+  .dark-box ul li { margin-bottom: 0.3rem; }
+  .dark-box ul li::before { content: "• "; color: var(--amber); font-weight: 700; }
+  .dark-number { display: inline-block; background: rgba(255,255,255,0.15); border-radius: 6px; padding: 0.1em 0.5em; font-weight: 700; font-size: 1rem; color: #fff; }
+
+  /* ── TEAL BOX ── */
+  .teal-box { background: var(--teal-pale); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 1.1rem 1.3rem; margin: 1rem 0; }
+  .teal-box .teal-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .teal-box ul, .teal-box p { font-size: 0.88rem; color: var(--navy); line-height: 1.5; }
+  .teal-box ul { list-style: none; padding: 0; }
+  .teal-box ul li { margin-bottom: 0.3rem; }
+  .teal-box ul li::before { content: "✓ "; color: var(--teal); font-weight: 700; }
+
+  /* ── TREATMENT TAGS ── */
+  .treatment-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; }
+  .treatment-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3em 0.8em; border-radius: 20px; font-size: 0.8rem; font-weight: 500; border: 1.5px solid; }
+  .tag-navy  { background: rgba(27,42,74,0.06); border-color: var(--navy-light); color: var(--navy); }
+  .tag-teal  { background: var(--teal-pale); border-color: var(--teal); color: #1A6B60; }
+  .tag-amber { background: var(--amber-pale); border-color: var(--amber); color: #8A5A10; }
+  .tag-subst { background: var(--substance-pale); border-color: var(--substance-mid); color: var(--substance); }
+
+  /* ── RESOURCE GRID ── */
+  .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.8rem; }
+  .resource-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; background: var(--gray-50); border-radius: 8px; border: 1px solid var(--gray-100); }
+  .resource-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .resource-label { font-size: 0.78rem; color: var(--gray-600); line-height: 1.3; }
+  .resource-number { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+
+  /* ── TABLE ── */
+  table.interaction-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 0.8rem; }
+  table.interaction-table th { background: var(--navy); color: #fff; padding: 0.5rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.03em; }
+  table.interaction-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--gray-100); vertical-align: top; line-height: 1.45; }
+  table.interaction-table tr:last-child td { border-bottom: none; }
+  table.interaction-table tr:nth-child(even) td { background: var(--gray-50); }
+  .risk-high { color: #C0392B; font-weight: 600; }
+  .risk-mod  { color: #B87A20; font-weight: 600; }
+  .risk-low  { color: var(--gray-600); }
+
+  /* ── FOOTER ── */
+  .footer { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 2.5rem; border-top: 1px solid var(--gray-100); background: var(--gray-50); }
+  .footer-left { font-size: 0.78rem; color: var(--gray-600); line-height: 1.5; }
+  .footer-badge { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--substance-mid); border: 1.5px solid var(--substance-mid); padding: 0.3em 0.8em; border-radius: 20px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .content { padding: 1.4rem 1.2rem; }
+    .header  { padding: 1.8rem 1.2rem 1.4rem; }
+    .header h1 { font-size: 1.8rem; }
+    .effects-grid, .info-cards, .resource-grid { grid-template-columns: 1fr; }
+    .bzd-grid { grid-template-columns: 1fr 1fr; }
+    .mechanism-visual { flex-direction: column; }
+    .mech-arrow { transform: rotate(90deg); padding: 0.3rem 0; align-self: center; }
+    .timeline { flex-direction: column; }
+    .tl-step { border-right: none; border-bottom: 1px solid var(--gray-200); }
+    .footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+  }
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; border-radius: 0; margin: 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">Fiche substance · Patient</div>
+    <h1>
+      Benzodiazépines (mésusage)
+      <span class="substance-names">Valium · Xanax · Lexomil · Séresta · Rivotril · Rohypnol · « benzo » · « cachetons »</span>
+    </h1>
+    <p class="header-subtitle">
+      Comprendre le mésusage des benzodiazépines, la dépendance, le sevrage progressif et les traitements disponibles à l'USCA.
+    </p>
+    <div class="header-warning-badge">
+      ⚡ Sevrage potentiellement dangereux — ne jamais arrêter brutalement seul·e
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 1. INTRO -->
+    <div class="intro-box">
+      <p>Les benzodiazépines (« benzos ») sont des <strong>médicaments légalement prescrits</strong> pour l'anxiété, l'insomnie ou l'épilepsie. Elles font partie de la famille des <strong>sédatifs du système nerveux central</strong>. Le terme « mésusage » désigne une utilisation qui sort du cadre médical prévu : doses supérieures à la prescription, durée prolongée sans avis médical, usage à des fins récréatives, ou en association avec d'autres substances.</p>
+      <p>La France est l'un des pays européens avec la plus forte consommation de benzodiazépines. <strong>Une dépendance physique peut s'installer en quelques semaines seulement</strong>, même avec une prescription médicale régulière. Ce n'est pas une faiblesse — c'est une propriété pharmacologique de ces médicaments.</p>
+      <p>Le sevrage des benzodiazépines est <strong>médicalement sérieux</strong> et doit toujours être encadré. Contrairement à une idée reçue, il peut être plus difficile que le sevrage d'autres substances.</p>
+    </div>
+
+    <!-- 2. FAMILLE BZD -->
+    <div class="section-title">
+      <div class="section-icon subst">💊</div>
+      Les principales benzodiazépines — classées par durée d'action
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:0.8rem;">La durée d'action influence le profil de sevrage : les BZD à courte durée d'action provoquent un sevrage plus rapide et plus intense ; les BZD à longue durée d'action ont un sevrage plus progressif et moins brutal.</p>
+
+    <div class="bzd-grid">
+      <div class="bzd-card long">
+        <div class="bzd-type">Longue durée (&gt; 24h)</div>
+        <div class="bzd-names">Diazépam, Clonazépam<br>Nitrazépam</div>
+        <div class="bzd-eg">Valium, Rivotril, Mogadon</div>
+      </div>
+      <div class="bzd-card medium">
+        <div class="bzd-type">Durée intermédiaire (6–24h)</div>
+        <div class="bzd-names">Bromazépam, Alprazolam<br>Lorazépam</div>
+        <div class="bzd-eg">Lexomil, Xanax, Temesta</div>
+      </div>
+      <div class="bzd-card short">
+        <div class="bzd-type">Courte durée (&lt; 6h)</div>
+        <div class="bzd-names">Oxazépam, Triazolam<br>Midazolam</div>
+        <div class="bzd-eg">Séresta, Halcion, Hypnovel</div>
+      </div>
+    </div>
+
+    <div class="teal-box" style="margin-top:0.5rem;">
+      <div class="teal-title">💬 Le protocole de sevrage à l'USCA</div>
+      <p>Pour le sevrage, on utilise généralement le <strong>diazépam (Valium)</strong> — une BZD à longue durée d'action — même si vous prenez habituellement une autre BZD. Cela permet une décroissance plus progressive et mieux contrôlée. La réduction se fait <strong>par paliers de 10 % environ toutes les 1 à 2 semaines</strong>, adaptés à votre situation.</p>
+    </div>
+
+    <!-- 3. MÉCANISME -->
+    <div class="section-title">
+      <div class="section-icon subst">🧠</div>
+      Comment les benzodiazépines agissent-elles sur votre cerveau ?
+    </div>
+
+    <div class="mechanism-visual">
+      <div class="mech-step">
+        <span class="emoji">🔒</span>
+        <div class="label">Prise aiguë</div>
+        <div class="sublabel">Les BZD renforcent l'action du GABA, le principal « frein » du cerveau. Résultat : anxiété réduite, muscles relâchés, sommeil facilité, sensation de calme.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">📉</span>
+        <div class="label">Avec le temps</div>
+        <div class="sublabel">Le cerveau réduit sa propre production de GABA naturel et diminue la sensibilité des récepteurs. La tolérance s'installe : le même effet nécessite des doses plus élevées. L'anxiété de fond peut paradoxalement augmenter.</div>
+      </div>
+      <div class="mech-arrow">→</div>
+      <div class="mech-step">
+        <span class="emoji">⚡</span>
+        <div class="label">À l'arrêt</div>
+        <div class="sublabel">Le cerveau reste en hyperactivité. Anxiété intense, tremblements, insomnie sévère — et dans les cas sérieux, crises convulsives. Ces symptômes peuvent durer des semaines à des mois.</div>
+      </div>
+    </div>
+    <p class="mech-caption">Le paradoxe des BZD : prises pour l'anxiété, elles peuvent finalement entretenir et aggraver l'anxiété à long terme. Ce n'est pas votre faute — c'est leur mode de fonctionnement.</p>
+
+    <!-- 4. EFFETS -->
+    <div class="section-title">
+      <div class="section-icon amber">📊</div>
+      Les effets des benzodiazépines
+    </div>
+
+    <div class="effects-grid">
+      <div class="effects-col">
+        <h4>Effets recherchés / thérapeutiques</h4>
+        <ul>
+          <li><span class="dot dot-green"></span>Réduction rapide de l'anxiété</li>
+          <li><span class="dot dot-green"></span>Facilitation du sommeil</li>
+          <li><span class="dot dot-green"></span>Relaxation musculaire</li>
+          <li><span class="dot dot-green"></span>Effet anticonvulsivant</li>
+          <li><span class="dot dot-green"></span>Soulagement des crises de panique</li>
+        </ul>
+      </div>
+      <div class="effects-col">
+        <h4>Effets indésirables</h4>
+        <ul>
+          <li><span class="dot dot-orange"></span>Somnolence, ralentissement des réflexes</li>
+          <li><span class="dot dot-orange"></span>Troubles de la mémoire (antérograde)</li>
+          <li><span class="dot dot-orange"></span>Dépendance physique et psychologique</li>
+          <li><span class="dot dot-red"></span>Chutes (personnes âgées ++)</li>
+          <li><span class="dot dot-red"></span>Accidents de voiture et de travail</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:0.8rem;">
+      <h4 style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--gray-600);margin-bottom:0.6rem;">Effets du mésusage chronique</h4>
+      <ul style="list-style:none;padding:0;columns:2;gap:1.5rem;">
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Anxiété chronique paradoxalement aggravée</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Dépression, émoussement émotionnel</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Déclin cognitif (mémoire, concentration)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Trouble du sommeil paradoxal (moins de sommeil profond)</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Risque de chutes, fractures</li>
+        <li style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.88rem;margin-bottom:0.4rem;line-height:1.4;break-inside:avoid;"><span class="dot dot-navy" style="margin-top:0.3em;flex-shrink:0;"></span>Difficultés professionnelles et relationnelles</li>
+      </ul>
+    </div>
+
+    <!-- 5. SEVRAGE -->
+    <div class="section-title">
+      <div class="section-icon red">⏱</div>
+      Le syndrome de sevrage — progressif mais durable
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-title">⚠ Ne jamais arrêter brutalement</div>
+      <p style="font-size:0.88rem;color:var(--navy);line-height:1.5;">Contrairement à d'autres médicaments, l'arrêt brutal des benzodiazépines peut provoquer des <strong>crises d'épilepsie graves</strong> et un syndrome de sevrage sévère. Toute réduction doit être graduelle, sous supervision médicale.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-step critical">
+        <div class="tl-period">J1 – J3 (BZD courtes)<br>J3 – J7 (BZD longues)</div>
+        <div class="tl-title">Début du sevrage</div>
+        <div class="tl-items">
+          Anxiété · Tremblements<br>
+          Insomnie · Sueurs<br>
+          <span style="font-weight:600;color:var(--red-soft);">Risque de crises</span>
+        </div>
+      </div>
+      <div class="tl-step urgent">
+        <div class="tl-period">J1 – J14</div>
+        <div class="tl-title">Phase aiguë</div>
+        <div class="tl-items">
+          Anxiété intense<br>
+          Irritabilité · Palpitations<br>
+          Sensibilité accrue aux sons,<br>
+          à la lumière
+        </div>
+      </div>
+      <div class="tl-step moderate">
+        <div class="tl-period">Semaines – mois</div>
+        <div class="tl-title">Sevrage prolongé</div>
+        <div class="tl-items">
+          Symptômes moins intenses<br>
+          mais persistants<br>
+          Insomnie résiduelle<br>
+          Anxiété fluctuante
+        </div>
+      </div>
+      <div class="tl-step recovery">
+        <div class="tl-period">Mois – 1 an</div>
+        <div class="tl-title">Récupération</div>
+        <div class="tl-items">
+          Amélioration progressive<br>
+          Retour du sommeil naturel<br>
+          Anxiété naturelle retrouvée<br>
+          sans substance
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--gray-600);font-style:italic;margin-top:0.4rem;">⚠ Le sevrage des BZD peut être l'un des plus longs. La patience est une partie du traitement. Les symptômes s'améliorent.</p>
+
+    <!-- SCHÉMA DÉGRESSIF -->
+    <div class="section-title">
+      <div class="section-icon subst">📉</div>
+      Le principe du sevrage progressif
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--gray-600);margin-bottom:0.6rem;">Le protocole consiste à réduire la dose par <strong>paliers progressifs</strong>, en laissant au cerveau le temps de se réajuster à chaque étape. Il n'y a pas de vitesse universelle — le rythme est adapté à votre tolérance.</p>
+
+    <div class="taper-scheme">
+      <div class="taper-step">
+        <div class="taper-pct">100 %</div>
+        <div class="taper-bar" style="height:100px;"></div>
+        <div class="taper-label">Dose<br>initiale</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">90 %</div>
+        <div class="taper-bar" style="height:90px;"></div>
+        <div class="taper-label">Palier 1<br>1–2 sem.</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">75 %</div>
+        <div class="taper-bar" style="height:75px;"></div>
+        <div class="taper-label">Palier 2<br>1–2 sem.</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">60 %</div>
+        <div class="taper-bar" style="height:60px;"></div>
+        <div class="taper-label">Palier 3</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">45 %</div>
+        <div class="taper-bar" style="height:45px;"></div>
+        <div class="taper-label">Palier 4</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">30 %</div>
+        <div class="taper-bar" style="height:30px;"></div>
+        <div class="taper-label">Palier 5</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">15 %</div>
+        <div class="taper-bar" style="height:15px;"></div>
+        <div class="taper-label">Palier 6</div>
+      </div>
+      <div class="taper-step">
+        <div class="taper-pct">0 %</div>
+        <div class="taper-bar" style="height:4px;background:var(--teal);"></div>
+        <div class="taper-label" style="color:var(--teal);font-weight:600;">Arrêt</div>
+      </div>
+    </div>
+    <p class="taper-caption">Le rythme réel est adapté à votre situation. Certaines personnes ont besoin de plus de paliers ou d'un rythme plus lent — c'est normal et ne signifie pas un échec.</p>
+
+    <!-- 6. INTERACTIONS -->
+    <div class="section-title">
+      <div class="section-icon red">⚗️</div>
+      Mélanges dangereux
+    </div>
+
+    <div class="dark-box">
+      <div class="dark-title">🚫 Associations pouvant être mortelles</div>
+      <ul>
+        <li><strong>BZD + alcool :</strong> sédation majorée, coma, arrêt respiratoire</li>
+        <li><strong>BZD + opioïdes</strong> (morphine, tramadol, méthadone) : dépression respiratoire fatale</li>
+        <li><strong>BZD + GHB/GBL :</strong> coma, arrêt respiratoire</li>
+        <li><strong>BZD + autres sédatifs</strong> (antihistaminiques, neuroleptiques sédatifs) : sédation extrême</li>
+      </ul>
+    </div>
+
+    <table class="interaction-table">
+      <thead>
+        <tr><th>Association</th><th>Risque principal</th><th>Niveau</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>BZD + alcool</td><td>Coma, arrêt respiratoire</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>BZD + opioïdes</td><td>Dépression respiratoire</td><td class="risk-high">⚠ Mortel</td></tr>
+        <tr><td>BZD + méthadone / buprénorphine</td><td>Risque majoré — à déclarer à l'équipe TSO</td><td class="risk-high">⚠ Élevé</td></tr>
+        <tr><td>BZD + cannabis</td><td>Sédation majorée, désorientation</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>BZD + antidépresseurs sédatifs</td><td>Somnolence excessive, chutes</td><td class="risk-mod">⚡ Modéré</td></tr>
+        <tr><td>BZD + antiépileptiques</td><td>Interactions complexes — suivi médical requis</td><td class="risk-low">Variable</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 7. RdRD -->
+    <div class="section-title">
+      <div class="section-icon teal">🛡</div>
+      Réduction des risques
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card green">
+        <h4>✅ Si vous prenez des BZD</h4>
+        <ul>
+          <li>Ne jamais augmenter les doses sans avis médical</li>
+          <li>Indiquer toutes vos BZD à l'équipe (y compris celles d'une autre prescription)</li>
+          <li>Ne jamais interrompre brutalement — contactez un médecin</li>
+          <li>Ne pas conduire si vous ressentez de la somnolence</li>
+          <li>Éviter l'alcool absolument en cas de prise de BZD</li>
+        </ul>
+      </div>
+      <div class="info-card orange">
+        <h4>⚠ Situations à éviter</h4>
+        <ul>
+          <li>Mélanger avec de l'alcool ou des opioïdes</li>
+          <li>Acheter des BZD hors circuit médical (contrefaçons fréquentes)</li>
+          <li>Prendre les BZD d'une autre personne</li>
+          <li>Stocker et prendre en réserve en cas de crise</li>
+          <li>Arrêter d'un coup après une prise prolongée</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 8. TRAITEMENTS USCA -->
+    <div class="section-title">
+      <div class="section-icon teal">🏥</div>
+      Ce qu'on vous propose à l'USCA
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Protocole de sevrage médicalisé</h4>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-subst">💊 Diazépam (Valium) — switch + décroissance guidée</span>
+        <span class="treatment-tag tag-navy">💊 Antiépileptiques si nécessaire</span>
+        <span class="treatment-tag tag-navy">💊 Traitement de l'anxiété et de l'insomnie</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Traitement de l'anxiété sous-jacente</h4>
+      <p style="font-size:0.85rem;color:var(--navy);margin-bottom:0.5rem;">Les BZD sont souvent utilisées pour traiter une anxiété qui mérite d'autres approches. Nous travaillons avec vous sur les traitements de fond :</p>
+      <div class="treatment-list">
+        <span class="treatment-tag tag-teal">✓ ISRS / IRSN (sertraline, venlafaxine)</span>
+        <span class="treatment-tag tag-teal">✓ Pregabaline (selon indication)</span>
+        <span class="treatment-tag tag-amber">⚡ Buspérone (anxiolytique non BZD)</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <h4 style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--gray-600);margin-bottom:0.6rem;">Approches non médicamenteuses — particulièrement efficaces pour le sevrage BZD</h4>
+      <div class="info-cards">
+        <div class="info-card green">
+          <h4>🪡 Acupuncture (protocole NADA)</h4>
+          <p>Particulièrement indiquée pour l'anxiété de sevrage et l'insomnie. Proposée tôt dans le séjour, dès stabilisation de la dose.</p>
+        </div>
+        <div class="info-card green">
+          <h4>🌀 Hypnose thérapeutique</h4>
+          <p>Travail sur la gestion de l'anxiété sans substance. L'autohypnose peut remplacer progressivement le réflexe « je prends une benzo quand je suis anxieux·se ».</p>
+        </div>
+      </div>
+      <div class="info-cards" style="margin-top:0.6rem;">
+        <div class="info-card green">
+          <h4>🥽 Réalité Virtuelle (TRV)</h4>
+          <p>Relaxation immersive, exposition aux situations anxiogènes dans un environnement sécurisé. Aide à développer des outils alternatifs aux BZD pour gérer le stress.</p>
+        </div>
+        <div class="info-card orange">
+          <h4>🧠 TCC et travail psychologique</h4>
+          <p>Thérapies cognitivo-comportementales spécifiques de l'anxiété, techniques de relaxation, gestion du sommeil sans médicament.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="teal-box">
+      <div class="teal-title">💬 Ce que l'on sait sur le long terme</div>
+      <p>La grande majorité des personnes qui réduisent progressivement les benzodiazépines voient leur anxiété <strong>diminuer à long terme</strong>, et leur sommeil <strong>s'améliorer</strong> — même si les premières semaines sont difficiles. Le cerveau récupère, mais il a besoin de temps.</p>
+    </div>
+
+    <!-- 9. RESSOURCES -->
+    <div class="section-title">
+      <div class="section-icon navy">📞</div>
+      Ressources et numéros utiles
+    </div>
+
+    <div class="resource-grid">
+      <div class="resource-item">
+        <div class="resource-icon">🆘</div>
+        <div>
+          <div class="resource-number">15 (SAMU)</div>
+          <div class="resource-label">Urgence vitale · Crise convulsive<br>Perte de conscience</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">💬</div>
+        <div>
+          <div class="resource-number">3114</div>
+          <div class="resource-label">Prévention suicide<br>Si vous vous sentez en danger</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">📞</div>
+        <div>
+          <div class="resource-number">0 800 23 13 13</div>
+          <div class="resource-label">Drogues Info Service<br>Anonyme, gratuit, 7j/7</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🏠</div>
+        <div>
+          <div class="resource-number">CSAPA</div>
+          <div class="resource-label">Suivi ambulatoire après sortie<br>Gratuit et confidentiel</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🩺</div>
+        <div>
+          <div class="resource-number">Médecin traitant</div>
+          <div class="resource-label">Interlocuteur principal pour<br>la suite du sevrage progressif</div>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🧠</div>
+        <div>
+          <div class="resource-number">CMP</div>
+          <div class="resource-label">Centre médico-psychologique<br>Suivi psychiatrique si besoin</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTE FINALE -->
+    <div class="dark-box" style="margin-top:2rem;">
+      <div class="dark-title">🚨 Quand appeler le 15 immédiatement</div>
+      <ul>
+        <li>Convulsions, secousses musculaires incontrôlables</li>
+        <li>Confusion intense, désorientation</li>
+        <li>Perte de conscience, même brève</li>
+        <li>Fièvre associée à une agitation extrême</li>
+        <li>Difficultés à respirer</li>
+        <li>Pensées de vous faire du mal</li>
+      </ul>
+      <div style="margin-top:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.75);">
+        Si vous êtes à l'USCA, sonnez immédiatement l'infirmier·ère sans attendre. Ne gérez pas seul·e.
+        En dehors de l'hôpital, appelez le <span class="dark-number">15</span>.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>
+      Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>
+      Contact : addicto.psl@aphp.fr
+    </div>
+    <div class="footer-badge">Document d'information patient</div>
+  </div>
+
+</div>
+</body>
+</html>
