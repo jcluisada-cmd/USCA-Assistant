@@ -1,6 +1,10 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 6 mai 2026 (v4.10 — Notifications push V3 personnalisables + permissions modifiables/supprimables + nouveau logo phénix.
+> Dernière mise à jour : 6 mai 2026 (v4.11 — Fix RLS DELETE permissions.
+> 1. **Migration v35** : ajout policy `permissions_delete_auth` (`USING (auth.role() = 'authenticated')`). Bug v4.10 — la table `permissions` avait INSERT/SELECT/UPDATE en RLS mais aucune policy DELETE → tout DELETE était bloqué silencieusement (0 ligne supprimée sans erreur HTTP, comportement standard Postgres).
+> 2. **Helper `db.deletePermission` durci** : utilise `count: 'exact'` + throw si 0 ligne affectée → tout futur problème RLS deviendra immédiatement visible côté UI au lieu de "rien ne se passe".)
+>
+> v4.10 — Notifications push V3 personnalisables + permissions modifiables/supprimables + nouveau logo phénix.
 > 1. **Préférences notifications par compte** : migration v34 ajoute `profiles.push_preferences JSONB` (NULL = défauts système). Section "Mes notifications" dans modal Paramètres admin (visible role=medecin uniquement) — 5 checkboxes événements (`message_patient`, `permission_demande`, `alerte_craving`, `groupe_rappel`, `rdv_perso`) + 3 réglages silence perso (heure soir 16h-20h, weekend on/off, fériés on/off). L'Edge Function `send-push` lit `push_preferences` et filtre destinataires en amont par `event_type`. Les prefs perso peuvent **durcir** mais pas assouplir le silence weekend/férié (sécurité par défaut).
 > 2. **Silence soignant : seuil soir 16h → 18h** dans `send-push`. Garde rôle médecin pour les push staff (`getSubscribedMedecinIds` filtre `role='medecin'`).
 > 3. **Push patient — nouveaux événements** : (a) demande de permission patient → médecins abonnés (fire-and-forget, comme messages V2) ; (b) validation permission soignant → patient (push patient toujours envoyé, pas filtré par silence).
@@ -55,7 +59,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.10 |
+| **Service Worker** | usca-v4.11 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

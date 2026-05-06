@@ -364,8 +364,12 @@ window.db = {
   },
 
   async deletePermission(id) {
-    const { error } = await sb.from('permissions').delete().eq('id', id);
+    // count: 'exact' force PostgREST à renvoyer le nombre de lignes affectées.
+    // Sans ça, un échec RLS silencieux (policy DELETE manquante) passe inaperçu
+    // côté client (0 ligne supprimée, pas d'erreur HTTP).
+    const { error, count } = await sb.from('permissions').delete({ count: 'exact' }).eq('id', id);
     if (error) throw error;
+    if (count === 0) throw new Error('Suppression refusée (déjà supprimée ou droits insuffisants)');
   },
 
   // ════════════════ CONTENUS PARTAGÉS ════════════════
