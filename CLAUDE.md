@@ -1,6 +1,14 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 4 mai 2026 (v4.09 — Mode paysage activé (orientation libre).
+> Dernière mise à jour : 6 mai 2026 (v4.10 — Notifications push V3 personnalisables + permissions modifiables/supprimables + nouveau logo phénix.
+> 1. **Préférences notifications par compte** : migration v34 ajoute `profiles.push_preferences JSONB` (NULL = défauts système). Section "Mes notifications" dans modal Paramètres admin (visible role=medecin uniquement) — 5 checkboxes événements (`message_patient`, `permission_demande`, `alerte_craving`, `groupe_rappel`, `rdv_perso`) + 3 réglages silence perso (heure soir 16h-20h, weekend on/off, fériés on/off). L'Edge Function `send-push` lit `push_preferences` et filtre destinataires en amont par `event_type`. Les prefs perso peuvent **durcir** mais pas assouplir le silence weekend/férié (sécurité par défaut).
+> 2. **Silence soignant : seuil soir 16h → 18h** dans `send-push`. Garde rôle médecin pour les push staff (`getSubscribedMedecinIds` filtre `role='medecin'`).
+> 3. **Push patient — nouveaux événements** : (a) demande de permission patient → médecins abonnés (fire-and-forget, comme messages V2) ; (b) validation permission soignant → patient (push patient toujours envoyé, pas filtré par silence).
+> 4. **Permissions admin — modif + suppression** : bouton ✏️ Modifier (mini-form inline 4 champs date/heure + motif, validation 48h max) disponible tous statuts. Modif sur perm `refusee` repasse en `en_attente` (clear validee_par/at). Bouton 🗑 Supprimer (`db.deletePermission`) disponible tous statuts avec confirmation. Helper `buildPermCard(p, patientId)` factorise rendu + handlers.
+> 5. **UI permissions 2 jours clarifiée** : 1 jour = `Lun. 5 mai · 09:00 → 18:00` (1 ligne) ; 2 jours = `↗ Départ : Lun. 5 mai à 18:00` + `↙ Retour : Mar. 6 mai à 09:00` (2 lignes). Appliqué côté admin (`renderPermDates`) et patient (`loadPermissions`).
+> 6. **Nouveau logo + splash plein écran** : `assets/icon-source.png` remplacé (phénix + poignée de main, fond blanc, 4096×4096) → `icon-192.png`/`icon-512.png` regénérés via PowerShell+System.Drawing (downscale bicubique HQ). `splash.png` remplacé par variante portrait avec mention "USCA Connect" sous le logo. `manifest.json` `background_color` passe de `#f0f4f8` à `#ffffff` (raccord splash natif Android sans cadre crème visible). `index.html` splash custom : `inset-0 flex items-center justify-center` + `width:100%;height:100%;object-fit:contain` (plein écran avec préservation du ratio, fond blanc).
+>
+> v4.09 — Mode paysage activé (orientation libre).
 > 0. **Mode paysage** : `manifest.json` passé de `"orientation": "portrait"` à `"orientation": "any"` → la PWA suit désormais l'orientation physique de l'appareil (Android Chrome + iOS Safari ≥ 16.4 en mode standalone). Cible principale : Galaxy Tab S7 FE en paysage (1366×853, le layout Tailwind responsive s'adapte naturellement). Garde-fou ajouté dans `shared/theme.css` via media query `(orientation: landscape) and (max-height: 500px)` pour téléphones tournés sur le côté (compactage headers/footers stickys + modales 92vh + splash logo 40vh max).
 >
 > v4.08 — Fiches substances poussées au patient + fixes PWA install + QCM externe auto-extend + toolbox accordions repliés.
@@ -47,7 +55,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.09 |
+| **Service Worker** | usca-v4.10 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

@@ -1040,7 +1040,8 @@ async function loadMessages() {
               title: '💬 Message de ' + label,
               body: preview,
               url: '/admin/',
-              tag: 'msg-' + currentPatient.id
+              tag: 'msg-' + currentPatient.id,
+              event_type: 'message_patient'
             });
           }
         } catch (pushErr) {
@@ -1131,6 +1132,32 @@ document.getElementById('btn-send-perm').addEventListener('click', async functio
     successEl.textContent = 'Demande envoy\u00e9e ! En attente de validation.';
     successEl.classList.remove('hidden');
     loadPermissions();
+    // Notifie les m\u00e9decins abonn\u00e9s (V2) \u2014 fire-and-forget, ne doit pas bloquer l'UI patient
+    (async function() {
+      try {
+        var ids = await db.getSubscribedMedecinIds();
+        if (ids && ids.length) {
+          var label = 'Ch.' + (currentPatient.chambre || '?');
+          var debutD = new Date(dateDebut + 'T' + heureDebut);
+          var retourD = new Date(dateRetour + 'T' + heureRetour);
+          var sameDay = debutD.toDateString() === retourD.toDateString();
+          var debutLabel = debutD.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+          var preview = sameDay
+            ? debutLabel + ' ' + heureDebut + ' \u2192 ' + heureRetour
+            : debutLabel + ' ' + heureDebut + ' \u2192 ' + retourD.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + heureRetour;
+          await db.sendPushToStaff({
+            profile_ids: ids,
+            title: '\ud83d\udeaa Permission demand\u00e9e \u2014 ' + label,
+            body: preview,
+            url: '/admin/',
+            tag: 'perm-' + currentPatient.id,
+            event_type: 'permission_demande'
+          });
+        }
+      } catch (pushErr) {
+        console.warn('Push permission \u00e9chou\u00e9:', pushErr);
+      }
+    })();
   } catch(e) {
     errEl.textContent = 'Erreur : ' + e.message;
     errEl.classList.remove('hidden');
@@ -1168,16 +1195,20 @@ async function loadPermissions() {
       var card = createEl('div', 'rounded-xl border p-4 mb-2 ' + style.bg);
 
       // En-tête : dates + badge statut
-      var header = createEl('div', 'flex items-center justify-between mb-2');
+      var header = createEl('div', 'flex items-start justify-between mb-1');
       var dates = createEl('div', '');
-      dates.appendChild(createEl('p', 'text-sm font-bold text-slate-800',
-        debut.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }) +
-        ' ' + debut.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-      ));
-      dates.appendChild(createEl('p', 'text-xs text-slate-500',
-        'Retour : ' + retour.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }) +
-        ' ' + retour.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-      ));
+      var sameDay = debut.toDateString() === retour.toDateString();
+      var hDebut = debut.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      var hRetour = retour.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      var dDebut = debut.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+      var dRetour = retour.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+      if (sameDay) {
+        dates.appendChild(createEl('p', 'text-sm font-bold text-slate-800', dDebut));
+        dates.appendChild(createEl('p', 'text-xs text-slate-600', hDebut + ' → ' + hRetour));
+      } else {
+        dates.appendChild(createEl('p', 'text-xs text-slate-600', '↗ Départ : ' + dDebut + ' à ' + hDebut));
+        dates.appendChild(createEl('p', 'text-xs text-slate-600', '↙ Retour : ' + dRetour + ' à ' + hRetour));
+      }
       header.appendChild(dates);
       header.appendChild(createEl('span', 'text-[10px] font-bold px-2 py-1 rounded-full ' + style.badge, style.label));
       card.appendChild(header);

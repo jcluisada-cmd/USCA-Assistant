@@ -552,6 +552,62 @@
                 <p id="admin-push-hint" class="text-xs text-slate-400 dark:text-slate-500 mt-2"></p>
               </div>
 
+              <!-- Préférences notifications (par compte) -->
+              <div id="notif-prefs-section" class="pt-4 border-t border-slate-200 dark:border-slate-700 hidden">
+                <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mes notifications</h4>
+                <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Choisis les types d'alertes à recevoir et tes heures de silence personnelles. Les règles globales (silence weekend et jours fériés) restent appliquées sauf si tu les décoches ci-dessous.</p>
+
+                <div class="space-y-1.5 mb-3">
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-evt-message_patient" class="w-4 h-4 accent-indigo-600">
+                    <span>💬 Messages des patients</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-evt-permission_demande" class="w-4 h-4 accent-indigo-600">
+                    <span>🚪 Demandes de permission</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-evt-alerte_craving" class="w-4 h-4 accent-indigo-600">
+                    <span>⚠️ Alertes craving</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-evt-groupe_rappel" class="w-4 h-4 accent-indigo-600">
+                    <span>👥 Rappels groupes (animateur)</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-evt-rdv_perso" class="w-4 h-4 accent-indigo-600">
+                    <span>📅 Rappels rendez-vous perso</span>
+                  </label>
+                </div>
+
+                <div class="space-y-2 mb-3 pt-2 border-t border-slate-100 dark:border-slate-700">
+                  <label class="flex items-center justify-between gap-2 text-sm text-slate-700 dark:text-slate-200">
+                    <span>Silence le soir à partir de</span>
+                    <select id="pref-evening-after" class="px-2 py-1 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm">
+                      <option value="16">16h</option>
+                      <option value="17">17h</option>
+                      <option value="18" selected>18h</option>
+                      <option value="19">19h</option>
+                      <option value="20">20h</option>
+                    </select>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-quiet-weekend" class="w-4 h-4 accent-indigo-600" checked>
+                    <span>Silence weekend</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
+                    <input type="checkbox" id="pref-quiet-ferie" class="w-4 h-4 accent-indigo-600" checked>
+                    <span>Silence jours fériés</span>
+                  </label>
+                </div>
+
+                <div class="flex gap-2">
+                  <button id="btn-prefs-save" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98]">Enregistrer</button>
+                  <button id="btn-prefs-reset" class="px-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm hover:bg-slate-50 transition-colors">Défauts</button>
+                </div>
+                <p id="prefs-status" class="text-xs text-emerald-600 dark:text-emerald-400 mt-2 hidden"></p>
+              </div>
+
               <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
                 <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Pause vacances</h4>
                 <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Suspendre temporairement les notifications jusqu'à une date donnée. Reprise automatique le lendemain.</p>
@@ -2478,6 +2534,204 @@ async function deletePatientData(patientId) {
   await loadDashboardStats();
 }
 
+// ── Construit la card permission (affichage + actions) ──
+var PERM_STATUT_STYLES = {
+  en_attente: { bg: 'bg-cyan-50 border-cyan-200 dark:bg-cyan-900/20 dark:border-cyan-800', badge: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-800 dark:text-cyan-200', label: 'En attente' },
+  validee:    { bg: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800', badge: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200', label: 'Validée' },
+  refusee:    { bg: 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800', badge: 'bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200', label: 'Refusée' },
+  annulee:    { bg: 'bg-slate-50 border-slate-200 dark:bg-slate-800 dark:border-slate-700', badge: 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400', label: 'Annulée' }
+};
+
+function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+function dateInputValue(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function timeInputValue(d) { return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+
+function renderPermDates(card, debut, retour) {
+  var sameDay = debut.toDateString() === retour.toDateString();
+  var hDebut = debut.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  var hRetour = retour.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  var dDebut = debut.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+  if (sameDay) {
+    var oneLine = createEl('p', 'text-xs font-semibold text-slate-700 dark:text-slate-200', dDebut + ' · ' + hDebut + ' → ' + hRetour);
+    card.appendChild(oneLine);
+  } else {
+    var dRetour = retour.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+    card.appendChild(createEl('p', 'text-xs font-semibold text-slate-700 dark:text-slate-200', '↗ Départ : ' + dDebut + ' à ' + hDebut));
+    card.appendChild(createEl('p', 'text-xs font-semibold text-slate-700 dark:text-slate-200', '↙ Retour : ' + dRetour + ' à ' + hRetour));
+  }
+}
+
+function buildPermCard(p, patientId) {
+  var debut = new Date(p.date_debut);
+  var retour = new Date(p.date_retour);
+  var style = PERM_STATUT_STYLES[p.statut] || PERM_STATUT_STYLES.en_attente;
+
+  var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + style.bg);
+
+  var header = createEl('div', 'flex items-start justify-between mb-1 gap-2');
+  var datesBox = createEl('div', 'flex-1 min-w-0');
+  renderPermDates(datesBox, debut, retour);
+  if (p.motif) {
+    datesBox.appendChild(createEl('p', 'text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 italic', p.motif));
+  }
+  header.appendChild(datesBox);
+  header.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap ' + style.badge, style.label));
+  card.appendChild(header);
+
+  // Boutons d'action selon le statut
+  var actions = createEl('div', 'flex gap-2 mt-2 flex-wrap');
+  if (p.statut !== 'validee') {
+    var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Valider');
+    btnVal.addEventListener('click', async function() {
+      await db.updatePermission(p.id, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+      // Push au patient — pas filtré par silence (push_patient toujours envoyés)
+      var sameDay = debut.toDateString() === retour.toDateString();
+      var hD = timeInputValue(debut), hR = timeInputValue(retour);
+      var preview = sameDay
+        ? debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + hR
+        : debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + retour.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hR;
+      db.sendPushToPatient({
+        patient_id: patientId,
+        title: '✓ Permission validée',
+        body: preview,
+        url: '/patient/',
+        tag: 'perm-validee-' + p.id
+      }).catch(function(e) { console.warn('push perm validee:', e); });
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    });
+    actions.appendChild(btnVal);
+  }
+  if (p.statut !== 'refusee') {
+    var btnRef = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Refuser');
+    btnRef.addEventListener('click', async function() {
+      await db.updatePermission(p.id, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    });
+    actions.appendChild(btnRef);
+  }
+  if (p.statut !== 'annulee') {
+    var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-400 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Annuler');
+    btnAnn.addEventListener('click', async function() {
+      await db.updatePermission(p.id, { statut: 'annulee' });
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    });
+    actions.appendChild(btnAnn);
+  }
+  // ✏️ Modifier — disponible pour tous les statuts
+  var btnEdit = createEl('button', 'py-1.5 px-2.5 bg-white dark:bg-slate-700 border border-indigo-200 dark:border-indigo-700 text-indigo-600 dark:text-indigo-300 font-bold rounded-lg text-xs transition-colors', '✏️');
+  btnEdit.title = 'Modifier les horaires';
+  btnEdit.addEventListener('click', function() {
+    showPermEditForm(card, p, patientId);
+  });
+  actions.appendChild(btnEdit);
+  // 🗑 Supprimer — disponible pour tous les statuts
+  var btnDel = createEl('button', 'py-1.5 px-2.5 bg-white dark:bg-slate-700 border border-red-200 dark:border-red-700 text-red-500 dark:text-red-400 font-bold rounded-lg text-xs transition-colors', '🗑');
+  btnDel.title = 'Supprimer définitivement';
+  btnDel.addEventListener('click', async function() {
+    if (!confirm('Supprimer définitivement cette permission ? Cette action est irréversible.')) return;
+    try {
+      await db.deletePermission(p.id);
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    } catch (e) {
+      alert('Erreur : ' + e.message);
+    }
+  });
+  actions.appendChild(btnDel);
+  card.appendChild(actions);
+
+  return card;
+}
+
+function showPermEditForm(card, p, patientId) {
+  var debut = new Date(p.date_debut);
+  var retour = new Date(p.date_retour);
+  card.textContent = '';
+
+  var title = createEl('p', 'text-xs font-bold text-slate-700 dark:text-slate-200 mb-2', '✏️ Modifier la permission');
+  card.appendChild(title);
+
+  var grid = createEl('div', 'grid grid-cols-2 gap-2 mb-2');
+  function makeField(labelText, type, id, value) {
+    var wrap = createEl('div', '');
+    wrap.appendChild(createEl('label', 'text-[10px] text-slate-500 dark:text-slate-400 block mb-0.5', labelText));
+    var input = document.createElement('input');
+    input.type = type; input.id = id; input.value = value;
+    input.className = 'w-full px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg text-xs';
+    wrap.appendChild(input);
+    return wrap;
+  }
+  grid.appendChild(makeField('Date départ', 'date', 'edit-perm-d-debut-' + p.id, dateInputValue(debut)));
+  grid.appendChild(makeField('Heure départ', 'time', 'edit-perm-h-debut-' + p.id, timeInputValue(debut)));
+  grid.appendChild(makeField('Date retour', 'date', 'edit-perm-d-retour-' + p.id, dateInputValue(retour)));
+  grid.appendChild(makeField('Heure retour', 'time', 'edit-perm-h-retour-' + p.id, timeInputValue(retour)));
+  card.appendChild(grid);
+
+  var motifWrap = createEl('div', 'mb-2');
+  motifWrap.appendChild(createEl('label', 'text-[10px] text-slate-500 dark:text-slate-400 block mb-0.5', 'Motif (optionnel)'));
+  var motifInput = document.createElement('input');
+  motifInput.type = 'text'; motifInput.id = 'edit-perm-motif-' + p.id; motifInput.value = p.motif || '';
+  motifInput.className = 'w-full px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg text-xs';
+  motifWrap.appendChild(motifInput);
+  card.appendChild(motifWrap);
+
+  var errEl = createEl('p', 'text-[10px] text-red-600 dark:text-red-400 mb-2 hidden', '');
+  card.appendChild(errEl);
+
+  if (p.statut === 'refusee') {
+    card.appendChild(createEl('p', 'text-[10px] text-amber-600 dark:text-amber-400 mb-2 italic', 'Cette permission a été refusée. Si tu enregistres, elle repassera en attente.'));
+  }
+
+  var actions = createEl('div', 'flex gap-2');
+  var btnSave = createEl('button', 'flex-1 py-1.5 bg-indigo-600 text-white font-bold rounded-lg text-xs', 'Enregistrer');
+  var btnCancel = createEl('button', 'py-1.5 px-3 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-bold rounded-lg text-xs', 'Annuler');
+  actions.appendChild(btnSave); actions.appendChild(btnCancel);
+  card.appendChild(actions);
+
+  btnCancel.addEventListener('click', function() { renderPatientPerms(patientId); });
+
+  btnSave.addEventListener('click', async function() {
+    var dD = document.getElementById('edit-perm-d-debut-' + p.id).value;
+    var hD = document.getElementById('edit-perm-h-debut-' + p.id).value;
+    var dR = document.getElementById('edit-perm-d-retour-' + p.id).value;
+    var hR = document.getElementById('edit-perm-h-retour-' + p.id).value;
+    var motif = document.getElementById('edit-perm-motif-' + p.id).value.trim();
+    errEl.classList.add('hidden');
+
+    if (!dD || !hD || !dR || !hR) { errEl.textContent = 'Tous les champs date/heure sont obligatoires'; errEl.classList.remove('hidden'); return; }
+    var newDebut = new Date(dD + 'T' + hD + ':00');
+    var newRetour = new Date(dR + 'T' + hR + ':00');
+    var diffH = (newRetour - newDebut) / 3600000;
+    if (diffH <= 0) { errEl.textContent = 'Le retour doit être après le départ'; errEl.classList.remove('hidden'); return; }
+    if (diffH > 48) { errEl.textContent = 'La permission ne peut pas dépasser 48h'; errEl.classList.remove('hidden'); return; }
+
+    var updates = {
+      date_debut: newDebut.toISOString(),
+      date_retour: newRetour.toISOString(),
+      motif: motif || null
+    };
+    // Si refusée, on repasse en attente après modif et on efface les traces de décision
+    if (p.statut === 'refusee') {
+      updates.statut = 'en_attente';
+      updates.validee_par = null;
+      updates.validee_at = null;
+    }
+
+    btnSave.disabled = true; btnSave.textContent = 'Enregistrement…';
+    try {
+      await db.updatePermission(p.id, updates);
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    } catch (e) {
+      errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden');
+      btnSave.disabled = false; btnSave.textContent = 'Enregistrer';
+    }
+  });
+}
+
 // ── Rendu permissions dans le détail patient ──
 async function renderPatientPerms(patientId) {
   var list = document.getElementById('detail-perms-list');
@@ -2505,50 +2759,7 @@ async function renderPatientPerms(patientId) {
     }
 
     perms.forEach(function(p) {
-      var debut = new Date(p.date_debut);
-      var retour = new Date(p.date_retour);
-      var statutStyles = {
-        en_attente: { bg: 'bg-cyan-50 border-cyan-200', badge: 'bg-cyan-100 text-cyan-700', label: 'En attente' },
-        validee: { bg: 'bg-emerald-50 border-emerald-200', badge: 'bg-emerald-100 text-emerald-700', label: 'Valid\u00e9e' },
-        refusee: { bg: 'bg-red-50 border-red-200', badge: 'bg-red-100 text-red-700', label: 'Refus\u00e9e' },
-        annulee: { bg: 'bg-slate-50 border-slate-200', badge: 'bg-slate-100 text-slate-500', label: 'Annul\u00e9e' }
-      };
-      var style = statutStyles[p.statut] || statutStyles.en_attente;
-
-      var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + style.bg);
-      var header = createEl('div', 'flex items-center justify-between mb-1');
-      header.appendChild(createEl('span', 'text-xs font-semibold text-slate-700',
-        debut.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'}) + ' ' +
-        debut.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) + ' \u2192 ' +
-        retour.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})
-      ));
-      header.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full ' + style.badge, style.label));
-      card.appendChild(header);
-
-      if (debut.toDateString() !== retour.toDateString()) {
-        card.appendChild(createEl('p', 'text-[10px] text-slate-500', 'Retour : ' + retour.toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})));
-      }
-
-      // Boutons d'action selon le statut
-      var actions = createEl('div', 'flex gap-2 mt-2');
-      if (p.statut !== 'validee') {
-        var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors', 'Valider');
-        (function(pid, permId) { btnVal.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
-        actions.appendChild(btnVal);
-      }
-      if (p.statut !== 'refusee') {
-        var btnRef = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs transition-colors', 'Refuser');
-        (function(pid, permId) { btnRef.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
-        actions.appendChild(btnRef);
-      }
-      if (p.statut !== 'annulee') {
-        var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white border border-slate-200 text-slate-400 font-bold rounded-lg text-xs transition-colors', 'Annuler');
-        (function(pid, permId) { btnAnn.addEventListener('click', async function() { await db.updatePermission(permId, { statut: 'annulee' }); renderPatientPerms(pid); loadedPermissions = await db.getAllPermissionsEnAttente(); }); })(patientId, p.id);
-        actions.appendChild(btnAnn);
-      }
-      card.appendChild(actions);
-
-      list.appendChild(card);
+      list.appendChild(buildPermCard(p, patientId));
     });
   } catch(e) {
     list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
@@ -2939,6 +3150,7 @@ document.getElementById('btn-params').addEventListener('click', function() {
   document.getElementById('modal-params').classList.remove('hidden');
   refreshAdminPushStatus();
   refreshPushPause();
+  refreshNotifPrefs();
   // P5 -- visibilité admin only de la section "Personnalisation"
   var isAdmin = currentProfile && currentProfile.is_admin === true;
   var sec = document.getElementById('settings-section-modules-edit');
@@ -2947,6 +3159,97 @@ document.getElementById('btn-params').addEventListener('click', function() {
 
 document.getElementById('btn-params-close').addEventListener('click', function() {
   document.getElementById('modal-params').classList.add('hidden');
+});
+
+// ── Préférences notifications (par compte, role=medecin uniquement) ──
+var DEFAULT_NOTIF_PREFS = {
+  events: { message_patient: true, permission_demande: true, alerte_craving: true, groupe_rappel: true, rdv_perso: true },
+  quiet_hours: { evening_after: 18, weekend: true, ferie: true }
+};
+
+function applyNotifPrefsToUI(prefs) {
+  var p = prefs || DEFAULT_NOTIF_PREFS;
+  var ev = p.events || DEFAULT_NOTIF_PREFS.events;
+  var qh = p.quiet_hours || DEFAULT_NOTIF_PREFS.quiet_hours;
+  document.getElementById('pref-evt-message_patient').checked = ev.message_patient !== false;
+  document.getElementById('pref-evt-permission_demande').checked = ev.permission_demande !== false;
+  document.getElementById('pref-evt-alerte_craving').checked = ev.alerte_craving !== false;
+  document.getElementById('pref-evt-groupe_rappel').checked = ev.groupe_rappel !== false;
+  document.getElementById('pref-evt-rdv_perso').checked = ev.rdv_perso !== false;
+  var ea = parseInt(qh.evening_after);
+  document.getElementById('pref-evening-after').value = (!isNaN(ea) && ea >= 16 && ea <= 20) ? String(ea) : '18';
+  document.getElementById('pref-quiet-weekend').checked = qh.weekend !== false;
+  document.getElementById('pref-quiet-ferie').checked = qh.ferie !== false;
+}
+
+function readNotifPrefsFromUI() {
+  return {
+    events: {
+      message_patient: document.getElementById('pref-evt-message_patient').checked,
+      permission_demande: document.getElementById('pref-evt-permission_demande').checked,
+      alerte_craving: document.getElementById('pref-evt-alerte_craving').checked,
+      groupe_rappel: document.getElementById('pref-evt-groupe_rappel').checked,
+      rdv_perso: document.getElementById('pref-evt-rdv_perso').checked
+    },
+    quiet_hours: {
+      evening_after: parseInt(document.getElementById('pref-evening-after').value) || 18,
+      weekend: document.getElementById('pref-quiet-weekend').checked,
+      ferie: document.getElementById('pref-quiet-ferie').checked
+    }
+  };
+}
+
+async function refreshNotifPrefs() {
+  // Section visible uniquement pour les médecins (les push staff sont filtrés sur role=medecin)
+  var section = document.getElementById('notif-prefs-section');
+  var isMedecin = currentProfile && currentProfile.role === 'medecin';
+  section.classList.toggle('hidden', !isMedecin);
+  if (!isMedecin) return;
+  try {
+    var prefs = await db.getPushPreferences(currentProfile.id);
+    applyNotifPrefsToUI(prefs);
+  } catch (e) {
+    console.warn('getPushPreferences:', e);
+    applyNotifPrefsToUI(null);
+  }
+}
+
+document.getElementById('btn-prefs-save').addEventListener('click', async function() {
+  if (!currentProfile) return;
+  var status = document.getElementById('prefs-status');
+  status.classList.add('hidden');
+  this.disabled = true;
+  this.textContent = 'Enregistrement…';
+  try {
+    await db.setPushPreferences(currentProfile.id, readNotifPrefsFromUI());
+    status.textContent = '✓ Préférences enregistrées';
+    status.classList.remove('hidden');
+    setTimeout(function() { status.classList.add('hidden'); }, 2500);
+  } catch (e) {
+    status.textContent = 'Erreur : ' + (e.message || 'réessayez');
+    status.className = 'text-xs text-red-600 dark:text-red-400 mt-2';
+    status.classList.remove('hidden');
+  }
+  this.disabled = false;
+  this.textContent = 'Enregistrer';
+});
+
+document.getElementById('btn-prefs-reset').addEventListener('click', async function() {
+  if (!currentProfile) return;
+  if (!confirm('Réinitialiser les préférences aux valeurs par défaut ?')) return;
+  this.disabled = true;
+  try {
+    await db.setPushPreferences(currentProfile.id, null);
+    applyNotifPrefsToUI(null);
+    var status = document.getElementById('prefs-status');
+    status.textContent = '✓ Préférences réinitialisées';
+    status.className = 'text-xs text-emerald-600 dark:text-emerald-400 mt-2';
+    status.classList.remove('hidden');
+    setTimeout(function() { status.classList.add('hidden'); }, 2500);
+  } catch (e) {
+    alert('Erreur : ' + e.message);
+  }
+  this.disabled = false;
 });
 
 // ── P5 ── Edit mode toggle (admin only) ───────────────────

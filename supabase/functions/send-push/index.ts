@@ -4,11 +4,17 @@
 //
 // Payload (POST JSON) — 3 modes mutuellement exclusifs :
 //   V1 patient :
-//     { patient_id: string, title, body?, url?, tag? }
+//     { patient_id: string, title, body?, url?, tag?, event_type? }
 //   V2 soignant unique :
-//     { profile_id: string, title, body?, url?, tag? }
+//     { profile_id: string, title, body?, url?, tag?, event_type? }
 //   V2 broadcast soignants (ex: message patient → médecins abonnés) :
-//     { profile_ids: string[], title, body?, url?, tag? }
+//     { profile_ids: string[], title, body?, url?, tag?, event_type? }
+//
+// event_type (optionnel) : utilisé côté staff uniquement pour filtrer
+//   selon profiles.push_preferences.events. Valeurs connues :
+//     'message_patient' | 'permission_demande' | 'alerte_craving'
+//     | 'groupe_rappel' | 'rdv_perso'
+//   Si absent ou inconnu, le push est envoyé (pas de filtrage par type).
 //
 // Pour profile_ids, le même body+title est envoyé à tous. Le dernier message
 // est stocké dans push_last_message_staff (1 ligne / profile_id) pour que le
@@ -43,7 +49,9 @@ const FERIES_FR = new Set([
   '2027-07-14', '2027-08-15', '2027-11-01', '2027-11-11', '2027-12-25',
 ]);
 
-function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: string } {
+// Contexte temporel "Paris" partagé : on calcule une seule fois pour réutiliser
+// dans les checks globaux et les checks personnalisés par profil.
+function parisContext(now: Date = new Date()): { dateStr: string; minutes: number; wd: number; hh: number } {
   const dateStr = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
   }).format(now);
@@ -51,19 +59,48 @@ function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: s
     timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', hour12: false
   }).format(now);
   const [hh, mm] = timeStr.split(':').map(Number);
-  const minutesSinceMidnight = hh * 60 + mm;
   const wdStr = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Europe/Paris', weekday: 'short'
   }).format(now);
   const dayMap: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-  const wd = dayMap[wdStr] ?? 1;
+  return { dateStr, minutes: hh * 60 + mm, wd: dayMap[wdStr] ?? 1, hh };
+}
 
+function isStaffQuietHours(now: Date = new Date()): { quiet: boolean; reason?: string } {
+  const { dateStr, minutes, wd } = parisContext(now);
   if (wd === 0 || wd === 6) return { quiet: true, reason: 'weekend' };
   if (FERIES_FR.has(dateStr)) return { quiet: true, reason: 'ferie' };
-  // Plage ouverte : 8h30 ≤ heure < 16h00 (Paris)
-  if (minutesSinceMidnight < 8 * 60 + 30) return { quiet: true, reason: 'before_830' };
-  if (minutesSinceMidnight >= 16 * 60) return { quiet: true, reason: 'after_16h' };
+  // Plage ouverte : 8h30 ≤ heure < 18h00 (Paris)
+  if (minutes < 8 * 60 + 30) return { quiet: true, reason: 'before_830' };
+  if (minutes >= 18 * 60) return { quiet: true, reason: 'after_18h' };
   return { quiet: false };
+}
+
+// Vérifie les préférences personnelles d'un soignant. Renvoie true si on doit
+// SKIP ce profil (event filtré ou heure de silence personnelle dépassée).
+// Les règles globales (weekend, férié, plage 8h30-18h) ont déjà filtré en amont.
+function shouldSkipForProfile(
+  prefs: any,
+  event_type: string | undefined,
+  ctx: { hh: number }
+): { skip: boolean; reason?: string } {
+  if (!prefs || typeof prefs !== 'object') return { skip: false };
+
+  // Filtre par type d'événement (uniquement si event_type fourni ET clé connue)
+  if (event_type && prefs.events && typeof prefs.events === 'object') {
+    if (prefs.events[event_type] === false) {
+      return { skip: true, reason: 'event_disabled:' + event_type };
+    }
+  }
+
+  // Heure de silence personnelle (peut DURCIR la règle globale, jamais l'assouplir)
+  if (prefs.quiet_hours && typeof prefs.quiet_hours === 'object') {
+    const evening = Number(prefs.quiet_hours.evening_after);
+    if (!isNaN(evening) && evening >= 8 && evening < 24) {
+      if (ctx.hh >= evening) return { skip: true, reason: 'personal_evening' };
+    }
+  }
+  return { skip: false };
 }
 
 // ── Helpers base64url ──
@@ -165,7 +202,7 @@ Deno.serve(async (req) => {
 
   try {
     const payload = await req.json();
-    const { patient_id, profile_id, title, body, url, tag } = payload;
+    const { patient_id, profile_id, title, body, url, tag, event_type } = payload;
     const profile_ids: string[] | undefined = Array.isArray(payload.profile_ids) ? payload.profile_ids : undefined;
 
     if (!title) {
@@ -209,23 +246,24 @@ Deno.serve(async (req) => {
     let subs: any[] = [];
     const defaultUrl = patient_id ? '/patient/' : '/admin/';
 
-    // Pour le mode staff, on filtre en amont les profiles en pause vacances
-    // (push_pause_until ≥ today_paris → skip). Cette vérif est portée par
-    // l'Edge Function — aucune action serveur n'est nécessaire à la reprise.
+    // Pour le mode staff, on filtre en amont :
+    //   1) les profiles en pause vacances (push_pause_until ≥ today_paris → skip)
+    //   2) les préférences personnelles : type d'événement désactivé OU heure de
+    //      silence personnelle déjà dépassée (peut durcir la règle globale).
     let activeStaffIds: string[] | null = null;
     if (!patient_id) {
       const requestedIds: string[] = profile_ids && profile_ids.length ? profile_ids : [profile_id];
       const { data: profRows, error: profErr } = await supabase
-        .from('profiles').select('id, push_pause_until').in('id', requestedIds);
+        .from('profiles').select('id, push_pause_until, push_preferences').in('id', requestedIds);
       if (profErr) throw profErr;
-      const todayParis = new Intl.DateTimeFormat('en-CA', {
-        timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
-      }).format(new Date());
+      const ctx = parisContext();
+      const todayParis = ctx.dateStr;
       activeStaffIds = (profRows || [])
         .filter(p => !p.push_pause_until || String(p.push_pause_until) < todayParis)
+        .filter(p => !shouldSkipForProfile(p.push_preferences, event_type, ctx).skip)
         .map(p => p.id);
       if (!activeStaffIds.length) {
-        return new Response(JSON.stringify({ sent: 0, reason: 'all_on_vacation' }), {
+        return new Response(JSON.stringify({ sent: 0, reason: 'all_filtered_out' }), {
           status: 200,
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
         });

@@ -363,6 +363,11 @@ window.db = {
     return data;
   },
 
+  async deletePermission(id) {
+    const { error } = await sb.from('permissions').delete().eq('id', id);
+    if (error) throw error;
+  },
+
   // ════════════════ CONTENUS PARTAGÉS ════════════════
 
   async getContenus(patientId) {
@@ -639,8 +644,8 @@ window.db = {
   },
 
   /** Déclenche l'envoi d'un push au patient via l'Edge Function send-push */
-  async sendPushToPatient({ patient_id, title, body, url, tag }) {
-    return await this._invokeSendPush({ patient_id, title, body, url, tag });
+  async sendPushToPatient({ patient_id, title, body, url, tag, event_type }) {
+    return await this._invokeSendPush({ patient_id, title, body, url, tag, event_type });
   },
 
   // ─── V2 : souscriptions et envois côté soignant ───
@@ -658,12 +663,27 @@ window.db = {
   },
 
   /** Push vers un ou plusieurs soignants (profile_id ou profile_ids[]) */
-  async sendPushToStaff({ profile_id, profile_ids, title, body, url, tag }) {
-    const payload = { title, body, url, tag };
+  async sendPushToStaff({ profile_id, profile_ids, title, body, url, tag, event_type }) {
+    const payload = { title, body, url, tag, event_type };
     if (Array.isArray(profile_ids) && profile_ids.length) payload.profile_ids = profile_ids;
     else if (profile_id) payload.profile_id = profile_id;
     else throw new Error('sendPushToStaff : profile_id ou profile_ids requis');
     return await this._invokeSendPush(payload);
+  },
+
+  /** Lit les préférences push d'un profil. NULL = défauts système. */
+  async getPushPreferences(profile_id) {
+    const { data, error } = await sb.from('profiles')
+      .select('push_preferences').eq('id', profile_id).maybeSingle();
+    if (error) throw error;
+    return data ? data.push_preferences : null;
+  },
+
+  /** Met à jour les préférences push (passer null pour revenir aux défauts système) */
+  async setPushPreferences(profile_id, preferences) {
+    const { error } = await sb.from('profiles')
+      .update({ push_preferences: preferences }).eq('id', profile_id);
+    if (error) throw error;
   },
 
   /** Retourne les profile_id distincts des médecins actuellement abonnés au Push */
