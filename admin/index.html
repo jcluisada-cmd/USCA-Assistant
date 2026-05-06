@@ -2576,12 +2576,16 @@ function renderPermDates(card, debut, retour) {
   }
 }
 
-function buildPermCard(p, patientId) {
+function buildPermCard(p, patientId, isPast) {
   var debut = new Date(p.date_debut);
   var retour = new Date(p.date_retour);
   var style = PERM_STATUT_STYLES[p.statut] || PERM_STATUT_STYLES.en_attente;
 
-  var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + style.bg);
+  // Permissions passées : fond neutre grisé, opacité réduite (fait passer le statut au second plan)
+  var cardBg = isPast
+    ? 'bg-slate-100 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 opacity-70'
+    : style.bg;
+  var card = createEl('div', 'rounded-xl border p-3 mb-2 ' + cardBg);
 
   var header = createEl('div', 'flex items-start justify-between mb-1 gap-2');
   var datesBox = createEl('div', 'flex-1 min-w-0');
@@ -2593,56 +2597,58 @@ function buildPermCard(p, patientId) {
   header.appendChild(createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap ' + style.badge, style.label));
   card.appendChild(header);
 
-  // Boutons d'action selon le statut
+  // Boutons d'action — limités à 🗑 si la permission est passée
   var actions = createEl('div', 'flex gap-2 mt-2 flex-wrap');
-  if (p.statut !== 'validee') {
-    var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Valider');
-    btnVal.addEventListener('click', async function() {
-      await db.updatePermission(p.id, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
-      // Push au patient — pas filtré par silence (push_patient toujours envoyés)
-      var sameDay = debut.toDateString() === retour.toDateString();
-      var hD = timeInputValue(debut), hR = timeInputValue(retour);
-      var preview = sameDay
-        ? debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + hR
-        : debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + retour.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hR;
-      db.sendPushToPatient({
-        patient_id: patientId,
-        title: '✓ Permission validée',
-        body: preview,
-        url: '/patient/',
-        tag: 'perm-validee-' + p.id
-      }).catch(function(e) { console.warn('push perm validee:', e); });
-      renderPatientPerms(patientId);
-      loadedPermissions = await db.getAllPermissionsEnAttente();
+  if (!isPast) {
+    if (p.statut !== 'validee') {
+      var btnVal = createEl('button', 'flex-1 py-1.5 bg-emerald-600 text-white font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Valider');
+      btnVal.addEventListener('click', async function() {
+        await db.updatePermission(p.id, { statut: 'validee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+        // Push au patient — pas filtré par silence (push_patient toujours envoyés)
+        var sameDay = debut.toDateString() === retour.toDateString();
+        var hD = timeInputValue(debut), hR = timeInputValue(retour);
+        var preview = sameDay
+          ? debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + hR
+          : debut.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hD + ' → ' + retour.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }) + ' ' + hR;
+        db.sendPushToPatient({
+          patient_id: patientId,
+          title: '✓ Permission validée',
+          body: preview,
+          url: '/patient/',
+          tag: 'perm-validee-' + p.id
+        }).catch(function(e) { console.warn('push perm validee:', e); });
+        renderPatientPerms(patientId);
+        loadedPermissions = await db.getAllPermissionsEnAttente();
+      });
+      actions.appendChild(btnVal);
+    }
+    if (p.statut !== 'refusee') {
+      var btnRef = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Refuser');
+      btnRef.addEventListener('click', async function() {
+        await db.updatePermission(p.id, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
+        renderPatientPerms(patientId);
+        loadedPermissions = await db.getAllPermissionsEnAttente();
+      });
+      actions.appendChild(btnRef);
+    }
+    if (p.statut !== 'annulee') {
+      var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-400 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Annuler');
+      btnAnn.addEventListener('click', async function() {
+        await db.updatePermission(p.id, { statut: 'annulee' });
+        renderPatientPerms(patientId);
+        loadedPermissions = await db.getAllPermissionsEnAttente();
+      });
+      actions.appendChild(btnAnn);
+    }
+    // ✏️ Modifier — uniquement si non passée
+    var btnEdit = createEl('button', 'py-1.5 px-2.5 bg-white dark:bg-slate-700 border border-indigo-200 dark:border-indigo-700 text-indigo-600 dark:text-indigo-300 font-bold rounded-lg text-xs transition-colors', '✏️');
+    btnEdit.title = 'Modifier les horaires';
+    btnEdit.addEventListener('click', function() {
+      showPermEditForm(card, p, patientId);
     });
-    actions.appendChild(btnVal);
+    actions.appendChild(btnEdit);
   }
-  if (p.statut !== 'refusee') {
-    var btnRef = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Refuser');
-    btnRef.addEventListener('click', async function() {
-      await db.updatePermission(p.id, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
-      renderPatientPerms(patientId);
-      loadedPermissions = await db.getAllPermissionsEnAttente();
-    });
-    actions.appendChild(btnRef);
-  }
-  if (p.statut !== 'annulee') {
-    var btnAnn = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-400 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Annuler');
-    btnAnn.addEventListener('click', async function() {
-      await db.updatePermission(p.id, { statut: 'annulee' });
-      renderPatientPerms(patientId);
-      loadedPermissions = await db.getAllPermissionsEnAttente();
-    });
-    actions.appendChild(btnAnn);
-  }
-  // ✏️ Modifier — disponible pour tous les statuts
-  var btnEdit = createEl('button', 'py-1.5 px-2.5 bg-white dark:bg-slate-700 border border-indigo-200 dark:border-indigo-700 text-indigo-600 dark:text-indigo-300 font-bold rounded-lg text-xs transition-colors', '✏️');
-  btnEdit.title = 'Modifier les horaires';
-  btnEdit.addEventListener('click', function() {
-    showPermEditForm(card, p, patientId);
-  });
-  actions.appendChild(btnEdit);
-  // 🗑 Supprimer — disponible pour tous les statuts
+  // 🗑 Supprimer — disponible toujours, y compris pour les permissions passées
   var btnDel = createEl('button', 'py-1.5 px-2.5 bg-white dark:bg-slate-700 border border-red-200 dark:border-red-700 text-red-500 dark:text-red-400 font-bold rounded-lg text-xs transition-colors', '🗑');
   btnDel.title = 'Supprimer définitivement';
   btnDel.addEventListener('click', async function() {
@@ -2773,9 +2779,22 @@ async function renderPatientPerms(patientId) {
       return;
     }
 
+    // Tri chronologique : à venir/en cours en haut (plus précoce d'abord), passées en bas grisées
+    var nowMs = Date.now();
+    var future = [], past = [];
     perms.forEach(function(p) {
-      list.appendChild(buildPermCard(p, patientId));
+      if (new Date(p.date_retour).getTime() < nowMs) past.push(p);
+      else future.push(p);
     });
+    function byDebutAsc(a, b) { return new Date(a.date_debut) - new Date(b.date_debut); }
+    future.sort(byDebutAsc);
+    past.sort(byDebutAsc);
+
+    future.forEach(function(p) { list.appendChild(buildPermCard(p, patientId, false)); });
+    if (past.length && future.length) {
+      list.appendChild(createEl('p', 'text-[10px] uppercase tracking-wide text-slate-400 dark:text-slate-500 font-semibold mt-3 mb-1', 'Permissions passées'));
+    }
+    past.forEach(function(p) { list.appendChild(buildPermCard(p, patientId, true)); });
   } catch(e) {
     list.appendChild(createEl('p', 'text-xs text-slate-400 py-2', 'Erreur de chargement'));
   }

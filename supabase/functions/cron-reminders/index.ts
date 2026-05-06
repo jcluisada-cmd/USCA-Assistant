@@ -3,17 +3,19 @@
 // Invoqué toutes les 1 minute par pg_cron (via pg_net HTTP POST).
 //
 // 3 scans :
-//   1. PATIENTS (V1) : events avec patient_id NOT NULL commençant dans 4-5 min
+//   1. PATIENTS (V1) : events avec patient_id NOT NULL commençant dans 9-10 min
 //      → push au patient concerné.
 //   2. CONSULTATIONS PERSO (V2) : events avec patient_id IS NULL ET cree_par IS NOT NULL
-//      commençant dans 4-5 min → push au créateur (profile_id = cree_par).
-//   3. GROUPES A/B (V2) : créneaux du planning thérapeutique commençant dans 4-5 min
+//      commençant dans 9-10 min → push au créateur (profile_id = cree_par).
+//   3. GROUPES A/B (V2) : créneaux du planning thérapeutique commençant dans 9-10 min
 //      (en heure Europe/Paris) → push à chaque animateur désigné dans groupe_animateurs
-//      (sauf si le groupe est annulé dans groupe_modifications pour la date du jour).
+//      ET à tous les patients hospitalisés abonnés aux push (sauf exclusions du jour).
+//      Skipped si le groupe est annulé dans groupe_modifications pour la date du jour.
 //
 // Anti-doublon :
 //   • Scans 1 et 2 : table push_reminders_sent (clé evenement_id).
-//   • Scan 3 : table push_reminders_sent_groupe (clé slug+date+heure+profile_id).
+//   • Scan 3 : table push_reminders_sent_groupe — clé XOR (slug+date+heure+profile_id)
+//     ou (slug+date+heure+patient_id). Migration v36 (CHECK + 2 UNIQUE partiels).
 //
 // Planning A/B dupliqué en TS ci-dessous (copie de shared/planning-groupes.js).
 // TODO priorité basse (CLAUDE.md) : migrer le planning vers une table Supabase.
@@ -109,8 +111,8 @@ Deno.serve(async (req) => {
   const stats = { patients: 0, perso: 0, groupes: 0, failed: 0 };
 
   const now = new Date();
-  const in4 = new Date(now.getTime() + 4 * 60_000).toISOString();
-  const in5 = new Date(now.getTime() + 5 * 60_000).toISOString();
+  const in9 = new Date(now.getTime() + 9 * 60_000).toISOString();
+  const in10 = new Date(now.getTime() + 10 * 60_000).toISOString();
 
   // ─── SCAN 1 + 2 : événements patients et consultations perso ───
   // On scanne tous les events dans la fenêtre [now+4min, now+5min], puis on tri
@@ -119,8 +121,8 @@ Deno.serve(async (req) => {
     const { data: events, error } = await supabase
       .from('evenements')
       .select('id, patient_id, cree_par, titre, description, type, date_heure, lieu')
-      .gte('date_heure', in4)
-      .lte('date_heure', in5);
+      .gte('date_heure', in9)
+      .lte('date_heure', in10);
     if (error) throw error;
 
     if (events && events.length) {
@@ -140,7 +142,7 @@ Deno.serve(async (req) => {
           body = {
             patient_id: evt.patient_id,
             title: '⏰ Rappel : ' + evt.titre,
-            body: 'Dans 5 min (' + heure + ')' + (evt.lieu ? ' — ' + evt.lieu : ''),
+            body: 'Dans 10 min (' + heure + ')' + (evt.lieu ? ' — ' + evt.lieu : ''),
             url: '/patient/',
             tag: 'reminder-' + evt.id
           };
@@ -148,7 +150,7 @@ Deno.serve(async (req) => {
           body = {
             profile_id: evt.cree_par,
             title: '⏰ ' + evt.titre,
-            body: 'Dans 5 min (' + heure + ')' + (evt.lieu ? ' — ' + evt.lieu : ''),
+            body: 'Dans 10 min (' + heure + ')' + (evt.lieu ? ' — ' + evt.lieu : ''),
             url: '/admin/',
             tag: 'reminder-' + evt.id
           };
@@ -184,9 +186,9 @@ Deno.serve(async (req) => {
     const week = getWeekTypeFromStr(paris.dateStr);
     const planning = week === 'A' ? PLANNING_A : PLANNING_B;
 
-    // Candidats : groupes d'aujourd'hui avec début dans [now+4, now+5] minutes
-    const targetMin = paris.minutes + 4; // on déclenche entre +4 et +5 min (inclusif à +5)
-    const targetMax = paris.minutes + 5;
+    // Candidats : groupes d'aujourd'hui avec début dans [now+9, now+10] minutes
+    const targetMin = paris.minutes + 9; // on déclenche entre +9 et +10 min (inclusif à +10)
+    const targetMax = paris.minutes + 10;
 
     const candidates = planning.filter(g => {
       if (g.jour !== paris.dayOfWeek) return false;
@@ -217,11 +219,26 @@ Deno.serve(async (req) => {
       });
 
       if (effective.length) {
+        // ── 3a. Animateurs ──
         // Charge les animateurs pour ces slugs
         const { data: anims } = await supabase
           .from('groupe_animateurs')
           .select('groupe_slug, user_id')
           .in('groupe_slug', effective.map(e => e.slug));
+
+        // Charge la map exclusions (patient IDs) par slug pour ce jour
+        const exclusionsBySlug = new Map<string, Set<string>>();
+        {
+          const { data: modsExcl } = await supabase
+            .from('groupe_modifications')
+            .select('groupe_slug, exclusions')
+            .eq('date_effet', paris.dateStr)
+            .in('groupe_slug', effective.map(e => e.slug));
+          (modsExcl || []).forEach(m => {
+            const arr: string[] = Array.isArray(m.exclusions) ? m.exclusions : [];
+            exclusionsBySlug.set(m.groupe_slug, new Set(arr));
+          });
+        }
 
         // Anti-doublon : on skip (slug, date, heure, profile_id) déjà envoyés
         const keys = new Set<string>();
@@ -257,7 +274,7 @@ Deno.serve(async (req) => {
                   body: JSON.stringify({
                     profile_id: a.user_id,
                     title: '⏰ Groupe : ' + g.nom,
-                    body: 'Dans 5 min (' + effHeure + ')',
+                    body: 'Dans 10 min (' + effHeure + ')',
                     url: '/admin/',
                     tag: 'groupe-' + g.slug + '-' + paris.dateStr
                   })
@@ -275,6 +292,65 @@ Deno.serve(async (req) => {
                 }
               } catch (e) {
                 console.error('Groupe reminder error:', e);
+                stats.failed++;
+              }
+            }
+          }
+        }
+
+        // ── 3b. Patients hospitalisés (abonnés aux push) ──
+        // On récupère les patient_ids distincts qui ont une subscription active
+        const { data: subPatients } = await supabase
+          .from('push_subscriptions')
+          .select('patient_id')
+          .not('patient_id', 'is', null);
+        const patientIds = Array.from(new Set((subPatients || []).map(r => r.patient_id))) as string[];
+
+        if (patientIds.length) {
+          // Charge les push déjà envoyés aux patients pour ces slugs/aujourd'hui
+          const { data: sentPatRows } = await supabase
+            .from('push_reminders_sent_groupe')
+            .select('groupe_slug, date_groupe, heure, patient_id')
+            .eq('date_groupe', paris.dateStr)
+            .not('patient_id', 'is', null)
+            .in('groupe_slug', effective.map(e => e.slug));
+          const sentPatKeys = new Set((sentPatRows || []).map(
+            r => `${r.groupe_slug}|${r.date_groupe}|${r.heure}|${r.patient_id}`
+          ));
+
+          for (const g of effective) {
+            const mod = modMap.get(g.slug);
+            const effHeure = mod?.nouvelle_heure || g.debut!;
+            const exclus = exclusionsBySlug.get(g.slug) || new Set<string>();
+            for (const pid of patientIds) {
+              if (exclus.has(pid)) continue; // patient explicitement exclu de ce groupe ce jour
+              const key = `${g.slug}|${paris.dateStr}|${effHeure}|${pid}`;
+              if (sentPatKeys.has(key)) continue;
+              try {
+                const resp = await fetch(sendPushUrl, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${serviceKey}` },
+                  body: JSON.stringify({
+                    patient_id: pid,
+                    title: '⏰ Atelier : ' + g.nom,
+                    body: 'Dans 10 min (' + effHeure + ')',
+                    url: '/patient/',
+                    tag: 'atelier-' + g.slug + '-' + paris.dateStr
+                  })
+                });
+                if (resp.ok) {
+                  await supabase.from('push_reminders_sent_groupe').insert({
+                    groupe_slug: g.slug,
+                    date_groupe: paris.dateStr,
+                    heure: effHeure,
+                    patient_id: pid
+                  });
+                  stats.groupes++;
+                } else {
+                  stats.failed++;
+                }
+              } catch (e) {
+                console.error('Patient atelier reminder error:', e);
                 stats.failed++;
               }
             }

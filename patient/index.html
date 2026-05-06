@@ -758,6 +758,21 @@
     </div>
   </div>
 
+  <!-- Modal pop-up Présence ateliers du jour (≥ 8h30) -->
+  <div id="modal-groupe-presence" class="fixed inset-0 z-[110] bg-black/50 flex items-end sm:items-center justify-center hidden">
+    <div class="bg-white w-full max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-2xl p-5 max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-bold text-slate-800">📅 Tes ateliers du jour</h3>
+        <button id="btn-grp-presence-close" class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="text-xs text-slate-500 mb-3 leading-relaxed">Indique pour chaque atelier si tu seras présent·e ou absent·e.</p>
+      <div id="grp-presence-list" class="space-y-2 mb-3"></div>
+      <button id="btn-grp-presence-later" class="w-full py-2.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl text-sm hover:bg-slate-50 transition-colors">Plus tard</button>
+    </div>
+  </div>
+
   <!-- Panel Paramètres -->
   <div id="panel-params" class="panel">
     <header class="sticky top-0 z-10 bg-slate-700 text-white px-4 py-3 flex items-center gap-3">
@@ -854,6 +869,8 @@ async function showPatientApp(patient) {
   document.getElementById('patient-name').textContent = 'Chambre ' + (patient.numero_chambre || patient.chambre);
   // Pop-up activation des notifications (premier login + relance 7j si reporté)
   setTimeout(function() { try { maybeShowNotifPromptPatient(); } catch(_) {} }, 1500);
+  // Pop-up présence ateliers du jour (à partir de 8h30, 1×/jour)
+  setTimeout(function() { try { maybeShowGroupePresencePrompt(); } catch(_) {} }, 2500);
   var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -2696,6 +2713,125 @@ document.getElementById('btn-notif-prompt-enable').addEventListener('click', fun
   var btn = document.getElementById('btn-push-toggle');
   if (btn) btn.click();
 });
+
+// ── Pop-up présence ateliers (déclenché à partir de 8h30 le jour des ateliers) ──
+var GRP_PRESENCE_DISMISSED_KEY = 'groupe_presence_dismissed_';
+
+function pad2P(n) { return n < 10 ? '0' + n : '' + n; }
+function todayISOLocal() {
+  var d = new Date();
+  return d.getFullYear() + '-' + pad2P(d.getMonth() + 1) + '-' + pad2P(d.getDate());
+}
+
+async function maybeShowGroupePresencePrompt() {
+  if (!currentPatient) return;
+  if (typeof window.getGroupesForDay !== 'function') return;
+
+  var now = new Date();
+  // Heure ≥ 8h30 (en heure locale appareil — l'app est utilisée à Paris)
+  if (now.getHours() < 8 || (now.getHours() === 8 && now.getMinutes() < 30)) return;
+
+  var todayISO = todayISOLocal();
+  if (localStorage.getItem(GRP_PRESENCE_DISMISSED_KEY + todayISO)) return;
+
+  // Ateliers du jour avec heure de début connue
+  var groupes = window.getGroupesForDay(now).filter(function(g) { return g.debut; });
+  if (!groupes.length) return;
+
+  // Charge modifications du jour (annulations + exclusions par patient)
+  var mods = [];
+  try { mods = await db.getGroupeModifications(todayISO); } catch (_) {}
+  var modBySlug = {};
+  mods.forEach(function(m) { modBySlug[m.groupe_slug] = m; });
+
+  // Filtre : pas annulé, patient pas exclu
+  groupes = groupes.filter(function(g) {
+    var m = modBySlug[g.slug];
+    if (!m) return true;
+    if (m.annule) return false;
+    if (Array.isArray(m.exclusions) && m.exclusions.indexOf(currentPatient.id) !== -1) return false;
+    return true;
+  });
+  if (!groupes.length) return;
+
+  // Filtre : pas déjà répondu (participations.present non null)
+  var parts = [];
+  try { parts = await db.getParticipationsPatient(currentPatient.id); } catch (_) {}
+  var alreadyMap = {};
+  parts.forEach(function(p) {
+    if (p.date_groupe === todayISO && p.present !== null && p.present !== undefined) {
+      alreadyMap[p.groupe_slug] = true;
+    }
+  });
+  groupes = groupes.filter(function(g) { return !alreadyMap[g.slug]; });
+  if (!groupes.length) return;
+
+  // Construit la liste dans le modal
+  var list = document.getElementById('grp-presence-list');
+  list.textContent = '';
+  groupes.forEach(function(g) {
+    var card = document.createElement('div');
+    card.className = 'rounded-xl border border-slate-200 p-3';
+
+    var header = document.createElement('div');
+    header.className = 'mb-2';
+    var nom = document.createElement('p');
+    nom.className = 'text-sm font-bold text-slate-800';
+    nom.textContent = g.nom;
+    var heure = document.createElement('p');
+    heure.className = 'text-xs text-slate-500 mt-0.5';
+    heure.textContent = g.debut + (g.fin ? ' → ' + g.fin : '');
+    header.appendChild(nom);
+    header.appendChild(heure);
+    card.appendChild(header);
+
+    var actions = document.createElement('div');
+    actions.className = 'flex gap-2';
+    var btnP = document.createElement('button');
+    btnP.className = 'flex-1 py-2 bg-emerald-600 text-white font-bold rounded-lg text-xs hover:bg-emerald-700 transition-colors active:scale-[0.98]';
+    btnP.textContent = 'Présent·e';
+    var btnA = document.createElement('button');
+    btnA.className = 'flex-1 py-2 bg-white border border-slate-200 text-slate-600 font-bold rounded-lg text-xs hover:bg-slate-50 transition-colors';
+    btnA.textContent = 'Absent·e';
+
+    function lock(label, classes) {
+      actions.textContent = '';
+      var done = document.createElement('p');
+      done.className = 'text-xs font-bold text-center py-2 ' + classes;
+      done.textContent = label;
+      actions.appendChild(done);
+    }
+
+    btnP.addEventListener('click', async function() {
+      btnP.disabled = true; btnA.disabled = true;
+      try {
+        await db.upsertParticipation(currentPatient.id, g.slug, g.nom, todayISO, true, 'patient');
+        lock('✓ Présence enregistrée', 'text-emerald-600');
+      } catch (e) { btnP.disabled = false; btnA.disabled = false; alert('Erreur : ' + e.message); }
+    });
+    btnA.addEventListener('click', async function() {
+      btnP.disabled = true; btnA.disabled = true;
+      try {
+        await db.upsertParticipation(currentPatient.id, g.slug, g.nom, todayISO, false, 'patient');
+        lock('✗ Absence enregistrée', 'text-slate-500');
+      } catch (e) { btnP.disabled = false; btnA.disabled = false; alert('Erreur : ' + e.message); }
+    });
+
+    actions.appendChild(btnP);
+    actions.appendChild(btnA);
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+
+  document.getElementById('modal-groupe-presence').classList.remove('hidden');
+}
+
+function dismissGroupePresence() {
+  localStorage.setItem(GRP_PRESENCE_DISMISSED_KEY + todayISOLocal(), '1');
+  document.getElementById('modal-groupe-presence').classList.add('hidden');
+}
+document.getElementById('btn-grp-presence-close').addEventListener('click', dismissGroupePresence);
+document.getElementById('btn-grp-presence-later').addEventListener('click', dismissGroupePresence);
 
 // ══════════════ FEEDBACK ══════════════
 
