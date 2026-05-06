@@ -741,6 +741,23 @@
     </div>
   </div>
 
+  <!-- Modal pop-up Notifications patient (1er login + relance 7j) -->
+  <div id="modal-notif-prompt" class="fixed inset-0 z-[110] bg-black/50 flex items-end sm:items-center justify-center hidden">
+    <div class="bg-white w-full max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-2xl p-5">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-bold text-slate-800">🔔 Notifications</h3>
+        <button id="btn-notif-prompt-close" class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p id="notif-prompt-body" class="text-sm text-slate-600 mb-4 leading-relaxed"></p>
+      <div class="flex gap-2">
+        <button id="btn-notif-prompt-later" class="flex-1 py-2.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-xl text-sm hover:bg-slate-50 transition-colors">Plus tard</button>
+        <button id="btn-notif-prompt-enable" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98]">Activer</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Panel Paramètres -->
   <div id="panel-params" class="panel">
     <header class="sticky top-0 z-10 bg-slate-700 text-white px-4 py-3 flex items-center gap-3">
@@ -835,6 +852,8 @@ async function showPatientApp(patient) {
   document.getElementById('login-screen').classList.add('hidden');
   document.getElementById('patient-app').classList.remove('hidden');
   document.getElementById('patient-name').textContent = 'Chambre ' + (patient.numero_chambre || patient.chambre);
+  // Pop-up activation des notifications (premier login + relance 7j si reporté)
+  setTimeout(function() { try { maybeShowNotifPromptPatient(); } catch(_) {} }, 1500);
   var now = new Date();
   document.getElementById('date-label').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -2611,6 +2630,71 @@ document.getElementById('btn-push-toggle').addEventListener('click', async funct
     document.getElementById('push-status').textContent = 'Erreur : ' + e.message;
     btn.disabled = false;
   }
+});
+
+// ── Pop-up notifications patient : 1er login + relance tous les 7 jours si reporté ──
+var NOTIF_PROMPT_KEY = 'notif_prompt_last_asked';
+var NOTIF_PROMPT_DELAY_MS = 7 * 24 * 3600 * 1000;
+
+function fillIOSInstallStepsPatient(bodyEl) {
+  bodyEl.textContent = '';
+  var intro = document.createElement('p');
+  intro.className = 'mb-3';
+  intro.textContent = 'Pour recevoir les notifications sur iPhone, installer d\'abord l\'app sur l\'écran d\'accueil :';
+  bodyEl.appendChild(intro);
+  var ol = document.createElement('ol');
+  ol.className = 'list-decimal pl-5 space-y-1';
+  ['Bouton Partage (↑) en bas de Safari', 'Choisir « Sur l\'écran d\'accueil »', 'Ouvrir l\'app depuis l\'icône (pas depuis Safari)'].forEach(function(line) {
+    var li = document.createElement('li');
+    li.textContent = line;
+    ol.appendChild(li);
+  });
+  bodyEl.appendChild(ol);
+}
+
+function maybeShowNotifPromptPatient() {
+  if (!currentPatient) return;
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if (Notification.permission !== 'default') return;
+  var last = parseInt(localStorage.getItem(NOTIF_PROMPT_KEY) || '0', 10);
+  if (last && (Date.now() - last) < NOTIF_PROMPT_DELAY_MS) return;
+
+  var modal = document.getElementById('modal-notif-prompt');
+  var bodyEl = document.getElementById('notif-prompt-body');
+  var enableBtn = document.getElementById('btn-notif-prompt-enable');
+  var laterBtn = document.getElementById('btn-notif-prompt-later');
+
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  if (isIOS && !isStandalone) {
+    fillIOSInstallStepsPatient(bodyEl);
+    enableBtn.textContent = 'OK';
+    laterBtn.classList.add('hidden');
+  } else {
+    bodyEl.textContent = 'Recevoir une alerte quand l\'équipe valide une permission ou t\'envoie un message.';
+    enableBtn.textContent = 'Activer';
+    laterBtn.classList.remove('hidden');
+  }
+  modal.classList.remove('hidden');
+}
+
+document.getElementById('btn-notif-prompt-later').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+});
+document.getElementById('btn-notif-prompt-close').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+});
+document.getElementById('btn-notif-prompt-enable').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isIOS && !isStandalone) return;
+  var btn = document.getElementById('btn-push-toggle');
+  if (btn) btn.click();
 });
 
 // ══════════════ FEEDBACK ══════════════

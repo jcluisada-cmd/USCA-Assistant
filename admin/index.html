@@ -534,16 +534,33 @@
 
         <!-- ═══ MODALS ═══ -->
 
+        <!-- Modal pop-up Notifications (premier login + relance 7j) -->
+        <div id="modal-notif-prompt" class="fixed inset-0 z-[110] bg-black/50 flex items-end sm:items-center justify-center hidden">
+          <div class="bg-white dark:bg-slate-800 w-full max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-2xl p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">🔔 Notifications</h3>
+              <button id="btn-notif-prompt-close" class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <p id="notif-prompt-body" class="text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed"></p>
+            <div class="flex gap-2">
+              <button id="btn-notif-prompt-later" class="flex-1 py-2.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-bold rounded-xl text-sm hover:bg-slate-50 transition-colors">Plus tard</button>
+              <button id="btn-notif-prompt-enable" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold rounded-xl text-sm hover:bg-indigo-700 transition-colors active:scale-[0.98]">Activer</button>
+            </div>
+          </div>
+        </div>
+
         <!-- Modal Paramètres (notifications push V2 médecins) -->
         <div id="modal-params" class="fixed inset-0 z-[100] bg-black/50 flex items-end sm:items-center justify-center hidden">
-          <div class="bg-white dark:bg-slate-800 w-full max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-2xl p-5">
-            <div class="flex items-center justify-between mb-4">
+          <div class="bg-white dark:bg-slate-800 w-full max-w-md mx-0 sm:mx-4 rounded-t-2xl sm:rounded-2xl flex flex-col max-h-[90vh] overflow-hidden" data-modal-content>
+            <div class="flex items-center justify-between px-5 pt-5 pb-3 flex-shrink-0 border-b border-slate-100 dark:border-slate-700">
               <h3 class="text-base font-bold text-slate-800 dark:text-slate-100">Paramètres</h3>
               <button id="btn-params-close" class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center hover:bg-slate-200 transition-colors">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
-            <div class="space-y-4">
+            <div class="overflow-y-auto px-5 py-4 flex-1 space-y-4">
               <div>
                 <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Notifications push</h4>
                 <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Recevoir une notification sur cet appareil quand un patient envoie un message ou 5 min avant un groupe que tu animes.</p>
@@ -565,10 +582,6 @@
                   <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
                     <input type="checkbox" id="pref-evt-permission_demande" class="w-4 h-4 accent-indigo-600">
                     <span>🚪 Demandes de permission</span>
-                  </label>
-                  <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
-                    <input type="checkbox" id="pref-evt-alerte_craving" class="w-4 h-4 accent-indigo-600">
-                    <span>⚠️ Alertes craving</span>
                   </label>
                   <label class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200 cursor-pointer">
                     <input type="checkbox" id="pref-evt-groupe_rappel" class="w-4 h-4 accent-indigo-600">
@@ -1117,6 +1130,8 @@ function showAdminApp(profile) {
   loadDashboardStats();
   checkAdminAccess();
   loadEleves();
+  // Pop-up activation des notifications (medecin only, premier login + relance 7j si reporté)
+  setTimeout(function() { try { maybeShowNotifPrompt(); } catch(_) {} }, 1500);
 
   if (auth.hasPin()) {
     auth.setupInactivityLock(60 * 60 * 1000, () => {
@@ -3161,9 +3176,89 @@ document.getElementById('btn-params-close').addEventListener('click', function()
   document.getElementById('modal-params').classList.add('hidden');
 });
 
+// Fermeture par clic sur l'overlay sombre (clic en dehors du contenu blanc)
+document.getElementById('modal-params').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.add('hidden');
+});
+
+// Fermeture par touche ESC (UX desktop)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var m = document.getElementById('modal-params');
+    if (m && !m.classList.contains('hidden')) m.classList.add('hidden');
+    var n = document.getElementById('modal-notif-prompt');
+    if (n && !n.classList.contains('hidden')) n.classList.add('hidden');
+  }
+});
+
+// ── Pop-up notifications : 1er login medecin + relance tous les 7 jours si reporté ──
+var NOTIF_PROMPT_KEY = 'notif_prompt_last_asked';
+var NOTIF_PROMPT_DELAY_MS = 7 * 24 * 3600 * 1000;
+
+function fillIOSInstallSteps(bodyEl) {
+  bodyEl.textContent = '';
+  var intro = document.createElement('p');
+  intro.className = 'mb-3';
+  intro.textContent = 'Pour recevoir les notifications sur iPhone, installer d\'abord l\'app sur l\'écran d\'accueil :';
+  bodyEl.appendChild(intro);
+  var ol = document.createElement('ol');
+  ol.className = 'list-decimal pl-5 space-y-1';
+  ['Bouton Partage (↑) en bas de Safari', 'Choisir « Sur l\'écran d\'accueil »', 'Ouvrir l\'app depuis l\'icône (pas depuis Safari)'].forEach(function(line) {
+    var li = document.createElement('li');
+    li.textContent = line;
+    ol.appendChild(li);
+  });
+  bodyEl.appendChild(ol);
+}
+
+function maybeShowNotifPrompt() {
+  if (!currentProfile || currentProfile.role !== 'medecin') return;
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if (Notification.permission !== 'default') return;
+  var last = parseInt(localStorage.getItem(NOTIF_PROMPT_KEY) || '0', 10);
+  if (last && (Date.now() - last) < NOTIF_PROMPT_DELAY_MS) return;
+
+  var modal = document.getElementById('modal-notif-prompt');
+  var bodyEl = document.getElementById('notif-prompt-body');
+  var enableBtn = document.getElementById('btn-notif-prompt-enable');
+  var laterBtn = document.getElementById('btn-notif-prompt-later');
+
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+  if (isIOS && !isStandalone) {
+    fillIOSInstallSteps(bodyEl);
+    enableBtn.textContent = 'OK';
+    laterBtn.classList.add('hidden');
+  } else {
+    bodyEl.textContent = 'Recevoir une alerte quand un patient envoie un message ou demande une permission.';
+    enableBtn.textContent = 'Activer';
+    laterBtn.classList.remove('hidden');
+  }
+  modal.classList.remove('hidden');
+}
+
+document.getElementById('btn-notif-prompt-later').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+});
+document.getElementById('btn-notif-prompt-close').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+});
+document.getElementById('btn-notif-prompt-enable').addEventListener('click', function() {
+  localStorage.setItem(NOTIF_PROMPT_KEY, String(Date.now()));
+  document.getElementById('modal-notif-prompt').classList.add('hidden');
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isIOS && !isStandalone) return;
+  var btn = document.getElementById('btn-admin-push-toggle');
+  if (btn) btn.click();
+});
+
 // ── Préférences notifications (par compte, role=medecin uniquement) ──
 var DEFAULT_NOTIF_PREFS = {
-  events: { message_patient: true, permission_demande: true, alerte_craving: true, groupe_rappel: true, rdv_perso: true },
+  events: { message_patient: true, permission_demande: true, groupe_rappel: true, rdv_perso: true },
   quiet_hours: { evening_after: 18, weekend: true, ferie: true }
 };
 
@@ -3173,7 +3268,6 @@ function applyNotifPrefsToUI(prefs) {
   var qh = p.quiet_hours || DEFAULT_NOTIF_PREFS.quiet_hours;
   document.getElementById('pref-evt-message_patient').checked = ev.message_patient !== false;
   document.getElementById('pref-evt-permission_demande').checked = ev.permission_demande !== false;
-  document.getElementById('pref-evt-alerte_craving').checked = ev.alerte_craving !== false;
   document.getElementById('pref-evt-groupe_rappel').checked = ev.groupe_rappel !== false;
   document.getElementById('pref-evt-rdv_perso').checked = ev.rdv_perso !== false;
   var ea = parseInt(qh.evening_after);
@@ -3187,7 +3281,6 @@ function readNotifPrefsFromUI() {
     events: {
       message_patient: document.getElementById('pref-evt-message_patient').checked,
       permission_demande: document.getElementById('pref-evt-permission_demande').checked,
-      alerte_craving: document.getElementById('pref-evt-alerte_craving').checked,
       groupe_rappel: document.getElementById('pref-evt-groupe_rappel').checked,
       rdv_perso: document.getElementById('pref-evt-rdv_perso').checked
     },

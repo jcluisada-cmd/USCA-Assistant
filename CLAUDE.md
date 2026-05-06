@@ -1,8 +1,13 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 6 mai 2026 (v4.11 — Fix RLS DELETE permissions.
+> Dernière mise à jour : 6 mai 2026 (v4.12 — Fix modal Paramètres scrollable + pop-up onboarding notifications + retrait notifs craving.
+> 1. **Modal Paramètres (admin) — fix scroll** : container restructuré en `flex flex-col max-h-[90vh] overflow-hidden`, header sticky en haut (`flex-shrink-0`) avec border-b, body `overflow-y-auto flex-1` → toutes les sections accessibles + bouton ✕ toujours visible. Ajout fermeture par clic sur l'overlay sombre + touche Escape (UX desktop).
+> 2. **Pop-up onboarding notifications** : nouveau modal `modal-notif-prompt` côté admin (médecin uniquement) ET côté patient. Trigger via `setTimeout(maybeShowNotifPrompt, 1500)` à la fin de `showAdminApp` / `showPatientApp`. Conditions : `Notification.permission === 'default'` + délai 7 jours via `localStorage.notif_prompt_last_asked`. Détection iOS Safari onglet (`!matchMedia('(display-mode: standalone)').matches && !navigator.standalone`) → affiche les 3 étapes d'installation PWA au lieu du bouton Activer (DOM API, pas innerHTML, pour passer le hook XSS). "Plus tard" et croix marquent le timestamp → relance 7j plus tard. "Activer" déclenche programmatiquement le bouton existant `btn-admin-push-toggle` / `btn-push-toggle`.
+> 3. **Retrait notifications craving** : `alerte_craving` retiré du schéma `DEFAULT_NOTIF_PREFS`, du HTML modal Paramètres, et des helpers read/write. Fonctionnalité non utilisée en pratique. Edge Function inchangée (le filtrage se fait par clé `=== false`, donc une clé absente = pas de filtre = OK).)
+>
+> v4.11 — Fix RLS DELETE permissions.
 > 1. **Migration v35** : ajout policy `permissions_delete_auth` (`USING (auth.role() = 'authenticated')`). Bug v4.10 — la table `permissions` avait INSERT/SELECT/UPDATE en RLS mais aucune policy DELETE → tout DELETE était bloqué silencieusement (0 ligne supprimée sans erreur HTTP, comportement standard Postgres).
-> 2. **Helper `db.deletePermission` durci** : utilise `count: 'exact'` + throw si 0 ligne affectée → tout futur problème RLS deviendra immédiatement visible côté UI au lieu de "rien ne se passe".)
+> 2. **Helper `db.deletePermission` durci** : utilise `count: 'exact'` + throw si 0 ligne affectée → tout futur problème RLS deviendra immédiatement visible côté UI au lieu de "rien ne se passe".
 >
 > v4.10 — Notifications push V3 personnalisables + permissions modifiables/supprimables + nouveau logo phénix.
 > 1. **Préférences notifications par compte** : migration v34 ajoute `profiles.push_preferences JSONB` (NULL = défauts système). Section "Mes notifications" dans modal Paramètres admin (visible role=medecin uniquement) — 5 checkboxes événements (`message_patient`, `permission_demande`, `alerte_craving`, `groupe_rappel`, `rdv_perso`) + 3 réglages silence perso (heure soir 16h-20h, weekend on/off, fériés on/off). L'Edge Function `send-push` lit `push_preferences` et filtre destinataires en amont par `event_type`. Les prefs perso peuvent **durcir** mais pas assouplir le silence weekend/férié (sécurité par défaut).
@@ -59,7 +64,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.11 |
+| **Service Worker** | usca-v4.12 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
