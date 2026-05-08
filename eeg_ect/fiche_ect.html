@@ -97,14 +97,11 @@
     line-height: 1.5;
   }
 
-  /* === GRID === */
+  /* === GRID — sections empilées en 1 colonne pour lisibilité optimale en iframe Toolbox === */
   .grid-2 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 14px;
-  }
-  @media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr; }
   }
 
   /* === SECTIONS === */

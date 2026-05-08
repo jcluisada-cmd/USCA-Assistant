@@ -1435,6 +1435,7 @@ function App() {
   const [selSub, setSelSub] = useState(restored?.selSub ?? null);
   const [selScore, setSelScore] = useState(restored?.selScore ?? null);
   const [selFiche, setSelFiche] = useState(restored?.selFiche ?? null);
+  const [selEegFiche, setSelEegFiche] = useState(restored?.selEegFiche ?? null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
 
@@ -1451,7 +1452,7 @@ function App() {
     return () => { delete window.__uscaToolboxState; };
   }, [view, selSub, selScore, selFiche]);
 
-  const nav = (v) => { setView(v); setSelSub(null); setSelScore(null); setMenuOpen(false); window.scrollTo(0,0); };
+  const nav = (v) => { setView(v); setSelSub(null); setSelScore(null); setSelEegFiche(null); setMenuOpen(false); window.scrollTo(0,0); };
 
   const navItems = [
     {id:"home",label:"Accueil",icon:I.home},
@@ -1576,37 +1577,49 @@ function App() {
       </div>;
 
       case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
-      case "eeg_ect": return <div className="fade-in">
-        <BackBtn onClick={()=>nav("home")}/>
-        <SectionHead icon={I.activity(C.t[300])} title="EEG / ECT" sub="Pratique ECT + handbook EEG"/>
-
-        <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>Pratique ECT</div>
-        <div className="card card-tap" style={{padding:14,marginBottom:14,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>window.open('../eeg_ect/fiche_ect.html','_blank')}>
-          <div style={{display:"flex",alignItems:"center",gap:12}}>
-            <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.clipboard(C.t[600],22)}</div>
-            <div>
-              <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Fiche pratique ECT</div>
-              <div style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière — protocole, prise en charge, post-séance</div>
+      case "eeg_ect":
+        if (selEegFiche) {
+          const fichePath = `../eeg_ect/fiche_${selEegFiche.slug}.html`;
+          return <div className="fade-in">
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <button onClick={()=>setSelEegFiche(null)} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>
+              <span style={{fontSize:14,fontWeight:800,color:C.n[800],flex:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{selEegFiche.nom}</span>
+              <button onClick={()=>window.open(fichePath,'_blank')} title="Ouvrir dans un nouvel onglet" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.t[50],border:`1px solid ${C.t[300]}`,cursor:"pointer",flexShrink:0,fontSize:14,fontWeight:700,color:C.t[700]}}>↗</button>
             </div>
-          </div>
-          {I.chevR(C.n[300])}
-        </div>
+            <iframe className="fiche-iframe" src={fichePath} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selEegFiche.nom}/>
+          </div>;
+        }
+        return <div className="fade-in">
+          <BackBtn onClick={()=>nav("home")}/>
+          <SectionHead icon={I.activity(C.t[300])} title="EEG / ECT" sub="Pratique ECT + handbook EEG"/>
 
-        <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,textTransform:"uppercase"}}>Fiches EEG (handbook)</div>
-        <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>window.open('../eeg_ect/fiche_technical.html','_blank')}>
-          <div style={{display:"flex",alignItems:"center",gap:12}}>
-            <div style={{width:40,height:40,borderRadius:12,background:C.t[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[700],22)}</div>
-            <div>
-              <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Comprendre un EEG en 10 min</div>
-              <div style={{fontSize:11,color:C.n[400]}}>Aspects techniques — bandes, montages, filtres, artefacts</div>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>Pratique ECT</div>
+          <div className="card card-tap" style={{padding:14,marginBottom:14,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"ect",nom:"Fiche pratique ECT"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.clipboard(C.t[600],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Fiche pratique ECT</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière — protocole, prise en charge, post-séance</div>
+              </div>
             </div>
+            {I.chevR(C.n[300])}
           </div>
-          {I.chevR(C.n[300])}
-        </div>
-        <div style={{padding:14,marginTop:8,borderRadius:12,background:C.n[50],border:`1px dashed ${C.n[200]}`}}>
-          <div style={{fontSize:11,color:C.n[500],lineHeight:1.5}}><strong>À venir</strong> · EEG normal · Artefacts · Activité épileptiforme · Status epilepticus · ICU EEG</div>
-        </div>
-      </div>;
+
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,textTransform:"uppercase"}}>Fiches EEG (handbook)</div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"technical",nom:"Comprendre un EEG en 10 min"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.t[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[700],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Comprendre un EEG en 10 min</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Aspects techniques — bandes, montages, filtres, artefacts</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div style={{padding:14,marginTop:8,borderRadius:12,background:C.n[50],border:`1px dashed ${C.n[200]}`}}>
+            <div style={{fontSize:11,color:C.n[500],lineHeight:1.5}}><strong>À venir</strong> · EEG normal · Sommeil · Artefacts · Activité épileptiforme · Status epilepticus · ICU EEG</div>
+          </div>
+        </div>;
       case "elsa_hub": return <ELSAHub onNav={nav} onBack={()=>nav("home")}/>;
       case "elsa_fiches": return <ELSAFichesView onBack={()=>nav("elsa_hub")}/>;
       case "admission": return <AdmView onBack={()=>nav("elsa_hub")}/>;

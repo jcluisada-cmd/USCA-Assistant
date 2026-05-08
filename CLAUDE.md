@@ -1,6 +1,12 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.16 — Fiche pilote EEG : Comprendre un EEG en 10 min.
+> Dernière mise à jour : 8 mai 2026 (v4.17 — Fiches EEG/ECT en iframe intégré + fix mise en page fiche ECT.
+> 1. **Iframe intégré dans Toolbox** : nouveau pattern `selEegFiche` (state `useState({slug, nom})`) dans le composant App de `staff/toolbox.html`. Quand une carte EEG/ECT est cliquée, la fiche s'affiche désormais en iframe au sein de la Toolbox (`height: calc(100vh - 180px)`, comme les fiches patient existantes) au lieu d'ouvrir un nouvel onglet. Header de l'iframe : bouton ← retour + nom de la fiche tronqué + bouton ↗ pour ouvrir tout de même en nouvel onglet (utile impression A4, séance ECT). `nav()` clear `selEegFiche` au changement de vue.
+> 2. **Fix mise en page fiche ECT** : `.grid-2 { grid-template-columns: 1fr; }` permanent (suppression du media query `@media (max-width:768px)`). Toutes les sections sont désormais empilées en 1 colonne quelle que soit la largeur d'écran — lisibilité optimale en iframe et sur tablette landscape (Galaxy Tab S7 FE). Schémas spécifiques (`.sismo-schema` 4 cols, `.phases` 5 cols) inchangés car ce sont des visualisations.
+> 3. **Pattern unifié pour toutes les fiches EEG** : la fiche Technical et les 6 fiches du batch à venir (normal · sommeil · artefacts · épileptiforme · status · ICU) utiliseront ce pattern iframe + ↗ — décidé suite à validation JC.
+> 4. **SW bump v4.16 → v4.17** (force re-fetch toolbox.html + fiche_ect.html mis à jour).)
+>
+> v4.16 — Fiche pilote EEG : Comprendre un EEG en 10 min.
 > 1. **Nouvelle fiche `eeg_ect/fiche_technical.html`** (378 lignes) : fiche pilote du chapitre Technical du handbook EEG, rédigée en synthèse pédagogique originale (concepts du domaine commun, pas de paraphrase). Sections : résumé · 4 bandes de fréquence (avec schéma SVG α/β/θ/δ) · origine du signal · montages bipolaire vs référentiel (avec schéma SVG) · filtres et calibration · artefacts techniques · règles de lecture rapide · checklist psychiatre ECT (pré/per/post-séance, effet psychotropes) · red flags · take home. Linke `shared/ressource-doc.css` (design system partagé USCA) + `shared/ressource-doc.js` (toggle ☀️/🌙 dark mode automatique via `html.dark`).
 > 2. **Pas de figures du manuel pour cette fiche pilote** (chapitre Technical conceptuel — schémas SVG originaux suffisent). Décision figures-originales-vs-SVG à trancher avec JC pour les 5 fiches suivantes (Normal · Artefacts · Épileptiforme · Status · ICU EEG) où les vrais tracés cliniques sont structurants.
 > 3. **Case `eeg_ect` enrichi** dans `staff/toolbox.html` : 2 sections distinctes (uppercase headers) — "Pratique ECT" (`fiche_ect.html` Pitié) et "Fiches EEG (handbook)" (Technical actif + bandeau "À venir" pour les 5 chapitres restants).
@@ -90,7 +96,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.16 |
+| **Service Worker** | usca-v4.17 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
