@@ -355,14 +355,61 @@ Cible : permettre la saisie d'un génotype patient (anonyme, localStorage volati
 
 ---
 
-## §8. Décisions à prendre avec JC avant exécution
+## §8. Décisions actées (2026-05-08, après livraison Phase B v4.25)
 
-1. **Scope chantier B** : ingestion totale 451 molécules ou par classe ATC prioritaire ? (recommandation : par classe, en commençant par anticoagulants + statines + antifongiques + immunosuppresseurs = ~30 molécules — couvre 80% des liaisons ELSA)
-2. **Mode Ordonnance D.1** : output HTML imprimable (cohérent Toolbox V1) ou jsPDF (cohérent post-cure) ? (recommandation : HTML imprimable, plus simple à itérer)
-3. **Sync dark mode C.1** : palette navy conservée ou migrée vers indigo USCA V2 ?
-4. **Build F.1** : continuer à commit `dist/` ou GitHub Action ?
-5. **Suggestions alternatives D.2** : préfixer chaque suggestion d'un avertissement explicite ou laisser l'utilisateur tirer ses conclusions ?
-6. **Couverture étendue B** vs **refonte UX C** : si on doit choisir entre les deux pour les 4 prochaines sessions, lequel prime ? (recommandation : C+D.1 d'abord, B ensuite — l'UX bénéficie même aux 147 molécules existantes, alors que les 451 nouvelles dans une mauvaise UX restent peu utilisables)
+1. ✅ **Scope chantier B — par classe ATC**, plus tard. 1ère vague : anticoagulants oraux directs + statines + antifongiques azolés + immunosuppresseurs + macrolides ≈ 30 molécules (couvre ~80% des liaisons ELSA). Pas en cours.
+2. ✅ **Mode Ordonnance D.1 → HTML imprimable A4** (cohérent Toolbox V1, plus simple à itérer que jsPDF).
+3. ✅ **Sync dark mode C.1 → max intégration USCA**. Migration palette navy/teal MetaboScope → indigo USCA V2 (`#4F46E5`) en mode light, navy conservé en mode dark. Sync `?theme=dark/light` via `localStorage.usca_theme` (pattern v4.24 EEG/ECT).
+4. ✅ **Build F.1 → commit `dist/`** (statu quo, cohérent règle "pas de bundler" §8 CLAUDE.md USCA-Connect). Rebuild manuel `cd metaboscope && npm run build` + bump `CACHE_NAME` à chaque modif. GitHub Action à reconsidérer si build dépasse 30 sec.
+5. ✅ **Suggestions alternatives D.2 → pas de préfixe d'avertissement** (l'utilisateur tire ses conclusions). Option de préfixer gardée en réserve si retours d'usage le demandent.
+6. ✅ **C avant B** (UX d'abord). L'UX bénéficie aux 147 molécules existantes ; les 451 nouvelles dans une mauvaise UX restent peu utilisables.
+
+---
+
+## §10. Chantier G — Révision classification & données molécules (P2, ajouté 2026-05-08)
+
+**Contexte** : test pilote v4.25 a révélé un mauvais rangement des molécules dans les buckets internes MetaboScope. Exemples remontés par JC :
+- `acamprosate` classé en `molecules_drogues_classiques.json` → c'est un **médicament anti-craving prescrit**, pas une drogue
+- `3MMC` classé en NPS → à valider (cathinone synthétique, OK ou pas ?)
+
+**Problème de fond** : la classification a été dictée par la chronologie d'ingestion (sessions S1-S13 par lots thématiques) plutôt que par une **taxonomie clinique cohérente**. Le module Recherche/Atlas affiche ces buckets tels quels → friction pour l'utilisateur soignant.
+
+**Charge** : 2-3 sessions selon ampleur. **Bénéfice clinique** : module Recherche enfin utilisable sans dictionnaire mental.
+
+### G.1. Audit complet des 147 molécules
+
+- Re-grouper par taxonomie clinique cohérente :
+  - **Médicaments addictologiques** (TSO, anti-craving acamprosate/naltrexone/disulfirame/baclofène, sevrage)
+  - **Psychotropes** (ATD, antipsy, BZD/hypnotiques, thymorégulateurs, stimulants thérapeutiques)
+  - **Drogues classiques** (alcool, cocaïne, cannabis, héroïne, MDMA, hallucinogènes, GHB)
+  - **NPS** (cathinones, opioïdes synthétiques, cannabinoïdes synthétiques, BZD analogues, etc.)
+  - **Autres** (kava, kratom, NAC, poppers, N2O — à reclasser ou splitter)
+- Implémentation : ajouter un champ `bucket` au schéma `Molecule` (string enum), backfiller les 147 via script
+- Avantage : indépendant des fichiers JSON sources (qui peuvent rester organisés par session d'ingestion historique)
+
+### G.2. UX Recherche/Atlas après G.1
+
+- SearchPage : ajouter filtres `bucket` au-dessus de la liste de résultats
+- AtlasPage : option de regrouper les molécules par bucket dans les listes CYP/UGT/Transporteurs
+- HomePage : éventuellement afficher un compteur "X médicaments addicto · Y drogues · Z NPS" (factuel, désamorce la perception "outil incomplet")
+
+### G.3. Acamprosate — fix immédiat possible (~10 min, hors session ATC complète)
+
+Si JC veut un quick fix avant le chantier G complet : ouvrir `metaboscope/src/data/molecules/molecules_drogues_classiques.json`, retirer la fiche acamprosate (la dupliquer dans `molecules_opioides_tso.json` ou créer `molecules_anticraving.json`). Validation `npm run validate:molecules`. Rebuild. Bump CACHE_NAME.
+
+---
+
+## §11. Chantier F additions
+
+### F.7. Catch SW USCA hors-scope (livré v4.25, 2026-05-08)
+
+`sw.js` ligne 167 (cache-first runtime) faisait un `fetch(e.request)` non catché → `Uncaught (in promise) TypeError: Failed to fetch` en console pour toute requête hors-scope (extensions navigateur, BrowserRouter sous-app MetaboScope, `searchAnalyzer.js` Edge/Bing).
+
+**Fix appliqué v4.25** : `.catch(() => new Response('', { status: 408 }))` propre. Bug pré-existant à MetaboScope, juste révélé par la nouvelle iframe. À documenter en §F si besoin de revisiter.
+
+### F.8. Meta `mobile-web-app-capable` (livré v4.25, 2026-05-08)
+
+Chrome ≥ 109 a déprécié `<meta name="apple-mobile-web-app-capable">` au profit du standard `<meta name="mobile-web-app-capable">`. Ajout du tag standard à côté de l'apple-meta dans 5 fichiers HTML USCA (`index.html` racine, `admin/`, `patient/`, `staff/toolbox.html`, export imprimable patient). Apple-meta conservé (compat iOS Safari).
 
 ---
 
