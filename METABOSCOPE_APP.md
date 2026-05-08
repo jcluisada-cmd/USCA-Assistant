@@ -411,6 +411,31 @@ Si JC veut un quick fix avant le chantier G complet : ouvrir `metaboscope/src/da
 
 Chrome ≥ 109 a déprécié `<meta name="apple-mobile-web-app-capable">` au profit du standard `<meta name="mobile-web-app-capable">`. Ajout du tag standard à côté de l'apple-meta dans 5 fichiers HTML USCA (`index.html` racine, `admin/`, `patient/`, `staff/toolbox.html`, export imprimable patient). Apple-meta conservé (compat iOS Safari).
 
+### F.9. Migration MetaboScope Tailwind v3 → v4 (à planifier)
+
+**Contexte** : USCA-Connect utilise Tailwind v4 via CDN (`@tailwindcss/browser@4`), MetaboScope utilise Tailwind v3 avec Vite + PostCSS + `tailwind.config.ts`. Stack hétérogène. Demande JC 2026-05-08 d'uniformiser.
+
+**Charge estimée** : 1-2h — config + tests visuels sur 30+ composants. Risque modéré (Tailwind v4 récent, breaking changes possibles).
+
+**Bénéfices** :
+- Cohérence stack USCA-Connect ↔ MetaboScope (un seul Tailwind à connaître)
+- Build MetaboScope plus rapide (Lightning CSS Rust vs PostCSS Node)
+- Configuration plus simple (CSS-first via `@theme {}`, suppression `tailwind.config.ts` + `postcss.config.js`)
+
+**Étapes** :
+1. `npm install -D tailwindcss@4 @tailwindcss/vite` (remplace `tailwindcss@3` + `postcss` + `autoprefixer`)
+2. `vite.config.ts` : ajouter le plugin `@tailwindcss/vite`
+3. `src/index.css` : remplacer `@tailwind base; @tailwind components; @tailwind utilities;` par `@import "tailwindcss";`
+4. Migrer les couleurs custom de `tailwind.config.ts` vers un bloc `@theme {}` dans `index.css`
+5. Supprimer `tailwind.config.ts` + `postcss.config.js`
+6. `npm run build` → vérifier qu'il n'y a pas de classe non reconnue
+7. Test visuel : home + search + interaction + atlas + fiche molécule, en light ET dark
+8. Bump `CACHE_NAME` USCA + commit
+
+**Décision** : ne pas attaquer maintenant. Planifié post chantier B (extension molécules) ou en chantier "stabilisation" si rien d'urgent. Le système light/dark v4.26 livré ne dépend pas de l'API v3 spécifique → la migration v4 ne le cassera pas.
+
+**Précaution** : Tailwind v4 a quelques renames de classes (ex. `bg-opacity-50` → `bg-{color}/50` qui était déjà la syntaxe utilisée dans MetaboScope, donc OK). Vérifier la page de migration officielle au moment de l'attaquer.
+
 ---
 
 ## §9. Notes de méthode
