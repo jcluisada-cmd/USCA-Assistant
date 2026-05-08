@@ -1,6 +1,13 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.23 — Fiche EEG en réanimation (6/6 — batch handbook complet).
+> Dernière mise à jour : 8 mai 2026 (v4.24 — Sync dark mode iframes EEG/ECT ↔ Toolbox global.
+> 1. **Stratégie URL param** : la Toolbox passe `?theme=dark|light` dans le `src` de l'iframe selon `localStorage.usca_theme`. La fiche lit le param au chargement et applique le dark mode. Comme le toggle global de la Toolbox déclenche déjà un reload (`saveViewThenReload` ligne 1779), l'iframe est rechargée avec le bon param — pas besoin de postMessage runtime, solution minimaliste et robuste.
+> 2. **`shared/ressource-doc.js`** : priorité de résolution du thème — (1) URL param `?theme=` (mode iframe synchronisé), (2) `localStorage('usca-res-theme')` (mode standalone), (3) light par défaut. **Détection mode iframe** via `window.self !== window.top` : en iframe, le bouton flottant ☀️/🌙 est masqué (toggle dans le parent). En ouverture directe (file:// ou nouvel onglet), le bouton reste fonctionnel.
+> 3. **`eeg_ect/fiche_ect.html`** (qui utilise `body.dark`, ancien pattern, distinct de `ressource-doc.css`) : ajout d'un script inline en début de `<body>` qui lit `?theme=` et applique `body.classList.add('dark')` si dark — compatibilité avec le pattern existant sans tout migrer.
+> 4. **Toutes les fiches EEG/ECT bénéficient** : Fiche pratique ECT + 7 fiches handbook (Technical, Normal, Sommeil, Artefacts, Épileptiforme, Status, EEG en réanimation).
+> 5. **SW bump v4.23 → v4.24** (force re-fetch toolbox.html + ressource-doc.js + fiche_ect.html mis à jour).)
+>
+> v4.23 — Fiche EEG en réanimation (6/6 — batch handbook complet).
 > 1. **Nouvelle fiche `eeg_ect/fiche_icu_eeg.html`** (~430 lignes) : 10 sections — résumé 4 questions clés (encéphalopathie ? · NCSE ? · pronostic ? · profondeur d'anesthésie ?), encéphalopathie diffuse avec SVG (delta-theta diffus haute amplitude), patterns périodiques ACNS 2021 avec SVG LPDs (anciennement PLEDs · unilatéraux), GPDs (anciennement GPEDs · bilatéraux synchrones), BIPDs (bilatéraux indépendants · pronostic très péjoratif), burst-suppression avec SVG (anesthésie ciblée vs post-anoxie), ondes triphasiques avec SVG (encéphalopathies métaboliques hépatique/urémique), silence électrique cérébral (critère mort cérébrale), continuum ictal-interictal (zone grise + test lorazépam IV), implications ECT (effet cumulatif séances rapprochées), red flags, take home.
 > 2. **Vocabulaire ACNS 2021 mis à jour** explicitement dans la fiche (LPDs/GPDs/BIPDs remplacent PLEDs/GPEDs/BIPLEDs) — référence terminologique internationale courante.
 > 3. **SVG schématiques** : encéphalopathie, LPDs périodiques, burst-suppression (alternance bursts/suppression), triphasiques (3 phases). Aucune figure du manuel — concepts schématisables.
@@ -135,7 +142,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.23 |
+| **Service Worker** | usca-v4.24 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

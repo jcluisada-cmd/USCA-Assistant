@@ -411,6 +411,16 @@
 </style>
 </head>
 <body>
+<script>
+  // Sync dark mode iframe ↔ Toolbox parent : lit ?theme=dark|light dans l'URL
+  // (passé par le parent au montage de l'iframe). Fallback : pas de modif.
+  (function() {
+    try {
+      var p = new URLSearchParams(window.location.search).get('theme');
+      if (p === 'dark') document.body.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
 
 <div class="container">
 

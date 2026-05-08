@@ -1579,7 +1579,8 @@ function App() {
       case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
       case "eeg_ect":
         if (selEegFiche) {
-          const fichePath = `../eeg_ect/fiche_${selEegFiche.slug}.html`;
+          const themeParam = (localStorage.getItem('usca_theme') === 'dark') ? '?theme=dark' : '?theme=light';
+          const fichePath = `../eeg_ect/fiche_${selEegFiche.slug}.html${themeParam}`;
           return <div className="fade-in">
             <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
               <button onClick={()=>setSelEegFiche(null)} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>
