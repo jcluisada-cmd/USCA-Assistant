@@ -1636,8 +1636,18 @@ function App() {
             </div>
             {I.chevR(C.n[300])}
           </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"artefacts",nom:"Artefacts EEG"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.a[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.a[700],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Artefacts EEG</div>
+                <div style={{fontSize:11,color:C.n[400]}}>EMG · ECG · oculaires · sueur · 50 Hz — méthode systématique</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
           <div style={{padding:14,marginTop:8,borderRadius:12,background:C.n[50],border:`1px dashed ${C.n[200]}`}}>
-            <div style={{fontSize:11,color:C.n[500],lineHeight:1.5}}><strong>À venir</strong> · Artefacts · Activité épileptiforme · Status epilepticus · ICU EEG</div>
+            <div style={{fontSize:11,color:C.n[500],lineHeight:1.5}}><strong>À venir</strong> · Activité épileptiforme · Status epilepticus · ICU EEG</div>
           </div>
         </div>;
       case "elsa_hub": return <ELSAHub onNav={nav} onBack={()=>nav("home")}/>;

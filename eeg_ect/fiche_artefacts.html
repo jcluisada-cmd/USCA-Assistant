@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artefacts EEG — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.4; }
+  svg.eeg-schema .wave-art { fill: none; stroke: var(--r-500); stroke-width: 1.4; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  svg.eeg-schema .label-event { fill: var(--r-600); font-weight: 700; }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Artefacts EEG</h1>
+  <p class="meta">Reconnaître ce qui ressemble à de la pathologie sans en être — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ ULTRA RAPIDE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>Un <strong>artefact</strong> est tout signal enregistré par l'EEG mais qui ne provient pas du cortex cérébral. C'est <strong>la première cause de surinterprétation</strong> chez le débutant.</p>
+  <ul class="thm">
+    <li><strong>3 origines</strong> : biologique (muscle, œil, cœur), mécanique (mouvement, électrode), électrique (secteur, mauvais contact).</li>
+    <li><strong>Avant</strong> de qualifier une activité d'« anormale », identifier les artefacts. Un EEG calme et propre est rare en pratique.</li>
+    <li><strong>Indices clés</strong> : localisation (1 seule électrode ?), morphologie (rythmique/aléatoire ?), contexte (mouvement ? sommeil ? sueur ?).</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Pertinence ECT :</strong> en péri-séance le patient est souvent agité, sondé ou non détendu — l'EEG est <em>très chargé en artefacts</em>. Savoir les reconnaître est indispensable avant d'interpréter le tracé.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CATÉGORIES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Trois grandes familles d'artefacts</h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Famille</th><th>Origine</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Biologique</strong></td><td>Le patient lui-même</td><td>EMG (muscle), ECG, mouvements oculaires, pulse, transpiration, mouvements respiratoires</td></tr>
+        <tr><td><strong>Mécanique</strong></td><td>Interface électrode-peau</td><td>Mauvais contact, électrode qui se décolle, vibration, mouvement de tête</td></tr>
+        <tr><td><strong>Électrique</strong></td><td>Environnement</td><td>Secteur 50 Hz, équipements voisins (perfuseur, scope, climatiseur), boucle de masse</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     EMG MUSCULAIRE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Artefact musculaire (EMG)
+    <span class="h-sub">Le plus fréquent — et le plus piégeux</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="Artefact EMG : tracé hérissé rapide">
+    <text x="20" y="22" font-weight="700">EMG</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">bouffées très rapides 20-200 Hz, aspect hérissé</text>
+    <path class="wave-art" d="M 20 70 L 25 50 L 30 80 L 35 55 L 40 78 L 45 52 L 50 79 L 55 51 L 60 80 L 65 56 L 70 76 L 75 54 L 80 77 L 85 53 L 90 78 L 95 50 L 100 81 L 105 56 L 110 76 L 115 51 L 120 79 L 125 55 L 130 77 L 135 53 L 140 80 L 145 52 L 150 79 L 155 56 L 160 78 L 165 51 L 170 80 L 175 54 L 180 77 L 185 50 L 190 81 L 195 56 L 200 78 L 205 52 L 210 79 L 215 55 L 220 76 L 225 53 L 230 80 L 235 51 L 240 78 L 245 56 L 250 79 L 255 52 L 260 80 L 265 55 L 270 77 L 275 53 L 280 79 L 285 51 L 290 80 L 295 54 L 300 78 L 305 56 L 310 76 L 315 51 L 320 79 L 325 53 L 330 80 L 335 56 L 340 77 L 345 50 L 350 81 L 355 55 L 360 78 L 365 52 L 370 79 L 375 54 L 380 80 L 385 51 L 390 78 L 395 56 L 400 76 L 410 70 L 420 70 L 430 70 L 440 70 L 450 70 L 460 70 L 470 70 L 480 70 L 490 70 L 500 70 L 510 70 L 520 70 L 530 70 L 540 70 L 550 70 L 560 70" />
+    <text x="420" y="60" font-size="10" fill="var(--n-500)">détente</text>
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Aspect</strong> : bouffées très rapides, irrégulières, en « buisson » ou « hérisson ».</li>
+    <li><strong>Fréquence</strong> : 20-200 Hz, beaucoup plus rapide que les bandes EEG normales.</li>
+    <li><strong>Localisation</strong> : régions <strong>frontales</strong> (muscles frontaux), <strong>temporales</strong> (muscles temporaux), <strong>nuque/occipital</strong> (muscles cervicaux). Selon la posture du patient.</li>
+    <li><strong>Disparition</strong> à la <em>relaxation</em> ou au sommeil = signature.</li>
+    <li><strong>Distinction activité épileptiforme rapide</strong> : EMG est désorganisé, sans morphologie reproductible ; les bouffées épileptiformes ont une forme stéréotypée.</li>
+  </ul>
+  <div class="alert">
+    <strong>Astuce :</strong> demander au patient de relâcher la mâchoire, fermer les yeux mollement, respirer lentement. L'EMG s'efface en 10-20 s chez un sujet coopérant.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ECG ET PULSE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Artefacts cardiaques (ECG et pulse)
+    <span class="h-sub">Régularité à la fréquence cardiaque = indice clé</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Artefact ECG : déflexions régulières à la fréquence cardiaque">
+    <text x="20" y="22" font-weight="700">ECG</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">déflexion régulière à la fréquence cardiaque (~60/min)</text>
+    <!-- 5-6 cycles cardiaques sur 600 px = ~1 cycle / 100 px (1 sec à fréquence 60/min) -->
+    <path class="wave-art" d="M 20 75 L 60 75 L 65 60 L 68 90 L 71 75 L 120 75 L 165 75 L 170 60 L 173 90 L 176 75 L 220 75 L 265 75 L 270 60 L 273 90 L 276 75 L 320 75 L 365 75 L 370 60 L 373 90 L 376 75 L 420 75 L 465 75 L 470 60 L 473 90 L 476 75 L 520 75 L 560 75" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>ECG</strong> : déflexion régulière, espacée de l'intervalle R-R cardiaque (~1 s à FC 60/min).</li>
+    <li><strong>Localisation</strong> : électrodes basses (auriculaires <strong>A1, A2</strong>), références d'oreille, parfois T6.</li>
+    <li><strong>Solution</strong> : enregistrer une <strong>dérivation ECG synchrone</strong> pour confirmation visuelle directe ; éviter les références d'oreille chez les patients fins.</li>
+  </ul>
+  <ul class="thm" style="margin-top:8px">
+    <li><strong>Pulse</strong> : variante de l'ECG, déflexion régulière mais sur <strong>une seule électrode</strong> (celle posée sur une artère superficielle).</li>
+    <li><strong>Solution</strong> : déplacer légèrement l'électrode incriminée pour la sortir de la zone artérielle.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     OCULAIRES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Artefacts oculaires (mouvements et clignements)
+    <span class="h-sub">Sous Fp1 / Fp2 — frontaux par excellence</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Artefact de clignement : déflexion frontale ample symétrique">
+    <text x="20" y="22" font-weight="700">Clignement (blink)</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">déflexion frontale ample, brève, symétrique, lente</text>
+    <path class="wave-art" d="M 20 75 L 100 75 Q 110 35 120 35 Q 135 35 145 75 L 220 75 L 280 75 Q 290 35 300 35 Q 315 35 325 75 L 400 75 L 470 75 Q 480 35 490 35 Q 505 35 515 75 L 560 75" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Clignements</strong> : déflexions frontales (Fp1/Fp2) amples, lentes, brèves (~200 ms), <strong>symétriques</strong> bilatéralement.</li>
+    <li><strong>Mouvements oculaires lents (SEM)</strong> : déflexions frontales lentes (&lt; 1 Hz), signature de l'endormissement (N1).</li>
+    <li><strong>Mouvements oculaires rapides (saccades)</strong> : brèves déflexions frontales asymétriques (un œil bouge plus que l'autre selon la direction).</li>
+    <li><strong>Solution</strong> : <strong>EOG synchrone</strong> (1 électrode au-dessus / 1 sous l'œil) pour identifier visuellement les artefacts oculaires.</li>
+    <li><strong>Distinction épileptiforme</strong> : un graphoélément frontal Fp1/Fp2 strictement <em>synchrone</em> du mouvement oculaire est presque toujours un artefact.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SUEUR ET MOUVEMENT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Sueur et dérives lentes
+    <span class="h-sub">Très lentes, parfois confondues avec delta</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Artefact de sueur : dérive très lente sinusoïdale">
+    <text x="20" y="22" font-weight="700">Sueur</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">dérive très lente &lt; 0,5 Hz, grande amplitude</text>
+    <path class="wave-art" d="M 20 75 Q 120 30 220 75 Q 320 120 420 75 Q 520 30 560 65" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Aspect</strong> : ondulations très lentes (&lt; 0,5 Hz), amples, qui dérivent la ligne de base.</li>
+    <li><strong>Localisation</strong> : électrodes frontales, ou n'importe lesquelles si la sueur est généralisée.</li>
+    <li><strong>Distinction delta pathologique</strong> : la sueur est encore plus lente que le delta clinique (&lt; 0,5 Hz vs 0,5-4 Hz), et n'a pas la rythmicité des ondes delta.</li>
+    <li><strong>Solution</strong> : sécher la peau, refaire le contact, augmenter le filtre passe-haut (LF) si transitoire.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SECTEUR ET ÉLECTRODE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Secteur 50 Hz et mauvais contact d'électrode
+    <span class="h-sub">Origine technique pure</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 80" aria-label="Artefact secteur 50 Hz : oscillation fine régulière">
+    <text x="20" y="20" font-weight="700">Secteur 50 Hz</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">oscillation très fine et régulière sur la ligne de base</text>
+    <!-- Sinusoïde rapide haute fréquence -->
+    <path class="wave-art" d="M 20 60 Q 22 50 24 60 Q 26 70 28 60 Q 30 50 32 60 Q 34 70 36 60 Q 38 50 40 60 Q 42 70 44 60 Q 46 50 48 60 Q 50 70 52 60 Q 54 50 56 60 Q 58 70 60 60 Q 62 50 64 60 Q 66 70 68 60 Q 70 50 72 60 Q 74 70 76 60 Q 78 50 80 60 Q 82 70 84 60 Q 86 50 88 60 Q 90 70 92 60 Q 94 50 96 60 Q 98 70 100 60 Q 102 50 104 60 Q 106 70 108 60 Q 110 50 112 60 Q 114 70 116 60 Q 118 50 120 60 Q 122 70 124 60 Q 126 50 128 60 Q 130 70 132 60 Q 134 50 136 60 Q 138 70 140 60 Q 142 50 144 60 Q 146 70 148 60 Q 150 50 152 60 Q 154 70 156 60 Q 158 50 160 60 Q 162 70 164 60 Q 166 50 168 60 Q 170 70 172 60 Q 174 50 176 60 Q 178 70 180 60 Q 182 50 184 60 Q 186 70 188 60 Q 190 50 192 60 Q 194 70 196 60 Q 198 50 200 60 Q 202 70 204 60 Q 206 50 208 60 Q 210 70 212 60 Q 214 50 216 60 Q 218 70 220 60 Q 222 50 224 60 Q 226 70 228 60 Q 230 50 232 60 Q 234 70 236 60 Q 238 50 240 60 Q 242 70 244 60 Q 246 50 248 60 Q 250 70 252 60 Q 254 50 256 60 Q 258 70 260 60 Q 262 50 264 60 Q 266 70 268 60 Q 270 50 272 60 Q 274 70 276 60 Q 278 50 280 60 L 560 60" />
+    <text x="290" y="55" font-size="10" fill="var(--n-500)">après notch 50 Hz →</text>
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Secteur 50 Hz</strong> (60 Hz aux US) : oscillation très fine et régulière sur la ligne de base, monotone.</li>
+    <li><strong>Cause</strong> : interférence électromagnétique du réseau (perfuseur, scope, mauvaise mise à la terre).</li>
+    <li><strong>Solution</strong> : <strong>filtre notch</strong> 50 Hz, vérifier la mise à la terre, éloigner les équipements parasites.</li>
+    <li><strong>Piège</strong> : le notch 50 Hz peut <em>masquer</em> une activité épileptiforme rapide proche de 50 Hz — le désactiver si environnement propre.</li>
+  </ul>
+  <div class="t-scroll" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Mauvais contact</th><th>Aspect</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Électrode décollée</strong></td><td>Tracé plat ou parasité sur <em>une seule</em> dérivation, ne suivant pas la logique anatomique du montage</td><td>Vérifier impédance &lt; 5 kΩ, refaire le contact, regéliser</td></tr>
+        <tr><td><strong>« Pop » d'électrode</strong></td><td>Déflexion brève isolée sur une seule électrode, après mouvement</td><td>Réajuster ; ignorer l'événement isolé</td></tr>
+        <tr><td><strong>Boucle de masse</strong></td><td>50 Hz qui ne disparaît pas avec notch, présent sur toutes les dérivations</td><td>Vérifier câblage, mise à la terre du système, débrancher équipements voisins</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TABLEAU RÉCAPITULATIF
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Tableau de poche — reconnaître en quelques secondes</h2>
+  <div class="t-scroll">
+    <table>
+      <thead>
+        <tr><th>Artefact</th><th>Aspect</th><th>Indice clé</th><th>Solution</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>EMG</strong></td>
+          <td>Bouffées rapides hérissées 20-200 Hz</td>
+          <td>Disparaît à la relaxation</td>
+          <td>Détendre le patient, augmenter HF si transitoire</td>
+        </tr>
+        <tr>
+          <td><strong>ECG</strong></td>
+          <td>Déflexion régulière à la FC</td>
+          <td>Synchrone du QRS</td>
+          <td>Dérivation ECG synchrone, éviter références d'oreille</td>
+        </tr>
+        <tr>
+          <td><strong>Pulse</strong></td>
+          <td>Déflexion régulière sur <em>1 seule</em> électrode</td>
+          <td>Synchrone du pouls + 1 électrode</td>
+          <td>Déplacer l'électrode</td>
+        </tr>
+        <tr>
+          <td><strong>Blink</strong></td>
+          <td>Déflexion frontale ample symétrique</td>
+          <td>Fp1/Fp2 + EOG synchrone</td>
+          <td>Demander de fixer un point</td>
+        </tr>
+        <tr>
+          <td><strong>SEM</strong></td>
+          <td>Mouvements oculaires lents frontaux</td>
+          <td>Signe d'endormissement</td>
+          <td>Aucune — signe physiologique de N1</td>
+        </tr>
+        <tr>
+          <td><strong>Sueur</strong></td>
+          <td>Dérive très lente &lt; 0,5 Hz</td>
+          <td>Plus lent que delta</td>
+          <td>Sécher, augmenter LF</td>
+        </tr>
+        <tr>
+          <td><strong>Mauvais contact</strong></td>
+          <td>Anomalie sur <em>1 seule</em> électrode</td>
+          <td>Ne suit pas la logique anatomique</td>
+          <td>Vérifier impédance, refaire</td>
+        </tr>
+        <tr>
+          <td><strong>Secteur 50 Hz</strong></td>
+          <td>Oscillation fine régulière monotone</td>
+          <td>Aspect uniforme et constant</td>
+          <td>Notch 50 Hz, mise à la terre</td>
+        </tr>
+        <tr>
+          <td><strong>Mouvement de tête</strong></td>
+          <td>Déflexions amples globales irrégulières</td>
+          <td>Multi-électrodes synchrones</td>
+          <td>Marqueur événement, retirer ce passage de l'analyse</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MÉTHODE DE DÉTECTION
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Méthode systématique
+    <span class="h-sub">3 questions à se poser face à une activité suspecte</span>
+  </h2>
+  <ol class="lecture">
+    <li><strong>Où ?</strong> Sur combien d'électrodes ? Si 1 seule → presque toujours artefact (mauvais contact ou pulse).</li>
+    <li><strong>Quand ?</strong> En lien avec un mouvement ? Avec un battement cardiaque ? Avec l'état de vigilance ? Si oui → artefact très probable.</li>
+    <li><strong>Comment ?</strong> Morphologie reproductible et stéréotypée (épileptiforme) <em>vs</em> aléatoire et désorganisée (artefact).</li>
+  </ol>
+  <div class="alert info">
+    <strong>Discipline systématique :</strong> avant de conclure « pointes épileptiformes », vérifier que (a) l'activité est sur plusieurs électrodes en logique anatomique, (b) elle n'est pas synchrone d'un événement biologique (mouvement, ECG, blink), (c) elle a une morphologie reproductible.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PIÈGES ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Pièges spécifiques au péri-ECT
+    <span class="h-sub">Contexte chargé en artefacts</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Pré-induction</strong> : patient anxieux, EMG abondant. Lui faire fermer les yeux et respirer lentement avant la prise du tracé baseline.</li>
+    <li><strong>Per-séance</strong> : le stimulus crée un artefact massif transitoire (saturation des amplificateurs) — interprétation reprend après quelques secondes.</li>
+    <li><strong>Phase tonico-clonique</strong> : EMG envahissant peut masquer la crise EEG sous-jacente. Privilégier les électrodes peu musculaires (Cz, Pz).</li>
+    <li><strong>Post-séance immédiate</strong> : patient encore détendu sous anesthésie → tracé propre. Bonne fenêtre pour évaluer le ralentissement post-critique.</li>
+    <li><strong>Recovery</strong> : retour de la vigilance, agitation possible → EMG, mouvement de tête. Repérer les artefacts avant de qualifier le tracé d'« anormal ».</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>11. Take home messages</h2>
+  <ul class="thm">
+    <li>Avant de qualifier d'« anormal », <strong>identifier les artefacts</strong>.</li>
+    <li>3 questions : <strong>où</strong> (combien d'électrodes ?) · <strong>quand</strong> (synchrone d'un événement ?) · <strong>comment</strong> (morphologie reproductible ?).</li>
+    <li><strong>1 seule électrode anormale</strong> = presque toujours artefact (mauvais contact ou pulse).</li>
+    <li><strong>EMG</strong> : aspect hérissé, disparaît à la relaxation. Ne pas confondre avec activité rapide pathologique.</li>
+    <li><strong>ECG</strong> : régulier à la FC, sur électrodes basses. Solution = dérivation ECG synchrone.</li>
+    <li><strong>Blink</strong> : déflexion frontale ample symétrique synchrone du mouvement oculaire (EOG).</li>
+    <li><strong>Sueur</strong> : dérive très lente &lt; 0,5 Hz, plus lente que delta clinique.</li>
+    <li><strong>Secteur 50 Hz</strong> : oscillation fine monotone — notch + mise à la terre.</li>
+    <li><strong>Filtres trop agressifs</strong> peuvent masquer la pathologie : LF &gt; 1 Hz cache delta, HF &lt; 30 Hz rabote spikes, notch peut masquer activité épileptiforme rapide.</li>
+    <li>Péri-ECT : tracé baseline pré-induction, fenêtre propre post-anesthésie pour évaluer le ralentissement post-critique.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>

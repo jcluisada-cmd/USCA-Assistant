@@ -1,6 +1,12 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.19 — Fiche Sommeil (2/6 du batch handbook).
+> Dernière mise à jour : 8 mai 2026 (v4.20 — Fiche Artefacts (3/6 du batch handbook).
+> 1. **Nouvelle fiche `eeg_ect/fiche_artefacts.html`** (~340 lignes) : 11 sections — résumé, 3 grandes familles (biologique/mécanique/électrique), EMG (avec SVG hérissé rouge), ECG/pulse (SVG impulsions régulières), oculaires/blink (SVG déflexion frontale), sueur (SVG dérive lente), secteur 50 Hz + mauvais contact (SVG oscillation fine), tableau de poche 9 lignes, méthode systématique 3 questions (où/quand/comment), pièges péri-ECT (pré-induction, per-séance, recovery), take home. Tous les SVG en couleur rouge `var(--r-500)` pour distinguer des SVG verts `t-600` des fiches Normal/Technical (artefacts = signal parasite à reconnaître).
+> 2. **Aucune figure du manuel** dans cette fiche : tous les SVG faits maison (option C — les artefacts standards se schématisent bien, pas besoin de tracés cliniques réels).
+> 3. **Pattern iframe + ↗** : carte Artefacts ajoutée au case `eeg_ect` (icône alerte ambre `C.a[700]` pour distinguer visuellement). Bandeau "À venir" mis à jour (3 fiches restantes : Épileptiforme · Status · ICU EEG).
+> 4. **SW bump v4.19 → v4.20** : pré-cache de `fiche_artefacts.html`.)
+>
+> v4.19 — Fiche Sommeil (2/6 du batch handbook).
 > 1. **Nouvelle fiche `eeg_ect/fiche_sommeil.html`** (~280 lignes) : 7 sections — résumé · architecture du sommeil (5 stades + cycles 90 min) · stades détaillés (Éveil/N1/N2/N3/REM) · tableau récapitulatif EEG/EOG/EMG par stade · variants bénins (vertex sharp, POST, sawtooth, K-complexes, fuseaux) avec critères de distinction épileptiforme · implications péri/post-ECT · take home. Linke `shared/ressource-doc.css` + `.js`.
 > 2. **2 figures Oxford intégrées** (option C, mix figures) : `fig_sommeil_stades.png` (800×1019, 454 KB — tracés 5 stades + spectres puissance, fig 17.2 du Oxford Handbook) et `fig_sommeil_variants.png` (800×1015, 332 KB — vertex sharp + POST + sawtooth, fig 17.4). Wrapper `.eeg-fig-wrap.compact` (max-width 520 px) pour ne pas dominer la page. Footer attribution sobre option A : "Sources : manuels d'EEG clinique et critères AASM de stadification du sommeil".
 > 3. **Pattern iframe + ↗** : carte Sommeil ajoutée au case `eeg_ect` (icône stéthoscope ardoise pour distinguer visuellement de Technical et Normal). Bandeau "À venir" mis à jour (4 fiches restantes : Artefacts · Épileptiforme · Status · ICU EEG).
@@ -108,7 +114,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.19 |
+| **Service Worker** | usca-v4.20 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
