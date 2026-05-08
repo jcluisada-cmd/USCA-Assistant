@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.28 — 2026-05-08
+Fix dark mode wrappers d'icône Toolbox (`SectionHead` + EEG/ECT preview + input alert) : backgrounds passent en valeur fixe `#243b53` ou `C.bg` au lieu d'utiliser `C.n[800]`/`#fff` que le swap palette inversait en couleurs claires en dark.
+
 ## v4.27 — 2026-05-08
 Fix dark mode boîtes `.alert`/`.alert.info`/`.alert.crit` dans `shared/ressource-doc.css` — backgrounds amber/teal/red passent en translucide sombre via `--a-50`/`--t-50`/`--r-50` (correctif global : fiches EEG/ECT, ressources, fiches expert).
 

@@ -479,7 +479,7 @@ function BackBtn({onClick}) {
 
 function SectionHead({icon,title,sub}) {
   return <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
-    {icon && <div style={{width:40,height:40,borderRadius:12,background:C.n[800],display:"flex",alignItems:"center",justifyContent:"center"}}>{icon}</div>}
+    {icon && <div style={{width:40,height:40,borderRadius:12,background:"#243b53",display:"flex",alignItems:"center",justifyContent:"center"}}>{icon}</div>}
     <div><div style={{fontSize:17,fontWeight:800,color:C.n[900]}}>{title}</div>{sub&&<div style={{fontSize:12,color:C.n[400]}}>{sub}</div>}</div>
   </div>;
 }
@@ -970,7 +970,7 @@ function WaitlistForm({item, onAdded}) {
     <div style={{marginBottom:8}}>
       <div style={{fontSize:10,fontWeight:700,color:C.n[600],marginBottom:3}}>Âge du patient *</div>
       <input type="number" min="18" max="100" placeholder="65" value={age} onChange={e=>setAge(e.target.value)}
-        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.a[200]}`,borderRadius:8,fontSize:13,fontWeight:700,background:"#fff",color:C.n[900]}}/>
+        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.a[200]}`,borderRadius:8,fontSize:13,fontWeight:700,background:C.bg,color:C.n[900]}}/>
     </div>
 
     {/* DDN optionnelle — calcule l'âge */}
@@ -1715,7 +1715,7 @@ function App() {
     {/* Top bar */}
     <div className="top-bar">
       <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <div style={{width:30,height:30,borderRadius:8,background:C.n[800],display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[300])}</div>
+        <div style={{width:30,height:30,borderRadius:8,background:"#243b53",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[300])}</div>
         <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>USCA</span>
       </div>
       <span style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière</span>
