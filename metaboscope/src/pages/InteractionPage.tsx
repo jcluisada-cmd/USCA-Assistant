@@ -19,6 +19,7 @@ import { getVoieStyle, getMoleculeVoies, intensityLevel } from '../utils/voies';
 import { getMoleculeBucket, getBucketShort } from '../utils/classes';
 import { IntensityBars } from '../components/ui/IntensityBars';
 import { ModalDrawer } from '../components/ui/ModalDrawer';
+import { VoieDetailModal } from '../components/VoieDetailModal';
 import { pdAlertLabel } from '../utils/labels';
 
 type AlertKind = 'qt' | 'sero' | 'resp' | 'acb' | 'sep';
@@ -30,6 +31,7 @@ export function InteractionPage() {
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState<AlertKind | null>(null);
+  const [openVoie, setOpenVoie] = useState<string | null>(null);
   const blurTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const molecules = useMemo<Molecule[]>(
@@ -181,7 +183,8 @@ export function InteractionPage() {
       {molecules.map(m => (
         <MoleculeCardRow key={m.id} m={m} sharedVoies={sharedVoies}
                          onRemove={() => cart.remove(m.id)}
-                         onOpenDetail={() => openMoleculeModal(m.id)} />
+                         onOpenDetail={() => openMoleculeModal(m.id)}
+                         onClickVoie={(voieId) => setOpenVoie(voieId)} />
       ))}
 
       {/* Bouton vider */}
@@ -200,6 +203,15 @@ export function InteractionPage() {
           kind={openAlert}
           onClose={() => setOpenAlert(null)}
           qt={qt} sero={sero} resp={resp} acb={acb} sep={sep}
+        />
+      )}
+      {/* Modal voie */}
+      {openVoie && (
+        <VoieDetailModal
+          voieId={openVoie}
+          cartMolecules={molecules}
+          onClose={() => setOpenVoie(null)}
+          onOpenMolecule={openMoleculeModal}
         />
       )}
     </div>
@@ -221,9 +233,10 @@ interface MoleculeCardRowProps {
   sharedVoies: Set<string>;
   onRemove: () => void;
   onOpenDetail: () => void;
+  onClickVoie: (voieId: string) => void;
 }
 
-function MoleculeCardRow({ m, sharedVoies, onRemove, onOpenDetail }: MoleculeCardRowProps) {
+function MoleculeCardRow({ m, sharedVoies, onRemove, onOpenDetail, onClickVoie }: MoleculeCardRowProps) {
   const voies = useMemo(() => getMoleculeVoies(m), [m]);
   // Aggrège : pour chaque voie, on garde le rôle le plus fort
   const aggregated = voies
@@ -256,20 +269,28 @@ function MoleculeCardRow({ m, sharedVoies, onRemove, onOpenDetail }: MoleculeCar
             const shared = sharedVoies.has(voieId);
             const roleColor = role === 'substrat' ? 'bg-blue-600' : role === 'inhibiteur' ? 'bg-red-600' : 'bg-green-600';
             const roleLetter = role === 'substrat' ? 'S' : role === 'inhibiteur' ? 'I' : 'Ind';
+            const intensityBadge = lvl === 3
+              ? 'bg-amber-500 text-amber-950'
+              : lvl === 2
+                ? 'bg-slate-400 text-slate-900'
+                : 'bg-slate-300 text-slate-800';
             return (
-              <span
+              <button
                 key={voieId}
-                className={`relative inline-flex items-center gap-1 rounded-full ${v.pillBgClass} ${v.pillTextClass} px-2 py-0.5 text-[10px] font-bold ${
+                type="button"
+                onClick={() => onClickVoie(voieId)}
+                aria-label={`Détails ${voieId} sur ${m.nom_dci}`}
+                className={`relative inline-flex items-center gap-1 rounded-full ${v.pillBgClass} ${v.pillTextClass} px-2 py-0.5 text-[10px] font-bold focus-ring transition-transform hover:scale-105 ${
                   shared ? 'ring-2 ring-amber-400 ring-offset-1 ring-offset-navy-800' : ''
                 }`}
-                title={`${role} ${intensity} de ${voieId}`}
+                title={`${role} ${intensity} de ${voieId} — tap pour insight clinique`}
               >
                 <span className={`flex h-3.5 min-w-3.5 items-center justify-center rounded-sm ${roleColor} px-1 text-[8px] text-white`}>
                   {roleLetter}
                 </span>
                 {v.label}
                 {role === 'substrat' ? (
-                  <span className="rounded bg-black/15 px-1 text-[8px] uppercase">
+                  <span className={`rounded ${intensityBadge} px-1 text-[8px] font-bold uppercase`}>
                     {lvl === 3 ? 'maj' : lvl === 2 ? 'mod' : 'min'}
                   </span>
                 ) : (
@@ -283,7 +304,7 @@ function MoleculeCardRow({ m, sharedVoies, onRemove, onOpenDetail }: MoleculeCar
                     ⚡
                   </span>
                 )}
-              </span>
+              </button>
             );
           })}
         </div>

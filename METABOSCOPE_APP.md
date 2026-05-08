@@ -407,6 +407,70 @@ Si JC veut un quick fix avant le chantier G complet : ouvrir `metaboscope/src/da
 
 **Fix appliqué v4.25** : `.catch(() => new Response('', { status: 408 }))` propre. Bug pré-existant à MetaboScope, juste révélé par la nouvelle iframe. À documenter en §F si besoin de revisiter.
 
+## §12. Chantier H — Refonte UX/UI 2 onglets (livré v4.29-v4.30, 2026-05-09)
+
+Refonte profonde issue du brainstorming visuel JC ↔ Claude (mockups via Visual Companion superpowers). Décisions clés validées :
+
+### Architecture
+- **2 onglets** au lieu de 3 : `Atlas` (par défaut) + `Interactions`. Suppression de `HomePage`, `SearchPage` isolée et `MoleculePage` isolée.
+- **Tabs en haut** style navigateur (au lieu de bottom nav) avec indicateur 2px qui glisse + badge dynamique sur Interactions (pulsant orange quand panier > 0).
+- **Routes simplifiées** : `/` = Atlas, `/interactions`. Redirects legacy `/search`, `/search/:id` (→ `?molecule=:id`), `/atlas`.
+- **Fiche molécule = `MoleculeDetailModal`** slide-in (drawer) ouvert via `?molecule=ID` dans l'URL — accessible depuis n'importe où.
+- Routes obsolètes nettoyées du dossier `pages/`.
+
+### Atlas refondu
+- **Barre de recherche universelle** (autocomplete → ouvre `MoleculeDetailModal`).
+- **Grille de toggles voies** (~30 voies CYP/UGT/Phase II/Non-CYP/Transporteurs) en multi-sélection. **1 couleur unique par voie** (CYP3A4 bleu, CYP2D6 vert, etc. — cohérent avec Interactions). `src/utils/voies.ts`.
+- **Mode OU/ET** pour combiner les voies sélectionnées.
+- **Filtre classes thérapeutiques** : 8 buckets (`Antidépresseurs`, `Antipsychotiques`, `Anxiolytiques · Hypnotiques`, `Thymorégulateurs`, `Opioïdes · TSO`, `Psychostimulants`, `Drogues classiques`, `NPS · Autres`). Compteur discret en haut droit, dropdown léger, persistance `localStorage`. `src/utils/classes.ts`.
+- **3 sections résultats empilées** : Substrats (badge MAJ/mod/min) / Inhibiteurs (barres d'intensité 3/2/1, rouge) / Inducteurs (idem, vert). Chaque mol = card avec voies pills colorées + bouton `+`/`✓` pour ajouter au panier.
+- **⚡ orange sur les toggles voies** partagées par les molécules du panier.
+- **Bannière flottante panier** en bas : "X mol · ⚡ N voies partagées · Analyser →" — bascule vers Interactions.
+
+### Interactions refondu
+- **Barre de recherche** pour ajouter une molécule.
+- **Alertes PD cumulées** en haut (QT, sérotonine, respiratoire, ACB, seuil épileptogène) — uniquement les niveaux red/amber visibles, cliquables → `AlertDetailModal` (rationale + contributeurs + conduite à tenir).
+- **Cards molécule visuelles** : nom + classe + ✕ retire, voies en pills colorées (lettre `S`/`I`/`Ind` dans carré + intensité MAJ/mod/min ou barres 3/2/1), voies partagées avec halo + ⚡, pictogrammes alertes PD red/amber.
+- Section "Interactions PK détectées" si paires PK ou interactions documentées.
+
+### `VoieDetailModal` (v4.30)
+- Tap sur n'importe quelle pill voie (Atlas ou Interactions) → modal slide-in avec :
+  - Header coloré de la voie (palette uniforme dans toute l'app)
+  - **Détection automatique paires PK** : pour chaque substrat × chaque inhibiteur/inducteur sur la même voie → flag "AUC ↑" ou "AUC ↓" avec mini-explication
+  - Liste des molécules du panier touchant cette voie + leur rôle/intensité
+  - Lien vers fiche complète d'une molécule
+
+### Lisibilité dark/light (v4.30)
+Les classes Tailwind `text-{color}-{100,200,300}` sont conçues pour fond foncé. En mode light, elles devenaient illisibles (jaune pâle sur blanc, rouge pâle sur blanc). Ajout de règles d'inversion dans `metaboscope/src/index.css` : `html.theme-light .text-amber-{100,200,300}` → `text-amber-{800,800,700}`, idem red/blue/green/indigo. Contrastes badges intensité aussi renforcés (slate-300/400 au lieu de slate-200/black-15%).
+
+### Composants nouveaux
+- `src/utils/voies.ts` — catalogue voies + couleurs + helper `getMoleculeVoies(m)` qui agrège phase1_cyp/non_cyp + phase2 + transporteurs + inhibiteur + inducteur.
+- `src/utils/classes.ts` — regroupement 8 classes thérapeutiques avec regex.
+- `src/components/ui/ModalDrawer.tsx` — drawer slide-in générique (Echap pour fermer, backdrop dimmé, accent border colorée).
+- `src/components/ui/IntensityBars.tsx` — 3 barres remplies selon level (1/2/3).
+- `src/components/MoleculeDetailModal.tsx` — wrap `MoleculeCard` dans drawer.
+- `src/components/VoieDetailModal.tsx` — insight clinique sur une voie + détection paires PK.
+
+### Conservé tel quel
+DisclaimerGate, CartContext, OfflineBanner, helpers `scoring.ts`/`pgx.ts`/`data/index.ts`, composant `MoleculeCard` (réutilisé dans le modal), sync thème dark/light (v4.26 + v4.28), deep link `?cart=` (v4.26).
+
+### Hors scope (reporté)
+- Vue "réseau" molécules ↔ voies (Layout B refusé — moins compact, moins scalable)
+- Scénarios cliniques précâblés (refusés)
+- Mode Ordonnance (chantier D.1 reporté)
+- Migration Tailwind v4 (chantier F.9 — la refonte v4.29 ne dépend pas de l'API v3 spécifique)
+- Refonte de la classification fine des molécules (chantier G — séparé)
+
+---
+
+## §11 (déplacée). Chantier F additions
+
+### F.7. Catch SW USCA hors-scope (livré v4.25, 2026-05-08)
+
+`sw.js` ligne 167 (cache-first runtime) faisait un `fetch(e.request)` non catché → `Uncaught (in promise) TypeError: Failed to fetch` en console pour toute requête hors-scope (extensions navigateur, BrowserRouter sous-app MetaboScope, `searchAnalyzer.js` Edge/Bing).
+
+**Fix appliqué v4.25** : `.catch(() => new Response('', { status: 408 }))` propre. Bug pré-existant à MetaboScope, juste révélé par la nouvelle iframe. À documenter en §F si besoin de revisiter.
+
 ### F.8. Meta `mobile-web-app-capable` (livré v4.25, 2026-05-08)
 
 Chrome ≥ 109 a déprécié `<meta name="apple-mobile-web-app-capable">` au profit du standard `<meta name="mobile-web-app-capable">`. Ajout du tag standard à côté de l'apple-meta dans 5 fichiers HTML USCA (`index.html` racine, `admin/`, `patient/`, `staff/toolbox.html`, export imprimable patient). Apple-meta conservé (compat iOS Safari).

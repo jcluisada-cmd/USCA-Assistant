@@ -12,6 +12,7 @@ import { useCart } from '../context/CartContext';
 import { VOIES, getVoieStyle, getMoleculeVoies, intensityLevel, type VoieStyle, type VoieKind } from '../utils/voies';
 import { CLASS_BUCKETS, getMoleculeBucket, getBucketShort, type ClassBucket } from '../utils/classes';
 import { IntensityBars } from '../components/ui/IntensityBars';
+import { VoieDetailModal } from '../components/VoieDetailModal';
 
 const STORAGE_DISABLED_CLASSES = 'metaboscope_disabled_classes_v1';
 
@@ -34,6 +35,7 @@ export function AtlasPage() {
   const [selectedVoies, setSelectedVoies] = useState<Set<string>>(new Set());
   const [mode, setMode] = useState<FilterMode>('OR');
   const [classFilterOpen, setClassFilterOpen] = useState(false);
+  const [openVoie, setOpenVoie] = useState<string | null>(null);
   const [disabledClasses, setDisabledClasses] = useState<Set<ClassBucket>>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_DISABLED_CLASSES);
@@ -311,6 +313,7 @@ export function AtlasPage() {
           molecules={substrats}
           openMolecule={openMoleculeModal}
           cart={cart}
+          onClickVoie={(voieId) => setOpenVoie(voieId)}
         />
       )}
       {inhibiteurs.length > 0 && (
@@ -319,6 +322,7 @@ export function AtlasPage() {
           molecules={inhibiteurs}
           openMolecule={openMoleculeModal}
           cart={cart}
+          onClickVoie={(voieId) => setOpenVoie(voieId)}
         />
       )}
       {inducteurs.length > 0 && (
@@ -327,6 +331,18 @@ export function AtlasPage() {
           molecules={inducteurs}
           openMolecule={openMoleculeModal}
           cart={cart}
+          onClickVoie={(voieId) => setOpenVoie(voieId)}
+        />
+      )}
+
+      {openVoie && (
+        <VoieDetailModal
+          voieId={openVoie}
+          cartMolecules={Array.from(cart.ids)
+            .map(id => ALL_MOLECULES.find(m => m.id === id))
+            .filter((m): m is Molecule => Boolean(m))}
+          onClose={() => setOpenVoie(null)}
+          onOpenMolecule={openMoleculeModal}
         />
       )}
 
@@ -373,9 +389,10 @@ interface ResultsSectionProps {
   molecules: MoleculeWithRoles[];
   openMolecule: (id: string) => void;
   cart: ReturnType<typeof useCart>;
+  onClickVoie: (voieId: string) => void;
 }
 
-function ResultsSection({ kind, molecules, openMolecule, cart }: ResultsSectionProps) {
+function ResultsSection({ kind, molecules, openMolecule, cart, onClickVoie }: ResultsSectionProps) {
   const config = SECTION_CONFIG[kind];
   const targetRole = kind === 'substrats' ? 'substrat' : kind === 'inhibiteurs' ? 'inhibiteur' : 'inducteur';
 
@@ -409,19 +426,24 @@ function ResultsSection({ kind, molecules, openMolecule, cart }: ResultsSectionP
                     const v = getVoieStyle(h.voieId);
                     const lvl = intensityLevel(h.intensity);
                     return (
-                      <span key={`${h.voieId}-${i}`}
-                            className={`inline-flex items-center gap-1 rounded-full ${v.pillBgClass} ${v.pillTextClass} px-1.5 py-0.5 text-[10px] font-semibold`}>
+                      <button
+                        key={`${h.voieId}-${i}`}
+                        type="button"
+                        onClick={() => onClickVoie(h.voieId)}
+                        className={`inline-flex items-center gap-1 rounded-full ${v.pillBgClass} ${v.pillTextClass} px-1.5 py-0.5 text-[10px] font-semibold focus-ring transition-transform hover:scale-105`}
+                        title={`${h.role} ${h.intensity} de ${h.voieId} — tap pour insight`}
+                      >
                         <span>{v.label}</span>
                         {targetRole === 'substrat' ? (
-                          <span className={`rounded px-1 py-0 text-[9px] font-bold ${
-                            lvl === 3 ? 'bg-amber-500 text-amber-950' : lvl === 2 ? 'bg-slate-300 text-slate-800' : 'bg-slate-200 text-slate-700'
-                          }`}>{lvl === 3 ? 'MAJ' : lvl === 2 ? 'mod' : 'min'}</span>
+                          <span className={`rounded px-1 py-0 text-[9px] font-bold uppercase ${
+                            lvl === 3 ? 'bg-amber-500 text-amber-950' : lvl === 2 ? 'bg-slate-400 text-slate-900' : 'bg-slate-300 text-slate-800'
+                          }`}>{lvl === 3 ? 'maj' : lvl === 2 ? 'mod' : 'min'}</span>
                         ) : (
                           <span className={config.text}>
                             <IntensityBars level={lvl} />
                           </span>
                         )}
-                      </span>
+                      </button>
                     );
                   })}
                 </div>
