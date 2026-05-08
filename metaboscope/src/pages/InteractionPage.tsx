@@ -5,8 +5,8 @@
 // alertes PD cumulées en haut (cliquables → modal détail),
 // barre de recherche pour ajouter une molécule.
 
-import { useState, useMemo, useCallback, useRef } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ALL_MOLECULES, searchMolecules } from '../data';
 import type { Molecule } from '../types/molecule';
 import { useCart } from '../context/CartContext';
@@ -16,7 +16,7 @@ import {
   type Severity,
 } from '../utils/scoring';
 import { getVoieStyle, getMoleculeVoies, intensityLevel } from '../utils/voies';
-import { getMoleculeBucket, getBucketShort } from '../utils/classes';
+import { getMoleculeBucket, getBucketShort, CLASS_BUCKETS, type ClassBucket } from '../utils/classes';
 import { IntensityBars } from '../components/ui/IntensityBars';
 import { ModalDrawer } from '../components/ui/ModalDrawer';
 import { VoieDetailModal } from '../components/VoieDetailModal';
@@ -24,15 +24,56 @@ import { pdAlertLabel } from '../utils/labels';
 
 type AlertKind = 'qt' | 'sero' | 'resp' | 'acb' | 'sep';
 
+const STORAGE_EXPANDED_BUCKETS = 'metaboscope_expanded_buckets_v1';
+
 export function InteractionPage() {
-  const navigate = useNavigate();
   const cart = useCart();
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [openAlert, setOpenAlert] = useState<AlertKind | null>(null);
   const [openVoie, setOpenVoie] = useState<string | null>(null);
   const blurTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Workflow 2 phases : sélection (badges classes dépliables) → analyse
+  const [analyzeMode, setAnalyzeMode] = useState(false);
+  const [expandedBuckets, setExpandedBuckets] = useState<Set<ClassBucket>>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_EXPANDED_BUCKETS);
+      if (raw) return new Set(JSON.parse(raw) as ClassBucket[]);
+    } catch { /* ignore */ }
+    return new Set(); // tout replié par défaut
+  });
+
+  // Persist expandedBuckets
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_EXPANDED_BUCKETS, JSON.stringify(Array.from(expandedBuckets)));
+    } catch { /* ignore */ }
+  }, [expandedBuckets]);
+
+  // Auto-bascule en mode analyse si on arrive avec ?analyze=1 (depuis Atlas)
+  useEffect(() => {
+    if (searchParams.get('analyze') === '1') {
+      setAnalyzeMode(true);
+      const next = new URLSearchParams(searchParams);
+      next.delete('analyze');
+      setSearchParams(next, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
+  // Si panier vide, repasser en mode sélection automatiquement
+  useEffect(() => {
+    if (cart.size === 0) setAnalyzeMode(false);
+  }, [cart.size]);
+
+  function toggleBucket(b: ClassBucket) {
+    setExpandedBuckets(prev => {
+      const next = new Set(prev);
+      if (next.has(b)) next.delete(b); else next.add(b);
+      return next;
+    });
+  }
 
   const molecules = useMemo<Molecule[]>(
     () => Array.from(cart.ids)
@@ -73,6 +114,20 @@ export function InteractionPage() {
     if (query.trim().length < 2) return [];
     return searchMolecules(query, 8).filter(m => !cart.ids.has(m.id));
   }, [query, cart.ids]);
+
+  // ─── Molécules pré-groupées par bucket pour la phase sélection ──
+  const moleculesByBucket = useMemo<Map<ClassBucket, Molecule[]>>(() => {
+    const map = new Map<ClassBucket, Molecule[]>();
+    for (const m of ALL_MOLECULES) {
+      const b = getMoleculeBucket(m);
+      if (!map.has(b)) map.set(b, []);
+      map.get(b)!.push(m);
+    }
+    for (const list of map.values()) {
+      list.sort((a, b) => a.nom_dci.localeCompare(b.nom_dci, 'fr'));
+    }
+    return map;
+  }, []);
 
   function addFromSearch(id: string) {
     cart.add(id);
@@ -127,74 +182,186 @@ export function InteractionPage() {
         )}
       </div>
 
-      {/* État vide */}
-      {molecules.length === 0 && (
-        <div className="rounded-lg border border-dashed border-navy-700 p-8 text-center text-sm text-gray-500">
-          Panier vide<br />
-          <span className="text-xs">Ajoute une molécule via la recherche ci-dessus,<br />ou bascule dans l'<button type="button" onClick={() => navigate('/')} className="text-teal-400 underline">Atlas</button> pour explorer par voies.</span>
-        </div>
-      )}
+      {/* ════ MODE SÉLECTION : badges classes dépliables ════ */}
+      {!analyzeMode && (
+        <>
+          {/* Récap panier compact en haut */}
+          {molecules.length > 0 && (
+            <section className="rounded-md border border-indigo-500/40 bg-indigo-500/10 p-2.5">
+              <div className="mb-1.5 flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-300">
+                  Panier · {molecules.length}
+                </span>
+                <button type="button" onClick={() => cart.clear()}
+                        className="text-[10px] text-gray-400 underline hover:text-gray-200 focus-ring">
+                  Vider
+                </button>
+              </div>
+              <ul className="flex flex-wrap gap-1.5">
+                {molecules.map(m => (
+                  <li key={m.id}>
+                    <button type="button" onClick={() => cart.remove(m.id)}
+                            aria-label={`Retirer ${m.nom_dci}`}
+                            className="inline-flex items-center gap-1 rounded-full bg-indigo-500/30 px-2 py-0.5 text-xs text-indigo-100 hover:bg-red-500/30 hover:text-red-100 focus-ring">
+                      {m.nom_dci} <span aria-hidden>×</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-      {/* Alertes en haut */}
-      {visibleAlerts.length > 0 && (
-        <section className="space-y-1.5">
-          {visibleAlerts.map(a => (
-            <button
-              key={a.kind}
-              type="button"
-              onClick={() => setOpenAlert(a.kind)}
-              className={`flex w-full items-center justify-between gap-2 rounded-md border px-3 py-2 text-left text-sm focus-ring ${
-                a.severity === 'red'
-                  ? 'border-red-500/40 bg-red-500/10 text-red-200'
-                  : 'border-amber-500/40 bg-amber-500/10 text-amber-200'
-              }`}
-            >
-              <span><strong>⚠ {a.label}</strong> · {a.summary}</span>
-              <span aria-hidden className="text-xs opacity-60">→</span>
+          {/* Badges classes dépliables */}
+          <section>
+            <h2 className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">
+              Choisir des molécules par classe · sélection multiple
+            </h2>
+            <div className="space-y-1.5">
+              {CLASS_BUCKETS.map(bucket => {
+                const bucketMol = moleculesByBucket.get(bucket.id) ?? [];
+                if (bucketMol.length === 0) return null;
+                const isExpanded = expandedBuckets.has(bucket.id);
+                const inCartCount = bucketMol.filter(m => cart.ids.has(m.id)).length;
+                return (
+                  <div key={bucket.id} className="rounded-md border border-navy-700 bg-navy-800">
+                    <button type="button" onClick={() => toggleBucket(bucket.id)}
+                            aria-expanded={isExpanded}
+                            className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm focus-ring">
+                      <span aria-hidden className="inline-block w-3 text-gray-500">{isExpanded ? '▾' : '▸'}</span>
+                      <span className="font-semibold text-gray-100">{bucket.label}</span>
+                      <span className="text-[10px] text-gray-500">({bucketMol.length})</span>
+                      {inCartCount > 0 && (
+                        <span className="ml-auto inline-flex items-center rounded-full bg-indigo-500/30 px-2 py-0.5 text-[10px] font-bold text-indigo-200">
+                          {inCartCount} au panier
+                        </span>
+                      )}
+                    </button>
+                    {isExpanded && (
+                      <ul className="grid grid-cols-1 gap-1 border-t border-navy-700 p-2 sm:grid-cols-2">
+                        {bucketMol.map(m => {
+                          const inCart = cart.ids.has(m.id);
+                          return (
+                            <li key={m.id}
+                                className={`flex items-center justify-between gap-1.5 rounded border px-2 py-1.5 text-sm ${
+                                  inCart ? 'border-indigo-500 bg-indigo-500/10' : 'border-navy-700 bg-navy-900'
+                                }`}>
+                              <button type="button" onClick={() => openMoleculeModal(m.id)}
+                                      className="min-w-0 flex-1 truncate text-left focus-ring">
+                                <span className="font-medium text-gray-100">{m.nom_dci}</span>
+                              </button>
+                              <button type="button"
+                                      onClick={() => inCart ? cart.remove(m.id) : cart.add(m.id)}
+                                      aria-label={inCart ? `Retirer ${m.nom_dci}` : `Ajouter ${m.nom_dci}`}
+                                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded text-sm font-bold focus-ring ${
+                                        inCart
+                                          ? 'bg-indigo-500 text-white'
+                                          : 'border border-navy-600 text-indigo-300 hover:bg-indigo-500/10'
+                                      }`}>
+                                {inCart ? '✓' : '+'}
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* FAB Analyser → */}
+          {cart.size >= 2 && (
+            <button type="button" onClick={() => setAnalyzeMode(true)}
+                    className="fixed bottom-4 right-4 z-30 flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-2xl hover:bg-indigo-500 focus-ring">
+              <span>Analyser</span>
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">{cart.size}</span>
+              <span aria-hidden>→</span>
             </button>
+          )}
+
+          {cart.size === 1 && (
+            <p className="text-center text-xs text-gray-500">
+              Ajoute au moins une 2<sup>e</sup> molécule pour lancer l'analyse.
+            </p>
+          )}
+        </>
+      )}
+
+      {/* ════ MODE ANALYSE : alertes + cards mol + voies ════ */}
+      {analyzeMode && (
+        <>
+          {/* Bouton retour vers sélection */}
+          <div className="flex items-center justify-between gap-2">
+            <button type="button" onClick={() => setAnalyzeMode(false)}
+                    className="rounded-md border border-navy-700 bg-navy-800 px-3 py-1.5 text-xs text-gray-300 hover:text-gray-100 focus-ring">
+              ✎ Modifier le panier
+            </button>
+            <span className="text-[10px] text-gray-500">{molecules.length} molécule{molecules.length > 1 ? 's' : ''}</span>
+          </div>
+
+          {/* Alertes en haut */}
+          {visibleAlerts.length > 0 && (
+            <section className="space-y-1.5">
+              {visibleAlerts.map(a => (
+                <button
+                  key={a.kind}
+                  type="button"
+                  onClick={() => setOpenAlert(a.kind)}
+                  className={`flex w-full items-center justify-between gap-2 rounded-md border px-3 py-2 text-left text-sm focus-ring ${
+                    a.severity === 'red'
+                      ? 'border-red-500/40 bg-red-500/10 text-red-200'
+                      : 'border-amber-500/40 bg-amber-500/10 text-amber-200'
+                  }`}
+                >
+                  <span><strong>⚠ {a.label}</strong> · {a.summary}</span>
+                  <span aria-hidden className="text-xs opacity-60">→</span>
+                </button>
+              ))}
+            </section>
+          )}
+
+          {/* Paires PK détectées + interactions documentées */}
+          {(pkPairs.length > 0 || docInter.length > 0) && molecules.length >= 2 && (
+            <section className="rounded-md border border-amber-500/30 bg-amber-500/5 p-3">
+              <h3 className="mb-1.5 text-xs font-bold uppercase tracking-wider text-amber-300">
+                Interactions PK détectées · {pkPairs.length + docInter.length}
+              </h3>
+              <ul className="space-y-1.5 text-xs text-gray-200">
+                {pkPairs.map((p, i) => (
+                  <li key={`pk-${i}`}>
+                    <strong>{p.substrat.nom}</strong> ↔ <strong>{p.inhibiteurOuInducteur.nom}</strong>
+                    <span className="text-amber-300"> · {p.isoenzyme} ({p.inhibiteurOuInducteur.role}, {p.inhibiteurOuInducteur.puissance})</span>
+                  </li>
+                ))}
+                {docInter.map((d, i) => (
+                  <li key={`doc-${i}`}>
+                    <strong>{d.source.nom}</strong> ↔ <strong>{d.cible.nom}</strong>
+                    <span className="text-gray-400"> · {d.effet}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Cards molécule */}
+          {molecules.map(m => (
+            <MoleculeCardRow key={m.id} m={m} sharedVoies={sharedVoies}
+                             onRemove={() => cart.remove(m.id)}
+                             onOpenDetail={() => openMoleculeModal(m.id)}
+                             onClickVoie={(voieId) => setOpenVoie(voieId)} />
           ))}
-        </section>
-      )}
 
-      {/* Paires PK détectées + interactions documentées */}
-      {(pkPairs.length > 0 || docInter.length > 0) && molecules.length >= 2 && (
-        <section className="rounded-md border border-amber-500/30 bg-amber-500/5 p-3">
-          <h3 className="mb-1.5 text-xs font-bold uppercase tracking-wider text-amber-300">
-            Interactions PK détectées · {pkPairs.length + docInter.length}
-          </h3>
-          <ul className="space-y-1.5 text-xs text-gray-200">
-            {pkPairs.map((p, i) => (
-              <li key={`pk-${i}`}>
-                <strong>{p.substrat.nom}</strong> ↔ <strong>{p.inhibiteurOuInducteur.nom}</strong>
-                <span className="text-amber-300"> · {p.isoenzyme} ({p.inhibiteurOuInducteur.role}, {p.inhibiteurOuInducteur.puissance})</span>
-              </li>
-            ))}
-            {docInter.map((d, i) => (
-              <li key={`doc-${i}`}>
-                <strong>{d.source.nom}</strong> ↔ <strong>{d.cible.nom}</strong>
-                <span className="text-gray-400"> · {d.effet}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {/* Cards molécule */}
-      {molecules.map(m => (
-        <MoleculeCardRow key={m.id} m={m} sharedVoies={sharedVoies}
-                         onRemove={() => cart.remove(m.id)}
-                         onOpenDetail={() => openMoleculeModal(m.id)}
-                         onClickVoie={(voieId) => setOpenVoie(voieId)} />
-      ))}
-
-      {/* Bouton vider */}
-      {molecules.length > 0 && (
-        <div className="pt-2 text-center">
-          <button type="button" onClick={() => cart.clear()}
-                  className="rounded-md border border-navy-700 bg-navy-800 px-3 py-1.5 text-xs text-gray-400 hover:text-gray-200 focus-ring">
-            Vider le panier
-          </button>
-        </div>
+          {/* Bouton vider */}
+          {molecules.length > 0 && (
+            <div className="pt-2 text-center">
+              <button type="button" onClick={() => cart.clear()}
+                      className="rounded-md border border-navy-700 bg-navy-800 px-3 py-1.5 text-xs text-gray-400 hover:text-gray-200 focus-ring">
+                Vider le panier
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Modals alertes */}

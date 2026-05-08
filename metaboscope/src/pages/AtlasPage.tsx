@@ -406,7 +406,7 @@ export function AtlasPage() {
           </div>
           <button
             type="button"
-            onClick={() => navigate('/interactions')}
+            onClick={() => navigate('/interactions?analyze=1')}
             className="rounded-md bg-white px-3 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-50 focus-ring"
           >
             Analyser →

@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.31 (2026-05-09) — Atlas : catégories de voies repliables (Cytochromes / UGT / Phase II / Non-CYP / Transporteurs) avec badge sélection persistance localStorage. Par défaut seuls les Cytochromes dépliés.
+> **Version courante** : v4.32 (2026-05-09) — Interactions workflow 2-phases (sélection par classes dépliables → Analyser FAB → analyse) + carte "MetaboScope" passée en grande carte Toolbox (avant Dossier post-cure).
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.31` |
+| **Service Worker** | `usca-v4.32` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |

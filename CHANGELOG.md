@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.32 — 2026-05-09
+Workflow 2-phases dans Interactions MetaboScope : (1) phase sélection par défaut avec badges classes thérapeutiques dépliables (8 buckets, tous repliés au boot, persistance localStorage), bouton + sur chaque mol, FAB "Analyser →" en bas droite (visible si cart ≥ 2) ; (2) phase analyse au clic Analyser → affichage actuel (alertes + cards mol + voies). Bouton "✎ Modifier le panier" pour revenir en sélection. Auto-bascule vers sélection si panier vidé. Bannière flottante Atlas → `/interactions?analyze=1` (mode analyse direct sans repasser par sélection). Toolbox : ancienne petite carte "MetaboScope (Interactions)" supprimée, remplacée par **grande carte "MetaboScope"** placée avant "Dossier post-cure" (palette rouge USCA, gradient C.r[100]). Petites cartes home Toolbox passent de 3 → 2 colonnes (Scores · EEG/ECT).
+
 ## v4.31 — 2026-05-09
 Atlas MetaboScope : catégories de voies repliables (Cytochromes / UGT / Phase II / Non-CYP / Transporteurs). Header cliquable avec ▾/▸ + compteur (`(N voies)`) + badge de sélection (`X sélectionnée(s)`) + indicateur ⚡ si voies partagées dans une catégorie repliée. Persistance dans `localStorage.metaboscope_expanded_kinds_v1`. Par défaut, seuls les Cytochromes dépliés (les plus utilisés en pratique addicto-psychiatrique) — désamorce la surcharge visuelle au boot.
 

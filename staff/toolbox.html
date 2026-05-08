@@ -1493,6 +1493,7 @@ function App() {
         {[{l:"Protocoles USCA",desc:"Protocoles cliniques par substance",i:I.pill,v:"substances",dm:"toolbox_protocoles",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
           {l:"Ressources USCA",desc:"Articles, fiches, recos, algos",i:I.book,v:"ressources",dm:"toolbox_ressources",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
           {l:"Fiches Traitements et Substances",desc:"Fiches patient, fiches expert, fiches substances",i:I.heart,v:"fiches_traitements",dm:"toolbox_traitements",c:C.a[700],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`},
+          {l:"MetaboScope",desc:"Atlas voies métaboliques + analyse interactions",i:I.alert,v:"interactions",dm:"toolbox_interactions",c:C.r[500],bg:`linear-gradient(135deg, ${C.r[100]}, ${C.bg})`},
           {l:"Dossier post-cure",desc:"Volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",dm:"toolbox_postcure",c:C.t[800],bg:`linear-gradient(135deg, ${C.t[100]}, ${C.bg})`}
         ].map(item=>
           <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>{
@@ -1505,15 +1506,13 @@ function App() {
             {I.chevR(C.n[300])}
           </div>)}
 
-        {/* Petites cartes — outils cliniques (3) */}
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
-          {[{l:"MetaboScope",sub:"(Interactions)",i:I.alert,v:"interactions",dm:"toolbox_interactions",c:C.r[500]},
-            {l:"Scores",i:I.calc,v:"scores",dm:"toolbox_scores",c:C.n[600]},
+        {/* Petites cartes — outils cliniques (2 — MetaboScope est passée en grande carte v4.32) */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
+          {[{l:"Scores",i:I.calc,v:"scores",dm:"toolbox_scores",c:C.n[600]},
             {l:"EEG / ECT",i:I.activity,v:"eeg_ect",dm:"toolbox_eeg_ect",c:C.t[700]}].map(item=>
             <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:12,textAlign:"center"}} onClick={()=>nav(item.v)}>
               {item.i(item.c, 22)}
               <div style={{fontSize:12,fontWeight:800,color:C.n[800],marginTop:6}}>{item.l}</div>
-              {item.sub && <div style={{fontSize:10,fontWeight:600,color:C.n[400],marginTop:2}}>{item.sub}</div>}
             </div>)}
         </div>
 
