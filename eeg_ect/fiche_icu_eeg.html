@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEG en réanimation — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.4; }
+  svg.eeg-schema .wave-pat { fill: none; stroke: var(--r-500); stroke-width: 1.6; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>EEG en réanimation</h1>
+  <p class="meta">Encéphalopathies, patterns périodiques, burst-suppression, triphasiques — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>L'EEG en réanimation est un outil incontournable pour 4 questions cliniques :</p>
+  <ul class="thm">
+    <li><strong>Y a-t-il une encéphalopathie ?</strong> et quel est son degré (ralentissement diffus).</li>
+    <li><strong>Y a-t-il un état de mal non-convulsif</strong> sous-jacent au coma ? (cf. fiche Status)</li>
+    <li><strong>Quel est le pronostic ?</strong> après arrêt cardiaque, anoxie sévère ou coma post-traumatique.</li>
+    <li><strong>L'anesthésie est-elle suffisante ?</strong> (cible burst-suppression en status réfractaire).</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Vocabulaire mis à jour</strong> : la terminologie <strong>ACNS 2021</strong> remplace les anciens termes — PLEDs devient <em>LPDs</em>, GPEDs devient <em>GPDs</em>, BIPLEDs devient <em>BIPDs</em>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ENCÉPHALOPATHIE DIFFUSE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Encéphalopathie diffuse
+    <span class="h-sub">Le pattern le plus fréquent en réanimation</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="Encéphalopathie : ralentissement diffus delta-theta de haute amplitude">
+    <text x="20" y="20" font-weight="700">Encéphalopathie diffuse</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">delta + theta haute amplitude diffus</text>
+    <path class="wave-pat" d="M 20 70 Q 60 30 100 70 Q 140 110 180 70 Q 220 30 260 70 Q 300 110 340 70 Q 380 30 420 70 Q 460 110 500 70 Q 540 30 560 60" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Aspect</strong> : ralentissement diffus, prédominance delta-theta, haute amplitude, organisation conservée.</li>
+    <li><strong>Sévérité graduelle</strong> : ralentissement modéré → ralentissement marqué → tracé plat.</li>
+    <li><strong>Étiologies fréquentes</strong> :</li>
+  </ul>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Étiologie</th><th>Particularité EEG</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Métabolique</strong> (hépatique, urémique, hyponatrémie)</td><td>Souvent ondes triphasiques associées</td></tr>
+        <tr><td><strong>Septique</strong></td><td>Ralentissement diffus + asymétries possibles</td></tr>
+        <tr><td><strong>Toxique</strong> (médicaments, alcool, BZD)</td><td>Beta abondant + ralentissement (BZD/barbituriques)</td></tr>
+        <tr><td><strong>Hypoxie / post-anoxique</strong></td><td>Continuum : ralentissement → burst-suppression → silence électrique</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert">
+    Le degré du ralentissement <strong>corrèle</strong> avec la sévérité clinique. Une amélioration EEG précède souvent l'amélioration clinique de quelques heures.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PATTERNS PÉRIODIQUES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Patterns périodiques (ACNS 2021)
+    <span class="h-sub">LPDs · GPDs · BIPDs — toujours pathologiques</span>
+  </h2>
+
+  <p>Les <strong>décharges périodiques</strong> sont des graphoéléments répétés à intervalles réguliers (typiquement 0,5 – 3 s) avec retour à un fond souvent atténué entre chaque décharge. Elles signalent une souffrance cérébrale aiguë sévère.</p>
+
+  <h3>LPDs — décharges périodiques latéralisées</h3>
+
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="LPDs : décharges périodiques latéralisées d'un hémisphère">
+    <text x="20" y="20" font-weight="700">LPDs (ex-PLEDs)</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">décharges périodiques unilatérales · 1-2 Hz</text>
+    <path class="wave" d="M 20 70 L 75 70" />
+    <path class="wave-pat" d="M 75 70 L 85 40 L 92 75 L 100 65 Q 110 70 120 70" />
+    <path class="wave" d="M 120 70 L 195 70" />
+    <path class="wave-pat" d="M 195 70 L 205 40 L 212 75 L 220 65 Q 230 70 240 70" />
+    <path class="wave" d="M 240 70 L 315 70" />
+    <path class="wave-pat" d="M 315 70 L 325 40 L 332 75 L 340 65 Q 350 70 360 70" />
+    <path class="wave" d="M 360 70 L 435 70" />
+    <path class="wave-pat" d="M 435 70 L 445 40 L 452 75 L 460 65 Q 470 70 480 70" />
+    <path class="wave" d="M 480 70 L 560 70" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Anciennement PLEDs</strong> (Periodic Lateralized Epileptiform Discharges).</li>
+    <li><strong>Localisation</strong> : un seul hémisphère (focal ou régional).</li>
+    <li><strong>Fréquence</strong> : 0,5 – 3 Hz, périodicité régulière.</li>
+    <li><strong>Étiologies</strong> : AVC ischémique étendu, encéphalite herpétique +++, abcès cérébral, hémorragie, tumeur, status focal.</li>
+    <li><strong>Continuum ictal-interictal</strong> : peuvent évoluer vers une crise franche — surveiller.</li>
+  </ul>
+
+  <h3>GPDs — décharges périodiques généralisées</h3>
+  <ul class="thm">
+    <li><strong>Anciennement GPEDs</strong> (Generalized Periodic Epileptiform Discharges).</li>
+    <li><strong>Distribution</strong> : généralisée, bilatérale synchrone.</li>
+    <li><strong>Étiologies</strong> : encéphalopathie post-anoxique +++, intoxications, encéphalopathie métabolique sévère, Creutzfeldt-Jakob (très spécifique : 1 Hz + ondes triphasiques).</li>
+    <li><strong>Pronostic</strong> sombre dans le contexte post-anoxique.</li>
+  </ul>
+
+  <h3>BIPDs — décharges périodiques bilatérales indépendantes</h3>
+  <ul class="thm">
+    <li><strong>Anciennement BIPLEDs</strong>.</li>
+    <li>2 décharges périodiques <strong>indépendantes</strong> (une à droite, une à gauche, asynchrones).</li>
+    <li>Pronostic <strong>très péjoratif</strong> — souvent encéphalite herpétique bilatérale ou anoxie sévère.</li>
+  </ul>
+
+  <div class="alert info">
+    <strong>Critères qualitatifs ACNS</strong> : nommer la périodicité (ex. 1 Hz), la localisation, l'amplitude, et la présence éventuelle de composantes rapides (« plus fast activity » → continuum ictal).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     BURST-SUPPRESSION
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Burst-suppression
+    <span class="h-sub">Alternance bursts d'activité et silence — pattern à plusieurs sens</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="Burst-suppression : alternance burst d'activité et suppression silencieuse">
+    <text x="20" y="20" font-weight="700">Burst-suppression</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">burst (5-30 s) + suppression (5-30 s)</text>
+    <!-- Burst 1 -->
+    <path class="wave-pat" d="M 20 70 L 30 50 L 40 90 L 50 45 L 60 90 L 70 50 L 80 88 L 90 55 L 100 88 L 110 60 L 120 80 L 130 65 L 140 75 L 150 70" />
+    <!-- Suppression 1 -->
+    <path class="wave" d="M 150 70 L 280 70" />
+    <text x="195" y="62" font-size="9" fill="var(--n-500)">suppression</text>
+    <!-- Burst 2 -->
+    <path class="wave-pat" d="M 280 70 L 290 50 L 300 90 L 310 45 L 320 90 L 330 50 L 340 88 L 350 55 L 360 88 L 370 60 L 380 80 L 390 70" />
+    <!-- Suppression 2 -->
+    <path class="wave" d="M 390 70 L 540 70" />
+    <text x="445" y="62" font-size="9" fill="var(--n-500)">suppression</text>
+    <path class="wave-pat" d="M 540 70 L 550 55 L 560 75" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Définition</strong> : alternance régulière de bursts d'activité (5-30 s) et de suppression (tracé plat &lt; 10 µV, 5-30 s).</li>
+    <li><strong>Plusieurs significations</strong> selon le contexte :</li>
+  </ul>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Contexte</th><th>Signification</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Anesthésie générale profonde</strong></td><td>État ciblé en status réfractaire (3<sup>e</sup> ligne) — bénéfique</td></tr>
+        <tr><td><strong>Hypothermie thérapeutique</strong></td><td>Pattern attendu sous 32 °C — réversible au réchauffement</td></tr>
+        <tr><td><strong>Post-anoxique</strong> (après ACR)</td><td>Pronostic sombre si pattern persistant 24 h après réchauffement</td></tr>
+        <tr><td><strong>Intoxication barbiturique sévère</strong></td><td>Réversible avec élimination du toxique</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert">
+    <strong>Toujours interpréter le burst-suppression dans son contexte.</strong> Le même tracé peut signifier « anesthésie efficace » ou « pronostic catastrophique ».
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TRIPHASIQUES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Ondes triphasiques
+    <span class="h-sub">Signature des encéphalopathies métaboliques</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="Ondes triphasiques : 3 phases caractéristiques">
+    <text x="20" y="20" font-weight="700">Ondes triphasiques</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">3 phases successives · diffuses · ~2 Hz · prédominance frontale</text>
+    <!-- 3 ondes triphasiques successives -->
+    <path class="wave" d="M 20 70 L 60 70" />
+    <path class="wave-pat" d="M 60 70 L 75 55 L 90 30 L 105 90 L 120 50 L 135 70" />
+    <path class="wave" d="M 135 70 L 215 70" />
+    <path class="wave-pat" d="M 215 70 L 230 55 L 245 30 L 260 90 L 275 50 L 290 70" />
+    <path class="wave" d="M 290 70 L 370 70" />
+    <path class="wave-pat" d="M 370 70 L 385 55 L 400 30 L 415 90 L 430 50 L 445 70" />
+    <path class="wave" d="M 445 70 L 525 70" />
+    <path class="wave-pat" d="M 525 70 L 540 55 L 555 30 L 560 50" />
+  </svg>
+
+  <ul class="thm">
+    <li><strong>Morphologie</strong> : 3 phases successives nettes (positivité ample-négativité-positivité) ou variantes.</li>
+    <li><strong>Distribution</strong> : généralisées, prédominance frontale, ~2 Hz.</li>
+    <li><strong>Étiologies majeures</strong> : encéphalopathie hépatique, urémique, septique sévère, parfois hypoxique.</li>
+    <li><strong>Signal d'alerte</strong> : leur apparition signifie une encéphalopathie significative.</li>
+    <li><strong>Difficulté</strong> : peuvent ressembler à des décharges épileptiformes — appartiennent au <em>continuum ictal-interictal</em>. Test thérapeutique BZD utile.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SILENCE ÉLECTRIQUE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Silence électrique cérébral
+    <span class="h-sub">Critère du diagnostic de mort cérébrale</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Définition</strong> : activité &lt; 2 µV sur tout l'enregistrement, avec gain à 2 µV/mm, pendant <strong>30 minutes minimum</strong>.</li>
+    <li><strong>Conditions de réalisation</strong> strictes : absence d'hypothermie (&gt; 35 °C), absence d'anesthésiques résiduels, pression artérielle stable.</li>
+    <li>Un EEG plat <strong>n'est pas équivalent</strong> à la mort cérébrale : c'est un des critères, à associer à l'examen clinique répété et aux tests réflexes.</li>
+    <li><strong>Pièges</strong> : sédation profonde, hypothermie, hypotension peuvent simuler un silence électrique réversible.</li>
+  </ul>
+  <div class="alert crit">
+    L'interprétation du silence électrique cérébral relève des <strong>spécialistes du diagnostic de mort cérébrale</strong> et suit un protocole rigoureux. Hors de ce cadre, ne jamais conclure à la mort cérébrale sur l'EEG seul.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CONTINUUM IIC
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Continuum ictal-interictal (IIC)
+    <span class="h-sub">La zone grise entre crise et anomalie inter-critique</span>
+  </h2>
+  <p>Certains patterns ne sont ni clairement critiques (= crise) ni clairement inter-critiques. Ils se situent dans une <strong>zone d'incertitude</strong> qui demande une approche clinique rigoureuse.</p>
+  <ul class="thm">
+    <li><strong>Patterns concernés</strong> : LPDs ou GPDs entre 1 et 2,5 Hz, avec ou sans composante rapide associée ; ondes triphasiques rythmiques ; décharges focales rythmiques sub-critiques.</li>
+    <li><strong>Risque</strong> : ces patterns peuvent contribuer à la souffrance neuronale même en l'absence de crise franche.</li>
+    <li><strong>Approche pragmatique</strong> :
+      <ul class="thm" style="margin-top:4px">
+        <li>Test thérapeutique <strong>lorazépam IV</strong> — amélioration clinique <em>et</em> EEG = traiter comme NCSE.</li>
+        <li>Décision multidisciplinaire (neurologie, réanimation) sur l'opportunité d'un traitement antiépileptique d'épreuve.</li>
+        <li>Surveillance EEG continue si possible.</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPLICATIONS POUR ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Implications pour l'ECT
+    <span class="h-sub">Patient ECT et patient de réanimation se rejoignent post-séance</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Post-ECT précoce</strong> : ralentissement diffus delta-theta normal pendant heures à jours — pattern d'<em>encéphalopathie réversible</em>.</li>
+    <li><strong>Effet cumulatif</strong> avec séances rapprochées : ralentissement persistant possible. Espacement à organiser si confusion clinique cumulée.</li>
+    <li><strong>Confusion prolongée</strong> &gt; 1 h post-séance + pattern périodique ou rythmique → <strong>suspecter NCSE</strong> et faire un EEG en urgence (cf. fiche Status).</li>
+    <li><strong>Patient ECT en réanimation</strong> (rare) : indications restreintes (catatonie maligne, syndrome malin des neuroleptiques résistant). Surveillance EEG indispensable.</li>
+    <li><strong>Burst-suppression post-ECT</strong> : ne devrait pas survenir avec dosage adapté — si présent, alerter (sur-dosage anesthésique ou complication).</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RED FLAGS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Red flags — patterns à signaler immédiatement</h2>
+  <div class="alert crit">
+    <ul class="thm" style="margin:0">
+      <li><strong>Patterns périodiques</strong> (LPDs, GPDs, BIPDs) avec ou sans composante rapide.</li>
+      <li><strong>Burst-suppression</strong> hors anesthésie ciblée ou hypothermie.</li>
+      <li><strong>Tracé plat / silence électrique</strong> hors contexte d'anesthésie profonde.</li>
+      <li><strong>Aggravation progressive</strong> du ralentissement diffus en quelques heures.</li>
+      <li><strong>Décharge rythmique &gt; 2,5 Hz prolongée</strong> = NCSE (cf. fiche Status).</li>
+      <li><strong>Asymétrie nouvelle</strong> du fond ou apparition d'un foyer focal lent → IRM cérébrale.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Take home messages</h2>
+  <ul class="thm">
+    <li>4 questions clés en réanimation : <strong>encéphalopathie ? · NCSE ? · pronostic ? · profondeur d'anesthésie ?</strong></li>
+    <li><strong>Encéphalopathie diffuse</strong> = ralentissement delta-theta diffus haute amplitude — sévérité graduelle.</li>
+    <li>Vocabulaire ACNS 2021 : <strong>LPDs · GPDs · BIPDs</strong> remplacent PLEDs · GPEDs · BIPLEDs.</li>
+    <li><strong>LPDs</strong> = unilatérales (penser AVC, encéphalite herpétique, abcès, status focal).</li>
+    <li><strong>GPDs</strong> = bilatérales synchrones (encéphalopathie post-anoxique, métabolique, CJD).</li>
+    <li><strong>BIPDs</strong> = bilatérales indépendantes — pronostic très péjoratif.</li>
+    <li><strong>Burst-suppression</strong> : interpréter dans le contexte (anesthésie ciblée vs post-anoxie).</li>
+    <li><strong>Triphasiques</strong> = signature des encéphalopathies métaboliques (hépatique, urémique).</li>
+    <li><strong>Continuum ictal-interictal</strong> : zone grise — test lorazépam IV utile pour trancher.</li>
+    <li>Post-ECT : ralentissement diffus normal qq h-jours ; pattern périodique + confusion &gt; 1 h = penser NCSE.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique et terminologie ACNS 2021.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>

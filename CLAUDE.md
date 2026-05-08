@@ -1,6 +1,14 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.22 — Fiche Status epilepticus (5/6 du batch handbook).
+> Dernière mise à jour : 8 mai 2026 (v4.23 — Fiche EEG en réanimation (6/6 — batch handbook complet).
+> 1. **Nouvelle fiche `eeg_ect/fiche_icu_eeg.html`** (~430 lignes) : 10 sections — résumé 4 questions clés (encéphalopathie ? · NCSE ? · pronostic ? · profondeur d'anesthésie ?), encéphalopathie diffuse avec SVG (delta-theta diffus haute amplitude), patterns périodiques ACNS 2021 avec SVG LPDs (anciennement PLEDs · unilatéraux), GPDs (anciennement GPEDs · bilatéraux synchrones), BIPDs (bilatéraux indépendants · pronostic très péjoratif), burst-suppression avec SVG (anesthésie ciblée vs post-anoxie), ondes triphasiques avec SVG (encéphalopathies métaboliques hépatique/urémique), silence électrique cérébral (critère mort cérébrale), continuum ictal-interictal (zone grise + test lorazépam IV), implications ECT (effet cumulatif séances rapprochées), red flags, take home.
+> 2. **Vocabulaire ACNS 2021 mis à jour** explicitement dans la fiche (LPDs/GPDs/BIPDs remplacent PLEDs/GPEDs/BIPLEDs) — référence terminologique internationale courante.
+> 3. **SVG schématiques** : encéphalopathie, LPDs périodiques, burst-suppression (alternance bursts/suppression), triphasiques (3 phases). Aucune figure du manuel — concepts schématisables.
+> 4. **Pattern iframe + ↗** : carte EEG en réanimation ajoutée au case `eeg_ect` (icône activité ardoise foncé `C.n[800]`). **Le bandeau "À venir" est supprimé** — toutes les 6 fiches du batch + Technical sont en place. Le case eeg_ect comprend désormais 8 cartes : 1 Pratique ECT + 7 fiches EEG handbook (Technical, Normal, Sommeil, Artefacts, Épileptiforme, Status, EEG en réanimation).
+> 5. **Renommage appliqué** : ICU EEG → "EEG en réanimation" partout (carte Toolbox, titre fiche, header doc-head, sous-titre "Encéphalopathies · LPDs · GPDs · burst-suppression · triphasiques"). Slug fichier `icu_eeg` conservé pour cohérence URL/code.
+> 6. **SW bump v4.22 → v4.23** : pré-cache de `fiche_icu_eeg.html`. **Batch handbook complet livré.** Reste TODO 21 : sync dark mode global ↔ iframes (à faire en v4.24).)
+>
+> v4.22 — Fiche Status epilepticus (5/6 du batch handbook).
 > 1. **Nouvelle fiche `eeg_ect/fiche_status_epilepticus.html`** (~430 lignes) : 10 sections — résumé urgence, définition opérationnelle ILAE 2015 (t1=5 min, t2=30 min), status convulsif tonico-clonique avec SVG (recrutement → tonique → clonique → post-critique), status focal moteur et complexe, status non-convulsif (NCSE) avec SVG décharge rythmique stable, critères de Salzburg simplifiés (NCSE certain &gt; 2,5 Hz, NCSE possible avec test thérapeutique lorazépam), conduite à tenir 4 paliers (BZD 1<sup>re</sup> ligne / antiépileptique IV 2<sup>e</sup> / anesthésie générale burst-suppression 3<sup>e</sup>), implications ECT (confusion post-séance &gt; 1 h = NCSE jusqu'à preuve du contraire), red flags, take home.
 > 2. **SVG schématiques** pour pattern crise tonico-clonique (4 phases distinctes en couleur rouge) et pattern NCSE (décharge rythmique stable). Aucune figure du manuel.
 > 3. **Pattern iframe + ↗** : carte Status epilepticus ajoutée au case `eeg_ect` (icône thermo rouge `C.r[700]` pour signaler l'urgence). Bandeau "À venir" mis à jour : reste **EEG en réanimation** (6/6, dernière fiche du batch).
@@ -127,7 +135,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.22 |
+| **Service Worker** | usca-v4.23 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
