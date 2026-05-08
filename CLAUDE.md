@@ -1,6 +1,13 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.15 — Fixes Toolbox post-réorga.
+> Dernière mise à jour : 8 mai 2026 (v4.16 — Fiche pilote EEG : Comprendre un EEG en 10 min.
+> 1. **Nouvelle fiche `eeg_ect/fiche_technical.html`** (378 lignes) : fiche pilote du chapitre Technical du handbook EEG, rédigée en synthèse pédagogique originale (concepts du domaine commun, pas de paraphrase). Sections : résumé · 4 bandes de fréquence (avec schéma SVG α/β/θ/δ) · origine du signal · montages bipolaire vs référentiel (avec schéma SVG) · filtres et calibration · artefacts techniques · règles de lecture rapide · checklist psychiatre ECT (pré/per/post-séance, effet psychotropes) · red flags · take home. Linke `shared/ressource-doc.css` (design system partagé USCA) + `shared/ressource-doc.js` (toggle ☀️/🌙 dark mode automatique via `html.dark`).
+> 2. **Pas de figures du manuel pour cette fiche pilote** (chapitre Technical conceptuel — schémas SVG originaux suffisent). Décision figures-originales-vs-SVG à trancher avec JC pour les 5 fiches suivantes (Normal · Artefacts · Épileptiforme · Status · ICU EEG) où les vrais tracés cliniques sont structurants.
+> 3. **Case `eeg_ect` enrichi** dans `staff/toolbox.html` : 2 sections distinctes (uppercase headers) — "Pratique ECT" (`fiche_ect.html` Pitié) et "Fiches EEG (handbook)" (Technical actif + bandeau "À venir" pour les 5 chapitres restants).
+> 4. **SW bump v4.15 → v4.16** : pré-cache de `fiche_technical.html` + `shared/ressource-doc.css` + `shared/ressource-doc.js` (jamais cachés auparavant — manquait pour mode hors-ligne complet des fiches Toolbox).
+> 5. **Mode validation visuelle (Q2=A)** : fiche pilote présentée à JC pour calage du style/structure avant batch des 5 fiches restantes.)
+>
+> v4.15 — Fixes Toolbox post-réorga.
 > 1. **Carte "Protocoles USCA par substance" → "Protocoles USCA"** (label simplifié). Court-circuit du hub `protocoles_hub` : la grande carte ouvre directement `case "substances"`, le BackBtn revient sur `home`. Bottom nav `Protocoles` pointe désormais sur `id:"substances"` (au lieu de `protocoles_hub`), `protoViews` simplifié en check direct `view==="substances"||!!selSub`. Le hub `protocoles_hub` reste défini dans le code mais devient totalement inaccessible (peut être supprimé dans un cleanup ultérieur).
 > 2. **Vue Traitements — renommages + accordéons Fiches Expert** : SectionHead "Traitements" → "Fiches Traitements et Substances" (sub : "Fiches patient · fiches substances · fiches expert"). Cartes "Fiches Patient" → "Fiches Traitements Patient", "Fiches Expert" → "Fiches Traitements Expert" (Fiches Substances inchangée). `renderExpertSection` refondue : classes médicamenteuses repliées par défaut (clé `openCats["expert_"+group.cat]`, même pattern que `renderPatientSection` et `renderSubstancesSection`).
 > 3. **MASTER_PROMPT_EEG_ECT.md — flexibilité longueur** : section "CAP LONGUEUR" relâchée en "LONGUEUR — viser court mais privilégier la pédagogie". Cible 400-700 lignes maintenue mais autorisation explicite de dépasser pour chapitres denses (Status, ICU EEG). Pédagogie > quota.
@@ -83,7 +90,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.15 |
+| **Service Worker** | usca-v4.16 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comprendre un EEG en 10 minutes — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  /* SVG schémas — fond transparent qui suit dark mode */
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.5; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  svg.eeg-schema .label-bg { fill: var(--n-50); }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+  .col2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 720px) { .col2 { grid-template-columns: 1fr 1fr; } }
+  /* Figures EEG : fond blanc préservé en dark mode pour les schémas anatomiques */
+  .eeg-fig-wrap { background:#fff; border:1px solid var(--bdr); border-radius:8px; padding:10px; max-width:680px; margin:10px auto; }
+  .eeg-fig-wrap.compact { max-width:460px; }
+  .eeg-fig-wrap img { display:block; width:100%; height:auto; }
+  .caption { font-size:11px; color:var(--n-500); text-align:center; margin:6px auto 0; max-width:680px; line-height:1.4; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Comprendre un EEG en 10 minutes</h1>
+  <p class="meta">Aspects techniques — repères pour interne psychiatre / ECT — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ ULTRA RAPIDE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>L'EEG enregistre les <strong>différences de potentiel électrique</strong> à la surface du scalp, générées par la sommation des potentiels post-synaptiques des neurones pyramidaux corticaux. Amplitudes faibles (5 à 100 µV), à l'échelle de la <strong>milliseconde à la seconde</strong>.</p>
+  <p>Trois choses à reconnaître pour lire un EEG :</p>
+  <ul class="thm">
+    <li><strong>Les 4 bandes de fréquence</strong> (alpha, beta, theta, delta) — le langage de base.</li>
+    <li><strong>Le montage</strong> utilisé (bipolaire vs référentiel) — détermine ce qu'on voit.</li>
+    <li><strong>Les artefacts</strong> et les <strong>filtres</strong> — ce qui n'est pas pathologique mais ressemble à de la pathologie.</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Objectif clinique :</strong> reconnaître rapidement <em>normal / ralenti / épileptiforme / urgence</em>.
+    Les patterns détaillés sont décrits dans les fiches dédiées (Normal · Artefacts · Épileptiforme · Status · ICU).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     VOCABULAIRE ESSENTIEL — EEG MESURÉ + STIMULUS ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Vocabulaire essentiel
+    <span class="h-sub">Lire un EEG et programmer un ECT — savoir de quoi on parle</span>
+  </h2>
+
+  <h3>Côté EEG — signal mesuré</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Terme</th><th>Définition</th><th>Unité</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fréquence (f)</strong></td><td>Nombre de cycles par seconde</td><td>Hz <span style="color:var(--n-400)">(cycle/s)</span></td></tr>
+        <tr><td><strong>Période (T)</strong></td><td>Durée d'un cycle — inverse de la fréquence</td><td>s ou ms · <strong>T = 1/f</strong></td></tr>
+        <tr><td><strong>Amplitude</strong></td><td>Hauteur du tracé pic-à-pic (différence de potentiel)</td><td>µV (microvolt)</td></tr>
+        <tr><td><strong>Puissance</strong></td><td>Énergie portée par un rythme — proportionnelle au <em>carré</em> de l'amplitude</td><td>µV² (ou µV²/Hz en densité spectrale)</td></tr>
+        <tr><td><strong>Phase</strong></td><td>Position dans le cycle (avance/retard entre 2 ondes)</td><td>radian (0 à 2π) ou degré (0 à 360°)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Côté ECT — stimulus appliqué</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Terme</th><th>Définition</th><th>Valeurs usuelles</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Intensité (I)</strong></td><td>Courant constant délivré pendant chaque impulsion</td><td>800 – 900 mA</td></tr>
+        <tr><td><strong>Pulse width (pw)</strong> <span style="color:var(--n-400)">— largeur d'impulsion</span></td><td>Durée d'une impulsion électrique unitaire</td><td><span class="pill teal">UPP</span> 0,25 – 0,5 ms · <span class="pill amber">BP</span> 0,5 – 1,5 ms</td></tr>
+        <tr><td><strong>Fréquence (f)</strong></td><td>Nombre de paires d'impulsions par seconde</td><td>20 – 120 Hz (souvent 30 – 70)</td></tr>
+        <tr><td><strong>Durée du train (t)</strong></td><td>Durée totale d'application du stimulus</td><td>1 – 8 s</td></tr>
+        <tr><td><strong>Charge totale (Q)</strong></td><td>Quantité totale d'électricité délivrée — paramètre principal de la « dose »</td><td>30 – 500 mC selon protocole</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert info">
+    <strong>Formule de la charge ECT</strong> — les appareils modernes délivrent des impulsions <em>bidirectionnelles</em> (alternance + puis −) → <strong>2 phases par cycle</strong>.
+    <p style="margin:10px 0 6px;text-align:center;font-family:'Courier New',monospace;background:var(--n-50);padding:10px;border-radius:6px;font-size:13.5px;border:1px solid var(--bdr)"><strong>Q&nbsp;(mC) = I&nbsp;(mA) × pw&nbsp;(ms) × f&nbsp;(Hz) × 2 × t&nbsp;(s) ÷ 1000</strong></p>
+    <p style="margin:0;font-size:11.5px;color:var(--n-600)">Exemple : 800 mA × 0,5 ms × 50 Hz × 2 × 4 s ÷ 1000 = <strong>160 mC</strong>.</p>
+  </div>
+
+  <div class="alert">
+    <strong>Maxime à retenir :</strong> l'EEG offre une <strong>excellente résolution temporelle</strong> (milliseconde) mais une <strong>faible résolution spatiale</strong> (cm) — c'est l'inverse de l'IRM. Le signal mesuré au scalp est une moyenne floue de l'activité corticale sous-jacente.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     LES 4 BANDES DE FRÉQUENCE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Les bandes de fréquence
+    <span class="h-sub">Le langage commun de l'EEG — à mémoriser absolument</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 220" aria-label="Schéma des 4 rythmes EEG empilés">
+    <!-- Labels gauche -->
+    <text x="8" y="32" font-weight="700">β</text>
+    <text x="8" y="80" font-weight="700">α</text>
+    <text x="8" y="128" font-weight="700">θ</text>
+    <text x="8" y="176" font-weight="700">δ</text>
+    <!-- Beta : haute fréquence, faible amplitude -->
+    <path class="wave" d="M 40 32 Q 50 22 60 32 Q 70 42 80 32 Q 90 22 100 32 Q 110 42 120 32 Q 130 22 140 32 Q 150 42 160 32 Q 170 22 180 32 Q 190 42 200 32 Q 210 22 220 32 Q 230 42 240 32 Q 250 22 260 32 Q 270 42 280 32 Q 290 22 300 32 Q 310 42 320 32 Q 330 22 340 32 Q 350 42 360 32 Q 370 22 380 32 Q 390 42 400 32 Q 410 22 420 32 Q 430 42 440 32 Q 450 22 460 32 Q 470 42 480 32 Q 490 22 500 32 Q 510 42 520 32 Q 530 22 540 32 Q 550 42 560 32" />
+    <text x="572" y="36" font-size="10">&gt;13 Hz</text>
+    <!-- Alpha : moyenne -->
+    <path class="wave" d="M 40 80 Q 60 56 80 80 Q 100 104 120 80 Q 140 56 160 80 Q 180 104 200 80 Q 220 56 240 80 Q 260 104 280 80 Q 300 56 320 80 Q 340 104 360 80 Q 380 56 400 80 Q 420 104 440 80 Q 460 56 480 80 Q 500 104 520 80 Q 540 56 560 80" />
+    <text x="572" y="84" font-size="10">8-13 Hz</text>
+    <!-- Theta : plus lent, ample -->
+    <path class="wave" d="M 40 128 Q 75 96 110 128 Q 145 160 180 128 Q 215 96 250 128 Q 285 160 320 128 Q 355 96 390 128 Q 425 160 460 128 Q 495 96 530 128 Q 547 144 560 128" />
+    <text x="572" y="132" font-size="10">4-7 Hz</text>
+    <!-- Delta : très lent, très ample -->
+    <path class="wave" d="M 40 176 Q 100 130 160 176 Q 220 222 280 176 Q 340 130 400 176 Q 460 222 520 176 Q 545 200 560 176" />
+    <text x="572" y="180" font-size="10">&lt;4 Hz</text>
+    <!-- Repère temps -->
+    <line class="axis" x1="40" y1="200" x2="560" y2="200" />
+    <text x="40" y="214" font-size="10">0</text>
+    <text x="540" y="214" font-size="10">1 s</text>
+  </svg>
+
+  <div class="t-scroll">
+    <table>
+      <thead>
+        <tr><th>Bande</th><th>Fréquence</th><th>Quand on la voit</th><th>Interprétation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Alpha (α)</strong></td>
+          <td>8 – 13 Hz</td>
+          <td>Région postérieure, yeux fermés, éveil détendu. Bloquée à l'ouverture des yeux.</td>
+          <td><span class="pill teal">normal</span> chez l'adulte. Référence majeure pré-ECT.</td>
+        </tr>
+        <tr>
+          <td><strong>Beta (β)</strong></td>
+          <td>14 – 30 Hz</td>
+          <td>Frontal, parfois diffus. Faible amplitude.</td>
+          <td><span class="pill teal">normal</span> en faible quantité. <span class="pill amber">abondant</span> sous BZD, barbituriques, certains anesthésiques.</td>
+        </tr>
+        <tr>
+          <td><strong>Gamma (γ)</strong></td>
+          <td>&gt; 30 Hz</td>
+          <td>Faible amplitude au scalp (&lt; 5 µV), oscillations brèves.</td>
+          <td><span class="pill slate">recherche</span> — cognition, conscience. <strong>Ne pas confondre avec EMG</strong> : l'EMG est ample et désorganisé, le gamma est faible et organisé.</td>
+        </tr>
+        <tr>
+          <td><strong>Theta (θ)</strong></td>
+          <td>4 – 7 Hz</td>
+          <td>Temporal en somnolence, normal chez l'enfant et l'ado jeune.</td>
+          <td><span class="pill teal">tolérable</span> en quantité modérée chez l'adulte. <span class="pill amber">pathologique</span> si abondant ou focal.</td>
+        </tr>
+        <tr>
+          <td><strong>Delta (δ)</strong></td>
+          <td>&lt; 4 Hz</td>
+          <td>Sommeil profond ; jeune enfant éveillé.</td>
+          <td><span class="pill red">toujours pathologique</span> chez l'adulte éveillé. Encéphalopathie, lésion focale, post-critique, post-ECT précoce.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert">
+    <strong>Astuce mnémo :</strong> α (alpha) postérieur fermé · β (beta) frontal éveil · θ (theta) somnolence · δ (delta) sommeil ou pathologie.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     VOCABULAIRE DES FORMES D'ONDES — DESCRIPTION NEUTRE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Vocabulaire des formes d'ondes
+    <span class="h-sub">Décrire ce qu'on voit avant de l'interpréter</span>
+  </h2>
+
+  <h3>Comportement temporel</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Terme</th><th>Définition</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sporadique</strong></td><td>Apparition isolée, sans périodicité</td><td>Pointe occasionnelle</td></tr>
+        <tr><td><strong>Rythmique</strong></td><td>Oscillations régulières à fréquence stable, morphologie répétée</td><td>Rythme alpha postérieur</td></tr>
+        <tr><td><strong>Périodique</strong></td><td>Décharges récurrentes à intervalles fixes (0,5 – 3 s) avec retour au calme entre chaque</td><td>PLEDs, GPDs <em>(cf. fiche ICU EEG)</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Évolution d'amplitude</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Terme</th><th>Définition</th><th>Quand le repérer</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Recrutement</strong></td><td>Augmentation progressive de l'amplitude et/ou de la fréquence</td><td>Début d'une crise tonico-clonique généralisée</td></tr>
+        <tr><td><strong>Atténuation</strong></td><td>Diminution focale ou diffuse de l'amplitude</td><td>Lésion sous-jacente, phase post-critique</td></tr>
+        <tr><td><strong>Suppression</strong></td><td>Disparition complète, tracé plat (&lt; 10 µV)</td><td>Coma profond, anesthésie, mort cérébrale</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Distribution spatiale</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Terme</th><th>Définition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Focal</strong></td><td>Limité à une région anatomique (ex. T3-T5 gauche)</td></tr>
+        <tr><td><strong>Multifocal</strong></td><td>Plusieurs foyers indépendants, distincts en localisation</td></tr>
+        <tr><td><strong>Généralisé</strong></td><td>Visible sur l'ensemble des dérivations simultanément</td></tr>
+        <tr><td><strong>Bilatéral synchrone</strong></td><td>Droite et gauche en miroir, simultané, sans prédominance</td></tr>
+        <tr><td><strong>Latéralisé</strong></td><td>Asymétrie nette D vs G (un côté domine clairement)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Morphologie de groupe</h3>
+  <ul class="thm">
+    <li><strong>Bouffée (burst)</strong> — épisode bref (&lt; 2 s typiquement) d'activité distincte du fond. Peut être normal (bouffée de fuseaux en N2) ou pathologique (bouffée de pointes-ondes).</li>
+    <li><strong>Décharge</strong> — activité épileptiforme groupée, plus prolongée qu'une bouffée, à connotation pathologique.</li>
+    <li><strong>Complexe</strong> — groupement reproductible et identifiable d'éléments distincts (ex. K-complexe en N2, complexe pointe-onde 3 Hz).</li>
+  </ul>
+
+  <div class="alert info">
+    <strong>Renvois pour le détail des graphoéléments :</strong>
+    <ul style="margin:6px 0 0;padding-left:18px;font-size:12.5px;line-height:1.6">
+      <li>Pointe (spike) · sharp wave · pointe-onde · polypointe → <em>fiche Activité épileptiforme</em></li>
+      <li>Vertex sharp · POST · sawtooth · K-complexe · fuseaux → <em>fiche Sommeil</em></li>
+      <li>PLEDs · GPDs · BIPDs · burst-suppression · triphasiques → <em>fiche ICU EEG</em></li>
+    </ul>
+  </div>
+
+  <div class="alert">
+    <strong>Discipline de description :</strong> toujours décrire <em>ce qu'on voit</em> (forme, fréquence, amplitude, distribution, périodicité) <em>avant</em> de proposer une interprétation. Cette séparation permet à un autre lecteur de discuter l'interprétation à partir du même tracé.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ORIGINE DU SIGNAL
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. D'où vient le signal ? Le système 10-20</h2>
+  <ul class="thm">
+    <li><strong>Source neuronale :</strong> sommation spatiale et temporelle des potentiels post-synaptiques (excitateurs et inhibiteurs) des neurones pyramidaux corticaux orientés perpendiculairement à la surface. Les potentiels d'action ne contribuent pratiquement pas (trop brefs, trop dispersés).</li>
+    <li><strong>Amplitude au scalp :</strong> 5 à 100 µV — atténuation forte par le crâne et le scalp (~1/100 vs ECoG cortical direct).</li>
+    <li><strong>Convention de polarité :</strong> par convention historique, une déflexion <strong>vers le haut</strong> = négativité électrique sous l'électrode active. Inversé vs ECG.</li>
+    <li><strong>Système 10-20 international :</strong> 21 électrodes nommées par lobe (Fp = frontopolaire, F = frontal, C = central, P = pariétal, T = temporal, O = occipital) avec chiffres <strong>impairs à gauche, pairs à droite</strong>, "z" sur la ligne médiane (Fz, Cz, Pz).</li>
+  </ul>
+  <div class="eeg-fig-wrap">
+    <img src="assets/fig_10_20_repere.png" alt="Système 10-20 international : vue latérale et vue de dessus avec repères crâniens">
+  </div>
+  <p class="caption"><strong>Repérage 10-20</strong> — distances de 10 % et 20 % de la circonférence crânienne mesurées depuis le Nasion, l'Inion et les points préauriculaires. Le nom "10-20" vient de ces deux pourcentages.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MONTAGES BIPOLAIRE VS RÉFÉRENTIEL
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Montages : bipolaire vs référentiel
+    <span class="h-sub">Deux façons de regarder le même tracé</span>
+  </h2>
+
+  <div class="eeg-fig-wrap compact">
+    <img src="assets/fig_10_20_dessus.png" alt="Système 10-20 vue de dessus : Fp1/Fp2, F3/F4/F7/F8, C3/C4, T3/T4/T5/T6, P3/P4, O1/O2, Fz/Cz/Pz">
+  </div>
+  <p class="caption"><strong>Vue de dessus</strong> — gauche en rouge, droite en bleu, ligne médiane en noir (Fz, Cz, Pz). Les paires comme F7-T3-T5 (chaîne temporale gauche) servent de base aux montages bipolaires.</p>
+
+  <svg class="eeg-schema" viewBox="0 0 600 200" aria-label="Schéma comparant montage bipolaire et référentiel" style="margin-top:14px">
+    <!-- BIPOLAIRE à gauche (zone 0-290) -->
+    <text x="20" y="22" font-weight="700">Bipolaire (chaîne)</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">électrodes adjacentes</text>
+    <circle cx="40"  cy="78" r="7" fill="var(--t-600)"/>
+    <line x1="47" y1="78" x2="83" y2="78" stroke="var(--t-600)" stroke-width="2"/>
+    <circle cx="90"  cy="78" r="7" fill="var(--t-600)"/>
+    <line x1="97" y1="78" x2="133" y2="78" stroke="var(--t-600)" stroke-width="2"/>
+    <circle cx="140" cy="78" r="7" fill="var(--t-600)"/>
+    <line x1="147" y1="78" x2="183" y2="78" stroke="var(--t-600)" stroke-width="2"/>
+    <circle cx="190" cy="78" r="7" fill="var(--t-600)"/>
+    <text x="33"  y="100" font-size="10">Fp1</text>
+    <text x="84"  y="100" font-size="10">F3</text>
+    <text x="134" y="100" font-size="10">C3</text>
+    <text x="184" y="100" font-size="10">P3</text>
+    <text x="20" y="135" font-size="11">→ chaque tracé = différence</text>
+    <text x="20" y="152" font-size="11">  entre 2 électrodes voisines</text>
+    <text x="20" y="178" font-size="11" font-weight="700">→ phase reversal = foyer</text>
+
+    <!-- Séparateur -->
+    <line x1="295" y1="20" x2="295" y2="185" stroke="var(--n-200)" stroke-dasharray="3,3"/>
+
+    <!-- RÉFÉRENTIEL à droite (zone 305-580) -->
+    <text x="320" y="22" font-weight="700">Référentiel</text>
+    <text x="320" y="38" font-size="10" fill="var(--n-500)">vs référence commune</text>
+    <circle cx="335" cy="65" r="7" fill="var(--t-600)"/>
+    <circle cx="385" cy="65" r="7" fill="var(--t-600)"/>
+    <circle cx="435" cy="65" r="7" fill="var(--t-600)"/>
+    <circle cx="485" cy="65" r="7" fill="var(--t-600)"/>
+    <text x="328" y="86" font-size="10">F3</text>
+    <text x="378" y="86" font-size="10">C3</text>
+    <text x="428" y="86" font-size="10">P3</text>
+    <text x="478" y="86" font-size="10">O1</text>
+    <!-- Référence centrale en bas -->
+    <circle cx="410" cy="135" r="9" fill="var(--a-500)"/>
+    <text x="425" y="139" font-size="10">Cz · Oreilles · Avg</text>
+    <line x1="335" y1="71" x2="408" y2="132" stroke="var(--n-400)" stroke-width="1"/>
+    <line x1="385" y1="71" x2="408" y2="132" stroke="var(--n-400)" stroke-width="1"/>
+    <line x1="435" y1="71" x2="412" y2="132" stroke="var(--n-400)" stroke-width="1"/>
+    <line x1="485" y1="71" x2="412" y2="132" stroke="var(--n-400)" stroke-width="1"/>
+    <text x="320" y="170" font-size="11" font-weight="700">→ amplitude absolue,</text>
+    <text x="320" y="186" font-size="11" font-weight="700">  comparaison D/G</text>
+  </svg>
+
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th></th><th>Bipolaire</th><th>Référentiel</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Principe</strong></td><td>Différence entre 2 électrodes <em>adjacentes</em></td><td>Chaque électrode vs <em>une référence commune</em></td></tr>
+        <tr><td><strong>Force</strong></td><td>Localiser un foyer (<strong>phase reversal</strong>)</td><td>Amplitude absolue, comparaison hémisphères</td></tr>
+        <tr><td><strong>Faiblesse</strong></td><td>Activité diffuse mal vue (peut s'annuler)</td><td>Sensible aux artefacts de la référence</td></tr>
+        <tr><td><strong>Quand l'utiliser</strong></td><td>Foyer suspecté, spike focal</td><td>Activité diffuse, asymétrie, post-ECT</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info">
+    <strong>Bonne pratique :</strong> toujours regarder un EEG dans <em>au moins deux montages</em> avant de conclure. Un foyer évident en bipolaire peut disparaître en référentiel et inversement.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FILTRES ET CALIBRATION
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Filtres et calibration
+    <span class="h-sub">Réglages standards et pièges fréquents</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Réglage</th><th>Valeur usuelle</th><th>But</th><th>Piège</th></tr></thead>
+      <tbody>
+        <tr><td><strong>LF (passe-haut)</strong></td><td>0,5 – 1 Hz</td><td>Éliminer dérive lente, sueur, mouvement de fond</td><td>Trop élevé (&gt;1 Hz) → masque l'activité <strong>delta</strong> pathologique</td></tr>
+        <tr><td><strong>HF (passe-bas)</strong></td><td>70 Hz</td><td>Éliminer artefact musculaire (EMG)</td><td>Trop bas (&lt;30 Hz) → rabote les <strong>spikes</strong> et les pointes rapides</td></tr>
+        <tr><td><strong>Notch</strong></td><td>50 Hz (Europe), 60 Hz (US)</td><td>Éliminer interférence secteur</td><td>Peut masquer une activité épileptiforme rapide proche de 50 Hz — désactiver si environnement propre</td></tr>
+        <tr><td><strong>Sensibilité</strong></td><td>7 µV/mm (10 µV/mm aussi courant)</td><td>Calibration verticale</td><td>Trop faible → tracé écrasé, anomalies invisibles</td></tr>
+        <tr><td><strong>Vitesse</strong></td><td>30 mm/s</td><td>Calibration horizontale standard</td><td>60 mm/s utile pour analyser une crise au ralenti</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert">
+    <strong>Règle d'or :</strong> avant d'interpréter un tracé inhabituel, <em>toujours</em> vérifier les filtres et la calibration. Un "tracé pathologique" peut être un mauvais réglage.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ARTEFACTS LIÉS À LA TECHNIQUE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Artefacts techniques fréquents
+    <span class="h-sub">Ce qui n'est pas pathologique mais en a l'air</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Artefact</th><th>Aspect typique</th><th>Comment le reconnaître</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Musculaire (EMG)</strong></td>
+          <td>Bouffées très rapides (20-200 Hz), aspect "hérissé"</td>
+          <td>Régions temporales / frontales ; disparaît si patient détendu</td>
+          <td>Détendre le patient, réduire le HF si transitoire</td>
+        </tr>
+        <tr>
+          <td><strong>ECG</strong></td>
+          <td>Déflexion régulière à la fréquence cardiaque</td>
+          <td>Souvent sur les électrodes basses (auriculaires, T6)</td>
+          <td>Dérivation ECG synchrone pour comparer ; éviter les références d'oreille</td>
+        </tr>
+        <tr>
+          <td><strong>Mouvement oculaire / blink</strong></td>
+          <td>Déflexion frontale (Fp1/Fp2) lente, ample, symétrique</td>
+          <td>Synchronisée à la fermeture/ouverture des yeux</td>
+          <td>Dérivation EOG synchrone ; demander de fixer un point</td>
+        </tr>
+        <tr>
+          <td><strong>Sueur</strong></td>
+          <td>Dérive très lente (&lt; 0,5 Hz), grande amplitude</td>
+          <td>Souvent sur électrodes frontales ou basse résistance</td>
+          <td>Sécher la peau, vérifier le gel, augmenter LF si transitoire</td>
+        </tr>
+        <tr>
+          <td><strong>Mauvais contact d'électrode</strong></td>
+          <td>Plage isolée, anomalie sur <em>une seule</em> électrode</td>
+          <td>L'anomalie ne suit pas la logique anatomique du montage</td>
+          <td>Vérifier impédance &lt; 5 kΩ, refaire le contact</td>
+        </tr>
+        <tr>
+          <td><strong>Pulse</strong></td>
+          <td>Déflexion régulière à la fréquence cardiaque</td>
+          <td>Une seule électrode posée près d'une artère</td>
+          <td>Déplacer légèrement l'électrode</td>
+        </tr>
+        <tr>
+          <td><strong>Secteur 50 Hz</strong></td>
+          <td>Bouffées fines régulières à 50 Hz</td>
+          <td>Aspect très uniforme, monotone</td>
+          <td>Notch filter, vérifier mise à la terre</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert crit">
+    <strong>Piège majeur :</strong> ne pas confondre <strong>artefact musculaire</strong> avec activité épileptiforme rapide. Indice : l'EMG disparaît à la relaxation et n'a pas de morphologie en "pointe-onde" reproductible.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÈGLES DE LECTURE RAPIDE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Lire un EEG en moins d'une minute
+    <span class="h-sub">Méthode systématique pour ne rien rater</span>
+  </h2>
+  <ol class="lecture">
+    <li><strong>Vérifier la calibration</strong> (sensibilité, vitesse, filtres, montage).</li>
+    <li><strong>État du patient :</strong> éveillé ? somnolent ? sommeil ? agité ?</li>
+    <li><strong>Rythme alpha postérieur :</strong> présent ? bloqué à l'ouverture des yeux ? symétrique D/G (asymétrie tolérée &lt; 50 %) ?</li>
+    <li><strong>Activité de fond globale :</strong> bien organisée ou ralentie ?</li>
+    <li><strong>Asymétries</strong> droite/gauche ou antérieur/postérieur.</li>
+    <li><strong>Activités lentes</strong> (theta/delta) anormalement abondantes ou focales ?</li>
+    <li><strong>Activités rapides</strong> (spikes, sharp waves, complexes pointe-onde) ?</li>
+    <li><strong>Identifier les artefacts</strong> avant de conclure à une anomalie.</li>
+    <li><strong>Synthèse :</strong> normal · ralenti diffus · ralenti focal · épileptiforme · urgence.</li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CHECKLIST PSYCHIATRE ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Ce qu'un psychiatre pratiquant les ECT doit savoir
+    <span class="h-sub">Repères spécifiques au péri-ECT</span>
+  </h2>
+  <div class="col2">
+    <div>
+      <h3>Pré-ECT</h3>
+      <ul class="thm">
+        <li>EEG baseline si possible : détecte un foyer épileptiforme silencieux ou un ralentissement focal qui modifierait le rapport bénéfice/risque.</li>
+        <li>Connaître le tracé de référence permet d'évaluer les anomalies post-ECT.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Effet des psychotropes</h3>
+      <ul class="thm">
+        <li><strong>BZD / barbituriques :</strong> beta diffus abondant + ralentissement modéré.</li>
+        <li><strong>Lithium :</strong> ralentissement diffus dose-dépendant.</li>
+        <li><strong>Clozapine :</strong> peut induire activité épileptiforme.</li>
+        <li><strong>ISRS, ISRSNa :</strong> peu d'effet EEG en règle générale.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Pendant la séance</h3>
+  <ul class="thm">
+    <li>Anesthésiques (propofol, étomidate, kétamine, méthohexital) modifient profondément le tracé.</li>
+    <li>Suivi de la qualité de la crise par EEG (durée, propagation, post-critique) — décisif pour l'efficacité.</li>
+  </ul>
+
+  <h3>Post-ECT</h3>
+  <ul class="thm">
+    <li>Ralentissement diffus normal pendant quelques heures à jours, parfois plus prolongé en traitement répété (cumulatif réversible).</li>
+    <li><strong>Confusion prolongée &gt; 1 h ou récurrente :</strong> demander un EEG en urgence pour éliminer un état de mal post-critique infraclinique.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RED FLAGS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>11. Red flags — avis neurologique immédiat</h2>
+  <div class="alert crit">
+    <ul class="thm" style="margin:0">
+      <li><strong>Status epilepticus</strong> clinique ou électrique <em>(cf. fiche dédiée)</em></li>
+      <li><strong>Décharges périodiques</strong> (PLEDs, GPDs, BIPDs) — encéphalopathie aiguë sévère</li>
+      <li><strong>Burst-suppression</strong> en dehors d'une anesthésie</li>
+      <li><strong>Tracé plat / silence électrique cérébral</strong> — contexte critique</li>
+      <li><strong>Ralentissement delta focal</strong> majeur asymétrique — penser lésion structurale</li>
+      <li><strong>Confusion post-ECT &gt; 1 h</strong> non expliquée par l'anesthésie</li>
+    </ul>
+  </div>
+  <p style="font-size:12px;color:var(--n-500);margin-top:8px">Les patterns détaillés sont décrits dans les fiches <em>Status epilepticus</em>, <em>ICU EEG</em> et <em>Activité épileptiforme</em>.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME MESSAGES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>12. Take home messages</h2>
+  <ul class="thm">
+    <li><strong>4 bandes</strong> à mémoriser : α 8-13 / β &gt;13 / θ 4-7 / δ &lt;4 Hz.</li>
+    <li><strong>Alpha postérieur yeux fermés</strong> = signature du sujet sain.</li>
+    <li><strong>Delta chez l'adulte éveillé</strong> = toujours pathologique.</li>
+    <li><strong>Bipolaire</strong> pour localiser (phase reversal), <strong>référentiel</strong> pour amplitude absolue. Toujours regarder dans 2 montages.</li>
+    <li>Filtres standards : <strong>LF 1 Hz · HF 70 Hz · Notch 50 Hz</strong>.</li>
+    <li><strong>BZD / barbituriques</strong> → beta abondant : ne pas confondre avec activité rapide pathologique.</li>
+    <li><strong>EMG ≠ activité épileptiforme rapide</strong> : indice clé = disparition à la relaxation.</li>
+    <li><strong>EEG baseline pré-ECT</strong> recommandé si possible.</li>
+    <li><strong>Ralentissement post-ECT</strong> jusqu'à plusieurs jours = normal ; confusion prolongée &gt; 1 h = urgence EEG.</li>
+    <li>Méthode de lecture : calibration → état → alpha → fond → asymétries → lents → rapides → artefacts → synthèse.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Référence : manuels d'EEG clinique et recommandations internationales.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>
