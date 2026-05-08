@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche ECT — Pitié-Salpêtrière</title>
+<style>
+  /* ===========================================================
+     FICHE ECT — Pitié-Salpêtrière
+     Version USCA Connect — responsive web + print A4 recto-verso
+     =========================================================== */
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #4F46E5;
+    --danger: #dc2626;
+    --warn: #ea580c;
+    --warn-dark: #c2410c;
+    --success: #059669;
+    --success-dark: #047857;
+    --neutral: #475569;
+    --bg: #ffffff;
+    --card-bg: #ffffff;
+    --section-bg: #ffffff;
+    --warn-bg: #fff7ed;
+    --danger-bg: #fef2f2;
+    --success-bg: #ecfdf5;
+    --neutral-bg: #f1f5f9;
+    --border: #cbd5e1;
+    --text: #1e293b;
+    --text-soft: #475569;
+    --text-mute: #94a3b8;
+    --h2-color: #1e3a8a;
+    --h2-warn: #c2410c;
+    --h2-danger: #dc2626;
+    --h2-success: #047857;
+    --h2-neutral: #475569;
+    --strong-color: #1e3a8a;
+  }
+
+  /* === DARK MODE (manuel uniquement, via body.dark depuis USCA Connect) === */
+  body.dark {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --section-bg: #1e293b;
+    --warn-bg: #2d1d0f;
+    --danger-bg: #2d1414;
+    --success-bg: #0d2620;
+    --neutral-bg: #1e293b;
+    --border: #475569;
+    --text: #e2e8f0;
+    --text-soft: #cbd5e1;
+    --text-mute: #64748b;
+    --h2-color: #818cf8;
+    --h2-warn: #fb923c;
+    --h2-danger: #f87171;
+    --h2-success: #34d399;
+    --h2-neutral: #94a3b8;
+    --strong-color: #818cf8;
+  }
+
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* === HEADER === */
+  .page-header {
+    background: var(--primary);
+    color: white;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-left: 6px solid var(--danger);
+    border-radius: 8px;
+  }
+  .page-header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .page-header .sub {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+
+  /* === GRID === */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* === SECTIONS === */
+  .section {
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: var(--section-bg);
+    border-radius: 6px;
+  }
+  .section.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+  .section.danger { border-left-color: var(--danger); background: var(--danger-bg); }
+  .section.success { border-left-color: var(--success); background: var(--success-bg); }
+  .section.neutral { border-left-color: var(--neutral); background: var(--neutral-bg); }
+
+  .section h2 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--h2-color);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  .section.warn h2 { color: var(--h2-warn); }
+  .section.danger h2 { color: var(--h2-danger); }
+  .section.success h2 { color: var(--h2-success); }
+  .section.neutral h2 { color: var(--h2-neutral); }
+
+  ul, ol { list-style: none; padding-left: 0; }
+  ul li {
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  ul li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+  }
+  .section.warn ul li:before { color: var(--warn-dark); }
+  .section.danger ul li:before { color: var(--danger); }
+  .section.success ul li:before { color: var(--success-dark); }
+  .section.neutral ul li:before { color: var(--neutral); }
+
+  ol { counter-reset: item; padding-left: 0; }
+  ol li {
+    counter-increment: item;
+    padding-left: 24px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  ol li:before {
+    content: counter(item);
+    position: absolute;
+    left: 0; top: 1px;
+    background: var(--primary);
+    color: white;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 18px;
+  }
+
+  .checklist li { padding-left: 22px; margin-bottom: 6px; }
+  .checklist li:before {
+    content: "☐";
+    font-size: 1.1rem;
+    top: -2px;
+    color: var(--text-soft);
+  }
+
+  strong { color: var(--strong-color); font-weight: 700; }
+  em { color: var(--danger); font-style: normal; font-weight: 600; }
+
+  /* === TABLES === */
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    min-width: 480px;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+  }
+
+  /* Decision table */
+  .decision td:first-child {
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    width: 100px;
+  }
+  .decision .row-zero td:first-child { background: var(--danger); }
+  .decision .row-short td:first-child { background: var(--warn); }
+  .decision .row-quality td:first-child { background: #d97706; }
+  .decision .row-ok td:first-child { background: var(--success); }
+  .decision .row-prolonged td:first-child { background: #7f1d1d; }
+
+  .decision .row-ok td { background: var(--success-bg); }
+  .decision .row-prolonged td { background: var(--danger-bg); }
+
+  /* Titration table */
+  .titration { font-size: 0.85rem; }
+  .titration th { padding: 8px; text-align: center; }
+  .titration td { padding: 7px 6px; text-align: center; }
+  .titration tr:nth-child(even) td { background: var(--neutral-bg); }
+
+  /* === SCHEMA SISMOTHÈRE === */
+  .sismo-schema {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    padding: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .sismo-button { text-align: center; }
+  .sismo-button .knob {
+    width: 28px; height: 28px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 6px;
+    border: 1.5px solid #1e293b;
+  }
+  .sismo-button .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--h2-color);
+  }
+  .sismo-button .val {
+    font-size: 0.7rem;
+    color: var(--text-soft);
+    margin-top: 2px;
+  }
+  .sismo-arrow {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--danger);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  /* === EEG PHASES === */
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+  }
+  @media (max-width: 480px) {
+    .phases { grid-template-columns: repeat(2, 1fr); }
+  }
+  .phase {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--primary);
+    padding: 8px 6px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .phase .num {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    font-weight: 600;
+  }
+  .phase .name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--h2-color);
+    margin: 2px 0;
+  }
+  .phase .desc {
+    font-size: 0.7rem;
+    line-height: 1.3;
+    color: var(--text-soft);
+  }
+
+  .xs { font-size: 0.85rem; color: var(--text-soft); }
+
+  .alert-box {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger);
+    border-left: 4px solid var(--danger);
+    padding: 8px 12px;
+    margin: 10px 0 0;
+    border-radius: 4px;
+  }
+  .alert-box strong { color: var(--danger); }
+
+  .compact-list li { margin-bottom: 3px; }
+
+  .source-line {
+    font-size: 0.8rem;
+    color: var(--text-mute);
+    text-align: center;
+    margin-top: 14px;
+    padding: 12px 8px;
+    font-style: italic;
+    border-top: 1px solid var(--border);
+  }
+
+  /* === PRINT STYLES — A4 recto-verso === */
+  @media print {
+    @page { size: A4; margin: 0; }
+    html, body {
+      font-size: 9pt;
+      line-height: 1.32;
+      background: white;
+      color: #1e293b;
+    }
+    .container {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+    .source-line { display: none; }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      padding: 6mm 9mm;
+      overflow: hidden;
+      page-break-after: always;
+      background: white;
+    }
+    .page:last-child { page-break-after: auto; }
+    .page-header {
+      padding: 3mm 5mm;
+      margin-bottom: 2.5mm;
+      border-radius: 0;
+      border-left-width: 4mm;
+    }
+    .page-header h1 { font-size: 12pt; }
+    .page-header .sub { font-size: 7.5pt; }
+    .grid-2 { gap: 3mm; }
+    .section {
+      padding: 1.7mm 2.5mm;
+      margin-bottom: 1.8mm;
+      border-radius: 0;
+      border-left-width: 1.4mm;
+      break-inside: avoid;
+      background: var(--section-bg);
+    }
+    .section h2 {
+      font-size: 9pt;
+      margin-bottom: 1.5mm;
+      padding-bottom: 0.9mm;
+    }
+    table { font-size: 7.5pt; min-width: auto; }
+    th, td { padding: 1.1mm 1.5mm; }
+    .titration { font-size: 7.5pt; }
+    .titration th { padding: 1.1mm; font-size: 7pt; }
+    .titration td { padding: 0.9mm 1mm; }
+    .sismo-schema { padding: 1.2mm; gap: 1mm; margin-top: 1.2mm; }
+    .sismo-button .knob { width: 6mm; height: 6mm; margin-bottom: 1mm; border-width: 0.4mm; }
+    .sismo-button .label { font-size: 6.5pt; }
+    .sismo-button .val { font-size: 6pt; }
+    .sismo-arrow { font-size: 7pt; margin-top: 0.8mm; }
+    .phases { gap: 1mm; margin-top: 0.8mm; grid-template-columns: repeat(5, 1fr) !important; }
+    .phase { padding: 1mm 0.8mm; border-radius: 0.5mm; border-top-width: 1mm; }
+    .phase .num { font-size: 6.5pt; }
+    .phase .name { font-size: 6.8pt; margin: 0.3mm 0; }
+    .phase .desc { font-size: 6pt; }
+    .xs { font-size: 7pt; }
+    ul li { padding-left: 3.5mm; margin-bottom: 0.4mm; }
+    ol li { padding-left: 5mm; margin-bottom: 0.7mm; }
+    ol li:before {
+      width: 3.4mm; height: 3.4mm;
+      font-size: 6.5pt; line-height: 3.4mm;
+      top: 0.2mm;
+    }
+    .checklist li { padding-left: 4.5mm; margin-bottom: 0.7mm; }
+    .checklist li:before { font-size: 9pt; top: -0.2mm; }
+    .alert-box {
+      padding: 1.2mm 1.8mm;
+      margin: 1.2mm 0 0;
+      border-radius: 0.5mm;
+      border-width: 0.4mm;
+      border-left-width: 1.5mm;
+    }
+    .compact-list li { margin-bottom: 0.3mm; }
+    /* Force colors on print */
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================= RECTO ============================= -->
+  <div class="page">
+
+    <div class="page-header">
+      <h1>ECT — Déroulé de séance</h1>
+      <div class="sub">
+        Pitié-Salpêtrière · Bât. Babinski −1 · Code 2710 · Début 8h15 · À jeun 6 h
+      </div>
+    </div>
+
+    <div class="grid-2">
+
+      <div>
+
+        <div class="section">
+          <h2>1. Avant de stimuler — Checklist</h2>
+          <ul class="checklist compact-list">
+            <li>Consentement écrit signé (patient / personne de confiance / tuteur)</li>
+            <li>Patient à jeun 6 h · ne pas fumer · traitements pris avec gorgée d'eau il y a 2 h</li>
+            <li>Si insuline : glycémie dans la ½ h avant · injection après séance</li>
+            <li>Si anxiété : Hydroxyzine ou Cyamémazine 25–100 mg</li>
+            <li>Dégraissage tempes / front / mastoïdes (sérum phy. ou alcool)</li>
+            <li>Papier EEG en place (impression visible à l'allumage)</li>
+            <li>Gain EEG = <strong>0.05 mV/mm</strong> · tracé de base yeux fermés (ON / OFF)</li>
+            <li>Protection bucco-dentaire <em>après endormissement</em></li>
+            <li>Personnes éloignées du lit avant stimulation</li>
+          </ul>
+        </div>
+
+        <div class="section neutral">
+          <h2>2. Électrodes</h2>
+          <ul class="compact-list">
+            <li><strong>EEG :</strong> 2 rouges en frontal · 2 noires aux mastoïdes</li>
+            <li><strong>ECG :</strong> dérivations frontales · <strong>Terre :</strong> sus-claviculaire</li>
+            <li><strong>Stimulation BT :</strong> ligne canthus externe ↔ bord supérieur du tragus → mi-distance, bord inférieur de l'électrode</li>
+            <li>Gel d'écho : adapter pour <strong>impédance &lt; 500 Ω</strong> <span class="xs">(machine bloque si extrême)</span></li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>3. Paramètres machine — Spectrum 5000Q</h2>
+          <p class="xs"><strong>4 boutons sous l'écran (gauche → droite) :</strong> Pulse Width · Frequency · Duration · Current</p>
+
+          <div class="sismo-schema">
+            <div class="sismo-button"><div class="knob"></div><div class="label">PW</div><div class="val">ms</div></div>
+            <div class="sismo-button"><div class="knob"></div><div class="label">FREQ</div><div class="val">Hz</div></div>
+            <div class="sismo-button"><div class="knob"></div><div class="label">DUR</div><div class="val">sec</div></div>
+            <div class="sismo-button"><div class="knob"></div><div class="label">CURRENT</div><div class="val">mA</div></div>
+          </div>
+          <div class="sismo-arrow">◀ ON RÈGLE DE DROITE À GAUCHE ◀</div>
+
+          <p class="xs" style="margin-top: 10px;"><strong>Base titration (Stim 2 = 32 mC) :</strong> 800 mA · 2.0 s · 20 Hz · 0.5 ms</p>
+          <ol style="margin-top: 6px;">
+            <li><strong>Current</strong> fixé à 800 mA (ne change jamais)</li>
+            <li>Augmenter <strong>Duration</strong> jusqu'à max <strong>8 s</strong></li>
+            <li>Puis <strong>Frequency</strong> jusqu'à max <strong>120 Hz</strong></li>
+            <li>Puis <strong>Pulse Width</strong></li>
+          </ol>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="section neutral">
+          <h2>4. Anesthésie</h2>
+          <ul class="compact-list">
+            <li><strong>Propofol</strong> (par défaut) : élève le seuil épileptogène · meilleur réveil</li>
+            <li><strong>Étomidate</strong> : abaisse le seuil · si difficulté de crise · réveil plus tardif</li>
+            <li><strong>Caféine 500 mg IV</strong> 5 min avant <em>(dernière intention)</em></li>
+            <li><strong>Curare</strong> : Célocurine · majorer si fracture récente os long, isoler un bras au brassard <span class="xs">(sauf ostéoporose)</span></li>
+            <li><strong>Si grossesse :</strong> tocolytiques à dispo · décubitus latéral G + hanche D surélevée dès 20 SA</li>
+          </ul>
+        </div>
+
+        <div class="section warn">
+          <h2>5. Pendant la crise — Surveillance combinée</h2>
+          <p class="xs"><strong>Signes cliniques discrets</strong> (curare masque les convulsions) :</p>
+          <ul class="compact-list">
+            <li>↑ TA, ↑ FC · piloérection</li>
+            <li>Activité fine extrémités (orteils, doigts, paupières)</li>
+          </ul>
+          <div class="alert-box">
+            <span class="xs"><strong>⚠ Ces signes disparaissent AVANT l'arrêt EEG</strong> → la surveillance EEG combinée est <em>indispensable</em>.</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>6. Phases EEG de la crise</h2>
+          <div class="phases">
+            <div class="phase"><div class="num">1</div><div class="name">Recrutement</div><div class="desc">EEG rapide<br>~20 Hz</div></div>
+            <div class="phase"><div class="num">2</div><div class="name">Tonique</div><div class="desc">Pointes /<br>polypointes<br>~10 s</div></div>
+            <div class="phase"><div class="num">3</div><div class="name">Clonique</div><div class="desc">Polypointes-<br>ondes →<br>5→1 Hz</div></div>
+            <div class="phase"><div class="num">4</div><div class="name">Terminaison</div><div class="desc">Ondes lentes<br>décroissantes</div></div>
+            <div class="phase"><div class="num">5</div><div class="name">Suppression</div><div class="desc">Silence électr.<br><strong>= qualité ✓</strong></div></div>
+          </div>
+          <p class="xs" style="margin-top: 10px;"><strong>Crise efficace :</strong> généralisée 2 hémisphères · amplitude importante · suppression post-critique nette (SABC).</p>
+        </div>
+
+        <div class="section success">
+          <h2>7. Après — Étiqueter le tracé</h2>
+          <ul class="compact-list">
+            <li>Nom du patient (étiquette ORBIS)</li>
+            <li>Date de la séance</li>
+            <li>Puissance délivrée (mC)</li>
+            <li>Durée crise <strong>clinique</strong></li>
+            <li>Durée crise <strong>EEG</strong></li>
+            <li>Impédance (Ω)</li>
+          </ul>
+        </div>
+
+        <div class="section danger">
+          <h2>8. Complications post-critiques</h2>
+          <ul class="compact-list">
+            <li><strong>Désaturation O₂</strong> → ventilation</li>
+            <li><strong>Crise tardive</strong> → EEG en urgence + appel épileptologue de garde</li>
+            <li><strong>Agitation</strong> (montée des lactates) → <em>Clonazépam 0.5–1 mg IV</em></li>
+            <li><strong>Nausées</strong> → Ondansétron · <strong>Céphalées · Myalgies · Dysmnésie</strong></li>
+            <li><strong>Virage de l'humeur</strong> → arrêt de la cure à discuter</li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <h2>9. Bilan pré-thérapeutique</h2>
+          <p class="xs" style="margin-bottom: 6px;"><strong>Indispensable</strong> · à valider <em>avant la 1ʳᵉ séance</em></p>
+          <ul class="compact-list">
+            <li>Consultation d'anesthésie ≥ 48 h avant la 1ʳᵉ séance</li>
+            <li>ECG · scanner ou IRM cérébral · bilan neuropsychologique</li>
+            <li>NFS · TP/TCA · iono · créatinine · ASAT/ALAT/PAL/GGT/Bilirubine</li>
+          </ul>
+          <p class="xs" style="margin-top: 6px;"><strong>Facultatif :</strong> EEG · radio thorax</p>
+        </div>
+
+        <div class="section warn">
+          <h2>10. Contre-indications</h2>
+          <p class="xs" style="margin-bottom: 6px;"><strong style="color: var(--danger);">Absolue :</strong> <em>HTIC</em> (sauf risque vital — ex. catatonie maligne).</p>
+          <p class="xs" style="margin-bottom: 6px;"><strong>Relatives</strong> (forte activation sympathique, risques anesthésiques) :</p>
+          <p class="xs">IDM récent · AVC hémorragique récent · MAV / anévrysme à risque · décollement de rétine · phéochromocytome.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================= VERSO ============================= -->
+  <div class="page">
+
+    <div class="page-header">
+      <h1>ECT — Décisions en salle</h1>
+      <div class="sub">
+        Algorithme charge selon durée EEG · Titration · 1ʳᵉ séance · Séances suivantes
+      </div>
+    </div>
+
+    <div class="section" style="border-left-color: var(--danger); background: var(--card-bg); padding: 12px 16px;">
+      <h2 style="color: var(--danger);">Algorithme principal — Conduite à tenir selon la durée EEG</h2>
+      <div class="table-wrap">
+        <table class="decision">
+          <thead>
+            <tr>
+              <th style="width: 100px;">Durée EEG</th>
+              <th>TITRATION<br><span style="font-weight: 400; font-size: 0.75rem;">(débuter Stim 2 = 32 mC)</span></th>
+              <th>1ʳᵉ SÉANCE D'ATTAQUE<br><span style="font-weight: 400; font-size: 0.75rem;">(seuil titration × 2.5)</span></th>
+              <th>SÉANCES SUIVANTES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-zero">
+              <td>0 s<br>Pas de crise</td>
+              <td>Attendre 20 s · 2ⁿᵈ choc → <strong>Stimulus n+1</strong> <span class="xs">(ex : 64 mC)</span></td>
+              <td>Attendre 20 s · 2ⁿᵈ choc → <strong>+ 50 mC</strong></td>
+              <td>Idem 1ʳᵉ : <strong>+ 50 % de la dose initiale</strong></td>
+            </tr>
+            <tr class="row-short">
+              <td>&lt; 15 s<br>Avortée / courte</td>
+              <td colspan="3">
+                Attendre <strong>60 s</strong> · entre les deux : <strong>ventiler au ballon</strong> (hypocapnie → ↓ seuil)<br>
+                <strong>Titration :</strong> 2ⁿᵈ choc Stim n+1 &nbsp;·&nbsp; <strong>1ʳᵉ &amp; suivantes :</strong> 2ⁿᵈ choc à <strong>+ 50 % de la dose initiale</strong> <em>(ex : C1=500 → C2=750)</em>
+              </td>
+            </tr>
+            <tr class="row-quality">
+              <td>15–20 s<br>Selon qualité</td>
+              <td colspan="3">
+                Si crise <strong>généralisée + ample + suppression nette (SABC)</strong> → ne rien faire.<br>
+                Sinon, 2ⁿᵈ choc : <strong>Titration</strong> Stim n+1 &nbsp;·&nbsp; <strong>1ʳᵉ &amp; suivantes</strong> + 50 % dose initiale.
+              </td>
+            </tr>
+            <tr class="row-ok">
+              <td>20–180 s<br>Adéquate ✓</td>
+              <td><strong>Crise &gt; 20 s :</strong> seuil retenu → <strong>×&nbsp;2.5</strong> pour 1ʳᵉ séance d'attaque</td>
+              <td>Conserver la même charge à la prochaine séance</td>
+              <td>Conserver la même charge</td>
+            </tr>
+            <tr class="row-prolonged">
+              <td>&gt; 180 s<br>PROLONGÉE ⚠</td>
+              <td colspan="3">
+                <strong style="color: var(--danger);">CLONAZÉPAM 0.5 à 1 mg IV</strong> · laisser les électrodes en place pour refaire un EEG une fois les manipulations finies (s'assurer de l'arrêt) · informer équipe sismo et salle.<br>
+                <span class="xs">Au retour en salle si doute → EEG en urgence + appel épileptologue. Avant la prochaine séance, élucider la cause (paramètres, épilepsie sous-jacente, médicaments pro-convulsivants, anesthésie).</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="xs" style="margin-top: 8px;">
+        <strong>Exemple titration → traitement :</strong> Stim 2 (32 mC) efficace → 1ʳᵉ attaque à 80 mC (32 × 2.5). Stim 3 (64 mC) efficace → 1ʳᵉ attaque à 160 mC.
+      </p>
+    </div>
+
+    <div class="grid-2">
+
+      <div>
+
+        <div class="section neutral">
+          <h2>Table de titration — Spectrum 5000Q</h2>
+          <div class="table-wrap">
+            <table class="titration">
+              <thead>
+                <tr>
+                  <th>Stim</th>
+                  <th>Hz</th>
+                  <th>PW (ms)</th>
+                  <th>Dur (s)</th>
+                  <th>Charge</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>20</td><td>0.5</td><td>1.0</td><td>16.0 mC</td></tr>
+                <tr><td><strong>2</strong></td><td>20</td><td>0.5</td><td>2.0</td><td><strong>32.0 mC ◀ départ</strong></td></tr>
+                <tr><td>3</td><td>20</td><td>0.5</td><td>4.0</td><td>64.0 mC</td></tr>
+                <tr><td>4</td><td>20</td><td>0.5</td><td>8.0</td><td>128.0 mC</td></tr>
+                <tr><td>5</td><td>40</td><td>0.5</td><td>8.0</td><td>256.0 mC</td></tr>
+                <tr><td>6</td><td>80</td><td>0.5</td><td>8.0</td><td>512.0 mC</td></tr>
+                <tr><td>7</td><td>120</td><td>0.67</td><td>8.0</td><td>1029.1 mC</td></tr>
+                <tr><td>8</td><td>120</td><td>0.75</td><td>8.0</td><td><strong>1152.0 mC (max)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="xs" style="margin-top: 8px;">
+            Current toujours à 800 mA. <em>Tableau d'après 200 J Titration Table — Spectrum Q (NYS Psychiatric Institute + Columbia University).</em>
+          </p>
+        </div>
+
+        <div class="section warn">
+          <h2>Échec à 1152 mC — Stratégies</h2>
+          <ol class="compact-list">
+            <li>Arrêter les <strong>traitements pro-convulsivants antagonistes</strong> (BZD, antiépileptiques)</li>
+            <li>Préférer <strong>stimulation bilatérale (BT)</strong></li>
+            <li><strong>Étomidate</strong> seul comme hypnotique (abaisse le seuil)</li>
+            <li><strong>Hyperventilation</strong> : ~20 insufflations au ballon juste avant le choc + lunettes O₂</li>
+            <li><strong>Caféine 500 mg IV</strong> 5 min avant la délivrance</li>
+            <li>Si schizophrénie ultra-résistante : discuter <strong>adjonction Clozapine</strong></li>
+          </ol>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div class="section">
+          <h2>Protocoles d'attaque par indication</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Indication</th>
+                  <th>Rythme</th>
+                  <th>Durée</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dépression caractérisée</strong></td>
+                  <td>2–3/sem</td>
+                  <td>12 séances <span class="xs">(20–25 si réponse partielle)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Épisode maniaque</strong></td>
+                  <td>2–3/sem</td>
+                  <td>12 séances</td>
+                </tr>
+                <tr>
+                  <td><strong>Catatonie</strong></td>
+                  <td>2–3/sem</td>
+                  <td>12 séances <span class="xs">(rarement &lt; 6)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Schizophrénie</strong></td>
+                  <td>2–3/sem</td>
+                  <td>20–30 séances</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="xs" style="margin-top: 8px;">
+            <strong>Urgent</strong> = 3/sem · <strong>Résistant</strong> = 2/sem · <strong>Arrêter dès rémission.</strong><br>
+            Interruption si pas de réponse après 12 crises efficaces (dépression) ou 20 (schizophrénie).
+          </p>
+        </div>
+
+        <div class="section success">
+          <h2>Consolidation — CANMAT 2016</h2>
+          <ul class="compact-list">
+            <li><strong>1 séance / semaine</strong> pendant 1 mois</li>
+            <li><strong>1 séance / 2 semaines</strong> pendant 2 mois</li>
+            <li><strong>1 séance / mois</strong> pendant 3 mois</li>
+          </ul>
+          <p class="xs" style="margin-top: 8px;">
+            Échelle psychométrique <strong>hebdomadaire</strong> consignée au dossier. Synthèse CRH.
+          </p>
+        </div>
+
+        <div class="section danger">
+          <h2>Traitements concomitants</h2>
+          <ul class="compact-list">
+            <li><strong>Lithium</strong> : arrêt sauf situations particulières (potentialisation)</li>
+            <li><strong>Antidépresseurs · Antiépileptiques</strong> : arrêt dans la mesure du possible</li>
+            <li><strong>Antipsychotiques</strong> : maintenir (y compris Clozapine)</li>
+            <li><strong>BZD</strong> : arrêt avant la cure · à défaut <em>demi-vie courte</em> (Oxazépam, Lorazépam) · arrêt 24 h avant ou éviter prise du matin</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="source-line">
+      Sources : The ECT Handbook (Waite &amp; Easton 2013) · CANMAT 2016 · NICE 2003 · Micoulaud-Franchi 2013 · Szekely 2015 · Mortalité 1/74 000 séances ou 1/10 000 patients
+    </p>
+  </div>
+
+</div>
+
+<script>
+  // === Sync avec le mode sombre USCA Connect ===
+  // Lit usca_session.theme du localStorage et applique le thème
+  (function() {
+    try {
+      const usca = localStorage.getItem('usca_session');
+      if (usca) {
+        const session = JSON.parse(usca);
+        if (session && session.theme === 'dark') {
+          document.body.classList.add('dark');
+        }
+      }
+    } catch (e) {}
+  })();
+</script>
+
+</body>
+</html>

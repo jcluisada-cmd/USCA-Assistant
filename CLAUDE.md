@@ -1,6 +1,13 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 6 mai 2026 (v4.13 — Push 10 min + push patients pour ateliers + permissions triées + pop-up présence ateliers patient.
+> Dernière mise à jour : 8 mai 2026 (v4.14 — Réorga Toolbox V1 + nouvelle carte EEG/ECT.
+> 1. **Réorganisation des cartes Toolbox** (`staff/toolbox.html`) : passage de 3 grandes + 3 petites + 1 carte feedback isolée à **4 grandes + 5 petites**. Grandes (ordre) : Protocoles USCA par substance / Ressources USCA / Fiches Traitements et Substances / Dossier post-cure. Petites (en 2 grilles) : ligne 1 = Scores · EEG/ECT · Interactions (MetaboScope) ; ligne 2 = ELSA · Feedback. **Ressources** sortie du sous-hub Protocoles → grande carte autonome. **ELSA** rétrogradée de grande à petite carte. **Feedback** intégrée dans la grille (suppression de la carte isolée du bas). La grande carte "Protocoles USCA par substance" pointe directement sur `case "substances"` ; le hub `protocoles_hub` reste accessible via le bottom nav (dormant mais fonctionnel).
+> 2. **Nouvelle carte "EEG / ECT"** : nouveau case `eeg_ect` — hub minimal qui ouvre `eeg_ect/fiche_ect.html` (fiche pratique ECT canonique fournie par les psychiatres de la Pitié, copiée depuis `EEG_ECT_handbook/fiche_ect.html` qui reste la source de référence). Placeholder pour les fiches EEG du handbook clinique à venir (chapitres Technical / Normal / Artefacts / Epileptiforme / Status / ICU EEG — voir `EEG_ECT_handbook/MASTER_PROMPT_EEG_ECT.md`).
+> 3. **Renommage "Interactions" → "Interactions (MetaboScope)"** : SectionHead du composant `InterCheck`, label dans `moreItems`, sous-titre sous la petite carte d'accueil. Le standalone MetaboScope (en cours d'amélioration JC) sera intégré ultérieurement.
+> 4. **`MASTER_PROMPT_EEG_ECT.md` corrigé** : aligné sur charte USCA + dark mode, arborescence `eeg_ect/` + manifest `index.json` calqué sur `ressources_doc/`, design system partagé `shared/ressource-doc.css`, figures PNG externes dans `eeg_ect/assets/` (pas d'inline base64), sections obligatoires/optionnelles, cap longueur ~400-700 lignes/fiche, règles anti-copie renforcées, fiche ECT canonique distincte du corpus EEG.
+> 5. **SW bump v4.13 → v4.14** : ajout de `./eeg_ect/fiche_ect.html` au pré-cache `LOCAL_ASSETS`.)
+>
+> v4.13 — Push 10 min + push patients pour ateliers + permissions triées + pop-up présence ateliers patient.
 > 1. **Rappels push 9-10 min au lieu de 4-5 min** : fenêtre élargie dans `cron-reminders/index.ts` (`in9`/`in10`, `targetMin/Max = paris.minutes + 9/10`), textes "Dans 10 min" partout. pg_cron continue à tourner toutes les 60 s. JC ressentait des notifs "lentes" — la latence venait majoritairement de FCM/APNs (5-30 s) et du tick cron (jitter ±60 s), donc le fix est de pousser 5 min plus tôt.
 > 2. **Push 10 min avant atelier à TOUS les patients hospitalisés abonnés aux push** : nouveau bloc `3b. Patients hospitalisés` dans le SCAN 3 de `cron-reminders`. Récupère `push_subscriptions WHERE patient_id IS NOT NULL` (distinct), filtre via `groupe_modifications.exclusions[]` du jour. Anti-doublon via migration v36 : colonne `patient_id UUID NULL` ajoutée à `push_reminders_sent_groupe` + CHECK XOR (`profile_id` XOR `patient_id`) + 2 UNIQUE partiels (un par cible). Tag PWA dédié `atelier-<slug>-<date>` distinct du tag animateur `groupe-<slug>-<date>` pour éviter qu'un push patient écrase celui d'un soignant.
 > 3. **Affichage permissions admin trié chronologiquement** : `renderPatientPerms` partitionne en `future` (date_retour ≥ now) et `past` (date_retour < now), tri ascendant par `date_debut` dans chaque groupe, séparateur "Permissions passées" entre les deux. `buildPermCard(p, patientId, isPast)` reçoit un flag : si `isPast`, fond gris neutre + opacité 70 % + retrait des boutons Valider/Refuser/Annuler/Modifier (seul 🗑 reste). Le label de statut (validée/refusée/en attente) est conservé pour archive.
@@ -70,7 +77,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.12 |
+| **Service Worker** | usca-v4.14 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
