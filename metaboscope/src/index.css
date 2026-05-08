@@ -3,24 +3,90 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
   html, body, #root {
     min-height: 100%;
   }
   body {
-    @apply bg-navy-900 text-gray-100 font-sans antialiased;
+    @apply font-sans antialiased;
   }
-  /* Scrollbar discrète sur fond navy */
+
+  /* Mode dark (défaut historique MetaboScope, navy/teal) */
+  html.theme-dark {
+    color-scheme: dark;
+  }
+  html.theme-dark body {
+    @apply bg-navy-900 text-gray-100;
+  }
+  html.theme-dark ::-webkit-scrollbar-track { background: #0f1e33; }
+  html.theme-dark ::-webkit-scrollbar-thumb { background: #1e4976; }
+  html.theme-dark ::-webkit-scrollbar-thumb:hover { background: #27598c; }
+
+  /* Mode light (intégration USCA-Connect, palette slate + accents indigo USCA) */
+  html.theme-light {
+    color-scheme: light;
+  }
+  html.theme-light body {
+    @apply bg-slate-50 text-slate-900;
+  }
+  html.theme-light ::-webkit-scrollbar-track { background: #f1f5f9; }
+  html.theme-light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+  html.theme-light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  /* Backgrounds navy → blanc/slate clair en light mode */
+  html.theme-light .bg-navy-900 { @apply bg-white; }
+  html.theme-light .bg-navy-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  html.theme-light .bg-navy-800 { @apply bg-white; }
+  html.theme-light .bg-navy-800\/60 { @apply bg-white; }
+  html.theme-light .bg-navy-800\/50 { @apply bg-slate-100; }
+  html.theme-light .bg-navy-800\/40 { @apply bg-white; }
+  html.theme-light .bg-navy-800\/30 { @apply bg-slate-100; }
+  html.theme-light .bg-navy-700 { @apply bg-slate-200; }
+  html.theme-light .hover\:bg-navy-700:hover { @apply bg-slate-100; }
+  html.theme-light .hover\:bg-navy-800\/50:hover { @apply bg-slate-100; }
+  /* Borders navy → slate clair */
+  html.theme-light .border-navy-600 { @apply border-slate-300; }
+  html.theme-light .border-navy-700 { @apply border-slate-200; }
+  html.theme-light .border-navy-800 { @apply border-slate-200; }
+  /* Texte gris (utilisé partout) → slate cohérent en light */
+  html.theme-light .text-gray-100 { @apply text-slate-900; }
+  html.theme-light .text-gray-200 { @apply text-slate-800; }
+  html.theme-light .text-gray-300 { @apply text-slate-700; }
+  html.theme-light .text-gray-400 { @apply text-slate-600; }
+  html.theme-light .text-gray-500 { @apply text-slate-500; }
+  html.theme-light .hover\:text-gray-100:hover { @apply text-slate-900; }
+  html.theme-light .hover\:text-gray-300:hover { @apply text-slate-700; }
+  html.theme-light .placeholder\:text-gray-500::placeholder { @apply text-slate-400; }
+  /* Accents teal → indigo USCA V2 en light mode (charte CLAUDE.md USCA-Connect §2) */
+  html.theme-light .text-teal-400 { color: #4F46E5; }
+  html.theme-light .text-teal-500 { color: #4338CA; }
+  html.theme-light .text-teal-300 { color: #4338CA; }
+  html.theme-light .text-teal-200 { color: #4338CA; }
+  html.theme-light .text-teal-100 { color: #312E81; }
+  html.theme-light .bg-teal-600 { background-color: #4F46E5; }
+  html.theme-light .bg-teal-600\/30 { background-color: rgba(79, 70, 229, 0.15); }
+  html.theme-light .bg-teal-600\/20 { background-color: rgba(79, 70, 229, 0.10); }
+  html.theme-light .bg-teal-600\/10 { background-color: rgba(79, 70, 229, 0.06); }
+  html.theme-light .border-teal-500 { border-color: #4F46E5; }
+  html.theme-light .border-teal-400 { border-color: #6366F1; }
+  html.theme-light .border-l-teal-500 { border-left-color: #4F46E5; }
+  html.theme-light .hover\:border-teal-500:hover { border-color: #4F46E5; }
+  html.theme-light .hover\:border-teal-400:hover { border-color: #6366F1; }
+  html.theme-light .hover\:border-l-teal-400:hover { border-left-color: #6366F1; }
+  html.theme-light .hover\:text-teal-300:hover { color: #4338CA; }
+  html.theme-light .hover\:text-teal-100:hover { color: #312E81; }
+  html.theme-light .focus-visible\:ring-teal-400:focus-visible { --tw-ring-color: #6366F1; }
+  /* Scrollbar commune */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: #0f1e33; }
-  ::-webkit-scrollbar-thumb { background: #1e4976; border-radius: 6px; }
-  ::-webkit-scrollbar-thumb:hover { background: #27598c; }
+  ::-webkit-scrollbar-thumb { border-radius: 6px; }
 }
 
 @layer utilities {
   .focus-ring {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900;
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2;
+  }
+  html.theme-dark .focus-ring {
+    @apply focus-visible:ring-offset-navy-900;
+  }
+  html.theme-light .focus-ring {
+    @apply focus-visible:ring-offset-slate-50;
   }
 }

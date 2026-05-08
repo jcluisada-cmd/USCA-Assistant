@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.26 — 2026-05-08
+MetaboScope chantier C : sync dark/light mode USCA (URL param + postMessage live), refonte HomePage par cas d'usage, deep link `?cart=` (préparation liens fiches Toolbox).
+
 ## v4.25 — 2026-05-08
 Intégration MetaboScope (carte Interactions Toolbox) en iframe + 2 micro-fixes USCA (catch SW hors-scope, meta `mobile-web-app-capable`).
 

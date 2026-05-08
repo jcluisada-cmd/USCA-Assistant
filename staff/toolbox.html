@@ -1465,7 +1465,7 @@ function App() {
 
   const moreItems = [
     {id:"fiches_traitements",label:"Traitements",icon:I.heart},
-    {id:"interactions",label:"Interactions (MetaboScope)",icon:I.alert},
+    {id:"interactions",label:"MetaboScope (Interactions)",icon:I.alert},
     {id:"bzdcalc",label:"Convertisseur BZD",icon:I.scale},
     {id:"cpzcalc",label:"Convertisseur CPZ",icon:I.scale},
     {id:"feedback",label:"💬 Feedback",icon:I.msgSquare}
@@ -1507,9 +1507,9 @@ function App() {
 
         {/* Petites cartes — outils cliniques (3) */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:10}}>
-          {[{l:"Scores",i:I.calc,v:"scores",dm:"toolbox_scores",c:C.n[600]},
-            {l:"EEG / ECT",i:I.activity,v:"eeg_ect",dm:"toolbox_eeg_ect",c:C.t[700]},
-            {l:"Interactions",sub:"(MetaboScope)",i:I.alert,v:"interactions",dm:"toolbox_interactions",c:C.r[500]}].map(item=>
+          {[{l:"MetaboScope",sub:"(Interactions)",i:I.alert,v:"interactions",dm:"toolbox_interactions",c:C.r[500]},
+            {l:"Scores",i:I.calc,v:"scores",dm:"toolbox_scores",c:C.n[600]},
+            {l:"EEG / ECT",i:I.activity,v:"eeg_ect",dm:"toolbox_eeg_ect",c:C.t[700]}].map(item=>
             <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:12,textAlign:"center"}} onClick={()=>nav(item.v)}>
               {item.i(item.c, 22)}
               <div style={{fontSize:12,fontWeight:800,color:C.n[800],marginTop:6}}>{item.l}</div>
@@ -1579,10 +1579,11 @@ function App() {
 
       case "interactions": {
         // Iframe MetaboScope — pattern aligné sur eeg_ect (v4.17).
-        // Chemin relatif depuis staff/toolbox.html : remonte d'un niveau puis descend dans metaboscope/dist/.
-        // Sync thème dark/light non propagé en v4.25 (palette navy/teal MetaboScope reste cohérente).
-        // À câbler en chantier C.1 (METABOSCOPE_APP.md §3) — migration vers indigo USCA V2 + sync ?theme=.
-        const metaboscopePath = '../metaboscope/dist/index.html';
+        // Sync dark/light mode (v4.26) :
+        //   - param URL ?theme= initial (lu au boot par metaboscope/src/main.tsx)
+        //   - postMessage live via shared/theme.js déjà en place (notifie toutes les iframes au toggle)
+        const themeParam = (localStorage.getItem('usca_theme') === 'dark') ? '?theme=dark' : '?theme=light';
+        const metaboscopePath = `../metaboscope/dist/index.html${themeParam}`;
         return <div className="fade-in">
           <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
             <button onClick={()=>nav("home")} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>

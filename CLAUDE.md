@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.25 (2026-05-08) — Intégration MetaboScope (carte Interactions Toolbox) en iframe.
+> **Version courante** : v4.26 (2026-05-08) — MetaboScope chantier C : sync dark/light mode USCA, refonte HomePage, deep link `?cart=`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.25` |
+| **Service Worker** | `usca-v4.26` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
