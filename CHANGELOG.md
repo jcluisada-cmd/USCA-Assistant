@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.31 — 2026-05-09
+Atlas MetaboScope : catégories de voies repliables (Cytochromes / UGT / Phase II / Non-CYP / Transporteurs). Header cliquable avec ▾/▸ + compteur (`(N voies)`) + badge de sélection (`X sélectionnée(s)`) + indicateur ⚡ si voies partagées dans une catégorie repliée. Persistance dans `localStorage.metaboscope_expanded_kinds_v1`. Par défaut, seuls les Cytochromes dépliés (les plus utilisés en pratique addicto-psychiatrique) — désamorce la surcharge visuelle au boot.
+
 ## v4.30 — 2026-05-09
 Refonte MetaboScope (suite v4.29) : `VoieDetailModal` cliquable depuis pills voies (Atlas + Interactions) — insight clinique avec détection auto des paires PK (substrat × inhibiteur/inducteur sur même voie, AUC ↑/↓). Fix lisibilité bannières/sections en light mode : ajout règles `html.theme-light .text-{amber,red,blue,green,indigo}-{100,200,300}` dans `metaboscope/src/index.css` (les classes Tailwind text-*-200/300 conçues pour fond foncé devenaient illisibles sur fond blanc). Contrastes badges intensité Atlas/Interactions renforcés (`bg-slate-300/400` au lieu de `bg-slate-200/black-15%`).
 

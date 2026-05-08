@@ -15,6 +15,8 @@ import { IntensityBars } from '../components/ui/IntensityBars';
 import { VoieDetailModal } from '../components/VoieDetailModal';
 
 const STORAGE_DISABLED_CLASSES = 'metaboscope_disabled_classes_v1';
+const STORAGE_EXPANDED_KINDS = 'metaboscope_expanded_kinds_v1';
+const DEFAULT_EXPANDED_KINDS: VoieKind[] = ['cyp']; // par défaut : seuls les CYP dépliés
 
 type FilterMode = 'OR' | 'AND';
 
@@ -43,6 +45,13 @@ export function AtlasPage() {
     } catch { /* ignore */ }
     return new Set();
   });
+  const [expandedKinds, setExpandedKinds] = useState<Set<VoieKind>>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_EXPANDED_KINDS);
+      if (raw) return new Set(JSON.parse(raw) as VoieKind[]);
+    } catch { /* ignore */ }
+    return new Set(DEFAULT_EXPANDED_KINDS);
+  });
 
   // Persist disabledClasses
   useEffect(() => {
@@ -50,6 +59,13 @@ export function AtlasPage() {
       localStorage.setItem(STORAGE_DISABLED_CLASSES, JSON.stringify(Array.from(disabledClasses)));
     } catch { /* ignore */ }
   }, [disabledClasses]);
+
+  // Persist expandedKinds
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_EXPANDED_KINDS, JSON.stringify(Array.from(expandedKinds)));
+    } catch { /* ignore */ }
+  }, [expandedKinds]);
 
   // ─── Helpers ─────────────────────────────────────────────
   function toggleVoie(id: string) {
@@ -64,6 +80,14 @@ export function AtlasPage() {
     setDisabledClasses(prev => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleKind(kind: VoieKind) {
+    setExpandedKinds(prev => {
+      const next = new Set(prev);
+      if (next.has(kind)) next.delete(kind); else next.add(kind);
       return next;
     });
   }
@@ -190,39 +214,62 @@ export function AtlasPage() {
         {(['cyp', 'ugt', 'phase2', 'autre', 'transporteur'] as VoieKind[]).map(kind => {
           const list = voiesByKind[kind];
           if (list.length === 0) return null;
+          const isExpanded = expandedKinds.has(kind);
+          // Compteur sélection dans cette catégorie
+          const selectedInKind = list.filter(v => selectedVoies.has(v.id)).length;
+          const sharedInKind = list.filter(v => sharedVoies.has(v.id)).length;
           return (
             <div key={kind} className="mb-2">
-              <p className="mb-1 text-[9px] uppercase tracking-wider text-gray-500">
-                {kindLabel(kind)}
-              </p>
-              <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-4">
-                {list.map(v => {
-                  const active = selectedVoies.has(v.id);
-                  const shared = sharedVoies.has(v.id);
-                  return (
-                    <button
-                      key={v.id}
-                      type="button"
-                      onClick={() => toggleVoie(v.id)}
-                      aria-pressed={active}
-                      className={`relative rounded-md border-[1.5px] px-1 py-1.5 text-[10px] font-bold focus-ring ${
-                        active
-                          ? `${v.bgActiveClass} text-white border-transparent`
-                          : `bg-navy-800 ${v.borderClass} ${v.textClass}`
-                      }`}
-                    >
-                      {v.label}
-                      {active && <span className="ml-1">✓</span>}
-                      {shared && (
-                        <span aria-label="voie partagée par le panier"
-                              className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] text-white shadow">
-                          ⚡
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+              <button
+                type="button"
+                onClick={() => toggleKind(kind)}
+                aria-expanded={isExpanded}
+                className="flex w-full items-center gap-2 rounded px-1 py-1 text-left text-[9px] uppercase tracking-wider text-gray-400 hover:bg-navy-800 focus-ring"
+              >
+                <span aria-hidden className="inline-block w-3 text-gray-500">{isExpanded ? '▾' : '▸'}</span>
+                <span>{kindLabel(kind)}</span>
+                <span className="ml-1 text-[8px] normal-case text-gray-500">({list.length})</span>
+                {selectedInKind > 0 && (
+                  <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-teal-500/20 px-2 py-0.5 text-[9px] font-bold text-teal-300">
+                    {selectedInKind} sélectionnée{selectedInKind > 1 ? 's' : ''}
+                  </span>
+                )}
+                {sharedInKind > 0 && selectedInKind === 0 && (
+                  <span className="ml-auto inline-flex items-center gap-0.5 text-[9px] text-amber-400">
+                    ⚡ {sharedInKind}
+                  </span>
+                )}
+              </button>
+              {isExpanded && (
+                <div className="mt-1 grid grid-cols-3 gap-1.5 sm:grid-cols-4">
+                  {list.map(v => {
+                    const active = selectedVoies.has(v.id);
+                    const shared = sharedVoies.has(v.id);
+                    return (
+                      <button
+                        key={v.id}
+                        type="button"
+                        onClick={() => toggleVoie(v.id)}
+                        aria-pressed={active}
+                        className={`relative rounded-md border-[1.5px] px-1 py-1.5 text-[10px] font-bold focus-ring ${
+                          active
+                            ? `${v.bgActiveClass} text-white border-transparent`
+                            : `bg-navy-800 ${v.borderClass} ${v.textClass}`
+                        }`}
+                      >
+                        {v.label}
+                        {active && <span className="ml-1">✓</span>}
+                        {shared && (
+                          <span aria-label="voie partagée par le panier"
+                                className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] text-white shadow">
+                            ⚡
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
