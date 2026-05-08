@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.28 (2026-05-08) — Fix dark mode wrappers d'icône Toolbox (SectionHead) + input alert : ces éléments restaient blancs en dark à cause du swap inversé de la palette navy `C.n`.
+> **Version courante** : v4.29 (2026-05-09) — Refonte UX/UI MetaboScope : 2 onglets Atlas + Interactions, toggles voies multi-sélection, filtre classes, sections Substrats/Inhib/Induct, voies partagées avec ⚡, modal molécule.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.28` |
+| **Service Worker** | `usca-v4.29` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |

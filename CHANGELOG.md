@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.29 — 2026-05-09
+Refonte UX/UI MetaboScope (chantier C complet + chantier H "redesign 2 onglets"). Architecture : 2 onglets `Atlas` + `Interactions` au lieu de 3 modules + HomePage. Atlas : barre de recherche universelle, grille de toggles 30+ voies multi-sélection (1 couleur par voie), mode OU/ET, filtre classes thérapeutiques (8 buckets, persistance localStorage), 3 sections résultats (Substrats / Inhibiteurs / Inducteurs) avec barres d'intensité. Pont Atlas → Interactions : bouton + sur chaque mol, badge dynamique sur tab, bannière flottante "X mol · ⚡ N voies partagées · Analyser →". Interactions : cards mol visuelles avec voies pills (S/I/Ind + intensité), voies partagées avec halo ⚡, alertes PD cumulées en haut cliquables → modal détail. Fiche mol = `MoleculeDetailModal` slide-in. Suppression `HomePage`, `SearchPage`, `MoleculePage` isolée. Routes simplifiées (`/` = Atlas, `/interactions`, redirects legacy). Sync dark/light, deep link `?cart=`, `CartContext` conservés.
+
 ## v4.28 — 2026-05-08
 Fix dark mode wrappers d'icône Toolbox (`SectionHead` + EEG/ECT preview + input alert) : backgrounds passent en valeur fixe `#243b53` ou `C.bg` au lieu d'utiliser `C.n[800]`/`#fff` que le swap palette inversait en couleurs claires en dark.
 
