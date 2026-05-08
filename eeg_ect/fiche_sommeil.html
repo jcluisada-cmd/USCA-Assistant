@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sommeil et variants bénins — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+  .col2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 720px) { .col2 { grid-template-columns: 1fr 1fr; } }
+  .eeg-fig-wrap { background:#fff; border:1px solid var(--bdr); border-radius:8px; padding:10px; max-width:680px; margin:10px auto; }
+  .eeg-fig-wrap.compact { max-width:520px; }
+  .eeg-fig-wrap img { display:block; width:100%; height:auto; }
+  .caption { font-size:11px; color:var(--n-500); text-align:center; margin:6px auto 0; max-width:680px; line-height:1.4; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Sommeil et variants bénins</h1>
+  <p class="meta">Stades, fuseaux, K-complexes, sawtooth — éviter les faux positifs épileptiformes — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ ULTRA RAPIDE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>Le sommeil produit un tracé EEG <strong>dramatiquement différent</strong> de l'éveil. Trois pièges majeurs pour l'interne :</p>
+  <ul class="thm">
+    <li>Confondre un <strong>ralentissement physiologique de N1-N2</strong> avec une encéphalopathie.</li>
+    <li>Confondre un <strong>vertex sharp</strong>, un <strong>POST</strong> ou une <strong>sawtooth</strong> avec une activité épileptiforme.</li>
+    <li>Confondre un <strong>K-complex</strong> avec une décharge focale.</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Pertinence ECT :</strong> un patient post-séance somnolent ou en sommeil léger génère légitimement des graphoéléments physiologiques pointus. Ne jamais conclure « anormal » sans préciser l'<em>état de vigilance</em>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ARCHITECTURE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Architecture du sommeil
+    <span class="h-sub">Le trio EEG + EOG + EMG est indispensable pour stadifier</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>5 stades</strong> alternent au cours de la nuit : Éveil → N1 → N2 → N3 → REM, avec des cycles de ~90 min.</li>
+    <li><strong>Sommeil lent</strong> (NREM) = N1 + N2 + N3 — domine la première moitié de la nuit (N3 prépondérant).</li>
+    <li><strong>Sommeil paradoxal</strong> (REM) — domine la deuxième moitié de la nuit, durées croissantes.</li>
+    <li>Aucun stade n'est identifiable sur l'EEG seul : il faut <strong>EOG (mouvements oculaires)</strong> + <strong>EMG mentonnier (tonus musculaire)</strong>.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     LES STADES — FIGURE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Les stades — tracés et spectres
+    <span class="h-sub">Comparaison visuelle Éveil / N1 / N2 / N3 / REM</span>
+  </h2>
+
+  <div class="eeg-fig-wrap compact">
+    <img src="assets/fig_sommeil_stades.png" alt="Tracés EEG, EOG et EMG des cinq stades de vigilance avec spectres de puissance">
+  </div>
+  <p class="caption"><strong>Tracés EEG/EOG/EMG et spectres de puissance pour chaque stade.</strong> Plus le sommeil s'approfondit, plus les fréquences lentes dominent. Le REM ressemble à un EEG d'éveil bas voltage mais s'accompagne de <em>mouvements oculaires rapides</em> et d'<em>atonie EMG</em>.</p>
+
+  <h3>Éveil (yeux fermés au repos)</h3>
+  <ul class="thm">
+    <li>EEG : <strong>alpha postérieur</strong> 8-13 Hz dominant.</li>
+    <li>EOG : clignements, mouvements rapides volontaires.</li>
+    <li>EMG : tonus présent.</li>
+  </ul>
+
+  <h3>N1 — sommeil léger / endormissement</h3>
+  <ul class="thm">
+    <li>EEG : <strong>atténuation de l'alpha</strong>, apparition de <strong>theta 4-7 Hz</strong>.</li>
+    <li>EOG : <strong>mouvements oculaires lents</strong> (slow eye movements / SEM) — signature de l'endormissement.</li>
+    <li>EMG : tonus diminué.</li>
+    <li>Variants attendus : <em>vertex sharp transients</em> (V-waves) — voir §5.</li>
+  </ul>
+
+  <h3>N2 — sommeil léger établi</h3>
+  <ul class="thm">
+    <li>EEG : tracé de fond theta + apparition des <strong>K-complexes</strong> et des <strong>fuseaux de sommeil</strong> (sleep spindles).</li>
+    <li>EOG : calme (pas de mouvements significatifs).</li>
+    <li>EMG : tonus diminué.</li>
+    <li><strong>K-complex + fuseau = signature N2</strong>.</li>
+  </ul>
+
+  <h3>N3 — sommeil lent profond (SWS, slow-wave sleep)</h3>
+  <ul class="thm">
+    <li>EEG : <strong>delta 0,5-2 Hz haute amplitude</strong> (&gt; 75 µV pic-à-pic) sur &gt; 20 % de l'epoch (critère AASM).</li>
+    <li>EOG : calme.</li>
+    <li>EMG : tonus très diminué.</li>
+    <li>Stade le plus difficile à réveiller — sommeil « profond ».</li>
+  </ul>
+
+  <h3>REM — sommeil paradoxal</h3>
+  <ul class="thm">
+    <li>EEG : <strong>tracé bas voltage</strong>, fréquences mixtes (theta + alpha lent), proche d'un éveil somnolent.</li>
+    <li>EOG : <strong>mouvements oculaires rapides</strong> (REMs) — saccades caractéristiques.</li>
+    <li>EMG : <strong>atonie complète</strong> du muscle mentonnier — paradoxe : cerveau actif, corps paralysé.</li>
+    <li>Variant attendu : <em>sawtooth waves</em> — voir §5.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TABLEAU RÉCAPITULATIF
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Tableau récapitulatif — stades de vigilance</h2>
+  <div class="t-scroll">
+    <table>
+      <thead>
+        <tr><th>Stade</th><th>EEG</th><th>EOG</th><th>EMG</th><th>Piège fréquent</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Éveil</strong></td>
+          <td>Alpha postérieur · beta frontal</td>
+          <td>Clignements, saccades</td>
+          <td>Tonus présent</td>
+          <td>Alpha = normal, ne pas paniquer</td>
+        </tr>
+        <tr>
+          <td><strong>N1</strong></td>
+          <td>Theta 4-7 Hz · alpha atténué</td>
+          <td>Mouvements lents (SEM)</td>
+          <td>Tonus diminué</td>
+          <td>Theta abondant pris à tort pour ralentissement pathologique</td>
+        </tr>
+        <tr>
+          <td><strong>N2</strong></td>
+          <td>Fuseaux 11-16 Hz · K-complexes</td>
+          <td>Calme</td>
+          <td>Tonus diminué</td>
+          <td>K-complex pris à tort pour graphoélément épileptiforme</td>
+        </tr>
+        <tr>
+          <td><strong>N3</strong></td>
+          <td>Delta 0,5-2 Hz, &gt; 75 µV, &gt; 20 % epoch</td>
+          <td>Calme</td>
+          <td>Tonus très diminué</td>
+          <td>Delta « pathologique » alors que sujet endormi</td>
+        </tr>
+        <tr>
+          <td><strong>REM</strong></td>
+          <td>Bas voltage, mixte (theta + alpha lent)</td>
+          <td>Mouvements rapides (REMs)</td>
+          <td><strong>Atonie</strong></td>
+          <td>Sawtooth pris à tort pour activité épileptiforme rythmique</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     VARIANTS BÉNINS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Variants bénins — à ne pas confondre avec de l'épileptiforme
+    <span class="h-sub">Le piège classique de l'EEG de sommeil</span>
+  </h2>
+
+  <div class="eeg-fig-wrap compact">
+    <img src="assets/fig_sommeil_variants.png" alt="Vertex sharp transients en N1, POST en N1-N2 et sawtooth waves en REM">
+  </div>
+  <p class="caption">Trois graphoéléments physiologiques pointus du sommeil : <strong>vertex sharp</strong> (N1, central), <strong>POST</strong> (N1-N2, occipital) et <strong>sawtooth</strong> (REM, frontal central).</p>
+
+  <h3>Vertex sharp transients (V-waves)</h3>
+  <ul class="thm">
+    <li><strong>Stade</strong> : N1 surtout, parfois N2 et début N3.</li>
+    <li><strong>Localisation</strong> : <strong>Cz</strong> (vertex) — exclusivement central.</li>
+    <li><strong>Aspect</strong> : déflexion négative brève (&lt; 200 ms), ample (jusqu'à 100-200 µV chez l'enfant).</li>
+    <li><strong>Symétrique</strong> bilatéralement, isolé.</li>
+    <li><strong>Distinction épileptiforme</strong> : pas d'asymétrie · localisation Cz exclusive · contexte de N1 · pas d'onde lente associée.</li>
+  </ul>
+
+  <h3>POST — positive occipital sharp transients of sleep</h3>
+  <ul class="thm">
+    <li><strong>Stade</strong> : N1 et N2.</li>
+    <li><strong>Localisation</strong> : occipitale (O1, O2), bilatéral.</li>
+    <li><strong>Aspect</strong> : déflexion <em>positive</em> (vers le bas en convention EEG) triangulaire, en bouffées courtes.</li>
+    <li><strong>Distinction épileptiforme</strong> : positivité (les sharps épileptiformes sont typiquement négatifs) · contexte N1-N2 · symétrie.</li>
+  </ul>
+
+  <h3>Sawtooth waves</h3>
+  <ul class="thm">
+    <li><strong>Stade</strong> : REM exclusivement.</li>
+    <li><strong>Localisation</strong> : central et frontal central.</li>
+    <li><strong>Aspect</strong> : ondes theta 2-6 Hz en <strong>dent de scie</strong>, succession rapide de pics asymétriques.</li>
+    <li><strong>Distinction épileptiforme</strong> : contexte REM (atonie EMG + REMs au EOG) · morphologie répétitive régulière sans onde lente associée.</li>
+  </ul>
+
+  <h3>K-complexes</h3>
+  <ul class="thm">
+    <li><strong>Stade</strong> : N2 (signature).</li>
+    <li><strong>Localisation</strong> : maximum frontal central.</li>
+    <li><strong>Aspect</strong> : déflexion <strong>biphasique</strong> ample (négative puis positive), durée &gt; 0,5 s, souvent suivie d'un fuseau.</li>
+    <li><strong>Distinction épileptiforme</strong> : isolé · suivi d'un fuseau · pas de répétition rythmique · contexte N2.</li>
+  </ul>
+
+  <h3>Fuseaux de sommeil (sleep spindles)</h3>
+  <ul class="thm">
+    <li><strong>Stade</strong> : N2.</li>
+    <li><strong>Localisation</strong> : maximum central (Cz, C3, C4).</li>
+    <li><strong>Aspect</strong> : bouffées rythmiques <strong>11-16 Hz</strong> (typiquement 12-14 Hz), durée 0,5-1,5 s, fusiformes (amplitude croît puis décroît).</li>
+    <li><strong>Distinction beta abondant</strong> : bouffées courtes et fusiformes, contexte N2 confirmé par K-complexes.</li>
+  </ul>
+
+  <div class="alert">
+    <strong>Règle d'or :</strong> avant de qualifier une activité de « pointue » comme épileptiforme dans un EEG de sommeil, identifier <em>le stade</em> et chercher un variant bénin connu.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPLICATIONS POUR L'ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Implications pour l'ECT
+    <span class="h-sub">Reconnaître le sommeil pour ne pas alarmer à tort</span>
+  </h2>
+  <div class="col2">
+    <div>
+      <h3>Péri-ECT</h3>
+      <ul class="thm">
+        <li>Patient en attente / pré-induction : peut être en N1 (somnolence) avec vertex sharp et theta abondant — <strong>ne pas confondre avec encéphalopathie</strong>.</li>
+        <li>Privation de sommeil parfois utilisée pour démasquer un foyer épileptiforme silencieux.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Post-séance</h3>
+      <ul class="thm">
+        <li>Sommeil léger N1-N2 fréquent — tracé physiologiquement pointu (V-waves, K-complexes) pendant des minutes à dizaines de minutes.</li>
+        <li>Toujours <strong>préciser l'état de vigilance</strong> avant de qualifier l'EEG.</li>
+        <li>Confusion prolongée &gt; 1 h <em>avec</em> tracé pointu hors variants bénins → suspecter état de mal post-critique infraclinique (cf. fiche Status).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert info">
+    <strong>Discipline d'interprétation :</strong> un EEG de sommeil ne s'interprète jamais sans la <em>polysomnographie minimale</em> (EOG + EMG). Sans ces canaux, beaucoup d'éléments physiologiques deviennent ambigus.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Take home messages</h2>
+  <ul class="thm">
+    <li>5 stades de vigilance : <strong>Éveil · N1 · N2 · N3 · REM</strong>.</li>
+    <li>Plus le sommeil s'approfondit, plus les <strong>fréquences lentes dominent</strong>.</li>
+    <li><strong>N2 = K-complex + fuseau</strong> (signature).</li>
+    <li><strong>N3 = delta &gt; 75 µV sur &gt; 20 % de l'epoch</strong>.</li>
+    <li><strong>REM = bas voltage + REMs + atonie EMG</strong> (paradoxe : cerveau actif, corps paralysé).</li>
+    <li><strong>Vertex sharp</strong> (N1, Cz), <strong>POST</strong> (N1-N2, occipital, positif), <strong>sawtooth</strong> (REM, dent de scie) → variants bénins, <em>pas épileptiformes</em>.</li>
+    <li>Pour stadifier : <strong>EEG seul ne suffit pas</strong> — il faut EOG + EMG.</li>
+    <li>Post-ECT : ne pas conclure encéphalopathie sans préciser l'état de vigilance.</li>
+    <li>Privation de sommeil = activation utile pour démasquer foyer épileptiforme silencieux.</li>
+    <li>Avant de qualifier d'épileptiforme : identifier le stade, chercher un variant bénin.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique et critères AASM de stadification du sommeil.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>

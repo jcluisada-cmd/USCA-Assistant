@@ -1,6 +1,12 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.18 — Fiche EEG normal (1/6 du batch handbook).
+> Dernière mise à jour : 8 mai 2026 (v4.19 — Fiche Sommeil (2/6 du batch handbook).
+> 1. **Nouvelle fiche `eeg_ect/fiche_sommeil.html`** (~280 lignes) : 7 sections — résumé · architecture du sommeil (5 stades + cycles 90 min) · stades détaillés (Éveil/N1/N2/N3/REM) · tableau récapitulatif EEG/EOG/EMG par stade · variants bénins (vertex sharp, POST, sawtooth, K-complexes, fuseaux) avec critères de distinction épileptiforme · implications péri/post-ECT · take home. Linke `shared/ressource-doc.css` + `.js`.
+> 2. **2 figures Oxford intégrées** (option C, mix figures) : `fig_sommeil_stades.png` (800×1019, 454 KB — tracés 5 stades + spectres puissance, fig 17.2 du Oxford Handbook) et `fig_sommeil_variants.png` (800×1015, 332 KB — vertex sharp + POST + sawtooth, fig 17.4). Wrapper `.eeg-fig-wrap.compact` (max-width 520 px) pour ne pas dominer la page. Footer attribution sobre option A : "Sources : manuels d'EEG clinique et critères AASM de stadification du sommeil".
+> 3. **Pattern iframe + ↗** : carte Sommeil ajoutée au case `eeg_ect` (icône stéthoscope ardoise pour distinguer visuellement de Technical et Normal). Bandeau "À venir" mis à jour (4 fiches restantes : Artefacts · Épileptiforme · Status · ICU EEG).
+> 4. **SW bump v4.18 → v4.19** : pré-cache de `fiche_sommeil.html` + 2 figures sommeil.)
+>
+> v4.18 — Fiche EEG normal (1/6 du batch handbook).
 > 1. **Nouvelle fiche `eeg_ect/fiche_normal_eeg.html`** (~370 lignes) : 10 sections — résumé · activité de fond adulte éveillé (tableau bandes + asymétrie tolérée 50 %) · réaction d'arrêt avec schéma SVG (alpha bloquée à l'OY) · variantes physiologiques (mu rhythm avec SVG en arche, lambda, BETS, wickets, 14&6, SREDA, mid-temporal RTTD) · variations par âge · activations standardisées (HV 3 min, photostim, sommeil) · checklist 10 points · frontières du normal vs anormal · implications pré/post-ECT · take home. Linke `shared/ressource-doc.css` + `.js`. Pas de figure manuel pour cette fiche (concepts schématisables en SVG).
 > 2. **Pattern iframe + ↗** appliqué : carte Normal ajoutée au case `eeg_ect` de la Toolbox, bandeau "À venir" mis à jour (5 fiches restantes : Sommeil · Artefacts · Épileptiforme · Status · ICU EEG).
 > 3. **TODO ajoutée — Sync dark mode global ↔ iframes fiches** : décision JC. Le toggle dark/light du Toolbox ne propage pas l'état aux iframes. Fix à appliquer en fin de batch (un seul fix couvre les 6 fiches EEG qui partagent `shared/ressource-doc`). La fiche ECT utilise `body.dark` (ancien pattern) → migration vers `html.dark` + `ressource-doc.css` au moment du fix global pour cohérence.
@@ -102,7 +108,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.18 |
+| **Service Worker** | usca-v4.19 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
