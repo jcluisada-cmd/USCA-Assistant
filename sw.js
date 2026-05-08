@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.17';
+const CACHE_NAME = 'usca-v4.18';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -44,6 +44,7 @@ const LOCAL_ASSETS = [
   './fiches-substances/fiche_tabac_patient.html',
   './eeg_ect/fiche_ect.html',
   './eeg_ect/fiche_technical.html',
+  './eeg_ect/fiche_normal_eeg.html',
   './eeg_ect/assets/fig_10_20_repere.png',
   './eeg_ect/assets/fig_10_20_dessus.png',
   './shared/ressource-doc.css',

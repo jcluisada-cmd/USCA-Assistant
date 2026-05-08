@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEG normal — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.5; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  svg.eeg-schema .label-event { fill: var(--r-600); font-weight: 700; }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+  .col2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 720px) { .col2 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>EEG normal</h1>
+  <p class="meta">Activité de fond, variantes physiologiques, frontières du normal — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ ULTRA RAPIDE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>Un EEG <strong>normal</strong> chez l'adulte éveillé est défini par trois choses :</p>
+  <ul class="thm">
+    <li>Un <strong>rythme alpha postérieur</strong> (8-13 Hz) bien organisé, bloqué par l'ouverture des yeux.</li>
+    <li>Une <strong>activité de fond symétrique</strong> (asymétrie D/G &lt; 50 %), sans ralentissement focal.</li>
+    <li>L'<strong>absence d'éléments épileptiformes</strong> (pointes, sharp waves, complexes pointe-onde).</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Avant de conclure « anormal » :</strong> connaître les nombreux <em>variants bénins</em> (mu rhythm, lambda, BETS, wickets…) qui peuvent évoquer à tort une activité épileptiforme à un débutant.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ACTIVITÉ DE FOND — ADULTE ÉVEILLÉ
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Activité de fond — adulte éveillé yeux fermés
+    <span class="h-sub">La référence à mémoriser</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Bande</th><th>Localisation</th><th>Amplitude</th><th>Présence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Alpha (α)</strong> 8-13 Hz</td><td>Postérieure (occipito-pariétale)</td><td>30-60 µV typique</td><td><span class="pill teal">dominante</span></td></tr>
+        <tr><td><strong>Beta (β)</strong> 14-30 Hz</td><td>Frontale et centrale</td><td>&lt; 20 µV</td><td><span class="pill teal">faible quantité</span></td></tr>
+        <tr><td><strong>Theta (θ)</strong> 4-7 Hz</td><td>Temporale, parfois centrale</td><td>&lt; 30 µV</td><td><span class="pill teal">minimale chez le jeune adulte</span></td></tr>
+        <tr><td><strong>Delta (δ)</strong> &lt; 4 Hz</td><td>—</td><td>—</td><td><span class="pill red">absent</span> chez l'adulte éveillé</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="thm" style="margin-top:10px">
+    <li><strong>Asymétrie tolérée</strong> de l'alpha : amplitude D/G acceptable jusqu'à <em>50 % de différence</em> (souvent gauche &gt; droit chez le droitier). Au-delà : suspect.</li>
+    <li><strong>Fréquence dominante</strong> stable d'un côté à l'autre — un écart de fréquence supérieur à 1 Hz est suspect.</li>
+    <li><strong>Réactivité</strong> conservée : l'alpha doit se bloquer à l'ouverture des yeux, à l'attention, au calcul mental.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉACTION D'ARRÊT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Réaction d'arrêt
+    <span class="h-sub">Blocage de l'alpha par l'ouverture des yeux</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 160" aria-label="Schéma de la réaction d'arrêt : alpha bloquée à l'ouverture des yeux">
+    <!-- Avant OY : alpha bien visible -->
+    <text x="20" y="22" font-weight="700">Yeux fermés</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">alpha postérieur dominant</text>
+    <path class="wave" d="M 20 80 Q 40 56 60 80 Q 80 104 100 80 Q 120 56 140 80 Q 160 104 180 80 Q 200 56 220 80 Q 240 104 260 80" />
+
+    <!-- Événement OY -->
+    <line class="axis" x1="270" y1="50" x2="270" y2="115" stroke="var(--r-500)" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <text x="278" y="55" class="label-event">↑ OY</text>
+
+    <!-- Après OY : tracé désynchronisé, beta -->
+    <text x="320" y="22" font-weight="700">Yeux ouverts</text>
+    <text x="320" y="38" font-size="10" fill="var(--n-500)">alpha bloquée — fond rapide aplati</text>
+    <path class="wave" d="M 290 80 L 295 78 L 300 82 L 305 79 L 310 81 L 315 78 L 320 82 L 325 80 L 330 79 L 335 81 L 340 79 L 345 82 L 350 78 L 355 80 L 360 81 L 365 79 L 370 82 L 375 78 L 380 81 L 385 79 L 390 80 L 395 78 L 400 82 L 405 80 L 410 79 L 415 81 L 420 79 L 425 82 L 430 80 L 435 78 L 440 80 L 445 81 L 450 79 L 455 82 L 460 78 L 465 81 L 470 80 L 475 79 L 480 82 L 485 80 L 490 78 L 495 80 L 500 81 L 505 79 L 510 80 L 515 78 L 520 82 L 525 80 L 530 80 L 535 80 L 540 80 L 545 80 L 550 80 L 555 80 L 560 80" />
+
+    <line class="axis" x1="20" y1="130" x2="560" y2="130" />
+    <text x="20" y="146" font-size="10">0</text>
+    <text x="540" y="146" font-size="10">2 s</text>
+  </svg>
+
+  <ul class="thm">
+    <li>Le blocage doit être <strong>symétrique</strong> et <strong>complet</strong> bilatéralement.</li>
+    <li>Asymétrie de blocage = phénomène de Bancaud → suspect d'anomalie focale du côté qui ne se bloque pas.</li>
+    <li>Persistance de l'alpha à l'OY chez l'adulte = atypique (à confirmer dans le contexte).</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     VARIANTES PHYSIOLOGIQUES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Variantes physiologiques
+    <span class="h-sub">Bénin — à connaître pour ne pas surinterpréter</span>
+  </h2>
+
+  <h3>Rythme mu</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 100" aria-label="Schéma du rythme mu : ondes en arche centrales">
+    <text x="20" y="22" font-weight="700">Mu (μ)</text>
+    <text x="20" y="38" font-size="10" fill="var(--n-500)">central · forme en arche · 8-12 Hz</text>
+    <!-- Pattern en arche : pointe rapide vers le bas + onde lente vers le haut -->
+    <path class="wave" d="M 20 70 L 35 50 L 40 80 L 55 50 L 60 80 L 75 50 L 80 80 L 95 50 L 100 80 L 115 50 L 120 80 L 135 50 L 140 80 L 155 50 L 160 80 L 175 50 L 180 80 L 195 50 L 200 80 L 215 50 L 220 80 L 235 50 L 240 80 L 255 50 L 260 80 L 275 50 L 280 80 L 295 50 L 300 80 L 315 50 L 320 80 L 335 50 L 340 80 L 355 50 L 360 80 L 375 50 L 380 80 L 395 50 L 400 80 L 415 50 L 420 80 L 435 50 L 440 80 L 455 50 L 460 80 L 475 50 L 480 80 L 495 50 L 500 80 L 515 50 L 520 80 L 535 50 L 540 80 L 555 50 L 560 70" />
+  </svg>
+  <ul class="thm">
+    <li><strong>Localisation</strong> : régions centrales (C3, C4), parfois bilatéral asynchrone.</li>
+    <li><strong>Forme caractéristique</strong> en arche (pointe descendante puis remontée plus douce) — ne pas confondre avec une activité épileptiforme.</li>
+    <li><strong>Bloqué par le mouvement</strong> contra-latéral (ou son intention) : un patient qui serre le poing droit bloque le mu de C3.</li>
+  </ul>
+
+  <h3>Ondes lambda</h3>
+  <ul class="thm">
+    <li>Déflexions <strong>occipitales triangulaires</strong> visibles lors d'un balayage visuel actif (lecture, exploration d'image complexe).</li>
+    <li>Disparaissent les yeux fermés ou en regardant un écran uniforme.</li>
+    <li>Signification : intégration visuelle normale.</li>
+  </ul>
+
+  <h3>Autres variants bénins à reconnaître</h3>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Variant</th><th>Aspect</th><th>Piège</th></tr></thead>
+      <tbody>
+        <tr><td><strong>BETS</strong> <span class="h-sub">benign epileptiform transients of sleep</span></td><td>Petites pointes brèves, faible amplitude, symétriques, en somnolence légère</td><td>Imite une pointe épileptiforme</td></tr>
+        <tr><td><strong>Wickets</strong> <span class="h-sub">wicket spikes</span></td><td>Ondes en arche temporales (souvent G), 6-11 Hz, sujet jeune ou âgé</td><td>Confondues avec sharp waves temporales</td></tr>
+        <tr><td><strong>14 &amp; 6 Hz positive bursts</strong></td><td>Bouffées brèves bi-fréquences, surtout chez l'enfant/adolescent</td><td>Aucune signification clinique pathologique</td></tr>
+        <tr><td><strong>SREDA</strong> <span class="h-sub">subclinical rhythmic EEG discharge</span></td><td>Décharge rythmique 5-7 Hz, plusieurs secondes, sujet âgé</td><td>Imite un état de mal partiel</td></tr>
+        <tr><td><strong>Mid-temporal RTTD</strong></td><td>Theta rythmique temporal en somnolence (« psychomotor variant »)</td><td>Confondu avec décharge focale</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info">
+    Variants bénins du <strong>sommeil</strong> (vertex sharp transients, POST, sawtooth, fuseaux, K-complexes) → voir <em>fiche Sommeil</em>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     VARIATIONS PAR ÂGE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Variations par âge
+    <span class="h-sub">Le « normal » dépend de l'âge du patient</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Âge</th><th>Tracé attendu</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nouveau-né à terme</strong></td><td>Tracé alternant, delta dominant, asymétrie tolérée +++. Logique propre.</td></tr>
+        <tr><td><strong>Nourrisson 6-12 mois</strong></td><td>Theta dominant postérieur, delta présent, alpha rudimentaire.</td></tr>
+        <tr><td><strong>Enfant 3-10 ans</strong></td><td>Theta abondant, alpha en formation (5-8 Hz d'abord, accélération progressive).</td></tr>
+        <tr><td><strong>Adolescent</strong></td><td>Maturation alpha (~10 Hz), beta plus net.</td></tr>
+        <tr><td><strong>Adulte jeune (20-50)</strong></td><td>Alpha 9-11 Hz dominante, beta frontal modéré, theta minime.</td></tr>
+        <tr><td><strong>Sujet âgé (&gt; 65)</strong></td><td>Ralentissement modéré <em>tolérable</em> : alpha 8-9 Hz, theta plus visible. Au-delà : penser pathologie.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ACTIVATIONS STANDARDISÉES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Activations standardisées
+    <span class="h-sub">Ce qu'on demande au patient pendant l'examen</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Ouverture / fermeture des yeux</strong> répétée → vérifier le blocage de l'alpha (réaction d'arrêt) et sa réapparition.</li>
+    <li><strong>Hyperventilation (HV) 3 minutes</strong> → induit un ralentissement diffus chez le sujet jeune (<em>build-up</em> normal). Persistance &gt; 1 min après l'arrêt = anormal. Démasque les <strong>absences</strong> (complexes pointe-onde 3 Hz).</li>
+    <li><strong>Photostimulation intermittente</strong> (1 → 30 Hz) → driving photonique normal (réponse occipitale verrouillée à la fréquence). Recherche d'une <strong>réponse photoparoxystique</strong> (épilepsie photosensible).</li>
+    <li><strong>Sommeil et privation de sommeil</strong> → augmente la sensibilité pour démasquer une activité épileptiforme silencieuse à l'éveil.</li>
+  </ul>
+  <div class="alert">
+    <strong>Contre-indications HV</strong> : pathologie cardio-pulmonaire sévère, AVC récent, drépanocytose. <strong>Photostim</strong> : prudence si épilepsie photosensible connue (avoir un protocole d'arrêt rapide).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CHECKLIST NORMAL
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Checklist « tracé normal »
+    <span class="h-sub">À vérifier en quelques secondes</span>
+  </h2>
+  <ol class="lecture">
+    <li>Activité de fond <strong>bien organisée</strong>, sans rupture brutale.</li>
+    <li><strong>Alpha postérieur</strong> présent, 8-13 Hz, amplitude 30-60 µV, asymétrie &lt; 50 %.</li>
+    <li><strong>Réaction d'arrêt</strong> à l'ouverture des yeux, symétrique.</li>
+    <li><strong>Beta</strong> en faible quantité, frontal/central.</li>
+    <li><strong>Theta</strong> minime (sujet jeune) ou modéré (sujet âgé).</li>
+    <li><strong>Pas de delta</strong> chez l'adulte éveillé.</li>
+    <li><strong>Pas d'asymétrie focale</strong> de fréquence ou d'amplitude.</li>
+    <li><strong>Pas d'éléments épileptiformes</strong> (pointes, sharp waves, complexes pointe-onde).</li>
+    <li>Variants bénins <strong>identifiés et tolérés</strong>.</li>
+    <li>Activations (HV, photostim) sans anomalie persistante.</li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FRONTIÈRES DU NORMAL
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Frontières du normal — quand basculer en « anormal »
+    <span class="h-sub">Les signes qui obligent à élargir l'interprétation</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Anomalie</th><th>Que penser</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Asymétrie alpha &gt; 50 %</strong></td><td>Atteinte structurale homo-latérale (lésion, AVC ancien, malformation)</td></tr>
+        <tr><td><strong>Fréquence alpha &lt; 8 Hz</strong> chez l'adulte</td><td>Encéphalopathie diffuse, démence débutante, intoxication médicamenteuse</td></tr>
+        <tr><td><strong>Theta abondant et focal</strong></td><td>Lésion / dysfonction sous-jacente</td></tr>
+        <tr><td><strong>Delta chez l'adulte éveillé</strong></td><td>Toujours pathologique : encéphalopathie aiguë, lésion, post-critique</td></tr>
+        <tr><td><strong>Persistance HV &gt; 1 min après arrêt</strong></td><td>Encéphalopathie ou hypoglycémie</td></tr>
+        <tr><td><strong>Réponse photoparoxystique</strong></td><td>Épilepsie photosensible (cf. fiche Épileptiforme)</td></tr>
+        <tr><td><strong>Pointes / sharp waves / complexes pointe-onde</strong></td><td>Activité épileptiforme — voir <em>fiche Épileptiforme</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPLICATIONS POUR ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Implications pour l'ECT
+    <span class="h-sub">Pourquoi un EEG normal pré-séance compte</span>
+  </h2>
+  <div class="col2">
+    <div>
+      <h3>Pré-ECT</h3>
+      <ul class="thm">
+        <li>Tracé baseline = <strong>repère individuel</strong>. Compare au post-ECT.</li>
+        <li>Détecte un <strong>foyer épileptiforme silencieux</strong> ou un ralentissement focal préalable.</li>
+        <li>Détecte un effet médicamenteux marqué (BZD/barbituriques → beta diffus abondant ; lithium → ralentissement diffus).</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Post-ECT précoce</h3>
+      <ul class="thm">
+        <li>Ralentissement diffus avec <strong>delta + theta</strong> abondants : <em>normal pendant quelques heures à jours</em>.</li>
+        <li>Persistance ou aggravation : suspecter état de mal post-critique (cf. fiche Status).</li>
+        <li>Comparer au baseline pour évaluer la récupération.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert">
+    <strong>Discipline ECT :</strong> ne pas conclure « EEG normal » sans avoir vérifié l'ensemble de la checklist (§7) — un foyer épileptiforme isolé peut moduler le rapport bénéfice/risque.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Take home messages</h2>
+  <ul class="thm">
+    <li><strong>Alpha postérieur 8-13 Hz</strong> bloqué par OY = signature normale de l'adulte éveillé.</li>
+    <li>Asymétrie alpha tolérée jusqu'à <strong>50 %</strong>, fréquence stable D/G.</li>
+    <li><strong>Delta chez l'adulte éveillé</strong> = toujours pathologique.</li>
+    <li>Variants bénins (mu, lambda, BETS, wickets, 14&amp;6, SREDA) — à connaître pour ne pas surinterpréter.</li>
+    <li>Mu rhythm : forme en arche, central, bloqué par le mouvement contra-latéral.</li>
+    <li>Activations standard : OY/FY, HV 3 min, photostim 1-30 Hz.</li>
+    <li>Sujet âgé : ralentissement modéré tolérable ; au-delà = pathologie.</li>
+    <li>Pré-ECT : baseline normal recommandé pour détecter foyer silencieux et servir de repère post-séance.</li>
+    <li>Post-ECT précoce : ralentissement diffus normal qq h-jours.</li>
+    <li>« Normal » se valide par checklist : fond · alpha · réaction d'arrêt · symétrie · pas de lent focal · pas d'épileptiforme · variants identifiés.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>

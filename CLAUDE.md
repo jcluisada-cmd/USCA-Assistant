@@ -1,6 +1,12 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.17 — Fiches EEG/ECT en iframe intégré + fix mise en page fiche ECT.
+> Dernière mise à jour : 8 mai 2026 (v4.18 — Fiche EEG normal (1/6 du batch handbook).
+> 1. **Nouvelle fiche `eeg_ect/fiche_normal_eeg.html`** (~370 lignes) : 10 sections — résumé · activité de fond adulte éveillé (tableau bandes + asymétrie tolérée 50 %) · réaction d'arrêt avec schéma SVG (alpha bloquée à l'OY) · variantes physiologiques (mu rhythm avec SVG en arche, lambda, BETS, wickets, 14&6, SREDA, mid-temporal RTTD) · variations par âge · activations standardisées (HV 3 min, photostim, sommeil) · checklist 10 points · frontières du normal vs anormal · implications pré/post-ECT · take home. Linke `shared/ressource-doc.css` + `.js`. Pas de figure manuel pour cette fiche (concepts schématisables en SVG).
+> 2. **Pattern iframe + ↗** appliqué : carte Normal ajoutée au case `eeg_ect` de la Toolbox, bandeau "À venir" mis à jour (5 fiches restantes : Sommeil · Artefacts · Épileptiforme · Status · ICU EEG).
+> 3. **TODO ajoutée — Sync dark mode global ↔ iframes fiches** : décision JC. Le toggle dark/light du Toolbox ne propage pas l'état aux iframes. Fix à appliquer en fin de batch (un seul fix couvre les 6 fiches EEG qui partagent `shared/ressource-doc`). La fiche ECT utilise `body.dark` (ancien pattern) → migration vers `html.dark` + `ressource-doc.css` au moment du fix global pour cohérence.
+> 4. **SW bump v4.17 → v4.18** : pré-cache de `fiche_normal_eeg.html`.)
+>
+> v4.17 — Fiches EEG/ECT en iframe intégré + fix mise en page fiche ECT.
 > 1. **Iframe intégré dans Toolbox** : nouveau pattern `selEegFiche` (state `useState({slug, nom})`) dans le composant App de `staff/toolbox.html`. Quand une carte EEG/ECT est cliquée, la fiche s'affiche désormais en iframe au sein de la Toolbox (`height: calc(100vh - 180px)`, comme les fiches patient existantes) au lieu d'ouvrir un nouvel onglet. Header de l'iframe : bouton ← retour + nom de la fiche tronqué + bouton ↗ pour ouvrir tout de même en nouvel onglet (utile impression A4, séance ECT). `nav()` clear `selEegFiche` au changement de vue.
 > 2. **Fix mise en page fiche ECT** : `.grid-2 { grid-template-columns: 1fr; }` permanent (suppression du media query `@media (max-width:768px)`). Toutes les sections sont désormais empilées en 1 colonne quelle que soit la largeur d'écran — lisibilité optimale en iframe et sur tablette landscape (Galaxy Tab S7 FE). Schémas spécifiques (`.sismo-schema` 4 cols, `.phases` 5 cols) inchangés car ce sont des visualisations.
 > 3. **Pattern unifié pour toutes les fiches EEG** : la fiche Technical et les 6 fiches du batch à venir (normal · sommeil · artefacts · épileptiforme · status · ICU) utiliseront ce pattern iframe + ↗ — décidé suite à validation JC.
@@ -96,7 +102,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.17 |
+| **Service Worker** | usca-v4.18 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
