@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status epilepticus — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.4; }
+  svg.eeg-schema .wave-pat { fill: none; stroke: var(--r-500); stroke-width: 1.6; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+  .col2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 720px) { .col2 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Status epilepticus</h1>
+  <p class="meta">État de mal — convulsif et non-convulsif — urgence absolue — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <div class="alert crit" style="margin-top:0">
+    <strong>Urgence absolue.</strong> Toute suspicion d'état de mal impose un avis neurologique et un traitement immédiat — sans attendre la confirmation EEG.
+  </div>
+  <ul class="thm" style="margin-top:10px">
+    <li><strong>2 grandes formes</strong> : convulsif (visible cliniquement) · non-convulsif / NCSE (cliniquement discret ou silencieux).</li>
+    <li><strong>Définition opérationnelle</strong> : crise &gt; 5 min ou 2 crises sans récupération de conscience entre (ILAE).</li>
+    <li><strong>Pertinence ECT majeure</strong> : confusion post-ECT prolongée &gt; 1 h doit faire évoquer un NCSE — EEG en urgence.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     DÉFINITION
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Définition opérationnelle (ILAE 2015)
+    <span class="h-sub">Pourquoi 5 min, et pas plus tard</span>
+  </h2>
+  <p>Une crise épileptique tonico-clonique généralisée s'arrête spontanément en règle générale en moins de 2 minutes. Au-delà de <strong>5 minutes</strong>, l'arrêt spontané devient improbable et le risque de séquelles neurologiques augmente avec chaque minute. C'est le seuil opérationnel retenu pour déclencher la prise en charge urgente.</p>
+  <ul class="thm">
+    <li><strong>t1 = 5 min</strong> : seuil pour parler de status (déclenche le traitement).</li>
+    <li><strong>t2 = 30 min</strong> : seuil au-delà duquel les lésions neuronales s'installent (excitotoxicité, mort cellulaire).</li>
+    <li><strong>2 crises rapprochées</strong> sans récupération de conscience entre les deux = équivalent d'un status.</li>
+  </ul>
+  <div class="alert">
+    <strong>Status réfractaire</strong> : status persistant malgré 2 antiépileptiques de 1<sup>re</sup> et 2<sup>e</sup> ligne. <strong>Status super-réfractaire</strong> : persistant &gt; 24 h ou récidivant à la levée de l'anesthésie.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     STATUS CONVULSIF
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Status convulsif (généralisé tonico-clonique)
+    <span class="h-sub">La forme la plus visible — diagnostic clinique avant tout</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 130" aria-label="Pattern EEG d'une crise tonico-clonique : recrutement, décharge rythmique, ralentissement post-critique">
+    <text x="20" y="20" font-weight="700">Pattern critique tonico-clonique</text>
+    <!-- Phase 1 : fond normal -->
+    <path class="wave" d="M 20 80 Q 35 65 50 80 Q 65 95 80 80 Q 95 65 110 80" />
+    <text x="20" y="115" font-size="9" fill="var(--n-500)">Pré-crise</text>
+    <!-- Phase 2 : recrutement (montée amplitude) -->
+    <path class="wave-pat" d="M 110 80 L 120 65 L 130 95 L 140 60 L 150 100 L 160 55 L 170 105 L 180 50 L 190 110 L 200 45 L 210 115 L 220 40 L 230 120" />
+    <text x="125" y="115" font-size="9" fill="var(--r-600)" font-weight="700">Recrutement</text>
+    <!-- Phase 3 : tonique (rapide ample) -->
+    <path class="wave-pat" d="M 230 120 L 240 30 L 248 120 L 258 30 L 266 120 L 276 30 L 284 120 L 294 30 L 302 120 L 312 30 L 320 120 L 330 30" />
+    <text x="245" y="115" font-size="9" fill="var(--r-600)" font-weight="700">Tonique</text>
+    <!-- Phase 4 : clonique (pointe-onde rythmique) -->
+    <path class="wave-pat" d="M 330 30 L 340 100 Q 350 120 360 100 L 370 50 L 380 100 Q 390 120 400 100 L 410 55 L 420 100 Q 430 120 440 100" />
+    <text x="365" y="115" font-size="9" fill="var(--r-600)" font-weight="700">Clonique</text>
+    <!-- Phase 5 : post-critique (atténuation puis ralentissement) -->
+    <path class="wave" d="M 440 100 L 460 80 L 470 80 L 490 80 Q 510 65 530 80 Q 550 95 560 80" />
+    <text x="475" y="115" font-size="9" fill="var(--n-500)" font-weight="700">Post-critique</text>
+  </svg>
+
+  <ol class="lecture">
+    <li><strong>Recrutement initial</strong> : montée progressive de l'amplitude et de la fréquence.</li>
+    <li><strong>Phase tonique</strong> : activité rapide ample, monotone (10-20 Hz), durée 10-20 s.</li>
+    <li><strong>Phase clonique</strong> : pointes-ondes rythmiques (1-3 Hz), s'espacent vers la fin.</li>
+    <li><strong>Atténuation post-critique</strong> : aplatissement transitoire, puis ralentissement diffus delta/theta plusieurs minutes à heures.</li>
+  </ol>
+  <div class="alert">
+    <strong>Diagnostic clinique avant EEG</strong> : convulsions tonico-cloniques généralisées prolongées ne nécessitent pas d'attendre l'EEG pour traiter. <em>Traiter d'abord, EEG si confusion persistante après contrôle des convulsions</em>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     STATUS FOCAL
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Status focal (focal moteur, focal complexe)
+    <span class="h-sub">Décharge limitée à une région — clinique parfois discrète</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Status focal moteur</strong> (ex. epilepsia partialis continua) : clonies persistantes d'un membre. EEG : décharge rythmique focale (souvent rolandique).</li>
+    <li><strong>Status focal complexe</strong> : altération de conscience, automatisme oraux/manuels prolongés, discours incohérent, état dissociatif. Peut <strong>ressembler à un état psychiatrique</strong>.</li>
+    <li>EEG : décharge rythmique focale ou hémisphérique, propagation possible.</li>
+    <li>À évoquer chez un patient psychiatrique avec changement aigu d'état mental, surtout chez l'épileptique connu.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     STATUS NON-CONVULSIF
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Status non-convulsif (NCSE)
+    <span class="h-sub">Le piège majeur — diagnostic uniquement EEG</span>
+  </h2>
+
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Pattern de status non-convulsif : décharge rythmique stable continue">
+    <text x="20" y="20" font-weight="700">NCSE — décharge rythmique stable</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">activité 1,5-3 Hz continue, peu de variation, &gt; 30 min</text>
+    <!-- Décharge rythmique régulière sur toute la largeur -->
+    <path class="wave-pat" d="M 20 70 L 35 45 L 45 90 L 60 50 L 70 90 L 85 45 L 95 90 L 110 50 L 120 90 L 135 45 L 145 90 L 160 50 L 170 90 L 185 45 L 195 90 L 210 50 L 220 90 L 235 45 L 245 90 L 260 50 L 270 90 L 285 45 L 295 90 L 310 50 L 320 90 L 335 45 L 345 90 L 360 50 L 370 90 L 385 45 L 395 90 L 410 50 L 420 90 L 435 45 L 445 90 L 460 50 L 470 90 L 485 45 L 495 90 L 510 50 L 520 90 L 535 45 L 545 90 L 560 70" />
+  </svg>
+
+  <p>Le NCSE est une <strong>activité critique électrique sans manifestation motrice convulsive</strong>. Cliniquement il se présente comme :</p>
+  <ul class="thm">
+    <li>Confusion prolongée inexpliquée.</li>
+    <li>Coma persistant après une crise.</li>
+    <li>Mutisme, négligence, comportement bizarre.</li>
+    <li>Stupeur, ralentissement psychomoteur majeur.</li>
+  </ul>
+  <p>Le diagnostic <strong>nécessite obligatoirement l'EEG</strong> car la clinique est non spécifique.</p>
+
+  <div class="alert crit">
+    <strong>Quand penser à un NCSE :</strong>
+    <ul style="margin:4px 0 0;padding-left:18px;font-size:12.5px">
+      <li>Confusion prolongée &gt; 30 min après convulsion contrôlée.</li>
+      <li><strong>Confusion post-ECT &gt; 1 h</strong> non expliquée par l'anesthésie.</li>
+      <li>Coma sans cause structurale ni métabolique évidente en réanimation.</li>
+      <li>Patient âgé avec changement aigu d'état mental.</li>
+      <li>Patient sous antiépileptiques avec modification clinique.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CRITÈRES SALZBURG
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Critères de Salzburg (simplifiés)
+    <span class="h-sub">Reconnaître un NCSE sur l'EEG</span>
+  </h2>
+  <p>Les critères de Salzburg modifiés sont la référence internationale. Voici la version pratique simplifiée :</p>
+  <h3>NCSE certain</h3>
+  <ul class="thm">
+    <li>Décharges épileptiformes (pointes, sharp waves, pointes-ondes) à <strong>&gt; 2,5 Hz</strong>, ou</li>
+    <li>Décharges épileptiformes &lt; 2,5 Hz <strong>+</strong> évolution typique (phases d'augmentation/diminution de fréquence/amplitude/champ).</li>
+  </ul>
+
+  <h3>NCSE possible (« encephalopathic background » + features)</h3>
+  <ul class="thm">
+    <li>Décharges épileptiformes &lt; 2,5 Hz sans évolution typique, <strong>+</strong> au moins 1 critère parmi :</li>
+    <li style="list-style:disc;margin-left:22px">amélioration EEG (et clinique) après BZD IV — <em>test thérapeutique</em></li>
+    <li style="list-style:disc;margin-left:22px">subtle clinical phenomena correlated with EEG (clignements, tremblements péri-buccaux, nystagmus)</li>
+  </ul>
+
+  <div class="alert info">
+    <strong>Test thérapeutique au lorazépam IV</strong> (1-2 mg) : si l'EEG s'améliore <em>en même temps</em> que la clinique, cela conforte le diagnostic de NCSE. Outil de référence quand le pattern EEG est ambigu.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     CONDUITE À TENIR
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Conduite à tenir
+    <span class="h-sub">Paliers de traitement standardisés</span>
+  </h2>
+
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Délai</th><th>Action</th><th>Détail</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>0-5 min</strong></td>
+          <td>Mesures de réanimation</td>
+          <td>PLS, VVP, glycémie capillaire, oxygène. Surveillance scope.</td>
+        </tr>
+        <tr>
+          <td><strong>5-20 min</strong><br><span class="pill teal">1<sup>re</sup> ligne</span></td>
+          <td><strong>Benzodiazépine</strong></td>
+          <td>Clonazépam 1 mg IVL ou Diazépam 10 mg IV (répétable 1×). En l'absence de voie veineuse : Midazolam IM ou intra-buccal.</td>
+        </tr>
+        <tr>
+          <td><strong>20-40 min</strong><br><span class="pill amber">2<sup>e</sup> ligne</span></td>
+          <td><strong>Antiépileptique IV</strong></td>
+          <td>Phénytoïne 20 mg/kg, lévétiracétam 60 mg/kg, valproate 40 mg/kg, phénobarbital. Choix selon contexte.</td>
+        </tr>
+        <tr>
+          <td><strong>&gt; 40 min</strong><br><span class="pill red">3<sup>e</sup> ligne</span></td>
+          <td><strong>Anesthésie générale</strong></td>
+          <td>Réanimation, intubation. Propofol, midazolam, thiopental, kétamine. Cible EEG : <em>burst-suppression</em> 12-24 h.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ul class="thm" style="margin-top:10px">
+    <li>Bilan étiologique parallèle : iono, glycémie, calcémie, magnésémie, alcoolémie, dosage des antiépileptiques, IRM/scanner si nouveau cas, ponction lombaire si fièvre.</li>
+    <li>Penser aux causes <strong>aiguës réversibles</strong> : hypoglycémie, hyponatrémie, sevrage alcoolique, intoxication, infection cérébrale.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPLICATIONS POUR ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Implications pour l'ECT
+    <span class="h-sub">Quand suspecter un status post-séance</span>
+  </h2>
+  <div class="col2">
+    <div>
+      <h3>Per-séance</h3>
+      <ul class="thm">
+        <li>Une crise déclenchée &gt; 120 s = sur-dosage. Considérer arrêt par BZD si &gt; 180 s.</li>
+        <li>Crise prolongée mal contrôlée → status iatrogène — rare avec dosage adapté.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Post-séance</h3>
+      <ul class="thm">
+        <li><strong>Confusion post-ECT &gt; 1 h</strong> non expliquée par l'anesthésie : <strong>EEG en urgence</strong> pour éliminer un NCSE.</li>
+        <li>Ralentissement diffus prolongé seul = encéphalopathie post-séance, pas un NCSE — pas d'urgence.</li>
+        <li>Crises spontanées post-ECT (rares) : se présentent généralement dans les 24-48 h post-séance.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert">
+    <strong>Règle d'or post-ECT :</strong> patient confus 1 h après la séance + tracé persistant rythmique épileptiforme = NCSE jusqu'à preuve du contraire. Test thérapeutique au lorazépam IV puis transfert si confirmé.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RED FLAGS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Red flags — à reconnaître en quelques secondes</h2>
+  <div class="alert crit">
+    <ul class="thm" style="margin:0">
+      <li><strong>Convulsions tonico-cloniques &gt; 5 min</strong> sans arrêt spontané.</li>
+      <li><strong>2 crises rapprochées</strong> sans récupération de conscience entre.</li>
+      <li><strong>Confusion prolongée &gt; 30 min</strong> après une crise apparemment résolue.</li>
+      <li><strong>Confusion post-ECT &gt; 1 h</strong> sans explication anesthésique.</li>
+      <li><strong>Coma inexpliqué</strong> en réanimation, surtout après une crise initiale.</li>
+      <li>Décharge rythmique &gt; 2,5 Hz prolongée à l'EEG.</li>
+      <li>Patterns ambigus avec subtle clinical phenomena (clignements rythmiques, mâchonnement, nystagmus).</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Take home messages</h2>
+  <ul class="thm">
+    <li>Status = crise <strong>&gt; 5 min</strong> ou 2 crises sans récupération entre (ILAE).</li>
+    <li>2 grandes formes : <strong>convulsif</strong> (visible) et <strong>non-convulsif / NCSE</strong> (uniquement EEG).</li>
+    <li>Status convulsif : recrutement → tonique → clonique → post-critique.</li>
+    <li>NCSE : décharge rythmique stable &gt; 2,5 Hz prolongée + clinique de confusion / coma / état dissocié.</li>
+    <li>Critères de Salzburg : décharge &gt; 2,5 Hz, ou évolution typique, ou amélioration au lorazépam IV.</li>
+    <li>Traitement par <strong>paliers</strong> : BZD (1<sup>re</sup>) → antiépileptique IV (2<sup>e</sup>) → anesthésie générale (3<sup>e</sup>) avec cible EEG burst-suppression.</li>
+    <li>Causes aiguës réversibles : hypoglycémie, hyponatrémie, sevrage OH, intoxication, infection.</li>
+    <li><strong>Confusion post-ECT &gt; 1 h</strong> = penser NCSE jusqu'à preuve EEG du contraire.</li>
+    <li>Test thérapeutique lorazépam IV : améliore clinique <em>et</em> EEG = NCSE confirmé.</li>
+    <li>Plus le délai de prise en charge augmente, plus le pronostic neurologique se dégrade — d'où l'urgence à 5 min.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique, recommandations ILAE et critères de Salzburg.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>
