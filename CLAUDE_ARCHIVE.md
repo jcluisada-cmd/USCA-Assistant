@@ -165,6 +165,115 @@
 - [x] **Limites** (notées dans le spec §7) : masquage UI ≠ sécurité BDD (les RLS des tables patients/messages/etc. restent inchangées — un user avec accès API peut toujours lire les données qu'on cache visuellement). Si à l'avenir une feature exige un vrai contrôle d'accès données par rôle, il faudra ajouter des policies RLS dédiées indépendamment de P5.
 - [x] **Extensions V2 hors scope** (notées spec §9 pour référence future) : per-user overrides (table `user_modules_override` qui prime sur `role_modules_hidden`), preset par substance/parcours patient, journal d'audit (`role_modules_log`), intégration auto pour nouveaux modules (ajouter à `modules-config.js` + `data-module` → apparaît automatiquement dans matrix + edit mode).
 
+### Sessions v4.08 → v4.24 (24 avril → 8 mai 2026) — détail livré
+
+> Format hérité du header CLAUDE.md avant le split en `CHANGELOG.md` + `MODULES.md` + `DB_SCHEMA.md`.
+> Pour le résumé 1-ligne par version : voir `CHANGELOG.md`.
+
+**v4.24 — Sync dark mode iframes EEG/ECT ↔ Toolbox global**
+1. **Stratégie URL param** : la Toolbox passe `?theme=dark|light` dans le `src` de l'iframe selon `localStorage.usca_theme`. La fiche lit le param au chargement et applique le dark mode. Comme le toggle global de la Toolbox déclenche déjà un reload (`saveViewThenReload` ligne 1779), l'iframe est rechargée avec le bon param — pas besoin de postMessage runtime, solution minimaliste et robuste.
+2. **`shared/ressource-doc.js`** : priorité de résolution du thème — (1) URL param `?theme=` (mode iframe synchronisé), (2) `localStorage('usca-res-theme')` (mode standalone), (3) light par défaut. **Détection mode iframe** via `window.self !== window.top` : en iframe, le bouton flottant ☀️/🌙 est masqué (toggle dans le parent). En ouverture directe (file:// ou nouvel onglet), le bouton reste fonctionnel.
+3. **`eeg_ect/fiche_ect.html`** (qui utilise `body.dark`, ancien pattern, distinct de `ressource-doc.css`) : ajout d'un script inline en début de `<body>` qui lit `?theme=` et applique `body.classList.add('dark')` si dark — compatibilité avec le pattern existant sans tout migrer.
+4. **Toutes les fiches EEG/ECT bénéficient** : Fiche pratique ECT + 7 fiches handbook (Technical, Normal, Sommeil, Artefacts, Épileptiforme, Status, EEG en réanimation).
+5. **SW bump v4.23 → v4.24** (force re-fetch toolbox.html + ressource-doc.js + fiche_ect.html mis à jour).
+
+**v4.23 — Fiche EEG en réanimation (6/6 — batch handbook complet)**
+1. **Nouvelle fiche `eeg_ect/fiche_icu_eeg.html`** (~430 lignes) : 10 sections — résumé 4 questions clés (encéphalopathie ? · NCSE ? · pronostic ? · profondeur d'anesthésie ?), encéphalopathie diffuse avec SVG (delta-theta diffus haute amplitude), patterns périodiques ACNS 2021 avec SVG LPDs (anciennement PLEDs · unilatéraux), GPDs (anciennement GPEDs · bilatéraux synchrones), BIPDs (bilatéraux indépendants · pronostic très péjoratif), burst-suppression avec SVG (anesthésie ciblée vs post-anoxie), ondes triphasiques avec SVG (encéphalopathies métaboliques hépatique/urémique), silence électrique cérébral (critère mort cérébrale), continuum ictal-interictal (zone grise + test lorazépam IV), implications ECT (effet cumulatif séances rapprochées), red flags, take home.
+2. **Vocabulaire ACNS 2021 mis à jour** explicitement (LPDs/GPDs/BIPDs remplacent PLEDs/GPEDs/BIPLEDs).
+3. **SVG schématiques** : encéphalopathie, LPDs périodiques, burst-suppression, triphasiques. Aucune figure du manuel — concepts schématisables.
+4. **Pattern iframe + ↗** : carte EEG en réanimation ajoutée (icône activité ardoise foncé `C.n[800]`). Bandeau "À venir" supprimé — toutes les 6 fiches handbook + Technical livrées.
+5. **Renommage** : ICU EEG → "EEG en réanimation" partout. Slug fichier `icu_eeg` conservé.
+6. **SW bump v4.22 → v4.23**. Batch handbook complet livré.
+
+**v4.22 — Fiche Status epilepticus (5/6 du batch handbook)**
+1. **Nouvelle fiche `eeg_ect/fiche_status_epilepticus.html`** (~430 lignes) : 10 sections — résumé urgence, définition opérationnelle ILAE 2015 (t1=5 min, t2=30 min), status convulsif tonico-clonique avec SVG, status focal moteur et complexe, status non-convulsif (NCSE) avec SVG, critères de Salzburg simplifiés, conduite à tenir 4 paliers (BZD 1<sup>re</sup> ligne / antiépileptique IV 2<sup>e</sup> / anesthésie générale burst-suppression 3<sup>e</sup>), implications ECT (confusion post-séance > 1 h = NCSE jusqu'à preuve du contraire), red flags, take home.
+2. SVG schématiques crise tonico-clonique (4 phases distinctes en couleur rouge) et NCSE.
+3. Carte ajoutée case `eeg_ect` (icône thermo rouge `C.r[700]` urgence). Bandeau "À venir" : reste **EEG en réanimation** (6/6).
+4. **SW bump v4.21 → v4.22**.
+
+**v4.21 — Fiche Activité épileptiforme (4/6 du batch handbook)**
+1. **Nouvelle fiche `eeg_ect/fiche_epileptiforme.html`** (~440 lignes) : 11 sections — résumé, définition rigoureuse (stéréotypie/paroxysme/polarité/champ), 4 graphoéléments unitaires avec SVG (pointe <70 ms, sharp wave 70-200 ms, pointe-onde, polypointe-onde), patterns groupés généralisés (pointe-onde 3 Hz absence, lente 1,5-2,5 Hz Lennox-Gastaut, hypsarythmie West), distribution spatiale, activations (HV/photostim/sommeil), signification clinique (5% pop sans épilepsie, sensibilité ~50% en simple → ~80% avec sommeil/privation), pièges variants bénins (tableau 7 lignes avec renvois Normal et Sommeil), implications ECT pré/per/post-séance, red flags, take home.
+2. **SVG schématiques en rouge `var(--r-500)`** pour les graphoéléments (cohérent avec Artefacts).
+3. **Renommage à venir — fiche 6/6 ICU EEG → "EEG en réanimation"** (décision JC pour vocabulaire hospitalier français standard, slug `icu_eeg` conservé).
+4. Pattern iframe + ↗ : carte ajoutée case `eeg_ect` (icône alerte rouge `C.r[600]`).
+5. **SW bump v4.20 → v4.21**.
+
+**v4.20 — Fiche Artefacts (3/6 du batch handbook)**
+1. **Nouvelle fiche `eeg_ect/fiche_artefacts.html`** (~340 lignes) : 11 sections — résumé, 3 grandes familles (biologique/mécanique/électrique), EMG (SVG hérissé rouge), ECG/pulse (SVG impulsions régulières), oculaires/blink (SVG déflexion frontale), sueur (SVG dérive lente), secteur 50 Hz + mauvais contact (SVG oscillation fine), tableau de poche 9 lignes, méthode systématique 3 questions (où/quand/comment), pièges péri-ECT (pré-induction, per-séance, recovery), take home. Tous SVG en rouge `var(--r-500)`.
+2. **Aucune figure du manuel** — tous SVG faits maison (option C).
+3. Pattern iframe + ↗ : carte ajoutée case `eeg_ect` (icône alerte ambre `C.a[700]`).
+4. **SW bump v4.19 → v4.20**.
+
+**v4.19 — Fiche Sommeil (2/6 du batch handbook)**
+1. **Nouvelle fiche `eeg_ect/fiche_sommeil.html`** (~280 lignes) : 7 sections — résumé · architecture du sommeil (5 stades + cycles 90 min) · stades détaillés (Éveil/N1/N2/N3/REM) · tableau récapitulatif EEG/EOG/EMG · variants bénins (vertex sharp, POST, sawtooth, K-complexes, fuseaux) avec critères distinction épileptiforme · implications péri/post-ECT · take home.
+2. **2 figures Oxford intégrées** (option C, mix figures) : `fig_sommeil_stades.png` (800×1019, 454 KB — fig 17.2) et `fig_sommeil_variants.png` (800×1015, 332 KB — fig 17.4). Wrapper `.eeg-fig-wrap.compact` (max-width 520 px). Footer attribution sobre option A.
+3. Pattern iframe + ↗ : carte ajoutée case `eeg_ect` (icône stéthoscope ardoise).
+4. **SW bump v4.18 → v4.19**.
+
+**v4.18 — Fiche EEG normal (1/6 du batch handbook)**
+1. **Nouvelle fiche `eeg_ect/fiche_normal_eeg.html`** (~370 lignes) : 10 sections — résumé · activité de fond adulte éveillé (tableau bandes + asymétrie tolérée 50%) · réaction d'arrêt avec schéma SVG · variantes physiologiques (mu rhythm SVG en arche, lambda, BETS, wickets, 14&6, SREDA, mid-temporal RTTD) · variations par âge · activations standardisées (HV 3 min, photostim, sommeil) · checklist 10 points · frontières du normal vs anormal · implications pré/post-ECT · take home. Pas de figure manuel (concepts schématisables en SVG).
+2. Pattern iframe + ↗ appliqué : carte Normal ajoutée case `eeg_ect`.
+3. **TODO ajoutée — Sync dark mode global ↔ iframes fiches** (livrée en v4.24).
+4. **SW bump v4.17 → v4.18**.
+
+**v4.17 — Fiches EEG/ECT en iframe intégré + fix mise en page fiche ECT**
+1. **Iframe intégré dans Toolbox** : nouveau pattern `selEegFiche` (state `useState({slug, nom})`) dans `staff/toolbox.html`. La fiche s'affiche en iframe au sein de la Toolbox (`height: calc(100vh - 180px)`). Header iframe : ← retour + nom tronqué + ↗ ouvrir nouvel onglet. `nav()` clear `selEegFiche` au changement de vue.
+2. **Fix mise en page fiche ECT** : `.grid-2 { grid-template-columns: 1fr; }` permanent. Toutes les sections empilées en 1 colonne — lisibilité optimale en iframe et tablette landscape (Galaxy Tab S7 FE). Schémas spécifiques (`.sismo-schema`, `.phases`) inchangés.
+3. **Pattern unifié pour toutes fiches EEG** : Technical + 6 fiches batch utilisent ce pattern.
+4. **SW bump v4.16 → v4.17**.
+
+**v4.16 — Fiche pilote EEG : Comprendre un EEG en 10 min**
+1. **Nouvelle fiche `eeg_ect/fiche_technical.html`** (378 lignes) : fiche pilote chapitre Technical handbook, rédigée en synthèse pédagogique originale. Sections : résumé · 4 bandes de fréquence (schéma SVG α/β/θ/δ) · origine du signal · montages bipolaire vs référentiel (schéma SVG) · filtres et calibration · artefacts techniques · règles de lecture rapide · checklist psychiatre ECT · red flags · take home. Linke `shared/ressource-doc.css` + `.js`.
+2. Pas de figures du manuel (chapitre Technical conceptuel).
+3. **Case `eeg_ect` enrichi** : 2 sections distinctes — "Pratique ECT" (`fiche_ect.html` Pitié) et "Fiches EEG (handbook)" (Technical actif + bandeau "À venir" pour 5 chapitres restants).
+4. **SW bump v4.15 → v4.16** : pré-cache de `fiche_technical.html` + `shared/ressource-doc.css` + `shared/ressource-doc.js` (jamais cachés auparavant).
+5. **Mode validation visuelle** : fiche pilote présentée à JC pour calage du style/structure avant batch.
+
+**v4.15 — Fixes Toolbox post-réorga**
+1. **Carte "Protocoles USCA par substance" → "Protocoles USCA"** (label simplifié). Court-circuit du hub `protocoles_hub` : la grande carte ouvre directement `case "substances"`. Bottom nav `Protocoles` pointe sur `id:"substances"`. Le hub reste défini mais inaccessible.
+2. **Vue Traitements — renommages + accordéons Fiches Expert** : SectionHead "Traitements" → "Fiches Traitements et Substances". Cartes "Fiches Patient" → "Fiches Traitements Patient", "Fiches Expert" → "Fiches Traitements Expert". `renderExpertSection` refondue : classes médicamenteuses repliées par défaut.
+3. **MASTER_PROMPT_EEG_ECT.md — flexibilité longueur** : section "CAP LONGUEUR" relâchée. Cible 400-700 lignes maintenue mais autorisation de dépasser pour chapitres denses.
+4. **SW bump v4.14 → v4.15**.
+
+**v4.14 — Réorga Toolbox V1 + nouvelle carte EEG/ECT**
+1. **Réorganisation cartes Toolbox** : passage de 3 grandes + 3 petites + 1 carte feedback isolée à **4 grandes + 5 petites**. Grandes : Protocoles USCA / Ressources USCA / Fiches Traitements et Substances / Dossier post-cure. Petites : Scores · EEG/ECT · Interactions (MetaboScope) ; ELSA · Feedback. **Ressources** sortie du sous-hub Protocoles. **ELSA** rétrogradée en petite. **Feedback** intégrée à la grille.
+2. **Nouvelle carte "EEG / ECT"** : case `eeg_ect` qui ouvre `eeg_ect/fiche_ect.html` (fiche pratique ECT canonique de la Pitié, copiée depuis `EEG_ECT_handbook/fiche_ect.html`). Placeholder pour fiches EEG handbook à venir.
+3. **Renommage "Interactions" → "Interactions (MetaboScope)"**. Le standalone MetaboScope sera intégré ultérieurement.
+4. **`MASTER_PROMPT_EEG_ECT.md` corrigé** : aligné charte USCA + dark mode, arborescence `eeg_ect/` + manifest `index.json` calqué sur `ressources_doc/`, design system partagé `shared/ressource-doc.css`, figures PNG externes dans `eeg_ect/assets/` (pas d'inline base64), cap longueur ~400-700 lignes/fiche.
+5. **SW bump v4.13 → v4.14**.
+
+**v4.13 — Push 10 min + push patients pour ateliers + permissions triées + pop-up présence ateliers patient**
+1. **Rappels push 9-10 min au lieu de 4-5 min** : fenêtre élargie dans `cron-reminders/index.ts` (`in9`/`in10`), textes "Dans 10 min" partout. La latence venait de FCM/APNs (5-30 s) et tick cron (jitter ±60 s) → fix = pousser 5 min plus tôt.
+2. **Push 10 min avant atelier à TOUS patients hospitalisés abonnés** : nouveau bloc `3b. Patients hospitalisés` SCAN 3. Récupère `push_subscriptions WHERE patient_id IS NOT NULL` (distinct), filtre via `groupe_modifications.exclusions[]`. Anti-doublon migration v36 : `patient_id UUID NULL` ajoutée à `push_reminders_sent_groupe` + CHECK XOR + 2 UNIQUE partiels. Tag PWA dédié `atelier-<slug>-<date>`.
+3. **Affichage permissions admin trié chronologiquement** : `renderPatientPerms` partitionne en `future` et `past`, tri ascendant `date_debut`, séparateur "Permissions passées". `buildPermCard(p, patientId, isPast)` : si past, fond gris + opacité 70% + retrait Valider/Refuser/Annuler/Modifier (seul 🗑 reste).
+4. **Pop-up "Tes ateliers du jour" patient** : modal `modal-groupe-presence` 2.5s après ouverture si conditions (heure ≥ 8h30, atelier aujourd'hui, pas annulé, pas exclu, pas répondu, pas fermé jour). Liste verticale ateliers avec boutons Présent·e/Absent·e → `db.upsertParticipation`. "Plus tard" + croix ferment journée.
+
+**v4.12 — Fix modal Paramètres scrollable + pop-up onboarding notifications + retrait notifs craving**
+1. **Modal Paramètres (admin) — fix scroll** : container restructuré en `flex flex-col max-h-[90vh] overflow-hidden`, header sticky, body `overflow-y-auto flex-1`. Fermeture par clic overlay + touche Escape.
+2. **Pop-up onboarding notifications** : modal `modal-notif-prompt` côté admin (médecin uniquement) ET côté patient. Trigger 1.5s après showAdminApp/showPatientApp. Conditions : `Notification.permission === 'default'` + délai 7 jours. Détection iOS Safari onglet → 3 étapes installation PWA. "Plus tard" et croix : timestamp → relance 7j. "Activer" déclenche programmatiquement le bouton existant.
+3. **Retrait notifications craving** : `alerte_craving` retiré de `DEFAULT_NOTIF_PREFS`, du HTML modal Paramètres, et des helpers. Edge Function inchangée.
+
+**v4.11 — Fix RLS DELETE permissions**
+1. **Migration v35** : policy `permissions_delete_auth` (`USING (auth.role() = 'authenticated')`). Bug v4.10 — table `permissions` avait INSERT/SELECT/UPDATE en RLS mais aucune policy DELETE → tout DELETE bloqué silencieusement (0 ligne supprimée sans erreur HTTP).
+2. **Helper `db.deletePermission` durci** : utilise `count: 'exact'` + throw si 0 ligne affectée.
+
+**v4.10 — Notifications push V3 personnalisables + permissions modifiables/supprimables + nouveau logo phénix**
+1. **Préférences notifications par compte** : migration v34 ajoute `profiles.push_preferences JSONB` (NULL = défauts système). Section "Mes notifications" modal Paramètres admin (médecin uniquement) — 5 checkboxes événements + 3 réglages silence perso. L'Edge Function lit `push_preferences` et filtre destinataires en amont par `event_type`. Les prefs perso peuvent **durcir** mais pas assouplir le silence weekend/férié.
+2. **Silence soignant : seuil soir 16h → 18h** dans `send-push`. Garde rôle médecin pour push staff.
+3. **Push patient — nouveaux événements** : (a) demande de permission patient → médecins abonnés (fire-and-forget) ; (b) validation permission soignant → patient (toujours envoyé, pas filtré).
+4. **Permissions admin — modif + suppression** : bouton ✏️ Modifier (mini-form inline 4 champs date/heure + motif, validation 48h max). Modif sur perm `refusee` repasse en `en_attente`. Bouton 🗑 Supprimer disponible tous statuts avec confirmation. Helper `buildPermCard(p, patientId)` factorise rendu + handlers.
+5. **UI permissions 2 jours clarifiée** : 1 jour = `Lun. 5 mai · 09:00 → 18:00` ; 2 jours = `↗ Départ : Lun. 5 mai à 18:00` + `↙ Retour : Mar. 6 mai à 09:00`.
+6. **Nouveau logo + splash plein écran** : `assets/icon-source.png` remplacé (phénix + poignée de main, 4096×4096) → icon-192/512.png regénérés via PowerShell+System.Drawing. `splash.png` portrait avec mention "USCA Connect". `manifest.json` `background_color` `#f0f4f8` → `#ffffff`. `index.html` splash `inset-0 flex items-center justify-center` + `width:100%;height:100%;object-fit:contain`.
+
+**v4.09 — Mode paysage activé (orientation libre)**
+- **Mode paysage** : `manifest.json` passé de `"orientation": "portrait"` à `"orientation": "any"` → la PWA suit l'orientation physique (Android Chrome + iOS Safari ≥ 16.4 standalone). Cible : Galaxy Tab S7 FE en paysage (1366×853). Garde-fou ajouté dans `shared/theme.css` via media query `(orientation: landscape) and (max-height: 500px)` pour téléphones tournés (compactage headers/footers stickys + modales 92vh + splash logo 40vh max).
+
+**v4.08 — Fiches substances poussées au patient + fixes PWA install + QCM externe auto-extend + toolbox accordions repliés**
+1. **Fiches substances (16)** : nouveau dossier `fiches-substances/`, table `substances_patient` (migration v33, RLS calquée sur `prescriptions`), `shared/substances-catalogue.js` (16 fiches × 6 catégories : Dépresseurs SNC / Stimulants / Opioïdes / Psychodysleptiques / Mésusage médicamenteux / Tabac), helpers `db.getSubstancesPatient` / `db.addSubstancePatient` / `db.removeSubstancePatient`. Côté admin : 2ème checklist "Fiches substances". Côté patient : carte Traitements → 2 sections (traitements catégorisés ambre + substances liste plate violet). Côté toolbox : 3ème accordion "Fiches Substances" dans `TraitementsView`. Export HTML autonome embarque aussi les fiches substances. SW : 16 HTML pré-cachées.
+2. **PWA install** : `icon-192.png` ajouté (généré bicubique HQ depuis icon-512), manifest mis à jour avec 4 entrées (192/512 × `any` + `maskable`).
+3. **QCM externe auto-extend** : sessions en cours créées avant le fix v3.98 (cap 10 questions) sont automatiquement étendues à toutes les questions de l'item lors du "Reprendre" (compare `sessionQuestions.length` vs `questions.length`, append manquantes).
+4. **Toolbox** : `TraitementsView` ouvre désormais avec tous accordions repliés (`useState(null)`).
+
 ---
 
 ## C. SPEC MODULE PATIENT V3 — VISION LONG TERME
