@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#102a43">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="USCA">
@@ -1576,7 +1577,21 @@ function App() {
         </div>
       </div>;
 
-      case "interactions": return <InterCheck onBack={()=>nav("home")}/>;
+      case "interactions": {
+        // Iframe MetaboScope — pattern aligné sur eeg_ect (v4.17).
+        // Chemin relatif depuis staff/toolbox.html : remonte d'un niveau puis descend dans metaboscope/dist/.
+        // Sync thème dark/light non propagé en v4.25 (palette navy/teal MetaboScope reste cohérente).
+        // À câbler en chantier C.1 (METABOSCOPE_APP.md §3) — migration vers indigo USCA V2 + sync ?theme=.
+        const metaboscopePath = '../metaboscope/dist/index.html';
+        return <div className="fade-in">
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+            <button onClick={()=>nav("home")} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>
+            <span style={{fontSize:14,fontWeight:800,color:C.n[800],flex:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>Interactions · MetaboScope</span>
+            <button onClick={()=>window.open(metaboscopePath,'_blank')} title="Ouvrir dans un nouvel onglet" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.t[50],border:`1px solid ${C.t[300]}`,cursor:"pointer",flexShrink:0,fontSize:14,fontWeight:700,color:C.t[700]}}>↗</button>
+          </div>
+          <iframe className="fiche-iframe" src={metaboscopePath} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title="MetaboScope"/>
+        </div>;
+      }
       case "eeg_ect":
         if (selEegFiche) {
           const themeParam = (localStorage.getItem('usca_theme') === 'dark') ? '?theme=dark' : '?theme=light';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.24';
+const CACHE_NAME = 'usca-v4.25';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -61,6 +61,15 @@ const LOCAL_ASSETS = [
   './shared/craving-agenda.js',
   './shared/planning-groupes.js',
   './shared/postcure-structures.js',
+  // ── MetaboScope (sous-app React/Vite intégrée en iframe — v4.25) ──
+  // Seuls index.html + favicon + icon sont pré-cachés. Les bundles JS/CSS hashés
+  // (./metaboscope/dist/assets/index-*.{js,css}) sont cachés au runtime via la
+  // stratégie cache-first déjà en place dans le fetch listener.
+  // À chaque rebuild de MetaboScope (npm run build dans metaboscope/), bumper
+  // CACHE_NAME ci-dessus pour forcer la ré-installation et purger l'ancien index.
+  './metaboscope/dist/index.html',
+  './metaboscope/dist/favicon.svg',
+  './metaboscope/dist/icons/icon.svg',
   './icon-192.png',
   './icon-512.png',
   './splash.png',
@@ -161,6 +170,12 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
         }
         return resp;
+      }).catch(() => {
+        // Fail silencieux pour les requêtes hors-scope (extensions navigateur,
+        // BrowserRouter sous-app MetaboScope sur /interactions, /search, etc.,
+        // searchAnalyzer Edge/Bing). Évite les "Uncaught (in promise) TypeError:
+        // Failed to fetch" en console. Renvoie une réponse 408 propre.
+        return new Response('', { status: 408, statusText: 'Network error or out of scope' });
       });
     })
   );

@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.25 — 2026-05-08
+Intégration MetaboScope (carte Interactions Toolbox) en iframe + 2 micro-fixes USCA (catch SW hors-scope, meta `mobile-web-app-capable`).
+
 ## v4.24 — 2026-05-08
 Sync dark mode iframes EEG/ECT ↔ Toolbox global (URL param `?theme=`, détection iframe via `window.self !== window.top`).
 
