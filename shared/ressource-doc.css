@@ -34,6 +34,11 @@ html.dark {
   --bg:#0b1220; --bdr:#1e293b; --card:#0b1220;
   --head-bg:#1e293b; --head-fg:#ffffff; --head-meta:#94a3b8;
   --foot-fg:#cbd5e1;
+  /* Fonds des boîtes d'alerte assombris translucides pour rester lisibles en dark mode (v4.27) —
+     la border-left garde sa couleur amber/teal/red vive, seul le bg passe en sombre. */
+  --a-50: rgba(240, 180, 41, 0.12);
+  --t-50: rgba(39, 171, 131, 0.14);
+  --r-50: rgba(239, 68, 68, 0.16);
 }
 
 * { box-sizing: border-box; }

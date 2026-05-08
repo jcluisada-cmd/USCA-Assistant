@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.27 — 2026-05-08
+Fix dark mode boîtes `.alert`/`.alert.info`/`.alert.crit` dans `shared/ressource-doc.css` — backgrounds amber/teal/red passent en translucide sombre via `--a-50`/`--t-50`/`--r-50` (correctif global : fiches EEG/ECT, ressources, fiches expert).
+
 ## v4.26 — 2026-05-08
 MetaboScope chantier C : sync dark/light mode USCA (URL param + postMessage live), refonte HomePage par cas d'usage, deep link `?cart=` (préparation liens fiches Toolbox).
 
