@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activité épileptiforme — USCA</title>
+<link rel="stylesheet" href="../shared/ressource-doc.css">
+<style>
+  svg.eeg-schema { width: 100%; height: auto; max-width: 640px; display: block; margin: 8px auto; }
+  svg.eeg-schema text { fill: var(--n-700); font-size: 11px; font-family: inherit; }
+  svg.eeg-schema .wave { fill: none; stroke: var(--t-600); stroke-width: 1.4; }
+  svg.eeg-schema .wave-pat { fill: none; stroke: var(--r-500); stroke-width: 1.6; }
+  svg.eeg-schema .axis { stroke: var(--n-300); stroke-width: 1; }
+  svg.eeg-schema .label-event { fill: var(--r-600); font-weight: 700; }
+  ol.lecture { padding-left: 22px; margin: 4px 0 0; }
+  ol.lecture li { margin-bottom: 4px; font-size: 13px; }
+  ul.thm { padding-left: 18px; margin: 0; }
+  ul.thm li { margin-bottom: 6px; font-size: 13px; }
+  .col2 { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 720px) { .col2 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc-head">
+  <h1>Activité épileptiforme</h1>
+  <p class="meta">Pointes, sharp waves, pointes-ondes — reconnaissance et signification — USCA Pitié-Salpêtrière</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RÉSUMÉ
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>1. Résumé ultra rapide</h2>
+  <p>Une <strong>activité épileptiforme</strong> est un graphoélément <strong>paroxystique</strong> (qui survient brutalement et se distingue du fond) à <strong>morphologie stéréotypée</strong>, associé à un trouble du seuil épileptique sous-jacent.</p>
+  <ul class="thm">
+    <li><strong>4 unités de base</strong> : pointe (spike), sharp wave, pointe-onde (spike-and-wave), polypointe-onde.</li>
+    <li><strong>Distribution</strong> : focal · multifocal · généralisé bilatéral synchrone.</li>
+    <li><strong>Activité inter-critique ≠ crise</strong> : voir des pointes ne veut pas dire que le patient « fait une crise » à ce moment-là.</li>
+    <li>Avant de qualifier d'épileptiforme : <strong>éliminer les variants bénins</strong> (mu, wickets, BETS, POST, vertex sharp — cf. fiches Normal et Sommeil).</li>
+  </ul>
+  <div class="alert info" style="margin-top:10px">
+    <strong>Pertinence ECT :</strong> un foyer épileptiforme silencieux pré-séance peut moduler le rapport bénéfice/risque. Le déclenchement contrôlé d'une crise généralisée <em>est</em> l'objectif thérapeutique de l'ECT.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     DÉFINITION
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>2. Définition rigoureuse
+    <span class="h-sub">Pour ne pas qualifier d'épileptiforme à la légère</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Stéréotypie</strong> : la même morphologie se répète sur plusieurs occurrences — pas un événement aléatoire isolé.</li>
+    <li><strong>Caractère paroxystique</strong> : apparition brutale, distincte du fond, fin brutale.</li>
+    <li><strong>Polarité typiquement négative</strong> au scalp (déflexion vers le haut en convention EEG) — <em>sauf POST</em> qui sont positifs et physiologiques.</li>
+    <li><strong>Champ de propagation</strong> cohérent avec une logique anatomique : un graphoélément vraiment épileptiforme respecte la propagation cortico-corticale, pas juste « 1 électrode bizarre ».</li>
+    <li><strong>Reproductibilité</strong> : on observe des occurrences multiples, pas un seul événement isolé.</li>
+  </ul>
+  <div class="alert">
+    <strong>Distinction critique vs inter-critique :</strong>
+    <ul style="margin:4px 0 0;padding-left:18px;font-size:12.5px;line-height:1.5">
+      <li><strong>Inter-critique</strong> : graphoéléments isolés, pas de corrélation clinique simultanée — révèle une <em>tendance épileptique</em>.</li>
+      <li><strong>Critique</strong> : décharge organisée, prolongée, généralement &gt; 10 s, avec ou sans manifestation clinique — c'est une <em>crise EEG</em>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     GRAPHOÉLÉMENTS UNITAIRES
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>3. Les 4 graphoéléments unitaires</h2>
+
+  <h3>Pointe (spike)</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 90" aria-label="Pointe (spike) : déflexion brève très rapide">
+    <text x="20" y="20" font-weight="700">Pointe (spike)</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">durée &lt; 70 ms</text>
+    <path class="wave" d="M 20 60 L 200 60" />
+    <path class="wave-pat" d="M 200 60 L 220 25 L 230 60" />
+    <path class="wave" d="M 230 60 L 360 60" />
+    <path class="wave-pat" d="M 360 60 L 380 25 L 390 60" />
+    <path class="wave" d="M 390 60 L 560 60" />
+  </svg>
+  <ul class="thm">
+    <li><strong>Durée</strong> &lt; 70 ms — déflexion <em>très brève</em>, pic acéré.</li>
+    <li><strong>Amplitude</strong> nettement supérieure à l'activité de fond.</li>
+    <li><strong>Souvent suivi</strong> d'une légère composante lente (mais pas obligatoire).</li>
+  </ul>
+
+  <h3>Sharp wave</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 90" aria-label="Sharp wave : déflexion plus large que la pointe">
+    <text x="20" y="20" font-weight="700">Sharp wave</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">durée 70-200 ms</text>
+    <path class="wave" d="M 20 60 L 200 60" />
+    <path class="wave-pat" d="M 200 60 Q 220 25 240 25 Q 250 25 260 60" />
+    <path class="wave" d="M 260 60 L 380 60" />
+    <path class="wave-pat" d="M 380 60 Q 400 25 420 25 Q 430 25 440 60" />
+    <path class="wave" d="M 440 60 L 560 60" />
+  </svg>
+  <ul class="thm">
+    <li><strong>Durée</strong> 70-200 ms — déflexion <em>plus large</em> que la pointe, mais aspect toujours pointu.</li>
+    <li>Significativité clinique <strong>équivalente</strong> à la pointe.</li>
+  </ul>
+
+  <h3>Pointe-onde (spike-and-wave)</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Pointe-onde : pointe suivie d'une onde lente">
+    <text x="20" y="20" font-weight="700">Pointe-onde</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">pointe + onde lente associée</text>
+    <path class="wave" d="M 20 70 L 180 70" />
+    <path class="wave-pat" d="M 180 70 L 200 35 L 210 70 Q 250 100 290 70" />
+    <path class="wave" d="M 290 70 L 380 70" />
+    <path class="wave-pat" d="M 380 70 L 400 35 L 410 70 Q 450 100 490 70" />
+    <path class="wave" d="M 490 70 L 560 70" />
+  </svg>
+  <ul class="thm">
+    <li><strong>Pointe</strong> rapide suivie d'une <strong>onde lente ample</strong> (durée totale ~250-300 ms).</li>
+    <li>Le complexe pointe-onde est l'<em>unité de base</em> de nombreux patterns épileptiformes généralisés.</li>
+  </ul>
+
+  <h3>Polypointe-onde</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Polypointe-onde : plusieurs pointes successives suivies d'une onde lente">
+    <text x="20" y="20" font-weight="700">Polypointe-onde</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">plusieurs pointes successives + onde lente</text>
+    <path class="wave" d="M 20 70 L 200 70" />
+    <path class="wave-pat" d="M 200 70 L 215 35 L 222 70 L 235 35 L 242 70 L 255 35 L 262 70 Q 305 105 345 70" />
+    <path class="wave" d="M 345 70 L 560 70" />
+  </svg>
+  <ul class="thm">
+    <li>Succession rapide de <strong>2 à 5 pointes</strong> avant l'onde lente.</li>
+    <li>Caractéristique des épilepsies myocloniques (myoclonique juvénile +++).</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PATTERNS GROUPÉS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>4. Patterns groupés généralisés
+    <span class="h-sub">Quand les graphoéléments s'organisent en décharge</span>
+  </h2>
+
+  <h3>Complexe pointe-onde 3 Hz généralisé</h3>
+  <svg class="eeg-schema" viewBox="0 0 600 110" aria-label="Décharge pointe-onde 3 Hz généralisée caractéristique de l'absence">
+    <text x="20" y="20" font-weight="700">Pointe-onde 3 Hz généralisée</text>
+    <text x="20" y="36" font-size="10" fill="var(--n-500)">pattern pathognomonique des absences typiques (épilepsie-absence)</text>
+    <path class="wave" d="M 20 70 L 100 70" />
+    <!-- 6 cycles de pointe-onde sur ~360 px = ~3 Hz si 600 px = 2 s, soit 6 cycles en 2 s -->
+    <path class="wave-pat" d="M 100 70 L 115 35 L 122 70 Q 145 100 165 70 L 175 35 L 182 70 Q 205 100 225 70 L 235 35 L 242 70 Q 265 100 285 70 L 295 35 L 302 70 Q 325 100 345 70 L 355 35 L 362 70 Q 385 100 405 70 L 415 35 L 422 70 Q 445 100 465 70" />
+    <path class="wave" d="M 465 70 L 560 70" />
+    <line class="axis" x1="100" y1="92" x2="465" y2="92" />
+    <text x="270" y="105" font-size="10" fill="var(--n-500)">~ 2 s</text>
+  </svg>
+
+  <ul class="thm">
+    <li>Pattern <strong>pathognomonique</strong> des absences typiques (épilepsie-absence de l'enfant et de l'adolescent).</li>
+    <li>Décharge généralisée, bilatérale, synchrone, à <strong>~3 Hz</strong> (entre 2,5 et 4 Hz).</li>
+    <li>Provoquée par l'<strong>hyperventilation</strong> (test diagnostique).</li>
+    <li>Traduction clinique : suspension de conscience pendant la décharge (~5-15 s).</li>
+  </ul>
+
+  <h3>Pointe-onde lente (1,5-2,5 Hz)</h3>
+  <ul class="thm">
+    <li>Pattern <strong>plus lent</strong> que le 3 Hz typique.</li>
+    <li>Évoque syndrome de <strong>Lennox-Gastaut</strong> (encéphalopathie épileptique sévère, retard mental, multiples types de crises).</li>
+    <li>Aussi observée dans certaines encéphalopathies acquises.</li>
+  </ul>
+
+  <h3>Hypsarythmie</h3>
+  <ul class="thm">
+    <li>Pattern <strong>chaotique</strong>, désorganisé, haute amplitude (&gt; 200 µV).</li>
+    <li>Pointes et ondes lentes asynchrones, multifocales, sur tout l'EEG.</li>
+    <li>Marqueur du <strong>syndrome de West</strong> (nourrisson, spasmes infantiles, retard psychomoteur).</li>
+    <li>Mention pour culture — rare en psychiatrie adulte.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     DISTRIBUTION SPATIALE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>5. Distribution spatiale
+    <span class="h-sub">Où voit-on les graphoéléments ?</span>
+  </h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Distribution</th><th>Aspect</th><th>Évoque</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Focal</strong></td>
+          <td>Limité à une région anatomique (ex. T3-T5 gauche)</td>
+          <td>Épilepsie focale, lésion sous-jacente possible</td>
+        </tr>
+        <tr>
+          <td><strong>Multifocal</strong></td>
+          <td>Plusieurs foyers indépendants</td>
+          <td>Encéphalopathie, malformations multiples</td>
+        </tr>
+        <tr>
+          <td><strong>Bilatéral synchrone</strong></td>
+          <td>Décharge en miroir D/G simultanée</td>
+          <td>Épilepsie généralisée idiopathique</td>
+        </tr>
+        <tr>
+          <td><strong>Latéralisé / asymétrique</strong></td>
+          <td>Décharge avec prédominance d'un côté</td>
+          <td>Possible foyer focal avec propagation rapide</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info">
+    Pour les patterns <strong>périodiques</strong> (PLEDs, GPDs, BIPDs) souvent rencontrés en réanimation → voir <em>fiche ICU EEG</em>.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ACTIVATIONS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>6. Activations qui démasquent une activité épileptiforme
+    <span class="h-sub">Quand l'EEG « calme » ne suffit pas</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Hyperventilation 3 min</strong> → démasque les <em>absences typiques</em> (3 Hz généralisé). Pousser jusqu'à activation chez le jeune.</li>
+    <li><strong>Photostimulation 1-30 Hz</strong> → recherche d'une <em>réponse photoparoxystique</em> (épilepsie photosensible : myoclonique juvénile, autres).</li>
+    <li><strong>Sommeil et privation de sommeil</strong> → augmente le rendement diagnostique pour les <em>épilepsies focales</em>, en particulier temporales. Une privation de 24 h avant l'examen est classique.</li>
+    <li>Combinaison HV + photostim + sommeil = <strong>EEG d'activation maximale</strong>, quasi-systématique en bilan d'épilepsie.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SIGNIFICATION CLINIQUE
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>7. Signification clinique
+    <span class="h-sub">Une pointe ≠ un diagnostic d'épilepsie</span>
+  </h2>
+  <ul class="thm">
+    <li><strong>Anomalies épileptiformes inter-critiques</strong> retrouvées chez ~5 % de la population sans épilepsie clinique. Une pointe isolée n'est pas un diagnostic.</li>
+    <li><strong>Sensibilité</strong> de l'EEG inter-critique pour le diagnostic d'épilepsie : ~50 % en un seul enregistrement, ~80 % avec EEG répété + sommeil + privation.</li>
+    <li><strong>Spécificité</strong> : un pattern stéréotypé reproductible avec localisation cohérente est très évocateur, mais l'interprétation se fait <strong>toujours dans le contexte clinique</strong>.</li>
+    <li>Une activité épileptiforme franche chez un sujet n'ayant jamais convulsé peut traduire un seuil bas <em>sans crise</em> — informer mais ne pas systématiquement traiter.</li>
+  </ul>
+  <div class="alert">
+    <strong>Règle de base :</strong> EEG = examen <em>complémentaire</em>. Il aide à confirmer une épilepsie suspectée cliniquement, classer le syndrome, suivre l'évolution. Il ne diagnostique pas l'épilepsie à lui seul.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PIÈGES — VARIANTS BÉNINS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>8. Pièges — variants bénins à ne pas confondre</h2>
+  <div class="t-scroll">
+    <table>
+      <thead><tr><th>Variant</th><th>À ne pas confondre avec</th><th>Indice de distinction</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mu rhythm</strong></td><td>Sharp wave centrale</td><td>Forme en arche · bloqué par mouvement contra-latéral</td></tr>
+        <tr><td><strong>Wickets temporales</strong></td><td>Sharp wave temporale</td><td>Bilatéral · sujet jeune / âgé · pas de slow wave</td></tr>
+        <tr><td><strong>BETS</strong></td><td>Pointe focale</td><td>Contexte de N1 · faible amplitude · symétrique</td></tr>
+        <tr><td><strong>POST</strong></td><td>Sharp wave occipitale</td><td>Polarité <em>positive</em> · contexte N1-N2 · symétrique</td></tr>
+        <tr><td><strong>Vertex sharp</strong></td><td>Pointe centrale</td><td>Cz exclusivement · contexte N1 · pas d'asymétrie</td></tr>
+        <tr><td><strong>Sawtooth</strong></td><td>Décharge rythmique</td><td>Contexte REM · atonie EMG + REMs</td></tr>
+        <tr><td><strong>14 &amp; 6 Hz</strong></td><td>Décharge polypointe</td><td>Bouffées brèves bi-fréquences · enfant/adolescent</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert info">
+    Détails dans les fiches <em>EEG normal</em> (mu, lambda, BETS, wickets, 14&amp;6) et <em>Sommeil</em> (vertex sharp, POST, sawtooth, K-complexes).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     IMPLICATIONS POUR ECT
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>9. Implications pour l'ECT
+    <span class="h-sub">L'ECT déclenche une crise — autant connaître le terrain</span>
+  </h2>
+  <div class="col2">
+    <div>
+      <h3>Pré-séance</h3>
+      <ul class="thm">
+        <li><strong>Foyer épileptiforme silencieux</strong> détecté à l'EEG baseline : ne contre-indique pas l'ECT, mais informe sur la facilité prévisible de déclenchement de la crise.</li>
+        <li>Patient sous antiépileptique pour autre raison : peut <strong>élever le seuil</strong> de déclenchement nécessaire en ECT.</li>
+        <li>BZD et barbituriques : réduisent la qualité de la crise — espacement à organiser.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Per-séance</h3>
+      <ul class="thm">
+        <li>L'EEG montre la <strong>crise déclenchée</strong> : recrutement → activité tonico-clonique → ralentissement post-critique.</li>
+        <li>Durée optimale 25-60 s ; trop courte = sous-dosage, trop longue (&gt; 120 s) = sur-dosage.</li>
+        <li><strong>Qualité de la crise</strong> (cf. fiche ECT pratique) : amplitude, propagation, ralentissement post-critique = critères d'efficacité.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Post-séance</h3>
+  <ul class="thm">
+    <li>Ralentissement diffus delta + theta normal pendant heures à jours.</li>
+    <li>Pointes ou activité épileptiforme post-séance : peuvent persister quelques heures sans signification pathologique.</li>
+    <li><strong>Crises spontanées post-ECT</strong> (récidives non provoquées) : rares mais à surveiller chez le patient à terrain prédisposant.</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RED FLAGS
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>10. Red flags — avis neurologique
+    <span class="h-sub">Quand l'activité épileptiforme déborde du cadre psychiatrique</span>
+  </h2>
+  <div class="alert crit">
+    <ul class="thm" style="margin:0">
+      <li><strong>Décharge prolongée &gt; 10 s</strong> (au-delà de la simple inter-critique) → suspecter activité critique, voir fiche <em>Status</em>.</li>
+      <li><strong>Activité épileptiforme nouvelle</strong> chez un patient sans antécédent → bilan étiologique structural (IRM cérébrale).</li>
+      <li><strong>Hypsarythmie</strong> → urgence pédiatrique (West).</li>
+      <li><strong>Pattern lateralisé persistant</strong> → AVC, encéphalite, lésion focale.</li>
+      <li><strong>Confusion post-ECT prolongée &gt; 1 h</strong> avec pointes inter-critiques persistantes → EEG en urgence pour éliminer status non convulsif.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TAKE HOME
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="card">
+  <h2>11. Take home messages</h2>
+  <ul class="thm">
+    <li>4 unités : <strong>pointe (&lt; 70 ms) · sharp wave (70-200 ms) · pointe-onde · polypointe-onde</strong>.</li>
+    <li><strong>Pointe-onde 3 Hz généralisée</strong> = signature de l'absence typique.</li>
+    <li>Distribution : <strong>focal · multifocal · bilatéral synchrone · latéralisé</strong>.</li>
+    <li>Activations : HV (absence), photostim (photosensibilité), sommeil/privation (focales).</li>
+    <li>Inter-critique ≠ critique : voir des pointes ne veut pas dire « crise en cours ».</li>
+    <li>~5 % de la population a des anomalies épileptiformes <em>sans</em> épilepsie clinique.</li>
+    <li>Sensibilité EEG en un seul enregistrement : ~50 % ; avec sommeil + privation + répétition : ~80 %.</li>
+    <li>Toujours <strong>éliminer un variant bénin</strong> (mu, wickets, BETS, POST, vertex, sawtooth, 14&amp;6) avant de qualifier d'épileptiforme.</li>
+    <li>Pré-ECT : foyer silencieux n'est pas une contre-indication, mais informe sur la facilité de déclenchement.</li>
+    <li>Le diagnostic d'épilepsie est <strong>clinique</strong> ; l'EEG est complémentaire.</li>
+  </ul>
+</div>
+
+<footer class="src">
+  Synthèse pédagogique USCA — Pitié-Salpêtrière (AP-HP) · Usage clinique interne · Sources : manuels d'EEG clinique.
+</footer>
+
+</div>
+<script defer src="../shared/ressource-doc.js"></script>
+</body>
+</html>

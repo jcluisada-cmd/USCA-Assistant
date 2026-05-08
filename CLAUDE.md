@@ -1,6 +1,13 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.20 — Fiche Artefacts (3/6 du batch handbook).
+> Dernière mise à jour : 8 mai 2026 (v4.21 — Fiche Activité épileptiforme (4/6 du batch handbook).
+> 1. **Nouvelle fiche `eeg_ect/fiche_epileptiforme.html`** (~440 lignes) : 11 sections — résumé, définition rigoureuse (stéréotypie/paroxysme/polarité/champ), 4 graphoéléments unitaires avec SVG (pointe &lt;70 ms, sharp wave 70-200 ms, pointe-onde, polypointe-onde), patterns groupés généralisés (pointe-onde 3 Hz absence avec SVG, lente 1,5-2,5 Hz Lennox-Gastaut, hypsarythmie West), distribution spatiale, activations (HV/photostim/sommeil), signification clinique (5% pop sans épilepsie, sensibilité ~50 % en simple → ~80 % avec sommeil/privation), pièges variants bénins avec tableau de 7 lignes (renvois Normal et Sommeil), implications ECT pré/per/post-séance, red flags, take home.
+> 2. **SVG schématiques en rouge `var(--r-500)`** pour les graphoéléments épileptiformes (cohérent avec Artefacts qui utilise aussi rouge pour signaler le pathologique). Aucune figure du manuel pour cette fiche — les morphologies se schématisent suffisamment bien.
+> 3. **Renommage à venir — fiche 6/6 ICU EEG → "EEG en réanimation"** : décision JC pour vocabulaire hospitalier français standard. Bandeau "À venir" mis à jour en conséquence ; le slug fichier `icu_eeg` reste pour la cohérence URL/code.
+> 4. **Pattern iframe + ↗** : carte Activité épileptiforme ajoutée au case `eeg_ect` (icône alerte rouge `C.r[600]`).
+> 5. **SW bump v4.20 → v4.21** : pré-cache de `fiche_epileptiforme.html`.)
+>
+> v4.20 — Fiche Artefacts (3/6 du batch handbook).
 > 1. **Nouvelle fiche `eeg_ect/fiche_artefacts.html`** (~340 lignes) : 11 sections — résumé, 3 grandes familles (biologique/mécanique/électrique), EMG (avec SVG hérissé rouge), ECG/pulse (SVG impulsions régulières), oculaires/blink (SVG déflexion frontale), sueur (SVG dérive lente), secteur 50 Hz + mauvais contact (SVG oscillation fine), tableau de poche 9 lignes, méthode systématique 3 questions (où/quand/comment), pièges péri-ECT (pré-induction, per-séance, recovery), take home. Tous les SVG en couleur rouge `var(--r-500)` pour distinguer des SVG verts `t-600` des fiches Normal/Technical (artefacts = signal parasite à reconnaître).
 > 2. **Aucune figure du manuel** dans cette fiche : tous les SVG faits maison (option C — les artefacts standards se schématisent bien, pas besoin de tracés cliniques réels).
 > 3. **Pattern iframe + ↗** : carte Artefacts ajoutée au case `eeg_ect` (icône alerte ambre `C.a[700]` pour distinguer visuellement). Bandeau "À venir" mis à jour (3 fiches restantes : Épileptiforme · Status · ICU EEG).
@@ -114,7 +121,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.20 |
+| **Service Worker** | usca-v4.21 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |
