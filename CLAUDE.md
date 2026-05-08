@@ -1,6 +1,12 @@
 # USCA Connect — Document de référence unique
 
-> Dernière mise à jour : 8 mai 2026 (v4.14 — Réorga Toolbox V1 + nouvelle carte EEG/ECT.
+> Dernière mise à jour : 8 mai 2026 (v4.15 — Fixes Toolbox post-réorga.
+> 1. **Carte "Protocoles USCA par substance" → "Protocoles USCA"** (label simplifié). Court-circuit du hub `protocoles_hub` : la grande carte ouvre directement `case "substances"`, le BackBtn revient sur `home`. Bottom nav `Protocoles` pointe désormais sur `id:"substances"` (au lieu de `protocoles_hub`), `protoViews` simplifié en check direct `view==="substances"||!!selSub`. Le hub `protocoles_hub` reste défini dans le code mais devient totalement inaccessible (peut être supprimé dans un cleanup ultérieur).
+> 2. **Vue Traitements — renommages + accordéons Fiches Expert** : SectionHead "Traitements" → "Fiches Traitements et Substances" (sub : "Fiches patient · fiches substances · fiches expert"). Cartes "Fiches Patient" → "Fiches Traitements Patient", "Fiches Expert" → "Fiches Traitements Expert" (Fiches Substances inchangée). `renderExpertSection` refondue : classes médicamenteuses repliées par défaut (clé `openCats["expert_"+group.cat]`, même pattern que `renderPatientSection` et `renderSubstancesSection`).
+> 3. **MASTER_PROMPT_EEG_ECT.md — flexibilité longueur** : section "CAP LONGUEUR" relâchée en "LONGUEUR — viser court mais privilégier la pédagogie". Cible 400-700 lignes maintenue mais autorisation explicite de dépasser pour chapitres denses (Status, ICU EEG). Pédagogie > quota.
+> 4. **SW bump v4.14 → v4.15** (force re-fetch toolbox.html mis à jour).)
+>
+> v4.14 — Réorga Toolbox V1 + nouvelle carte EEG/ECT.
 > 1. **Réorganisation des cartes Toolbox** (`staff/toolbox.html`) : passage de 3 grandes + 3 petites + 1 carte feedback isolée à **4 grandes + 5 petites**. Grandes (ordre) : Protocoles USCA par substance / Ressources USCA / Fiches Traitements et Substances / Dossier post-cure. Petites (en 2 grilles) : ligne 1 = Scores · EEG/ECT · Interactions (MetaboScope) ; ligne 2 = ELSA · Feedback. **Ressources** sortie du sous-hub Protocoles → grande carte autonome. **ELSA** rétrogradée de grande à petite carte. **Feedback** intégrée dans la grille (suppression de la carte isolée du bas). La grande carte "Protocoles USCA par substance" pointe directement sur `case "substances"` ; le hub `protocoles_hub` reste accessible via le bottom nav (dormant mais fonctionnel).
 > 2. **Nouvelle carte "EEG / ECT"** : nouveau case `eeg_ect` — hub minimal qui ouvre `eeg_ect/fiche_ect.html` (fiche pratique ECT canonique fournie par les psychiatres de la Pitié, copiée depuis `EEG_ECT_handbook/fiche_ect.html` qui reste la source de référence). Placeholder pour les fiches EEG du handbook clinique à venir (chapitres Technical / Normal / Artefacts / Epileptiforme / Status / ICU EEG — voir `EEG_ECT_handbook/MASTER_PROMPT_EEG_ECT.md`).
 > 3. **Renommage "Interactions" → "Interactions (MetaboScope)"** : SectionHead du composant `InterCheck`, label dans `moreItems`, sous-titre sous la petite carte d'accueil. Le standalone MetaboScope (en cours d'amélioration JC) sera intégré ultérieurement.
@@ -77,7 +83,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | usca-v4.14 |
+| **Service Worker** | usca-v4.15 |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\OneDrive\Documents\GitHub\USCA-Assistant\` |
 | **Mot de passe staff commun** | `usca_c15` |

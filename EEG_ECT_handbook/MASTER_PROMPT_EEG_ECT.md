@@ -207,14 +207,17 @@ Les figures du manuel sont **claires et de qualité**. Elles doivent être conse
 
 ---
 
-# CAP LONGUEUR — IMPORTANT
+# LONGUEUR — VISER COURT, MAIS PRIVILÉGIER LA PÉDAGOGIE
 
-Chaque fiche HTML générée :
-- **400 à 700 lignes max** (HTML + CSS inline ou linké, hors images)
-- chaque section doit tenir sur **1 écran mobile** (un swipe = une section)
-- pas de section > 500 mots
+**Cible** : 400 à 700 lignes par fiche HTML (CSS inline ou linké, hors images). Si tu y arrives en restant clair et complet, tant mieux.
 
-Si un chapitre déborde, **splitter en plusieurs fiches** (ex : `fiche_status_epilepticus_adulte.html` + `fiche_status_epilepticus_pediatrique.html`) plutôt que de pondre une fiche fleuve.
+**Mais** : la pédagogie prime sur le quota. Pour des chapitres denses (Status epilepticus, ICU EEG), une fiche peut légitimement aller plus loin. Ne **jamais** sacrifier la clarté ou un pattern important pour rester dans le cap. Ne **jamais** délayer non plus pour atteindre la cible.
+
+**Règles complémentaires** :
+- chaque section doit rester lisible sur **1 écran mobile** (un swipe = une idée)
+- préférer plusieurs sections courtes à une section fleuve
+- si une fiche dépasse ~900 lignes et qu'on peut splitter sans perdre la cohérence (ex : `fiche_status_epilepticus_adulte.html` + `fiche_status_epilepticus_pediatrique.html`), splitter
+- si une fiche fait < 300 lignes mais couvre tout, c'est OK (pas besoin de remplir)
 
 ---
 

@@ -673,18 +673,29 @@ function TraitementsView({onBack, onPickPatient}) {
     });
 
   const renderExpertSection = () =>
-    FICHES_EXPERT_CATS.map(group => <div key={group.cat} style={{marginBottom:14}}>
-      <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>{group.cat}</div>
-      {group.fiches.map(f => <a key={f.s} href={"../fiches-traitements/fiches_expert/fiche_"+f.s+".pdf"} target="_blank" rel="noopener noreferrer"
-        className="card card-tap"
-        style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between",textDecoration:"none"}}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <span style={{fontSize:18}}>📄</span>
-          <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
-        </div>
-        <span style={{fontSize:9,fontWeight:800,color:C.n[400],letterSpacing:"0.5px"}}>PDF ↗</span>
-      </a>)}
-    </div>);
+    FICHES_EXPERT_CATS.map(group => {
+      const isOpen = !!openCats["expert_"+group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat("expert_"+group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <a key={f.s} href={"../fiches-traitements/fiches_expert/fiche_"+f.s+".pdf"} target="_blank" rel="noopener noreferrer"
+            className="card card-tap"
+            style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between",textDecoration:"none"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>📄</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            <span style={{fontSize:9,fontWeight:800,color:C.n[400],letterSpacing:"0.5px"}}>PDF ↗</span>
+          </a>)}
+        </div>}
+      </div>;
+    });
 
   const renderSubstancesSection = () =>
     FICHES_SUBSTANCES_CATS.map(group => {
@@ -710,14 +721,14 @@ function TraitementsView({onBack, onPickPatient}) {
     });
 
   const ACC = [
-    {key:"patient", icon:"💊", title:"Fiches Patient", sub:"Fiches d'information à remettre au patient (HTML)"},
+    {key:"patient", icon:"💊", title:"Fiches Traitements Patient", sub:"Fiches d'information à remettre au patient (HTML)"},
     {key:"substances", icon:"📖", title:"Fiches Substances", sub:"Fiches d'information sur les substances (HTML)"},
-    {key:"expert",  icon:"🎓", title:"Fiches Expert",  sub:"Synthèses cliniques (PDF, ouverture nouvel onglet)"}
+    {key:"expert",  icon:"🎓", title:"Fiches Traitements Expert",  sub:"Synthèses cliniques (PDF, ouverture nouvel onglet)"}
   ];
 
   return <div className="fade-in">
     <BackBtn onClick={onBack}/>
-    <SectionHead icon={I.heart(C.a[300])} title="Traitements" sub="Fiches patient + fiches expert"/>
+    <SectionHead icon={I.heart(C.a[300])} title="Fiches Traitements et Substances" sub="Fiches patient · fiches substances · fiches expert"/>
     {ACC.map(a => {
       const isOpen = open === a.key;
       return <div key={a.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
@@ -1444,7 +1455,7 @@ function App() {
 
   const navItems = [
     {id:"home",label:"Accueil",icon:I.home},
-    {id:"protocoles_hub",label:"Protocoles",icon:I.pill},
+    {id:"substances",label:"Protocoles",icon:I.pill},
     {id:"elsa_hub",label:"ELSA",icon:I.steth},
     {id:"scores",label:"Scores",icon:I.calc},
     {id:"more",label:"Plus",icon:I.menu}
@@ -1477,7 +1488,7 @@ function App() {
 
         {/* 4 grandes cartes mises en valeur */}
         {/* Carte "Livret IFSI" retirée 2026-04-19 — accès suffisant via dashboard admin (carte "Mon élève") */}
-        {[{l:"Protocoles USCA par substance",desc:"Protocoles cliniques par substance",i:I.pill,v:"substances",dm:"toolbox_protocoles",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
+        {[{l:"Protocoles USCA",desc:"Protocoles cliniques par substance",i:I.pill,v:"substances",dm:"toolbox_protocoles",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
           {l:"Ressources USCA",desc:"Articles, fiches, recos, algos",i:I.book,v:"ressources",dm:"toolbox_ressources",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
           {l:"Fiches Traitements et Substances",desc:"Fiches patient, fiches expert, fiches substances",i:I.heart,v:"fiches_traitements",dm:"toolbox_traitements",c:C.a[700],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`},
           {l:"Dossier post-cure",desc:"Volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",dm:"toolbox_postcure",c:C.t[800],bg:`linear-gradient(135deg, ${C.t[100]}, ${C.bg})`}
@@ -1521,8 +1532,8 @@ function App() {
       case "protocoles_hub": return <ProtocolesHub onNav={nav} onBack={()=>nav("home")}/>;
 
       case "substances": return <div className="fade-in">
-        <BackBtn onClick={()=>nav("protocoles_hub")}/>
-        <SectionHead icon={I.pill(C.t[300])} title="Substances" sub="Protocoles par substance"/>
+        <BackBtn onClick={()=>nav("home")}/>
+        <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA" sub="Protocoles par substance"/>
         {Object.entries(SUBSTANCES).map(([k,s])=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelSub(k)}>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
             <span style={{fontSize:28}}>{s.icon}</span>
@@ -1626,10 +1637,9 @@ function App() {
     <div className="bottom-nav">
       <div className="bottom-nav-inner">
         {navItems.map(item=>{
-          const protoViews = ["protocoles_hub","substances","ressources"];
           const elsaViews = ["elsa_hub","elsa_fiches","admission","liaisons"];
           const act = item.id==="more"?menuOpen:
-            item.id==="protocoles_hub"?(protoViews.includes(view)||selSub):
+            item.id==="substances"?(view==="substances"||!!selSub):
             item.id==="elsa_hub"?elsaViews.includes(view):
             (item.id===view);
           return <button key={item.id} className="nav-btn" onClick={()=>item.id==="more"?setMenuOpen(!menuOpen):nav(item.id)} style={{color:act?C.t[600]:C.n[400]}}>
