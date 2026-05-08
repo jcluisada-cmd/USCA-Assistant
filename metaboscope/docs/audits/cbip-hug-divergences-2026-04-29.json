@@ -1,0 +1,3803 @@
+{
+  "date": "2026-04-29",
+  "stats": {
+    "cbip_molecules": 465,
+    "hug_molecules": 245,
+    "union": 508,
+    "recouvrement_audit_json": 57,
+    "candidats_ingestion": 451,
+    "high_severity_divergences": 30
+  },
+  "highSeverityDivergences": [
+    {
+      "nom": "amiodarone",
+      "canonical_key": "amiodarone",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2C9",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "amiodarone",
+      "canonical_key": "amiodarone",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2D6",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "atazanavir",
+      "canonical_key": "atazanavir",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "bosentan",
+      "canonical_key": "bosentan",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP2C9",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "bosentan",
+      "canonical_key": "bosentan",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "carbamazépine",
+      "canonical_key": "carbamazepine",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP1A2",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "carbamazépine",
+      "canonical_key": "carbamazepine",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "Pgp",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "ciprofloxacine",
+      "canonical_key": "ciprofloxacine",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP1A2",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "clopidogrel",
+      "canonical_key": "clopidogrel",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2B6",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "darunavir",
+      "canonical_key": "darunavir",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "diltiazem",
+      "canonical_key": "diltiazem",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "éfavirenz",
+      "canonical_key": "efavirenz",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "enzalutamide",
+      "canonical_key": "enzalutamide",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP2C19",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "érythromycine",
+      "canonical_key": "erythromycine",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "Pgp",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "ésoméprazole",
+      "canonical_key": "esomeprazole",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2C19",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "fluconazole",
+      "canonical_key": "fluconazole",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "fluvastatine",
+      "canonical_key": "fluvastatine",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2C9",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "imatinib",
+      "canonical_key": "imatinib",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "ledipasvir",
+      "canonical_key": "ledipasvir",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "Pgp",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "moclobémide",
+      "canonical_key": "moclobemide",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2D6",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "modafinil",
+      "canonical_key": "modafinil",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2C19",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "oméprazole",
+      "canonical_key": "omeprazole",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2C19",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "propafénone",
+      "canonical_key": "propafenone",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "Pgp",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "rifabutine",
+      "canonical_key": "rifabutine",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "rifampicine",
+      "canonical_key": "rifampicine",
+      "type": "puissance_discordante",
+      "category": "inducteur",
+      "voie": "CYP2C8",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "roxithromycine",
+      "canonical_key": "roxithromycine",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "saquinavir",
+      "canonical_key": "saquinavir",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "tipranavir",
+      "canonical_key": "tipranavir",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "vérapamil",
+      "canonical_key": "verapamil",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP3A4/5",
+      "action": "review_manuel_prioritaire\r"
+    },
+    {
+      "nom": "voriconazole",
+      "canonical_key": "voriconazole",
+      "type": "puissance_discordante",
+      "category": "inhibiteur",
+      "voie": "CYP2B6",
+      "action": "review_manuel_prioritaire\r"
+    }
+  ],
+  "candidatsIngestion": [
+    {
+      "name": "alfentanil",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "apixaban",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "atorvastatine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "carvédilol",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ciclosporine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "clarithromycine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "colchicine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dabigatran",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "diénogest",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "digoxine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "docétaxel",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dutastéride",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "édoxaban",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ergotamine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "étoposide",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "fexofénadine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "finastéride",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "flurbiprofène",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "galantamine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "glimépiride",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "granisétron",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "isradipine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "itraconazole",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "kétoconazole",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "létrozole",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "lidocaïne",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "lopéramide",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "maraviroc",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "méthylprednisolone",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "métoprolol",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "mifépristone",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "millepertuis",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "nébivolol",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "oxybutynine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "paclitaxel",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "piroxicam",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "réboxétine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rivaroxaban",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "saxagliptine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "simvastatine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "siponimod",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sirolimus",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sofosbuvir",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sufentanil",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sulfaméthoxazole",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tacrolimus",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tadalafil",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tamsulosine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "testostérone",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "timolol",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tizanidine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "toltérodine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "torasémide",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "triazolam",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "vincristine",
+      "reliability": "élevé",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "acénocoumarol",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "amlodipine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "artéméther",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "bortézomib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "bromocriptine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "célécoxib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "cyclophosphamide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dasatinib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "désogestrel",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dexaméthasone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dextrométhorphane",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "diclofénac",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dihydrocodéine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "diphenhydramine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dolutégravir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "donépézil",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "elvitégravir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "erlotinib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "éthinylestradiol",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "étravirine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "éverolimus",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "félodipine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "flécaïnide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "fluvoxamine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "géfitinib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "gestodène",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "glibenclamide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "grazoprévir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ibuprofène",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ifosfamide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "irbésartan",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "isoniazide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "lansoprazole",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "lopinavir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "loratadine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "losartan",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "luméfantrine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "méfloquine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "méloxicam",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "métoclopramide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "miansérine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "miconazole",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "montélukast",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "naproxène",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "névirapine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "nifédipine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "nilotinib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "nimodipine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "nortriptyline",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ondansétron",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "pantoprazole",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "phenprocoumone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "pioglitazone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "posaconazole",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "prednisolone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "primidone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "proguanil",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "prométhazine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "propofol",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "propranolol",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "quinidine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "quinine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rabéprazole",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "répaglinide",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rilpivirine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ritonavir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sildénafil",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sorafénib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sunitinib",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tamoxifène",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "terbinafine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "théophylline",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "ticagrélor",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "trazodone",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "triméthoprime",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "vardénafil",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "velpatasvir",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "vinblastine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "warfarine",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "zolmitriptan",
+      "reliability": "moyen",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "abémaciclib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "abiratérone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "abrocitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "acalabrutinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "aciclovir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "acide fusidique",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "acide méfénamique",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "afatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "alectinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "alfuzosine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "almotriptan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "alpelisib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ambrisentan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "amiodarone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "anagrélide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "anastrozole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "apalutamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "aprémilast",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "aprépitant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "asciminib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "asénapine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "atazanavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "atogépant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "avanafil",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "avatrombopag",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "axitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "azithromycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bédaquiline",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bendamustine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bérotralstat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bétaméthasone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bexarotène",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bictégravir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "binimétinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bisoprolol",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "bosentan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "bosutinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "brentuximab védotine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "brigatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "brivaracétam",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "budésonide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bupivacaïne",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "bupropione",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cabazitaxel",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cabergoline",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cabozantinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "canagliflozine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "candésartan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "capécitabine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "capivasertib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "celiprolol",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "cénobamate",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "céritinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cétirizine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "chardon marie (silibinine)",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "chlormadinone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "chloroquine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "chlorphénamine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "chlorphéniramine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "cinacalcet",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ciprofloxacine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "clindamycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "clonidine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "clopidogrel",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "co-trimoxazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cobicistat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cobimétinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "cobisistat",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "cortisol",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "crizotinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "curcuma",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "dabrafénib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "dacarbazine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "daclatasvir",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "dapoxétine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "darifénacine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "darolutamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "darunavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "daunorubicine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "déférasirox",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "desfésotérodine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "desloratadine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "dihydroergotamine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "diltiazem",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "disopyramide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "disulfiram",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "dompéridone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "doxorubicine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "doxycycline",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "dronédarone",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "dropéridol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "drospirénone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ébastine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ecstasy (MDMA)",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "éfavirenz",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "elbasvir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "élétriptan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "élexacaftor",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "éliglustat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "emtricitabine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "encorafénib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "enfortumab vedotin",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "entrectinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "enzalutamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "éplérénone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "éravacycline",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "erdafitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "érythromycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "eskétamine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ésoméprazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "estradiol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "estriol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "estrogènes",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "estrogènes et estroprogestatifs",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "estroprogestatifs",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "éthylmorphine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "étonogestrel",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "étrasimod",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "exémestane",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fédratinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "felbamate",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "fenfluramine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fésotérodine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fézolinétant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fidaxomicine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "finérénone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fingolimod",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fluconazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "fluorouracil",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "flurazépam",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "flutamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fluticasone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fluvastatine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "fosamprénavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fosaprépitant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fostemsavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "frovatriptan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "fumée de cigarettes",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "gemfibrozil",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "giltéritinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "givosiran",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "glécaprévir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "glicazide",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "gliclazide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "glipizide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "gliquidone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "grapefruit, orange de Séville",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "hydrocodone",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "hydrocortisone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ibrutinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "idébénone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "idélalisib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "imatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "indacatérol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "indométacine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "irinotécan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "isavuconazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ivabradine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ivacaftor",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ivermectine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ivosidénib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ixazomib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "labétalol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lapatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "larotrectinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ledipasvir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "léflunomide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "légumes (chou, brocoli)",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "lénacapavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lenvatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lercanidipine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "létermovir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lévonorgestrel",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "linagliptine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "linzagolix",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lorlatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "lumacaftor",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "macitentan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "maribavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "mavacamten",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "médroxyprogestérone",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "mélatonine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "métamizole",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "méthoxsalène",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "métronidazole",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "midostaurine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "mirabégron",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "mitomycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "mitotane",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "moclobémide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "momélotinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "mométasone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "naldémédine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "natéglinide",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "nétupitant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "nicardipine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "nintédanib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "niraparib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "nirmatrelvir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "nitisinon",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "nitrendipine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "nomégestrol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "norelgestromine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "noréthistérone",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "norfloxacine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "noscapine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "odévixibat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "olaparib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "oméprazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "oséltamivir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "osimertinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ozanimod",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "palbociclib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "palonosétron",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pamplemousse",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "panobinostat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "paracétamol",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "pazopanib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pentamidine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pibrentasvir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pimozide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pirfénidone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pitolisant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pomalidomide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pomélo",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ponatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "pralsétinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "prasugrel",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "prednisone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "progestatifs",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "propafénone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "raltégravir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ranitidine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "ranolazine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rasagiline",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "réglisse",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "régorafénib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rélugolix",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "remdésivir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ribociclib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rifabutine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rifampicine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rifamycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rifaximine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "riluzole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rimégépant",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "riociguat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "riprétinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ritlécitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ropinirole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ropivacaïne",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rosuvastatine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "roxadustat",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "roxithromycine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "rucaparib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "rufinamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ruxolitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "salmétérol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "saquinavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "sélexipag",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "selpercatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "sélumétinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "sertindole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "silodosine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "sitagliptine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "solifénacine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "sonidégib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "stiripentol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tabac (goudrons)",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "talazoparib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tégafur",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "temsirolimus",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ténofovir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ténoxicam",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "tépotinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tériflunomide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tétrabénazine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tezacaftor",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "thalidomide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "thiotépa",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tiagabine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ticlopidine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tinidazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tipranavir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "tofacitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tolbutamide",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "tolvaptan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "topotécan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "trabectédine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "trastuzumab emtansine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "tréprostinil",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "triamcinolone",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "trimipramine",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "tropisétron",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    },
+    {
+      "name": "tucatinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "ulipristal",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "uméclidinium",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "upadacitinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "valsartan",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vandétanib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vemurafenib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vénétoclax",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vérapamil",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "vibégron",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vilantérol",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vindésine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vinorelbine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "vismodégib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "voclosporine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "voriconazole",
+      "reliability": "faible",
+      "sources": [
+        "CBIP",
+        "HUG"
+      ]
+    },
+    {
+      "name": "voxilaprévir",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "yohimbine",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "zanubritinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "zanubrutinib",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "zonisamide",
+      "reliability": "faible",
+      "sources": [
+        "CBIP"
+      ]
+    },
+    {
+      "name": "zuclopenthixol",
+      "reliability": "faible",
+      "sources": [
+        "HUG"
+      ]
+    }
+  ],
+  "recouvrementJson": [
+    {
+      "name": "acide valproïque",
+      "jsonId": "thy_valproate"
+    },
+    {
+      "name": "agomélatine",
+      "jsonId": "atd_agomelatine"
+    },
+    {
+      "name": "alprazolam",
+      "jsonId": "bzd_alprazolam"
+    },
+    {
+      "name": "amisulpride",
+      "jsonId": "atp_amisulpride"
+    },
+    {
+      "name": "amitriptyline",
+      "jsonId": "atd_amitriptyline"
+    },
+    {
+      "name": "aripiprazole",
+      "jsonId": "atp_aripiprazole"
+    },
+    {
+      "name": "atomoxétine",
+      "jsonId": "pst_atomoxetine"
+    },
+    {
+      "name": "buprénorphine",
+      "jsonId": "opi_tso_buprenorphine"
+    },
+    {
+      "name": "bupropion",
+      "jsonId": "pst_bupropion"
+    },
+    {
+      "name": "caféine",
+      "jsonId": "pst_cafeine"
+    },
+    {
+      "name": "cannabidiol",
+      "jsonId": "can_cbd"
+    },
+    {
+      "name": "carbamazépine",
+      "jsonId": "aco_carbamazepine"
+    },
+    {
+      "name": "cariprazine",
+      "jsonId": "atp_cariprazine"
+    },
+    {
+      "name": "chlorpromazine",
+      "jsonId": "atp_chlorpromazine"
+    },
+    {
+      "name": "citalopram",
+      "jsonId": "atd_citalopram"
+    },
+    {
+      "name": "clobazam",
+      "jsonId": "bzd_clobazam"
+    },
+    {
+      "name": "clomipramine",
+      "jsonId": "atd_clomipramine"
+    },
+    {
+      "name": "clonazépam",
+      "jsonId": "bzd_clonazepam"
+    },
+    {
+      "name": "clozapine",
+      "jsonId": "atp_clozapine"
+    },
+    {
+      "name": "codéine",
+      "jsonId": "opi_codeine"
+    },
+    {
+      "name": "diazépam",
+      "jsonId": "bzd_diazepam"
+    },
+    {
+      "name": "duloxétine",
+      "jsonId": "atd_duloxetine"
+    },
+    {
+      "name": "escitalopram",
+      "jsonId": "atd_escitalopram"
+    },
+    {
+      "name": "éthanol",
+      "jsonId": "aut_alcool_aigu"
+    },
+    {
+      "name": "éthosuximide",
+      "jsonId": "aco_ethosuximide"
+    },
+    {
+      "name": "fentanyl",
+      "jsonId": "opi_fentanyl"
+    },
+    {
+      "name": "fluoxétine",
+      "jsonId": "atd_fluoxetine"
+    },
+    {
+      "name": "guanfacine",
+      "jsonId": "pst_guanfacine"
+    },
+    {
+      "name": "halopéridol",
+      "jsonId": "atp_haloperidol"
+    },
+    {
+      "name": "imipramine",
+      "jsonId": "atd_imipramine"
+    },
+    {
+      "name": "kétamine",
+      "jsonId": "dis_ketamine"
+    },
+    {
+      "name": "lévomépromazine",
+      "jsonId": "atp_levomepromazine"
+    },
+    {
+      "name": "méthadone",
+      "jsonId": "opi_tso_methadone"
+    },
+    {
+      "name": "midazolam",
+      "jsonId": "bzd_midazolam"
+    },
+    {
+      "name": "mirtazapine",
+      "jsonId": "atd_mirtazapine"
+    },
+    {
+      "name": "modafinil",
+      "jsonId": "pst_modafinil"
+    },
+    {
+      "name": "morphine",
+      "jsonId": "opi_morphine"
+    },
+    {
+      "name": "naloxone",
+      "jsonId": "ant_opi_naloxone"
+    },
+    {
+      "name": "olanzapine",
+      "jsonId": "atp_olanzapine"
+    },
+    {
+      "name": "oxcarbazépine",
+      "jsonId": "aco_oxcarbazepine"
+    },
+    {
+      "name": "oxycodone",
+      "jsonId": "opi_oxycodone"
+    },
+    {
+      "name": "palipéridone",
+      "jsonId": "atp_paliperidone"
+    },
+    {
+      "name": "paroxétine",
+      "jsonId": "atd_paroxetine"
+    },
+    {
+      "name": "pérampanel",
+      "jsonId": "aco_perampanel"
+    },
+    {
+      "name": "phénobarbital",
+      "jsonId": "aco_phenobarbital"
+    },
+    {
+      "name": "phénytoïne",
+      "jsonId": "aco_phenytoine"
+    },
+    {
+      "name": "quétiapine",
+      "jsonId": "atp_quetiapine"
+    },
+    {
+      "name": "rispéridone",
+      "jsonId": "atp_risperidone"
+    },
+    {
+      "name": "sertraline",
+      "jsonId": "atd_sertraline"
+    },
+    {
+      "name": "tetrahydrocannabinol",
+      "jsonId": "can_thc"
+    },
+    {
+      "name": "THC",
+      "jsonId": "can_thc"
+    },
+    {
+      "name": "topiramate",
+      "jsonId": "aco_topiramate"
+    },
+    {
+      "name": "tramadol",
+      "jsonId": "opi_tramadol"
+    },
+    {
+      "name": "venlafaxine",
+      "jsonId": "atd_venlafaxine"
+    },
+    {
+      "name": "vortioxétine",
+      "jsonId": "atd_vortioxetine"
+    },
+    {
+      "name": "zolpidem",
+      "jsonId": "hyp_zolpidem"
+    },
+    {
+      "name": "zopiclone",
+      "jsonId": "hyp_zopiclone"
+    }
+  ]
+}

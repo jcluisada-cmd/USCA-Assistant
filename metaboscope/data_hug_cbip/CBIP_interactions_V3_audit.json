@@ -1,0 +1,428 @@
+{
+  "counts": {
+    "molecules": 472,
+    "substrat": 602,
+    "inhibiteur": 177,
+    "inducteur": 72,
+    "molecules_with_inhibiteur": 114,
+    "molecules_with_inducteur": 35
+  },
+  "counts_by_voie_category": {
+    "CYP1A2": {
+      "substrat": 32,
+      "inhibiteur": 15,
+      "inducteur": 9
+    },
+    "CYP2B6": {
+      "substrat": 9,
+      "inhibiteur": 4,
+      "inducteur": 7
+    },
+    "CYP2C19": {
+      "substrat": 34,
+      "inhibiteur": 16,
+      "inducteur": 6
+    },
+    "CYP2C8": {
+      "substrat": 22,
+      "inhibiteur": 8,
+      "inducteur": 2
+    },
+    "CYP2C9": {
+      "substrat": 39,
+      "inhibiteur": 17,
+      "inducteur": 14
+    },
+    "CYP2D6": {
+      "substrat": 52,
+      "inhibiteur": 27,
+      "inducteur": 0
+    },
+    "CYP2E1": {
+      "substrat": 0,
+      "inhibiteur": 0,
+      "inducteur": 0
+    },
+    "CYP3A4/5": {
+      "substrat": 281,
+      "inhibiteur": 55,
+      "inducteur": 29
+    },
+    "Pgp": {
+      "substrat": 133,
+      "inhibiteur": 35,
+      "inducteur": 5
+    }
+  },
+  "index_crosscheck": {
+    "reference_molecules": 463,
+    "discrepancy_count": 45,
+    "discrepancies": [
+      {
+        "molecule": "abiratérone",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP2C8"
+        ]
+      },
+      {
+        "molecule": "aciclovir",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP1A2"
+        ]
+      },
+      {
+        "molecule": "binimetinib",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "binimétinib",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "diltiazem",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "éliglustat",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5",
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "eliglustat",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5",
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "elvitégravir",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "élvitégravir",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "ésoméprazole",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP2C19"
+        ]
+      },
+      {
+        "molecule": "esoméprazole",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP2C19"
+        ]
+      },
+      {
+        "molecule": "estrogènes",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP1A2"
+        ]
+      },
+      {
+        "molecule": "estrogènes et estroprogestatifs",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP1A2"
+        ]
+      },
+      {
+        "molecule": "estroprogestatifs",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP1A2"
+        ]
+      },
+      {
+        "molecule": "étravirine",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP2C19"
+        ]
+      },
+      {
+        "molecule": "etravirine",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP2C19"
+        ]
+      },
+      {
+        "molecule": "évérolimus",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "éverolimus",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "fédratinib",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP2C19"
+        ]
+      },
+      {
+        "molecule": "géfitinib",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "gilteritinib",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "giltéritinib",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "lédipasvir",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "lédipasvir",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "ledipasvir",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "ledipasvir",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "maribavir",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "netupitant",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "nétupitant",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "norfloxacine",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP1A2"
+        ]
+      },
+      {
+        "molecule": "réboxétine",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "reboxétine",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "remdésivir",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "riociguat",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "Pgp"
+        ]
+      },
+      {
+        "molecule": "ritlécitinib",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP1A2",
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "ritlécitinib",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP1A2",
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "tetrahydrocannabinol",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP2C9"
+        ]
+      },
+      {
+        "molecule": "tétrahydrocannabinol",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP2C9"
+        ]
+      },
+      {
+        "molecule": "topiramate",
+        "category": "inducteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "vémurafénib",
+        "category": "inhibiteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP2D6"
+        ]
+      },
+      {
+        "molecule": "vémurafénib",
+        "category": "inducteur",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "vemurafenib",
+        "category": "inhibiteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP1A2",
+          "CYP2D6"
+        ]
+      },
+      {
+        "molecule": "vemurafenib",
+        "category": "inducteur",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "zanubritinib",
+        "category": "substrat",
+        "issue": "présent dans table récapitulative mais absent des tables détaillées",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      },
+      {
+        "molecule": "zanubrutinib",
+        "category": "substrat",
+        "issue": "présent dans tables détaillées mais absent de la table récapitulative",
+        "voies": [
+          "CYP3A4/5"
+        ]
+      }
+    ]
+  }
+}

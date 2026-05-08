@@ -1,0 +1,1353 @@
+{
+  "_metadata": {
+    "fichier": "molecules_antidepresseurs.json",
+    "classes_incluses": ["Antidépresseur"],
+    "nombre_molecules": 14,
+    "nombre_zones_grises_molecule": 1,
+    "nombre_entrees_avec_champs_zone_grise": 3,
+    "date_consolidation": "2026-04",
+    "sources_rapports_projet": [
+      "Gemini DR 1 (Plan_de_recherche_MetaboScope_validé_.txt)",
+      "Gemini DR 2, 3, 4 (rapports consolidés)",
+      "ChatGPT P1-P3bis (4 fichiers)",
+      "Rapport d'Expertise HUG 2020 extension",
+      "Mise_à_jour_référentiel_interactions_médicamenteuses.txt",
+      "carte_des_cytochromes_2020.pdf (HUG 2020)"
+    ],
+    "arbitrages_appliques": [
+      "Escitalopram/Citalopram classés QT-KR (CredibleMeds) — pas QT-PR",
+      "Vortioxétine : CYP2D6-PM niveau CPIC B (pas A)",
+      "Escitalopram : CYP2C19-PM niveau CPIC A (réduction dose 50%)",
+      "Tianeptine : β-oxydation majeure + MC5 actif agoniste μ-opioïde atypique (mésusage)",
+      "Agomélatine : CI ABSOLUE fluvoxamine (AUC ×60) + hepatotox + surveillance hépatique obligatoire",
+      "Paroxétine : inhibiteur CYP2D6 MBI (irréversible) — distinguer de fluoxétine (compétitive)",
+      "Venlafaxine : ACB-3 sur Boustani 2012 scale",
+      "Tricycliques : QT-CR (CredibleMeds) + ACB-3 + réduction 50% dose si PM CYP2D6"
+    ],
+    "schema_version": "v2_avec_champs_manquants"
+  },
+  "molecules": [
+    {
+      "id": "atd_vortioxetine",
+      "nom_dci": "Vortioxétine",
+      "synonymes": ["Brintellix"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "Lu AA34443 (alcool benzylique) puis Lu AA34528 (acide carboxylique, inactif)",
+          "preuve": "IVH-C",
+          "source": "EMA:Brintellix-EPAR"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites mineurs inactifs",
+          "preuve": "IVH-O",
+          "source": "PMID:25921183"
+        },
+        {
+          "isoforme": "CYP3A5",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:25921183"
+        },
+        {
+          "isoforme": "CYP2A6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:25921183"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:25921183"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:25921183"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:25921183"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides (UGT non spécifiée dans rapports accessibles)",
+          "preuve": "IVT",
+          "source": "EMA:Brintellix-EPAR"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "EMA:Brintellix-EPAR"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "pas de métabolite actif significatif — avantage PK",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B",
+          "recommandation": "AUC ×2 chez PM — envisager réduction de dose 50% (niveau CPIC B, non A)",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO (moclobémide, tranylcypromine, linézolide, bleu de méthylène)",
+          "mecanisme": "inhibition dégradation 5-HT + modulation multimodale 5-HT",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue ; délai 14 jours après arrêt IMAO",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "bupropion (inhibiteur CYP2D6 fort)",
+          "mecanisme": "inhibition CYP2D6 — phénocopie PM",
+          "effet": "↑ concentrations vortioxétine",
+          "timing": "envisager réduction dose 50%",
+          "preuve": "IVH-O",
+          "source": "EMA:Brintellix-EPAR"
+        }
+      ],
+      "alertes_pd": ["sero"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Brintellix-EPAR", "PMID:25921183", "CPIC:SSRI-CYP2D6-CYP2C19-2023"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atd_escitalopram",
+      "nom_dci": "Escitalopram",
+      "synonymes": ["Seroplex", "Lexapro", "Cipralex"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "S-desméthylcitalopram (faiblement actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "S-desméthylcitalopram",
+          "preuve": "IVH-O",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "didesméthylcitalopram (inactif)",
+          "preuve": "IVH-O",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "EMA:Seroplex-RCP"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "S-desméthylcitalopram",
+        "activite_relative": "faiblement actif (ISR faible) — contribution clinique marginale",
+        "demi_vie_h": 50
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire la dose de 50% ou choisir alternative non métabolisée par CYP2C19. Risque QT-KR majoré. Dose max 10 mg/j si PM (vs 20 mg/j population générale). Prévalence PM 2-5% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*17",
+          "phenotype": "RM/UM",
+          "niveau_cpic": "A",
+          "recommandation": "Exposition diminuée — envisager alternative non métabolisée par CYP2C19 (ex. sertraline à doses adaptées). Prévalence UM 5-10% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide, pimozide",
+          "mecanisme": "sero + QT additif",
+          "effet": "syndrome sérotoninergique / torsades de pointes",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "fluvoxamine, oméprazole (inhibiteurs CYP2C19 forts)",
+          "mecanisme": "inhibition CYP2C19",
+          "effet": "↑ AUC escitalopram — risque QT majoré",
+          "timing": "réduire dose ou surveiller ECG",
+          "preuve": "IVH-O",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "avec": "autres torsadogènes (méthadone, halopéridol, cyamémazine, ondansétron, hydroxyzine, moxifloxacine, macrolides)",
+          "mecanisme": "addition QT (KR + KR)",
+          "effet": "torsades de pointes",
+          "timing": "CI ou surveillance ECG strict selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "sero", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:citalopram-escitalopram-CYP2C19-2023", "CredibleMeds:KR-list-2022", "EMA:Seroplex-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_citalopram",
+      "nom_dci": "Citalopram",
+      "synonymes": ["Seropram", "Celexa"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "desméthylcitalopram (faiblement actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "desméthylcitalopram",
+          "preuve": "IVH-O",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "didesméthylcitalopram",
+          "preuve": "IVH-O",
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "EMA:Seropram-RCP"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "desméthylcitalopram",
+        "activite_relative": "faiblement actif",
+        "demi_vie_h": 50
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire la dose de 50% ou choisir alternative. Dose max 20 mg/j en population générale, 10 mg/j si PM ou >65 ans ou IH. Risque QT majoré.",
+          "zone_grise": false,
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*17",
+          "phenotype": "RM/UM",
+          "niveau_cpic": "A",
+          "recommandation": "Exposition diminuée — envisager alternative",
+          "zone_grise": false,
+          "source": "CPIC:citalopram-escitalopram-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide, pimozide",
+          "mecanisme": "sero + QT additif",
+          "effet": "syndrome sérotoninergique / torsades de pointes",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "torsades",
+          "timing": "CI selon OMEDIT (citalopram/escitalopram = CI avec tout autre torsadogène)",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "sero", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:citalopram-escitalopram-CYP2C19-2023", "CredibleMeds:KR-list-2022", "EMA:Seropram-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_sertraline",
+      "nom_dci": "Sertraline",
+      "synonymes": ["Zoloft"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2B6",
+          "rang": "majeur",
+          "produit": "desméthylsertraline (faiblement actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "desméthylsertraline",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "desméthylsertraline",
+          "preuve": "IVH-O",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "desméthylsertraline",
+          "preuve": "IVH-O",
+          "source": "EMA:Zoloft-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "EMA:Zoloft-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "EMA:Zoloft-RCP"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "desméthylsertraline (N-desméthylsertraline)",
+        "activite_relative": "~20× moins puissant que sertraline — contribution clinique modeste",
+        "demi_vie_h": 66
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire la dose de 50% (CPIC 2023). Prévalence PM 2-5% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*17",
+          "phenotype": "RM/UM",
+          "niveau_cpic": "A",
+          "recommandation": "Envisager alternative non métabolisée par CYP2C19",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide, tramadol, fentanyl, péthidine, triptans, MDMA, LSD, psilocybine",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO ; surveillance autres",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["sero", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:SSRI-CYP2D6-CYP2C19-2023", "EMA:Zoloft-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_fluoxetine",
+      "nom_dci": "Fluoxétine",
+      "synonymes": ["Prozac", "Fluox"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "norfluoxétine (actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "majeur",
+          "produit": "norfluoxétine",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "norfluoxétine",
+          "preuve": "IVH-O",
+          "source": "EMA:Prozac-RCP"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "norfluoxétine",
+          "preuve": "IVH-O",
+          "source": "EMA:Prozac-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "strong",
+          "mecanisme": "competitive",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C19",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP3A4",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norfluoxétine",
+        "activite_relative": "activité ISR comparable à fluoxétine — contribution majeure aux effets thérapeutiques",
+        "demi_vie_h": 240
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B",
+          "recommandation": "Envisager réduction dose 50% ou alternative non métabolisée par CYP2D6. Accumulation norfluoxétine.",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "tramadol, codéine, tamoxifène, métoprolol, ATC, atomoxétine",
+          "mecanisme": "inhibition CYP2D6 forte — phénocopie PM persistante (demi-vie longue du métabolite actif)",
+          "effet": "↓ efficacité pour prodrogues CYP2D6 (tramadol, codéine, tamoxifène) ; ↑ toxicité pour substrats CYP2D6",
+          "timing": "effet persistant 3-5 semaines après arrêt (norfluoxétine t½ ≈ 10 j)",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "avec": "IMAO, linézolide, tramadol, MDMA, LSD, psilocybine, triptans",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO — délai 5 semaines après arrêt fluoxétine avant IMAO (t½ norfluoxétine)",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["sero", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:SSRI-CYP2D6-CYP2C19-2023", "FDA:Drug-Interactions-Table-2020", "EMA:Prozac-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_paroxetine",
+      "nom_dci": "Paroxétine",
+      "synonymes": ["Deroxat", "Paxil", "Divarius"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "métabolites inactifs (auto-inhibition MBI)",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "EMA:Deroxat-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "strong",
+          "mecanisme": "MBI",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Exposition ↑↑ — envisager alternative non CYP2D6 ou réduction dose 50%",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "tramadol, codéine, tamoxifène, métoprolol, ATC",
+          "mecanisme": "inhibition CYP2D6 forte MBI — phénocopie PM irréversible (durée jusqu'à resynthèse enzyme ~7-14 j)",
+          "effet": "↓ efficacité tramadol/codéine/tamoxifène ; ↑ toxicité ATC/métoprolol",
+          "timing": "effet persistant même après arrêt paroxétine (MBI)",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO — délai 2 semaines",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["sero", "ACB-3", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:SSRI-CYP2D6-CYP2C19-2023", "FDA:Drug-Interactions-Table-2020", "EMA:Deroxat-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_venlafaxine",
+      "nom_dci": "Venlafaxine",
+      "synonymes": ["Effexor", "Venlafaxin"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "O-desméthylvenlafaxine (desvenlafaxine, actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "N-desméthylvenlafaxine",
+          "preuve": "IVH-O",
+          "source": "EMA:Effexor-RCP"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "métabolites",
+          "preuve": "IVT",
+          "source": "EMA:Effexor-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "EMA:Effexor-RCP"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "O-desméthylvenlafaxine (desvenlafaxine)",
+        "activite_relative": "IRSNa actif — contribution thérapeutique majeure",
+        "demi_vie_h": 11
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM) ; ×N (UM)",
+          "phenotype": "PM ou UM",
+          "niveau_cpic": "B",
+          "recommandation": "PM : ↑ venlafaxine/desvenlafaxine ratio — envisager surveillance ou alternative. UM : phénocopiage par MDMA (fenêtre 10 j) à considérer.",
+          "zone_grise": false,
+          "source": "CPIC:SSRI-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "MDMA (fenêtre 10 jours)",
+          "mecanisme": "MBI CYP2D6 par MDMA → phénocopiage PM transitoire",
+          "effet": "↑↑ venlafaxine ; risque sérotoninergique additif (MDMA libère 5-HT)",
+          "timing": "éviter venlafaxine 10 jours après prise MDMA",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "IMAO, linézolide, tramadol, triptans",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO ; moclobémide + venlafaxine = combinaison particulièrement documentée",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "sero", "ACB-3", "CI-IMAO", "HTA-dose-dep"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:SSRI-CYP2D6-CYP2C19-2023", "CredibleMeds:PR-list-2022", "EMA:Effexor-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atd_duloxetine",
+      "nom_dci": "Duloxétine",
+      "synonymes": ["Cymbalta"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "4-hydroxy-duloxétine (inactif)",
+          "preuve": "IVH-C",
+          "source": "EMA:Cymbalta-RCP"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "métabolites inactifs",
+          "preuve": "IVH-C",
+          "source": "EMA:Cymbalta-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "EMA:Cymbalta-RCP"
+        },
+        {
+          "enzyme": "SULT",
+          "rang": "mineur",
+          "produit": "sulfates",
+          "preuve": "IVT",
+          "source": "EMA:Cymbalta-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP1A2",
+          "variants": "*1F",
+          "phenotype": "IM / NM fumeur",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact modéré de l'induction CYP1A2 par tabagisme (↓ duloxétine chez fumeurs). Pas de guideline CPIC finalisée.",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "fluvoxamine, ciprofloxacine, énoxacine (inhibiteurs CYP1A2 forts)",
+          "mecanisme": "inhibition CYP1A2",
+          "effet": "↑↑ AUC duloxétine",
+          "timing": "CI ou réduction dose",
+          "preuve": "IVH-C",
+          "source": "EMA:Cymbalta-RCP"
+        },
+        {
+          "avec": "tabac (arrêt brutal)",
+          "mecanisme": "déinduction CYP1A2 après arrêt des goudrons",
+          "effet": "↑ duloxétine à l'arrêt tabac",
+          "timing": "surveillance si arrêt hospitalier",
+          "preuve": "IVH-O",
+          "source": "Littérature PK"
+        },
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "addition sérotoninergique + NA",
+          "effet": "syndrome sérotoninergique + hypertension",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["sero", "ACB-1", "CI-IMAO", "hepatotox"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Cymbalta-RCP", "FDA:Drug-Interactions-Table-2020"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atd_agomelatine",
+      "nom_dci": "Agomélatine",
+      "synonymes": ["Valdoxan", "Thymanax"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "3-hydroxy-agomélatine et 7-desméthyl-agomélatine (inactifs)",
+          "preuve": "IVH-C",
+          "source": "EMA:Valdoxan-EPAR"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "métabolites mineurs inactifs",
+          "preuve": "IVH-O",
+          "source": "EMA:Valdoxan-EPAR"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "métabolites mineurs inactifs",
+          "preuve": "IVH-O",
+          "source": "EMA:Valdoxan-EPAR"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "biodisponibilité ~5% (premier passage hépatique massif ~95%) — pas de métabolite actif",
+        "demi_vie_h": 2
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "fluvoxamine",
+          "mecanisme": "inhibition CYP1A2 puissante",
+          "effet": "augmentation exposition agomélatine ×60 (IC95: ×12 à ×412)",
+          "timing": "CONTRE-INDICATION ABSOLUE",
+          "preuve": "IVH-C",
+          "source": "EMA:Valdoxan-EPAR"
+        },
+        {
+          "avec": "ciprofloxacine, énoxacine",
+          "mecanisme": "inhibition CYP1A2 modérée",
+          "effet": "↑ exposition agomélatine",
+          "timing": "éviter ou surveiller",
+          "preuve": "IVH-O",
+          "source": "EMA:Valdoxan-EPAR"
+        },
+        {
+          "avec": "tabac (goudrons)",
+          "mecanisme": "induction CYP1A2",
+          "effet": "↓ concentrations agomélatine → perte d'efficacité",
+          "timing": "ajuster dose ou déconseiller tabagisme",
+          "preuve": "IVH-O",
+          "source": "EMA:Valdoxan-EPAR"
+        },
+        {
+          "avec": "rifampicine",
+          "mecanisme": "induction CYP1A2",
+          "effet": "↓ AUC agomélatine",
+          "timing": "éviter",
+          "preuve": "IVH-O",
+          "source": "EMA:Valdoxan-EPAR"
+        }
+      ],
+      "alertes_pd": ["hepatotox", "CI-fluvoxamine"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Valdoxan-EPAR", "ANSM:RCP-agomelatine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atd_mirtazapine",
+      "nom_dci": "Mirtazapine",
+      "synonymes": ["Norset", "Remeron"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "N-desméthylmirtazapine (faiblement actif)",
+          "preuve": "IVH-C",
+          "source": "EMA:Remeron-RCP"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "8-hydroxy-mirtazapine",
+          "preuve": "IVH-C",
+          "source": "EMA:Remeron-RCP"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "mineur",
+          "produit": "métabolites",
+          "preuve": "IVH-O",
+          "source": "EMA:Remeron-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "EMA:Remeron-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "N-desméthylmirtazapine",
+        "activite_relative": "faiblement actif — contribution clinique modeste",
+        "demi_vie_h": 40
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact modéré ; pas de guideline CPIC spécifique mirtazapine",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "addition sérotoninergique (modérée)",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO ; délai 2 semaines",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (carbamazépine, rifampicine, millepertuis)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ concentrations mirtazapine",
+          "timing": "ajuster dose",
+          "preuve": "IVH-O",
+          "source": "EMA:Remeron-RCP"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "sero-faible", "ACB-2"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Remeron-RCP", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atd_tianeptine",
+      "nom_dci": "Tianeptine",
+      "synonymes": ["Stablon (retiré FR)", "Coaxil", "ZaZa (mésusage)", "Tianna (mésusage)"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Non commercialisé (Stablon retiré)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolite MC5 (actif) par déméthylation",
+          "preuve": "IVA",
+          "source": "GPT P3bis (données animales/in vitro)"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "β-oxydation mitochondriale",
+          "alias": "voie majeure oxydation chaîne latérale",
+          "rang": "majeur",
+          "produit": "acides carboxyliques métabolites",
+          "preuve": "IVA",
+          "source": "GPT P3bis"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT1A3",
+          "rang": "majeur",
+          "produit": "glucuronides des métabolites",
+          "preuve": "IVT",
+          "source": "GPT P3bis"
+        },
+        {
+          "enzyme": "UGT2B15",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "GPT P3bis"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "MC5 (amphiphénone)",
+        "activite_relative": "agoniste partiel μ-opioïde — clé du potentiel addictogène",
+        "demi_vie_h": 8
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "méthadone, buprénorphine, opioïdes",
+          "mecanisme": "addition μ-opioïde (tianeptine et MC5 agonistes partiels)",
+          "effet": "dépression respiratoire additive",
+          "timing": "éviter l'association",
+          "preuve": "CAS",
+          "source": "GPT P3bis"
+        },
+        {
+          "avec": "inhibiteurs CYP3A4 (azolés, macrolides)",
+          "mecanisme": "inhibition CYP3A4 mineur — voie alterne β-oxydation préservée",
+          "effet": "augmentation modeste concentrations — non quantifiée",
+          "timing": "zone grise — pas de recommandation officielle",
+          "preuve": "ND",
+          "source": "GPT P3bis (zone grise)"
+        }
+      ],
+      "alertes_pd": ["resp", "dependance-mu-opioide"],
+      "niveau_preuve_global": "CAS",
+      "sources_principales": ["FDA:safety-communication-tianeptine-2018-2022", "StatPearls:tianeptine"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atd_amitriptyline",
+      "nom_dci": "Amitriptyline",
+      "synonymes": ["Laroxyl", "Elavil", "Endep"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "nortriptyline (actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "10-hydroxy-amitriptyline (actif) + 10-hydroxy-nortriptyline",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites",
+          "preuve": "IVH-O",
+          "source": "EMA:Laroxyl-RCP"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "mineur",
+          "produit": "métabolites",
+          "preuve": "IVH-O",
+          "source": "EMA:Laroxyl-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "EMA:Laroxyl-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "nortriptyline + 10-hydroxy-amitriptyline",
+        "activite_relative": "nortriptyline = IRSNa actif ; contribution majeure aux effets thérapeutiques et EI",
+        "demi_vie_h": 30
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire dose initiale de 50% ou éviter. Surveillance taux plasmatiques possible.",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2D6",
+          "variants": "×N (UM)",
+          "phenotype": "UM",
+          "niveau_cpic": "A",
+          "recommandation": "Exposition ↓ — envisager alternative",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Ratio nortriptyline/amitriptyline modifié — envisager adaptation ou alternative",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "addition sérotoninergique + NA",
+          "effet": "syndrome sérotoninergique + crise hypertensive",
+          "timing": "CI absolue ; délai 14 jours",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "autres torsadogènes + anticholinergiques",
+          "mecanisme": "addition QT et ACB",
+          "effet": "TdP + syndrome anticholinergique",
+          "timing": "prudence ; sujet âgé = risque majoré",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:CR-list-2022"
+        },
+        {
+          "avec": "surdosage",
+          "mecanisme": "blocage cardiaque Na + anticholinergique + α1",
+          "effet": "convulsions + élargissement QRS + torsades + coma (dose létale basse 10-30 mg/kg)",
+          "timing": "surveillance USI",
+          "preuve": "IVH-C",
+          "source": "StatPearls:amitriptyline-overdose"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "sero", "ACB-3", "seuil-ep", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:tricyclics-CYP2D6-CYP2C19-2023", "CredibleMeds:CR-list-2022", "EMA:Laroxyl-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atd_clomipramine",
+      "nom_dci": "Clomipramine",
+      "synonymes": ["Anafranil"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "8-hydroxy-clomipramine (actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "desméthylclomipramine (actif — inhibiteur NA préférentiel)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "desméthylclomipramine",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "desméthylclomipramine",
+          "preuve": "IVH-O",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "EMA:Anafranil-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "N-desméthylclomipramine + 8-hydroxy-clomipramine",
+        "activite_relative": "desméthylclomipramine = IRNa préférentiel ; effet clinique composite",
+        "demi_vie_h": 36
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire dose initiale de 50% ou éviter",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Ratio clomipramine/desméthylclomipramine modifié — envisager adaptation",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide, tramadol (fort agent sérotoninergique — clomipramine = ATC le plus sérotoninergique)",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI absolue IMAO",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "sero", "ACB-3", "seuil-ep", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:tricyclics-CYP2D6-CYP2C19-2023", "CredibleMeds:CR-list-2022", "EMA:Anafranil-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atd_imipramine",
+      "nom_dci": "Imipramine",
+      "synonymes": ["Tofranil"],
+      "classe": "Antidépresseur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "2-hydroxy-imipramine + 2-hydroxy-désipramine (actif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "désipramine (actif — inhibiteur NA)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "désipramine",
+          "preuve": "IVH-O",
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "désipramine",
+          "preuve": "IVH-O",
+          "source": "EMA:Tofranil-RCP"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "EMA:Tofranil-RCP"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "désipramine",
+        "activite_relative": "IRNa actif — contribution thérapeutique majeure",
+        "demi_vie_h": 22
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Réduire dose initiale de 50% ou éviter",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Envisager adaptation dose ou alternative",
+          "zone_grise": false,
+          "source": "CPIC:tricyclics-CYP2D6-CYP2C19-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "addition sérotoninergique + NA",
+          "effet": "syndrome sérotoninergique + crise hypertensive",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "sero", "ACB-3", "seuil-ep", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:tricyclics-CYP2D6-CYP2C19-2023", "CredibleMeds:CR-list-2022", "EMA:Tofranil-RCP"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    }
+  ]
+}

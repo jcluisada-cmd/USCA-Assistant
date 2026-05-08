@@ -1,0 +1,5391 @@
+{
+  "_metadata": {
+    "source": "HUG:carte_cytochromes_2020",
+    "publication": "Hôpitaux Universitaires de Genève — Carte des cytochromes (édition 2020)",
+    "extraction_date": "2026-04-27",
+    "extraction_by": "claude-opus-4-7",
+    "totals": {
+      "molecules_uniques": 245,
+      "substrats_T1": 220,
+      "inhibiteurs_T2": 98,
+      "inducteurs_T3": 29,
+      "intersection_T1_T2": 78,
+      "intersection_T1_T3": 22,
+      "intersection_T2_T3": 9,
+      "intersection_T1_T2_T3": 7
+    },
+    "schema": {
+      "voies_couvertes": [
+        "CYP1A2",
+        "CYP2B6",
+        "CYP2C8",
+        "CYP2C9",
+        "CYP2C19",
+        "CYP2D6",
+        "CYP2E1",
+        "CYP3A4/5",
+        "Pgp"
+      ],
+      "rangs_substrat": [
+        "majeure",
+        "mineure"
+      ],
+      "puissances_inhibiteur": [
+        "puissant",
+        "modéré"
+      ],
+      "puissances_inducteur": [
+        "puissant",
+        "modéré"
+      ],
+      "metabolite_actif": "true si la cellule est marquée d'un ! dans le PDF (= métabolite actif produit par cette voie)"
+    },
+    "notes": [
+      "Source = page « Carte des cytochromes P450 2020 » des HUG, document à 3 tableaux (substrats / inhibiteurs / inducteurs).",
+      "Le PDF source était en réalité une archive ZIP contenant 2 JPEG ; extraction réalisée par pipeline visuel PIL/numpy + OCR + listes manuelles.",
+      "Le tableau 1 contient 220 entrées (et non ~270) — la cible de 270 ± 5 dans le prompt est en réalité plus large que ce que contient ce document HUG 2020.",
+      "Pour les substrats, ! signale la présence d'un métabolite actif via cette voie (codéine→morphine via 2D6, tramadol→O-desméthyl-tramadol via 2D6, etc.).",
+      "Plusieurs entités dépendantes du contexte (ecstasy/MDMA, mifépristone(RU486), tipranavir avec ritonavir) sont nommées entre parenthèses comme dans la source."
+    ]
+  },
+  "molecules": [
+    {
+      "nom": "acénocoumarol",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "acide fusidique",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "acide méfénamique",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "acide valproïque",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "agomelatine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "alfentanil",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "alprazolam",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "amiodarone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "amitriptyline",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "amlodipine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "apixaban",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "aripiprazole",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "artéméther",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "atazanavir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "atomoxétine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "atorvastatine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "bisoprolol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "bortézomib",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "bosentan",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "bromocriptine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "buprénorphine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "bupropion",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "caféine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2E1",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "cannabidiol",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "carbamazépine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "carvédilol",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "célécoxib",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "celiprolol",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "chardon marie (silibinine)",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "chloroquine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "chlorphéniramine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "chlorpromazine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "ciclosporine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "ciprofloxacine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "citalopram",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "clarithromycine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "clobazam",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "clomipramine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "clonazépam",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "clopidogrel",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "clozapine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "cobisistat",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "codéine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "colchicine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "cortisol",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "curcuma",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "cyclophosphamide",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "dabigatran",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "daclatasvir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "darunavir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "dasatinib",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "désogestrel",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "dexaméthasone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C8",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "dextrométhorphane",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "diazépam",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "diclofénac",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "dienogest",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "digoxine",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "dihydrocodéine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "diltiazem",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "diphénhydramine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "disulfirame",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2E1",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "docétaxel",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "dolutegravir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "donépézil",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "doxycycline",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "dronédarone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "duloxétine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "dutastéride",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ecstasy (MDMA)",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2B6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "edoxaban",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "efavirenz",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "elvitégravir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "enzalutamide",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "ergotamine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "erlotinib",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "érythromycine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "ésoméprazole",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "éthanol",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2E1",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2E1",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "éthinylestradiol",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "éthosuximide",
+      "substrat": [
+        {
+          "voie": "CYP2E1",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "étoposide",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "étravirine",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "everolimus",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "felbamate",
+      "substrat": [
+        {
+          "voie": "CYP2E1",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "félodipine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "fentanyl",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "fexofénadine",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "finastéride",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "flécaïnide",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "fluconazole",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "fluoxétine",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "flurbiprofène",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "fluvastatine",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "fluvoxamine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "galantamine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "géfitinib",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "gemfibrozil",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "gestodène",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "glibenclamide",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "glicazide",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "glimépiride",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "granisétron",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "grapefruit, orange de Séville",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "grazoprévir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "halopéridol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "hydrocodone",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ibuprofène",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ifosfamide",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "imatinib",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "imipramine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "irbésartan",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "isoniazide",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP2E1",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "isradipine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "itraconazole",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "kétoconazole",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "lansoprazole",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "ledipasvir",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "légumes (chou, brocoli)",
+      "substrat": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "letrozole",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "lévomépromazine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "lidocaïne",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "lopéramide",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "lopinavir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "loratadine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "losartan",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "luméfantrine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "maraviroc",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "médroxyprogestérone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "méfloquine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "méloxicam",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "métamizole",
+      "substrat": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "méthadone",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "méthylprednisolone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "métoclopramide",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "métoprolol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "métronidazole",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "miansérine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "miconazole",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "midazolam",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "mifépristone (RU486)",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "millepertuis",
+      "substrat": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "mirtazapine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "moclobémide",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "modafinil",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "montélukast",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "naproxène",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "natéglinide",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "nébivolol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "névirapine",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "nifédipine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "nilotinib",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "nimodipine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "nitrendipine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "noréthistérone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "norfloxacine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "nortriptyline",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "olanzapine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "oméprazole",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "ondansétron",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "oxcarbazépine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "oxybutynine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "oxycodone",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "paclitaxel",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "pantoprazole",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "paracétamol",
+      "substrat": [
+        {
+          "voie": "CYP2E1",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "paroxétine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "pérampanel",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2B6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "phénobarbital",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "phenprocoumone",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "phénytoïne",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "pioglitazone",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "piroxicam",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "posaconazole",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "prasugrel",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "prednisolone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "primidone",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": true
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "proguanil",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "prométhazine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "propafénone",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "propofol",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "propranolol",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "quétiapine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "quinidine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "quinine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "rabéprazole",
+      "substrat": [
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ranitidine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "réboxétine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "réglisse",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "répaglinide",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "rifabutine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "rifampicine",
+      "substrat": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C8",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "rilpivirine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "rispéridone",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "ritonavir",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "rivaroxaban",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "roxithromycine",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "saquinavir",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "saxagliptine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "sertraline",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2B6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "sildénafil",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "simvastatine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "siponimod",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "sirolimus",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "sofosbuvir",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "sorafénib",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "sufentanil",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "sulfaméthoxazole",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "sunitinib",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tabac (goudrons)",
+      "substrat": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2E1",
+          "puissance": "puissant"
+        }
+      ]
+    },
+    {
+      "nom": "tacrolimus",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tadalafil",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tamoxifène",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tamsulosine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ténoxicam",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "terbinafine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C8",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "testostérone",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "THC",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "théophylline",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2E1",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "ticagrelor",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "timolol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tipranavir (avec ritonavir)",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP2D6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "tizanidine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tolbutamide",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "toltérodine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "topiramate",
+      "substrat": [],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C19",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "torasémide",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tramadol",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "trazodone",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "triazolam",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "trimethoprim",
+      "substrat": [
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2C8",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "trimipramine",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "tropisétron",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "vardénafil",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "velpatasvir",
+      "substrat": [
+        {
+          "voie": "CYP2B6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C8",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "venlafaxine",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": true
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2D6",
+          "puissance": "modéré"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "vérapamil",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C8",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP1A2",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "vinblastine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "modéré"
+        },
+        {
+          "voie": "Pgp",
+          "puissance": "modéré"
+        }
+      ]
+    },
+    {
+      "nom": "vincristine",
+      "substrat": [
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "voriconazole",
+      "substrat": [
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [
+        {
+          "voie": "CYP2B6",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C9",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP2C19",
+          "puissance": "puissant"
+        },
+        {
+          "voie": "CYP3A4/5",
+          "puissance": "puissant"
+        }
+      ],
+      "inducteur": []
+    },
+    {
+      "nom": "warfarine",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "mineure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "zolmitriptan",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "Pgp",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "zolpidem",
+      "substrat": [
+        {
+          "voie": "CYP1A2",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C9",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2C19",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP2D6",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "zopiclone",
+      "substrat": [
+        {
+          "voie": "CYP2C8",
+          "rang": "mineure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    },
+    {
+      "nom": "zuclopenthixol",
+      "substrat": [
+        {
+          "voie": "CYP2D6",
+          "rang": "majeure",
+          "metabolite_actif": false
+        },
+        {
+          "voie": "CYP3A4/5",
+          "rang": "majeure",
+          "metabolite_actif": false
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": []
+    }
+  ],
+  "_warnings": []
+}

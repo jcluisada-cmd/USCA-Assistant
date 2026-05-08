@@ -1,0 +1,25 @@
+import type { Molecule } from '../../types/molecule';
+import { Accordion } from '../ui/Accordion';
+import { normalizeSources } from '../../types/molecule';
+import { SourceLink } from '../ui/SourceLink';
+
+export function SectionTransporteurs({ molecule, defaultOpen }: { molecule: Molecule; defaultOpen?: boolean }) {
+  if (molecule.transporteurs.length === 0) return null;
+  return (
+    <Accordion title={`Transporteurs (${molecule.transporteurs.length})`} defaultOpen={defaultOpen}>
+      <ul className="space-y-2">
+        {molecule.transporteurs.map((e, i) => (
+          <li key={i} className="rounded-md border border-navy-700 bg-navy-800/50 p-2">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-teal-400">{e.transporteur}</span>
+              <span className="text-xs text-gray-400">{e.role} · {e.preuve}</span>
+            </div>
+            <p className="mt-1 flex flex-wrap gap-2">
+              {normalizeSources(e.source).map((s, j) => <SourceLink key={j} source={s} />)}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </Accordion>
+  );
+}

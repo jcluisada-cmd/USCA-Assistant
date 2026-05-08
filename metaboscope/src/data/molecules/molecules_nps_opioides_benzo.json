@@ -1,0 +1,1075 @@
+[
+  {
+    "id": "nps_opi_isotonitazene",
+    "nom_dci": "Isotonitazène",
+    "synonymes": ["ISO", "isotonitazene", "2-(4-isopropoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "classe": "NPS opioïde — benzimidazole",
+    "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020 — liste NPS benzimidazoles-opioïdes)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-desethylisotonitazène + N-desalkylisotonitazène (via N-déalkylation)",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "N-desalkylisotonitazène",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale (NADPH-cytochrome P450 réductase + CYP3A4)",
+        "alias": "nitroréduction",
+        "rang": "majeur",
+        "produit": "5-aminoisotonitazène (métabolite amino — biomarqueur forensique principal; 3 métabolites détectés cas post-mortem France)",
+        "preuve": "FOR",
+        "source": "ResearchGate:postmortem-isotonitazene-France"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites amino",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "5-aminoisotonitazène",
+      "activite_relative": "Activité μ partielle documentée in vitro (modélisation docking) — contribution clinique non quantifiée",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM (*3/*4/*5/*6)",
+        "phenotype": "PM",
+        "niveau_cpic": null,
+        "recommandation": "Pas de recommandation CPIC disponible. PM théoriquement susceptibles d'accumulation. Zone grise absolue — aucune donnée in vivo humaine.",
+        "zone_grise": true,
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Liaison π-hole de l'isotonitazène avec résidu Trp293 du récepteur μ → cinétique de dissociation très lente. Antagonisme compétitif insuffisant aux doses standard de naloxone.",
+        "effet": "Réponse partielle ou absente à 0,4 mg. Protocole : 0,8-4 mg IV + perfusion continue (2/3 dose efficace/heure). Récidive quasi certaine à 60-90 min si perfusion interrompue.",
+        "timing": "Urgence — débuter 0,8 mg IV, répéter toutes les 2-3 min jusqu'à réponse respiratoire, relai perfusion immédiat",
+        "preuve": "CAS",
+        "source": "bioRxiv:2026.04.14.718203"
+      },
+      {
+        "avec": "CYP3A4 inhibiteurs forts (ritonavir, kétoconazole, clarithromycine)",
+        "mecanisme": "Inhibition CYP3A4 → ↑ exposition isotonitazène",
+        "effet": "Risque surdosage majoré — substance déjà létale à doses μg en contexte naïf",
+        "timing": "Non applicable en prescription légale — pertinent en USCA chez PVVIH sous ARV",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "avec": "méthadone, buprénorphine (TSO)",
+        "mecanisme": "Compétition agoniste μ + dépression respiratoire additive",
+        "effet": "Patients sous TSO non protégés contre surdosage isotonitazène. Buprénorphine insuffisamment déplacée par les doses illicites habituelles.",
+        "timing": "Surveillance active en USCA — contexte polyconsommation",
+        "preuve": "CAS",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "avec": "BZD (diazépam, alprazolam, NPS-BZD)",
+        "mecanisme": "Synergie dépression respiratoire opioïde + GABAA",
+        "effet": "Létalité exponentielle — profil benzo-dope + nitazène",
+        "timing": "Dépistage LC-MS/MS polysubstance systématique",
+        "preuve": "FOR",
+        "source": "ResearchGate:postmortem-isotonitazene-France"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "ResearchGate:postmortem-isotonitazene-France",
+      "bioRxiv:2026.04.14.718203",
+      "DOI:10.1080/15563650.2025.2504133",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "demi_vie parent in vivo humain",
+      "demi_vie métabolites confirmée",
+      "PK complète (Tmax, Vd, biodisponibilité)",
+      "UGT isoformes précises",
+      "pharmacogenetique in vivo",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_metonitazene",
+    "nom_dci": "Métonitazène",
+    "synonymes": ["metonitazene", "2-(4-méthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "classe": "NPS opioïde — benzimidazole",
+    "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-deethylmétonitazène (via N-deethylation)",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "N-desalkylmétonitazène",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale",
+        "alias": "nitroréduction",
+        "rang": "majeur",
+        "produit": "5-aminométonitazène (biomarqueur forensique — détecté cas post-mortem USA)",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites amino",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "5-aminométonitazène",
+      "activite_relative": "Activité μ partielle (modélisation docking receptor) — données cliniques absentes",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM",
+        "phenotype": "PM",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise — pas de données in vivo humaines. Accumulation théorique si PM.",
+        "zone_grise": true,
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Cinétique de dissociation lente μ (classe benzimidazole — même mécanique qu'isotonitazène)",
+        "effet": "Résistance relative. Protocole : 0,8-4 mg IV + perfusion continue. Cas de résistance documentés aux USA (NIJ).",
+        "timing": "Même protocole urgence que isotonitazène",
+        "preuve": "CAS",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "avec": "alcool, BZD, GHB",
+        "mecanisme": "Dépression SNC additive sur composante μ-opioïde",
+        "effet": "Létalité majorée — profil polyconsommation USCA",
+        "timing": "LC-MS/MS polysubstance systématique",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "DOI:10.1080/15563650.2025.2504133",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "PK humaine complète",
+      "demi_vie parent + métabolites",
+      "UGT isoformes",
+      "pharmacogenetique in vivo",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_protonitazepyne",
+    "nom_dci": "Protonitazépyne",
+    "synonymes": ["protonitazepyne", "N-pyrrolidinyl protonitazene analogue"],
+    "classe": "NPS opioïde — benzimidazole",
+    "statut_fr": "Stupéfiants (classement générique benzimidazoles-opioïdes ANSM 2020)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-desalkyl-protonitazépyne",
+        "preuve": "IVT",
+        "source": "PMC:12886327"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale",
+        "alias": "nitroréduction",
+        "rang": "majeur",
+        "produit": "5-aminoprotonitazépyne (biomarqueur forensique)",
+        "preuve": "IVT",
+        "source": "PMC:12886327"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites amino",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "5-aminoprotonitazépyne",
+      "activite_relative": "Modélisation docking μ : activité partielle estimée — aucune donnée clinique humaine (données 2023)",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Aucune recommandation disponible. Données limitées à modèles in vitro 2023.",
+        "zone_grise": true,
+        "source": "PMC:12886327"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Classe benzimidazole — cinétique de dissociation μ lente présumée par analogie structurelle",
+        "effet": "Résistance relative présumée. Protocole doses élevées 0,8-4 mg IV + perfusion par analogie de classe. ⚠️ Données directes absentes — inférence structurelle.",
+        "timing": "Protocole nitazène standard",
+        "preuve": "AN",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "avec": "fentanyl illicite (polyconsommation)",
+        "mecanisme": "Synergie dépression respiratoire μ",
+        "effet": "Létalité majorée — retrouvés associés dans cas post-mortem",
+        "timing": "LC-MS/MS polyopioïde systématique",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "IVT",
+    "sources_principales": [
+      "PMC:12886327",
+      "DOI:10.1080/15563650.2025.2504133",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données forensiques humaines",
+      "PK complète",
+      "demi_vie",
+      "pharmacogenetique in vivo",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_etonitazene",
+    "nom_dci": "Étonitazène",
+    "synonymes": ["etonitazene", "2-(4-éthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "classe": "NPS opioïde — benzimidazole",
+    "statut_fr": "Stupéfiants (classement ONU 1973 repris droit français + ANSM)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-deethylétonitazène + 5-aminoétonitazène (via nitroréduction)",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "N-desalkylétonitazène",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale",
+        "alias": "nitroréduction",
+        "rang": "majeur",
+        "produit": "5-aminoétonitazène",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Aucune donnée in vivo. Zone grise.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Classe benzimidazole — cinétique dissociation μ lente par analogie structurelle",
+        "effet": "Résistance relative. Protocole 0,8-4 mg IV + perfusion par analogie de classe.",
+        "timing": "Protocole nitazène standard",
+        "preuve": "AN",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      },
+      {
+        "avec": "autres opioïdes illicites (fentanyl, isotonitazène)",
+        "mecanisme": "Polyconsommation courante — polyopioïde",
+        "effet": "Surdosage polyopioïde difficile à reverser",
+        "timing": "Dépistage LC-MS/MS systématique",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide"],
+    "niveau_preuve_global": "IVT",
+    "sources_principales": [
+      "DOI:10.1080/15563650.2025.2504133",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données forensiques récentes",
+      "PK humaine",
+      "demi_vie",
+      "phase2 confirmée",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_flunitazene",
+    "nom_dci": "Flunitazène",
+    "synonymes": ["flunitazene", "2-(4-fluorobenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "classe": "NPS opioïde — benzimidazole",
+    "statut_fr": "Stupéfiants (classement générique benzimidazoles-opioïdes ANSM 2020)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-deethylflunitazène + 5-aminoflunitazène",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale",
+        "alias": "nitroréduction",
+        "rang": "majeur",
+        "produit": "5-aminoflunitazène",
+        "preuve": "IVT",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Classe benzimidazole — cinétique dissociation μ lente présumée",
+        "effet": "Résistance relative présumée. Protocole doses élevées 0,8-4 mg IV par analogie.",
+        "timing": "Protocole nitazène standard",
+        "preuve": "AN",
+        "source": "DOI:10.1080/15563650.2025.2504133"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide"],
+    "niveau_preuve_global": "IVT",
+    "sources_principales": [
+      "DOI:10.1080/15563650.2025.2504133",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données forensiques humaines",
+      "PK complète",
+      "demi_vie",
+      "phase2",
+      "pharmacogenetique",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_brorphine",
+    "nom_dci": "Brorphine",
+    "synonymes": ["brorphine", "1-(4-bromobenzyl)-4-(2-phényléthyl)pipéridin-4-amine"],
+    "classe": "NPS opioïde — phénylpipéridinyl (non-benzimidazole)",
+    "statut_fr": "Stupéfiants (arrêté ANSM 2021)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "N-déalkylation — métabolites non caractérisés en détail",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "hydroxylation aromatique présumée",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Aucune donnée. Zone grise absolue.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Agoniste μ haute affinité (scaffold phénylpipéridinyl — différent benzimidazole). Cinétique dissociation non étudiée.",
+        "effet": "Pas de liaison π-hole documentée (contrairement aux nitazènes). Protocole empirique : 0,8-2 mg IV à répéter selon réponse. Surveillance prolongée recommandée.",
+        "timing": "Surveillance minimale 4h après réponse initiale",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "avec": "fentanyl illicite (polyconsommation)",
+        "mecanisme": "Polyopioïde — addition dépression respiratoire μ",
+        "effet": "Surdosage polyopioïde documenté dans cas forensiques USA 2020-2022",
+        "timing": "Dépistage LC-MS/MS",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "voies métaboliques in vitro confirmées",
+      "PK humaine complète",
+      "demi_vie",
+      "puissance exacte vs morphine",
+      "pharmacogenetique",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_opi_xylazine",
+    "nom_dci": "Xylazine",
+    "synonymes": ["xylazine", "Tranq", "tranq-dope (mélange fentanyl+xylazine)", "Rompun (vétérinaire)"],
+    "classe": "NPS non-opioïde — agoniste α2-adrénergique (détournement médicament vétérinaire)",
+    "statut_fr": "Médicament vétérinaire (Rompun® — non autorisé usage humain). Non classé stupéfiant en France (2026). Usage humain illicite émergent.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP2D6",
+        "rang": "suspecté",
+        "produit": "hydroxylation (zone grise — non confirmé in vivo humain; données rat uniquement)",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "isoforme": "CYP3A4",
+        "rang": "suspecté",
+        "produit": "N-deméthylation (zone grise)",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "MAO",
+        "alias": "monoamine oxydase",
+        "rang": "possible",
+        "produit": "métabolites oxydatifs (non caractérisés chez l'homme)",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "N-acétyltransférase (NAT)",
+        "rang": "possible",
+        "produit": "2,6-xylidine acétylée (formation controversée — données contradictoires rat vs homme)",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": "2,6-xylidine (controversé chez l'homme — potentiellement carcinogène vétérinaire, rôle toxicité humaine non établi)",
+      "activite_relative": "Données contradictoires rat vs homme — zone grise",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM/UM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise absolue. Implication CYP2D6 in vivo humain non confirmée.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-opioides-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "naloxone",
+        "mecanisme": "Xylazine = agoniste α2-adrénergique — NON opioïde — insensible à l'antagonisme naloxone",
+        "effet": "⚠️ NALOXONE INEFFICACE sur la composante xylazine. En contexte tranq-dope (fentanyl+xylazine) : administrer naloxone pour traiter la composante opioïde, mais sédation par xylazine persiste. Pas d'antidote spécifique disponible.",
+        "timing": "Administrer naloxone systématiquement si opioïde associé suspecté. Surveillance prolongée ≥2h même après réponse initiale.",
+        "preuve": "CAS",
+        "source": "CDC:MMWR:mm7226a4"
+      },
+      {
+        "avec": "fentanyl illicite (tranq-dope)",
+        "mecanisme": "Synergie dépression SNC α2-adrénergique (xylazine) + μ-opioïde (fentanyl)",
+        "effet": "Dépression respiratoire prolongée et sévère + bradycardie + hypotension. Réponse naloxone partielle (composante fentanyl uniquement). Tableau clinique caractéristique : sédation résistante naloxone + plaies nécrotiques cutanées.",
+        "timing": "Émergence documentée USA 2019-2022; surveillance en France USCA dès 2024",
+        "preuve": "CAS",
+        "source": "CDC:MMWR:mm7226a4"
+      },
+      {
+        "avec": "antihypertenseurs (béta-bloquants, clonidine, méthyldopa)",
+        "mecanisme": "Addition effets α2/antiadrénergiques → bradycardie et hypotension majorées",
+        "effet": "Toxicité cardiovasculaire aggravée",
+        "timing": "Signaler en USCA pour patients traités pour HTA",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-opioides-2024"
+      },
+      {
+        "avec": "plaies nécrotiques cutanées (prise en charge)",
+        "mecanisme": "Vasoconstriction α2b-adrénergique périphérique intense → ischémie tissulaire locale et à distance du site d'injection",
+        "effet": "Plaies nécrotiques extensives. Prise en charge dermatologique/chirurgicale spécialisée nécessaire. Non résolutif avec naloxone.",
+        "timing": "Signalement systématique plaies nécrotiques chez PWUD — dépistage xylazine LC-MS/MS",
+        "preuve": "CAS",
+        "source": "CDC:MMWR:mm7226a4"
+      }
+    ],
+    "alertes_pd": ["resp"],
+    "niveau_preuve_global": "CAS",
+    "sources_principales": [
+      "CDC:MMWR:mm7226a4",
+      "EMCDDA:NPS-opioides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "CYP isoformes in vivo humain confirmés",
+      "demi_vie humaine",
+      "2,6-xylidine formation in vivo humain",
+      "PK complète humaine",
+      "statut réglementaire France évolutif",
+      "pharmacogenetique"
+    ]
+  },
+
+  {
+    "id": "nps_bzd_flualprazolam",
+    "nom_dci": "Flualprazolam",
+    "synonymes": ["flualprazolam", "2-fluoroalprazolam", "flualp"],
+    "classe": "NPS benzodiazépine (triazolobenzodiazépine fluorée)",
+    "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "4-hydroxyflualprazolam + α-hydroxyflualprazolam (par analogie alprazolam — position 2-F ne bloque pas l'hydroxylation)",
+        "preuve": "IVT",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "Métabolites hydroxylés présumés peu actifs (analogie alprazolam)",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Pas de données PGx. Inhibiteurs CYP3A4 (ritonavir, kétoconazole) susceptibles d'augmenter l'exposition — même mécanique qu'alprazolam. t1/2 estimée 10-20h (non confirmée).",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "fentanyl illicite, nitazènes, héroïne",
+        "mecanisme": "Dépression respiratoire additive BZD + opioïde",
+        "effet": "Association létale documentée (cas post-mortem Europe/USA). t1/2 longue estimée (10-20h) → accumulation insidieuse possible. Dépistage immunoassay BZD standard insuffisant.",
+        "timing": "LC-MS/MS obligatoire pour détection",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "alcool, GHB, kétamine",
+        "mecanisme": "Polydépression SNC",
+        "effet": "Surdosage polysubstance",
+        "timing": "Flumazénil à envisager (antagoniste BZD — réserve si épilepsie BZD-dépendante connue)",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 forts (ritonavir, clarithromycine, kétoconazole)",
+        "mecanisme": "Inhibition CYP3A4 → ↑ exposition flualprazolam",
+        "effet": "Sédation prolongée excessive — déjà présente à doses faibles",
+        "timing": "Pertinent en USCA PVVIH sous ARV",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "EMCDDA:NPS-benzo-2024",
+      "ANSM:arrete-2020-NPS-BZD"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "demi_vie confirmée in vivo humain",
+      "métabolites actifs confirmés",
+      "PK complète",
+      "pharmacogenetique",
+      "UGT isoformes"
+    ]
+  },
+
+  {
+    "id": "nps_bzd_clonazolam",
+    "nom_dci": "Clonazolam",
+    "synonymes": ["clonazolam", "clonitrazolam"],
+    "classe": "NPS benzodiazépine (triazolobenzodiazépine)",
+    "statut_fr": "Non classé stupéfiant en France (2026 — sous surveillance ANSM). Classé dans plusieurs pays UE. Zone grise réglementaire.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "4-hydroxyclonazolam + α-hydroxyclonazolam",
+        "preuve": "IVT",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "nitroréductase microsomale (NADPH-réductase)",
+        "alias": "nitroréduction",
+        "rang": "mineur",
+        "produit": "8-aminoclonazolam (biomarqueur forensique principal — inactif cliniquement)",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": "8-aminoclonazolam (biomarqueur forensique — inactif cliniquement)",
+      "activite_relative": "Inactif. Utilisé pour confirmation LC-MS/MS en toxicologie.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Pas de données PGx. Potence extrême (actif dès 0,5 mg, 2,5-5× alprazolam) — toute accumulation par inhibition CYP3A4 potentiellement létale.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "opioïdes illicites (fentanyl, nitazènes, héroïne) — benzo-dope",
+        "mecanisme": "Dépression respiratoire additive BZD haute potence + opioïde",
+        "effet": "Particulièrement létal — clonazolam actif dès 0,5 mg (2,5-5× alprazolam) et t1/2 estimée ~18-24h. Accumulation insidieuse possible. Dépistage immunoassay insuffisant.",
+        "timing": "LC-MS/MS — 8-aminoclonazolam comme biomarqueur obligatoire",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "flumazénil",
+        "mecanisme": "Antagonisme GABAA compétitif",
+        "effet": "Efficace mais t1/2 flumazénil (60-90 min) << t1/2 clonazolam estimée → récidive quasi certaine. Perfusion continue requise.",
+        "timing": "Urgence surdosage — dosage continu",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "alcool, GHB, kétamine",
+        "mecanisme": "Polydépression GABAA et SNC",
+        "effet": "Décès rapportés en contexte festif/chemsex",
+        "timing": "Interrogatoire systématique substances USCA",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "EMCDDA:NPS-benzo-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "demi_vie confirmée in vivo humain",
+      "statut_fr mise à jour classement ANSM",
+      "PK complète",
+      "pharmacogenetique"
+    ]
+  },
+
+  {
+    "id": "nps_bzd_etizolam",
+    "nom_dci": "Étizolam",
+    "synonymes": ["etizolam", "Etilaam", "Etizest", "Depas"],
+    "classe": "NPS thiénodiazépine (non benzodiazépine stricto sensu — cycle thiophène vs benzène)",
+    "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "α-hydroxyétizolam (actif, t1/2 8,2h) + 8-hydroxyétizolam (inactif)",
+        "preuve": "IVH-C",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "α-hydroxyétizolam",
+      "activite_relative": "Actif sur récepteur GABAA — contribue à l'effet sédatif prolongé malgré t1/2 parent courte (3,4h)",
+      "demi_vie_h": 8.2
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Données PK in vivo humaines disponibles : parent t1/2 3,4h, α-hydroxyétizolam t1/2 8,2h. Inhibiteurs CYP3A4 forts → accumulation métabolite actif α-hydroxy. Pertinent PVVIH sous ARV.",
+        "zone_grise": false,
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "opioïdes (fentanyl illicite, héroïne, méthadone)",
+        "mecanisme": "Dépression respiratoire additive",
+        "effet": "Association létale documentée. ⚠️ t1/2 parent courte (3,4h) trompeuse : métabolite α-hydroxy actif persiste 8,2h → sédation résiduelle même quand parent non détectable à l'immunoassay.",
+        "timing": "Fenêtre clinique étendue au-delà de la détection parent",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 forts (ritonavir, kétoconazole, antifongiques azolés)",
+        "mecanisme": "Inhibition CYP3A4 → ↑ AUC étizolam + α-hydroxyétizolam",
+        "effet": "Accumulation métabolite actif — sédation prolongée et excessive",
+        "timing": "Pertinent en USCA PVVIH sous ARV (ritonavir/cobicistat)",
+        "preuve": "IVH-C",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "inducteurs CYP3A4 (carbamazépine, rifampicine, millepertuis)",
+        "mecanisme": "Induction CYP3A4 → ↓ exposition étizolam et α-hydroxy",
+        "effet": "Risque syndrome de sevrage BZD — t1/2 déjà courte",
+        "timing": "Attention co-prescriptions thymostabilisants en USCA",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "flumazénil",
+        "mecanisme": "Antagonisme GABAA compétitif",
+        "effet": "Efficace. t1/2 étizolam courte (3,4h) proche t1/2 flumazénil → risque récidive moindre qu'avec BZD longue durée (bromazolam, clonazolam).",
+        "timing": "Urgence surdosage",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "niveau_preuve_global": "IVH-C",
+    "sources_principales": [
+      "EMCDDA:NPS-benzo-2024",
+      "ANSM:arrete-2020-NPS-BZD"
+    ],
+    "zone_grise": false,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "transporteurs",
+      "inhibition/induction CYP potentielle in vitro",
+      "UGT isoformes précises",
+      "pharmacogenetique CYP2C19 possible (analogie BZD)"
+    ]
+  },
+
+  {
+    "id": "nps_bzd_bromazolam",
+    "nom_dci": "Bromazolam",
+    "synonymes": ["bromazolam", "XLI-268", "benzo-dope"],
+    "classe": "NPS benzodiazépine (triazolobenzodiazépine bromée — analogue alprazolam)",
+    "statut_fr": "Non classé stupéfiant en France (2026 — en cours d'évaluation ANSM). Classé dans certains pays UE. Zone grise réglementaire.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "4-hydroxybromazolam + α-hydroxybromazolam (par analogie alprazolam-bromé)",
+        "preuve": "IVT",
+        "source": "PMID:41732118"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "Métabolites actifs non caractérisés — zone grise",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Pas de données PGx. t1/2 estimée 16-18h → risque accumulation avec inhibiteurs CYP3A4.",
+        "zone_grise": true,
+        "source": "PMID:41732118"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "opioïdes illicites (fentanyl, nitazènes, héroïne) — benzo-dope",
+        "mecanisme": "Dépression respiratoire additive BZD longue durée + opioïde",
+        "effet": "⚠️ Bromazolam = NPS-BZD dominant marché EU 2024. Décès multiples documentés. t1/2 longue estimée (16-18h) → sédation résiduelle persistante. Immunoassay standard insuffisant.",
+        "timing": "LC-MS/MS obligatoire. Dépistage actif USCA.",
+        "preuve": "FOR",
+        "source": "PMID:41732118"
+      },
+      {
+        "avec": "toxicité cardiovasculaire atypique",
+        "mecanisme": "Mécanisme non élucidé (2026) — dépasse sédation GABAergique classique",
+        "effet": "Hyperthermie + infarctus du myocarde + convulsions décrits chez jeunes adultes Chicago 2023 (bromazolam déguisé en alprazolam). Surveillance signes cardiovasculaires atypiques indispensable.",
+        "timing": "Surveiller EC, troponine si tableau atypique post-ingestion",
+        "preuve": "CAS",
+        "source": "CDC:MMWR:mm725253a5"
+      },
+      {
+        "avec": "flumazénil",
+        "mecanisme": "Antagonisme GABAA compétitif",
+        "effet": "Efficace à court terme mais t1/2 flumazénil (60-90 min) << t1/2 bromazolam (16-18h) → récidive quasi certaine. Perfusion continue requise.",
+        "timing": "Urgence — dosage continu",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      },
+      {
+        "avec": "alcool, GHB, kétamine",
+        "mecanisme": "Polydépression GABAA et SNC",
+        "effet": "Surdosage polysubstance — profil festif/chemsex",
+        "timing": "Interrogatoire systématique substances USCA",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "PMID:41732118",
+      "CDC:MMWR:mm725253a5",
+      "EMCDDA:NPS-benzo-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "demi_vie confirmée in vivo humain",
+      "métabolites actifs caractérisés",
+      "mécanisme toxicité cardiovasculaire atypique",
+      "statut réglementaire France mise à jour ANSM",
+      "pharmacogenetique"
+    ]
+  },
+
+  {
+    "id": "nps_bzd_flubromazolam",
+    "nom_dci": "Flubromazolam",
+    "synonymes": ["flubromazolam", "JYI-73"],
+    "classe": "NPS benzodiazépine (triazolobenzodiazépine fluorée-bromée)",
+    "statut_fr": "Non classé stupéfiant en France (2026). Zone grise réglementaire. Faible présence marché EU.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "suspecté",
+        "produit": "hydroxylation (non caractérisée — zone grise)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "opioïdes illicites",
+        "mecanisme": "Dépression respiratoire additive BZD + opioïde (mécanique de classe)",
+        "effet": "Létalité par dépression respiratoire présumée par analogie NPS-BZD. Données directes absentes.",
+        "timing": "Alerte de classe — données très limitées",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-benzo-2024"
+      }
+    ],
+    "alertes_pd": ["resp", "mesusage-documented", "seuil-ep-sevrage"],
+    "niveau_preuve_global": "AN",
+    "sources_principales": [
+      "EMCDDA:NPS-benzo-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "toutes données PK",
+      "métabolites",
+      "demi_vie",
+      "pharmacogenetique",
+      "données forensiques humaines",
+      "statut réglementaire France"
+    ]
+  }
+]

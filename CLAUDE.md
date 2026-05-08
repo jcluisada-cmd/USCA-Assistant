@@ -14,7 +14,9 @@ Charge ce `CLAUDE.md` systématiquement (~200 lignes). Charge **en plus** seulem
 | Notifications push (V2/V3, FCM, cron, silence)     | `SETUP_PUSH.md`                 |
 | Schéma BDD, nouvelle migration, RLS                | `DB_SCHEMA.md`                  |
 | Module patient/admin/externe/IFSI/Toolbox/post-cure| `MODULES.md` (section concernée)|
-| MetaboScope (intégration, build, molécules)        | `METABOSCOPE_INTEGRATION.md`    |
+| MetaboScope — intégration technique (build, iframe, SW) | `METABOSCOPE_INTEGRATION.md`    |
+| MetaboScope — features, UX, roadmap d'amélioration | `METABOSCOPE_APP.md`            |
+| MetaboScope — schéma data, méthodologie molécules  | `metaboscope/CLAUDE.md` + `metaboscope/INSTRUCTIONS_PROJET_METABOSCOPE.md` |
 | Feature ou bug touchant les fiches EEG-ECT         | `eeg_ect/fiche_*.html` direct   |
 | Historique d'une version v3.x ou v4.x              | `CHANGELOG.md` puis `CLAUDE_ARCHIVE.md` §B si plus de détail nécessaire |
 
@@ -168,16 +170,37 @@ Protocoles USCA · Ressources USCA · Fiches Traitements et Substances · Dossie
 
 ## §7. À FAIRE
 
-- [ ] **Notifications Push V2 — étape suivante** : étendre aux séances de thérapie complémentaire. V2 médecins en cours (voir `SETUP_PUSH.md`). V1 shippée v3.99.
-- [ ] **MetaboScope — intégration v1** : appliquer les 2 patches (`staff/toolbox.html` + `sw.js`) selon `METABOSCOPE_INTEGRATION.md`. SW bump v4.24 → v4.25.
-- [ ] **MetaboScope — durcissement v1.1** : propagation thème dark/light (limite L1), `_redirects` deep-link (limite L3), manifest Vite pour pré-cache bundles (limite L2).
-- [ ] **(Priorité basse) Planning A/B stocké en BDD** : aujourd'hui dupliqué côté client (`shared/planning-groupes.js`) et en TS dans cron-reminders. Migrer en table Supabase quand un autre module aura besoin du planning côté serveur.
-- [ ] **(Priorité basse) Silence soignant configurable par profil** : règle "lun-ven 18h + weekend + fériés FR" hardcodée dans `send-push`. Permettre à chaque soignant de régler ses plages (`profiles.push_quiet_hours JSONB`).
+### Chantier MetaboScope (en cours, prioritaire)
+
+> **Décision 2026-05-08** : `metaboscope/` dans USCA-Connect = **source unique**. Le repo MetaboScope d'origine est figé (à archiver sur GitHub). Toutes les modifs (UI, molécules, audits) se font directement dans `USCA-Connect/metaboscope/`.
+> Roadmap fonctionnelle complète : voir `METABOSCOPE_APP.md`.
+> Procédure technique d'intégration iframe : voir `METABOSCOPE_INTEGRATION.md`.
+
+- [x] **Chantier A — Import docs/audits** (livré 2026-05-08) : `metaboscope/CLAUDE.md`, `metaboscope/SETUP.md`, `metaboscope/data_hug_cbip/`, `metaboscope/docs/audits/`, `metaboscope/docs/superpowers/{specs,plans}/`.
+- [ ] **Phase B — Intégration iframe Toolbox** (P0 — bloquant pour la suite) : appliquer les 2 patches `staff/toolbox.html` (case `"interactions"` → iframe MetaboScope) + `sw.js` (`LOCAL_ASSETS` + bump `v4.24` → `v4.25`) selon `METABOSCOPE_INTEGRATION.md` §2-§3. Test local + commit.
+- [ ] **Chantier C — UX & cohérence USCA** (P1, METABOSCOPE_APP.md §3) : sync thème dark/light (pattern v4.24 EEG/ECT), refonte HomePage (suppression bandeau "Sprint 4 livré", entrée par cas d'usage), liens depuis fiches Toolbox (deep link `?cart=`), optim tablette/mobile, disclaimer pied de page sticky.
+- [ ] **Chantier B — Couverture v1.1 (451 molécules CBIP×HUG)** (P2, METABOSCOPE_APP.md §2) : ingestion par classe ATC prioritaire (anticoagulants oraux directs, statines, antifongiques azolés, immunosuppresseurs, macrolides ≈ 30 molécules en première vague — couvre ~80% des liaisons ELSA). Arbitrer les 30 conflits puissance discordante avant ingestion (méthode FDA Drug Interaction Table prioritaire). 4-8 sessions Claude estimées.
+- [ ] **Chantier D — Workflow décisionnel** (P2, METABOSCOPE_APP.md §4) : Mode Ordonnance (textarea DCI → rapport HTML imprimable A4), suggestions d'alternatives (sur QT-KR/sérotonine/ACB), calculateurs combinés (score ECG, équivalences BZD/CPZ via lien Toolbox), bookmarks/récents (localStorage anonymisé).
+- [ ] **Chantier E — Couverture addicto avancée** (P3, METABOSCOPE_APP.md §5) : scénarios précâblés (sevrage OH+QT long, TSO+psychotropes, BZD+opioïde, cannabis+chronique), PGx actionnable (saisie génotype CYP2D6/2C19/2B6 → reco CPIC verbatim), veille NPS (flag rouge data >2 ans), annotations cliniques USCA.
+- [ ] **Chantier F — Hygiène technique** (P5, METABOSCOPE_APP.md §6) : décision build (commit `dist/` vs GitHub Action), Service Worker pré-cache bundles hashés (manifest Vite), tests d'intégration `InteractionPage`, audit accessibilité Lighthouse a11y >90, perf bundle <300 KB gzipped, doc reprise `CHANGELOG.md` MetaboScope local.
+- [ ] **6 décisions à trancher avec JC avant exécution** : voir `METABOSCOPE_APP.md` §8 (scope chantier B, format rapport D.1, palette navy vs indigo USCA, build dist/ vs Action, ton suggestions D.2, ordre B vs C).
+
+### Notifications push
+
+- [ ] **V2 médecins — étape suivante** : étendre aux séances de thérapie complémentaire. V2 médecins en cours (voir `SETUP_PUSH.md`). V1 shippée v3.99.
+
+### Tech debt — priorité basse
+
+- [ ] **Planning A/B stocké en BDD** : aujourd'hui dupliqué côté client (`shared/planning-groupes.js`) et en TS dans cron-reminders. Migrer en table Supabase quand un autre module aura besoin du planning côté serveur.
+- [ ] **Silence soignant configurable par profil** : règle "lun-ven 18h + weekend + fériés FR" hardcodée dans `send-push`. Permettre à chaque soignant de régler ses plages (`profiles.push_quiet_hours JSONB`).
+- [ ] **Toolbox — performances & dark mode instantané** : ~500 ms de latence (Babel in-browser + reload toggle). Fix racine : bundler (Vite) + couleurs en variables CSS. Contrevient à la règle §8 "pas de bundler" — à reconsidérer si latence devient gênante.
+
+### Features applicatives
+
 - [ ] **Formulaire pré-admission** — QR code salle d'attente (identité, couverture, substances, scores AUDIT-C/CAST, ATCD, envoi email, 5 min max).
 - [ ] **Annuaire patients** — répertoire post-sortie.
 - [ ] **UI "Mes appareils de confiance"** dans paramètres du compte.
 - [ ] **Livret IFSI — P4** : export PDF du livret rempli à la fin du stage (jsPDF).
-- [ ] **(Priorité basse) Toolbox — performances & dark mode instantané** : ~500 ms de latence (Babel in-browser + reload toggle). Fix racine : bundler (Vite) + couleurs en variables CSS. Contrevient à la règle §8 "pas de bundler" — à reconsidérer si latence devient gênante.
 - [ ] **Ressources Toolbox — GitHub Action pour regénérer `index.json`** : aujourd'hui maintenu à la main. Action qui scanne `ressources_doc/{fiches,articles,recos,algos}/` à chaque push.
 - [ ] **Toolbox — Fiches Expert hors antipsychotiques** : enrichir `fiches_expert/` (BZD, TSO, thymorégulateurs, stimulants, antidépresseurs).
 

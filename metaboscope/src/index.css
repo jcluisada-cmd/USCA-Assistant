@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html, body, #root {
+    min-height: 100%;
+  }
+  body {
+    @apply bg-navy-900 text-gray-100 font-sans antialiased;
+  }
+  /* Scrollbar discrète sur fond navy */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #0f1e33; }
+  ::-webkit-scrollbar-thumb { background: #1e4976; border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover { background: #27598c; }
+}
+
+@layer utilities {
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900;
+  }
+}

@@ -1,0 +1,1488 @@
+{
+  "_metadata": {
+    "fichier": "molecules_opioides_tso.json",
+    "classes_incluses": [
+      "Opioïde",
+      "TSO",
+      "Antagoniste opioïde",
+      "Anti-craving alcool",
+      "Aide au sevrage tabagique"
+    ],
+    "nombre_molecules": 18,
+    "nombre_zones_grises_molecule": 0,
+    "nombre_entrees_avec_champs_zone_grise": 7,
+    "date_consolidation": "2026-04",
+    "sources_rapports_projet": [
+      "Gemini DR 1 (Plan_de_recherche_MetaboScope_validé_.txt)",
+      "Gemini DR 2 (implicite via Rapport_MetaboScope_Substances_Interactions_Corrections.txt)",
+      "Gemini DR 3 (implicite)",
+      "Gemini DR 4 (implicite)",
+      "ChatGPT P1 (métaboscope_GPT_1_sur_4.txt)",
+      "ChatGPT P2 (métaboscope_GPT_2_sur_4.txt)",
+      "ChatGPT P3 (métaboscope_GPT_3_sur_4.txt)",
+      "ChatGPT P3bis (Métaboscope_GPT_3bis_sur_4__Analyse_des_lacunes_médicamenteuses.pdf)",
+      "Rapport d'Expertise HUG 2020 extension",
+      "Mise_à_jour_référentiel_interactions_médicamenteuses.txt"
+    ],
+    "regles_fusion_appliquees": [
+      "Gemini DR > GPT Agent pour enzymes non-CYP, UGT, transporteurs",
+      "GPT Agent > Gemini DR pour classifications CredibleMeds/FDA/CPIC",
+      "Arbitrages trancés (naltrexone=6β-naltrexol, AKR1C4 majeur, etc.) appliqués sans exception",
+      "ND interdit dans sources_principales : reclassement zone_grise par champ si source non trouvable"
+    ],
+    "schema_version": "v2_avec_champs_manquants"
+  },
+  "molecules": [
+    {
+      "id": "ant_opi_naltrexone",
+      "nom_dci": "Naltrexone",
+      "synonymes": ["Revia", "Vivitrol", "Nalorex", "Adepend"],
+      "classe": "Antagoniste opioïde",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "2-hydroxy-3-méthoxy-naltrexone (mineur, inactif)",
+          "preuve": "IVT",
+          "source": "FDA:021897s003lbl"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "AKR1C4",
+          "alias": "dihydrodiol déshydrogénase (nomenclature FDA)",
+          "rang": "majeur",
+          "produit": "6β-naltrexol (actif)",
+          "preuve": "IVH-C",
+          "source": "FDA:021897s003lbl"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "naltrexone-3-glucuronide (inactif)",
+          "preuve": "IVH-O",
+          "source": "PMID:3490825"
+        },
+        {
+          "enzyme": "UGT1A1",
+          "rang": "mineur",
+          "produit": "naltrexone-3-glucuronide",
+          "preuve": "IVT",
+          "source": "Gemini DR 2"
+        },
+        {
+          "enzyme": "UGT1A3",
+          "rang": "mineur",
+          "produit": "naltrexone-3-glucuronide",
+          "preuve": "IVT",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "6β-naltrexol",
+        "activite_relative": "antagoniste opioïde ~1/10 à 1/50 de la naltrexone",
+        "demi_vie_h": 13
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "AKR1C4",
+          "variants": "S145C, L311V",
+          "phenotype": "PM (variants rares)",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC pour la naltrexone ; variabilité 40-80% formation 6β-naltrexol rapportée",
+          "zone_grise": true,
+          "source": "Gemini DR 2 — PMC9621334 (inaccessible - zone grise)"
+        },
+        {
+          "gene": "OPRM1",
+          "variants": "A118G (rs1799971)",
+          "phenotype": "G-porteur",
+          "niveau_cpic": "B",
+          "recommandation": "Zone grise — effet sur naltrexone COMBINE non consensuel",
+          "zone_grise": true,
+          "source": "CPIC:opioids-OPRM1-2021 (accès primaire non vérifié - zone grise)"
+        },
+        {
+          "gene": "CYP2A6",
+          "variants": "variants PM",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — guideline CPIC en cours ; concerne nicotine/varénicline co-prescrites plutôt que la naltrexone elle-même",
+          "zone_grise": true,
+          "source": "CPIC:CYP2A6-en-cours (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "opioïdes agonistes",
+          "mecanisme": "antagonisme compétitif récepteurs μ",
+          "effet": "sevrage précipité sévère",
+          "timing": "7-10 jours après dernière prise d'opioïde (héroïne, méthadone) ; protocole micro-induction possible pour buprénorphine",
+          "preuve": "IVH-C",
+          "source": "FDA:021897s003lbl"
+        }
+      ],
+      "alertes_pd": ["hepatotox"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:021897s003lbl", "PMID:3490825", "StatPearls:naltrexone"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "ant_opi_nalmefene",
+      "nom_dci": "Nalméfène",
+      "synonymes": ["Selincro", "Revex"],
+      "classe": "Antagoniste opioïde",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites mineurs inactifs",
+          "preuve": "IVT",
+          "source": "EMA:Selincro-EPAR"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "nalméfène-3-O-glucuronide (inactif)",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "enzyme": "UGT1A3",
+          "rang": "majeur",
+          "produit": "nalméfène-3-O-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "opioïdes agonistes",
+          "mecanisme": "antagonisme compétitif récepteurs μ (avec activité κ partielle)",
+          "effet": "inefficacité de l'analgésie opioïde, sevrage possible",
+          "timing": "délai ≥ 1 semaine après opioïde au long cours",
+          "preuve": "IVH-O",
+          "source": "EMA:Selincro-EPAR"
+        }
+      ],
+      "alertes_pd": [],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["EMA:Selincro-EPAR"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "ant_opi_naloxone",
+      "nom_dci": "Naloxone",
+      "synonymes": ["Narcan", "Nyxoid", "Prenoxad"],
+      "classe": "Antagoniste opioïde",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "naloxone-3-glucuronide (inactif)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-naloxone"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "opioïdes agonistes",
+          "mecanisme": "antagonisme compétitif récepteurs μ",
+          "effet": "réversion rapide dépression respiratoire",
+          "timing": "administration IV/IM/IN en urgence ; demi-vie courte (60-90 min) impose surveillance prolongée",
+          "preuve": "IVH-C",
+          "source": "FDA:label-naloxone"
+        },
+        {
+          "avec": "nitazènes (isotonitazène, métonitazène, protonitazépyne)",
+          "mecanisme": "antagonisme compétitif récepteurs μ — résistance relative liée à liaison π-hole et cinétique de dissociation lente des nitazènes",
+          "effet": "réponse partielle — doses supérieures requises",
+          "timing": "0,8-4 mg IV + perfusion continue nécessaire",
+          "preuve": "CAS",
+          "source": "Gemini DR 3"
+        },
+        {
+          "avec": "xylazine",
+          "mecanisme": "xylazine non-opioïde (agoniste α2-adrénergique)",
+          "effet": "absence de réponse à la naloxone sur la composante xylazine — traite uniquement la composante opioïde associée",
+          "timing": "surveillance prolongée requise",
+          "preuve": "CAS",
+          "source": "Gemini DR 4"
+        }
+      ],
+      "alertes_pd": [],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-naloxone"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "opi_tso_methadone",
+      "nom_dci": "Méthadone",
+      "synonymes": ["Méthadone chlorhydrate"],
+      "classe": "TSO",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2B6",
+          "rang": "majeur",
+          "produit": "EDDP (2-éthylidène-1,5-diméthyl-3,3-diphénylpyrrolidine, inactif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:opioids-CYP2D6-2021"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "EDDP",
+          "preuve": "IVH-C",
+          "source": "FDA:label-methadone"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "EDDP",
+          "preuve": "IVT",
+          "source": "FDA:label-methadone"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B4",
+          "rang": "majeur",
+          "produit": "méthadone-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "méthadone-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "transporteur": "OATP1B1",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        },
+        {
+          "transporteur": "OATP1B3",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        },
+        {
+          "transporteur": "BCRP",
+          "role": "inducteur",
+          "preuve": "IVT",
+          "source": "Rapport d'Expertise HUG 2020 extension (placenta)"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2B6",
+          "variants": "*6 (allèle fréquent)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Concentrations augmentées de méthadone (S-énantiomère) ; surveillance QT renforcée — pas de recommandation posologique actionnable",
+          "zone_grise": true,
+          "source": "Gemini DR 2 (guideline CPIC méthadone non finalisé)"
+        },
+        {
+          "gene": "ABCB1",
+          "variants": "C3435T (rs1045642)",
+          "phenotype": "variants T/T",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact sur pénétration SNC sans reco posologique ; prévalence européenne 50-60%",
+          "zone_grise": true,
+          "source": "Gemini DR 2 + Mise_à_jour_référentiel"
+        },
+        {
+          "gene": "OPRM1",
+          "variants": "A118G",
+          "phenotype": "G-porteur",
+          "niveau_cpic": "B",
+          "recommandation": "Pas de recommandation posologique actionnable (prévalence EU 10-15%)",
+          "zone_grise": true,
+          "source": "CPIC:opioids-OPRM1-2021 (accès primaire non vérifié - zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "millepertuis (Hypericum perforatum)",
+          "mecanisme": "induction CYP3A4 + Pgp par hyperforine",
+          "effet": "diminution des concentrations de méthadone → échec du TSO, sevrage",
+          "timing": "effet en 2-4 semaines ; persistance 2 semaines après arrêt",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "avec": "rifampicine",
+          "mecanisme": "induction CYP3A4 forte + CYP2B6",
+          "effet": "baisse massive des concentrations de méthadone",
+          "timing": "effet en 5-7 jours",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "ritonavir, cobicistat",
+          "mecanisme": "inhibition CYP3A4 + induction CYP2B6 (effet net variable)",
+          "effet": "modification imprévisible concentrations méthadone",
+          "timing": "surveillance clinique renforcée",
+          "preuve": "IVH-O",
+          "source": "Liverpool HIV drug interactions (référence externe citée par rapports Gemini)"
+        },
+        {
+          "avec": "fluvoxamine",
+          "mecanisme": "inhibition CYP2B6 + CYP3A4",
+          "effet": "augmentation concentrations méthadone + risque QT cumulé",
+          "preuve": "CAS",
+          "source": "Gemini DR 1"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "sero-modere", "resp"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-methadone", "CredibleMeds:KR-list-2022", "CPIC:opioids-CYP2D6-2021"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_tso_buprenorphine",
+      "nom_dci": "Buprénorphine",
+      "synonymes": ["Subutex", "Suboxone (assoc. naloxone)", "Temgesic", "Buvidal (LAI)", "Sixmo (implant)"],
+      "classe": "TSO",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "norbuprénorphine (actif — agoniste μ faible)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-buprenorphine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A1",
+          "rang": "majeur",
+          "produit": "buprénorphine-3-glucuronide (inactif)",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "buprénorphine-3-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        },
+        {
+          "transporteur": "BCRP",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "Pgp",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "cible": "BCRP",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norbuprénorphine",
+        "activite_relative": "agoniste μ partiel faible, retour minimal sur PD",
+        "demi_vie_h": 24
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP3A4",
+          "variants": "*22",
+          "phenotype": "IM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact PK rapporté, pas de guideline CPIC",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "benzodiazépines",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "HR 2.5 de mortalité (cohorte n=12118)",
+          "timing": "prudence accrue ; préférer buprénorphine à méthadone si BZD indispensable",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "rifampicine",
+          "mecanisme": "induction CYP3A4 forte",
+          "effet": "baisse des concentrations — risque d'inefficacité TSO",
+          "timing": "5-7 jours",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "azolés (voriconazole, itraconazole, kétoconazole)",
+          "mecanisme": "inhibition CYP3A4 forte",
+          "effet": "augmentation concentrations norbuprénorphine",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "resp", "sero-faible"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-buprenorphine", "CredibleMeds:PR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inducteur"]
+    },
+    {
+      "id": "opi_tramadol",
+      "nom_dci": "Tramadol",
+      "synonymes": ["Topalgic", "Contramal", "Ixprim (assoc paracétamol)", "Zaldiar"],
+      "classe": "Opioïde",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "O-desméthyltramadol (M1, actif — agoniste μ ~200× plus affinité que tramadol)",
+          "preuve": "IVH-C",
+          "source": "CPIC:tramadol-CYP2D6-2021"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "N-desméthyltramadol (M2, inactif)",
+          "preuve": "IVH-O",
+          "source": "CPIC:tramadol-CYP2D6-2021"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "N-desméthyltramadol",
+          "preuve": "IVT",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "tramadol-glucuronide et M1-glucuronide",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "O-desméthyltramadol (M1)",
+        "activite_relative": "agoniste μ ~200× plus affinité que tramadol",
+        "demi_vie_h": 7
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM) ; duplications *1×N (UM)",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Éviter le tramadol chez PM (inefficacité thérapeutique — absence de formation de M1). Choisir un opioïde non métabolisé par CYP2D6 (morphine, hydromorphone, oxycodone à prudence). Prévalence PM 5-10% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:tramadol-CYP2D6-2021"
+        },
+        {
+          "gene": "CYP2D6",
+          "variants": "duplications fonctionnelles ×N",
+          "phenotype": "UM",
+          "niveau_cpic": "A",
+          "recommandation": "Éviter le tramadol chez UM (toxicité — formation excessive de M1 → dépression respiratoire). FDA boxed warning 2017, contre-indiqué enfant <12 ans et mère allaitante. Prévalence UM 1-3% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:tramadol-CYP2D6-2021"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "ISRS, IRSNa, IMAO, linézolide",
+          "mecanisme": "tramadol inhibe recapture 5-HT + NA ; ISRS/IRSNa potentialisent ; IMAO inhibe dégradation",
+          "effet": "syndrome sérotoninergique",
+          "timing": "éviter l'association ou surveiller étroitement",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "paroxétine, fluoxétine, bupropion",
+          "mecanisme": "inhibition CYP2D6 — phénocopie PM",
+          "effet": "réduction formation M1 → inefficacité analgésique",
+          "timing": "privilégier alternative (sertraline, ISRS non-2D6)",
+          "preuve": "IVH-O",
+          "source": "CPIC:tramadol-CYP2D6-2021"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "sero", "resp", "seuil-ep"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:tramadol-CYP2D6-2021", "CredibleMeds:PR-list-2022", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_codeine",
+      "nom_dci": "Codéine",
+      "synonymes": ["Dafalgan codéiné", "Codoliprane", "Codenfan", "Néo-codion"],
+      "classe": "Opioïde",
+      "statut_fr": "Liste II",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "morphine (O-déméthylation — responsable de l'analgésie)",
+          "preuve": "IVH-C",
+          "source": "CPIC:codeine-CYP2D6-2021"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "norcodéine (N-déméthylation — inactive)",
+          "preuve": "IVH-O",
+          "source": "CPIC:codeine-CYP2D6-2021"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "codéine-6-glucuronide (inactive)",
+          "preuve": "IVH-O",
+          "source": "CPIC:codeine-CYP2D6-2021"
+        },
+        {
+          "enzyme": "UGT2B4",
+          "rang": "majeur",
+          "produit": "codéine-6-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "morphine",
+        "activite_relative": "agoniste μ plein — responsable de l'analgésie",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6",
+          "phenotype": "PM",
+          "niveau_cpic": "A",
+          "recommandation": "Éviter la codéine (morphine formée ↓ 96% → analgésie nulle). Choisir opioïde non métabolisé par CYP2D6. Prévalence PM 5-10% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:codeine-CYP2D6-2021"
+        },
+        {
+          "gene": "CYP2D6",
+          "variants": "duplications ×N",
+          "phenotype": "UM",
+          "niveau_cpic": "A",
+          "recommandation": "Éviter la codéine (morphine AUC ~45% supérieure → risque toxicité sévère même à faible dose). Contre-indication enfant <12 ans et mère allaitante (FDA 2017).",
+          "zone_grise": false,
+          "source": "CPIC:codeine-CYP2D6-2021"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "paroxétine, fluoxétine, bupropion",
+          "mecanisme": "inhibition CYP2D6 — phénocopie PM",
+          "effet": "inefficacité analgésique (pas de formation de morphine)",
+          "timing": "privilégier alternative",
+          "preuve": "IVH-O",
+          "source": "CPIC:codeine-CYP2D6-2021"
+        },
+        {
+          "avec": "autres dépresseurs SNC (BZD, alcool, gabapentinoïdes)",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "risque de décès par OD",
+          "timing": "prudence ; information patient",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:codeine-CYP2D6-2021", "ANSM:thesaurus-2024", "FDA:boxed-warning-codeine-2017"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_tapentadol",
+      "nom_dci": "Tapentadol",
+      "synonymes": ["Palexia", "Nucynta", "Yantil"],
+      "classe": "Opioïde",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "N-desméthyltapentadol (inactif)",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 3 + GPT P3"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "N-desméthyltapentadol",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 3 + GPT P3"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "hydroxy-tapentadol (inactif)",
+          "preuve": "IVH-O",
+          "source": "GPT P3"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A9",
+          "rang": "majeur",
+          "produit": "tapentadol-O-glucuronide (inactif, ~70% métabolisme)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-tapentadol"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "tapentadol-O-glucuronide",
+          "preuve": "IVH-C",
+          "source": "FDA:label-tapentadol"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs — pharmacologie portée par molécule mère",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "ISRS, IRSNa, IMAO",
+          "mecanisme": "tapentadol inhibe recapture NA (> SERT) — composante sérotoninergique modérée",
+          "effet": "risque syndrome sérotoninergique",
+          "timing": "prudence ; cas rapportés",
+          "preuve": "CAS",
+          "source": "GPT P3"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "sero", "resp", "seuil-ep"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["FDA:label-tapentadol", "CredibleMeds:PR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "opi_morphine",
+      "nom_dci": "Morphine",
+      "synonymes": ["Skenan LP", "Moscontin LP", "Actiskenan", "Sevredol", "Oramorph"],
+      "classe": "Opioïde",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "morphine-3-glucuronide (M3G, inactif, neurotoxique à forte conc.) et morphine-6-glucuronide (M6G, actif agoniste μ)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "morphine-6-glucuronide (M6G)",
+        "activite_relative": "agoniste μ actif — contribution ~10-30% à l'analgésie orale",
+        "demi_vie_h": 4
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "UGT2B7",
+          "variants": "*2 (T802C)",
+          "phenotype": "variants fonctionnels",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC finale. Prévalence ~20-30% Europe.",
+          "zone_grise": true,
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "gene": "OPRM1",
+          "variants": "A118G",
+          "phenotype": "G-porteur",
+          "niveau_cpic": "B",
+          "recommandation": "Pas de recommandation posologique actionnable (réponse hétérogène)",
+          "zone_grise": true,
+          "source": "CPIC:opioids-OPRM1-2021 (accès primaire non vérifié - zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "accumulation M6G (élimination rénale)",
+          "effet": "dépression respiratoire prolongée",
+          "timing": "surveillance clinique ; préférer alternative (oxycodone, hydromorphone)",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-morphine"
+        }
+      ],
+      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-morphine", "StatPearls:morphine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_oxycodone",
+      "nom_dci": "Oxycodone",
+      "synonymes": ["Oxycontin LP", "Oxynormoro", "Oxynorm"],
+      "classe": "Opioïde",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "noroxycodone (faiblement actif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-oxycodone"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "oxymorphone (actif — agoniste μ plus puissant)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-oxycodone"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "oxycodone-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "oxymorphone",
+        "activite_relative": "agoniste μ plus puissant que oxycodone — contribution mineure à effet clinique",
+        "demi_vie_h": 9
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM) ; ×N (UM)",
+          "phenotype": "PM ou UM",
+          "niveau_cpic": "B",
+          "recommandation": "Impact modéré (formation oxymorphone marginale dans analgésie globale). Pas de recommandation CPIC forte.",
+          "zone_grise": false,
+          "source": "CPIC:opioids-CYP2D6-2021"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 (macrolides, azolés, ritonavir)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "augmentation concentrations oxycodone — risque surdosage",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-oxycodone", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_hydromorphone",
+      "nom_dci": "Hydromorphone",
+      "synonymes": ["Sophidone LP", "Dilaudid"],
+      "classe": "Opioïde",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "hydromorphone-3-glucuronide (inactif, neurotoxique)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-hydromorphone"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "accumulation hydromorphone-3-glucuronide (neurotoxique)",
+          "effet": "myoclonies, hyperalgésie, confusion",
+          "timing": "surveillance clinique ; rotation opioïde envisageable",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-hydromorphone"
+        }
+      ],
+      "alertes_pd": ["resp", "ACB-1"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["FDA:label-hydromorphone", "ANSM:RCP-hydromorphone"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "opi_fentanyl",
+      "nom_dci": "Fentanyl",
+      "synonymes": ["Durogesic (patch)", "Actiq", "Effentora", "Instanyl", "Abstral", "Matrifen", "Breakyl"],
+      "classe": "Opioïde",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "norfentanyl (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-fentanyl"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A3",
+          "rang": "mineur",
+          "produit": "fentanyl-glucuronide",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "mineur",
+          "produit": "fentanyl-glucuronide",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "transporteur": "Pgp",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts (ritonavir, clarithromycine, voriconazole, kétoconazole)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "augmentation concentrations fentanyl — risque dépression respiratoire fatale",
+          "timing": "surveillance clinique renforcée ; ajustement posologique",
+          "preuve": "IVH-C",
+          "source": "FDA:label-fentanyl"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO",
+          "mecanisme": "composante sérotoninergique modérée",
+          "effet": "cas rapportés de syndrome sérotoninergique",
+          "timing": "prudence",
+          "preuve": "CAS",
+          "source": "GPT P2"
+        },
+        {
+          "avec": "benzodiazépines, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "risque majeur — FDA boxed warning 2016",
+          "timing": "éviter l'association si possible",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        }
+      ],
+      "alertes_pd": ["resp", "sero-modere", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-fentanyl", "ANSM:thesaurus-2024", "FDA:boxed-warning-opioids-BZD-2016"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "opi_pethidine",
+      "nom_dci": "Péthidine",
+      "synonymes": ["Meperidine", "Dolantin", "Demerol"],
+      "classe": "Opioïde",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "norpéthidine (actif — neurotoxique, épileptogène)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-meperidine"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "norpéthidine",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norpéthidine",
+        "activite_relative": "métabolite neurotoxique — abaisse seuil épileptogène ; accumulation en IR",
+        "demi_vie_h": 15
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO (phénelzine, tranylcypromine, linézolide, bleu de méthylène)",
+          "mecanisme": "inhibition dégradation 5-HT + composante 5-HT forte de péthidine",
+          "effet": "syndrome sérotoninergique sévère — CONTRE-INDICATION ABSOLUE",
+          "timing": "éviter dans un délai de 14 jours après arrêt IMAO",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "accumulation norpéthidine",
+          "effet": "convulsions",
+          "timing": "éviter si possible",
+          "preuve": "IVH-O",
+          "source": "FDA:label-meperidine"
+        }
+      ],
+      "alertes_pd": ["sero", "resp", "seuil-ep", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-meperidine", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "anc_acamprosate",
+      "nom_dci": "Acamprosate",
+      "synonymes": ["Aotal", "Campral"],
+      "classe": "Anti-craving alcool",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale sévère (DFG < 30 mL/min)",
+          "mecanisme": "élimination rénale exclusive (absence de métabolisme hépatique)",
+          "effet": "accumulation",
+          "timing": "contre-indication si DFG < 30 ; réduction de dose si 30-50",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-acamprosate"
+        }
+      ],
+      "alertes_pd": ["nephrotox"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-acamprosate", "PMID:PMC2853976"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "anc_baclofene",
+      "nom_dci": "Baclofène",
+      "synonymes": ["Lioresal", "Baclocur"],
+      "classe": "Anti-craving alcool",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "dépresseurs SNC (alcool, BZD, opioïdes)",
+          "mecanisme": "potentialisation GABA-B",
+          "effet": "sédation majorée, dépression respiratoire",
+          "timing": "information patient ; doses progressives",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-baclofene"
+        },
+        {
+          "avec": "insuffisance hépatique avec hépatite alcoolique sévère",
+          "mecanisme": "risque d'encéphalopathie hépatique augmenté (HR 1.80 vs acamprosate)",
+          "effet": "encéphalopathie hépatique",
+          "timing": "préférer acamprosate si cirrhose décompensée",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "resp", "seuil-ep-sevrage"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-baclofene", "CredibleMeds:CR-list-2022", "HUG:carte_cytochromes_2020"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "anc_disulfirame",
+      "nom_dci": "Disulfirame",
+      "synonymes": ["Esperal", "Antabuse"],
+      "classe": "Anti-craving alcool",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "métabolisme hépatique complexe",
+          "alias": null,
+          "rang": "majeur",
+          "produit": "diéthyldithiocarbamate (DDC) → méthylates → métabolites inhibiteurs enzymatiques multiples",
+          "preuve": "IVH-O",
+          "source": "FDA:label-disulfiram"
+        },
+        {
+          "enzyme": "ALDH2",
+          "alias": "aldéhyde déshydrogénase mitochondriale",
+          "rang": "inhibition cible principale",
+          "produit": "effet pharmacologique (accumulation acétaldéhyde en présence alcool)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-disulfiram"
+        },
+        {
+          "enzyme": "DBH",
+          "alias": "dopamine β-hydroxylase",
+          "rang": "inhibition secondaire",
+          "produit": "↑ dopamine synaptique (mécanisme anti-craving cocaïne)",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "ALDH2",
+          "puissance": "strong",
+          "mecanisme": "MBI (irréversible)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-disulfiram"
+        },
+        {
+          "cible": "CYP2E1",
+          "puissance": "moderate",
+          "mecanisme": "MBI",
+          "preuve": "IVH-O",
+          "source": "Littérature PK"
+        },
+        {
+          "cible": "CYP3A4",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        },
+        {
+          "cible": "DBH",
+          "puissance": "moderate",
+          "mecanisme": "non_competitive",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "diéthyldithiocarbamate (DDC) et métabolites méthylés",
+        "activite_relative": "porteurs de l'effet pharmacologique",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "ALDH2",
+          "variants": "*2 (E487K, rs671 — prévalent chez Asiatiques de l'Est)",
+          "phenotype": "déficit fonctionnel natif",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — effet antabuse natif ; disulfirame peu utile. Prévalence marginale en Europe.",
+          "zone_grise": true,
+          "source": "Littérature PGx (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "éthanol",
+          "mecanisme": "inhibition ALDH2 → accumulation acétaldéhyde",
+          "effet": "réaction antabuse (flushing, vomissements, hypotension, tachycardie)",
+          "timing": "éviter dans les 14 jours après arrêt ; mentions médico-légales",
+          "preuve": "IVH-C",
+          "source": "FDA:label-disulfiram"
+        },
+        {
+          "avec": "métronidazole, tinidazole",
+          "mecanisme": "effet antabuse additif",
+          "effet": "réaction antabuse sévère",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "cocaïne",
+          "mecanisme": "inhibition DBH — ↑ dopamine synaptique",
+          "effet": "potentielle toxicité CV — mais essais cliniques en cours pour addiction cocaïne",
+          "timing": "surveillance étroite",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "warfarine, phénytoïne",
+          "mecanisme": "inhibition CYP2C9/2C19",
+          "effet": "augmentation effet anticoagulant / concentrations phénytoïne",
+          "timing": "monitorage INR/phénytoïnémie",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["hepatotox", "CI-alcool"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-disulfiram", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "sev_varenicline",
+      "nom_dci": "Varénicline",
+      "synonymes": ["Champix", "Chantix"],
+      "classe": "Aide au sevrage tabagique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "OCT2",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "StatPearls:varenicline"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2A6",
+          "variants": "variants PM",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — guideline CPIC en cours. Des cohortes suggèrent une efficacité différentielle selon phénotype CYP2A6 sur la nicotine co-présente.",
+          "zone_grise": true,
+          "source": "CPIC:CYP2A6-en-cours (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "cimétidine",
+          "mecanisme": "inhibition OCT2",
+          "effet": "↑ concentrations varénicline",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "StatPearls:varenicline"
+        },
+        {
+          "avec": "alcool",
+          "mecanisme": "potentialisation effets CNS",
+          "effet": "troubles neuropsychiatriques (agitation, idées suicidaires — FDA boxed warning retiré en 2016 mais surveillance recommandée)",
+          "timing": "information patient",
+          "preuve": "IVH-O",
+          "source": "FDA:label-varenicline"
+        }
+      ],
+      "alertes_pd": [],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-varenicline", "StatPearls:varenicline"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "sev_nicotine",
+      "nom_dci": "Nicotine",
+      "synonymes": ["Nicorette (gomme, patch, inhaleur)", "Nicopatch", "Niquitin", "Nicopass", "Nicotinell"],
+      "classe": "Aide au sevrage tabagique",
+      "statut_fr": "Non classé (substituts nicotiniques OTC) ; Stupéfiants (tabac via règlementation spécifique)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2A6",
+          "rang": "majeur",
+          "produit": "cotinine (inactive)",
+          "preuve": "IVH-C",
+          "source": "Gemini DR 2"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "cotinine",
+          "preuve": "IVT",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B10",
+          "rang": "majeur",
+          "produit": "nicotine-N-glucuronide et cotinine-N-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP1A2",
+          "puissance": "strong",
+          "mecanisme": "via hydrocarbures aromatiques polycycliques du tabac (PAS la nicotine seule — distinction critique entre tabac fumé et substituts nicotiniques)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2A6",
+          "variants": "*2, *4, *9, *12, *17 (PM 1-5% Europe)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — guideline CPIC en cours. Métaboliseurs lents fument moins et ont moindre dépendance. Impact sur efficacité varénicline et substituts nicotiniques étudié mais pas de reco finale.",
+          "zone_grise": true,
+          "source": "CPIC:CYP2A6-en-cours (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "clozapine, olanzapine",
+          "mecanisme": "induction CYP1A2 par goudrons (pas la nicotine) — arrêt brutal du tabac = déinduction",
+          "effet": "à l'arrêt du tabac, ×2 concentrations clozapine/olanzapine en 5-10 jours — risque toxicité",
+          "timing": "surveillance clinique + tabacologie hospitalière ; ajustement dose",
+          "preuve": "IVH-C",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "caféine",
+          "mecanisme": "induction CYP1A2 (tabac fumé) vs clairance normale (substituts nicotiniques)",
+          "effet": "↑ clairance caféine chez fumeurs ; rebond à l'arrêt",
+          "timing": "information patient",
+          "preuve": "IVH-O",
+          "source": "GPT P1"
+        }
+      ],
+      "alertes_pd": ["CV-HTA"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-nicotine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur"]
+    }
+  ]
+}

@@ -1,0 +1,1344 @@
+{
+  "_metadata": {
+    "fichier": "molecules_thymoregulateurs_anticonvulsivants.json",
+    "classes_incluses": ["Thymorégulateur", "Anticonvulsivant"],
+    "nombre_molecules": 13,
+    "nombre_zones_grises_molecule": 0,
+    "nombre_entrees_avec_champs_zone_grise": 2,
+    "date_consolidation": "2026-04",
+    "sources_rapports_projet": [
+      "Gemini DR 1-4",
+      "ChatGPT P1-P3bis",
+      "Rapport d'Expertise HUG 2020 extension",
+      "Mise_à_jour_référentiel_interactions_médicamenteuses.txt",
+      "prompt_3bis_chatgpt_agent.md"
+    ],
+    "arbitrages_appliques": [
+      "Lithium : élimination rénale 100% + QT-CR + CI-grossesse-anomalie-Ebstein + fenêtre thérapeutique étroite 0.6-1.2 mmol/L + surveillance TSH/créat/calcémie",
+      "Valproate : β-oxydation mitochondriale majeure + UGT1A6/1A9/2B7 majeur + inhibiteur UGT1A4 fort (lamotrigine ×2) + inhibiteur époxyde hydrolase (carbamazépine-époxyde) + tératogène ANSM 2018 PNDS + POLG CI absolue",
+      "Lamotrigine : UGT1A4 majeur direct + HLA-B*15:02 CPIC A (SJS/Lyell) + titration prudente + valproate double la concentration (titration × 2 plus lente)",
+      "Carbamazépine : CYP3A4 majeur + auto-inducteur + HLA-B*15:02 CPIC A (Asiatiques) + HLA-A*31:01 CPIC A (Européens) + métabolite époxyde actif + inducteur CYP3A4/2C9/2C19/UGT/Pgp strong",
+      "Oxcarbazépine : pro-médicament → MHD via AKR1C1 (pas de métabolite époxyde contrairement à carbamazépine) + HLA-B*15:02 alerte SJS (CPIC A)",
+      "Topiramate : alerte QT-CR + induction CYP3A4 (↓ contraceptifs) + glaucome aigu + lithiase rénale + acidose métabolique + perte de poids",
+      "Gabapentine/Prégabaline : élimination rénale 100% inchangée + substrat LAT1 + alerte `resp` avec opioïdes (FDA 2019) + mésusage prégabaline documenté FR 2024",
+      "Phénytoïne : CYP2C9 majeur + CYP2C19 majeur + PK non-linéaire (saturation) + HLA-B*15:02 CPIC A + CYP2C9*3 CPIC A + inducteur large fort",
+      "Phénobarbital : CYP2B6/CYP2C9 substrat + inducteur large strong + dépression respiratoire + risque abus/dépendance"
+    ],
+    "schema_version": "v2_avec_champs_manquants"
+  },
+  "molecules": [
+    {
+      "id": "thy_lithium",
+      "nom_dci": "Lithium",
+      "synonymes": ["Téralithe", "Téralithe LP"],
+      "classe": "Thymorégulateur",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "transporteurs sodiques tubulaires",
+          "role": "substrat",
+          "preuve": "IVH-C",
+          "source": "PMID:31724518"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "ion monovalent — pas de métabolisme hépatique — élimination rénale 100% inchangée — compétition Na+ tubulaire",
+        "demi_vie_h": 24
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "diurétiques thiazidiques",
+          "mecanisme": "↓ clairance rénale du lithium (réabsorption tubulaire augmentée)",
+          "effet": "↑ lithémie — toxicité aiguë (tremblements, confusion, convulsions, coma)",
+          "timing": "éviter ou réduire dose et surveiller lithémie",
+          "preuve": "IVH-C",
+          "source": "PMID:31724518"
+        },
+        {
+          "avec": "IEC, ARA2 (sartans)",
+          "mecanisme": "↓ DFG → accumulation lithium",
+          "effet": "toxicité lithinique — cas rapportés",
+          "timing": "éviter ou surveillance rapprochée (lithémie + créatininémie à 7 j)",
+          "preuve": "CAS",
+          "source": "PMC7320113"
+        },
+        {
+          "avec": "AINS (ibuprofène, indométhacine, kétoprofène)",
+          "mecanisme": "↓ clairance lithium (↓ 20-60%)",
+          "effet": "toxicité lithinique",
+          "timing": "éviter si possible ; préférer paracétamol ; surveillance si indispensable",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-lithium"
+        },
+        {
+          "avec": "déshydratation, restriction sodée, régime hyposodé, diarrhée, fièvre",
+          "mecanisme": "↑ réabsorption tubulaire lithium",
+          "effet": "↑ lithémie — toxicité",
+          "timing": "information patient + consultation en urgence si gastro-entérite",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-lithium"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique (rare mais documenté)",
+          "timing": "surveillance clinique ; éviter si possible",
+          "preuve": "CAS",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "halopéridol, clozapine",
+          "mecanisme": "neurotoxicité additive",
+          "effet": "SMN, syndrome extrapyramidal sévère, encéphalopathie",
+          "timing": "surveillance neurologique rapprochée",
+          "preuve": "CAS",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "grossesse (1er trimestre)",
+          "mecanisme": "passage transplacentaire",
+          "effet": "anomalie d'Ebstein (cardiopathie) — risque ×10-20 base",
+          "timing": "discussion bénéfice/risque ; contraception efficace ; consultation préconceptionnelle",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-lithium"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "fenetre-etroite", "nephrotox", "thyroide-hypo", "teratogene-Ebstein", "sero"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:31724518", "ANSM:RCP-lithium", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "thy_valproate",
+      "nom_dci": "Valproate",
+      "synonymes": ["Dépakine", "Dépakote", "Dépamide", "acide valproïque", "valpromide", "divalproex"],
+      "classe": "Thymorégulateur",
+      "statut_fr": "Liste II",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "4-ène-VPA + 4-OH-VPA + 5-OH-VPA (4-ène-VPA potentiellement hépatotoxique)",
+          "preuve": "IVH-O",
+          "source": "PMC3696515"
+        },
+        {
+          "isoforme": "CYP2A6",
+          "rang": "mineur",
+          "produit": "4-ène-VPA",
+          "preuve": "IVH-O",
+          "source": "PMC3696515"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVH-O",
+          "source": "PMC3696515"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "β-oxydation mitochondriale",
+          "alias": null,
+          "rang": "majeur",
+          "produit": "acides carboxyliques inactifs (~40% métabolisme total)",
+          "preuve": "IVH-C",
+          "source": "PMC3696515"
+        },
+        {
+          "enzyme": "EPHX1",
+          "alias": "époxyde hydrolase microsomale",
+          "rang": "mineur (métabolisme valproate) / inhibition CIBLE thérapeutique (interaction carbamazépine)",
+          "produit": "hydrolyse du carbamazépine-10,11-époxyde",
+          "preuve": "IVH-O",
+          "source": "PMC2042805"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT1A6",
+          "rang": "majeur",
+          "produit": "valproate-glucuronide (voie majeure ~50%)",
+          "preuve": "IVH-C",
+          "source": "PMC3696515"
+        },
+        {
+          "enzyme": "UGT1A9",
+          "rang": "majeur",
+          "produit": "valproate-glucuronide",
+          "preuve": "IVH-C",
+          "source": "PMC3696515"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "valproate-glucuronide",
+          "preuve": "IVH-C",
+          "source": "PMC3696515"
+        },
+        {
+          "enzyme": "UGT1A3, UGT1A4, UGT1A8, UGT1A10, UGT2B15",
+          "rang": "mineur",
+          "produit": "valproate-glucuronide",
+          "preuve": "IVT",
+          "source": "PMC3696515"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "UGT1A4",
+          "puissance": "strong",
+          "mecanisme": "competitive",
+          "preuve": "IVH-C",
+          "source": "PMC1176375 (valproate-lamotrigine interaction)"
+        },
+        {
+          "cible": "EPHX1",
+          "puissance": "moderate",
+          "mecanisme": "non_competitive",
+          "preuve": "IVH-C",
+          "source": "PMC2042805"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "Littérature PK (warfarine, phénytoïne)"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "certains métabolites oxydés (4-ène-VPA) sont hépatotoxiques — cible de la toxicité idiosyncrasique",
+        "demi_vie_h": 14
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "POLG",
+          "variants": "mutations pathogènes (syndrome d'Alpers)",
+          "phenotype": "homozygote/composite",
+          "niveau_cpic": "ND",
+          "recommandation": "**CONTRE-INDICATION ABSOLUE** — hépatotoxicité fulminante chez patients POLG+. Test génétique recommandé avant initiation chez l'enfant < 2 ans et antécédents neurologiques suspects.",
+          "zone_grise": false,
+          "source": "NBK620296"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "lamotrigine",
+          "mecanisme": "inhibition UGT1A4 par valproate",
+          "effet": "×2 AUC lamotrigine — risque SJS/Lyell si titration trop rapide",
+          "timing": "**DOUBLER le délai de titration lamotrigine + réduire de 50% la dose cible** (EMA 2024)",
+          "preuve": "IVH-C",
+          "source": "PMC1176375"
+        },
+        {
+          "avec": "carbamazépine",
+          "mecanisme": "inhibition EPHX1 + UGT2B7 par valproate",
+          "effet": "↑ carbamazépine-10,11-époxyde (métabolite actif neurotoxique)",
+          "timing": "surveillance clinique + taux plasmatiques carbamazépine + CBZ-époxyde",
+          "preuve": "IVH-C",
+          "source": "PMC2042805"
+        },
+        {
+          "avec": "carbapénèmes (imipénème, méropénème, ertapénème)",
+          "mecanisme": "mécanisme mal élucidé — hydrolyse du valproate-glucuronide",
+          "effet": "↓↓↓ valproatémie (jusqu'à -90%) en 24-48h — risque crises convulsives",
+          "timing": "éviter ; si indispensable, monitorage strict + relais antiépileptique",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "grossesse",
+          "mecanisme": "inhibition du cycle des folates + action directe sur développement",
+          "effet": "tératogène majeur : anomalies tube neural (~10%), retard cognitif (~30-40%), autisme",
+          "timing": "**CI absolue chez femme en âge de procréer sans Programme Prévention Grossesse** (ANSM 2018 + PNDS 2024)",
+          "preuve": "IVH-C",
+          "source": "ANSM:valproate-2018"
+        },
+        {
+          "avec": "inducteurs enzymatiques (carbamazépine, phénytoïne, rifampicine)",
+          "mecanisme": "induction UGT + β-oxydation",
+          "effet": "↓ valproatémie",
+          "timing": "ajuster dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-valproate"
+        }
+      ],
+      "alertes_pd": ["hepatotox-POLG", "teratogene", "hyperammonemie", "pancreatite", "CI-grossesse"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMC:3696515", "ANSM:valproate-2018", "NBK:620296", "PMC:1176375"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    },
+    {
+      "id": "aco_lamotrigine",
+      "nom_dci": "Lamotrigine",
+      "synonymes": ["Lamictal"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A4",
+          "rang": "majeur",
+          "produit": "lamotrigine-2-N-glucuronide (voie principale ~80-90%)",
+          "preuve": "IVH-C",
+          "source": "PMC12853207"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "mineur",
+          "produit": "lamotrigine-N-glucuronide",
+          "preuve": "IVH-O",
+          "source": "PMC12853207"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": 29
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "HLA-B",
+          "variants": "*15:02",
+          "phenotype": "porteur (prévalent Asie du Sud-Est)",
+          "niveau_cpic": "A",
+          "recommandation": "**CONTRE-INDICATION** en cas de portage HLA-B*15:02 — risque Stevens-Johnson/Lyell majoré. Dépistage recommandé chez patients d'ascendance asiatique avant initiation.",
+          "zone_grise": false,
+          "source": "CPIC:lamotrigine-HLA-B-2018"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "valproate",
+          "mecanisme": "inhibition UGT1A4 par valproate",
+          "effet": "×2 AUC lamotrigine — risque SJS/Lyell aggravé",
+          "timing": "**titration ×2 plus lente + dose cible réduite de 50%**. Schéma : 25 mg tous les 2 jours pendant 2 semaines, puis 25 mg/j pendant 2 semaines, titration très progressive (EMA 2024)",
+          "preuve": "IVH-C",
+          "source": "PMC1176375"
+        },
+        {
+          "avec": "carbamazépine, phénytoïne, rifampicine (inducteurs UGT)",
+          "mecanisme": "induction UGT1A4",
+          "effet": "↓ concentrations lamotrigine (-50 à -70%)",
+          "timing": "doubler la dose cible",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-lamotrigine"
+        },
+        {
+          "avec": "contraceptifs oraux combinés (éthinylestradiol)",
+          "mecanisme": "induction UGT1A4 par éthinylestradiol",
+          "effet": "↓ 50% lamotrigine en phase active / ↑ en phase placebo",
+          "timing": "ajustement posologique selon cycle contraceptif OU préférer contraception sans EE",
+          "preuve": "IVH-C",
+          "source": "PMC12853207"
+        },
+        {
+          "avec": "grossesse",
+          "mecanisme": "↑ clairance lamotrigine (UGT1A4 induite)",
+          "effet": "↓ 50% concentrations en fin de grossesse",
+          "timing": "surveillance plasmatique trimestrielle + adaptation posologique",
+          "preuve": "IVH-O",
+          "source": "PMC12853207"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "SJS-Lyell-HLA-B1502", "titration-lente-obligatoire"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:lamotrigine-HLA-B-2018", "PMC:12853207", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "aco_carbamazepine",
+      "nom_dci": "Carbamazépine",
+      "synonymes": ["Tégrétol", "Tégrétol LP"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "carbamazépine-10,11-époxyde (actif, neurotoxique)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-carbamazepine"
+        },
+        {
+          "isoforme": "CYP2C8",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVH-O",
+          "source": "FDA:label-carbamazepine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "EPHX1",
+          "alias": "époxyde hydrolase microsomale",
+          "rang": "majeur",
+          "produit": "trans-10,11-dihydrodiol-carbamazépine (inactif)",
+          "preuve": "IVH-C",
+          "source": "PMC2042805"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "mineur",
+          "produit": "carbamazépine-N-glucuronide",
+          "preuve": "IVT",
+          "source": "FDA:label-carbamazepine"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "FDA:label-carbamazepine"
+        },
+        {
+          "transporteur": "Pgp",
+          "role": "inducteur",
+          "preuve": "IVH-O",
+          "source": "FDA:label-carbamazepine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "strong",
+          "mecanisme": "induction PXR (auto-induction également)",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C19",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP1A2",
+          "puissance": "moderate",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "UGT (large)",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "Pgp",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "carbamazépine-10,11-époxyde (CBZ-E)",
+        "activite_relative": "actif — contribution à l'effet antiépileptique ET à la neurotoxicité (vertiges, ataxie, diplopie)",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "HLA-B",
+          "variants": "*15:02",
+          "phenotype": "porteur (prévalent Asie du Sud-Est 10-15%)",
+          "niveau_cpic": "A",
+          "recommandation": "**CONTRE-INDICATION ABSOLUE** — risque Stevens-Johnson/Lyell ×10-100 fois. Dépistage HLA-B*15:02 OBLIGATOIRE avant initiation chez patients d'ascendance asiatique (FDA boxed warning 2007).",
+          "zone_grise": false,
+          "source": "CPIC:carbamazepine-HLA-2018"
+        },
+        {
+          "gene": "HLA-A",
+          "variants": "*31:01",
+          "phenotype": "porteur (prévalent Européens ~3-5% et Japonais ~10%)",
+          "niveau_cpic": "A",
+          "recommandation": "**Éviter** — risque réactions cutanées (SJS, DRESS, MPE). Dépistage recommandé pour patients d'ascendance européenne, japonaise, coréenne, sud-américaine.",
+          "zone_grise": false,
+          "source": "CPIC:carbamazepine-HLA-2018"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "valproate",
+          "mecanisme": "inhibition EPHX1 + UGT par valproate",
+          "effet": "↑ CBZ-époxyde (neurotoxicité)",
+          "timing": "surveillance plasmatique CBZ + CBZ-E",
+          "preuve": "IVH-C",
+          "source": "PMC2042805"
+        },
+        {
+          "avec": "contraceptifs oraux, anticoagulants oraux directs, immunosuppresseurs (tacrolimus, ciclosporine), antirétroviraux",
+          "mecanisme": "induction CYP3A4 + Pgp forte",
+          "effet": "↓↓ efficacité — échecs contraceptifs, thromboses, rejets",
+          "timing": "**CI** avec contraceptifs oraux ; ajustement/switch pour autres",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "méthadone, buprénorphine (TSO)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ concentrations TSO — sevrage précipité",
+          "timing": "**surveillance +++ ajustement dose TSO** (majoration possible 30-50%)",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "clozapine, olanzapine, quétiapine",
+          "mecanisme": "induction CYP3A4 (quétiapine+++) + CYP1A2 (clozapine/olanzapine)",
+          "effet": "↓ concentrations antipsychotiques",
+          "timing": "ajustement dose",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "macrolides (érythromycine, clarithromycine), azolés",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑↑ carbamazépine — toxicité",
+          "timing": "éviter",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "grossesse",
+          "mecanisme": "tératogène",
+          "effet": "spina bifida (~1%) + anomalies craniofaciales",
+          "timing": "discussion bénéfice/risque + supplémentation folates 5 mg/j",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-carbamazepine"
+        }
+      ],
+      "alertes_pd": ["hyponatremie-SIADH", "SJS-Lyell-HLA-B1502", "DRESS-HLA-A3101", "teratogene", "agranulocytose"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-carbamazepine", "CPIC:carbamazepine-HLA-2018", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur"]
+    },
+    {
+      "id": "aco_oxcarbazepine",
+      "nom_dci": "Oxcarbazépine",
+      "synonymes": ["Trileptal"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "AKR1C1, AKR1C2, AKR1C4",
+          "alias": "aldo-céto réductases cytosoliques",
+          "rang": "majeur",
+          "produit": "MHD (monohydroxy-dérivé, actif — métabolite majeur responsable de l'effet thérapeutique)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-oxcarbazepine"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "MHD-glucuronide",
+          "preuve": "IVH-O",
+          "source": "FDA:label-oxcarbazepine"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2C19",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:label-oxcarbazepine"
+        }
+      ],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "moderate",
+          "mecanisme": "induction (moins puissant que carbamazépine)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-oxcarbazepine"
+        },
+        {
+          "cible": "UGT",
+          "puissance": "moderate",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:label-oxcarbazepine"
+        }
+      ],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "MHD (monohydroxy-dérivé, 10-hydroxy-carbazépine)",
+        "activite_relative": "actif — porteur principal de l'effet thérapeutique (oxcarbazépine = pro-médicament). PAS d'époxyde contrairement à la carbamazépine",
+        "demi_vie_h": 9
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "HLA-B",
+          "variants": "*15:02",
+          "phenotype": "porteur",
+          "niveau_cpic": "A",
+          "recommandation": "**Éviter** chez porteurs HLA-B*15:02 — risque SJS/Lyell (réaction croisée avec carbamazépine démontrée).",
+          "zone_grise": false,
+          "source": "CPIC:carbamazepine-HLA-2018 (extension oxcarbazépine)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "contraceptifs oraux",
+          "mecanisme": "induction CYP3A4 modérée + UGT",
+          "effet": "↓ efficacité contraceptive (risque d'échec documenté)",
+          "timing": "préférer méthode non-hormonale ou DIU ; si CO : dose ≥ 50 µg EE",
+          "preuve": "IVH-C",
+          "source": "FDA:label-oxcarbazepine"
+        },
+        {
+          "avec": "phénytoïne",
+          "mecanisme": "inhibition CYP2C19 par oxcarbazépine",
+          "effet": "↑ phénytoïnémie",
+          "timing": "surveillance plasmatique phénytoïne",
+          "preuve": "IVH-O",
+          "source": "FDA:label-oxcarbazepine"
+        },
+        {
+          "avec": "grossesse",
+          "mecanisme": "tératogène (données limitées, analogie carbamazépine)",
+          "effet": "malformations possibles",
+          "timing": "discussion bénéfice/risque",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-oxcarbazepine"
+        }
+      ],
+      "alertes_pd": ["hyponatremie-SIADH", "SJS-Lyell-HLA-B1502", "teratogene"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-oxcarbazepine", "CPIC:carbamazepine-HLA-2018"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "transporteurs"]
+    },
+    {
+      "id": "aco_topiramate",
+      "nom_dci": "Topiramate",
+      "synonymes": ["Epitomax", "Topamax"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés (inactifs)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "hydrolyse + hydroxylation",
+          "alias": null,
+          "rang": "mineur",
+          "produit": "métabolites inactifs (~30% métabolisme)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT (non précisée)",
+          "rang": "mineur",
+          "produit": "topiramate-glucuronide",
+          "preuve": "IVT",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "weak",
+          "mecanisme": "induction modeste (dose-dépendante > 200 mg/j)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination majoritairement rénale inchangée (~70%) — métabolisme hépatique minoritaire",
+        "demi_vie_h": 21
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "contraceptifs oraux",
+          "mecanisme": "induction CYP3A4 (> 200 mg/j)",
+          "effet": "↓ efficacité contraceptive",
+          "timing": "à haute dose : préférer contraception non-hormonale ; à dose anti-craving alcool (100-300 mg/j) : discussion",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (carbamazépine, phénytoïne)",
+          "mecanisme": "induction",
+          "effet": "↓ concentrations topiramate",
+          "timing": "ajuster dose",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        },
+        {
+          "avec": "zonisamide, acétazolamide, autres inhibiteurs anhydrase carbonique",
+          "mecanisme": "addition inhibition anhydrase carbonique",
+          "effet": "acidose métabolique + lithiase rénale + hypohidrose",
+          "timing": "éviter association",
+          "preuve": "IVH-O",
+          "source": "FDA:label-topiramate"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "seuil-ep-sevrage", "glaucome-aigu", "lithiase-renale", "acidose-metabolique", "perte-poids", "troubles-cognitifs"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-topiramate", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aco_gabapentine",
+      "nom_dci": "Gabapentine",
+      "synonymes": ["Neurontin"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "LAT1",
+          "role": "substrat",
+          "preuve": "IVH-C",
+          "source": "PMID:7265598"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale 100% inchangée — pas de métabolisme hépatique",
+        "demi_vie_h": 6
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "opioïdes (méthadone, morphine, oxycodone)",
+          "mecanisme": "dépression respiratoire synergique",
+          "effet": "×1.49 risque overdose mortelle (aOR 1.49 IC 1.18-1.88) ; ≥900 mg/j : risque majoré ~60%",
+          "timing": "FDA Safety 2019 : démarrer dose minimale + surveillance respiratoire",
+          "preuve": "IVH-C",
+          "source": "PMC5691933"
+        },
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "élimination rénale 100%",
+          "effet": "accumulation → sédation, confusion",
+          "timing": "adapter dose selon DFG (table de Cockcroft)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-gabapentin"
+        },
+        {
+          "avec": "antiacides aluminium/magnésium",
+          "mecanisme": "↓ absorption (30%)",
+          "effet": "↓ efficacité",
+          "timing": "espacement ≥ 2h",
+          "preuve": "IVH-O",
+          "source": "FDA:label-gabapentin"
+        },
+        {
+          "avec": "alcool, BZD",
+          "mecanisme": "addition CNS depressant",
+          "effet": "sédation + dépression respiratoire",
+          "timing": "prudence",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-gabapentine"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "sevrage-possible-si-arret-brutal"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:7265598", "FDA:label-gabapentin", "PMC:5691933"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aco_pregabaline",
+      "nom_dci": "Prégabaline",
+      "synonymes": ["Lyrica"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I (ordonnance sécurisée depuis 2021)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "LAT1",
+          "role": "substrat",
+          "preuve": "IVH-C",
+          "source": "PMID:7265598"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale > 90% inchangée",
+        "demi_vie_h": 6
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "opioïdes (méthadone, morphine, oxycodone)",
+          "mecanisme": "dépression respiratoire synergique",
+          "effet": "risque overdose mortelle ×3-4 vs opioïde seul ; FDA Safety 2019 boxed warning",
+          "timing": "démarrer dose minimale + surveillance respiratoire",
+          "preuve": "IVH-C",
+          "source": "PMC5691933"
+        },
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "élimination rénale",
+          "effet": "accumulation",
+          "timing": "adapter selon DFG",
+          "preuve": "IVH-C",
+          "source": "EMA:Lyrica-EPAR"
+        },
+        {
+          "avec": "alcool, BZD, GHB",
+          "mecanisme": "addition CNS depressant",
+          "effet": "dépression respiratoire",
+          "timing": "prudence ; éviter si possible",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-pregabaline"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "mesusage-documented", "sevrage-BZD-like"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Lyrica-EPAR", "PMID:7265598", "ANSM:pregabaline-ordonnance-securisee-2021"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aco_phenytoine",
+      "nom_dci": "Phénytoïne",
+      "synonymes": ["Dilantin", "Di-Hydan"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "majeur",
+          "produit": "4'-HPPH (5-(4-hydroxyphényl)-5-phénylhydantoïne, inactif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:phenytoin-CYP2C9-HLA-2020"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "HPPH",
+          "preuve": "IVH-C",
+          "source": "CPIC:phenytoin-CYP2C9-HLA-2020"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A1, UGT1A4, UGT1A9",
+          "rang": "majeur",
+          "produit": "HPPH-glucuronide",
+          "preuve": "IVH-O",
+          "source": "FDA:label-phenytoin"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-phenytoin"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "strong",
+          "mecanisme": "induction PXR",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "strong",
+          "mecanisme": "auto-induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C19",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP1A2",
+          "puissance": "moderate",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "UGT",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "Pgp",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "PK saturable (Michaelis-Menten) : doublement dose peut ×3-5 la concentration plasmatique — fenêtre thérapeutique très étroite (10-20 mg/L)",
+        "demi_vie_h": 22
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C9",
+          "variants": "*3 (Leu359, rs1057910), *2",
+          "phenotype": "PM ou IM",
+          "niveau_cpic": "A",
+          "recommandation": "**Réduire dose de 25% (IM) à 50% (PM)** + monitorage plasmatique rapproché. Prévalence *3 ~5-10% Europe.",
+          "zone_grise": false,
+          "source": "CPIC:phenytoin-CYP2C9-HLA-2020"
+        },
+        {
+          "gene": "HLA-B",
+          "variants": "*15:02",
+          "phenotype": "porteur",
+          "niveau_cpic": "A",
+          "recommandation": "**Éviter** — risque SJS/Lyell. Dépistage obligatoire si ascendance asiatique.",
+          "zone_grise": false,
+          "source": "CPIC:phenytoin-CYP2C9-HLA-2020"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "valproate",
+          "mecanisme": "déplacement liaison albumine + inhibition CYP2C9 par valproate",
+          "effet": "↑ phénytoïne libre (fraction active) sans ↑ totale — risque toxicité avec phénytoïnémie totale apparemment normale",
+          "timing": "doser phénytoïne libre si disponible + surveillance clinique",
+          "preuve": "IVH-C",
+          "source": "FDA:label-phenytoin"
+        },
+        {
+          "avec": "contraceptifs oraux, anticoagulants oraux directs, immunosuppresseurs, antirétroviraux, antinéoplasiques",
+          "mecanisme": "induction CYP3A4/2C9/Pgp forte",
+          "effet": "↓↓ efficacité → échecs contraceptifs, thromboses, rejets",
+          "timing": "ajustement/switch systématique",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "méthadone, buprénorphine",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ TSO — sevrage",
+          "timing": "majoration dose TSO 30-50%",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["SJS-Lyell-HLA-B1502", "DRESS", "teratogene-hydantoine", "fenetre-etroite", "cerebelleux-dose-dependant", "hyperplasie-gingivale"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["CPIC:phenytoin-CYP2C9-HLA-2020", "FDA:label-phenytoin", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur"]
+    },
+    {
+      "id": "aco_phenobarbital",
+      "nom_dci": "Phénobarbital",
+      "synonymes": ["Gardénal", "Aparoxal", "Alepsal", "Kaneuron"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste II (stupéfiants selon forme injectable)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "majeur",
+          "produit": "p-hydroxy-phénobarbital (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-phenobarbital"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "p-hydroxy-phénobarbital",
+          "preuve": "IVH-C",
+          "source": "FDA:label-phenobarbital"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVH-O",
+          "source": "FDA:label-phenobarbital"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "phénobarbital-N-glucoside et glucuronide",
+          "preuve": "IVH-O",
+          "source": "FDA:label-phenobarbital"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "strong",
+          "mecanisme": "induction PXR",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2C19",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP1A2",
+          "puissance": "moderate",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "CYP2B6",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "UGT",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-C",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        },
+        {
+          "cible": "Pgp",
+          "puissance": "strong",
+          "mecanisme": "induction",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": 90
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact PK connu mais pas de guideline CPIC spécifique phénobarbital",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool, BZD, opioïdes",
+          "mecanisme": "addition CNS depressant GABAergique",
+          "effet": "coma, dépression respiratoire, décès",
+          "timing": "CI relative",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-phenobarbital"
+        },
+        {
+          "avec": "contraceptifs oraux, anticoagulants, immunosuppresseurs, antirétroviraux",
+          "mecanisme": "induction CYP3A4/2C9/2C19 + UGT + Pgp forte",
+          "effet": "↓↓ efficacité",
+          "timing": "CI avec CO ; ajustement autres",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "dependance", "teratogene", "sedation-profonde", "demi-vie-longue"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-phenobarbital", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur"]
+    },
+    {
+      "id": "aco_levetiracetam",
+      "nom_dci": "Lévétiracétam",
+      "synonymes": ["Keppra"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "hydrolyse enzymatique (estérases sanguines)",
+          "alias": null,
+          "rang": "mineur",
+          "produit": "acide inactif (L057, ~24% métabolisme)",
+          "preuve": "IVH-O",
+          "source": "EMA:Keppra-EPAR"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale 66% inchangée — métabolisme hépatique minoritaire (~24%) non CYP",
+        "demi_vie_h": 7
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "élimination rénale majoritaire",
+          "effet": "accumulation",
+          "timing": "adapter dose selon DFG",
+          "preuve": "IVH-C",
+          "source": "EMA:Keppra-EPAR"
+        },
+        {
+          "avec": "inducteurs enzymatiques (carbamazépine, phénytoïne)",
+          "mecanisme": "induction estérases sanguines (effet modeste)",
+          "effet": "↓ modeste concentrations lévétiracétam",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "EMA:Keppra-EPAR"
+        }
+      ],
+      "alertes_pd": ["troubles-neuropsy-agressivite", "idees-suicidaires"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Keppra-EPAR", "ANSM:RCP-levetiracetam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aco_ethosuximide",
+      "nom_dci": "Éthosuximide",
+      "synonymes": ["Zarontin"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "métabolites hydroxylés inactifs",
+          "preuve": "IVH-O",
+          "source": "FDA:label-ethosuximide"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "éthosuximide-glucuronide",
+          "preuve": "IVH-O",
+          "source": "FDA:label-ethosuximide"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": 50
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inducteurs CYP3A4 (carbamazépine, phénytoïne, rifampicine)",
+          "mecanisme": "induction",
+          "effet": "↓ éthosuximide",
+          "timing": "augmenter dose",
+          "preuve": "IVH-O",
+          "source": "FDA:label-ethosuximide"
+        }
+      ],
+      "alertes_pd": ["SJS", "troubles-psychiatriques"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["FDA:label-ethosuximide"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aco_perampanel",
+      "nom_dci": "Pérampanel",
+      "synonymes": ["Fycompa"],
+      "classe": "Anticonvulsivant",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "métabolites oxydés inactifs",
+          "preuve": "IVH-C",
+          "source": "EMA:Fycompa-EPAR"
+        },
+        {
+          "isoforme": "CYP3A5",
+          "rang": "majeur",
+          "produit": "métabolites oxydés",
+          "preuve": "IVH-O",
+          "source": "EMA:Fycompa-EPAR"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "pérampanel-glucuronide",
+          "preuve": "IVT",
+          "source": "EMA:Fycompa-EPAR"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP3A4",
+          "puissance": "weak",
+          "mecanisme": "induction modeste (dose-dépendant)",
+          "preuve": "IVH-O",
+          "source": "EMA:Fycompa-EPAR"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": 105
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inducteurs CYP3A4 forts (carbamazépine, phénytoïne, rifampicine)",
+          "mecanisme": "induction",
+          "effet": "↓ 50-67% pérampanel",
+          "timing": "doubler dose cible",
+          "preuve": "IVH-C",
+          "source": "EMA:Fycompa-EPAR"
+        },
+        {
+          "avec": "alcool, BZD",
+          "mecanisme": "addition CNS depressant",
+          "effet": "↑↑ sédation, agressivité, idées suicidaires (boxed warning FDA)",
+          "timing": "CI relative ; information patient renforcée",
+          "preuve": "IVH-C",
+          "source": "FDA:boxed-warning-perampanel"
+        },
+        {
+          "avec": "contraceptifs oraux (progestatifs)",
+          "mecanisme": "induction CYP3A4 à haute dose (> 8 mg/j)",
+          "effet": "↓ efficacité contraception",
+          "timing": "méthode non-hormonale si > 8 mg/j",
+          "preuve": "IVH-O",
+          "source": "EMA:Fycompa-EPAR"
+        }
+      ],
+      "alertes_pd": ["aggressivite-boxed-warning", "idees-suicidaires", "sedation", "demi-vie-longue"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["EMA:Fycompa-EPAR", "FDA:boxed-warning-perampanel"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "pharmacogenetique"]
+    }
+  ]
+}

@@ -1,0 +1,1060 @@
+{
+  "metadata": {
+    "fichier": "molecules_hallucinogenes_dissociatifs.json",
+    "session": 8,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 11,
+    "classes_couvertes": ["Dissociatif (anesthésique NMDA)", "Hallucinogène sérotoninergique (5-HT2A)", "Tryptamine endogène/synthétique", "Phénéthylamine 2C", "Iboga-alcaloïde anti-addiction"],
+    "note_methodologique": "Session 8 MétaboScope. Verrous critiques : (1) KÉTAMINE = CYP2B6 majeur + CYP3A4 + CYP2C9 mineurs → norkétamine ACTIVE (1/3-1/5 puissance) + hydroxynorkétamine (impliquée dans effet antidépresseur rapide via voie non-NMDA). Isomère R inhibe l'élimination de l'isomère S dans le racémique. (2) ESKÉTAMINE (Spravato) = isomère S, absorption biphasique intranasale, mêmes voies CYP2B6/3A4 → noreskétamine. Surveillance TA 40 min. (3) DMT = MAO-A majeure (oralement inactif) — l'AYAHUASCA contourne via β-carbolines (harmine, harmaline) inhibitrices MAO-A. (4) MESCALINE = 53% excrétée INCHANGÉE — élimination rénale dominante, durée d'action 8-12h disproportionnée. (5) IBOGAÏNE = CYP2D6 majeur → noribogaïne active (κ-opioïde + antagoniste NMDA + ISR, t1/2 28-49h). QT-KR CredibleMeds, allongement QTc moyen +67.9 ms — risque TdP. (6) 5-MeO-DMT = MAO-A + CYP2D6 → bufoténine (active). (7) PSILOCYBINE séparée de PSILOCINE : promédicament déphosphorylé par phosphatases tissulaires en psilocine active ; psilocine via UGT1A10/1A9 + MAO-A + CYP2D6/3A4. (8) 2C-B = MAO-A/B majeurs + CYP2D6 mineur. (9) PCP = CYP3A4 majeur + CYP2B6 mineur (INVERSE de kétamine)."
+  },
+  "molecules": [
+    {
+      "id": "dis_ketamine",
+      "nom_dci": "Kétamine (racémique R/S)",
+      "synonymes": ["Kétamine", "Ketalar", "Special K", "K", "Vetalar (vétérinaire)"],
+      "classe": "Dissociatif (antagoniste NMDA non-compétitif)",
+      "statut_fr": "Stupéfiants (depuis 2017 — assimilé stupéfiant ; usage hospitalier anesthésie + douleur réfractaire + dépression résistante off-label)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2B6",
+          "rang": "majeur",
+          "produit": "norkétamine (N-desméthyl-kétamine, ACTIVE — antagoniste NMDA potence 1/3-1/5 kétamine)",
+          "preuve": "IVH-C",
+          "source": "PMID:12065445"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur (contribution variable selon enantiomère)",
+          "produit": "norkétamine + hydroxynorkétamine (actif — voie 'rapid antidepressant')",
+          "preuve": "IVH-C",
+          "source": "PMC6197107"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "norkétamine + métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:12065445"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A9",
+          "rang": "majeur (sur kétamine et norkétamine)",
+          "produit": "kétamine-N-glucuronide + norkétamine-N-glucuronide",
+          "preuve": "IVH-O",
+          "source": "PMC6197107"
+        },
+        {
+          "enzyme": "UGT2B7",
+          "rang": "mineur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "PMC6197107"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat (faible)",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2B6",
+          "puissance": "moderate",
+          "mecanisme": "auto-inhibition compétitive — pertinent en perfusions répétées",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norkétamine + (R,S)-hydroxynorkétamine (HNK)",
+        "activite_relative": "norkétamine = antagoniste NMDA actif 1/3 à 1/5 puissance kétamine, contribue à l'analgésie chronique et à la sédation. Hydroxynorkétamine (notamment 2R,6R-HNK) = impliquée dans l'effet antidépresseur rapide via mécanisme non-NMDA (AMPA, BDNF). Note racémique : isomère R inhibe l'élimination de l'isomère S",
+        "demi_vie_h": 5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2B6",
+          "variants": "*6 (Q172H + K262R), *18",
+          "phenotype": "PM/IM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — CYP2B6*6 : ↓ formation norkétamine, ↑ exposition kétamine parent → effets dissociatifs prolongés possibles. Pertinent en perfusions chroniques (douleur, dépression résistante). Pas de génotypage routine.",
+          "zone_grise": true,
+          "source": "PMC6197107"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "rifampicine, carbamazépine (inducteurs CYP2B6/3A4)",
+          "mecanisme": "induction CYP2B6/3A4",
+          "effet": "↓ exposition kétamine ; ↑ ratio norkétamine/kétamine",
+          "timing": "augmenter dose ; surveillance efficacité (anesthésie, dépression résistante)",
+          "preuve": "IVH-O",
+          "source": "PMC3560924"
+        },
+        {
+          "avec": "kétoconazole, ritonavir, clarithromycine (inhibiteurs CYP3A4)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition kétamine ~2× (intranasal, oral surtout — premier passage hépatique)",
+          "timing": "réduire dose en intranasal/oral ; impact moindre IV",
+          "preuve": "IVH-O",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO, opioïdes sérotoninergiques",
+          "mecanisme": "addition sérotoninergique (kétamine = inhibiteur SERT/NET faible)",
+          "effet": "syndrome sérotoninergique (rare) — pertinent en dépression résistante avec ISRS associés",
+          "timing": "surveillance ; CI absolue IMAO",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "BZD",
+          "mecanisme": "additivité sédative + atténuation effets dissociatifs",
+          "effet": "↓ effets psychédéliques kétamine — pertinent en clinique (atténue dysphorie post-anesthésie)",
+          "timing": "association anesthésique fréquente (midazolam pré-opératoire)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-ketamine"
+        },
+        {
+          "avec": "alcool, opioïdes, GHB (chemsex/slam)",
+          "mecanisme": "additivité dépression SNC + cardiotoxicité",
+          "effet": "coma, dépression respiratoire, mort subite — décès chemsex documentés",
+          "timing": "alerte USCA",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "mésusage IV chronique",
+          "mecanisme": "exposition prolongée — toxicité urologique spécifique",
+          "effet": "**cystite kétamine** : symptômes pollakiurie/dysurie/hématurie ; lésions vessie irréversibles si chronique. Hépatite cholestatique également documentée",
+          "timing": "alerte USCA — examen urinaire systématique chez consommateurs réguliers",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sédation", "HTA", "tachycardie", "hyperthermie", "psychose-réactivation", "cystite-kétamine-irréversible", "hépatite-cholestatique-mésusage", "dépendance-documented", "dépression-respiratoire-doses-élevées", "syndrome-K-hole"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:12065445", "PMC6197107", "FDA:label-ketamine", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inducteur"]
+    },
+    {
+      "id": "dis_esketamine",
+      "nom_dci": "Eskétamine (Spravato)",
+      "synonymes": ["S-kétamine", "Spravato", "(S)-(+)-kétamine"],
+      "classe": "Dissociatif (antagoniste NMDA — isomère S, plus puissant que R)",
+      "statut_fr": "Stupéfiants (AMM France 2020 — dépression résistante en association à un ISRS/IRSNa, administration intranasale en milieu spécialisé sous surveillance 2h)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2B6",
+          "rang": "majeur",
+          "produit": "noreskétamine (N-desméthyl-S-kétamine, active)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "noreskétamine + hydroxynoreskétamine",
+          "preuve": "IVH-C",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "isoforme": "CYP2C9, CYP2C19",
+          "rang": "mineur",
+          "produit": "voies mineures",
+          "preuve": "IVT",
+          "source": "FDA:label-spravato"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT (1A9, 2B7)",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "FDA:label-spravato"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat (faible)",
+          "preuve": "IVT",
+          "source": "FDA:label-spravato"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "noreskétamine",
+        "activite_relative": "active mais contribution clinique débattue ; concentrations plasmatiques inférieures à kétamine racémique IV. Absorption biphasique intranasale : ~50% absorbé par la muqueuse nasale (Tmax 20-40 min), reste avalé avec premier passage hépatique extensif",
+        "demi_vie_h": 7
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6, CYP2B6",
+          "variants": "—",
+          "phenotype": "—",
+          "niveau_cpic": "ND",
+          "recommandation": "FDA Spravato : pas d'ajustement dose recommandé selon génotype — doses thérapeutiques (56-84 mg intranasal) non significativement modifiées par polymorphismes en pratique. Surveillance TA reste critique (pic +20-30 mmHg dans les 40 min).",
+          "zone_grise": false,
+          "source": "FDA:label-spravato"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "ISRS/IRSNa (association obligatoire AMM)",
+          "mecanisme": "co-prescription thérapeutique — synergie antidépressive",
+          "effet": "indication AMM Spravato = en association à un ISRS/IRSNa",
+          "timing": "protocole STAR*D / TRD",
+          "preuve": "IVH-C",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "avec": "IMAO, linézolide",
+          "mecanisme": "potentialisation libération monoamines + crise hypertensive",
+          "effet": "CI absolue",
+          "timing": "délai 14 jours après arrêt IMAO",
+          "preuve": "IVH-O",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "avec": "antihypertenseurs",
+          "mecanisme": "antagonisme PD — eskétamine ↑ TA",
+          "effet": "Spravato peut ↑ TA 20-30 mmHg dans 40 min après administration ; surveillance obligatoire",
+          "timing": "monitoring TA pré + 40 min + 90 min ; CI si TA non contrôlée >155/100",
+          "preuve": "IVH-C",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "avec": "BZD, opioïdes, alcool",
+          "mecanisme": "additivité sédative",
+          "effet": "↑ sédation post-administration",
+          "timing": "surveillance 2h post-administration ; pas de conduite véhicule jusqu'au lendemain",
+          "preuve": "IVH-C",
+          "source": "FDA:label-spravato"
+        },
+        {
+          "avec": "détournement / mésusage potentiel",
+          "mecanisme": "isomère pur S-kétamine = effet recherché récréatif possible",
+          "effet": "REMS strict aux US ; en France délivrance hospitalière + administration supervisée",
+          "timing": "surveillance addictovigilance",
+          "preuve": "IVH-O",
+          "source": "FDA:Spravato-REMS"
+        }
+      ],
+      "alertes_pd": ["HTA-pic-40min", "sédation", "dissociation-transitoire", "vertiges", "nausées", "détournement-potentiel", "psychose-réactivation"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-spravato", "ANSM:RCP-spravato", "PMC12615959"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "dis_pcp",
+      "nom_dci": "PCP (phencyclidine)",
+      "synonymes": ["PCP", "phencyclidine", "angel dust", "Sernyl"],
+      "classe": "Dissociatif (antagoniste NMDA — analogue structurel kétamine, durée d'action prolongée)",
+      "statut_fr": "Stupéfiants (résurgence en Europe 2022-2025, parfois confusion avec kétamine au marché illicite)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur (INVERSE de kétamine)",
+          "produit": "PCHP (4-hydroxy-PCP) + autres métabolites hydroxylés (actifs partiels)",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "PCHP + métabolites mineurs",
+          "preuve": "IVT",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides des métabolites hydroxylés",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "PCHP (4-hydroxy-PCP) + dérivés hydroxylés",
+        "activite_relative": "métabolites hydroxylés conservent une activité biologique partielle → contribue à la chronicité des effets dissociatifs lors de consommations répétées. PCP parent t1/2 long ~7-46h (variabilité majeure)",
+        "demi_vie_h": 21
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool, BZD, opioïdes",
+          "mecanisme": "additivité dépression SNC + agitation paradoxale",
+          "effet": "coma, dépression respiratoire, mais aussi épisodes psychotiques violents (caractéristique PCP)",
+          "timing": "alerte clinique majeure — sédation par BZD + isolement sécurisé",
+          "preuve": "FOR",
+          "source": "StatPearls:Phencyclidine"
+        },
+        {
+          "avec": "kétamine (compétition NMDA)",
+          "mecanisme": "antagonisme NMDA additif",
+          "effet": "potentialisation effets dissociatifs",
+          "timing": "co-consommation imprévisible — alerte chemsex",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope (zone grise)"
+        },
+        {
+          "avec": "antipsychotiques (halopéridol, olanzapine)",
+          "mecanisme": "antagonisme PD — gestion intoxication aiguë",
+          "effet": "1ère ligne en agitation PCP avec BZD ; halopéridol + lorazépam classique",
+          "timing": "urgence — protocole gestion agitation",
+          "preuve": "IVH-O",
+          "source": "StatPearls:Phencyclidine"
+        }
+      ],
+      "alertes_pd": ["psychose-aiguë-violence", "agitation-extrême", "rhabdomyolyse", "hyperthermie", "HTA", "sédation-paradoxale", "convulsions", "dépendance-documented", "flashbacks-prolongés"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["StatPearls:Phencyclidine", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hal_lsd",
+      "nom_dci": "LSD (acide lysergique diéthylamide)",
+      "synonymes": ["LSD", "LSD-25", "acid", "lysergide", "lysergic acid diethylamide"],
+      "classe": "Hallucinogène sérotoninergique (agoniste partiel 5-HT2A)",
+      "statut_fr": "Stupéfiants (essais thérapeutiques en cours TUS alcool, anxiété fin de vie)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "métabolites hydroxylés (2-oxo-3-hydroxy-LSD biomarqueur urinaire) + 13-hydroxy-LSD + 14-hydroxy-LSD",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 2"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur (déméthylation N-déséthyl-LSD)",
+          "produit": "nor-LSD",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "mineur",
+          "produit": "voie mineure de désamination",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT + sulfoconjugaison",
+          "rang": "majeur",
+          "produit": "glucuronides + sulfates",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "OATP1B1",
+          "role": "substrat (hypothèse — non confirmé)",
+          "preuve": "AN",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs (perte affinité 5-HT2A). LSD parent t1/2 ~3-5h mais effets prolongés ~8-12h via mécanisme PD (down-regulation 5-HT2A)",
+        "demi_vie_h": 4
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. PM : potentielle prolongation effets LSD (durée prolongée, intensité ↑). Pertinent en thérapie psychédélique encadrée.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "ISRS, IRSNa, ADT (consommation chronique)",
+          "mecanisme": "down-regulation 5-HT2A → tolérance partielle",
+          "effet": "ATTÉNUATION des effets psychédéliques LSD (effet attendu) — distinct du syndrome sérotoninergique. Mécanisme PHARMACODYNAMIQUE, pas PK",
+          "timing": "donnée clinique importante — patients sous ISRS rapportent effets ↓",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "IMAO",
+          "mecanisme": "potentialisation 5-HT",
+          "effet": "syndrome sérotoninergique potentiel (rare avec LSD seul mais documenté)",
+          "timing": "CI",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "lithium",
+          "mecanisme": "interaction PD documentée",
+          "effet": "**convulsions** rapportées en cas association LSD + lithium — alerte spécifique (mécanisme imprécis)",
+          "timing": "CI relative — alerter usagers sous lithium",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "tramadol",
+          "mecanisme": "abaissement seuil épileptogène + sérotoninergique",
+          "effet": "convulsions",
+          "timing": "éviter",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["psychose-vulnérable", "HPPD-flashbacks", "tachycardie", "HTA", "mydriase", "convulsions-avec-lithium", "anxiété-bad-trip"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["métaboscope GPT 2", "Plan_de_recherche_MetaboScope", "PMC10851641"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "hal_psilocybine",
+      "nom_dci": "Psilocybine",
+      "synonymes": ["psilocybine", "4-PO-DMT", "champignons magiques (truffes Psilocybe)", "magic mushrooms"],
+      "classe": "Hallucinogène sérotoninergique — promédicament (ester phosphorique de la psilocine)",
+      "statut_fr": "Stupéfiants (essais thérapeutiques dépression résistante, anxiété fin de vie, addiction — Compass Pathways, MAPS, Johns Hopkins, Sublimet en France)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "phosphatases tissulaires alcalines",
+          "alias": "déphosphorylation pré-systémique (intestin + foie)",
+          "rang": "majeur — étape de bioactivation",
+          "produit": "psilocine (psilocybin → psilocin) — métabolite actif principal",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "psilocine (entité distincte — voir fiche dédiée)",
+        "activite_relative": "psilocine = molécule active responsable de l'effet psychédélique. Psilocybine elle-même = inactive (charge phosphate empêche passage BHE). Bioactivation rapide pré-systémique",
+        "demi_vie_h": 0.3
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "interactions métaboliques (cf. fiche psilocine)",
+          "mecanisme": "psilocybine = promédicament — toutes les interactions PK pertinentes concernent la psilocine formée",
+          "effet": "—",
+          "timing": "voir fiche psilocine pour détail",
+          "preuve": "—",
+          "source": "voir hal_psilocine"
+        }
+      ],
+      "alertes_pd": ["voir-psilocine"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Rapport HUG 2020 extension", "PMID:34698507"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hal_psilocine",
+      "nom_dci": "Psilocine",
+      "synonymes": ["psilocine", "4-OH-DMT", "métabolite actif de la psilocybine"],
+      "classe": "Hallucinogène sérotoninergique (agoniste 5-HT2A) — métabolite actif de la psilocybine",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (oxydation de la psilocine en 4-hydroxyindole-3-acétaldéhyde)",
+          "produit": "voie oxydative",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "voie mineure",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "majeur (désamination oxydative)",
+          "produit": "4-hydroxyindole-3-acétaldéhyde → 4-hydroxy-indole-3-acétique (4-HIAA)",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT1A10",
+          "rang": "majeur (intestinal)",
+          "produit": "psilocine-O-glucuronide (voie majeure d'élimination, biomarqueur urinaire)",
+          "preuve": "IVH-C",
+          "source": "métaboscope GPT 2"
+        },
+        {
+          "enzyme": "UGT1A9",
+          "rang": "majeur (hépatique)",
+          "produit": "psilocine-O-glucuronide",
+          "preuve": "IVH-C",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; psilocine parent assure l'effet (~30 min latence orale, 4-6h durée). t1/2 effective ~2-3h",
+        "demi_vie_h": 2.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — PM CYP2D6 : ↑ exposition psilocine modeste (CYP2D6 voie mineure vs MAO-A et UGT1A10/1A9). Effet clinique potentiel sur durée de l'expérience.",
+          "zone_grise": true,
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO (linézolide, moclobémide, sélégiline >10 mg, bleu de méthylène, tranylcypromine)",
+          "mecanisme": "inhibition MAO-A — voie majeure de dégradation psilocine",
+          "effet": "↑↑ exposition psilocine → expérience PROLONGÉE et intensifiée — risque trauma psychologique en thérapie ; risque sérotoninergique (rare en monothérapie psilocine)",
+          "timing": "**ALERTE thérapie psychédélique** : washout obligatoire — 14 jours après IMAO classique, 5 semaines après fluoxétine (norfluoxétine longue)",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "avec": "ISRS, IRSNa (consommation chronique)",
+          "mecanisme": "down-regulation 5-HT2A → tolérance PD partielle (mécanisme PHARMACODYNAMIQUE distinct du blocage métabolique)",
+          "effet": "ATTÉNUATION effets psilocine — patients sous ISRS rapportent effets émoussés. Distinct du syndrome sérotoninergique",
+          "timing": "donnée clinique importante en thérapie psychédélique — protocoles MAPS/Compass demandent washout ISRS 2 semaines minimum",
+          "preuve": "IVH-O",
+          "source": "PMC10851641"
+        },
+        {
+          "avec": "lithium",
+          "mecanisme": "interaction PD — convulsions documentées (mécanisme imprécis)",
+          "effet": "convulsions rapportées",
+          "timing": "CI relative — exclusion essais thérapeutiques",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "tramadol, opioïdes sérotoninergiques",
+          "mecanisme": "addition sérotoninergique + abaissement seuil-ep",
+          "effet": "syndrome sérotoninergique + convulsions",
+          "timing": "éviter",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["psychose-vulnérable", "HPPD", "anxiété-bad-trip", "tachycardie", "HTA", "mydriase", "convulsions-avec-lithium"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Rapport HUG 2020 extension", "PMC10851641", "métaboscope GPT 2"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "hal_dmt",
+      "nom_dci": "DMT (N,N-diméthyltryptamine)",
+      "synonymes": ["DMT", "N,N-DMT", "Dimitri", "ayahuasca (préparation orale avec β-carbolines)"],
+      "classe": "Hallucinogène sérotoninergique tryptamine (agoniste 5-HT2A)",
+      "statut_fr": "Stupéfiants ; ayahuasca classée stupéfiant en France depuis 2005",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "majeur (voie quasi-exclusive)",
+          "produit": "acide indole-3-acétique (inactif) — désamination oxydative très rapide",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; DMT parent psychoactif. **Biodisponibilité orale quasi-NULLE** car dégradation pré-systémique massive par MAO-A intestinale → DMT seul actif uniquement par voie inhalée/IV/intranasale. Durée action courte ~10-20 min (DMT vapé) — origine du surnom 'businessman trip'",
+        "demi_vie_h": 0.25
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "**β-carbolines** (harmine, harmaline, tétrahydroharmine — Banisteriopsis caapi, ayahuasca)",
+          "mecanisme": "inhibition MAO-A réversible par les β-carbolines",
+          "effet": "**activation orale du DMT** — sans IMAO réversible, DMT oral inactif. Mécanisme central de l'ayahuasca : permet absorption intestinale et exposition systémique. Durée d'action étendue à 4-6h (vs 10-20 min vaporisé pur)",
+          "timing": "préparation traditionnelle — alerte interactions avec ISRS/IRSNa/IMAO médicamenteux",
+          "preuve": "IVH-C",
+          "source": "PMC13024736"
+        },
+        {
+          "avec": "ISRS, IRSNa (ayahuasca avec antidépresseur)",
+          "mecanisme": "addition sérotoninergique + IMAO (β-carbolines)",
+          "effet": "**syndrome sérotoninergique sévère** — décès documentés en cérémonies ayahuasca chez patients sous antidépresseurs. CONTRE-INDICATION ABSOLUE",
+          "timing": "washout 14 jours minimum (5 semaines pour fluoxétine)",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "IMAO médicamenteux (linézolide, moclobémide, tranylcypromine, bleu de méthylène)",
+          "mecanisme": "potentialisation MAO-A + addition sérotoninergique",
+          "effet": "syndrome sérotoninergique + crise hypertensive",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "**lithium**",
+          "mecanisme": "interaction PD documentée",
+          "effet": "**convulsions** rapportées en cérémonies ayahuasca chez patients sous lithium",
+          "timing": "CI absolue",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "stimulants (cocaïne, amphétamines, MDMA)",
+          "mecanisme": "addition sympathomimétique + sérotoninergique",
+          "effet": "tachycardie, HTA, hyperthermie",
+          "timing": "éviter",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["psychose-vulnérable", "HTA", "tachycardie", "vomissements-ayahuasca-purga", "convulsions-avec-lithium", "CI-IMAO", "CI-ISRS-en-ayahuasca"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMC13024736", "Plan_de_recherche_MetaboScope", "Rapport HUG 2020 extension"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hal_5_meo_dmt",
+      "nom_dci": "5-MeO-DMT (5-méthoxy-N,N-diméthyltryptamine)",
+      "synonymes": ["5-MeO-DMT", "5-methoxy-DMT", "Bufo alvarius (crapaud du Sonora)", "toad venom"],
+      "classe": "Hallucinogène sérotoninergique tryptamine (agoniste 5-HT1A > 5-HT2A — profil distinct du DMT)",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (formation bufoténine via O-déméthylation)",
+          "produit": "**bufoténine (5-OH-DMT, ACTIVE — agoniste 5-HT2A)**",
+          "preuve": "IVH-C",
+          "source": "PMID:20942780"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "majeur (désamination oxydative — voie majeure de clairance)",
+          "produit": "acide 5-méthoxy-indole-3-acétique (inactif)",
+          "preuve": "IVH-C",
+          "source": "PMID:20942780"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "bufoténine (5-OH-DMT)",
+        "activice_relative": "bufoténine = AGONISTE 5-HT2A actif (vs 5-MeO-DMT = principalement 5-HT1A) — module l'expérience subjective. Le génotype CYP2D6 détermine donc la nature de l'expérience : PM = bufoténine ↓ → effet 5-HT1A pur ; UM = bufoténine ↑ → expérience plus 'psychédélique classique'",
+        "demi_vie_h": 1
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM) ; duplications (UM)",
+          "phenotype": "PM ou UM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — module exposition à la bufoténine active. PM : intensité bufoténine ↓ → expérience plus brève, moins 'classique'. UM : bufoténine ↑ → expérience plus longue/intense. Pertinent en recherche clinique (essais analogues 5-MeO-DMT pour dépression).",
+          "zone_grise": true,
+          "source": "PMID:20942780"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO + 5-MeO-DMT (combinaison récréative parfois recherchée)",
+          "mecanisme": "inhibition MAO-A → ↑↑ exposition 5-MeO-DMT → toxicité",
+          "effet": "**syndrome sérotoninergique GRAVE — décès documentés**. Combinaison plus dangereuse que DMT+IMAO car 5-MeO-DMT plus puissant",
+          "timing": "CI absolue",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "ISRS, IRSNa, ADT",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "washout obligatoire",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "lithium",
+          "mecanisme": "convulsions (analogie autres tryptamines)",
+          "effet": "convulsions",
+          "timing": "CI",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "psychose-vulnérable", "HTA-soutenue", "tachycardie", "convulsions-IMAO", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:20942780", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "hal_2cb",
+      "nom_dci": "2C-B (4-bromo-2,5-diméthoxyphénéthylamine)",
+      "synonymes": ["2C-B", "Nexus", "Venus", "Bromo-mescaline", "phénéthylamine Shulgin"],
+      "classe": "Phénéthylamine 2C (agoniste partiel 5-HT2A — entactogène/hallucinogène hybride)",
+      "statut_fr": "Stupéfiants ; très répandu en chemsex/festivals Europe 2024-2025",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites désaminés et hydroxylés",
+          "preuve": "IVT",
+          "source": "Rapport MetaboScope Substances"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "majeur",
+          "produit": "BDMPE (acide 2-bromo-4,5-diméthoxyphénylacétique) puis BDMPAA",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "enzyme": "MAO-B",
+          "rang": "majeur (cofacteur — caractéristique des phénéthylamines à substituant α-méthyl absent)",
+          "produit": "voies désaminées",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "déméthylation puis conjugaison (mécanisme imprécis)",
+          "rang": "majeur",
+          "produit": "métabolites déméthylés excrétés",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites peu documentés — pas de métabolite actif identifié chez l'homme. t1/2 ~2-4h, durée d'action 4-6h",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "**IMAO**",
+          "mecanisme": "inhibition MAO-A/B → ↑↑ exposition 2C-B",
+          "effet": "**syndrome sérotoninergique GRAVE** — risque majeur car MAO-A/B sont la voie principale (vs CYP2D6 mineur)",
+          "timing": "CI absolue ; documenté dans cas médico-légaux",
+          "preuve": "FOR",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition sérotoninergique + atténuation PD partielle (down-regulation 5-HT2A)",
+          "effet": "syndrome sérotoninergique possible + atténuation effets psychédéliques",
+          "timing": "surveillance — données humaines suggèrent atténuation effets sans toxicité majeure",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "MDMA (combinaison fréquente chemsex)",
+          "mecanisme": "addition sérotoninergique + sympathomimétique",
+          "effet": "syndrome sérotoninergique, hyperthermie, tachycardie — cas documentés",
+          "timing": "alerte chemsex",
+          "preuve": "FOR",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "stimulants (cocaïne, amphétamines, MDMA)",
+          "mecanisme": "addition sympathomimétique",
+          "effet": "tachycardie, HTA, hyperthermie",
+          "timing": "alerte chemsex",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "tachycardie", "HTA", "hyperthermie", "psychose-vulnérable", "CI-IMAO", "anxiété-bad-trip"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["Rapport MetaboScope Substances", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hal_mescaline",
+      "nom_dci": "Mescaline (3,4,5-triméthoxyphénéthylamine)",
+      "synonymes": ["mescaline", "TMPEA", "Peyotl (Lophophora williamsii)", "San Pedro (Echinopsis pachanoi)"],
+      "classe": "Phénéthylamine hallucinogène (agoniste 5-HT2A) — prototype historique",
+      "statut_fr": "Stupéfiants (cactus Peyotl/San Pedro classés également)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "rang": "majeur (désamination oxydative)",
+          "produit": "acide 3,4,5-triméthoxyphénylacétique (TMPAA, inactif)",
+          "preuve": "IVH-C",
+          "source": "PMC12479620"
+        },
+        {
+          "enzyme": "MAO-B",
+          "rang": "mineur",
+          "produit": "TMPAA",
+          "preuve": "IVH-O",
+          "source": "PMC12479620"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "élimination rénale prédominante",
+          "role": "**~53% excrétée INCHANGÉE dans les urines** — singularité PK pour un hallucinogène (≠ tryptamines, MDMA)",
+          "preuve": "IVH-C",
+          "source": "PMC12479620"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; mescaline parent assure l'effet. t1/2 ~6h mais durée d'action 8-12h disproportionnée par rapport à la t1/2 (mécanisme PD imprécis)",
+        "demi_vie_h": 6
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO",
+          "mecanisme": "inhibition MAO-A — voie principale",
+          "effet": "↑↑ exposition mescaline → expérience prolongée + risque sérotoninergique",
+          "timing": "CI",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "**insuffisance rénale**",
+          "mecanisme": "53% excrétion urinaire inchangée → accumulation chez IRC",
+          "effet": "**durée d'action prolongée significativement** — alerte spécifique à la mescaline",
+          "timing": "vigilance chez patients IRC ; alerter usagers",
+          "preuve": "IVH-C",
+          "source": "PMC12479620"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition sérotoninergique + atténuation PD",
+          "effet": "syndrome sérotoninergique possible + atténuation effets",
+          "timing": "surveillance",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "lithium",
+          "mecanisme": "analogie autres hallucinogènes",
+          "effet": "convulsions possibles",
+          "timing": "CI relative",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope (zone grise)"
+        }
+      ],
+      "alertes_pd": ["sero", "tachycardie", "HTA", "mydriase", "psychose-vulnérable", "CI-IMAO", "accumulation-IRC"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMC12479620", "PMID:40658345", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hal_ibogaine",
+      "nom_dci": "Ibogaïne",
+      "synonymes": ["ibogaïne", "Tabernanthe iboga (racine)", "12-méthoxyibogamine"],
+      "classe": "Iboga-alcaloïde — anti-addiction (utilisé hors-AMM pour sevrage opioïdes/cocaïne ; usage rituel Bwiti)",
+      "statut_fr": "Stupéfiants (depuis 2007)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "**noribogaïne (12-hydroxyibogamine, ACTIVE)** — agoniste partiel κ-opioïde + antagoniste NMDA + inhibiteur recapture sérotonine. t1/2 28-49h (vs ibogaïne 4-7h) → effet anti-craving prolongé",
+          "preuve": "IVH-C",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "voie mineure noribogaïne",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "voie mineure",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT (non spécifié)",
+          "rang": "majeur (sur noribogaïne)",
+          "produit": "noribogaïne-glucuronide",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "canal hERG (IKr cardiaque)",
+          "puissance": "forte (ibogaïne ET noribogaïne — IC50 noribogaïne ~3 μM)",
+          "mecanisme": "blocage canal potassique cardiaque → allongement QT documenté in vivo (+67.9 ms en moyenne)",
+          "preuve": "IVH-C",
+          "source": "Rapport MetaboScope Substances"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "noribogaïne",
+        "activite_relative": "actif principal après administration aiguë (ibogaïne courte t1/2). Pharmacodynamie complexe : κ-opioïde partiel (effet anti-craving) + antagoniste NMDA + inhibiteur recapture 5-HT. Demi-vie longue 28-49h → effet 'reset' anti-addiction documenté",
+        "demi_vie_h": 38
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "**Zone grise critique** — PM : ↓ formation noribogaïne (perte effet thérapeutique anti-craving) + ↑↑ ibogaïne parent → **risque cardiotoxique majoré** (ibogaïne et noribogaïne TOUTES DEUX hERG-bloquantes mais accumulation parent = pic plus élevé). Pas de génotypage routine mais **génotypage CYP2D6 RECOMMANDÉ avant cure ibogaïne** (prévention décès cardiaque).",
+          "zone_grise": true,
+          "source": "Rapport MetaboScope Substances"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "**méthadone, autres torsadogènes KR (cf. CredibleMeds)**",
+          "mecanisme": "addition QT (ibogaïne KR + méthadone KR) + compétition PK CYP2D6/3A4",
+          "effet": "**TORSADES DE POINTES — décès rapportés** lors cures ibogaïne après méthadone (sevrage opioïde)",
+          "timing": "**délai obligatoire** : 12-24h après dernière prise méthadone + relais buprénorphine OU 7-10 jours sevrage complet avant ibogaïne. Surveillance ECG + monitoring continu",
+          "preuve": "FOR",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "buprénorphine",
+          "mecanisme": "affinité μ supérieure de la buprénorphine → bloque accès récepteurs μ à l'ibogaïne",
+          "effet": "↓ efficacité ibogaïne pour sevrage opioïde",
+          "timing": "switch vers opioïde courte action court avant ibogaïne, ou éviter ibogaïne si stable sous buprénorphine",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "inhibiteurs CYP2D6 (paroxétine, fluoxétine, bupropion)",
+          "mecanisme": "inhibition CYP2D6 → ↓ formation noribogaïne + ↑↑ ibogaïne parent",
+          "effet": "phénocopiage PM → ↑ risque cardiotoxique",
+          "timing": "CI absolue",
+          "preuve": "IVH-O",
+          "source": "Rapport MetaboScope Substances"
+        },
+        {
+          "avec": "inhibiteurs CYP3A4 (kétoconazole, ritonavir, clarithromycine)",
+          "mecanisme": "inhibition voie mineure",
+          "effet": "↑ exposition modeste",
+          "timing": "prudence",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition sérotoninergique (noribogaïne = ISR)",
+          "effet": "syndrome sérotoninergique",
+          "timing": "washout obligatoire",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "**hypokaliémie, hypomagnésémie, bradycardie, QT long congénital**",
+          "mecanisme": "facteurs aggravants TdP",
+          "effet": "↑↑ risque mort subite",
+          "timing": "**CONTRE-INDICATION ABSOLUE** — bilan préopératoire obligatoire (ECG, ionogramme, magnésium)",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "torsades-de-pointes", "mort-subite-cardiaque", "ataxie", "tremor", "nausées-vomissements", "psychose-vulnérable", "hépatotoxicité-rare", "sero", "CI-méthadone-non-sevrée"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Rapport MetaboScope Substances", "CredibleMeds:KR-list-2022", "métaboscope GPT 3"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inducteur"]
+    }
+  ]
+}

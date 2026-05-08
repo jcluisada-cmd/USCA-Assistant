@@ -1,0 +1,691 @@
+{
+  "metadata": {
+    "fichier": "molecules_nps_cathinones.json",
+    "session": 10,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 8,
+    "classes_couvertes": ["NPS cathinone synthétique", "NPS pyrrolidine cathinone"],
+    "note_methodologique": "Session 10 MétaboScope. Verrous critiques NPS : (1) Données majoritairement IN VITRO (microsomes hépatiques humains, HepaRG) + cas forensiques — niveau de preuve global IVT/FOR pour toutes les molécules sauf 3-MMC (PMC10972361 = profil clinico-toxicologique consolidé). (2) Voie commune CYP2D6 majeur pour la plupart (analogie méthamphétamine/MDMA). (3) Pas de classification CredibleMeds officielle — alertes QT basées sur mécanisme libérateur monoamines + cas TdP forensiques. (4) Mésusage chemsex/slam = voie IV dominante en France 2022-2026, modifie PK et toxicité. (5) Aucune guideline CPIC. (6) Statut FR évolutif : 3-MMC interdite avril 2022 → 3-CMC dominante 2023-2025 ; 2-MMC remplaçant après chaque vague. (7) α-PVP / MDPV / NEP / MDPHP / 4-CEC = ZONES GRISES INTÉGRALES (in vitro uniquement, pas de validation chez l'homme)."
+  },
+  "molecules": [
+    {
+      "id": "nps_3mmc",
+      "nom_dci": "3-MMC (3-méthylméthcathinone, métaphédrone)",
+      "synonymes": ["3-MMC", "métaphédrone", "metaphedrone", "3-methylmethcathinone"],
+      "classe": "NPS cathinone synthétique (β-cétone-amphétamine, libérateur DA/NA/5-HT)",
+      "statut_fr": "Stupéfiants (depuis avril 2022 par décision ANSM — précédemment NPS non classé, marché chemsex massif 2018-2022)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "métabolites hydroxylés (4-hydroxy-3-MMC) + dérivé céto-réduit (dihydro-3-MMC)",
+          "preuve": "IVT",
+          "source": "PMID:38972226"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "norméphédrone (N-déméthylation)",
+          "preuve": "IVT",
+          "source": "PMID:38972226"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase cytosolique",
+          "alias": "AKR / CR (céto-réduction du groupement β-cétone)",
+          "rang": "majeur",
+          "produit": "dihydro-3-MMC (métabolite stéréoisomère, présence in vivo confirmée)",
+          "preuve": "IVH-O",
+          "source": "PMID:38972226"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT (non spécifié) + sulfoconjugaison",
+          "rang": "majeur",
+          "produit": "glucuronides + sulfates des métabolites hydroxylés",
+          "preuve": "IVT",
+          "source": "PMID:38972226"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET, SERT (effet pharmacodynamique principal — libérateur)",
+          "puissance": "forte (libérateur monoamines + inhibiteur recapture)",
+          "mecanisme": "transporteur substrat — relarge DA/NA/5-HT dans la fente synaptique",
+          "preuve": "IVH-O",
+          "source": "PMC10972361"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": "norméphédrone (faiblement actif)",
+        "activite_relative": "norméphédrone = N-déméthylé, activité similaire mais moindre. Dihydro-3-MMC inactif ou très faiblement actif. t1/2 ~2-4h, durée d'action 1-3h → ré-administrations fréquentes (binge pattern caractéristique)",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. PM CYP2D6 : ↑ exposition 3-MMC potentielle → ↑ toxicité cardiovasculaire et neurologique. Concentrations sanguines variables documentées (249-4400 ng/mL dans cas mortels suédois STRIDA) suggèrent rôle des polymorphismes + interactions.",
+          "zone_grise": true,
+          "source": "PMID:25422862 (STRIDA Sweden)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "GHB, GBL, 1,4-BD (chemsex / slam)",
+          "mecanisme": "co-consommation chemsex — additivité dépression respiratoire au pic GHB + sympathomimétique 3-MMC",
+          "effet": "**combinaison la plus létale en chemsex français** — décès documentés en USCA/SAMU. Pattern 'slam-G' typique",
+          "timing": "ALERTE CRITIQUE USCA — éducation overdose + naloxone disponible",
+          "preuve": "FOR",
+          "source": "PMC10972361"
+        },
+        {
+          "avec": "MDMA, cocaïne, méthamphétamine",
+          "mecanisme": "addition sympathomimétique + sérotoninergique",
+          "effet": "syndrome sérotoninergique, hyperthermie, tachycardie, HTA, ischémie myocardique",
+          "timing": "alerte chemsex polyconsommation",
+          "preuve": "FOR",
+          "source": "PMC10972361"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO, opioïdes sérotoninergiques (tramadol, fentanyl)",
+          "mecanisme": "addition sérotoninergique massive (3-MMC = libérateur 5-HT)",
+          "effet": "syndrome sérotoninergique sévère",
+          "timing": "CI absolue IMAO ; alerte chemsex VIH (PrEP, traitement antidépresseur)",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "ritonavir, paroxétine, fluoxétine (inhibiteurs CYP2D6)",
+          "mecanisme": "inhibition CYP2D6 → ↑↑ exposition 3-MMC",
+          "effet": "↑ toxicité — pertinent chez patients VIH+ sous ritonavir-boosté ou patients dépressifs sous paroxétine/fluoxétine",
+          "timing": "alerte chemsex VIH",
+          "preuve": "AN",
+          "source": "PMID:38972226 (extrapolation in vitro)"
+        },
+        {
+          "avec": "BZD (à l'usage des sédatifs en relais, contexte slam)",
+          "mecanisme": "additivité sédative (BZD utilisé pour 'redescente')",
+          "effet": "dépression respiratoire si association GHB",
+          "timing": "alerte chemsex",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "QT-zone-grise-cas-rapportés", "HTA", "tachycardie", "hyperthermie", "rhabdomyolyse", "psychose-aiguë", "agitation-paranoïa", "stress-oxydatif-hépatocytaire-PMID-31468101", "dépendance-documented", "binge-pattern-mésusage", "infections-IV-slam"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["PMC10972361", "PMID:38972226", "PMID:25422862", "PMID:31468101", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    },
+    {
+      "id": "nps_3cmc",
+      "nom_dci": "3-CMC (cléphédrone, 3-chlorométhcathinone)",
+      "synonymes": ["3-CMC", "cléphédrone", "clephedrone", "3-chloromethcathinone"],
+      "classe": "NPS cathinone synthétique (β-cétone-amphétamine — analogue chloré de 3-MMC)",
+      "statut_fr": "Stupéfiants (par décision ANSM successive 2022-2023 — substance ayant remplacé la 3-MMC en chemsex français 2023-2025)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (par analogie avec 3-MMC)",
+          "produit": "métabolites hydroxylés phényliques",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope (extrapolation 3-MMC)"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "voie mineure",
+          "preuve": "IVT",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase / AKR",
+          "rang": "majeur",
+          "produit": "dihydro-3-CMC (par analogie)",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT + sulfoconjugaison",
+          "rang": "majeur",
+          "produit": "conjugués urinaires",
+          "preuve": "IVT",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET, SERT",
+          "puissance": "forte (libérateur monoamines)",
+          "mecanisme": "transporteur substrat",
+          "preuve": "IVH-O",
+          "source": "Italie 2014-2025 case series"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites peu documentés ; profil clinique suggère t1/2 et durée comparables à 3-MMC mais TOXICITÉ SUPÉRIEURE documentée (tachycardies sévères, psychoses agitées, cas mortels en Italie 2014-2025)",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "PM",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — extrapolation depuis 3-MMC. Pas de données spécifiques 3-CMC.",
+          "zone_grise": true,
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "GHB, GBL (chemsex / slam)",
+          "mecanisme": "co-consommation chemsex",
+          "effet": "décès documentés ; toxicité supérieure à 3-MMC + GHB rapportée",
+          "timing": "ALERTE CRITIQUE USCA",
+          "preuve": "FOR",
+          "source": "Italie 2014-2025"
+        },
+        {
+          "avec": "MDMA, cocaïne, autres stimulants",
+          "mecanisme": "addition sympathomimétique",
+          "effet": "psychoses agitées, tachycardies sévères, hyperthermie",
+          "timing": "alerte chemsex",
+          "preuve": "FOR",
+          "source": "Italie 2014-2025"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "QT-zone-grise", "HTA-sévère", "tachycardie-sévère", "psychose-agitée-documented", "hyperthermie", "rhabdomyolyse", "dépendance-documented", "toxicité-supérieure-vs-3-MMC"],
+      "niveau_preuve_global": "FOR",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "Italie 2014-2025 case series"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    },
+    {
+      "id": "nps_2mmc",
+      "nom_dci": "2-MMC (2-méthylméthcathinone)",
+      "synonymes": ["2-MMC", "2-methylmethcathinone"],
+      "classe": "NPS cathinone synthétique (isomère de position de 3-MMC)",
+      "statut_fr": "Stupéfiants (par décision ANSM successive 2021 — émergence après classement 3-MMC en France)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (extrapolation 3-MMC — données spécifiques limitées)",
+          "produit": "métabolites hydroxylés (par analogie)",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase",
+          "rang": "majeur (par analogie cathinones)",
+          "produit": "dihydro-2-MMC",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT + sulfoconjugaison",
+          "rang": "majeur (analogie)",
+          "produit": "conjugués urinaires",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET, SERT",
+          "puissance": "forte (libérateur, par analogie 3-MMC)",
+          "mecanisme": "transporteur substrat",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "données quasi-inexistantes ; profil clinique extrapolé depuis 3-MMC",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "GHB/GBL, autres stimulants, antidépresseurs",
+          "mecanisme": "extrapolation depuis 3-MMC (mêmes mécanismes)",
+          "effet": "voir profil 3-MMC",
+          "timing": "voir profil 3-MMC",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "HTA", "tachycardie", "hyperthermie", "psychose", "dépendance-documented", "données-très-limitées"],
+      "niveau_preuve_global": "AN",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "EMCDDA:cathinones-monitoring"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "nps_mephedrone",
+      "nom_dci": "Méphédrone (4-MMC, 4-méthylméthcathinone)",
+      "synonymes": ["méphédrone", "mephedrone", "4-MMC", "4-methylmethcathinone", "M-CAT", "miaow miaow", "drone"],
+      "classe": "NPS cathinone synthétique (modèle métabolique de référence des MMCs)",
+      "statut_fr": "Stupéfiants (depuis 2010 — la plus précoce des cathinones classées en France)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "4-hydroxytolyl-méphédrone (métabolite hydroxylé) + dihydro-méphédrone (céto-réduction)",
+          "preuve": "IVH-O",
+          "source": "PMC10972361"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "norméphédrone (N-déméthylation)",
+          "preuve": "IVT",
+          "source": "PMC10972361"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase",
+          "rang": "majeur",
+          "produit": "dihydro-méphédrone",
+          "preuve": "IVH-O",
+          "source": "PMC10972361"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT + sulfoconjugaison",
+          "rang": "majeur",
+          "produit": "glucuronides + sulfates",
+          "preuve": "IVH-O",
+          "source": "PMC10972361"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET, SERT",
+          "puissance": "forte (libérateur monoamines, profil similaire MDMA mais durée plus courte)",
+          "mecanisme": "transporteur substrat",
+          "preuve": "IVH-C",
+          "source": "PMC10972361"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": "norméphédrone (faiblement actif)",
+        "activite_relative": "norméphédrone activité résiduelle ~50% méphédrone. t1/2 méphédrone ~2-3h, durée d'action 1-2h. Pattern de re-dosing fréquent (binge)",
+        "demi_vie_h": 2
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "PM",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — analogie 3-MMC. PM : ↑ exposition potentielle.",
+          "zone_grise": true,
+          "source": "PMC10972361"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "GHB/GBL, alcool, BZD, opioïdes",
+          "mecanisme": "additivité dépression SNC + sympathomimétique",
+          "effet": "décès chemsex/slam — l'un des premiers NPS responsables de décès en Europe (2008-2010)",
+          "timing": "alerte historique chemsex",
+          "preuve": "FOR",
+          "source": "PMC10972361"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "MDMA, cocaïne, autres stimulants",
+          "mecanisme": "addition sympathomimétique",
+          "effet": "hyperthermie, tachycardie, ischémie",
+          "timing": "alerte chemsex",
+          "preuve": "FOR",
+          "source": "PMC10972361"
+        }
+      ],
+      "alertes_pd": ["sero", "QT-zone-grise", "HTA", "tachycardie", "hyperthermie", "rhabdomyolyse", "psychose", "dépendance-documented", "binge-pattern", "sevrage-documented"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["PMC10972361", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    },
+    {
+      "id": "nps_4cec",
+      "nom_dci": "4-CEC (4-chloroéthcathinone)",
+      "synonymes": ["4-CEC", "4-chloroethcathinone"],
+      "classe": "NPS cathinone synthétique (analogue chloré + N-éthyle de méphédrone)",
+      "statut_fr": "Stupéfiants (par décision ANSM successive)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (par analogie 3-CMC, méphédrone)",
+          "produit": "métabolites hydroxylés + N-désalkyl-cathinone",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase",
+          "rang": "majeur",
+          "produit": "dihydro-4-CEC",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "données très limitées",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "polyconsommation chemsex",
+          "mecanisme": "extrapolation depuis méphédrone/3-CMC",
+          "effet": "voir profils analogues",
+          "timing": "—",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["sero", "HTA", "tachycardie", "psychose", "dépendance-suspectée", "données-très-limitées"],
+      "niveau_preuve_global": "AN",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "EMCDDA:cathinones-monitoring"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "nps_nep",
+      "nom_dci": "NEP (N-éthylpentédrone, N-ethyl-norpentedrone)",
+      "synonymes": ["NEP", "N-ethylpentedrone", "ethyl-α-methylamino-valerophénone"],
+      "classe": "NPS cathinone synthétique (homologue éthyle de pentédrone)",
+      "statut_fr": "Stupéfiants (par décision ANSM successive)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur (par analogie cathinones)",
+          "produit": "métabolites hydroxylés + N-désalkyl",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase",
+          "rang": "majeur",
+          "produit": "dihydro-NEP",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "données très limitées",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "polyconsommation chemsex",
+          "mecanisme": "extrapolation depuis cathinones pyrrolidine",
+          "effet": "voir α-PVP/MDPV",
+          "timing": "—",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["HTA", "tachycardie", "psychose", "dépendance-suspectée", "données-très-limitées"],
+      "niveau_preuve_global": "AN",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "EMCDDA:cathinones-monitoring"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "nps_alpha_pvp",
+      "nom_dci": "α-PVP (alpha-pyrrolidinopentiophénone)",
+      "synonymes": ["α-PVP", "alpha-PVP", "flakka", "gravel", "alpha-pyrrolidinovalerophenone"],
+      "classe": "NPS pyrrolidine cathinone (sous-classe distincte — psychoactivité supérieure aux MMCs, profil 'flakka')",
+      "statut_fr": "Stupéfiants (depuis 2014 — vague d'intoxications spectaculaires Floride 2013-2015)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase cytosolique",
+          "alias": "réduction du groupement carbonyle",
+          "rang": "majeur (in vitro)",
+          "produit": "alcool secondaire (réduction céto)",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "enzyme": "hydroxylations sur le noyau phényl (in vitro, contribution CYP suspectée mais non identifiée)",
+          "rang": "majeur (in vitro)",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT + sulfotransférases",
+          "rang": "majeur (in vitro)",
+          "produit": "glucuronides + sulfates des métabolites hydroxy",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET (inhibiteur recapture > libérateur — distinction avec MMCs)",
+          "puissance": "forte (puissant inhibiteur DAT, profil cocaïne-like)",
+          "mecanisme": "blocage transporteur",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs (perte affinité DAT). t1/2 plasmatique ~3-5h mais effets PROLONGÉS jusqu'à 6-8h (forte affinité tissulaire DAT cérébral)",
+        "demi_vie_h": 4
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP non identifié",
+          "variants": "—",
+          "phenotype": "—",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise INTÉGRALE — voies CYP responsables de l'hydroxylation phénylique non identifiées chez l'homme.",
+          "zone_grise": true,
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "polyconsommation chemsex / slam",
+          "mecanisme": "addition sympathomimétique + dépression respiratoire si GHB/opioïdes associés",
+          "effet": "**psychose excitée / 'excited delirium'** — forme caractéristique : hyperthermie maligne, agitation extrême, rhabdomyolyse, mort subite",
+          "timing": "ALERTE — sédation BZD + refroidissement actif",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "antipsychotiques (gestion intoxication aiguë)",
+          "mecanisme": "antagonisme PD",
+          "effet": "1ère ligne agitation aiguë — BZD haute dose ± halopéridol",
+          "timing": "urgence",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["psychose-excitée-excited-delirium", "hyperthermie-maligne", "agitation-extrême-violente", "rhabdomyolyse", "IRA-secondaire", "HTA-sévère", "tachycardie-sévère", "convulsions", "ischémie-myocardique", "mort-subite", "dépendance-documented", "binge-pattern-prolongé"],
+      "niveau_preuve_global": "FOR",
+      "sources_principales": ["métaboscope GPT 3", "Plan_de_recherche_MetaboScope", "EMCDDA:cathinones-pyrrolidine"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "nps_mdpv",
+      "nom_dci": "MDPV (3,4-méthylènedioxypyrovalérone)",
+      "synonymes": ["MDPV", "bath salts", "3,4-methylenedioxypyrovalerone", "Magic", "Super Coke"],
+      "classe": "NPS pyrrolidine cathinone (analogue méthylènedioxy d'α-PVP)",
+      "statut_fr": "Stupéfiants (depuis 2012 — précurseur de la vague 'bath salts' US 2010-2012)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur suspecté (in vitro non confirmé chez l'homme)",
+          "produit": "catéchol (O-déméthylation/déméthylènation)",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur suspecté",
+          "produit": "voies mineures",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "carbonyl réductase",
+          "rang": "majeur (in vitro)",
+          "produit": "alcool secondaire (réduction céto)",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "COMT",
+          "alias": "catéchol-O-méthyltransférase",
+          "rang": "majeur (sur métabolite catéchol)",
+          "produit": "méthyl-catéchol",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "enzyme": "SULT (sulfotransférases) + UGT",
+          "rang": "majeur",
+          "produit": "sulfates + glucuronides",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET (inhibiteur recapture, profil similaire α-PVP — cocaïne-like)",
+          "puissance": "forte (puissant inhibiteur DAT > 10× cocaïne in vitro)",
+          "mecanisme": "blocage transporteur",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; t1/2 ~3-4h mais affinité DAT extrême → effets prolongés et toxicité à faibles concentrations plasmatiques",
+        "demi_vie_h": 3.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6, CYP2C19",
+          "variants": "—",
+          "phenotype": "—",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise INTÉGRALE — enzymes humaines responsables proposées (CYP2D6, CYP2C19) mais non confirmées chez l'homme.",
+          "zone_grise": true,
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "polyconsommation 'bath salts' / chemsex",
+          "mecanisme": "addition sympathomimétique",
+          "effet": "psychose excitée, hyperthermie, mort subite — tableaux similaires α-PVP",
+          "timing": "ALERTE — sédation BZD haute dose + refroidissement",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition sérotoninergique modeste (MDPV plus DA-NA que 5-HT)",
+          "effet": "potentielle interaction",
+          "timing": "—",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["psychose-excitée", "hyperthermie-maligne", "agitation-extrême", "rhabdomyolyse", "IRA", "HTA-sévère", "tachycardie-sévère", "ischémie-myocardique", "mort-subite", "dépendance-documented", "binge-pattern"],
+      "niveau_preuve_global": "FOR",
+      "sources_principales": ["métaboscope GPT 3", "Plan_de_recherche_MetaboScope", "EMCDDA:cathinones-pyrrolidine"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    }
+  ]
+}

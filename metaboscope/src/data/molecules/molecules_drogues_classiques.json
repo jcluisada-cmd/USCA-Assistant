@@ -1,0 +1,1527 @@
+{
+  "metadata": {
+    "fichier": "molecules_drogues_classiques.json",
+    "session": 7,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 14,
+    "classes_couvertes": ["Drogue licite", "Substance illicite", "Métabolite actif majeur", "Promédicament fumé"],
+    "note_methodologique": "Session 7 CRITIQUE USCA. Différenciateur majeur vs HUG 2020. Verrous strictement appliqués : (1) ALCOOL = 3 entités distinctes (aigu inhibe CYP2E1, chronique l'induit + CYP1A2 modérée, sevrage = seuil-ep + delirium tremens) ; (2) COCAÏNE = 3 entités (seule CES1/CES2/BChE / cocaéthylène par transestérification CES1 avec éthanol / crack-AEME pyrolytique + agonisme muscarinique M1/M2) ; (3) MDMA avec MBI CYP2D6 mécanisme-dépendant irréversible — fenêtre récupération 10 jours documentée par sonde dextrométhorphane (PMID:18794647) ; (4) HÉROÏNE + 6-MAM séparés (cascade BChE plasmatique → 6-MAM rapide → morphine via CES1/CES2) ; (5) NICOTINE séparée du TABAC FUMÉ — induction CYP1A2 par HAP combustion, PAS la nicotine seule (substituts nicotiniques ne déinduisent pas)."
+  },
+  "molecules": [
+    {
+      "id": "aut_alcool_aigu",
+      "nom_dci": "Alcool — phase aiguë",
+      "synonymes": ["éthanol", "ethanol", "alcool éthylique", "consommation aiguë"],
+      "classe": "Drogue licite (phase aiguë — consommation ponctuelle ou ivresse)",
+      "statut_fr": "Réglementé (vente >18 ans ; ivresse publique manifeste sanctionnée)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2E1",
+          "rang": "mineur (~10% métabolisme à dose modérée, ↑ à concentrations élevées)",
+          "produit": "acétaldéhyde",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Ethanol-Toxicity"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "ADH (ADH1A, ADH1B, ADH1C, ADH4)",
+          "alias": "alcool déshydrogénase cytosolique",
+          "rang": "majeur (~90% métabolisme à dose modérée)",
+          "produit": "acétaldéhyde (toxique, cancérigène groupe 1 IARC)",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Ethanol-Toxicity"
+        },
+        {
+          "enzyme": "ALDH2",
+          "alias": "aldéhyde déshydrogénase mitochondriale",
+          "rang": "majeur (étape 2 — détoxification)",
+          "produit": "acétate (puis acétyl-CoA)",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Ethanol-Toxicity"
+        },
+        {
+          "enzyme": "système catalase (peroxysomes)",
+          "rang": "trace",
+          "produit": "acétaldéhyde",
+          "preuve": "IVT",
+          "source": "StatPearls:Ethanol-Toxicity"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2E1",
+          "puissance": "weak (compétitive — substrat = inhibiteur)",
+          "mecanisme": "compétition substrat — diminue métabolisme paracétamol vers NAPQI à court terme (effet protecteur paradoxal en prise unique simultanée)",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "cible": "CES1",
+          "puissance": "moderate (en présence de cocaïne — transestérification)",
+          "mecanisme": "détourne CES1 de l'hydrolyse vers la transestérification → cocaéthylène",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": "acétaldéhyde (toxique non psychoactif)",
+        "activite_relative": "acétaldéhyde = vasodilatateur + cancérigène ; pas d'activité psychoactive directe — l'éthanol parent agit sur GABA-A et NMDA",
+        "demi_vie_h": 0.3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "ADH1B",
+          "variants": "*2 (His48Arg, fréquent en Asie de l'Est)",
+          "phenotype": "métaboliseur rapide alcool→acétaldéhyde",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs ADH1B*2 : ↑ accumulation acétaldéhyde transitoire → flush asiatique partiel, ↓ consommation alcool, effet protecteur AUD. Pas de guideline CPIC.",
+          "zone_grise": true,
+          "source": "PMID:19262484"
+        },
+        {
+          "gene": "ALDH2",
+          "variants": "*2 (Glu487Lys, ~40% Asie de l'Est)",
+          "phenotype": "déficient ALDH2",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — déficit ALDH2 → flush asiatique majeur (accumulation acétaldéhyde), tachycardie, nausées. Réaction antabuse-like spontanée. CI relative paracétamol forte dose + augmentation marquée risque cancers ORL/œsophage si maintien consommation.",
+          "zone_grise": true,
+          "source": "PMID:19262484"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "métronidazole, tinidazole, céfopérazone, griséofulvine",
+          "mecanisme": "inhibition ALDH2",
+          "effet": "réaction antabuse — flush, tachycardie, vomissements, hypotension",
+          "timing": "CI absolue pendant traitement + 48h après arrêt",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "disulfirame (Espéral)",
+          "mecanisme": "inhibition ALDH2 irréversible",
+          "effet": "réaction antabuse marquée — utilisée comme aversif thérapeutique",
+          "timing": "12-24h délai post-disulfirame ; effet persiste 7-14 jours après arrêt",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "avec": "cocaïne",
+          "mecanisme": "transestérification CES1 → formation cocaéthylène (cf. entité dédiée)",
+          "effet": "↑ exposition cocaïne 20-300% + cocaéthylène (cardiotoxicité × 18-25)",
+          "timing": "co-consommation → fiche spécifique",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "avec": "BZD, opioïdes, GHB, hypnotiques Z, barbituriques",
+          "mecanisme": "synergie GABA-A + dépression SNC additive",
+          "effet": "sédation profonde, dépression respiratoire, coma — décès",
+          "timing": "éviter ; alerte triade resp en USCA",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "paracétamol (prise aiguë simultanée à dose toxique)",
+          "mecanisme": "compétition CYP2E1 — alcool aigu PROTÈGE transitoirement (≠ chronique)",
+          "effet": "léger effet protecteur sur formation NAPQI en co-ingestion ponctuelle. NB : ne s'applique PAS à la prise différée chez alcoolique chronique",
+          "timing": "donnée mécanistique — pas de recommandation clinique",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "alertes_pd": ["resp", "sédation", "ataxie", "amnésie", "réaction-antabuse-si-ALDH2-ou-disulfirame", "fœtotoxicité-grossesse"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["StatPearls:Ethanol-Toxicity", "Rapport HUG 2020 extension", "PMID:11933066"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs"]
+    },
+    {
+      "id": "aut_alcool_chronique",
+      "nom_dci": "Alcool — phase chronique",
+      "synonymes": ["éthanol chronique", "alcoolisme chronique", "TUS alcool"],
+      "classe": "Drogue licite (consommation chronique régulière — TUSAL)",
+      "statut_fr": "Réglementé",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2E1",
+          "rang": "majeur (induction prolongée — voie MEOS prend le pas)",
+          "produit": "acétaldéhyde + NAPQI (à partir paracétamol)",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "ADH",
+          "rang": "majeur (saturé chez consommateur chronique → bascule vers MEOS)",
+          "produit": "acétaldéhyde",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP2E1",
+          "puissance": "strong (induction ×10 documentée chez gros buveurs chroniques)",
+          "mecanisme": "stabilisation protéique post-traductionnelle + induction transcriptionnelle",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "cible": "CYP1A2",
+          "puissance": "moderate",
+          "mecanisme": "stabilisation protéique (mécanisme moins clair que tabac)",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "cible": "CYP3A4",
+          "puissance": "weak-moderate",
+          "mecanisme": "induction modérée documentée chez consommateur chronique",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 1 sur 4"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": "acétaldéhyde + NAPQI (paracétamol)",
+        "activite_relative": "NAPQI = métabolite réactif hépatotoxique majeur en alcoolisme chronique → seuil paracétamol abaissé 2 g/j vs 4 g/j chez sain",
+        "demi_vie_h": 0.3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "ADH1B / ALDH2",
+          "variants": "voir alcool aigu",
+          "phenotype": "—",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — variants ADH1B*2 et ALDH2*2 protégent partiellement contre l'AUD chronique (intolérance acétaldéhyde rend la consommation chronique aversive).",
+          "zone_grise": true,
+          "source": "PMID:19262484"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "paracétamol",
+          "mecanisme": "induction CYP2E1 → ↑ production NAPQI + déplétion glutathion (malnutrition)",
+          "effet": "hépatotoxicité paracétamol — seuil toxique abaissé à 2-3 g/j chez alcoolique chronique vs 4 g/j chez sain. Cas d'hépatite fulminante à doses thérapeutiques rapportés",
+          "timing": "limiter paracétamol à 2 g/j chez TUSAL ; préférer codéine/tramadol prudemment ou nefopam selon contexte",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "avec": "clozapine, olanzapine (substrats CYP1A2)",
+          "mecanisme": "induction CYP1A2 modérée (additive avec tabac dominant)",
+          "effet": "à l'arrêt simultané alcool+tabac (hospitalisation USCA), déinduction additive → ×2 concentrations clozapine/olanzapine en <10 jours",
+          "timing": "alerte spécifique USCA — surveillance taux plasmatiques + réduction dose 30-50% à l'arrêt",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "warfarine, phénytoïne, isoniazide",
+          "mecanisme": "induction CYP2E1 + autres voies",
+          "effet": "↓ AVK efficacité ; ↓ phénytoïne → crises ; ↑ hépatotoxicité INH",
+          "timing": "surveillance INR / dosage phénytoïne",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "anesthésiques halogénés (sevoflurane, halothane)",
+          "mecanisme": "induction CYP2E1 → ↑ formation métabolites hépatotoxiques",
+          "effet": "↑ risque hépatite péri-opératoire",
+          "timing": "information anesthésiste",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "avec": "TSO (méthadone, buprénorphine)",
+          "mecanisme": "induction CYP3A4 modérée + dépression respiratoire additive",
+          "effet": "ajustement dose TSO + risque overdose",
+          "timing": "monitorage clinique en USCA/ELSA",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["hepatotox", "cirrhose-encephalopathie", "myocardiopathie-OH", "carences-B1-B6-B9-B12", "neuropathie-OH", "pancréatite", "cancers-ORL-œsophage-foie", "fœtotoxicité-grossesse"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Rapport HUG 2020 extension", "Gemini DR 1", "Mise_à_jour_référentiel", "StatPearls:Alcohol-Use-Disorder"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur"]
+    },
+    {
+      "id": "aut_alcool_sevrage",
+      "nom_dci": "Alcool — sevrage",
+      "synonymes": ["sevrage alcoolique", "delirium tremens", "alcohol withdrawal syndrome", "AWS"],
+      "classe": "Syndrome de sevrage (état clinique distinct nécessitant prise en charge spécifique)",
+      "statut_fr": "Urgence médicale (CIWA-Ar ≥10 = sevrage ; ≥20 = sévère/risque DT)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2E1",
+          "rang": "déinduction progressive (J5-J21 selon durée AUC chronique antérieure)",
+          "produit": "—",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "phase de transition ; pertinence métabolique = déinduction CYP2E1/1A2/3A4",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "BZD (diazépam, lorazépam, oxazépam) — première ligne",
+          "mecanisme": "agonisme GABA-A — supplée le manque GABAergique du sevrage",
+          "effet": "prévention crises convulsives + DT ; protocole CIWA-Ar guidé",
+          "timing": "diazépam 10 mg PO/IV répétable selon CIWA. En cirrhose avancée : oxazépam ou lorazépam (UGT pure, pas de CYP)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-diazepam"
+        },
+        {
+          "avec": "thiamine (B1)",
+          "mecanisme": "prévention encéphalopathie de Gayet-Wernicke",
+          "effet": "obligatoire AVANT toute glucose IV (risque déclenchement Wernicke par perfusion glucosée chez carencé)",
+          "timing": "thiamine 500 mg IV ×3/j × 3 j puis relais PO",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-thiamine"
+        },
+        {
+          "avec": "clozapine, olanzapine — co-arrêt tabac",
+          "mecanisme": "déinduction CYP1A2 cumulative",
+          "effet": "×2 concentrations en <10 jours — toxicité (sédation, convulsions, myocardite, hypotension)",
+          "timing": "alerte critique USCA hospitalisation — réduire dose 30-50% + monitorage",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "bupropion, ISRS, antipsychotiques abaisseurs seuil-ep",
+          "mecanisme": "additivité épileptogène",
+          "effet": "↑ risque crises convulsives en sevrage",
+          "timing": "CI absolue bupropion en sevrage aigu non couvert par BZD",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-bupropion-seizures"
+        },
+        {
+          "avec": "anti-craving (acamprosate, baclofène, naltrexone, nalméfène)",
+          "mecanisme": "introduction post-sevrage stable",
+          "effet": "prévention rechute ; baclofène à fortes doses possible",
+          "timing": "instauration après sevrage complet (J7-J14)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-acamprosate"
+        }
+      ],
+      "alertes_pd": ["seuil-ep", "delirium-tremens", "Wernicke-Korsakoff-prevention-B1", "hyperadrénergique", "déshydratation", "dyskaliémie"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["StatPearls:Alcohol-Withdrawal-Syndrome", "Rapport HUG 2020 extension", "Gemini DR 1"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "pst_cocaine_seule",
+      "nom_dci": "Cocaïne (forme poudre/IV — seule, sans alcool)",
+      "synonymes": ["cocaïne chlorhydrate", "benzoylméthylécgonine", "coke", "blow"],
+      "classe": "Psychostimulant illicite (entité 1/3 — seule)",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur (~5-10%)",
+          "produit": "norcocaïne (actif faible — vecteur d'hépatotoxicité en consommation massive)",
+          "preuve": "IVH-O",
+          "source": "PMID:11933066"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "trace",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "CES1",
+          "alias": "carboxylestérase 1 hépatique",
+          "rang": "majeur",
+          "produit": "benzoylecgonine (inactif — biomarqueur urinaire t1/2 6h)",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "enzyme": "CES2",
+          "alias": "carboxylestérase 2 (intestin + plasma)",
+          "rang": "majeur",
+          "produit": "ecgonine méthyl ester (inactif)",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "enzyme": "BChE",
+          "alias": "butyrylcholinestérase (pseudocholinestérase plasmatique)",
+          "rang": "majeur",
+          "produit": "ecgonine méthyl ester (inactif) — voie majeure d'inactivation rapide",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "OCT3",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 2 sur 4"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "DAT, NET, SERT",
+          "puissance": "forte (effet pharmacodynamique principal)",
+          "mecanisme": "inhibition recapture monoamines — base de l'effet euphorisant",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Cocaine"
+        },
+        {
+          "cible": "Pgp",
+          "puissance": "weak-moderate",
+          "mecanisme": "inhibition compétitive",
+          "preuve": "IVT",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norcocaïne",
+        "activite_relative": "actif faible mais hépatotoxique — bioactivation CYP3A4 → métabolite réactif (norcocaïne nitroxide → N-hydroxynorcocaïne) responsable de la toxicité hépatique des consommations massives",
+        "demi_vie_h": 1
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "BChE",
+          "variants": "K-variant, atypique (A) — déficit BChE",
+          "phenotype": "déficient BChE",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — déficit BChE (1/3000 homozygote) → ↑↑ exposition cocaïne, ↑ risque toxicité aiguë (HTA, arythmies, AVC). Pas de génotypage routine.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        },
+        {
+          "gene": "CES1",
+          "variants": "G143E (rs71647871)",
+          "phenotype": "PM CES1",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs G143E : ↓ formation benzoylecgonine ; impact biomarqueurs forensiques. Effet clinique probable mais peu documenté.",
+          "zone_grise": true,
+          "source": "PMID:28087982"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool",
+          "mecanisme": "transestérification CES1 → cocaéthylène (cf. entité dédiée)",
+          "effet": "↑ exposition cocaïne 20-300% + formation cocaéthylène (cardiotoxicité × 18-25)",
+          "timing": "co-consommation = entité métabolique distincte",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "avec": "disulfirame (essais addictologie)",
+          "mecanisme": "inhibition dopamine-β-hydroxylase (DBH)",
+          "effet": "↑ dopamine synaptique, potentielle toxicité CV, mais essais cliniques en cours pour traitement TUS cocaïne",
+          "timing": "surveillance étroite ; usage thérapeutique expérimental",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "β-bloqueurs non sélectifs (propranolol)",
+          "mecanisme": "blocage β-adrénergique sans effet sur α → α-stimulation non opposée",
+          "effet": "vasoconstriction coronaire majorée, risque infarctus",
+          "timing": "CI relative en intoxication aiguë cocaïne ; préférer benzodiazépines + nitrés",
+          "preuve": "CAS",
+          "source": "StatPearls:Cocaine"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO, opioïdes sérotoninergiques",
+          "mecanisme": "addition sérotoninergique",
+          "effet": "syndrome sérotoninergique",
+          "timing": "CI IMAO ; surveillance ISRS",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "MDMA, méthamphétamine, autres stimulants",
+          "mecanisme": "addition sympathomimétique",
+          "effet": "crise hypertensive, arythmie, ischémie myocardique",
+          "timing": "polyconsommation chemsex — alerte USCA",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "HTA", "tachycardie", "ischémie-myocardique", "AVC", "hyperthermie", "hépatotox-massive", "rhabdomyolyse", "seuil-ep", "perforation-septum-nasal", "dépendance-documented"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["StatPearls:Cocaine", "PMID:11933066", "Mise_à_jour_référentiel", "PMID:28087982"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "inducteur"]
+    },
+    {
+      "id": "pst_cocaethylene",
+      "nom_dci": "Cocaéthylène (cocaïne + alcool)",
+      "synonymes": ["cocaethylene", "cocaïne+éthanol", "ethylcocaïne", "ethyl benzoylecgonine"],
+      "classe": "Psychostimulant illicite (entité 2/3 — métabolite généré in vivo par interaction cocaïne+alcool)",
+      "statut_fr": "Non classé en propre (entité de co-consommation cocaïne+alcool)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "CES1",
+          "alias": "carboxylestérase 1 (transestérification — voie de formation)",
+          "rang": "majeur (formation in vivo)",
+          "produit": "ecgonine éthyl ester + benzoyl-éthyl-ecgonine via hydrolyses ultérieures",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "enzyme": "BChE plasmatique",
+          "rang": "mineur",
+          "produit": "ecgonine éthyl ester",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "DAT",
+          "puissance": "forte (affinité supérieure à cocaïne)",
+          "mecanisme": "inhibition recapture dopamine — euphorie plus intense",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "cible": "canaux sodiques cardiaques",
+          "puissance": "forte (blocage prolongé > cocaïne)",
+          "mecanisme": "anesthésique local — arythmies fatales",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "cocaéthylène lui-même est le métabolite actif cardiotoxique",
+        "activite_relative": "ACTIF — affinité DAT supérieure à cocaïne ; t1/2 doublée (120-150 min vs 60-90 min cocaïne) → effet prolongé 50-100%",
+        "demi_vie_h": 2.25
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CES1",
+          "variants": "G143E",
+          "phenotype": "PM CES1",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs G143E : ↓ formation cocaéthylène par transestérification, mais ↑ accumulation cocaïne parent. Effet net controversé.",
+          "zone_grise": true,
+          "source": "PMID:28087982"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "co-consommation cocaïne + alcool (mécanisme de formation)",
+          "mecanisme": "éthanol détourne CES1 hépatique de l'hydrolyse vers la transestérification — éthanol agit aussi comme inhibiteur de la voie hydrolytique",
+          "effet": "1) ↑ exposition cocaïne inchangée 20-300% selon voie ; 2) formation cocaéthylène cardiotoxique ; 3) cardiotoxicité majorée (mort subite × 18-25 vs cocaïne seule) ; 4) dépression contractilité myocardique additive",
+          "timing": "alerte USCA majeure — éducation patients sur risque polyconsommation",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        },
+        {
+          "avec": "β-bloqueurs non sélectifs",
+          "mecanisme": "α-stimulation non opposée + blocage canaux Na cardiaques",
+          "effet": "↑↑ risque IDM, arythmie",
+          "timing": "CI relative",
+          "preuve": "CAS",
+          "source": "StatPearls:Cocaine"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "myocardite", "infarctus", "arythmie-fatale", "mort-subite-x18-25-vs-cocaïne", "AVC-hémorragique", "hépatotox", "hyperthermie"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:11933066", "Rapport HUG 2020 extension", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "pst_crack_aeme",
+      "nom_dci": "Crack — AEME (anhydroecgonine méthyl ester)",
+      "synonymes": ["crack", "cocaïne base libre", "freebase", "AEME", "méthylécgonidine"],
+      "classe": "Psychostimulant illicite (entité 3/3 — cocaïne fumée + métabolite pyrolytique)",
+      "statut_fr": "Stupéfiants",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "voie thermique pyrolytique non-enzymatique",
+          "alias": "pyrolyse de la cocaïne base à >180°C",
+          "rang": "majeur (formation AEME au tirage)",
+          "produit": "AEME (anhydroecgonine méthyl ester) + anhydroecgonine (AE) — biomarqueurs spécifiques cocaïne fumée (t1/2 AEME ~30-60 min)",
+          "preuve": "IVH-C",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "enzyme": "CES1/CES2/BChE (cf. cocaïne seule pour la fraction non pyrolysée)",
+          "rang": "majeur (cocaïne parent absorbée pulmonaire)",
+          "produit": "voies cocaïne classiques",
+          "preuve": "IVH-C",
+          "source": "PMID:11933066"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "récepteurs muscariniques M1, M2 (pharmacodynamique AEME)",
+          "puissance": "agoniste partiel M1/M2 + antagoniste M3/M4/M5",
+          "mecanisme": "particularité AEME — effet pulmonaire direct via stimulation muscarinique",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "AEME (anhydroecgonine méthyl ester)",
+        "activite_relative": "ACTIF MUSCARINIQUE — agoniste M1/M2 → bronchospasme, altération synthèse mélatonine ; biomarqueur exclusif cocaïne fumée",
+        "demi_vie_h": 0.75
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool (co-consommation crack + alcool)",
+          "mecanisme": "transestérification CES1 — formation cocaéthylène à partir de la fraction cocaïne non pyrolysée",
+          "effet": "cardiotoxicité additive cocaéthylène + bronchospasme AEME",
+          "timing": "alerte USCA",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "asthme, BPCO",
+          "mecanisme": "bronchospasme muscarinique AEME",
+          "effet": "« crack lung » — toux, dyspnée, infiltrats pulmonaires, hémoptysies, bronchospasme aigu",
+          "timing": "tableau clinique distinctif vs cocaïne IV",
+          "preuve": "CAS",
+          "source": "StatPearls:Cocaine"
+        },
+        {
+          "avec": "anticholinergiques (cf. ACB-3 hydroxyzine, cyamémazine, ADT)",
+          "mecanisme": "antagonisme partiel des effets muscariniques AEME",
+          "effet": "interaction théorique — peu documentée cliniquement",
+          "timing": "—",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope (zone grise)"
+        }
+      ],
+      "alertes_pd": ["bronchospasme-crack-lung", "QT-CR", "HTA", "tachycardie", "ischémie-myocardique-élevée-vs-cocaïne-IV", "hyperthermie", "rhabdomyolyse", "seuil-ep", "dépendance-documented-rapide", "perturbation-mélatonine-circadienne"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "StatPearls:Cocaine", "PMID:11933066"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "opi_heroine",
+      "nom_dci": "Héroïne (diacétylmorphine)",
+      "synonymes": ["héroïne", "diacétylmorphine", "diamorphine", "héro", "smack", "brown sugar"],
+      "classe": "Opioïde illicite (promédicament rapide)",
+      "statut_fr": "Stupéfiants (interdiction totale en France ; diamorphine pharmaceutique disponible UK pour TSO/douleurs sévères)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "BChE plasmatique",
+          "alias": "butyrylcholinestérase",
+          "rang": "majeur (1ère étape — déacétylation rapide)",
+          "produit": "6-monoacétylmorphine (6-MAM, métabolite actif principal — cf. fiche dédiée)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "enzyme": "CES1, CES2",
+          "rang": "mineur (étape 2 — 6-MAM → morphine)",
+          "produit": "morphine (via hydrolyse complète)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-morphine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "6-MAM (6-monoacétylmorphine) puis morphine puis M6G",
+        "activite_relative": "héroïne parent = inactive ou faiblement active ; 6-MAM = métabolite actif principal (passe BHE rapide, t1/2 30 min) → morphine (analgésique standard) → M6G (actif μ-opioïde)",
+        "demi_vie_h": 0.05
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "BChE",
+          "variants": "K-variant, atypique",
+          "phenotype": "déficient BChE",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — déficit BChE → ↓ formation 6-MAM → ↓ effet euphorique IV ; mais accumulation héroïne parent. Effets cliniques peu documentés.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "BZD, alcool, GHB, autres dépresseurs SNC",
+          "mecanisme": "dépression respiratoire additive synergique",
+          "effet": "overdose mortelle — combinaison la plus létale en USCA. Naloxone répétée souvent nécessaire",
+          "timing": "alerte critique : éducation overdose + distribution naloxone",
+          "preuve": "FOR",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "naloxone",
+          "mecanisme": "antagonisme μ compétitif",
+          "effet": "réversion rapide — dose 0.4-2 mg IV/IM/IN, répétable",
+          "timing": "1ère ligne overdose ; t1/2 naloxone < 6-MAM/morphine → risque re-narcose, surveillance prolongée",
+          "preuve": "IVH-C",
+          "source": "FDA:label-naloxone"
+        },
+        {
+          "avec": "TSO (méthadone, buprénorphine)",
+          "mecanisme": "compétition récepteurs μ",
+          "effet": "buprénorphine peut précipiter sevrage si héroïne récente (agoniste partiel) ; méthadone bloque effet euphorique héroïne",
+          "timing": "induction TSO selon protocole — buprénorphine après COWS ≥12 ou ≥6h dernière prise héroïne courte action",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-suboxone"
+        },
+        {
+          "avec": "naltrexone",
+          "mecanisme": "antagonisme μ pur",
+          "effet": "sevrage précipité sévère si héroïne dans les 7-10 jours",
+          "timing": "délai 7-10 jours obligatoire avant induction naltrexone",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "fentanyl, nitazènes, xylazine (adultération marché illicite)",
+          "mecanisme": "polysubstance illicite — héroïne souvent contaminée",
+          "effet": "puissance imprévisible (nitazènes >>> fentanyl >>> héroïne pure), résistance naloxone documentée nitazènes",
+          "timing": "alerte ALD/ELSA — drug checking, naloxone HD",
+          "preuve": "FOR",
+          "source": "EMCDDA:NPS-opioides-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "miose", "sédation", "constipation", "dépendance-mu-opioide", "syndrome-sevrage-aigu", "infections-IV-VIH-VHC", "abcès-injections"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Mise_à_jour_référentiel", "FDA:boxed-warning-opioids-BZD-2016", "EMCDDA:NPS-opioides-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "opi_6_mam",
+      "nom_dci": "6-MAM (6-monoacétylmorphine)",
+      "synonymes": ["6-monoacétylmorphine", "6-MAM", "MAM", "monoacétylmorphine"],
+      "classe": "Métabolite actif principal de l'héroïne (entité distincte — biomarqueur forensique exclusif)",
+      "statut_fr": "Non classé en propre (formé in vivo après prise d'héroïne)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "CES1, CES2",
+          "rang": "majeur",
+          "produit": "morphine (déacétylation complète)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur (sur la morphine formée)",
+          "produit": "M3G (inactif) + M6G (actif μ-opioïde)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat — efflux BHE",
+          "preuve": "IVH-O",
+          "source": "FDA:label-morphine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "6-MAM lui-même + morphine + M6G",
+        "activite_relative": "6-MAM = lipophile +++ → passe BHE 100× plus vite que morphine → responsable du « rush » héroïne IV. Affinité μ comparable morphine. Morphine + M6G assurent l'effet prolongé",
+        "demi_vie_h": 0.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "UGT2B7",
+          "variants": "*2 (T802C, H268Y)",
+          "phenotype": "variants fonctionnels",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. Variabilité formation M6G ~20-30% Europe.",
+          "zone_grise": true,
+          "source": "Mise_à_jour_référentiel"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "détection forensique",
+          "mecanisme": "biomarqueur exclusif héroïne (pas formé par morphine pharmaceutique)",
+          "effet": "détection 6-MAM urinaire = prise héroïne récente (<8h) ; t1/2 court → fenêtre détection courte",
+          "timing": "intérêt expertise médico-légale + USCA",
+          "preuve": "FOR",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "interactions héroïne (cf. fiche héroïne)",
+          "mecanisme": "—",
+          "effet": "voir interactions héroïne (BZD, alcool, naloxone, TSO, naltrexone, fentanyl/nitazènes/xylazine)",
+          "timing": "—",
+          "preuve": "—",
+          "source": "voir fiche opi_heroine"
+        }
+      ],
+      "alertes_pd": ["resp", "rush-IV-rapide", "dépendance-mu-opioide"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Mise_à_jour_référentiel"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "ent_mdma",
+      "nom_dci": "MDMA (3,4-méthylènedioxyméthamphétamine)",
+      "synonymes": ["MDMA", "ecstasy", "XTC", "molly", "Mandy", "Adam"],
+      "classe": "Entactogène / phénéthylamine (libérateur 5-HT/DA/NA)",
+      "statut_fr": "Stupéfiants (essais thérapeutiques PTSD MAPS/MDMA-AT en cours mondialement)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "HHMA (3,4-dihydroxyméthamphétamine) via O-déméthylénation",
+          "preuve": "IVH-C",
+          "source": "PMID:18794647"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "mineur",
+          "produit": "MDA (3,4-méthylènedioxyamphétamine, actif)",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "MDA + HMMA",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "MDA",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "MAO-A",
+          "alias": "monoamine oxydase A",
+          "rang": "mineur (dégradation aval)",
+          "produit": "—",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "COMT",
+          "alias": "catéchol-O-méthyltransférase",
+          "rang": "majeur (sur HHMA)",
+          "produit": "HMMA (4-hydroxy-3-méthoxyméthamphétamine, métabolite urinaire majoritaire)",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "enzyme": "UGT (sur métabolites catéchols)",
+          "rang": "mineur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "métaboscope GPT 2"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "MBI puissant (mechanism-based inhibition irréversible)",
+          "mecanisme": "MBI mécanisme-dépendant : O-déméthylénation par CYP2D6 produit un complexe métabolique intermédiaire qui se lie de manière quasi-irréversible au fer héminique — INACTIVE l'enzyme. Phénocopie PM transitoire (>90% inhibition en heures). Récupération via synthèse de novo seulement (pas via élimination MDMA). t1/2 récupération CYP2D6 = 46-51h. Retour 90% activité basale = 10 jours.",
+          "preuve": "IVH-C",
+          "source": "PMID:18794647"
+        },
+        {
+          "cible": "SERT, NET, DAT",
+          "puissance": "forte (effet pharmacodynamique principal — libérateur monoamines)",
+          "mecanisme": "effet libérateur sérotonine principalement, dopamine et noradrénaline",
+          "preuve": "IVH-C",
+          "source": "StatPearls:MDMA"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "MDA (3,4-méthylènedioxyamphétamine)",
+        "activite_relative": "MDA actif (entactogène moindre, plus stimulant amphétaminique). HMMA = métabolite urinaire majoritaire mais inactif",
+        "demi_vie_h": 8
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — PM ont une exposition MDMA ↑ initialement, mais l'effet de la MBI annule rapidement la différence entre PM et NM dès la 2ème prise rapprochée. Pas de guideline CPIC. Risque toxicité CV/sérotoninergique majoré chez PM uniquement à la 1ère prise.",
+          "zone_grise": true,
+          "source": "PMID:22144942 (Frontiers in Genetics)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "**FENÊTRE CYP2D6 — 10 JOURS POST-MDMA** : substrats CYP2D6 (codéine, tramadol, oxycodone, métoprolol, propranolol, venlafaxine, fluoxétine, paroxétine, ADT, atomoxétine, dextrométhorphane)",
+          "mecanisme": "MBI persistante CYP2D6 — phénocopiage PM transitoire de 10 jours minimum",
+          "effet": "1) codéine/tramadol = INEFFICACITÉ ANALGÉSIQUE (pas de bioactivation en morphine/M1) ; 2) substrats parents (venlafaxine, ADT, métoprolol) = ↑↑ exposition, risque toxicité ; 3) tests pharmacogénétiques CYP2D6 caducs pendant 10 jours",
+          "timing": "**alerte critique chemsex/USCA** : reporter substrats CYP2D6 ≥10 jours après dernière prise MDMA. Documenter consommation MDMA dans dossier patient.",
+          "preuve": "IVH-C",
+          "source": "PMID:18794647"
+        },
+        {
+          "avec": "ISRS, IRSNa, IMAO, linézolide, triptans, opioïdes sérotoninergiques (tramadol, fentanyl, péthidine)",
+          "mecanisme": "addition sérotoninergique massive (MDMA = libérateur 5-HT)",
+          "effet": "syndrome sérotoninergique sévère — décès documentés en chemsex",
+          "timing": "CI absolue IMAO ; éviter ISRS+MDMA ; alerter chemsex",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "ISRS chronique préventif (idée populaire de protection)",
+          "mecanisme": "ISRS bloque SERT → MDMA ne peut plus libérer 5-HT",
+          "effet": "↓ effet recherché MDMA (idée fausse de protection : non sécurisé) + risque sérotoninergique persistant",
+          "timing": "alerte usagers : pas de protection efficace ISRS",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "ritonavir, clarithromycine, fluoxétine, paroxétine (inhibiteurs CYP2D6/3A4)",
+          "mecanisme": "inhibition combinée des voies d'élimination MDMA",
+          "effet": "↑↑ exposition MDMA → toxicité CV, hyperthermie, syndrome sérotoninergique",
+          "timing": "alerte spécifique chemsex VIH (PrEP/Truvada+ritonavir)",
+          "preuve": "CAS",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "alcool",
+          "mecanisme": "potentialisation hyperthermique + déshydratation",
+          "effet": "↑ risque hyperthermie maligne, rhabdomyolyse, IRA",
+          "timing": "alerte rave/festivals — hydratation contrôlée",
+          "preuve": "IVH-O",
+          "source": "StatPearls:MDMA"
+        }
+      ],
+      "alertes_pd": ["sero", "hyperthermie-maligne", "rhabdomyolyse", "IRA", "hyponatrémie-SIADH", "QT-CR", "HTA", "hépatotox", "phénocopie-CYP2D6-10j", "neurotoxicité-5HT-chronique"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:18794647", "Rapport HUG 2020 extension", "PMID:22144942", "StatPearls:MDMA"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inducteur"]
+    },
+    {
+      "id": "can_thc",
+      "nom_dci": "Δ9-THC (delta-9-tétrahydrocannabinol)",
+      "synonymes": ["THC", "Δ9-THC", "delta-9-THC", "tetrahydrocannabinol", "dronabinol (forme pharmaceutique)", "Marinol"],
+      "classe": "Cannabinoïde phytocannabinoïde (psychoactif principal du cannabis)",
+      "statut_fr": "Stupéfiants (cannabis classé ; dronabinol/Marinol disponible en ATU spécifique pour douleurs/spasticité)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "majeur",
+          "produit": "11-hydroxy-Δ9-THC (11-OH-THC, ACTIF — équipuissant ou plus puissant que THC parent)",
+          "preuve": "IVH-C",
+          "source": "PMID:17141642"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "11-OH-THC + autres hydroxylations",
+          "preuve": "IVH-C",
+          "source": "PMID:17141642"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A9, UGT2B7",
+          "rang": "majeur",
+          "produit": "11-nor-9-carboxy-Δ9-THC-glucuronide (THCCOOH-glucuronide, biomarqueur urinaire t1/2 long ~3-30j chez consommateur chronique)",
+          "preuve": "IVH-C",
+          "source": "PMID:17141642"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2C9, CYP3A4",
+          "puissance": "weak-moderate",
+          "mecanisme": "inhibition compétitive (in vitro à concentrations élevées)",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "11-OH-THC (11-hydroxy-Δ9-THC)",
+        "activite_relative": "métabolite ACTIF — équipuissant ou supérieur au THC parent au récepteur CB1. Important en consommation orale (cannabis edibles) où le ratio 11-OH-THC/THC est ↑ vs inhalation",
+        "demi_vie_h": 25
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C9",
+          "variants": "*3 (I359L, PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs *3/*3 : ↑ exposition THC ~3× et ↑ effets psychoactifs documentés. Pas de guideline CPIC. Variant rare en Europe (~3%).",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "CBD (cannabidiol)",
+          "mecanisme": "CBD inhibe CYP2C9 et CYP3A4 → ↓ formation 11-OH-THC mais ↑ THC parent",
+          "effet": "modulation du profil PK ; effet net sur effets psychoactifs débattu",
+          "timing": "ratios THC:CBD pertinents en clinique",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "warfarine",
+          "mecanisme": "inhibition CYP2C9 par THC (↓ clairance warfarine S)",
+          "effet": "↑ INR documenté, cas saignements",
+          "timing": "surveillance INR si consommation cannabis",
+          "preuve": "CAS",
+          "source": "Littérature PK"
+        },
+        {
+          "avec": "kétoconazole, ritonavir, clarithromycine",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition THC ; pertinent chez patients VIH+ avec usage récréatif",
+          "timing": "information patient",
+          "preuve": "IVH-O",
+          "source": "Littérature PK"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, millepertuis",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ exposition THC",
+          "timing": "—",
+          "preuve": "IVH-O",
+          "source": "Littérature PK"
+        },
+        {
+          "avec": "antipsychotiques",
+          "mecanisme": "antagonisme PD — CB1 vs D2",
+          "effet": "exacerbation psychose chez vulnérables ; déclencheur trouble psychotique",
+          "timing": "alerte clinique majeure adolescent/jeune adulte",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "alcool, BZD, opioïdes",
+          "mecanisme": "additivité sédative + cognitive",
+          "effet": "potentialisation effets dépresseurs SNC",
+          "timing": "information patient",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["psychose-vulnérable", "tachycardie", "hyperémèse-cannabique", "trouble-cognitif-développement-cerveau-adolescent", "dépendance-modérée", "syndrome-amotivationnel", "fœtotoxicité-grossesse"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:17141642", "FDA:label-epidiolex", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": []
+    },
+    {
+      "id": "can_cbd",
+      "nom_dci": "Cannabidiol (CBD)",
+      "synonymes": ["CBD", "cannabidiol", "Epidiolex", "Epidyolex"],
+      "classe": "Cannabinoïde phytocannabinoïde (non psychoactif au sens classique)",
+      "statut_fr": "Médicament (Epidyolex AMM épilepsies réfractaires Dravet/Lennox-Gastaut/sclérose tubéreuse de Bourneville) ; produits « bien-être » non réglementés (huiles, fleurs CBD <0.3% THC autorisées)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "7-hydroxy-CBD (actif modeste) puis 7-COOH-CBD (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "7-OH-CBD",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A7, UGT1A9, UGT2B7",
+          "rang": "majeur",
+          "produit": "CBD-glucuronides + métabolites glucuronoconjugués",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "le 7-COOH-CBD est substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "transporteur": "BCRP, BSEP",
+          "role": "inhibé par 7-COOH-CBD",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2C19",
+          "puissance": "moderate-strong",
+          "mecanisme": "inhibition compétitive — pertinent clinique majeur",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "moderate",
+          "mecanisme": "inhibition compétitive",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "cible": "CYP2C8, CYP1A2, CYP2B6",
+          "puissance": "moderate",
+          "mecanisme": "inhibition compétitive",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "cible": "UGT1A9, UGT2B7",
+          "puissance": "moderate",
+          "mecanisme": "inhibition compétitive",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "inducteur": [
+        {
+          "cible": "CYP2B6",
+          "puissance": "weak-moderate (effet bidirectionnel selon dose)",
+          "mecanisme": "induction concentration-dépendante",
+          "preuve": "IVT",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "7-OH-CBD",
+        "activite_relative": "actif modeste, AUC inférieure à CBD parent",
+        "demi_vie_h": 18
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "**CLOBAZAM** (substrat CYP2C19)",
+          "mecanisme": "inhibition CYP2C19 par CBD → ↑↑ N-desméthylclobazam (norclobazam, métabolite actif t1/2 42h)",
+          "effet": "↑ AUC norclobazam ×3 documenté en essais Dravet/Lennox-Gastaut → sédation excessive",
+          "timing": "**réduire dose clobazam 25-50% à l'introduction du CBD** ; surveillance sédation",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "warfarine, AVK",
+          "mecanisme": "inhibition CYP2C9",
+          "effet": "↑ INR documenté",
+          "timing": "surveillance INR rapprochée à l'introduction CBD",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "valproate",
+          "mecanisme": "mécanisme pharmacodynamique hépatique (pas PK)",
+          "effet": "hépatotoxicité additive — élévation transaminases dans essais cliniques (~20% patients)",
+          "timing": "surveillance ASAT/ALAT mensuelle initiale",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "tacrolimus, everolimus, ciclosporine (substrats CYP3A4)",
+          "mecanisme": "inhibition CYP3A4 par CBD",
+          "effet": "↑ exposition (everolimus AUC ×2.5)",
+          "timing": "surveillance taux résiduels + ajustement dose",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "rifampicine (inducteur CYP3A4/CYP2C19)",
+          "mecanisme": "induction des voies CBD",
+          "effet": "↓ AUC CBD ~30%",
+          "timing": "augmenter dose CBD",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "ISRS substrats CYP2C19 (citalopram, escitalopram, sertraline)",
+          "mecanisme": "inhibition CYP2C19",
+          "effet": "↑ exposition ISRS — risque QT (citalopram), syndrome sérotoninergique",
+          "timing": "surveillance ; réduire dose si nécessaire",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "caféine",
+          "mecanisme": "inhibition CYP1A2",
+          "effet": "↑ caféinémie",
+          "timing": "limiter caféine en cas Epidiolex haute dose",
+          "preuve": "IVH-O",
+          "source": "FDA:label-epidiolex"
+        }
+      ],
+      "alertes_pd": ["hepatotox-additif-valproate", "sédation-additive", "diarrhée"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-epidiolex", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["pharmacogenetique"]
+    },
+    {
+      "id": "can_cbn",
+      "nom_dci": "Cannabinol (CBN)",
+      "synonymes": ["CBN", "cannabinol"],
+      "classe": "Cannabinoïde phytocannabinoïde (produit de dégradation oxydative du THC)",
+      "statut_fr": "Stupéfiant (CBN exclu de la liste des stupéfiants depuis l'arrêté du 30/12/2021 — CBNA inscrit en juin 2024)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C9",
+          "rang": "majeur",
+          "produit": "11-OH-CBN + autres hydroxylations",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT (analogie THC)",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "AN",
+          "source": "Littérature PK"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "CBN = agoniste partiel CB1 faible (~10% activité THC) ; effet sédatif documenté",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "produits cannabis vieilli ou mal stocké",
+          "mecanisme": "CBN = produit d'oxydation du THC — concentration ↑ avec âge du cannabis",
+          "effet": "produits ‘bien-être’ avec CBN dominant → effets sédatifs imprévus",
+          "timing": "information patient",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "alertes_pd": ["sédation", "tachycardie"],
+      "niveau_preuve_global": "IVT",
+      "sources_principales": ["Littérature PK", "ANSM:arrêté-30-12-2021"],
+      "zone_grise": true,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aut_nicotine_pure",
+      "nom_dci": "Nicotine (substituts nicotiniques — TSN)",
+      "synonymes": ["nicotine", "Nicorette", "Nicopatch", "Niquitin", "Nicopass", "Nicotinell", "TSN"],
+      "classe": "Aide au sevrage tabagique (substituts nicotiniques) — entité distincte du tabac fumé",
+      "statut_fr": "Non classé (substituts nicotiniques OTC pharmacie, remboursables sur prescription)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2A6",
+          "rang": "majeur (~80%)",
+          "produit": "cotinine (inactive, biomarqueur de l'exposition à la nicotine)",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "cotinine",
+          "preuve": "IVT",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "FMO3",
+          "alias": "flavin-containing monooxygenase 3",
+          "rang": "mineur",
+          "produit": "nicotine-N'-oxyde",
+          "preuve": "IVT",
+          "source": "Littérature PK"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT2B10",
+          "rang": "majeur (sur cotinine et nicotine)",
+          "produit": "nicotine-N-glucuronide + cotinine-N-glucuronide",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "cotinine inactive pharmacologiquement ; biomarqueur de l'exposition (t1/2 ~16h vs nicotine 2h)",
+        "demi_vie_h": 2
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2A6",
+          "variants": "*2, *4, *9, *12, *17 (PM 1-5% Europe)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — guideline CPIC en cours. Métaboliseurs lents fument moins, dépendance moindre, meilleur succès sevrage. Impact varénicline et TSN étudié sans recommandation finale.",
+          "zone_grise": true,
+          "source": "CPIC:CYP2A6-en-cours"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "**IMPORTANT — distinction TSN vs tabac fumé**",
+          "mecanisme": "les substituts nicotiniques (gommes, patchs, inhaleurs, sprays) délivrent de la NICOTINE PURE — PAS de HAP de combustion",
+          "effet": "**les TSN n'induisent PAS le CYP1A2** (contrairement au tabac fumé). Donc à l'arrêt du tabac avec TSN, la déinduction CYP1A2 se produit quand même → ×2 clozapine/olanzapine",
+          "timing": "alerte critique : ne pas considérer TSN comme « équivalent tabac » pour les interactions PK",
+          "preuve": "IVH-C",
+          "source": "métaboscope GPT 1 sur 4"
+        },
+        {
+          "avec": "varénicline (Champix), bupropion",
+          "mecanisme": "co-thérapie sevrage tabagique",
+          "effet": "synergie thérapeutique pour arrêt tabac",
+          "timing": "associations parfois utilisées en sevrage difficile",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-champix"
+        },
+        {
+          "avec": "β-bloqueurs",
+          "mecanisme": "antagonisme PD adrénergique",
+          "effet": "atténuation effet stimulant nicotine",
+          "timing": "—",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 1 sur 4"
+        }
+      ],
+      "alertes_pd": ["HTA", "tachycardie", "vasoconstriction", "dépendance-documented", "fœtotoxicité-grossesse"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Mise_à_jour_référentiel", "Gemini DR 2", "ANSM:RCP-nicotine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "aut_tabac_fume",
+      "nom_dci": "Tabac fumé (cigarette, cigare, pipe, narguilé)",
+      "synonymes": ["tabagisme", "smoking", "cigarette", "tabac à fumer", "HAP", "hydrocarbures aromatiques polycycliques"],
+      "classe": "Drogue licite — fumée de combustion (entité distincte des TSN)",
+      "statut_fr": "Réglementé (>18 ans, lieux publics interdits, fiscalité spécifique)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [
+        {
+          "cible": "CYP1A2",
+          "puissance": "strong (induction × 1.5-2 chez fumeurs réguliers)",
+          "mecanisme": "induction transcriptionnelle via récepteur AhR par les hydrocarbures aromatiques polycycliques (HAP) de la combustion — PAS la nicotine elle-même",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "cible": "CYP1A1, CYP1B1",
+          "puissance": "strong",
+          "mecanisme": "induction AhR par HAP",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "cible": "CYP2E1",
+          "puissance": "weak-moderate",
+          "mecanisme": "induction modeste",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "cible": "UGT1A1, UGT1A6, UGT1A9",
+          "puissance": "weak",
+          "mecanisme": "induction modeste UGT",
+          "preuve": "IVH-O",
+          "source": "Littérature PK"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "tabac = vecteur de combustion ; nicotine et HAP suivent leurs voies propres. CYP1A2 indique l'inducteur dominant cliniquement.",
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP1A2",
+          "variants": "*1F (rs762551)",
+          "phenotype": "inductibilité variable selon génotype",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — *1F/*1F : inductibilité maximale par tabac (clairance caféine/clozapine/olanzapine ↑↑) ; *1A : inductibilité moindre. Pas de guideline CPIC.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "**CLOZAPINE, OLANZAPINE** (substrats CYP1A2)",
+          "mecanisme": "induction CYP1A2 par HAP — fumeurs nécessitent doses 25-50% supérieures",
+          "effet": "**à l'arrêt du tabac (hospitalisation, sevrage TSN, vape) : déinduction → ×2 concentrations clozapine/olanzapine en 5-10 jours** → toxicité (sédation, convulsions, myocardite)",
+          "timing": "**alerte critique USCA hospitalisation** : surveillance taux plasmatiques + réduction dose 30-50% à l'arrêt tabac. Si arrêt simultané alcool+tabac : effet additif",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "duloxétine, théophylline, mexiletine, propranolol, fluvoxamine, mirtazapine, agomélatine, ramelteon, ropinirole, ondansétron, frovatriptan (substrats CYP1A2)",
+          "mecanisme": "induction CYP1A2",
+          "effet": "↓ exposition substrats chez fumeurs ; rebond à l'arrêt",
+          "timing": "ajustement dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "caféine",
+          "mecanisme": "induction CYP1A2",
+          "effet": "fumeurs : clairance caféine ↑ ×1.5-2 ; à l'arrêt → rebond exposition (anxiété, palpitations) → recommander réduction caféine pendant sevrage tabagique",
+          "timing": "alerte sevrage tabagique",
+          "preuve": "IVH-C",
+          "source": "PMID:8809871"
+        },
+        {
+          "avec": "contraceptifs oraux œstroprogestatifs (>35 ans + tabac)",
+          "mecanisme": "additivité thrombogène + induction métabolisme œstrogènes (légère)",
+          "effet": "↑↑ risque thromboembolique veineux et artériel (IDM, AVC)",
+          "timing": "CI relative pilule œstroprogestative chez fumeuse >35 ans",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-CO-œstroprogestatifs"
+        }
+      ],
+      "alertes_pd": ["cancer-poumon-VADS-vessie", "BPCO", "athérosclérose", "thrombose-veineuse-artérielle", "fœtotoxicité-grossesse", "dépendance-documented", "induction-CYP1A2-réversible-arrêt"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["Mise_à_jour_référentiel", "PMID:8809871", "ANSM:thesaurus-2024"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur"]
+    }
+  ]
+}

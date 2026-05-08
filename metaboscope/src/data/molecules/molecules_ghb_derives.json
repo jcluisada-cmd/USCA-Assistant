@@ -1,0 +1,392 @@
+{
+  "metadata": {
+    "fichier": "molecules_ghb_derives.json",
+    "session": 9,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 4,
+    "classes_couvertes": ["Drogue récréative endogène", "Précurseur GHB", "Médicament narcolepsie/sevrage alcool"],
+    "note_methodologique": "Session 9 MétaboScope. Verrous critiques : (1) PK SATURABLE non-linéaire — dose ×2 → concentration plasmatique ×3,7 (Gemini DR 4 / FDA Xyrem) ; (2) GHB partage les voies ADH/ALDH avec ÉTHANOL → saturation cinétique commune = synergie respiratoire fatale documentée ; (3) GBL = prodrogue convertie par lactonase plasmatique (paraoxonase 1, PON1) — polymorphismes PON1 modulent vitesse conversion ; (4) 1,4-BD = prodrogue convertie via ADH+ALDH plus lentement que GBL → pic décalé, compétition éthanol prolonge toxicité ; (5) sevrage GHB = urgence neurologique analogue sevrage alcoolique/BZD (BZD haute dose première ligne, baclofène en relais, parfois propofol/dexmédétomidine en réa) ; (6) GHB = vecteur soumission chimique (chemsex) — fenêtre détection biologique courte (sang <8h, urines <12h) ; (7) Oxybate Na pharmaceutique (Xyrem/Xywav) charge sodée importante à intégrer en HTA/IC."
+  },
+  "molecules": [
+    {
+      "id": "ghb_ghb",
+      "nom_dci": "GHB (γ-hydroxybutyrate)",
+      "synonymes": ["GHB", "gamma-hydroxybutyrate", "acide gamma-hydroxybutyrique", "γ-OH", "liquid ecstasy", "Géhèbe", "G", "soap"],
+      "classe": "Drogue récréative endogène (composé endogène cérébral à très basse concentration ; psychoactif à dose exogène)",
+      "statut_fr": "Stupéfiants (depuis arrêté 1999 en France ; décret modifiant chaque inscription d'analogues)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "GHB déshydrogénase (cytosolique) — variante de l'ADH",
+          "alias": "GHBDH",
+          "rang": "majeur",
+          "produit": "semi-aldéhyde succinique (SSA)",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "enzyme": "SSADH",
+          "alias": "succinate semi-aldéhyde déshydrogénase mitochondriale (ALDH5A1)",
+          "rang": "majeur (étape 2 — détoxification)",
+          "produit": "acide succinique → cycle de Krebs",
+          "preuve": "IVH-C",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "enzyme": "ADH (alcool déshydrogénase cytosolique)",
+          "rang": "mineur (voie alternative — partagée avec éthanol)",
+          "produit": "SSA",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "MCT1 (monocarboxylate transporter 1, SLC16A1)",
+          "role": "substrat — absorption intestinale et passage BHE saturable",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xyrem-clinical-pharmacology"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites SSA puis succinate inactifs ; le GHB parent est l'agoniste GABA-B et GHB-récepteur. Demi-vie courte 30-60 min, mais saturation enzymatique → effets prolongés à haute dose",
+        "demi_vie_h": 0.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "ALDH5A1",
+          "variants": "déficit congénital SSADH (rare)",
+          "phenotype": "déficient SSADH",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — déficit SSADH = maladie métabolique rare (encéphalopathie GHB-acidurie). Pas de données sur exposition GHB exogène chez ces patients ; éviter par principe.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        },
+        {
+          "gene": "PON1",
+          "variants": "Q192R, L55M",
+          "phenotype": "métaboliseur lent/rapide GBL→GHB",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — PON1 polymorphismes modulent la vitesse de conversion GBL→GHB chez consommateurs de GBL. Effet net sur GHB pur : nul. Pertinence consommation GBL (cf. fiche GBL).",
+          "zone_grise": true,
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool",
+          "mecanisme": "saturation des voies ADH/ALDH partagées + synergie GABA-B (agoniste) + GABA-A (alcool) + dépression respiratoire additive",
+          "effet": "DÉCÈS PAR DÉPRESSION RESPIRATOIRE — combinaison la plus létale en chemsex (fenêtre étroite : dose euphorisante/dose comateuse ratio ~2). Saturation enzymatique commune → effets prolongés et imprévisibles",
+          "timing": "ALERTE CRITIQUE USCA/chemsex — éducation 'ne jamais boire en G', G-naps fatales documentées",
+          "preuve": "FOR",
+          "source": "PMC2766839"
+        },
+        {
+          "avec": "BZD, opioïdes, hypnotiques Z, kétamine, MDMA",
+          "mecanisme": "additivité dépression SNC",
+          "effet": "coma, dépression respiratoire — décès chemsex/slam fréquents",
+          "timing": "alerte chemsex/slam — éducation overdose + appel SAMU obligatoire",
+          "preuve": "FOR",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "naloxone",
+          "mecanisme": "GHB N'EST PAS un opioïde — naloxone INEFFICACE",
+          "effet": "absence de réversion ; ne pas perdre de temps en intoxication GHB pure (mais administrer si polyintoxication suspectée avec opioïdes)",
+          "timing": "soins symptomatiques : intubation, surveillance respiratoire ; le coma GHB se résout spontanément en 2-6h en absence de co-substance",
+          "preuve": "IVH-O",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "physostigmine (proposée historiquement comme antidote)",
+          "mecanisme": "—",
+          "effet": "INEFFICACE et risquée — ne pas utiliser malgré littérature ancienne",
+          "timing": "PROSCRIRE — recommandations actuelles favorisent soins symptomatiques",
+          "preuve": "IVH-O",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "valproate, vigabatrine (sevrage GHB)",
+          "mecanisme": "modulation GABAergique — usage clinique théorique",
+          "effet": "données limitées en sevrage GHB ; non recommandés en routine",
+          "timing": "préférer BZD haute dose (diazépam, lorazépam) ± baclofène en relais",
+          "preuve": "CAS",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "détection forensique (soumission chimique)",
+          "mecanisme": "biomarqueur exclusif difficile — GHB endogène en concentration basale + métabolisme rapide",
+          "effet": "fenêtre détection : sang ~6-8h, urines ~10-12h. Différencier endogène vs exogène : seuils >10 mg/L sang ou >10 mg/L urines suggèrent prise exogène. Cheveux : possible sur 4-6 semaines",
+          "timing": "prélèvement précoce CRITIQUE en cas de suspicion soumission chimique",
+          "preuve": "FOR",
+          "source": "ANSM:soumission-chimique-2023"
+        }
+      ],
+      "alertes_pd": ["resp", "coma", "amnésie-antérograde", "soumission-chimique", "dépendance-documented", "syndrome-sevrage-grave-analogie-alcool-BZD", "fenêtre-thérapeutique-étroite"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMC2766839", "EMCDDA:GHB-2024", "Rapport HUG 2020 extension", "ANSM:soumission-chimique-2023"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "ghb_gbl",
+      "nom_dci": "GBL (γ-butyrolactone)",
+      "synonymes": ["GBL", "gamma-butyrolactone", "1,4-butyrolactone", "butyrolactone", "BLO"],
+      "classe": "Précurseur du GHB (prodrogue rapide)",
+      "statut_fr": "Substance précurseur réglementée (vente professionnelle restreinte ; assimilé aux stupéfiants pour usage récréatif)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "PON1 (paraoxonase 1, sérum/plasma)",
+          "alias": "lactonase plasmatique",
+          "rang": "majeur (hydrolyse rapide GBL → GHB en <1 minute)",
+          "produit": "GHB",
+          "preuve": "IVH-C",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "enzyme": "lactonases hépatiques + hydrolyse spontanée plasmatique",
+          "rang": "mineur",
+          "produit": "GHB",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "GHB",
+        "activite_relative": "GHB est le métabolite actif principal — GBL elle-même est plus lipophile, passe BHE rapidement, et l'effet psychoactif découle de la conversion GBL→GHB. Pic plus rapide que GHB oral (5-15 min vs 30-45 min). Demi-vie effective gouvernée par GHB (~30-60 min)",
+        "demi_vie_h": 0.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "PON1",
+          "variants": "Q192R (rs662), L55M (rs854560)",
+          "phenotype": "lactonase rapide / lente",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs allèles 192Q + 55L : PON1 plus rapide → conversion GBL→GHB accélérée, pic GHB plus précoce et intense → ↑ risque overdose. À l'inverse, allèles 192R + 55M : conversion ralentie, accumulation GBL parent → toxicité retardée et prolongée. Pas de génotypage clinique.",
+          "zone_grise": true,
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool",
+          "mecanisme": "alcool inhibe la conversion GBL→GHB (compétition) + saturation ADH/ALDH aval pour le GHB formé",
+          "effet": "1) accumulation GBL parent (lipophile, toxique direct) ; 2) effet GHB prolongé et imprévisible ; 3) dépression respiratoire fatale fréquente",
+          "timing": "ALERTE CRITIQUE chemsex — combinaison la plus létale",
+          "preuve": "FOR",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "BZD, opioïdes, kétamine, MDMA",
+          "mecanisme": "additivité dépression SNC",
+          "effet": "coma, dépression respiratoire — décès",
+          "timing": "alerte chemsex/slam",
+          "preuve": "FOR",
+          "source": "EMCDDA:GHB-2024"
+        },
+        {
+          "avec": "détection biologique",
+          "mecanisme": "GBL très brièvement détectable (<1h) car convertie rapidement en GHB",
+          "effet": "le marqueur biologique pertinent est le GHB ; GBL parent quasi indétectable",
+          "timing": "expertise forensique : difficile de distinguer GBL vs GHB consommé",
+          "preuve": "FOR",
+          "source": "ANSM:soumission-chimique-2023"
+        }
+      ],
+      "alertes_pd": ["resp", "coma", "amnésie-antérograde", "soumission-chimique", "dépendance-documented", "syndrome-sevrage-grave", "absorption-rapide-pic-imprévisible"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["Plan_de_recherche_MetaboScope", "EMCDDA:GHB-2024", "métaboscope GPT 3"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "ghb_butanediol",
+      "nom_dci": "1,4-butanediol (1,4-BD)",
+      "synonymes": ["1,4-BD", "butanediol", "BDO", "BD", "tetramethylene glycol"],
+      "classe": "Précurseur du GHB (prodrogue lente — métabolisme hépatique)",
+      "statut_fr": "Précurseur réglementé (vente industrielle ; usage récréatif assimilé stupéfiant)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "ADH1 (alcool déshydrogénase)",
+          "rang": "majeur (étape 1)",
+          "produit": "4-hydroxybutyraldéhyde",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "enzyme": "ALDH (aldéhyde déshydrogénase)",
+          "rang": "majeur (étape 2)",
+          "produit": "GHB",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "GHB",
+        "activite_relative": "GHB = métabolite actif (psychoactif). 1,4-BD parent a une toxicité directe propre (irritant, narcotique) avant conversion. Pic GHB DÉCALÉ (~30-90 min) vs GBL (~5-15 min) car double étape enzymatique hépatique (vs hydrolyse plasmatique GBL).",
+        "demi_vie_h": 1
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "ADH1B / ALDH2",
+          "variants": "*2 (cf. fiche alcool)",
+          "phenotype": "—",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — variants ADH/ALDH affectent vitesse conversion 1,4-BD→GHB. Polymorphismes asiatiques (ALDH2*2) : ↓ conversion → accumulation 4-hydroxybutyraldéhyde (toxique). Pas de génotypage routine.",
+          "zone_grise": true,
+          "source": "métaboscope GPT 3"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool (compétition ADH/ALDH)",
+          "mecanisme": "éthanol = substrat préférentiel de l'ADH → BLOQUE/RETARDE la conversion 1,4-BD→GHB → accumulation 1,4-BD parent",
+          "effet": "1) toxicité 1,4-BD parent (irritant, narcose prolongée, atteinte rénale) ; 2) effet GHB retardé et prolongé ; 3) dépression respiratoire imprévisible — TABLEAU PARTICULIÈREMENT GRAVE",
+          "timing": "ALERTE chemsex : combinaison alcool + 1,4-BD plus dangereuse que alcool + GHB ou alcool + GBL",
+          "preuve": "IVH-O",
+          "source": "métaboscope GPT 3"
+        },
+        {
+          "avec": "fomépizole (4-méthylpyrazole, antidote méthanol/éthylène-glycol)",
+          "mecanisme": "fomépizole = inhibiteur ADH",
+          "effet": "BLOQUE la conversion 1,4-BD→GHB → accumulation 1,4-BD parent (théoriquement protecteur sur effet GHB mais toxicité 1,4-BD)",
+          "timing": "donnée mécanistique théorique — pas de protocole clinique validé",
+          "preuve": "AN",
+          "source": "Plan_de_recherche_MetaboScope (zone grise)"
+        },
+        {
+          "avec": "BZD, opioïdes, GHB, GBL, MDMA, kétamine",
+          "mecanisme": "additivité dépression SNC",
+          "effet": "coma, dépression respiratoire",
+          "timing": "alerte chemsex",
+          "preuve": "FOR",
+          "source": "EMCDDA:GHB-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "coma", "narcose-prolongée-1,4-BD-parent", "néphrotoxicité-rapportée", "amnésie-antérograde", "dépendance-documented", "syndrome-sevrage-grave"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["métaboscope GPT 3", "EMCDDA:GHB-2024", "Plan_de_recherche_MetaboScope"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "ghb_oxybate",
+      "nom_dci": "Oxybate de sodium (Xyrem) / oxybate mixte (Xywav)",
+      "synonymes": ["oxybate Na", "sodium oxybate", "Xyrem", "Xywav (oxybates calcium/magnésium/potassium/sodium)", "GHB pharmaceutique", "JZP-110-related"],
+      "classe": "Médicament narcolepsie (cataplexie + somnolence diurne) ± sevrage alcoolique (selon pays — non remboursé France hors narcolepsie)",
+      "statut_fr": "Stupéfiants (rétrocession hospitalière exclusive — Xyrem AMM narcolepsie avec cataplexie ≥7 ans ; Xywav pas commercialisé France)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "voies GHB endogène — GHBDH cytosolique + SSADH mitochondriale + ADH/ALDH (cf. GHB)",
+          "rang": "majeur",
+          "produit": "SSA → succinate → CO2 + H2O via cycle de Krebs",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xyrem-clinical-pharmacology"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "MCT1",
+          "role": "substrat — absorption intestinale saturable",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xyrem-clinical-pharmacology"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs (SSA puis succinate). Cinétique caractéristique : PK NON-LINÉAIRE par saturation enzymatique → dose ×2 (3g→6g) → concentration plasmatique ×3,7 documentée (FDA Xyrem clinical pharmacology review)",
+        "demi_vie_h": 0.5
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool — CONTRE-INDICATION ABSOLUE",
+          "mecanisme": "saturation cinétique commune ADH/ALDH/SSADH + synergie GABA-B/GABA-A + dépression respiratoire additive",
+          "effet": "MORT — risque coma profond, dépression respiratoire fatale documentée. Inscription FDA black-box warning",
+          "timing": "**CI ABSOLUE** — éducation patient impérative ; arrêt complet alcool requis",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xyrem-boxed-warning"
+        },
+        {
+          "avec": "autres dépresseurs SNC : BZD, hypnotiques Z, opioïdes, barbituriques, antihistaminiques sédatifs, anesthésiques généraux",
+          "mecanisme": "additivité dépression respiratoire",
+          "effet": "coma, dépression respiratoire — black-box warning",
+          "timing": "CI ou usage extrêmement prudent",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xyrem-boxed-warning"
+        },
+        {
+          "avec": "valproate (Dépakine)",
+          "mecanisme": "valproate inhibe possiblement SSADH → ↑ exposition GHB endogène (et exogène)",
+          "effet": "↑ exposition oxybate jusqu'à 25% — réduire dose 20%",
+          "timing": "ajustement posologique recommandé FDA",
+          "preuve": "IVH-O",
+          "source": "FDA:label-Xyrem-clinical-pharmacology"
+        },
+        {
+          "avec": "topiramate",
+          "mecanisme": "rapports de surdosage avec confusion et coma à doses thérapeutiques combinées",
+          "effet": "alerte CDC/FDA",
+          "timing": "prudence",
+          "preuve": "CAS",
+          "source": "FDA:label-Xyrem-clinical-pharmacology"
+        },
+        {
+          "avec": "régime hyposodé (HTA, IC, IR)",
+          "mecanisme": "Xyrem = sel de sodium — apport ~0.5 à 1.6 g sodium/jour selon dose",
+          "effet": "déséquilibre hydrosodé, aggravation HTA et IC",
+          "timing": "Xywav (sels mixtes Ca/Mg/K/Na) préférable si disponible — non commercialisé France. Surveillance TA + ionogramme",
+          "preuve": "IVH-C",
+          "source": "FDA:label-Xywav"
+        },
+        {
+          "avec": "mésusage / détournement",
+          "mecanisme": "Xyrem solution buvable ≡ GHB pur — risque détournement chemsex / soumission chimique",
+          "effet": "REMS (Risk Evaluation and Mitigation Strategy) FDA strict ; en France rétrocession hospitalière + carnet à souches",
+          "timing": "alerte addictovigilance — surveillance prescription",
+          "preuve": "IVH-O",
+          "source": "FDA:Xyrem-REMS"
+        },
+        {
+          "avec": "sevrage oxybate après usage chronique (narcolepsie)",
+          "mecanisme": "syndrome de sevrage GHB-like possible après arrêt brutal",
+          "effet": "anxiété, insomnie rebond, tremor — rare mais documenté",
+          "timing": "diminution progressive sur plusieurs semaines",
+          "preuve": "CAS",
+          "source": "FDA:label-Xyrem"
+        }
+      ],
+      "alertes_pd": ["resp", "CI-alcool-absolue", "CI-dépresseurs-SNC", "charge-sodée-Xyrem", "mésusage-documented", "REMS-strict", "sevrage-possible-arrêt-brutal"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-Xyrem-boxed-warning", "FDA:label-Xyrem-clinical-pharmacology", "FDA:label-Xywav", "ANSM:RCP-Xyrem"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    }
+  ]
+}

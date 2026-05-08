@@ -1,0 +1,1368 @@
+{
+  "_metadata": {
+    "fichier": "molecules_antipsychotiques.json",
+    "classes_incluses": ["Antipsychotique"],
+    "nombre_molecules": 18,
+    "nombre_zones_grises_molecule": 0,
+    "nombre_entrees_avec_champs_zone_grise": 3,
+    "date_consolidation": "2026-04",
+    "sources_rapports_projet": [
+      "Gemini DR 1 (Plan_de_recherche_MetaboScope_validé_.txt)",
+      "Gemini DR 2-4 (rapports consolidés)",
+      "ChatGPT P1-P3bis (4 fichiers)",
+      "Rapport d'Expertise HUG 2020 extension",
+      "Mise_à_jour_référentiel_interactions_médicamenteuses.txt",
+      "carte_des_cytochromes_2020.pdf (HUG 2020)"
+    ],
+    "arbitrages_appliques": [
+      "Antipsychotiques typiques phénothiaziniques + butyrophénones + benzamides = QT-KR (CredibleMeds) : halopéridol, chlorpromazine, cyamémazine, lévomépromazine, amisulpride, sulpiride, tiapride",
+      "Antipsychotiques atypiques = QT-PR pour la plupart (clozapine, olanzapine, rispéridone, palipéridone, quétiapine, aripiprazole, brexpiprazole, cariprazine, lurasidone)",
+      "Clozapine : CYP1A2 majeur + alerte rebond ×2 à l'arrêt simultané tabac+alcool en <10 jours (Gemini DR 1)",
+      "Cyamémazine : substrat CYP2D6+CYP1A2 ET inhibitrice CYP2D6 elle-même (Rapport HUG 2020 extension)",
+      "Alimémazine : substrat CYP2D6 + ACB-3 (phénothiazinique à forte charge ACB)",
+      "Amisulpride/sulpiride/tiapride : élimination rénale quasi exclusive + QT-KR",
+      "Palipéridone : 60% éliminée inchangée dans les urines + UGT1A1 mineur",
+      "Brexpiprazole/cariprazine : non commercialisés en France (AMM EU mais non distribués) - inclus pour veille"
+    ],
+    "schema_version": "v2_avec_champs_manquants"
+  },
+  "molecules": [
+    {
+      "id": "atp_clozapine",
+      "nom_dci": "Clozapine",
+      "synonymes": ["Leponex", "Clozaril"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "norclozapine (N-desméthylclozapine, actif)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-clozapine"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "norclozapine",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-clozapine"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-clozapine"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "trace",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-clozapine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A4",
+          "rang": "mineur",
+          "produit": "clozapine-N-glucuronide",
+          "preuve": "IVH-O",
+          "source": "StatPearls:clozapine"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-clozapine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norclozapine (N-desméthylclozapine)",
+        "activite_relative": "actif — activité partielle sur récepteurs muscariniques M1 (agoniste partiel, paradoxe anticholinergique) et contribution aux effets antipsychotiques",
+        "demi_vie_h": 15
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP1A2",
+          "variants": "*1F (induction tabac-dépendante)",
+          "phenotype": "variants fonctionnels + phénocopie tabac",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — impact tabagisme majeur mais pas de guideline CPIC. Monitorage plasmatique (niveaux cibles 350-600 ng/mL) recommandé.",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise — pas de guideline CPIC)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "tabac (arrêt brutal)",
+          "mecanisme": "déinduction CYP1A2 après arrêt des goudrons du tabac",
+          "effet": "×2 concentrations clozapine en 5-10 jours — risque toxicité (sédation, convulsions, myocardite)",
+          "timing": "surveillance renforcée + réduction dose 30-50% à l'arrêt tabac",
+          "preuve": "IVH-C",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "alcool chronique (arrêt simultané avec tabac)",
+          "mecanisme": "déinduction CYP1A2 additive (alcool chronique est inducteur modéré)",
+          "effet": "×2 concentrations clozapine en <10 jours à l'arrêt simultané tabac+alcool — signal d'alerte spécifique USCA",
+          "timing": "surveillance clinique + monitorage taux plasmatiques en hospitalisation",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 1"
+        },
+        {
+          "avec": "fluvoxamine",
+          "mecanisme": "inhibition CYP1A2 puissante",
+          "effet": "×5-10 clozapine — risque toxicité majeure",
+          "timing": "CI ou usage thérapeutique dédié avec monitorage strict",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "caféine",
+          "mecanisme": "compétition CYP1A2",
+          "effet": "↑ modéré concentrations clozapine",
+          "timing": "limiter consommation caféine (< 400 mg/j)",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-clozapine"
+        },
+        {
+          "avec": "ciprofloxacine, énoxacine",
+          "mecanisme": "inhibition CYP1A2",
+          "effet": "↑↑ concentrations clozapine",
+          "timing": "éviter ou réduire dose clozapine 50%",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-3", "seuil-ep", "agranulocytose", "myocardite", "sialorrhee"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-clozapine", "CredibleMeds:PR-list-2022", "StatPearls:clozapine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_olanzapine",
+      "nom_dci": "Olanzapine",
+      "synonymes": ["Zyprexa", "Zypadhera (LAI)"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "4'-N-desméthyl-olanzapine et 2-hydroxyméthyl-olanzapine (inactifs)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-olanzapine"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "trace",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-olanzapine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "FMO3",
+          "alias": "flavin-containing monooxygenase 3",
+          "rang": "mineur",
+          "produit": "olanzapine-N-oxyde",
+          "preuve": "IVT",
+          "source": "StatPearls:olanzapine"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT1A4",
+          "rang": "majeur",
+          "produit": "olanzapine-N-glucuronide (voie principale d'élimination)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-olanzapine"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-olanzapine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP1A2",
+          "variants": "*1F (induction tabac)",
+          "phenotype": "phénocopie fumeur",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — fumeurs nécessitent doses 25-50% supérieures. Arrêt tabac → surveillance + réduction dose.",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "tabac (arrêt brutal)",
+          "mecanisme": "déinduction CYP1A2",
+          "effet": "×2 concentrations olanzapine en 5-10 jours",
+          "timing": "surveillance + réduction dose 30-50% à l'arrêt tabac",
+          "preuve": "IVH-O",
+          "source": "Mise_à_jour_référentiel"
+        },
+        {
+          "avec": "fluvoxamine",
+          "mecanisme": "inhibition CYP1A2",
+          "effet": "↑ concentrations olanzapine",
+          "timing": "réduction dose 50%",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "ciprofloxacine",
+          "mecanisme": "inhibition CYP1A2",
+          "effet": "↑ concentrations olanzapine",
+          "timing": "surveillance",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-1", "metabolique-prise-poids", "diabete"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-olanzapine", "CredibleMeds:PR-list-2022", "StatPearls:olanzapine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_risperidone",
+      "nom_dci": "Rispéridone",
+      "synonymes": ["Risperdal", "Risperdal Consta (LAI)"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "9-hydroxyrispéridone (= palipéridone, actif)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-risperidone"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "9-hydroxyrispéridone",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-risperidone"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-risperidone"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "9-hydroxyrispéridone (palipéridone)",
+        "activite_relative": "actif — activité antipsychotique comparable à la rispéridone ; somme rispéridone + métabolite = fraction active",
+        "demi_vie_h": 24
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM) ; ×N (UM)",
+          "phenotype": "PM ou UM",
+          "niveau_cpic": "B",
+          "recommandation": "PM : ↑ exposition rispéridone (métabolite retardé) ; UM : ↑ formation 9-OH-rispéridone. Impact clinique modéré car somme rispéridone + métabolite active.",
+          "zone_grise": false,
+          "source": "CPIC:antipsychotics-CYP2D6-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "paroxétine, fluoxétine (inhibiteurs CYP2D6 forts)",
+          "mecanisme": "inhibition CYP2D6 → phénocopie PM",
+          "effet": "↑ concentrations rispéridone, ↓ 9-OH-rispéridone",
+          "timing": "surveillance clinique (somme active augmentée)",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "carbamazépine, rifampicine",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ concentrations rispéridone",
+          "timing": "ajuster dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-risperidone"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-1", "hyperprolactinemie", "SEP", "metabolique"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-risperidone", "CredibleMeds:PR-list-2022", "CPIC:antipsychotics-CYP2D6-2023"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_paliperidone",
+      "nom_dci": "Palipéridone",
+      "synonymes": ["Xeplion (LAI)", "Trevicta (LAI 3mo)", "Byannli (LAI 6mo)", "Invega"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "trace",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-paliperidone"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "trace",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-paliperidone"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT1A1",
+          "rang": "mineur",
+          "produit": "palipéridone-glucuronide",
+          "preuve": "IVT",
+          "source": "StatPearls:paliperidone"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-paliperidone"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "palipéridone = métabolite actif direct de la rispéridone — 60% éliminée inchangée dans les urines (élimination rénale majoritaire)",
+        "demi_vie_h": 23
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale (DFG < 50 mL/min)",
+          "mecanisme": "élimination rénale majoritaire (60% inchangé)",
+          "effet": "accumulation — réduction dose nécessaire",
+          "timing": "ajustement selon DFG (RCP)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-paliperidone"
+        },
+        {
+          "avec": "carbamazépine",
+          "mecanisme": "induction Pgp + CYP (effet modeste vu élimination rénale)",
+          "effet": "↓ concentrations palipéridone ~37%",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-paliperidone"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-3", "hyperprolactinemie", "metabolique"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-paliperidone", "CredibleMeds:PR-list-2022", "StatPearls:paliperidone"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_quetiapine",
+      "nom_dci": "Quétiapine",
+      "synonymes": ["Xeroquel", "Seroquel"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "norquétiapine (N-desalkyl-quétiapine, actif)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-quetiapine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-quetiapine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "norquétiapine",
+        "activite_relative": "actif — inhibiteur NET + antagoniste 5-HT2A — contribution aux effets antidépresseurs à faible dose",
+        "demi_vie_h": 12
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts (kétoconazole, itraconazole, clarithromycine, ritonavir)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑↑↑ concentrations quétiapine (×5-10)",
+          "timing": "CI ou réduction dose 80%",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-quetiapine"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (carbamazépine, rifampicine, phénytoïne)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓↓ concentrations quétiapine (×5 baisse)",
+          "timing": "augmenter dose 5× ou switch",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-quetiapine"
+        },
+        {
+          "avec": "jus de pamplemousse",
+          "mecanisme": "inhibition CYP3A4 intestinal",
+          "effet": "↑ concentrations quétiapine",
+          "timing": "éviter",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-quetiapine"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-3", "seuil-ep", "hypotension-orthostatique", "metabolique"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-quetiapine", "CredibleMeds:PR-list-2022", "StatPearls:quetiapine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_aripiprazole",
+      "nom_dci": "Aripiprazole",
+      "synonymes": ["Abilify", "Abilify Maintena (LAI)"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "déhydro-aripiprazole (actif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-aripiprazole"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "déhydro-aripiprazole",
+          "preuve": "IVH-C",
+          "source": "FDA:label-aripiprazole"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-aripiprazole"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "déhydro-aripiprazole",
+        "activite_relative": "actif — activité antipsychotique ~1/3 de l'aripiprazole, contribution clinique significative",
+        "demi_vie_h": 94
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM) ; ×N (UM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B",
+          "recommandation": "PM : exposition ↑ ~60% — réduction dose 50% si CYP2D6 PM connu. Surveillance EI (akathisie, somnolence).",
+          "zone_grise": false,
+          "source": "FDA:label-aripiprazole"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts + inhibiteurs CYP2D6 forts",
+          "mecanisme": "double inhibition",
+          "effet": "↑↑ exposition aripiprazole",
+          "timing": "réduction dose 75%",
+          "preuve": "IVH-C",
+          "source": "FDA:label-aripiprazole"
+        },
+        {
+          "avec": "carbamazépine, rifampicine",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ exposition — doubler dose",
+          "timing": "ajustement",
+          "preuve": "IVH-O",
+          "source": "FDA:label-aripiprazole"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "ACB-3", "akathisie", "impulsivite"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-aripiprazole", "CredibleMeds:PR-list-2022", "StatPearls:aripiprazole"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_brexpiprazole",
+      "nom_dci": "Brexpiprazole",
+      "synonymes": ["Rexulti"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Non commercialisé",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "DM-3411 (actif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-brexpiprazole"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "DM-3411",
+          "preuve": "IVH-C",
+          "source": "FDA:label-brexpiprazole"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-brexpiprazole"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "DM-3411",
+        "activite_relative": "actif — contribution clinique modeste",
+        "demi_vie_h": 91
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B",
+          "recommandation": "PM : réduction dose 50% (label FDA)",
+          "zone_grise": false,
+          "source": "FDA:label-brexpiprazole"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts + inhibiteurs CYP2D6 forts",
+          "mecanisme": "double inhibition",
+          "effet": "↑↑ exposition brexpiprazole",
+          "timing": "réduction dose 25-50%",
+          "preuve": "IVH-C",
+          "source": "FDA:label-brexpiprazole"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "akathisie", "metabolique"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-brexpiprazole", "CredibleMeds:PR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_cariprazine",
+      "nom_dci": "Cariprazine",
+      "synonymes": ["Reagila", "Vraylar"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Non commercialisé",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "desméthyl-cariprazine (DCAR, actif) + didesméthyl-cariprazine (DDCAR, actif, demi-vie très longue)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-cariprazine"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVH-O",
+          "source": "FDA:label-cariprazine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-cariprazine"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "desméthyl-cariprazine (DCAR) + didesméthyl-cariprazine (DDCAR)",
+        "activite_relative": "actif — DDCAR demi-vie très longue (~2-3 semaines) = activité prolongée après arrêt",
+        "demi_vie_h": 168
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition cariprazine — CI",
+          "timing": "CI association",
+          "preuve": "IVH-C",
+          "source": "FDA:label-cariprazine"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "akathisie"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-cariprazine", "CredibleMeds:PR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_lurasidone",
+      "nom_dci": "Lurasidone",
+      "synonymes": ["Latuda"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "ID-14283 et ID-14326 (actifs, activité moindre)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-lurasidone"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "inhibiteur",
+          "preuve": "IVT",
+          "source": "FDA:label-lurasidone"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "Pgp",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVT",
+          "source": "FDA:label-lurasidone"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "ID-14283 + ID-14326",
+        "activite_relative": "actifs mais activité antipsychotique moindre",
+        "demi_vie_h": 18
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts (kétoconazole, itraconazole, ritonavir)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑↑↑ exposition lurasidone",
+          "timing": "CI absolue",
+          "preuve": "IVH-C",
+          "source": "FDA:label-lurasidone"
+        },
+        {
+          "avec": "inducteurs CYP3A4 forts (rifampicine, carbamazépine)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓↓ exposition",
+          "timing": "CI absolue",
+          "preuve": "IVH-C",
+          "source": "FDA:label-lurasidone"
+        },
+        {
+          "avec": "jus de pamplemousse",
+          "mecanisme": "inhibition CYP3A4 intestinal",
+          "effet": "↑ exposition",
+          "timing": "éviter",
+          "preuve": "IVH-O",
+          "source": "FDA:label-lurasidone"
+        }
+      ],
+      "alertes_pd": ["QT-PR", "akathisie"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-lurasidone", "CredibleMeds:PR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_haloperidol",
+      "nom_dci": "Halopéridol",
+      "synonymes": ["Haldol", "Haldol décanoate (LAI)"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "réduit-halopéridol (actif) et métabolites oxydés",
+          "preuve": "IVH-C",
+          "source": "FDA:label-haloperidol"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "métabolites oxydés",
+          "preuve": "IVH-C",
+          "source": "FDA:label-haloperidol"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "mineur",
+          "produit": "halopéridol-glucuronide",
+          "preuve": "IVT",
+          "source": "FDA:label-haloperidol"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-haloperidol"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "réduit-halopéridol",
+        "activite_relative": "partiellement actif — réconversion possible en halopéridol",
+        "demi_vie_h": 21
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B",
+          "recommandation": "PM : ↑ exposition ~20-80% — envisager réduction dose + surveillance EI (SEP, sédation).",
+          "zone_grise": false,
+          "source": "CPIC:antipsychotics-CYP2D6-2023"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "voie IV",
+          "mecanisme": "risque de TdP majoré par voie IV (dose-dépendant)",
+          "effet": "torsades de pointes — décès rapportés",
+          "timing": "surveillance ECG stricte IV ; préférer IM/PO",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-haloperidol-IV"
+        },
+        {
+          "avec": "autres torsadogènes KR (méthadone, citalopram, escitalopram)",
+          "mecanisme": "addition QT (KR+KR)",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (carbamazépine, rifampicine)",
+          "mecanisme": "induction",
+          "effet": "↓ concentrations halopéridol",
+          "timing": "ajuster",
+          "preuve": "IVH-O",
+          "source": "FDA:label-haloperidol"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "SEP", "SMN", "seuil-ep", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-haloperidol", "CredibleMeds:KR-list-2022", "CPIC:antipsychotics-CYP2D6-2023"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inducteur"]
+    },
+    {
+      "id": "atp_chlorpromazine",
+      "nom_dci": "Chlorpromazine",
+      "synonymes": ["Largactil", "Thorazine"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "7-hydroxy-chlorpromazine (actif) + chlorpromazine-sulfoxyde",
+          "preuve": "IVH-C",
+          "source": "FDA:label-chlorpromazine"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "mineur",
+          "produit": "N-desméthyl-chlorpromazine",
+          "preuve": "IVH-O",
+          "source": "FDA:label-chlorpromazine"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "FDA:label-chlorpromazine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "FMO",
+          "alias": "flavin-containing monooxygenase",
+          "rang": "mineur",
+          "produit": "chlorpromazine-N-oxyde",
+          "preuve": "IVT",
+          "source": "StatPearls:chlorpromazine"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "StatPearls:chlorpromazine"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "FDA:label-chlorpromazine"
+        }
+      ],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "weak",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "FDA:Drug-Interactions-Table-2020"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "7-hydroxy-chlorpromazine",
+        "activite_relative": "actif — contribution modeste",
+        "demi_vie_h": 24
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "C",
+          "recommandation": "Zone grise — exposition ↑ chez PM mais pas de guideline CPIC spécifique",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        },
+        {
+          "avec": "anticholinergiques (ATC, antihistaminiques, oxybutynine)",
+          "mecanisme": "addition ACB",
+          "effet": "syndrome anticholinergique",
+          "timing": "éviter association",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "ACB-3", "SEP", "hypotension-orthostatique", "sedation"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-chlorpromazine", "CredibleMeds:KR-list-2022", "StatPearls:chlorpromazine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inducteur"]
+    },
+    {
+      "id": "atp_cyamemazine",
+      "nom_dci": "Cyamémazine",
+      "synonymes": ["Tercian"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "cyamémazine-sulfoxyde (actif — affinité 5-HT2A/H1 préservée)",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "cyamémazine-sulfoxyde",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "moderate",
+          "mecanisme": "competitive",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "cyamémazine-sulfoxyde",
+        "activite_relative": "actif — conserve affinité 5-HT2A et H1 → effet anxiolytique prolongé",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC spécifique. Molécule française peu étudiée en PGx.",
+          "zone_grise": true,
+          "source": "Littérature PK (zone grise)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "rispéridone, antidépresseurs tricycliques, métoprolol (substrats CYP2D6)",
+          "mecanisme": "inhibition CYP2D6 modérée par cyamémazine",
+          "effet": "↑ concentrations des substrats CYP2D6 co-prescrits",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        },
+        {
+          "avec": "autres torsadogènes (méthadone, citalopram, escitalopram, halopéridol, ondansétron)",
+          "mecanisme": "addition QT (KR+KR)",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "ACB-3", "sedation", "hypotension-orthostatique"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-cyamemazine", "CredibleMeds:KR-list-2022", "HUG:carte_cytochromes_2020"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inducteur"]
+    },
+    {
+      "id": "atp_levomepromazine",
+      "nom_dci": "Lévomépromazine",
+      "synonymes": ["Nozinan", "Méthotriméprazine", "Levomepromazine"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "métabolites sulfoxydés",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-levomepromazine"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-levomepromazine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-levomepromazine"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        },
+        {
+          "avec": "dépresseurs SNC (opioïdes, BZD, alcool)",
+          "mecanisme": "addition sédative majeure",
+          "effet": "dépression respiratoire, coma",
+          "timing": "prudence ; réduire doses",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "ACB-3", "sedation-profonde", "hypotension-orthostatique"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-levomepromazine", "CredibleMeds:KR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_alimemazine",
+      "nom_dci": "Alimémazine",
+      "synonymes": ["Théralène", "Trimeprazine"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "alimémazine-sulfoxyde (inactif)",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": null,
+        "demi_vie_h": null
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — PM : métabolisme lent → risque confusion chez sujet âgé majoré (combinaison PM + ACB-3). Pas de guideline CPIC.",
+          "zone_grise": true,
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "autres anticholinergiques",
+          "mecanisme": "addition ACB",
+          "effet": "syndrome anticholinergique — confusion sujet âgé",
+          "timing": "éviter surtout > 65 ans (Beers Criteria)",
+          "preuve": "IVH-O",
+          "source": "Rapport d'Expertise HUG 2020 extension"
+        }
+      ],
+      "alertes_pd": ["ACB-3", "sedation", "sujet-age-risque-confusion"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-alimemazine", "HUG:carte_cytochromes_2020"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "atp_amisulpride",
+      "nom_dci": "Amisulpride",
+      "synonymes": ["Solian"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale quasi exclusive (90% inchangé) — métabolisme hépatique négligeable",
+        "demi_vie_h": 12
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale (DFG < 60 mL/min)",
+          "mecanisme": "élimination rénale 90% inchangé",
+          "effet": "accumulation — risque TdP majoré",
+          "timing": "adapter dose ; CI si DFG < 10",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-amisulpride"
+        },
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "hyperprolactinemie", "SEP"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-amisulpride", "CredibleMeds:KR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_sulpiride",
+      "nom_dci": "Sulpiride",
+      "synonymes": ["Dogmatil", "Synédil"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale majoritaire (~70% inchangé)",
+        "demi_vie_h": 7
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "élimination rénale",
+          "effet": "accumulation",
+          "timing": "adapter dose",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-sulpiride"
+        },
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "hyperprolactinemie", "SEP"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-sulpiride", "CredibleMeds:KR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_tiapride",
+      "nom_dci": "Tiapride",
+      "synonymes": ["Tiapridal"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "élimination rénale majoritaire (~70% inchangé) — molécule d'intérêt en sevrage alcool (indication FR)",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "insuffisance rénale",
+          "mecanisme": "élimination rénale",
+          "effet": "accumulation",
+          "timing": "adapter dose (DFG < 60 mL/min)",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-tiapride"
+        },
+        {
+          "avec": "sevrage alcoolique (indication)",
+          "mecanisme": "antidopaminergique + anxiolytique — indication française dans le delirium tremens et sevrage agité",
+          "effet": "réduction agitation",
+          "timing": "indication ANSM",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-tiapride"
+        },
+        {
+          "avec": "autres torsadogènes KR",
+          "mecanisme": "addition QT",
+          "effet": "TdP",
+          "timing": "CI selon OMEDIT",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:KR-list-2022"
+        }
+      ],
+      "alertes_pd": ["QT-KR", "hyperprolactinemie", "SEP"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["ANSM:RCP-tiapride", "CredibleMeds:KR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "atp_loxapine",
+      "nom_dci": "Loxapine",
+      "synonymes": ["Loxapac", "Adasuve (inhalé)"],
+      "classe": "Antipsychotique",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur",
+          "produit": "7-OH-loxapine + 8-OH-loxapine (actifs)",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-loxapine"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "N-desméthyl-loxapine (amoxapine, actif — antidépresseur disponible séparément)",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-loxapine"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés",
+          "preuve": "IVT",
+          "source": "ANSM:RCP-loxapine"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-loxapine"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "amoxapine + 7-OH-loxapine + 8-OH-loxapine",
+        "activite_relative": "amoxapine = antidépresseur tricyclique actif (commercialisé séparément) — contribution aux effets antidépresseurs et EI de la loxapine",
+        "demi_vie_h": 4
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "tabac (induction CYP1A2)",
+          "mecanisme": "induction",
+          "effet": "↓ concentrations loxapine",
+          "timing": "surveillance à l'arrêt tabac (rebond possible)",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-loxapine"
+        },
+        {
+          "avec": "voie inhalée (Adasuve) — bronchospasme",
+          "mecanisme": "irritation bronchique directe",
+          "effet": "bronchospasme sévère — CI si asthme/BPCO",
+          "timing": "REMS FDA / CI voie inhalée si asthme",
+          "preuve": "IVH-C",
+          "source": "FDA:REMS-adasuve"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "ACB-2", "seuil-ep", "SEP", "bronchospasme-voie-inhalee"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-loxapine", "FDA:REMS-adasuve", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+# Dépendances Node — réinstallables via `npm install`
+node_modules/
+
+# Cache build TypeScript
+*.tsbuildinfo
+.vite/
+.cache/
+
+# Tests / couverture
+coverage/
+
+# Sources brutes téléchargées (PDF HUG 2020, HTML CBIP avec assets) — lourdes,
+# retéléchargeables manuellement depuis https://www.cbip.be/ et HUG Genève.
+# Les JSON/CSV d'audit dérivés (metaboscope_audit_*, cbip_gpt.json, hug_2020_opus.json,
+# CBIP_interactions_V3_audit.json) restent versionnés — indispensables au chantier B
+# (extension v1.1, cf. METABOSCOPE_APP.md §2).
+data_hug_cbip/*.pdf
+data_hug_cbip/*.html
+data_hug_cbip/CBIP*_files/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+
+# IMPORTANT : `dist/` est volontairement NON ignoré.
+# Le build statique doit être committé dans USCA-Connect pour que Cloudflare Pages
+# (déploiement git-based) le serve sans étape de build supplémentaire.
+# Si JC met en place une CI qui build à chaque push, dist/ peut être déplacé
+# dans .gitignore à ce moment-là.

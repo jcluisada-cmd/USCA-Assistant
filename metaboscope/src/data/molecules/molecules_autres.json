@@ -1,0 +1,628 @@
+[
+  {
+    "id": "aut_n2o",
+    "nom_dci": "Protoxyde d'azote",
+    "synonymes": ["N2O", "Laughing Gas", "Gaz hilarant", "Nos", "cartouches crème fouettée", "proto"],
+    "classe": "Gaz anesthésique / NPS (usage détourné)",
+    "statut_fr": "Non classé stupéfiant. Usage médical autorisé (MEOPA). Détournement cartouches : ANSM alerte 2024. Interdiction vente aux mineurs depuis 2021 (loi Bouillaud).",
+    "phase1_cyp": [],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "Non métabolisé",
+        "alias": "élimination pulmonaire exclusive",
+        "rang": "NA",
+        "produit": "Expiré inchangé (>99%). Mécanisme toxique NON métabolique : oxydation irréversible du cobalt Co(I)→Co(III) de la vitamine B12 (cobalamine) → inactivation de la méthionine synthase → blocage cycle monocarboné.",
+        "preuve": "IVH-C",
+        "source": "StatPearls:NBK532922"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "MTHFR",
+        "variants": "C677T (TT homozygote)",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. TT homozygote → hyperhomocystéinémie basale → susceptibilité majorée à la neurotoxicité N2O. Pas de guideline CPIC. Dosage homocystéine recommandé si MTHFR connu avant anesthésie prolongée.",
+        "zone_grise": true,
+        "source": "PMC:7366039"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "vitamine B12 (déficit préexistant — végans, malabsorption, chirurgie bariatrique, metformine)",
+        "mecanisme": "Oxydation irréversible cobalamine → inactivation méthionine synthase + méthylmalonyl-CoA mutase. Déficit B12 préexistant = facteur aggravant majeur.",
+        "effet": "⚠️ Myélopathie combinée subaiguë + neuropathie périphérique + troubles cognitifs. Dosage B12 sérique peut être NORMAL malgré déficit fonctionnel → préférer homocystéine + acide méthylmalonique pour dépistage.",
+        "timing": "Délai variable : de quelques heures (USCA/urgences : usage unique intense) à plusieurs semaines (usage chronique). Irréversible si non traité (supplémentation B12 IM urgente).",
+        "preuve": "IVH-O",
+        "source": "PMC:7366039"
+      },
+      {
+        "avec": "opioïdes, BZD, alcool, GHB",
+        "mecanisme": "Additivité dépression SNC (N2O = anesthésique CNS)",
+        "effet": "Dépression respiratoire composite — pic décès jeunes France 2022-2024 (cas post-mortem N2O ± alcool ± opioïdes)",
+        "timing": "Surveillance urgence — tableau hypoxie aiguë + sédation",
+        "preuve": "IVH-O",
+        "source": "ANSM:alerte-N2O-2024"
+      },
+      {
+        "avec": "méthotrexate",
+        "mecanisme": "Inhibition additive du cycle des folates (méthionine synthase + DHFR)",
+        "effet": "Potentialisation toxicité méthotrexate — aplasie, mucite. Éviter association ou supplémenter en folates.",
+        "timing": "Éviter N2O chez patients sous méthotrexate",
+        "preuve": "AN",
+        "source": "PMC:7366039"
+      },
+      {
+        "avec": "bupropion",
+        "mecanisme": "Mécanisme non élucidé — abaissement seuil épileptogène potentiel N2O",
+        "effet": "Cas isolés de convulsions (source primaire inaccessible)",
+        "timing": "Prudence clinique",
+        "preuve": "CAS",
+        "source": "StatPearls:NBK532922"
+      }
+    ],
+    "alertes_pd": ["resp", "myelopathie-B12", "mesusage-documented"],
+    "niveau_preuve_global": "IVH-O",
+    "sources_principales": [
+      "StatPearls:NBK532922",
+      "PMC:7366039",
+      "ANSM:alerte-N2O-2024"
+    ],
+    "zone_grise": false,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données PK usage détourné vs médical (doses, durée exposition)",
+      "pharmacogenetique MTHFR validée in vivo",
+      "seuil d'exposition critique myélopathie (nombre de cartouches)",
+      "transporteurs (non applicable)"
+    ]
+  },
+
+  {
+    "id": "aut_phenibut",
+    "nom_dci": "Phénibut",
+    "synonymes": ["phenibut", "β-phényl-GABA", "Noofen", "Fenibut", "Citrocard"],
+    "classe": "NPS — agoniste GABA-B / nootropique (usage détourné)",
+    "statut_fr": "Non commercialisé en France. Non classé stupéfiant (2026). Vente libre en ligne (poudres, gélules). Sous surveillance ANSM. Médicament prescrit en Russie/pays baltes.",
+    "phase1_cyp": [],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "hydroxylation hépatique (enzymes non caractérisées)",
+        "alias": "voie mineure",
+        "rang": "mineur",
+        "produit": "métabolites hydroxylés (non caractérisés in vivo humain)",
+        "preuve": "IVA",
+        "source": "EMCDDA:drug-profile-phenibut"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "62% excrété inchangé dans les urines. Métabolites inactifs présumés.",
+      "demi_vie_h": 5.3
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "alcool, BZD, GHB, opioïdes, baclofène",
+        "mecanisme": "Addition GABAergique (GABA-B) + dépression SNC",
+        "effet": "Sédation profonde, dépression respiratoire. Profil chemsex (association GHB+phénibut documentée). Sevrage croisé avec baclofène.",
+        "timing": "Urgence — immunoassay BZD FAUX NÉGATIF (phénibut non détecté). LC-MS/MS spécifique nécessaire.",
+        "preuve": "CAS",
+        "source": "EMCDDA:drug-profile-phenibut"
+      },
+      {
+        "avec": "sevrage — prise en charge",
+        "mecanisme": "Dépendance GABA-B + possiblement D1 (modulation dopaminergique)",
+        "effet": "⚠️ Syndrome de sevrage sévère : anxiété majeure, tremor, agitation psychomotrice, psychose, CONVULSIONS. Tableau proche sevrage BZD + sevrage baclofène. Traitement : phénobarbital ± baclofène (données de cas).",
+        "timing": "Délai sevrage : 3-7 jours après arrêt. Durée pouvant aller jusqu'à plusieurs semaines.",
+        "preuve": "CAS",
+        "source": "EMCDDA:drug-profile-phenibut"
+      },
+      {
+        "avec": "antipsychotiques",
+        "mecanisme": "Modulation dopamine D1 → interaction pharmacodynamique",
+        "effet": "Risque de perturbation équilibre antipsychotique. Peu documenté.",
+        "timing": "Alerte USCA patients sous antipsychotiques + consommation phénibut",
+        "preuve": "AN",
+        "source": "EMCDDA:drug-profile-phenibut"
+      }
+    ],
+    "alertes_pd": ["resp", "seuil-ep-sevrage", "dependance-documented", "mesusage-documented"],
+    "niveau_preuve_global": "CAS",
+    "sources_principales": [
+      "EMCDDA:drug-profile-phenibut"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "voies métaboliques CYP in vitro/in vivo humain",
+      "pharmacogenetique",
+      "transporteurs",
+      "PK complète (Vd, biodisponibilité orale, Tmax)",
+      "statut réglementaire France mise à jour"
+    ]
+  },
+
+  {
+    "id": "aut_kava",
+    "nom_dci": "Kava",
+    "synonymes": ["kava", "kava-kava", "Piper methysticum", "kavalactones", "kavaïne", "méthysticine"],
+    "classe": "Phytothérapeutique — anxiolytique à base de plante (retiré France)",
+    "statut_fr": "Suspension de commercialisation (arrêté ANSM 2003 — hépatotoxicité). Non classé stupéfiant. Importation personnelle non contrôlée.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP2E1",
+        "rang": "majeur",
+        "produit": "époxyde méthysticine (intermédiaire réactif — candidat mécanisme hépatotoxicité idiosyncrasique)",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "hydroxylation kavaïne + dihydrokavaïne",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "isoforme": "CYP1A2",
+        "rang": "mineur",
+        "produit": "voie mineure kavalactones",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides kavalactones hydroxylés",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [
+      {
+        "cible": "CYP1A2",
+        "puissance": "modérée à forte (in vitro concentrations élevées)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "cible": "CYP2C9",
+        "puissance": "modérée (in vitro)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "cible": "CYP2C19",
+        "puissance": "modérée (in vitro)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "cible": "CYP2D6",
+        "puissance": "modérée (in vitro)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "cible": "CYP3A4",
+        "puissance": "modérée à forte (in vitro concentrations élevées)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      }
+    ],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "kavalactones actives en l'état (kavaïne, dihydrokavaïne, méthysticine, yangonine)",
+      "activite_relative": "Agonistes GABA-A allostériques + inhibition canaux sodiques voltage-dépendants",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2E1",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. Inducteurs CYP2E1 (alcool chronique) → ↑ formation époxyde méthysticine → susceptibilité hépatotoxicité majorée théoriquement.",
+        "zone_grise": true,
+        "source": "ANSM:suspension-kava-2003"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "alcool chronique",
+        "mecanisme": "Induction CYP2E1 par alcool chronique → ↑ formation époxyde méthysticine hépatotoxique + addition hépatotoxicité directe",
+        "effet": "⚠️ Hépatotoxicité sévère — hépatite fulminante, transplantation hépatique. Retrait France 2003 basé sur signalements. Mécanisme précis encore débattu (idiosyncrasique vs dose-dépendant).",
+        "timing": "CI absolue fonctionnelle : ne pas associer kava et alcool",
+        "preuve": "CAS",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "avec": "médicaments à marge thérapeutique étroite métabolisés par CYP2C9/CYP3A4 (warfarine, ciclosporine, tacrolimus, statines)",
+        "mecanisme": "Inhibition CYP in vitro → ↑ exposition substrats",
+        "effet": "Pertinence clinique in vivo non établie — zone grise. Prudence si prise simultanée.",
+        "timing": "Alerter si découverte consommation kava chez patient sous anticoagulants/immunosuppresseurs",
+        "preuve": "IVT",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "avec": "BZD, alcool aigu, opioïdes",
+        "mecanisme": "Addition GABAergique + dépression SNC",
+        "effet": "Sédation excessive, dépression respiratoire",
+        "timing": "Éviter l'association",
+        "preuve": "CAS",
+        "source": "ANSM:suspension-kava-2003"
+      },
+      {
+        "avec": "lévodopa (maladie de Parkinson)",
+        "mecanisme": "Modulation dopaminergique kavalactones (antagonisme D2 présumé)",
+        "effet": "Réduction efficacité lévodopa (cas cliniques isolés)",
+        "timing": "Zone grise — signaler en USCA",
+        "preuve": "CAS",
+        "source": "ANSM:suspension-kava-2003"
+      }
+    ],
+    "alertes_pd": ["hepatotox", "resp"],
+    "niveau_preuve_global": "CAS",
+    "sources_principales": [
+      "ANSM:suspension-kava-2003"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "PK in vivo humaine complète (Cmax, Tmax, Vd, biodisponibilité)",
+      "confirmation inhibition CYP in vivo (études DDI cliniques)",
+      "mécanisme hépatotoxicité idiosyncrasique précis (époxyde méthysticine vs autre)",
+      "pharmacogenetique CYP2E1 validée",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "aut_poppers",
+    "nom_dci": "Nitrites d'alkyle",
+    "synonymes": ["poppers", "nitrite d'isobutyle", "nitrite d'amyle", "nitrite de pentyle", "alkyl nitrites"],
+    "classe": "Vasodilatateur (usage détourné — chemsex/récréatif)",
+    "statut_fr": "Vente légale en France (boutiques spécialisées, sex-shops) depuis 2013 (retour juridique). Interdiction vente aux mineurs. Usage médical: nitrite d'amyle (antidote cyanure) — autorisation restreinte.",
+    "phase1_cyp": [],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "estérases plasmatiques (non-CYP)",
+        "alias": "hydrolyse spontanée + enzymatique",
+        "rang": "majeur",
+        "produit": "alcool correspondant (isobutanol, amyl alcool, etc.) + ion nitrite (NO2⁻) → NO (oxyde nitrique) par réduction enzymatique",
+        "preuve": "IVH-C",
+        "source": "ANSM:alerte-poppers-PDE5"
+      },
+      {
+        "enzyme": "méthémoglobine réductase",
+        "alias": "réduction érythrocytaire",
+        "rang": "mineur",
+        "produit": "méthémoglobine (oxydation Hb Fe²⁺→Fe³⁺ par nitrite)",
+        "preuve": "IVH-O",
+        "source": "ANSM:alerte-poppers-PDE5"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [
+      {
+        "cible": "guanylate cyclase soluble (GMPc) → potentialisation vasodilatation",
+        "puissance": "CI absolue fonctionnelle avec inhibiteurs PDE5",
+        "mecanisme": "Relargage NO → activation guanylate cyclase → ↑↑ GMPc. PDE5i bloquent la dégradation GMPc → vasodilatation massive non contrôlable.",
+        "preuve": "IVH-C",
+        "source": "ANSM:alerte-poppers-PDE5"
+      }
+    ],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "L'effet pharmacologique est produit par le NO relargué — demi-vie très courte (secondes). Effets perçus 10-30 secondes après inhalation.",
+      "demi_vie_h": 0.003
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "G6PD",
+        "variants": "déficit G6PD",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. Déficit G6PD → susceptibilité majorée à la méthémoglobinémie. Prévalence ~5-10% hommes africains/méditerranéens. Pas de guideline spécifique.",
+        "zone_grise": true,
+        "source": "ANSM:alerte-poppers-PDE5"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "inhibiteurs PDE5 (sildénafil, tadalafil, vardénafil, avanafil)",
+        "mecanisme": "NO (poppers) → ↑↑ GMPc + PDE5i → blocage dégradation GMPc → vasodilatation massive synergique",
+        "effet": "⚠️ CI ABSOLUE — hypotension sévère (chute PAS >30 mmHg), syncope, infarctus, décès documentés. Délai : minutes après co-administration.",
+        "timing": "CI absolue — délai sécurité : 24h après sildénafil (t1/2 4h), 48h après tadalafil (t1/2 17.5h)",
+        "preuve": "IVH-C",
+        "source": "ANSM:alerte-poppers-PDE5"
+      },
+      {
+        "avec": "méthémoglobinémie — prise en charge",
+        "mecanisme": "Oxydation Hb Fe²⁺→Fe³⁺ par nitrite → méthémoglobine incapable de transporter O2",
+        "effet": "Cyanose, désaturation résistante à l'O2. SpO2 faussement élevée à l'oxymétrie de pouls (lecture 85% artificiellement). Traitement: bleu de méthylène 1-2 mg/kg IV.",
+        "timing": "Urgence — méthémoglobinémie symptomatique si >20%",
+        "preuve": "IVH-O",
+        "source": "ANSM:alerte-poppers-PDE5"
+      },
+      {
+        "avec": "antihypertenseurs, alcool, autres vasodilatateurs",
+        "mecanisme": "Addition hypotensive NO-dépendante",
+        "effet": "Hypotension orthostatique sévère — syncope",
+        "timing": "Prévention chute / surveillance chemsex USCA",
+        "preuve": "IVH-O",
+        "source": "ANSM:alerte-poppers-PDE5"
+      }
+    ],
+    "alertes_pd": ["CI-sildenafil"],
+    "niveau_preuve_global": "IVH-C",
+    "sources_principales": [
+      "ANSM:alerte-poppers-PDE5"
+    ],
+    "zone_grise": false,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données PK complètes (Tmax NO, Cmax, demi-vie NO tissulaire)",
+      "pharmacogenetique méthémoglobine réductase",
+      "différences entre isomères (isobutyl vs amyl vs pentyl — toxicité comparée)",
+      "rétinopathie (maculopathie poppers documentée cas cliniques — mécanisme phototoxicité NO)"
+    ]
+  },
+
+  {
+    "id": "aut_nac",
+    "nom_dci": "N-acétylcystéine",
+    "synonymes": ["NAC", "N-acetylcysteine", "Mucomyst", "Fluimucil", "acétylcystéine"],
+    "classe": "Antidote / mucolytique / anti-craving (off-label)",
+    "statut_fr": "Liste II (formes orales) ; IV non classé. Antidote paracétamol : usage hospitalier courant.",
+    "phase1_cyp": [],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "GSH synthétase / cystéine conjugaison",
+        "alias": "GST (glutathion-S-transférase) — voie indirecte",
+        "rang": "majeur",
+        "produit": "L-cystéine → précurseur GSH (glutathion). NAC = promédicament du GSH.",
+        "preuve": "IVH-C",
+        "source": "FDA:label-mucomyst"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "N-acétyltransférase (NAT)",
+        "rang": "mineur",
+        "produit": "diacétylcystéine (urinaire)",
+        "preuve": "IVH-C",
+        "source": "FDA:label-mucomyst"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "L-cystéine → Glutathion (GSH)",
+      "activite_relative": "NAC est un promédicament. L'activité antidote est médiée par la reconstitution du GSH hépatique qui neutralise le NAPQI (métabolite réactif du paracétamol).",
+      "demi_vie_h": 2.5
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "paracétamol (surdosage)",
+        "mecanisme": "Reconstitution GSH hépatique → neutralisation NAPQI (N-acétyl-para-benzoquinonéimine) → prévention nécrose hépatocytaire. Efficace si débuté dans les 8h (optimal) ; utile jusqu'à 24h.",
+        "effet": "Antidote de référence. Protocole: 150 mg/kg IV sur 60 min → 50 mg/kg sur 4h → 100 mg/kg sur 16h (protocole Prescott). PO possible (moins utilisé en France).",
+        "timing": "Urgence — débuter immédiatement si surdosage suspectée. Nomogramme Rumack-Matthew pour décision.",
+        "preuve": "IVH-C",
+        "source": "FDA:label-mucomyst"
+      },
+      {
+        "avec": "alcool chronique + paracétamol",
+        "mecanisme": "Alcool chronique induit CYP2E1 → ↑ formation NAPQI + épuise GSH → seuil toxicité paracétamol 2 g/j. NAC encore plus critique dans ce contexte.",
+        "effet": "Hépatotoxicité à doses sub-thérapeutiques de paracétamol chez alcoolique chronique. NAC IV recommandée même si nomogramme borderline.",
+        "timing": "Seuil 2 g/j paracétamol chez alcoolique chronique (vs 4 g/j adulte sain)",
+        "preuve": "IVH-O",
+        "source": "FDA:label-mucomyst"
+      },
+      {
+        "avec": "cocaïne (anti-craving off-label)",
+        "mecanisme": "Restauration homéostasie glutamatergique (nucleus accumbens) — mécanisme distinct de la voie GSH",
+        "effet": "Réduction du craving cocaïne en off-label. Essais cliniques positifs (modestes). Pas d'AMM en France pour cette indication.",
+        "timing": "Usage en addictologie hors AMM — mentionner en USCA",
+        "preuve": "IVH-C",
+        "source": "StatPearls:N-acetylcysteine"
+      },
+      {
+        "avec": "nitroglycérine, nitrites (poppers)",
+        "mecanisme": "Addition vasodilatation NO-dépendante (NAC = donneur thiol → réduction NO2→NO)",
+        "effet": "Hypotension additive (effet modeste cliniquement)",
+        "timing": "Zone grise clinique",
+        "preuve": "IVT",
+        "source": "StatPearls:N-acetylcysteine"
+      }
+    ],
+    "alertes_pd": [],
+    "niveau_preuve_global": "IVH-C",
+    "sources_principales": [
+      "FDA:label-mucomyst",
+      "StatPearls:N-acetylcysteine"
+    ],
+    "zone_grise": false,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "transporteurs",
+      "données PK IV vs PO complètes",
+      "pharmacogenetique NAT2 (pertinence diacétylcystéine)",
+      "données USCA anti-craving alcool (off-label)"
+    ]
+  },
+
+  {
+    "id": "aut_mitragynine",
+    "nom_dci": "Mitragynine",
+    "synonymes": ["mitragynine", "kratom", "Mitragyna speciosa", "krat", "thang"],
+    "classe": "Alcaloïde végétal — agoniste μ-opioïde partiel (faible affinité) + modulateur monoaminergique",
+    "statut_fr": "Non classé stupéfiant en France (2026 — en cours d'évaluation ANSM). Classé aux USA (FDA Schedule I proposé 2023). Vente en ligne légale France sous forme « kratom ».",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "7-hydroxymitragynine (7-HMG) — agoniste μ-opioïde 13-46× plus puissant que mitragynine",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "9-O-desméthylmitragynine + autres métabolites",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "isoforme": "CYP2C9",
+        "rang": "mineur",
+        "produit": "voie mineure",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:drug-profile-kratom"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [
+      {
+        "cible": "CYP3A4",
+        "puissance": "modérée (in vitro IC50 ~9.4 µM)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "cible": "CYP2D6",
+        "puissance": "modérée (in vitro IC50 ~4.9 µM)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "cible": "CYP2C9",
+        "puissance": "faible à modérée (in vitro)",
+        "mecanisme": "inhibition compétitive",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      }
+    ],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "7-hydroxymitragynine (7-HMG)",
+      "activite_relative": "Agoniste μ-opioïde partiel 13-46× plus puissant que mitragynine. Présent en faibles concentrations dans la plante (<2%) mais formé en quantité significative lors du métabolisme hépatique.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP3A4",
+        "variants": null,
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. Inhibiteurs CYP3A4 → ↑ mitragynine parent mais ↓ 7-HMG → effet net imprévisible. Pas de guideline.",
+        "zone_grise": true,
+        "source": "PMC:3807987"
+      },
+      {
+        "gene": "CYP2D6",
+        "variants": "PM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. PM → ↓ voie mineure CYP2D6 → impact modeste présumé. Pas de données in vivo humaines.",
+        "zone_grise": true,
+        "source": "PMC:3807987"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "méthadone, buprénorphine (TSO)",
+        "mecanisme": "1) Inhibition CYP3A4 → ↑ exposition méthadone (zone grise — concentrations in vitro non extrapolables directement). 2) Addition μ-opioïde (7-HMG + TSO)",
+        "effet": "Risque surdosage méthadone (QT aggravé) + dépression respiratoire additive. Zone grise clinique — interactions spécifiques non documentées prospectivementen humain.",
+        "timing": "Alerte USCA — interroger systématiquement consommation kratom chez patients TSO",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 forts (ritonavir, clarithromycine, kétoconazole)",
+        "mecanisme": "Inhibition CYP3A4 → ↑ exposition mitragynine parent + ↓ formation 7-HMG → effet net incertain",
+        "effet": "Zone grise — accumulation mitragynine possible + profil receptor shift",
+        "timing": "Pertinent PVVIH sous ARV — interroger kratom",
+        "preuve": "IVT",
+        "source": "PMC:3807987"
+      },
+      {
+        "avec": "BZD, alcool, opioïdes",
+        "mecanisme": "Addition μ-opioïde (7-HMG) + dépression SNC",
+        "effet": "Dépression respiratoire — cas de décès avec kratom + autres dépresseurs documentés USA",
+        "timing": "Dépistage spécifique kratom LC-MS/MS — immunoassay opioïdes: FAUX NÉGATIF",
+        "preuve": "FOR",
+        "source": "EMCDDA:drug-profile-kratom"
+      },
+      {
+        "avec": "ISRS, IRSNa",
+        "mecanisme": "Mitragynine = inhibiteur recapture monoaminergique (5-HT, NA) + CYP2D6 inhibiteur",
+        "effet": "Syndrome sérotoninergique possible (cas isolés). Inhibition CYP2D6 → ↑ exposition ISRS CYP2D6-dépendants.",
+        "timing": "Zone grise — signaler en USCA patients ISRS + kratom",
+        "preuve": "CAS",
+        "source": "EMCDDA:drug-profile-kratom"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "IVT",
+    "sources_principales": [
+      "PMC:3807987",
+      "EMCDDA:drug-profile-kratom"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "PK in vivo humaine complète (Cmax 7-HMG, Vd, biodisponibilité)",
+      "confirmation interactions CYP in vivo (études DDI cliniques)",
+      "pharmacogenetique validée in vivo",
+      "QT risque (CredibleMeds non classé — zone grise)",
+      "statut réglementaire France mise à jour ANSM",
+      "transporteurs"
+    ]
+  }
+]

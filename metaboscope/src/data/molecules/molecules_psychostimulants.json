@@ -1,0 +1,875 @@
+{
+  "metadata": {
+    "fichier": "molecules_psychostimulants.json",
+    "session": 6,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 8,
+    "classes_couvertes": ["Psychostimulant", "Inhibiteur sélectif recapture noradrénaline", "Agoniste α2-adrénergique", "Modulateur éveil", "Inhibiteur recapture NA/DA"],
+    "note_methodologique": "Session 6 MétaboScope. Corrections critiques vs Livrable 4a-2 : (1) lisdexamfétamine = hydrolyse érythrocytaire (peptidases RBC) PAS CES1 — confusion ChatGPT DR ; (2) modafinil = amide hydrolyse majeure non-CYP (CYP3A4/5 mineur pour sulfone) + inhibiteur CYP2C19 + inducteur CYP3A4 ; (3) bupropion ajouté avec MBI CYP2B6 et inhibition CYP2D6 puissante (CPIC niveau A) ; (4) PGx CPIC verbatim atomoxétine. Bupropion et caféine inclus selon plan."
+  },
+  "molecules": [
+    {
+      "id": "pst_methylphenidate",
+      "nom_dci": "Méthylphénidate",
+      "synonymes": ["Ritaline", "Ritaline LP", "Concerta", "Quasym LP", "Medikinet", "Daytrana (patch)", "MPH"],
+      "classe": "Psychostimulant",
+      "statut_fr": "Stupéfiants (ordonnance sécurisée 28 jours, prescription initiale hospitalière annuelle, primo-prescription neuro/psy/pédiatre)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "CES1",
+          "alias": "carboxylestérase 1 hépatique",
+          "rang": "majeur (>80% métabolisme)",
+          "produit": "acide ritalinique (ritalinic acid, inactif) par désestérification stéréosélective favorisant l-MPH",
+          "preuve": "IVH-C",
+          "source": "PMID:28087982"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "acide ritalinique inactif ; pas de métabolite actif",
+        "demi_vie_h": 3
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CES1",
+          "variants": "G143E (rs71647871)",
+          "phenotype": "PM CES1 (hétérozygote ~3-5%, homozygote rare)",
+          "niveau_cpic": "ND (pas de guideline CPIC)",
+          "recommandation": "Zone grise — porteurs G143E hétérozygotes : ↑ AUC d-MPH ~2× ; homozygotes : AUC ↑ ×7 documentée. Risque toxicité cardiovasculaire (HTA, tachycardie). Pas de génotypage routine, mais à considérer si effets indésirables disproportionnés à dose habituelle.",
+          "zone_grise": true,
+          "source": "PMID:28087982"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool",
+          "mecanisme": "transestérification CES1 — formation éthylphénidate (analogue actif) + ↑ d-MPH",
+          "effet": "↑ exposition d-MPH (~40%) + production éthylphénidate (cardiotoxique)",
+          "timing": "déconseiller alcool ; signal majeur en mésusage",
+          "preuve": "IVH-O",
+          "source": "PMID:28087982"
+        },
+        {
+          "avec": "IMAO (phénelzine, tranylcypromine, linézolide, bleu de méthylène, sélégiline >10 mg/j)",
+          "mecanisme": "potentialisation libération catécholamines + inhibition dégradation",
+          "effet": "crise hypertensive sévère, risque AVC",
+          "timing": "CI absolue ; respecter délai 14 jours après arrêt IMAO",
+          "preuve": "IVH-O",
+          "source": "FDA:label-methylphenidate"
+        },
+        {
+          "avec": "antipsychotiques (halopéridol, rispéridone, olanzapine)",
+          "mecanisme": "antagonisme pharmacodynamique D2",
+          "effet": "↓ efficacité MPH ; usage clinique potentiel pour gérer TDAH+troubles du comportement",
+          "timing": "surveillance efficacité",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-ritaline"
+        },
+        {
+          "avec": "vasopresseurs (sympathomimétiques)",
+          "mecanisme": "synergie adrénergique",
+          "effet": "HTA, tachycardie",
+          "timing": "prudence",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "warfarine, AVK",
+          "mecanisme": "MPH inhiberait métabolisme warfarine (mécanisme imprécis)",
+          "effet": "↑ INR rapporté",
+          "timing": "surveillance INR",
+          "preuve": "CAS",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "HTA", "tachycardie", "seuil-ep", "CI-IMAO", "dépendance-documented", "mésusage-documented", "détournement-IV-fente-narines"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-methylphenidate", "ANSM:RCP-ritaline", "PMID:28087982", "CredibleMeds:CR-list-2022"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "pst_lisdexamfetamine",
+      "nom_dci": "Lisdexamfétamine",
+      "synonymes": ["Vyvanse", "Elvanse", "LDX", "lisdexamphétamine"],
+      "classe": "Psychostimulant (promédicament d-amphétamine)",
+      "statut_fr": "Stupéfiants (ordonnance sécurisée 28 jours, AMM TDAH adulte/enfant ≥6 ans depuis 2022)",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "peptidases érythrocytaires cytosoliques",
+          "alias": "hydrolyse RBC (red blood cell hydrolysis)",
+          "rang": "majeur (voie exclusive)",
+          "produit": "d-amphétamine (active) + l-lysine (inactive)",
+          "preuve": "IVH-C",
+          "source": "PMID:25489246"
+        },
+        {
+          "enzyme": "CYP2D6",
+          "alias": "(métabolisme aval de la d-amphétamine libérée)",
+          "rang": "mineur",
+          "produit": "4-hydroxyamphétamine + norephédrine",
+          "preuve": "IVH-O",
+          "source": "FDA:label-vyvanse"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "élimination rénale ~96% (parent + métabolites)",
+          "rang": "majeur (voie d'élimination)",
+          "produit": "amphétamine inchangée (~30%) + métabolites",
+          "preuve": "IVH-C",
+          "source": "FDA:label-vyvanse"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "PEPT1 (SLC15A1)",
+          "role": "substrat — absorption intestinale haute capacité",
+          "preuve": "IVH-C",
+          "source": "PMID:20628632"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "d-amphétamine (= principe actif libéré)",
+        "activite_relative": "métabolite actif PRINCIPAL — la lisdexamfétamine elle-même est un promédicament inactif. d-amphétamine t1/2 ~10h",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM) ; duplications (UM)",
+          "phenotype": "PM ou UM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — voie CYP2D6 mineure pour la d-amphétamine libérée. Impact PK modeste vs amphétamine directe. Pas d'ajustement recommandé.",
+          "zone_grise": true,
+          "source": "FDA:label-vyvanse"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "pH urinaire (acidifiants : vitamine C, jus de canneberge / alcalinisants : bicarbonate, IPP)",
+          "mecanisme": "amphétamine = base faible — réabsorption tubulaire pH-dépendante",
+          "effet": "alcalinisation : ↑ AUC amphétamine 2-3× / acidification : ↓ AUC + ↑ effet rebond",
+          "timing": "éviter modificateurs pH urinaire ; noter co-prescription IPP",
+          "preuve": "IVH-C",
+          "source": "FDA:label-vyvanse"
+        },
+        {
+          "avec": "IMAO",
+          "mecanisme": "potentialisation libération catécholamines",
+          "effet": "crise hypertensive, risque vital",
+          "timing": "CI absolue ; délai 14 jours",
+          "preuve": "IVH-O",
+          "source": "FDA:label-vyvanse"
+        },
+        {
+          "avec": "ISRS, IRSNa, opioïdes sérotoninergiques (tramadol, fentanyl)",
+          "mecanisme": "potentialisation 5-HT par amphétamine",
+          "effet": "syndrome sérotoninergique (rare mais documenté)",
+          "timing": "surveillance clinique",
+          "preuve": "CAS",
+          "source": "FDA:label-vyvanse"
+        },
+        {
+          "avec": "pathologie inflammatoire intestinale (Crohn, RCH, post-bariatrique)",
+          "mecanisme": "altération PEPT1 intestinal",
+          "effet": "↓ biodisponibilité LDX — efficacité réduite",
+          "timing": "envisager amphétamine directe (Adderall non commercialisé FR)",
+          "preuve": "IVH-O",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "HTA", "tachycardie", "seuil-ep", "CI-IMAO", "sero", "dépendance-documented-faible-vs-amphetamine", "détournement-réduit-vs-amphetamine"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-vyvanse", "PMID:25489246", "PMID:20628632", "HUG:rapport_2020_extension"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "pst_dexamfetamine",
+      "nom_dci": "Dexamphétamine",
+      "synonymes": ["Dexedrine", "d-amphétamine", "dextroamphétamine"],
+      "classe": "Psychostimulant",
+      "statut_fr": "Non commercialisé en France (disponible US/UK/AU ; ATU possible)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "4-hydroxyamphétamine (actif faible) + norephédrine (active faible)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-dextroamphetamine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "DBH",
+          "alias": "dopamine-β-hydroxylase",
+          "rang": "mineur",
+          "produit": "norephédrine",
+          "preuve": "IVT",
+          "source": "StatPearls:Dextroamphetamine"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "élimination rénale pH-dépendante",
+          "rang": "majeur (voie d'élimination)",
+          "produit": "amphétamine inchangée (~30-45%)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-dextroamphetamine"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "4-hydroxyamphétamine + norephédrine",
+        "activite_relative": "activité faible — contribution clinique mineure",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*4, *5, *6 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. PM : ↑ exposition amphétamine modérée (~25-30%). Pas d'ajustement standard.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "IMAO",
+          "mecanisme": "potentialisation libération catécholamines",
+          "effet": "crise hypertensive",
+          "timing": "CI absolue ; délai 14 jours",
+          "preuve": "IVH-O",
+          "source": "FDA:label-dextroamphetamine"
+        },
+        {
+          "avec": "pH urinaire",
+          "mecanisme": "réabsorption tubulaire pH-dépendante",
+          "effet": "alcalinisation : ↑ exposition / acidification : ↓ exposition",
+          "timing": "noter IPP, bicarbonate",
+          "preuve": "IVH-C",
+          "source": "FDA:label-dextroamphetamine"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "potentialisation 5-HT",
+          "effet": "syndrome sérotoninergique (rare)",
+          "timing": "surveillance",
+          "preuve": "CAS",
+          "source": "FDA:label-dextroamphetamine"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "HTA", "tachycardie", "seuil-ep", "CI-IMAO", "sero", "dépendance-documented", "mésusage-documented"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-dextroamphetamine", "StatPearls:Dextroamphetamine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "pst_atomoxetine",
+      "nom_dci": "Atomoxétine",
+      "synonymes": ["Strattera"],
+      "classe": "Inhibiteur sélectif recapture noradrénaline (NRI)",
+      "statut_fr": "Liste I (AMM TDAH ≥6 ans, primo-prescription pédiatre/psy/neuro)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2D6",
+          "rang": "majeur",
+          "produit": "4-hydroxyatomoxétine (actif équipuissant, mais glucuroconjugué rapidement → inactif)",
+          "preuve": "IVH-C",
+          "source": "CPIC:atomoxetine-CYP2D6-2019"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "N-desméthylatomoxétine (faiblement actif)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-strattera"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B15",
+          "rang": "majeur",
+          "produit": "4-hydroxyatomoxétine-O-glucuronide (élimination urinaire)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-strattera"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "4-hydroxyatomoxétine",
+        "activite_relative": "équipuissant à atomoxétine in vitro mais glucuroconjugué très rapidement → contribution clinique négligeable",
+        "demi_vie_h": 4
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2D6",
+          "variants": "*3, *4, *5, *6, *7, *8 (PM)",
+          "phenotype": "PM (~5-10% Européens)",
+          "niveau_cpic": "A",
+          "recommandation": "CPIC 2019 (verbatim) : « In CYP2D6 PMs, initiate atomoxetine at 0.5 mg/kg/day and only increase to the standard 1.2 mg/kg/day if symptoms fail to improve after 4 weeks AND absence of side effects. Consider obtaining a peak plasma concentration (1-2 hours after dose) ; if >5000 ng/mL, decrease dose. » AUC ↑ ×5-10 chez PM ; t1/2 21h vs 5h chez EM.",
+          "zone_grise": false,
+          "source": "CPIC:atomoxetine-CYP2D6-2019"
+        },
+        {
+          "gene": "CYP2D6",
+          "variants": "duplications fonctionnelles ×N",
+          "phenotype": "UM",
+          "niveau_cpic": "A",
+          "recommandation": "CPIC 2019 (verbatim) : « In CYP2D6 UMs, consider selecting an alternative drug not metabolized by CYP2D6 ; if atomoxetine is used, monitor for therapeutic failure and consider higher doses (up to 1.8 mg/kg/day in adults) with peak plasma concentration monitoring. »",
+          "zone_grise": false,
+          "source": "CPIC:atomoxetine-CYP2D6-2019"
+        },
+        {
+          "gene": "CYP2D6",
+          "variants": "*1/*1, *1/*2 (NM)",
+          "phenotype": "NM (normal metabolizer)",
+          "niveau_cpic": "A",
+          "recommandation": "CPIC 2019 : posologie standard 0.5 mg/kg/j × 7 j puis 1.2 mg/kg/j (max 1.4 mg/kg/j ou 100 mg/j adulte).",
+          "zone_grise": false,
+          "source": "CPIC:atomoxetine-CYP2D6-2019"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "paroxétine, fluoxétine, bupropion (inhibiteurs CYP2D6 puissants)",
+          "mecanisme": "inhibition CYP2D6 → phénocopie PM",
+          "effet": "↑ exposition atomoxétine ×6-8 — toxicité cardiovasculaire",
+          "timing": "réduire dose atomoxétine (initiation 0.5 mg/kg/j, montée selon tolérance) ou alternative ISRS non-2D6 (sertraline, citalopram)",
+          "preuve": "IVH-C",
+          "source": "CPIC:atomoxetine-CYP2D6-2019"
+        },
+        {
+          "avec": "IMAO (phénelzine, tranylcypromine, linézolide, bleu de méthylène)",
+          "mecanisme": "potentialisation noradrénaline",
+          "effet": "crise hypertensive, syndrome sérotoninergique",
+          "timing": "CI absolue ; délai 14 jours",
+          "preuve": "IVH-O",
+          "source": "FDA:label-strattera"
+        },
+        {
+          "avec": "ISRS, IRSNa",
+          "mecanisme": "addition inhibition recapture monoaminergique",
+          "effet": "potentialisation effet thymique mais risque suicidaire chez adolescent (FDA boxed warning)",
+          "timing": "surveillance idéation suicidaire premières semaines",
+          "preuve": "IVH-O",
+          "source": "FDA:label-strattera"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "HTA", "hépatotox-rare", "idéation-suicidaire-adolescent", "CI-IMAO"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-strattera", "CPIC:atomoxetine-CYP2D6-2019", "ANSM:RCP-strattera"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "pst_guanfacine",
+      "nom_dci": "Guanfacine",
+      "synonymes": ["Intuniv", "Estulic"],
+      "classe": "Agoniste α2A-adrénergique",
+      "statut_fr": "Liste I (AMM TDAH 6-17 ans depuis 2017, primo-prescription neuro/psy/pédiatre)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "3-hydroxyguanfacine + métabolites mineurs (inactifs)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-intuniv"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "élimination rénale ~50% inchangée",
+          "rang": "majeur",
+          "produit": "guanfacine inchangée",
+          "preuve": "IVH-C",
+          "source": "FDA:label-intuniv"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; t1/2 ~17h chez enfant, 18h adulte",
+        "demi_vie_h": 17
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "kétoconazole, itraconazole, ritonavir, clarithromycine (inhibiteurs CYP3A4 forts)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑↑ exposition guanfacine — hypotension, bradycardie, sédation",
+          "timing": "réduire dose guanfacine 50%",
+          "preuve": "IVH-C",
+          "source": "FDA:label-intuniv"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, phénytoïne, millepertuis",
+          "mecanisme": "induction CYP3A4 forte",
+          "effet": "↓↓ exposition guanfacine — inefficacité",
+          "timing": "doubler dose guanfacine (selon RCP) ou alternative",
+          "preuve": "IVH-O",
+          "source": "FDA:label-intuniv"
+        },
+        {
+          "avec": "antihypertenseurs, β-bloqueurs",
+          "mecanisme": "additivité hypotensive",
+          "effet": "hypotension symptomatique, syncope",
+          "timing": "surveillance TA + FC ; titration prudente",
+          "preuve": "IVH-O",
+          "source": "FDA:label-intuniv"
+        },
+        {
+          "avec": "alcool, BZD, opioïdes",
+          "mecanisme": "additivité sédative",
+          "effet": "somnolence excessive",
+          "timing": "prudence",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-intuniv"
+        }
+      ],
+      "alertes_pd": ["bradycardie", "hypotension-orthostatique", "sédation", "syncope", "rebond-HTA-arrêt-brutal"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-intuniv", "ANSM:RCP-intuniv"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "pst_modafinil",
+      "nom_dci": "Modafinil",
+      "synonymes": ["Modiodal", "Provigil", "armodafinil/Nuvigil (énantiomère R, US)"],
+      "classe": "Modulateur éveil (eugrégorique)",
+      "statut_fr": "Liste I (prescription initiale hospitalière annuelle, indication restreinte narcolepsie ; ATU strictes pour autres indications depuis 2011)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4/5",
+          "rang": "mineur (formation modafinil sulfone)",
+          "produit": "modafinil sulfone (inactif, t1/2 long ~40h, accumule en chronique)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "amide hydrolyse (estérases/amidases hépatiques)",
+          "alias": "hydrolytic deamidation",
+          "rang": "majeur (voie principale ~50-60%)",
+          "produit": "acide modafinique (modafinil acid, inactif — métabolite urinaire majoritaire 35-60%)",
+          "preuve": "IVH-C",
+          "source": "DOI:10.2165/00003088-200342020-00002"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "glucuroconjugaison + sulfoconjugaison (mineure)",
+          "rang": "mineur",
+          "produit": "métabolites hydroxylés conjugués",
+          "preuve": "IVH-O",
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2C19",
+          "puissance": "modérée (réversible — modafinil ET modafinil sulfone)",
+          "mecanisme": "inhibition compétitive ; sulfone t1/2 long → accumulation et inhibition prolongée",
+          "preuve": "IVH-C",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "cible": "CYP2C9",
+          "puissance": "faible (suppression in vitro)",
+          "mecanisme": "suppression concentration-dépendante",
+          "preuve": "IVT",
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "inducteur": [
+        {
+          "cible": "CYP3A4 (intestinal et hépatique)",
+          "puissance": "modérée",
+          "mecanisme": "induction PXR",
+          "preuve": "IVH-C",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "cible": "CYP1A2",
+          "puissance": "faible",
+          "mecanisme": "induction concentration-dépendante",
+          "preuve": "IVT",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "cible": "CYP2B6",
+          "puissance": "faible",
+          "mecanisme": "induction concentration-dépendante",
+          "preuve": "IVT",
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "modafinil acid et modafinil sulfone inactifs sur l'éveil",
+        "demi_vie_h": 13
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — modafinil substrat mineur CYP2C19. Pas d'impact significatif documenté chez PM.",
+          "zone_grise": true,
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "contraceptifs oraux (éthinylestradiol)",
+          "mecanisme": "induction CYP3A4 intestinale par modafinil",
+          "effet": "↓ AUC éthinylestradiol → échec contraceptif",
+          "timing": "FDA recommande méthode contraceptive non hormonale ou contraception complémentaire pendant + 1 mois après arrêt modafinil",
+          "preuve": "IVH-C",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "avec": "ciclosporine (substrat CYP3A4)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ ciclosporinémie 50% (cas documenté chez transplantée)",
+          "timing": "surveillance taux ciclosporine + ajustement dose",
+          "preuve": "CAS",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "avec": "diazépam, phénytoïne, propranolol, ADT (substrats CYP2C19)",
+          "mecanisme": "inhibition CYP2C19 par modafinil + sulfone",
+          "effet": "↑ exposition substrats — surveillance dose",
+          "timing": "réduire dose substrats CYP2C19 selon clinique",
+          "preuve": "IVH-O",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "avec": "warfarine (substrat CYP2C9)",
+          "mecanisme": "suppression CYP2C9 in vitro mais pas d'effet clinique significatif",
+          "effet": "INR peu modifié dans étude dédiée",
+          "timing": "surveillance INR initiale puis stable",
+          "preuve": "IVH-C",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "avec": "kétoconazole, itraconazole",
+          "mecanisme": "inhibition CYP3A4 (mais voie mineure pour modafinil)",
+          "effet": "impact PK modeste — pas d'ajustement standard",
+          "timing": "—",
+          "preuve": "IVT",
+          "source": "FDA:label-provigil"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, phénobarbital",
+          "mecanisme": "induction CYP3A4 (voie mineure)",
+          "effet": "↓ modeste exposition modafinil",
+          "timing": "surveillance efficacité",
+          "preuve": "IVH-O",
+          "source": "FDA:label-provigil"
+        }
+      ],
+      "alertes_pd": ["DRESS-rare", "SJS-Lyell-rare", "psychose-réactivation", "HTA", "anxiété", "détournement-cognitive-enhancement"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-provigil", "ANSM:RCP-modiodal", "DOI:10.2165/00003088-200342020-00002"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs"]
+    },
+    {
+      "id": "pst_bupropion",
+      "nom_dci": "Bupropion",
+      "synonymes": ["Zyban (sevrage tabagique)", "Wellbutrin (dépression, US)", "amfébutamone"],
+      "classe": "Inhibiteur recapture noradrénaline et dopamine (NDRI) / antagoniste nicotinique non-compétitif",
+      "statut_fr": "Liste I (AMM sevrage tabagique uniquement en France ; AMM antidépresseur dans d'autres pays — usage hors-AMM possible en France)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2B6",
+          "rang": "majeur",
+          "produit": "hydroxybupropion (actif — contribution majeure à l'effet thérapeutique)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-wellbutrin"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "métabolites mineurs (érythrohydrobupropion, thréohydrobupropion via réductase non-CYP)",
+          "preuve": "IVT",
+          "source": "FDA:label-wellbutrin"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "11β-hydroxystéroïde déshydrogénase 1 (11β-HSD1) + AKR",
+          "alias": "carbonyl réductase / réductases cytosoliques",
+          "rang": "majeur",
+          "produit": "érythrohydrobupropion + thréohydrobupropion (actifs faibles)",
+          "preuve": "IVH-C",
+          "source": "PMID:21976390"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "UGT (1A4 et autres)",
+          "rang": "mineur",
+          "produit": "glucuronides des métabolites",
+          "preuve": "IVT",
+          "source": "FDA:label-wellbutrin"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [
+        {
+          "cible": "CYP2D6",
+          "puissance": "forte (compétitive, mais hydroxybupropion = inhibiteur dominant — t1/2 ~20h → effet prolongé)",
+          "mecanisme": "inhibition compétitive par bupropion + hydroxybupropion",
+          "preuve": "IVH-C",
+          "source": "CPIC:opioids-CYP2D6-2021 (mention bupropion comme phénocopie PM)"
+        },
+        {
+          "cible": "CYP2B6",
+          "puissance": "modérée (auto-inhibition mécanisme-dépendant possible)",
+          "mecanisme": "MBI suspectée + compétitive",
+          "preuve": "IVT",
+          "source": "PMID:21976390"
+        }
+      ],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "hydroxybupropion (R,R-hydroxybupropion = principal) + thréohydrobupropion + érythrohydrobupropion",
+        "activite_relative": "hydroxybupropion ~50% activité parent ; t1/2 ~20h vs 14h bupropion → contribution majeure à l'efficacité chronique. C'est aussi LE métabolite responsable de l'inhibition CYP2D6.",
+        "demi_vie_h": 20
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2B6",
+          "variants": "*6 (Q172H + K262R), *18",
+          "phenotype": "PM/IM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — porteurs CYP2B6*6 : ↓ formation hydroxybupropion → potentielle ↓ efficacité antidépressive (mais effet sevrage tabagique préservé via parent). Pas de guideline CPIC, signal modéré.",
+          "zone_grise": true,
+          "source": "PMID:21976390"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "tramadol, codéine, oxycodone, hydrocodone (substrats CYP2D6)",
+          "mecanisme": "inhibition CYP2D6 → phénocopie PM",
+          "effet": "tramadol/codéine : ↓ formation M1/morphine → INEFFICACITÉ ANALGÉSIQUE. Oxycodone : ↑ exposition parent",
+          "timing": "CPIC 2021 recommande d'éviter l'association ou choisir analgésique non-2D6 (morphine, hydromorphone). Persistance inhibition ~7-10 jours après arrêt bupropion (t1/2 hydroxybupropion).",
+          "preuve": "IVH-C",
+          "source": "CPIC:opioids-CYP2D6-2021"
+        },
+        {
+          "avec": "venlafaxine, duloxétine, fluoxétine, paroxétine, ADT, métoprolol, dextrométhorphane",
+          "mecanisme": "inhibition CYP2D6",
+          "effet": "↑ exposition substrats — risque toxicité",
+          "timing": "réduire dose substrat ou alternative",
+          "preuve": "IVH-O",
+          "source": "FDA:label-wellbutrin"
+        },
+        {
+          "avec": "IMAO (phénelzine, tranylcypromine, sélégiline, linézolide, bleu de méthylène)",
+          "mecanisme": "potentialisation libération catécholamines",
+          "effet": "crise hypertensive",
+          "timing": "CI absolue ; délai 14 jours",
+          "preuve": "IVH-O",
+          "source": "FDA:label-wellbutrin"
+        },
+        {
+          "avec": "molécules abaissant le seuil épileptogène (tramadol, ISRS, antipsychotiques, théophylline, alcool sevrage)",
+          "mecanisme": "additivité épileptogène (bupropion = abaisseur seuil dose-dépendant)",
+          "effet": "convulsions — incidence 0.4% à 300 mg/j, ↑ doses supérieures",
+          "timing": "CI bupropion si trouble convulsif, anorexie/boulimie active, sevrage alcoolique/BZD aigu",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-bupropion-seizures"
+        },
+        {
+          "avec": "ritonavir, lopinavir, efavirenz",
+          "mecanisme": "induction CYP2B6",
+          "effet": "↓ exposition bupropion → inefficacité",
+          "timing": "ajuster dose",
+          "preuve": "IVH-O",
+          "source": "FDA:label-wellbutrin"
+        },
+        {
+          "avec": "tabac (induction CYP2B6 par HAP combustion)",
+          "mecanisme": "induction CYP2B6 — modeste",
+          "effet": "↓ exposition bupropion modeste ; pertinent en cours sevrage tabagique (à l'arrêt du tabac, exposition ↑)",
+          "timing": "à intégrer dans la dynamique de sevrage",
+          "preuve": "IVH-O",
+          "source": "FDA:label-zyban"
+        }
+      ],
+      "alertes_pd": ["seuil-ep", "HTA", "insomnie", "agitation", "psychose-réactivation", "CI-IMAO", "CI-anorexie-boulimie", "CI-sevrage-alcool-BZD-aigu", "idéation-suicidaire-jeune-adulte"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-wellbutrin", "FDA:label-zyban", "ANSM:RCP-zyban", "CPIC:opioids-CYP2D6-2021", "PMID:21976390"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inducteur"]
+    },
+    {
+      "id": "pst_cafeine",
+      "nom_dci": "Caféine",
+      "synonymes": ["1,3,7-triméthylxanthine", "caffeine"],
+      "classe": "Psychostimulant (méthylxanthine)",
+      "statut_fr": "Non classé (alimentaire) ; usage médical (Peyona en néonatologie pour apnée du prématuré, Liste I)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP1A2",
+          "rang": "majeur (~95% métabolisme)",
+          "produit": "paraxanthine (1,7-diméthylxanthine, métabolite principal et actif) + théobromine + théophylline (mineurs)",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Caffeine"
+        },
+        {
+          "isoforme": "CYP2E1",
+          "rang": "mineur",
+          "produit": "voies mineures",
+          "preuve": "IVT",
+          "source": "StatPearls:Caffeine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "NAT2",
+          "alias": "N-acétyltransférase 2",
+          "rang": "mineur (métabolisme aval paraxanthine)",
+          "produit": "AAMU (5-acétylamino-6-amino-3-méthyluracile) — biomarqueur phénotypage NAT2",
+          "preuve": "IVH-C",
+          "source": "PMID:9603415"
+        },
+        {
+          "enzyme": "xanthine oxydase",
+          "alias": "XO",
+          "rang": "mineur",
+          "produit": "1-méthylacide urique + autres uracils méthylés",
+          "preuve": "IVH-O",
+          "source": "StatPearls:Caffeine"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "paraxanthine",
+        "activite_relative": "actif — antagoniste adénosine A1/A2A équipuissant à la caféine ; t1/2 similaire ~3-5h",
+        "demi_vie_h": 5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP1A2",
+          "variants": "*1F (rs762551, allèle inducteur tabac)",
+          "phenotype": "métaboliseurs rapides (homo *1F/*1F) vs lents",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. *1F/*1F : clairance caféine ↑ chez fumeurs, peu d'effet chez non-fumeurs. Utilisé en recherche comme sonde CYP1A2.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        },
+        {
+          "gene": "NAT2",
+          "variants": "*5, *6, *7 (acétyleurs lents)",
+          "phenotype": "acétyleurs lents (50-70% population française)",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — caféine = sonde phénotypique NAT2 (rapport AAMU/AFMU urinaire). Pas d'impact clinique direct sur effet caféine.",
+          "zone_grise": true,
+          "source": "PMID:9603415"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "ciprofloxacine, énoxacine, norfloxacine (fluoroquinolones)",
+          "mecanisme": "inhibition CYP1A2 forte",
+          "effet": "↑↑ exposition caféine ×3-5 — agitation, insomnie, palpitations",
+          "timing": "limiter caféine pendant traitement",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "fluvoxamine",
+          "mecanisme": "inhibition CYP1A2 puissante",
+          "effet": "↑↑ exposition caféine + clozapine + olanzapine + théophylline",
+          "timing": "limiter caféine ; surveillance",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "tabac (HAP combustion)",
+          "mecanisme": "induction CYP1A2",
+          "effet": "↓ caféine (clairance ↑ ×1.5-2 chez fumeurs) ; à l'arrêt du tabac, exposition ↑",
+          "timing": "alerte sevrage tabagique : symptômes hypercaféine possibles (anxiété, palpitations) — recommander réduction caféine",
+          "preuve": "IVH-C",
+          "source": "PMID:8809871"
+        },
+        {
+          "avec": "clozapine, olanzapine, théophylline, mexiletine, propranolol (substrats CYP1A2)",
+          "mecanisme": "compétition CYP1A2",
+          "effet": "modeste mais cumulatif chez gros consommateurs caféine",
+          "timing": "limiter consommation",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "lithium",
+          "mecanisme": "↓ excrétion lithium par caféine (effet diurétique inverse à l'arrêt)",
+          "effet": "à l'arrêt brutal caféine : ↑ lithémie 24% rapportée",
+          "timing": "consommation stable ; alerter sur arrêt brutal",
+          "preuve": "IVH-O",
+          "source": "PMID:1939689"
+        },
+        {
+          "avec": "alcool",
+          "mecanisme": "interaction PD : caféine masque sédation alcoolique",
+          "effet": "perception sobriété accrue → sur-consommation alcool ; risque accidents",
+          "timing": "alerter patient",
+          "preuve": "IVH-O",
+          "source": "FDA:caffeinated-alcohol-2010"
+        }
+      ],
+      "alertes_pd": ["anxiété", "tachycardie", "palpitations", "insomnie", "dépendance-faible", "sevrage-céphalées-fatigue"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["StatPearls:Caffeine", "PMID:9603415", "PMID:8809871"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur"]
+    }
+  ]
+}

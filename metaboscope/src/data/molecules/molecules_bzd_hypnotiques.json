@@ -1,0 +1,1167 @@
+{
+  "metadata": {
+    "fichier": "molecules_bzd_hypnotiques.json",
+    "session": 5,
+    "date_generation": "2026-04-22",
+    "nombre_molecules": 13,
+    "classes_couvertes": ["Benzodiazépine", "Hypnotique apparenté (Z-drug)", "Antihistaminique H1 anxiolytique"],
+    "note_methodologique": "Session 5 MétaboScope. Corrections intégrées vs Livrable 4a-2 ChatGPT DR : (1) zolpidem reclassé Liste I/assimilé stupéfiant (pas Stupéfiants stricto sensu), (2) diazépam enrichi CYP2B6 mineur, (3) hydroxyzine EMA referral 2015 et ACB-3 explicites, (4) interactions_specifiques systématiques, (5) PGx DPWG/CPIC verbatim quand niveau A/B, (6) champ_manquants[] systématique."
+  },
+  "molecules": [
+    {
+      "id": "bzd_diazepam",
+      "nom_dci": "Diazépam",
+      "synonymes": ["Valium", "Novazam", "Stésolid (rectal)"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur",
+          "produit": "N-desméthyldiazépam (nordiazépam, actif, t1/2 40-100h)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-diazepam"
+        },
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "témazépam (actif) + voie secondaire nordiazépam",
+          "preuve": "IVH-C",
+          "source": "FDA:label-diazepam"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "nordiazépam (voie minoritaire)",
+          "preuve": "IVT",
+          "source": "StatPearls:Diazepam"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur (pour métabolites oxazépam/témazépam terminaux)",
+          "produit": "glucuronides inactifs (élimination urinaire)",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Diazepam"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "FDA:label-diazepam"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "nordiazépam (N-desméthyldiazépam) + témazépam + oxazépam (cascade)",
+        "activite_relative": "nordiazépam ~80% activité parent, t1/2 très longue (40-100h) → accumulation chez sujet âgé. Témazépam et oxazépam actifs avant glucuronoconjugaison",
+        "demi_vie_h": 60
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC spécifique diazépam. Données PK : PM présentent ↑ exposition diazépam ~50% et ↑↑ t1/2 nordiazépam. Recommandation pragmatique : réduire dose initiale 30-50% chez sujet âgé PM ou population asiatique (prévalence PM ~15-20%). Surveillance sédation résiduelle.",
+          "zone_grise": true,
+          "source": "PMID:12598722 (population asiatique)"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "fluvoxamine, oméprazole, ésoméprazole, fluoxétine",
+          "mecanisme": "inhibition CYP2C19 → ↓ clairance diazépam et nordiazépam",
+          "effet": "↑ exposition, sédation prolongée, chutes (sujet âgé)",
+          "timing": "réduire dose 30-50% ou préférer BZD UGT (oxazépam, lorazépam)",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "kétoconazole, itraconazole, voriconazole, clarithromycine, érythromycine",
+          "mecanisme": "inhibition CYP3A4 forte",
+          "effet": "↑ exposition diazépam",
+          "timing": "éviter l'association ou réduire dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, phénytoïne, millepertuis",
+          "mecanisme": "induction CYP3A4/CYP2C19",
+          "effet": "↓ efficacité diazépam",
+          "timing": "ajustement dose ; préférer BZD UGT",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes (méthadone, buprénorphine, morphine)",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning 2016 — mortalité HR 2.5-3 dans cohortes (buprénorphine+BZD)",
+          "timing": "éviter l'association si possible ; si indispensable, doses minimales + éducation overdose naloxone",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "alcool",
+          "mecanisme": "synergie GABA-A + dépression SNC",
+          "effet": "sédation profonde, risque coma",
+          "timing": "éviter consommation alcool",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-diazepam"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "chute-sujet-age", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-diazepam", "ANSM:RCP-diazepam", "ANSM:thesaurus-2024", "StatPearls:Diazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["inhibiteur", "inducteur"]
+    },
+    {
+      "id": "bzd_oxazepam",
+      "nom_dci": "Oxazépam",
+      "synonymes": ["Seresta", "Serax"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "oxazépam-glucuronide (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-oxazepam"
+        },
+        {
+          "enzyme": "UGT2B15",
+          "rang": "mineur",
+          "produit": "oxazépam-glucuronide",
+          "preuve": "IVT",
+          "source": "PMID:16946766"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolite terminal de diazépam/nordiazépam ; pas de métabolite actif propre",
+        "demi_vie_h": 8
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "UGT2B15",
+          "variants": "*2 (D85Y)",
+          "phenotype": "réduction activité enzymatique ~50%",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. Porteurs UGT2B15*2 homozygotes peuvent présenter ↑ exposition, mais signal clinique faible. Pas d'ajustement de routine.",
+          "zone_grise": true,
+          "source": "PMID:16946766"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "cirrhose hépatique (Child-Pugh B/C)",
+          "mecanisme": "métabolisme UGT préservé (pas de CYP) → clairance peu altérée",
+          "effet": "BZD de choix en insuffisance hépatique (avec lorazépam, témazépam)",
+          "timing": "préférer oxazépam à diazépam/alprazolam chez cirrhotique",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "avec": "opioïdes, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning 2016 (classe BZD)",
+          "timing": "éviter ou doses minimales",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "probénécide, valproate",
+          "mecanisme": "inhibition UGT2B7",
+          "effet": "↑ modérée concentrations oxazépam",
+          "timing": "surveillance clinique, pas de CI",
+          "preuve": "IVT",
+          "source": "PMID:16946766"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-oxazepam", "ANSM:RCP-oxazepam", "StatPearls:Oxazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "bzd_lorazepam",
+      "nom_dci": "Lorazépam",
+      "synonymes": ["Temesta", "Ativan"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "lorazépam-glucuronide (inactif, élimination urinaire)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-lorazepam"
+        },
+        {
+          "enzyme": "UGT2B15",
+          "rang": "mineur",
+          "produit": "lorazépam-glucuronide",
+          "preuve": "IVT",
+          "source": "StatPearls:Lorazepam"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "pas de métabolite actif — voie UGT directe",
+        "demi_vie_h": 12
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "cirrhose hépatique",
+          "mecanisme": "métabolisme UGT conservé, pas de phase I",
+          "effet": "BZD recommandée en cirrhose (avec oxazépam, témazépam) — « LOT-BZD »",
+          "timing": "privilégier lorazépam à diazépam/alprazolam",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "avec": "opioïdes, alcool, clozapine IV",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning opioïdes+BZD ; cas de dépression respiratoire clozapine IV + lorazépam parentéral",
+          "timing": "éviter lorazépam IV+clozapine ; prudence co-BZD+opioïdes",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "valproate",
+          "mecanisme": "inhibition UGT2B7 par valproate",
+          "effet": "↑ concentrations lorazépam ~40%",
+          "timing": "réduire dose lorazépam 50% si co-prescription",
+          "preuve": "IVH-O",
+          "source": "PMID:10997951"
+        },
+        {
+          "avec": "probénécide",
+          "mecanisme": "inhibition UGT2B7",
+          "effet": "↑ concentrations lorazépam",
+          "timing": "surveillance clinique",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-lorazepam", "ANSM:RCP-lorazepam", "StatPearls:Lorazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "bzd_temazepam",
+      "nom_dci": "Témazépam",
+      "synonymes": ["Restoril", "Normison"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Non commercialisé en France (disponible US/UK/IE)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "mineur",
+          "produit": "oxazépam (voie secondaire, <5%)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-temazepam"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur",
+          "produit": "témazépam-glucuronide (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-temazepam"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolite actif de diazépam ; pas de métabolite actif propre significatif",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "cirrhose hépatique",
+          "mecanisme": "métabolisme UGT conservé",
+          "effet": "BZD de choix en cirrhose (trio « LOT » : lorazépam, oxazépam, témazépam)",
+          "timing": "privilégier si disponible (non commercialisé FR — import nominatif possible)",
+          "preuve": "IVH-O",
+          "source": "Gemini DR 2"
+        },
+        {
+          "avec": "opioïdes, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning classe BZD",
+          "timing": "éviter ou doses minimales",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-temazepam", "StatPearls:Temazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "bzd_alprazolam",
+      "nom_dci": "Alprazolam",
+      "synonymes": ["Xanax", "Xanax XR"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "α-hydroxyalprazolam (actif faible, t1/2 courte) + 4-hydroxyalprazolam",
+          "preuve": "IVH-C",
+          "source": "FDA:label-alprazolam"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides (élimination urinaire)",
+          "preuve": "IVH-O",
+          "source": "FDA:label-alprazolam"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVT",
+          "source": "StatPearls:Alprazolam"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "α-hydroxyalprazolam",
+        "activite_relative": "environ 50% activité parent, demi-vie plus courte → contribution mineure à l'effet clinique",
+        "demi_vie_h": 5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP3A4",
+          "variants": "*22 (rs35599367)",
+          "phenotype": "IM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. Porteurs *22 : ↑ exposition alprazolam ~30-50%. Surveillance sédation excessive.",
+          "zone_grise": true,
+          "source": "Littérature PK"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "kétoconazole, itraconazole, voriconazole, clarithromycine, érythromycine, ritonavir, cobicistat",
+          "mecanisme": "inhibition CYP3A4 forte",
+          "effet": "↑↑ exposition alprazolam (AUC ×3-4)",
+          "timing": "CI ou éviter ; alternative si indispensable (lorazépam)",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "fluvoxamine, néfazodone",
+          "mecanisme": "inhibition CYP3A4 modérée",
+          "effet": "↑ exposition alprazolam",
+          "timing": "réduire dose 50% ou préférer lorazépam",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, phénytoïne, millepertuis",
+          "mecanisme": "induction CYP3A4 forte",
+          "effet": "↓↓ efficacité alprazolam",
+          "timing": "préférer lorazépam/oxazépam",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes (méthadone, buprénorphine)",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning 2016",
+          "timing": "éviter l'association",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "alcool, NPS benzo (étizolam, clonazolam, flualprazolam)",
+          "mecanisme": "co-consommation fréquente en mésusage",
+          "effet": "polyintoxication sévère, décès rapportés",
+          "timing": "dépistage systématique en USCA",
+          "preuve": "FOR",
+          "source": "EMCDDA:NPS-benzo-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1", "seuil-ep-sevrage"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-alprazolam", "ANSM:RCP-alprazolam", "ANSM:thesaurus-2024", "StatPearls:Alprazolam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "bzd_clonazepam",
+      "nom_dci": "Clonazépam",
+      "synonymes": ["Rivotril", "Klonopin"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I (ordonnance sécurisée depuis 09/2011, prescription initiale réservée neurologue/pédiatre)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "7-amino-clonazépam (inactif, biomarqueur) via nitroréduction CYP3A4 + NADPH-réductase",
+          "preuve": "IVH-C",
+          "source": "FDA:label-clonazepam"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "AKR",
+          "alias": "aldo-céto réductase (nitroréduction)",
+          "rang": "mineur",
+          "produit": "7-amino-clonazépam",
+          "preuve": "IVT",
+          "source": "StatPearls:Clonazepam"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "NAT2",
+          "rang": "mineur",
+          "produit": "7-acétamido-clonazépam (N-acétylation du 7-amino)",
+          "preuve": "IVH-O",
+          "source": "PMID:2929773"
+        },
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "StatPearls:Clonazepam"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "7-amino-clonazépam : biomarqueur forensique mais inactif",
+        "demi_vie_h": 35
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "NAT2",
+          "variants": "*5, *6, *7 (acétyleurs lents)",
+          "phenotype": "acétyleurs lents (50-70% population française)",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — pas de guideline CPIC. Acétyleurs lents : ↑ exposition 7-amino-clonazépam (inactif) sans impact sur clonazépam parent. Pas d'ajustement clinique.",
+          "zone_grise": true,
+          "source": "PMID:2929773"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts (kétoconazole, clarithromycine, ritonavir)",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition clonazépam",
+          "timing": "réduire dose 50% ou préférer lorazépam",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (rifampicine, carbamazépine, phénytoïne, millepertuis)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ efficacité clonazépam",
+          "timing": "surveillance efficacité antiépileptique si indication épilepsie",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning 2016",
+          "timing": "éviter ou doses minimales",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        },
+        {
+          "avec": "NPS benzo (clonazolam, flualprazolam) — contexte USCA",
+          "mecanisme": "co-consommation fréquente",
+          "effet": "polyintoxication, décès rapportés",
+          "timing": "dépistage systématique immunoassay BZD + LC-MS si doute",
+          "preuve": "FOR",
+          "source": "EMCDDA:NPS-benzo-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1", "seuil-ep-sevrage"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-clonazepam", "ANSM:RCP-clonazepam", "StatPearls:Clonazepam", "PMID:2929773"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "bzd_bromazepam",
+      "nom_dci": "Bromazépam",
+      "synonymes": ["Lexomil", "Lexotan", "Lexotanil"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "3-hydroxybromazépam (actif faible) + 2-amino-5-bromobenzoylpyridine",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-bromazepam"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "majeur",
+          "produit": "glucuronides inactifs",
+          "preuve": "IVH-O",
+          "source": "ANSM:RCP-bromazepam"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "3-hydroxybromazépam",
+        "activite_relative": "activité faible — contribution clinique mineure",
+        "demi_vie_h": 20
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "inhibiteurs CYP3A4 forts",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition bromazépam",
+          "timing": "réduire dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning classe BZD",
+          "timing": "éviter l'association",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-O",
+      "sources_principales": ["ANSM:RCP-bromazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "bzd_midazolam",
+      "nom_dci": "Midazolam",
+      "synonymes": ["Hypnovel", "Versed", "Buccolam (buccal)"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Liste I (usage hospitalier, anesthésie)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "1-hydroxymidazolam (actif, ~60% activité parent)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        },
+        {
+          "isoforme": "CYP3A5",
+          "rang": "mineur",
+          "produit": "1-hydroxymidazolam + 4-hydroxymidazolam",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT2B7",
+          "rang": "majeur (pour métabolites)",
+          "produit": "1-hydroxymidazolam-glucuronide (excrétion urinaire)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        }
+      ],
+      "transporteurs": [
+        {
+          "transporteur": "Pgp",
+          "role": "substrat",
+          "preuve": "IVH-O",
+          "source": "FDA:label-midazolam"
+        }
+      ],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "1-hydroxymidazolam",
+        "activite_relative": "~60% activité parent ; accumulation en IR chronique (glucuronide actif retenu) → sédation prolongée en réanimation",
+        "demi_vie_h": 1
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP3A5",
+          "variants": "*1 (expresseur), *3 (non-expresseur)",
+          "phenotype": "expresseur *1/*1 ou *1/*3",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — usage clinique midazolam sonde PK CYP3A4+CYP3A5 combinée. Expresseurs CYP3A5*1 : clairance midazolam ↑ ~20-30%. Pas d'ajustement dose routine, mais à considérer en PK populations (africains subsahariens : prévalence *1 élevée).",
+          "zone_grise": true,
+          "source": "PMID:21412232"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "kétoconazole, itraconazole, voriconazole, clarithromycine, érythromycine, ritonavir, cobicistat",
+          "mecanisme": "inhibition CYP3A4 forte (midazolam = sonde classique)",
+          "effet": "↑↑↑ exposition (AUC ×10-15 oral) — risque overdose",
+          "timing": "CI absolue forme orale ; IV : réduire dose 75%",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        },
+        {
+          "avec": "jus de pamplemousse",
+          "mecanisme": "inhibition CYP3A4 intestinale",
+          "effet": "↑ exposition midazolam oral (×2)",
+          "timing": "éviter avant prise orale",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        },
+        {
+          "avec": "rifampicine, carbamazépine, phénytoïne, millepertuis, efavirenz",
+          "mecanisme": "induction CYP3A4 forte",
+          "effet": "↓↓ efficacité midazolam (AUC ÷5)",
+          "timing": "inefficacité prévisible ; alternative",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        },
+        {
+          "avec": "opioïdes anesthésiques (fentanyl, rémifentanil)",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "synergie attendue en anesthésie — monitoring capnographique indispensable",
+          "timing": "usage contrôlé anesthésie",
+          "preuve": "IVH-C",
+          "source": "FDA:label-midazolam"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation-profonde", "anesthesie", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-midazolam", "ANSM:RCP-midazolam", "PMID:21412232"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "bzd_flunitrazepam",
+      "nom_dci": "Flunitrazépam",
+      "synonymes": ["Rohypnol", "Narcozep"],
+      "classe": "Benzodiazépine",
+      "statut_fr": "Retiré du marché FR (2013) ; substance classée Liste I / assimilé stupéfiant. Forensique et NPS circulant.",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "N-desméthylflunitrazépam (norflunitrazépam, actif, t1/2 ~20h) + 3-hydroxyflunitrazépam",
+          "preuve": "IVH-C",
+          "source": "PMID:9311620"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "mineur",
+          "produit": "N-desméthylflunitrazépam",
+          "preuve": "IVT",
+          "source": "PMID:9311620"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "AKR",
+          "alias": "aldo-céto réductase (nitroréduction)",
+          "rang": "majeur",
+          "produit": "7-aminoflunitrazépam (biomarqueur forensique, inactif) via nitroréduction du groupement nitro aromatique",
+          "preuve": "IVH-C",
+          "source": "Plan_de_recherche_MetaboScope"
+        }
+      ],
+      "phase2": [
+        {
+          "enzyme": "NAT2",
+          "rang": "mineur",
+          "produit": "7-acétamidoflunitrazépam (biomarqueur forensique secondaire)",
+          "preuve": "IVH-O",
+          "source": "PMID:9311620"
+        },
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides",
+          "preuve": "IVT",
+          "source": "StatPearls:Flunitrazepam"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "N-desméthylflunitrazépam (norflunitrazépam)",
+        "activite_relative": "actif, t1/2 ~20h — contribue à l'effet prolongé et hangover matinal",
+        "demi_vie_h": 20
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "alcool (soumission chimique classique)",
+          "mecanisme": "potentialisation GABA-A + amnésie antérograde + désinhibition",
+          "effet": "amnésie lacunaire, perte de contrôle — usage documenté en agressions sexuelles / vols",
+          "timing": "signal clinique : amnésie + symptômes BZD + sérologie BZD immunoassay positive (capter fenêtre détection ~72h sang / 5-7j urines pour le 7-aminoflunitrazépam)",
+          "preuve": "FOR",
+          "source": "Plan_de_recherche_MetaboScope"
+        },
+        {
+          "avec": "opioïdes, NPS opioïdes (nitazènes, fentanyl)",
+          "mecanisme": "dépression respiratoire synergique",
+          "effet": "intoxications fatales documentées en chemsex",
+          "timing": "naloxone + soins respiratoires urgents",
+          "preuve": "FOR",
+          "source": "EMCDDA:NPS-benzo-2024"
+        },
+        {
+          "avec": "inhibiteurs CYP3A4 forts",
+          "mecanisme": "inhibition CYP3A4",
+          "effet": "↑ exposition ++ ; prolongation amnésie",
+          "timing": "éviter",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation-profonde", "amnesie-anterograde", "soumission-chimique", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["PMID:9311620", "EMCDDA:NPS-benzo-2024", "StatPearls:Flunitrazepam"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "hyp_zolpidem",
+      "nom_dci": "Zolpidem",
+      "synonymes": ["Stilnox", "Ambien", "Edluar", "Sublinox"],
+      "classe": "Hypnotique apparenté (Z-drug)",
+      "statut_fr": "Liste I — assimilé stupéfiant (ordonnance sécurisée obligatoire depuis 10/04/2017, arrêté 07/01/2017)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur (~60%)",
+          "produit": "métabolites inactifs (oxydation chaîne latérale méthyle + oxydation phényle)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-zolpidem"
+        },
+        {
+          "isoforme": "CYP1A2",
+          "rang": "mineur (~14%)",
+          "produit": "métabolites inactifs",
+          "preuve": "IVH-C",
+          "source": "FDA:label-zolpidem"
+        },
+        {
+          "isoforme": "CYP2C9",
+          "rang": "mineur",
+          "produit": "métabolites inactifs",
+          "preuve": "IVT",
+          "source": "PMID:15592335"
+        },
+        {
+          "isoforme": "CYP2D6",
+          "rang": "trace",
+          "produit": "métabolites inactifs",
+          "preuve": "IVT",
+          "source": "PMID:15592335"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": false,
+        "nom": null,
+        "activite_relative": "métabolites inactifs ; demi-vie courte ~2-3h",
+        "demi_vie_h": 2.5
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C9",
+          "variants": "*3",
+          "phenotype": "IM/PM",
+          "niveau_cpic": "ND",
+          "recommandation": "Zone grise — contribution CYP2C9 mineure ; pas d'ajustement recommandé. Signal faible en pratique.",
+          "zone_grise": true,
+          "source": "PMID:15592335"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "kétoconazole, itraconazole, ritonavir, clarithromycine",
+          "mecanisme": "inhibition CYP3A4 forte",
+          "effet": "↑ exposition zolpidem ×2-3 ; risque somnolence diurne, somnambulisme, parasomnies complexes",
+          "timing": "réduire dose zolpidem 50% (5 mg) ou alternative",
+          "preuve": "IVH-C",
+          "source": "FDA:label-zolpidem"
+        },
+        {
+          "avec": "rifampicine, millepertuis",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓↓ exposition zolpidem (AUC ÷3-4) ; inefficacité hypnotique",
+          "timing": "éviter ou changer molécule",
+          "preuve": "IVH-C",
+          "source": "FDA:label-zolpidem"
+        },
+        {
+          "avec": "opioïdes, alcool, autres dépresseurs SNC",
+          "mecanisme": "dépression respiratoire additive + altération cognitive",
+          "effet": "FDA boxed warning 2019 (parasomnies complexes : conduite somnambule, ingestion aliments, appels téléphoniques)",
+          "timing": "éviter co-prescription ; CI relative alcool",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-zolpidem-parasomnia-2019"
+        },
+        {
+          "avec": "ISRS (sertraline, fluoxétine)",
+          "mecanisme": "inhibition modérée CYP3A4/2C9 + potentialisation sédative",
+          "effet": "↑ effet sédatif zolpidem",
+          "timing": "prudence, surtout sujet âgé",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "somnambulisme", "parasomnies-complexes", "dependance-documented", "mesusage-documented", "chute-sujet-age", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-zolpidem", "ANSM:RCP-zolpidem", "FDA:boxed-warning-zolpidem-parasomnia-2019", "ANSM:arrete-07-01-2017-zolpidem"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+    },
+    {
+      "id": "hyp_zopiclone",
+      "nom_dci": "Zopiclone",
+      "synonymes": ["Imovane", "Zimovane", "Eszopiclone/Lunesta (énantiomère S commercialisé US)"],
+      "classe": "Hypnotique apparenté (Z-drug)",
+      "statut_fr": "Liste I",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "N-oxyde-zopiclone (actif faible) + N-desméthylzopiclone (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-eszopiclone"
+        },
+        {
+          "isoforme": "CYP2E1",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:11899453"
+        },
+        {
+          "isoforme": "CYP2C8",
+          "rang": "mineur",
+          "produit": "métabolites mineurs",
+          "preuve": "IVT",
+          "source": "PMID:11899453"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "N-oxyde-zopiclone (S-énantiomère = eszopiclone = isomère actif)",
+        "activite_relative": "eszopiclone (S-zopiclone) = énantiomère actif du racémique zopiclone — 50 fois plus affin pour GABA-A",
+        "demi_vie_h": 5
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "kétoconazole, itraconazole, ritonavir, érythromycine, clarithromycine",
+          "mecanisme": "inhibition CYP3A4 forte",
+          "effet": "↑ exposition zopiclone ×2 ; risque sédation résiduelle + parasomnies",
+          "timing": "réduire dose 50% (3,75 mg)",
+          "preuve": "IVH-C",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "rifampicine, carbamazépine",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ efficacité zopiclone",
+          "timing": "éviter ou changer molécule",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes, alcool, BZD",
+          "mecanisme": "dépression respiratoire + sédation additive",
+          "effet": "FDA boxed warning classe hypnotique",
+          "timing": "éviter l'association",
+          "preuve": "IVH-O",
+          "source": "FDA:label-eszopiclone"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-eszopiclone", "ANSM:RCP-zopiclone", "PMID:11899453"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "aut_hydroxyzine",
+      "nom_dci": "Hydroxyzine",
+      "synonymes": ["Atarax", "Vistaril"],
+      "classe": "Antihistaminique H1 anxiolytique",
+      "statut_fr": "Liste I (restrictions EMA referral 2015 : dose max 100 mg/j adulte, 50 mg/j >65 ans, CI allongement QT)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "cétirizine (métabolite actif, antihistaminique H1 non sédatif) via oxydation + oxydation alcool",
+          "preuve": "IVH-C",
+          "source": "FDA:label-hydroxyzine"
+        },
+        {
+          "isoforme": "CYP3A5",
+          "rang": "mineur",
+          "produit": "cétirizine",
+          "preuve": "IVT",
+          "source": "StatPearls:Hydroxyzine"
+        }
+      ],
+      "phase1_non_cyp": [
+        {
+          "enzyme": "alcool déshydrogénase",
+          "alias": "ADH",
+          "rang": "majeur",
+          "produit": "cétirizine (oxydation de l'alcool primaire de l'hydroxyzine en acide carboxylique)",
+          "preuve": "IVH-C",
+          "source": "StatPearls:Hydroxyzine"
+        }
+      ],
+      "phase2": [],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "cétirizine",
+        "activite_relative": "antihistaminique H1 actif, non sédatif, t1/2 ~10h — responsable de l'activité anti-allergique prolongée",
+        "demi_vie_h": 10
+      },
+      "pharmacogenetique": [],
+      "interactions_specifiques": [
+        {
+          "avec": "autres torsadogènes KR (méthadone, halopéridol, citalopram, escitalopram, cyamémazine, tiapride, sulpiride, amisulpride, ondansétron, dompéridone, azithromycine, moxifloxacine)",
+          "mecanisme": "addition QT (hydroxyzine CR + KR partenaire)",
+          "effet": "TdP potentielles — risque majoré si hypokaliémie ou bradycardie",
+          "timing": "CI selon OMEDIT avec KR ; surveillance ECG + kaliémie",
+          "preuve": "IVH-O",
+          "source": "CredibleMeds:CR-list-2022"
+        },
+        {
+          "avec": "inhibiteurs CYP3A4 forts (kétoconazole, ritonavir)",
+          "mecanisme": "inhibition formation cétirizine",
+          "effet": "↑ hydroxyzine parent (plus sédatif, QT-prolongateur) ; ↓ cétirizine active",
+          "timing": "éviter ; préférer cétirizine directement si indication allergique",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes, alcool, BZD",
+          "mecanisme": "dépression SNC + ACB additif",
+          "effet": "sédation profonde + confusion (sujet âgé)",
+          "timing": "éviter chez sujet âgé (ACB-3 cumulatif avec autres anticholinergiques)",
+          "preuve": "IVH-O",
+          "source": "Rapport HUG 2020 extension"
+        },
+        {
+          "avec": "autres anticholinergiques (ADT, paroxétine, oxybutynine, tolterodine, solifénacine, scopolamine)",
+          "mecanisme": "cumul ACB",
+          "effet": "confusion, rétention urinaire, constipation, glaucome aigu par fermeture angle",
+          "timing": "ACB cumulatif ≥3 = risque démence/chute ; à éviter ≥ 65 ans",
+          "preuve": "IVH-O",
+          "source": "PMC9427617"
+        }
+      ],
+      "alertes_pd": ["QT-CR", "ACB-3", "sedation", "chute-sujet-age", "glaucome-angle-ferme"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-hydroxyzine", "ANSM:RCP-hydroxyzine", "CredibleMeds:CR-list-2022", "EMA:hydroxyzine-referral-2015", "StatPearls:Hydroxyzine"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+    },
+    {
+      "id": "bzd_clobazam",
+      "nom_dci": "Clobazam",
+      "synonymes": ["Urbanyl", "Onfi", "Frisium"],
+      "classe": "Benzodiazépine (1,5-benzodiazépine)",
+      "statut_fr": "Liste I (indication anxiolytique + épileptique)",
+      "phase1_cyp": [
+        {
+          "isoforme": "CYP3A4",
+          "rang": "majeur",
+          "produit": "N-desméthylclobazam (norclobazam, actif, t1/2 36-46h)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-onfi"
+        },
+        {
+          "isoforme": "CYP2C19",
+          "rang": "majeur (voie d'élimination du N-desméthylclobazam)",
+          "produit": "4-hydroxy-N-desméthylclobazam (inactif)",
+          "preuve": "IVH-C",
+          "source": "FDA:label-onfi"
+        },
+        {
+          "isoforme": "CYP2B6",
+          "rang": "mineur",
+          "produit": "voie mineure clobazam",
+          "preuve": "IVT",
+          "source": "FDA:label-onfi"
+        }
+      ],
+      "phase1_non_cyp": [],
+      "phase2": [
+        {
+          "enzyme": "UGT",
+          "rang": "mineur",
+          "produit": "glucuronides inactifs",
+          "preuve": "IVT",
+          "source": "FDA:label-onfi"
+        }
+      ],
+      "transporteurs": [],
+      "inhibiteur": [],
+      "inducteur": [],
+      "metabolite_actif": {
+        "present": true,
+        "nom": "N-desméthylclobazam (norclobazam)",
+        "activite_relative": "actif, t1/2 36-46h — représente la majorité de l'activité clinique chronique. Ratio norclobazam/clobazam ~8:1 à l'équilibre",
+        "demi_vie_h": 42
+      },
+      "pharmacogenetique": [
+        {
+          "gene": "CYP2C19",
+          "variants": "*2, *3 (PM)",
+          "phenotype": "PM",
+          "niveau_cpic": "B (DPWG guideline 2021)",
+          "recommandation": "DPWG 2021 (verbatim) : « CYP2C19 poor metabolisers have a 3 to 5-fold higher plasma concentration of the active metabolite N-desmethylclobazam. Start with the lowest clobazam dose and titrate slowly. Consider 50% dose reduction for maintenance. » Prévalence PM Europe ~2-5%, Asie ~15-20%.",
+          "zone_grise": false,
+          "source": "DPWG:clobazam-CYP2C19-2021"
+        },
+        {
+          "gene": "CYP2C19",
+          "variants": "*17 (UM)",
+          "phenotype": "UM/RM",
+          "niveau_cpic": "B (DPWG)",
+          "recommandation": "DPWG 2021 : UM présentent ↓ N-desméthylclobazam → perte d'efficacité possible ; surveiller réponse clinique et envisager ↑ dose si inefficace. Prévalence UM Europe ~5%.",
+          "zone_grise": false,
+          "source": "DPWG:clobazam-CYP2C19-2021"
+        }
+      ],
+      "interactions_specifiques": [
+        {
+          "avec": "stiripentol (Diacomit, indication Dravet)",
+          "mecanisme": "inhibition CYP2C19 forte + CYP3A4",
+          "effet": "↑↑ norclobazam (AUC ×2-3) — utilisé comme association thérapeutique mais surveillance sédation",
+          "timing": "association indiquée mais monitoring clinique",
+          "preuve": "IVH-C",
+          "source": "ANSM:RCP-stiripentol"
+        },
+        {
+          "avec": "cannabidiol (CBD, Epidiolex)",
+          "mecanisme": "inhibition CYP2C19 par CBD",
+          "effet": "↑↑ norclobazam (AUC ×3) — signalé dans essais cliniques Dravet/Lennox-Gastaut",
+          "timing": "réduire dose clobazam 25-50% à l'introduction CBD ; surveillance sédation",
+          "preuve": "IVH-C",
+          "source": "FDA:label-epidiolex"
+        },
+        {
+          "avec": "oméprazole, ésoméprazole, fluvoxamine, fluoxétine",
+          "mecanisme": "inhibition CYP2C19",
+          "effet": "↑ norclobazam",
+          "timing": "surveillance ; réduire dose si sédation excessive",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "inducteurs CYP3A4 (rifampicine, carbamazépine, phénytoïne)",
+          "mecanisme": "induction CYP3A4",
+          "effet": "↓ efficacité clobazam",
+          "timing": "ajustement dose",
+          "preuve": "IVH-O",
+          "source": "ANSM:thesaurus-2024"
+        },
+        {
+          "avec": "opioïdes, alcool",
+          "mecanisme": "dépression respiratoire additive",
+          "effet": "FDA boxed warning classe BZD",
+          "timing": "éviter l'association",
+          "preuve": "IVH-O",
+          "source": "FDA:boxed-warning-opioids-BZD-2016"
+        }
+      ],
+      "alertes_pd": ["resp", "sedation", "dependance-documented", "mesusage-documented", "ACB-1"],
+      "niveau_preuve_global": "IVH-C",
+      "sources_principales": ["FDA:label-onfi", "ANSM:RCP-urbanyl", "DPWG:clobazam-CYP2C19-2021", "FDA:label-epidiolex"],
+      "zone_grise": false,
+      "derniere_maj": "2026-04",
+      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur"]
+    }
+  ]
+}

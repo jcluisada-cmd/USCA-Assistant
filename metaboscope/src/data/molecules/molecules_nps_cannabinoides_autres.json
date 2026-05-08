@@ -1,0 +1,769 @@
+[
+  {
+    "id": "nps_cb_hhc",
+    "nom_dci": "Hexahydrocannabinol",
+    "synonymes": ["HHC", "9α-HHC", "9β-HHC"],
+    "classe": "NPS cannabinoïde semi-synthétique (hydrogénation du THC)",
+    "statut_fr": "Stupéfiants (classement ANSM arrêté du 13 juin 2024 — vague France 2023-2024)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "11-hydroxy-HHC + autres hydroxylés (par analogie THC)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "isoforme": "CYP2C9",
+        "rang": "mineur",
+        "produit": "11-nor-9-carboxy-HHC (CHHC — biomarqueur urinaire présumé)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "11-hydroxy-HHC",
+      "activite_relative": "Activité CB1 présumée par analogie 11-OH-THC — non confirmée in vivo humain",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2C9",
+        "variants": "*2, *3 (PM)",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise absolue — aucune donnée PGx. Analogie avec THC (CYP2C9-PM → ↑ exposition THC) non validée pour HHC.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "inhibiteurs CYP3A4/CYP2C9 (ritonavir, kétoconazole, fluconazole)",
+        "mecanisme": "Inhibition CYP3A4/2C9 → ↑ exposition HHC (par analogie THC)",
+        "effet": "Effets psychoactifs majorés — déjà puissance CB1 comparable THC",
+        "timing": "Pertinent PVVIH sous ARV — zone grise (données absentes)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "avec": "antipsychotiques (clozapine, olanzapine)",
+        "mecanisme": "Interaction PD : agonisme CB1 module dopamine mésolimbique",
+        "effet": "Potentialisation sédation + perturbation équilibre antipsychotique",
+        "timing": "Alerte USCA — arrêt brutal possible en hospitalisation",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "avec": "BZD, opioïdes, alcool",
+        "mecanisme": "Additivité dépression SNC",
+        "effet": "Sédation majorée — profil polyconsommation",
+        "timing": "Interrogatoire systématique chemsex/festif USCA",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "alertes_pd": ["mesusage-documented"],
+    "niveau_preuve_global": "AN",
+    "sources_principales": [
+      "EMCDDA:NPS-cannabinoides-2024",
+      "ANSM:arrete-classement-HHC-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "voies métaboliques in vitro/in vivo humain",
+      "demi_vie",
+      "métabolites actifs confirmés",
+      "PK complète",
+      "pharmacogenetique",
+      "différenciation 9α-HHC vs 9β-HHC (stéréoisomères — affinités CB1 différentes)"
+    ]
+  },
+
+  {
+    "id": "nps_cb_thcp",
+    "nom_dci": "Tétrahydrocannabiphorol",
+    "synonymes": ["THC-P", "THCP", "(-)-trans-Δ9-tétrahydrocannabiphorol"],
+    "classe": "NPS phytocannabinolde à longue chaîne alkyle",
+    "statut_fr": "Stupéfiants (classement comme analogue THC — Article 695-1 CSP + arrêté ANSM 2021)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "11-hydroxy-THCP (présumé par analogie THC + chaîne C7)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "isoforme": "CYP2C9",
+        "rang": "mineur",
+        "produit": "11-nor-THCP-9-acide carboxylique (biomarqueur urinaire présumé)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "11-hydroxy-THCP",
+      "activite_relative": "Présumé actif CB1 — chaîne C7 confère affinité CB1 33× THC (C5). Non confirmé in vivo.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2C9",
+        "variants": "*3 (PM)",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise absolue. Puissance CB1 intrinsèque très élevée (33× THC) = risque majeur même sans variation PGx.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "antipsychotiques",
+        "mecanisme": "Agonisme CB1 intense (33× THC) — perturbation circuits DA mésolimbique",
+        "effet": "Risque exacerbation psychose, déséquilibre traitement antipsychotique. Plus sévère qu'avec THC naturel.",
+        "timing": "Alerte USCA — puissance sous-estimée par patient",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4/CYP2C9",
+        "mecanisme": "↑ exposition THCP — substrate haute puissance",
+        "effet": "Risque surdosage cannabinoïde sévère (convulsions, syndrome coronarien aigu)",
+        "timing": "Zone grise",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "niveau_preuve_global": "AN",
+    "sources_principales": [
+      "EMCDDA:NPS-cannabinoides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "toutes voies métaboliques in vitro/in vivo humain",
+      "demi_vie",
+      "PK complète",
+      "pharmacogenetique",
+      "données forensiques humaines"
+    ]
+  },
+
+  {
+    "id": "nps_cb_mdmb4enpinaca",
+    "nom_dci": "MDMB-4en-PINACA",
+    "synonymes": ["MDMB-4en-PINACA", "ADB-4en-PINACA MDMB analogue", "Spice 4e génération"],
+    "classe": "NPS cannabinoïde synthétique agoniste CB1/CB2 complet (indazole-carboxamide)",
+    "statut_fr": "Stupéfiants (arrêté ANSM NPS cannabinoïdes — classification générique)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "hydroxylation alcène + époxydation — multiples métabolites urinaires",
+        "preuve": "IVA",
+        "source": "PMC:10898835"
+      },
+      {
+        "isoforme": "CYP2C9",
+        "rang": "mineur",
+        "produit": "métabolites hydroxylés",
+        "preuve": "IVT",
+        "source": "PMC:10898835"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "estérases plasmatiques / carboxylestérases",
+        "alias": "CES1/CES2",
+        "rang": "majeur",
+        "produit": "hydrolyse de l'ester → acide carboxylique (métabolite principal détection urinaire forensique)",
+        "preuve": "IVA",
+        "source": "PMC:10898835"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides métabolites hydroxylés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "Parent = agoniste complet CB1/CB2 (vs agoniste partiel THC). Hydrolyse rapide → composé parent indétectable urine. Métabolites principaux pour dépistage forensique.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2C9",
+        "variants": "*3 (PM)",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. CES1 polymorphismes (G143E) théoriquement impliqués (hydrolyse estérases) — non validé.",
+        "zone_grise": true,
+        "source": "PMC:10898835"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "antipsychotiques (halopéridol, clozapine)",
+        "mecanisme": "Agonisme CB1 complet (puissance >> THC) + PK: CYP3A4 partagé avec clozapine, olanzapine",
+        "effet": "SCA (syndrome coronarien aigu) + convulsions documentés avec cannabinoïdes synthèse 4e génération. Complications quasi-inexistantes avec cannabis végétal.",
+        "timing": "Alerte USCA : patients sous antipsychotiques + consommation Spice",
+        "preuve": "CAS",
+        "source": "PMC:10898835"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 forts",
+        "mecanisme": "Inhibition CYP3A4 → ↑ exposition MDMB-4en-PINACA parent",
+        "effet": "Toxicité majorée (déjà impliqué dans décès à doses faibles)",
+        "timing": "Pertinent PVVIH sous ARV",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      },
+      {
+        "avec": "BZD, opioïdes",
+        "mecanisme": "Polydépression SNC + agonisme CB1",
+        "effet": "Syndrome de dépression respiratoire composite — immunoassay cannabinoïdes standard FAUX NÉGATIF (anticorps THC non réactifs MDMB-4en-PINACA)",
+        "timing": "LC-MS/MS obligatoire pour identification — ELISA cannabis insuffisant",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "niveau_preuve_global": "IVA",
+    "sources_principales": [
+      "PMC:10898835",
+      "EMCDDA:NPS-cannabinoides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données PK in vivo humaines",
+      "demi_vie parent + métabolites",
+      "pharmacogenetique CES1",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_cb_adbbutinaca",
+    "nom_dci": "ADB-BUTINACA",
+    "synonymes": ["ADB-BUTINACA", "ADB-4en-PINACA", "ADBB analogue"],
+    "classe": "NPS cannabinoïde synthétique agoniste CB1/CB2 complet (indazole-carboxamide)",
+    "statut_fr": "Stupéfiants (arrêté ANSM NPS cannabinoïdes — classification générique)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "majeur",
+        "produit": "hydroxylation + époxydation de la chaîne butin",
+        "preuve": "IVA",
+        "source": "PMC:10898835"
+      },
+      {
+        "isoforme": "CYP2C9",
+        "rang": "mineur",
+        "produit": "métabolites hydroxylés",
+        "preuve": "IVT",
+        "source": "PMC:10898835"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "carboxylestérases (CES1/CES2)",
+        "alias": "hydrolyse estérases",
+        "rang": "majeur",
+        "produit": "acide carboxylique (biomarqueur urinaire forensique)",
+        "preuve": "IVA",
+        "source": "PMC:10898835"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT",
+        "rang": "probable",
+        "produit": "glucuronides",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "Parent agoniste complet CB1 très puissant — hydrolyse rapide. Immunoassay THC : faux négatif systématique.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2C9",
+        "variants": "*3",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise absolue.",
+        "zone_grise": true,
+        "source": "PMC:10898835"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "antipsychotiques, BZD, opioïdes",
+        "mecanisme": "Agonisme CB1 complet + dépression SNC additive",
+        "effet": "SCA, convulsions, dépression respiratoire documentés avec cannabinoïdes synthèse génération 4. Immunoassay cannabis faux négatif.",
+        "timing": "LC-MS/MS obligatoire pour diagnostic",
+        "preuve": "CAS",
+        "source": "PMC:10898835"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 forts",
+        "mecanisme": "↑ exposition parent",
+        "effet": "Toxicité majorée",
+        "timing": "Pertinent PVVIH sous ARV",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-cannabinoides-2024"
+      }
+    ],
+    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "niveau_preuve_global": "IVA",
+    "sources_principales": [
+      "PMC:10898835",
+      "EMCDDA:NPS-cannabinoides-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "données PK in vivo humaines",
+      "demi_vie",
+      "pharmacogenetique",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_lsd_1plsd",
+    "nom_dci": "1P-LSD",
+    "synonymes": ["1P-LSD", "1-propionyl-lysergique diéthylamide", "1-propionyl-LSD"],
+    "classe": "NPS psychédélique (promédicament du LSD — acylation position N1)",
+    "statut_fr": "Stupéfiants (analogie structurelle LSD — classement ANSM 2021 + liste générique psychédéliques)",
+    "phase1_cyp": [
+      {
+        "isoforme": "hydrolyse plasmatique (estérases non-CYP)",
+        "rang": "majeur",
+        "produit": "LSD (déacylation enzymatique) — conversion rapide en LSD actif",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "métabolites hydroxylés (après conversion en LSD)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "isoforme": "CYP3A4",
+        "rang": "mineur",
+        "produit": "N-déméthylation (après conversion en LSD)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "estérases plasmatiques / carboxylestérases",
+        "alias": "déacylation",
+        "rang": "majeur",
+        "produit": "LSD (promédicament → LSD actif)",
+        "preuve": "IVA",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "LSD",
+      "activite_relative": "1P-LSD = promédicament. Activité pharmacologique = LSD (agoniste 5-HT2A). Cinétique exacte conversion in vivo humain : zone grise.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. Après conversion → LSD, mêmes voies que LSD (CYP2D6/CYP3A4). PM théoriquement ↑ exposition LSD résultant. Pas de données cliniques.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "IMAO (phénelzine, moclobémide, harmaline/ayahuasca)",
+        "mecanisme": "Inhibition MAO-A → ↑ exposition indirecte 5-HT endogène + potentialisation 5-HT2A",
+        "effet": "Syndrome sérotoninergique documenté avec LSD + IMAO. Extrapolé à 1P-LSD.",
+        "timing": "CI absolue fonctionnelle",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "avec": "ISRS, antipsychotiques (clozapine, quétiapine)",
+        "mecanisme": "ISRS : réduction effet 5-HT2A par downregulation. Antipsychotiques : antagonisme 5-HT2A → atténuation effets psychédéliques.",
+        "effet": "Atténuation ou abolition effets psychédéliques. Pertinent contexte thérapeutique ou urgence.",
+        "timing": "Cliniquement pertinent en USCA (patients sous traitement)",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "avec": "lithium",
+        "mecanisme": "Interaction pharmacodynamique mécanisme inconnu",
+        "effet": "Convulsions documentées (cas cliniques) avec association LSD/psilocybine + lithium. Extrapolé à 1P-LSD.",
+        "timing": "CI fonctionnelle chez patients lithiés — alerte USCA",
+        "preuve": "CAS",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "alertes_pd": ["sero", "mesusage-documented", "seuil-ep"],
+    "niveau_preuve_global": "IVA",
+    "sources_principales": [
+      "EMCDDA:NPS-psychedelics-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "cinétique de conversion in vivo humain (t1/2 promédicament → LSD)",
+      "PK complète",
+      "pharmacogenetique estérases",
+      "transporteurs"
+    ]
+  },
+
+  {
+    "id": "nps_lsd_allad",
+    "nom_dci": "AL-LAD",
+    "synonymes": ["AL-LAD", "6-allyl-6-nor-lysergique diéthylamide", "AllylAD"],
+    "classe": "NPS psychédélique (analogue LSD — N-allyl substitution — NON promédicament)",
+    "statut_fr": "Stupéfiants (classement analogue LSD — ANSM)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP2D6",
+        "rang": "suspecté",
+        "produit": "hydroxylation noyau ergoline",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "isoforme": "CYP3A4",
+        "rang": "suspecté",
+        "produit": "N-déalkylation chaîne allyl",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "phase1_non_cyp": [],
+    "phase2": [],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": "AL-LAD = entité pharmacologique propre (NON converti en LSD). Agoniste 5-HT2A direct. Durée d'action plus courte que LSD.",
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "IMAO",
+        "mecanisme": "Potentialisation 5-HT2A + accumulation monoamines",
+        "effet": "Syndrome sérotoninergique présumé (analogie LSD + IMAO)",
+        "timing": "CI fonctionnelle",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      },
+      {
+        "avec": "lithium",
+        "mecanisme": "Interaction pharmacodynamique mécanisme inconnu",
+        "effet": "Convulsions (analogie LSD + lithium — cas cliniques)",
+        "timing": "CI fonctionnelle chez patients lithiés",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-psychedelics-2024"
+      }
+    ],
+    "alertes_pd": ["sero", "mesusage-documented", "seuil-ep"],
+    "niveau_preuve_global": "AN",
+    "sources_principales": [
+      "EMCDDA:NPS-psychedelics-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "toutes voies métaboliques in vitro/in vivo",
+      "demi_vie",
+      "PK humaine",
+      "pharmacogenetique",
+      "données forensiques"
+    ]
+  },
+
+  {
+    "id": "nps_phenth_4fa",
+    "nom_dci": "4-Fluoroamphétamine",
+    "synonymes": ["4-FA", "4-FMP", "para-fluoroamphétamine", "Flash (usage festif)"],
+    "classe": "NPS phénéthylamine — amphétamine fluorée",
+    "statut_fr": "Stupéfiants (arrêté ANSM 2017 — classement phénéthylamines de synthèse)",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP2D6",
+        "rang": "mineur",
+        "produit": "4-fluorobenzylamine (hydroxylation diminuée — liaison C-F résistante à l'oxydation CYP)",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      },
+      {
+        "isoforme": "CYP3A4",
+        "rang": "mineur",
+        "produit": "N-déalkylation",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "MAO-A",
+        "alias": "monoamine oxydase A",
+        "rang": "majeur",
+        "produit": "4-fluorophénylacétone → acide 4-fluorophénylacétique (voie dominante en l'absence d'oxydation CYP efficace)",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      },
+      {
+        "enzyme": "DBH (dopamine β-hydroxylase)",
+        "alias": "DBH",
+        "rang": "mineur",
+        "produit": "4-fluornoréphédrine",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "NAT (N-acétyltransférase)",
+        "rang": "mineur",
+        "produit": "4-fluorohippurique",
+        "preuve": "FOR",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": false,
+      "nom": null,
+      "activite_relative": null,
+      "demi_vie_h": null
+    },
+    "pharmacogenetique": [
+      {
+        "gene": "CYP2D6",
+        "variants": "PM, UM",
+        "phenotype": "Zone grise",
+        "niveau_cpic": null,
+        "recommandation": "Zone grise. Liaison C-F résistante → CYP2D6 moins prédominant que pour amphétamine classique → variabilité PGx CYP2D6 cliniquement moins impactante. MAO-A voie dominante.",
+        "zone_grise": true,
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      }
+    ],
+    "interactions_specifiques": [
+      {
+        "avec": "IMAO (phénelzine, moclobémide, linézolide, bleu de méthylène)",
+        "mecanisme": "Inhibition MAO-A (voie principale 4-FA) → accumulation 4-FA + libération massive NA/DA/5-HT",
+        "effet": "Crise hypertensive majeure + syndrome sérotoninergique. Plus sévère que pour amphétamine classique car MAO-A = voie dominante 4-FA.",
+        "timing": "CI absolue — délai 14 jours après IMAO irréversible",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      },
+      {
+        "avec": "ISRS, IRSNa",
+        "mecanisme": "4-FA = libérateur 5-HT plus puissant que l'amphétamine + inhibition SERT",
+        "effet": "Syndrome sérotoninergique documenté (cas Pays-Bas/Belgique). Risque supérieur à MDMA en aigu.",
+        "timing": "Éviter association — dépistage consommation festive chez patients ISRS",
+        "preuve": "CAS",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      },
+      {
+        "avec": "antihypertenseurs (bêtabloquants, IEC, inhibiteurs calciques)",
+        "mecanisme": "Libération massive NA → HTA résistante aux antihypertenseurs standard",
+        "effet": "⚠️ Hémorragies cérébrales intracrâniennes documentées (Pays-Bas, Belgique, France). Mécanisme PD dominant : pics HTA sévères et soutenus > MDMA/amphétamine classique.",
+        "timing": "Urgence neurologique — scanner cérébral systématique en tableau HTA aiguë + contexte festif",
+        "preuve": "CAS",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      },
+      {
+        "avec": "sympathomimétiques (décongestionnants, pseudoéphédrine)",
+        "mecanisme": "Addition sympathomimétique",
+        "effet": "Majoration risque cardiovasculaire et HTA",
+        "timing": "Signaler en USCA",
+        "preuve": "AN",
+        "source": "EMCDDA:NPS-phenyethylamines-2024"
+      }
+    ],
+    "alertes_pd": ["sero", "HTA", "mesusage-documented", "CI-IMAO"],
+    "niveau_preuve_global": "FOR",
+    "sources_principales": [
+      "EMCDDA:NPS-phenyethylamines-2024"
+    ],
+    "zone_grise": true,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "demi_vie humaine confirmée",
+      "PK complète",
+      "pharmacogenetique MAO-A",
+      "données cliniques controlées"
+    ]
+  },
+
+  {
+    "id": "nps_tianeptine_mesusage",
+    "nom_dci": "Tianeptine (mésusage — entrée NPS distincte)",
+    "synonymes": ["ZaZa Red", "Tianna", "Neptune's Fix", "tianeptine sulfate (vente ligne)"],
+    "classe": "NPS opioïde atypique — mésusage d'antidépresseur (entrée distincte de atd_tianeptine)",
+    "statut_fr": "Non classé stupéfiant en France (2026 — Stablon® retiré ; vente en ligne hors AMM). Classé Schedule I dans plusieurs États USA (FDA safety communication 2018+2022). Zone grise réglementaire France.",
+    "phase1_cyp": [
+      {
+        "isoforme": "CYP3A4",
+        "rang": "mineur",
+        "produit": "déméthylation → MC5 (métabolite actif principal)",
+        "preuve": "IVA",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      }
+    ],
+    "phase1_non_cyp": [
+      {
+        "enzyme": "β-oxydation mitochondriale",
+        "alias": "voie majeure oxydation chaîne latérale propionique",
+        "rang": "majeur",
+        "produit": "cascade de 5 métabolites de β-oxydation (MC5, MC3, MC1 dont MC5 = métabolite cliniquement actif t1/2 ~7-8h)",
+        "preuve": "IVA",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      }
+    ],
+    "phase2": [
+      {
+        "enzyme": "UGT1A3",
+        "rang": "majeur",
+        "produit": "glucuronides métabolites",
+        "preuve": "IVT",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      },
+      {
+        "enzyme": "UGT2B15",
+        "rang": "majeur",
+        "produit": "glucuronides",
+        "preuve": "IVT",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      }
+    ],
+    "transporteurs": [],
+    "inhibiteur": [],
+    "inducteur": [],
+    "metabolite_actif": {
+      "present": true,
+      "nom": "MC5 (amphiphénone)",
+      "activite_relative": "Agoniste partiel μ-opioïde — contribution majeure aux effets euphorisants et au potentiel addictogène. t1/2 ~7-8h (> parent).",
+      "demi_vie_h": 7.5
+    },
+    "pharmacogenetique": [],
+    "interactions_specifiques": [
+      {
+        "avec": "opioïdes (méthadone, buprénorphine, morphine, codéine)",
+        "mecanisme": "Addition μ-opioïde (tianeptine + MC5 = agonistes partiels μ)",
+        "effet": "Dépression respiratoire additive. Surdosage atypique : tableau clinique de sevrage opioïde à l'arrêt brutal (agitation, diarrhée, douleurs, sueurs).",
+        "timing": "Éviter l'association. En USCA : dépistage systématique mésusage tianeptine chez PWUD",
+        "preuve": "CAS",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      },
+      {
+        "avec": "BZD, alcool, GHB",
+        "mecanisme": "Addition dépression SNC + μ-opioïde",
+        "effet": "Surdosage composite — décès documentés USA",
+        "timing": "LC-MS/MS spécifique (immunoassay opioïdes FAUX NÉGATIF pour tianeptine)",
+        "preuve": "CAS",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      },
+      {
+        "avec": "sevrage — prise en charge",
+        "mecanisme": "Dépendance μ-opioïde atypique",
+        "effet": "Syndrome de sevrage opioïde-like documenté (FDA 2018+2022) : anxiété, agitation, douleurs musculaires, diarrhée. Traitement : substitution buprénorphine-naloxone possible (données limitées).",
+        "timing": "Sevrage progressif recommandé — ne pas arrêter brutalement. Référer USCA.",
+        "preuve": "CAS",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      },
+      {
+        "avec": "inhibiteurs CYP3A4 (ritonavir, azolés)",
+        "mecanisme": "Inhibition CYP3A4 mineur → légère ↑ exposition; voie β-oxydation préservée",
+        "effet": "Impact modeste — β-oxydation non bloquée par inhibiteurs CYP3A4. Zone grise clinique.",
+        "timing": "Zone grise",
+        "preuve": "AN",
+        "source": "FDA:safety-communication-tianeptine-2022"
+      }
+    ],
+    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "niveau_preuve_global": "CAS",
+    "sources_principales": [
+      "FDA:safety-communication-tianeptine-2022",
+      "FDA:safety-communication-tianeptine-2018"
+    ],
+    "zone_grise": false,
+    "derniere_maj": "2026-04",
+    "champ_manquants": [
+      "statut réglementaire France mise à jour ANSM",
+      "données PK mésusage (doses supérieures thérapeutiques)",
+      "pharmacogenetique β-oxydation",
+      "transporteurs"
+    ]
+  }
+]

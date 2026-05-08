@@ -1,0 +1,67 @@
+{
+  "source_files": {
+    "cbip_v3": "CBIP_interactions_V3_expert.json",
+    "hug_json": "hug_2020_opus.json",
+    "hug_pdf_original": "Doc HUG 2020.pdf"
+  },
+  "generated_at": "2026-04-27",
+  "method": {
+    "base": "Comparaison par nom canonisé, catégorie (substrat/inhibiteur/inducteur) et voie.",
+    "caveat": "Le PDF HUG est considéré comme source primaire visuelle, mais cette génération ne refait pas une extraction visuelle exhaustive case par case; elle audite surtout le JSON HUG parsé contre CBIP V3.",
+    "reliability_rule": {
+      "élevé": "Concordance majoritaire CBIP-HUG, peu de divergences.",
+      "moyen": "Concordance partielle ou source unique plausible.",
+      "faible": "Conflit de puissance/rôle ou absence de concordance suffisante."
+    }
+  },
+  "counts": {
+    "molecules_union": 508,
+    "cbip_molecules": 465,
+    "hug_molecules": 245,
+    "molecules_in_both_after_normalization": 202,
+    "molecules_cbip_only": 263,
+    "molecules_hug_only": 43
+  },
+  "divergence_counts": {
+    "molecule_absente_hug": 263,
+    "voie_cbip_seule": 475,
+    "fiabilite_faible": 334,
+    "voie_hug_seule": 382,
+    "fiabilite_moyen": 110,
+    "molecule_absente_cbip": 43,
+    "fiabilite_élevé": 64,
+    "puissance_discordante": 30
+  },
+  "priority_review": {
+    "high_severity_molecules": [
+      "amiodarone",
+      "atazanavir",
+      "bosentan",
+      "carbamazépine",
+      "ciprofloxacine",
+      "clopidogrel",
+      "darunavir",
+      "diltiazem",
+      "éfavirenz",
+      "enzalutamide",
+      "érythromycine",
+      "ésoméprazole",
+      "fluconazole",
+      "fluvastatine",
+      "imatinib",
+      "ledipasvir",
+      "moclobémide",
+      "modafinil",
+      "oméprazole",
+      "propafénone",
+      "rifabutine",
+      "rifampicine",
+      "roxithromycine",
+      "saquinavir",
+      "tipranavir",
+      "vérapamil",
+      "voriconazole"
+    ],
+    "n_high_severity_molecules": 27
+  }
+}
