@@ -2625,10 +2625,8 @@ function buildPermCard(p, patientId, isPast) {
     }
     if (p.statut !== 'refusee') {
       var btnRef = createEl('button', 'flex-1 py-1.5 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 font-bold rounded-lg text-xs transition-colors min-w-[70px]', 'Refuser');
-      btnRef.addEventListener('click', async function() {
-        await db.updatePermission(p.id, { statut: 'refusee', validee_par: currentProfile ? currentProfile.id : null, validee_at: new Date().toISOString() });
-        renderPatientPerms(patientId);
-        loadedPermissions = await db.getAllPermissionsEnAttente();
+      btnRef.addEventListener('click', function() {
+        showPermRefuseForm(card, p, patientId);
       });
       actions.appendChild(btnRef);
     }
@@ -2750,6 +2748,99 @@ function showPermEditForm(card, p, patientId) {
     } catch (e) {
       errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden');
       btnSave.disabled = false; btnSave.textContent = 'Enregistrer';
+    }
+  });
+}
+
+// Vocabulaire des motifs de refus permission (cf. migration v37).
+// Pour ajouter/modifier un motif : éditer aussi le miroir dans patient/index.html.
+var REFUS_MOTIFS = [
+  { code: 'tardive',               label: 'Demande trop tardive' },
+  { code: 'retour_apres_20h',      label: 'Le retour ne peut pas être après 20h' },
+  { code: 'objectif_a_rediscuter', label: 'Objectif de permission à rediscuter' }
+];
+
+function showPermRefuseForm(card, p, patientId) {
+  card.textContent = '';
+
+  card.appendChild(createEl('p', 'text-xs font-bold text-red-700 dark:text-red-300 mb-2', '✗ Refuser cette permission'));
+
+  var datesRecap = createEl('div', 'mb-2 text-[11px] text-slate-600 dark:text-slate-300');
+  renderPermDates(datesRecap, new Date(p.date_debut), new Date(p.date_retour));
+  card.appendChild(datesRecap);
+
+  card.appendChild(createEl('p', 'text-[11px] font-semibold text-slate-700 dark:text-slate-300 mb-1.5', 'Motif(s) du refus (optionnel) :'));
+
+  var checksWrap = createEl('div', 'flex flex-col gap-1.5 mb-2');
+  REFUS_MOTIFS.forEach(function(m) {
+    var lbl = createEl('label', 'flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-200 cursor-pointer');
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = m.code;
+    cb.id = 'refus-cb-' + p.id + '-' + m.code;
+    cb.className = 'mt-0.5 accent-red-600';
+    lbl.appendChild(cb);
+    lbl.appendChild(createEl('span', '', m.label));
+    checksWrap.appendChild(lbl);
+  });
+  card.appendChild(checksWrap);
+
+  var libreWrap = createEl('div', 'mb-2');
+  libreWrap.appendChild(createEl('label', 'text-[10px] text-slate-500 dark:text-slate-400 block mb-0.5', 'Commentaire libre (optionnel)'));
+  var libreInput = document.createElement('textarea');
+  libreInput.id = 'refus-libre-' + p.id;
+  libreInput.rows = 2;
+  libreInput.placeholder = 'Précisions à destination du patient…';
+  libreInput.className = 'w-full px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg text-xs resize-none';
+  libreWrap.appendChild(libreInput);
+  card.appendChild(libreWrap);
+
+  var errEl = createEl('p', 'text-[10px] text-red-600 dark:text-red-400 mb-2 hidden', '');
+  card.appendChild(errEl);
+
+  var actionsRow = createEl('div', 'flex gap-2');
+  var btnConfirm = createEl('button', 'flex-1 py-1.5 bg-red-600 text-white font-bold rounded-lg text-xs', 'Confirmer le refus');
+  var btnCancel = createEl('button', 'py-1.5 px-3 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-bold rounded-lg text-xs', 'Annuler');
+  actionsRow.appendChild(btnConfirm);
+  actionsRow.appendChild(btnCancel);
+  card.appendChild(actionsRow);
+
+  btnCancel.addEventListener('click', function() { renderPatientPerms(patientId); });
+
+  btnConfirm.addEventListener('click', async function() {
+    var codes = REFUS_MOTIFS.filter(function(m) {
+      return document.getElementById('refus-cb-' + p.id + '-' + m.code).checked;
+    }).map(function(m) { return m.code; });
+    var libre = document.getElementById('refus-libre-' + p.id).value.trim();
+
+    btnConfirm.disabled = true; btnConfirm.textContent = 'Envoi…';
+    try {
+      await db.updatePermission(p.id, {
+        statut: 'refusee',
+        validee_par: currentProfile ? currentProfile.id : null,
+        validee_at: new Date().toISOString(),
+        motifs_refus_codes: codes,
+        motif_refus_libre: libre || null
+      });
+
+      // Push patient — fire-and-forget, ne doit pas bloquer la fermeture du formulaire
+      var motifLabels = REFUS_MOTIFS.filter(function(m) { return codes.indexOf(m.code) !== -1; }).map(function(m) { return m.label; });
+      var pushBody = motifLabels.length > 0 ? motifLabels.join(' · ') : 'Voir les détails dans l\'app';
+      if (libre) pushBody += ' — ' + libre;
+      if (pushBody.length > 140) pushBody = pushBody.slice(0, 137) + '…';
+      db.sendPushToPatient({
+        patient_id: patientId,
+        title: '✗ Permission refusée',
+        body: pushBody,
+        url: '/patient/',
+        tag: 'perm-refusee-' + p.id
+      }).catch(function(e) { console.warn('push perm refus:', e); });
+
+      renderPatientPerms(patientId);
+      loadedPermissions = await db.getAllPermissionsEnAttente();
+    } catch (e) {
+      errEl.textContent = 'Erreur : ' + e.message; errEl.classList.remove('hidden');
+      btnConfirm.disabled = false; btnConfirm.textContent = 'Confirmer le refus';
     }
   });
 }

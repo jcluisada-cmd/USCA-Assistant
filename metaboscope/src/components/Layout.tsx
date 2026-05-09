@@ -53,9 +53,12 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-navy-700 bg-navy-900 px-3 py-2 text-center text-xs text-gray-500">
-        <button type="button" onClick={() => setShowDisclaimer(true)} className="underline hover:text-gray-300 focus-ring">
-          Disclaimer
+      <footer className="border-t border-navy-700 bg-navy-900 px-3 py-2 text-center text-[11px] leading-snug text-gray-400">
+        <p className="mx-auto max-w-3xl">
+          <span className="text-amber-300">⚠️ Aide à la décision</span> — pas un substitut au jugement clinicien · Validation pharmacien USCA recommandée pour toute co-prescription à risque.
+        </p>
+        <button type="button" onClick={() => setShowDisclaimer(true)} className="mt-1 underline text-gray-500 hover:text-gray-300 focus-ring">
+          Disclaimer complet
         </button>
       </footer>
 

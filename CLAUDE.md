@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.32 (2026-05-09) — Interactions workflow 2-phases (sélection par classes dépliables → Analyser FAB → analyse) + carte "MetaboScope" passée en grande carte Toolbox (avant Dossier post-cure).
+> **Version courante** : v4.33 (2026-05-09) — Motifs de refus permission médecin (3 codes + libre, push patient avec récap, affichage sous badge) + bloquage dur retour > 20h patient (fix bug parseInt) + bandeau info 10h-20h. MetaboScope C.5 disclaimer pied de page enrichi (mention pharmacien USCA). C.3/C.4 abandonnés.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.32` |
+| **Service Worker** | `usca-v4.33` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -178,7 +178,7 @@ Protocoles USCA · Ressources USCA · Fiches Traitements et Substances · Dossie
 
 - [x] **Chantier A — Import docs/audits** (livré 2026-05-08) : `metaboscope/CLAUDE.md`, `metaboscope/SETUP.md`, `metaboscope/data_hug_cbip/`, `metaboscope/docs/audits/`, `metaboscope/docs/superpowers/{specs,plans}/`.
 - [ ] **Phase B — Intégration iframe Toolbox** (P0 — bloquant pour la suite) : appliquer les 2 patches `staff/toolbox.html` (case `"interactions"` → iframe MetaboScope) + `sw.js` (`LOCAL_ASSETS` + bump `v4.24` → `v4.25`) selon `METABOSCOPE_INTEGRATION.md` §2-§3. Test local + commit.
-- [ ] **Chantier C — UX & cohérence USCA** (P1, METABOSCOPE_APP.md §3) : sync thème dark/light (pattern v4.24 EEG/ECT), refonte HomePage (suppression bandeau "Sprint 4 livré", entrée par cas d'usage), liens depuis fiches Toolbox (deep link `?cart=`), optim tablette/mobile, disclaimer pied de page sticky.
+- [x] **Chantier C — UX & cohérence USCA** (livré v4.29 → v4.33) : sync thème dark/light (v4.26+v4.28+v4.30), refonte 2 onglets remplaçant la HomePage (v4.29), disclaimer pied de page (v4.33). C.3 (liens fiches Toolbox) et C.4 (optim tablette) abandonnés 2026-05-09 — voir `METABOSCOPE_APP.md` §3 pour le détail.
 - [ ] **Chantier B — Couverture v1.1 (451 molécules CBIP×HUG)** (P2, METABOSCOPE_APP.md §2) : ingestion par classe ATC prioritaire (anticoagulants oraux directs, statines, antifongiques azolés, immunosuppresseurs, macrolides ≈ 30 molécules en première vague — couvre ~80% des liaisons ELSA). Arbitrer les 30 conflits puissance discordante avant ingestion (méthode FDA Drug Interaction Table prioritaire). 4-8 sessions Claude estimées.
 - [ ] **Chantier D — Workflow décisionnel** (P2, METABOSCOPE_APP.md §4) : Mode Ordonnance (textarea DCI → rapport HTML imprimable A4), suggestions d'alternatives (sur QT-KR/sérotonine/ACB), calculateurs combinés (score ECG, équivalences BZD/CPZ via lien Toolbox), bookmarks/récents (localStorage anonymisé).
 - [ ] **Chantier E — Couverture addicto avancée** (P3, METABOSCOPE_APP.md §5) : scénarios précâblés (sevrage OH+QT long, TSO+psychotropes, BZD+opioïde, cannabis+chronique), PGx actionnable (saisie génotype CYP2D6/2C19/2B6 → reco CPIC verbatim), veille NPS (flag rouge data >2 ans), annotations cliniques USCA.

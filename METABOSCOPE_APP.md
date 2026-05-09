@@ -177,22 +177,19 @@ Fichier : `metaboscope/src/pages/HomePage.tsx`.
 - **Ajouter** une card "Mode ordonnance" (chantier D.1) une fois disponible
 - **Ajouter** un bandeau "Dernière mise à jour : YYYY-MM" piloté par `derniere_maj` du JSON le plus récent
 
-### C.3. Liens depuis fiches Toolbox
+### C.3. Liens depuis fiches Toolbox ❌ ABANDONNÉ (2026-05-09)
 
-- Sur chaque fiche patient/expert (BZD, antipsy, TSO) : ajouter un bouton sticky bas "🧪 Voir interactions MetaboScope" → ouvre `metaboscope/?cart=ID1,ID2,...` (deep link panier pré-rempli)
-- Implémentation : nouveau paramètre URL `?cart=` dans `App.tsx` qui appelle `cart.add(id)` au mount avant de naviguer vers `/interactions`
-- Cibles prioritaires : `fiche_diazepam.html`, `fiche_methadone.html`, `fiche_clozapine.html`, `fiche_chlorpromazine.html`
+Décision JC 2026-05-09 : feature jugée inutile. Le pattern "panier pré-rempli depuis une fiche Toolbox" n'a pas trouvé d'usage clinique évident. Le mécanisme côté MetaboScope (`?cart=` dans `App.tsx:14-45`) reste en place — il sert au deep-link manuel et peut être réactivé plus tard sans refonte.
 
-### C.4. Optimisation tablette/mobile
+### C.4. Optimisation tablette/mobile ❌ ABANDONNÉ (2026-05-09)
 
-- Vue accordion repliée par défaut sur la fiche molécule (11 sections) — ouvrir uniquement la "summary" + "alertes PD"
-- Mode paysage Galaxy Tab S7 FE : grille 2 colonnes au-dessus de 1024px sur la fiche (résumé colonne gauche, sections colonne droite scrollable)
-- Réduire la largeur max des accordions à `max-w-3xl` pour la lisibilité (actuellement pleine largeur)
+Décision JC 2026-05-09 : retiré du TODO. La refonte 2 onglets v4.29-v4.32 a déjà restructuré l'UI (drawer modal molécule, atlas accordion, classes filtrables) et l'usage Galaxy Tab S7 FE n'a pas remonté de friction bloquante. À reconsidérer ponctuellement sur retour utilisateur réel.
 
-### C.5. Disclaimer
+### C.5. Disclaimer ✅ LIVRÉ v4.33 (2026-05-09)
 
-- Disclaimer actuel = modal gate première visite. Garder mais réduire à un bandeau pied de page sticky pour les visites suivantes (gain d'écran)
-- Ajouter mention explicite "MetaboScope ne remplace pas la validation pharmacien clinicien USCA"
+- `DISCLAIMER_TEXT` (`metaboscope/src/components/Disclaimer.tsx`) enrichi : ajout explicite "ni à la validation du pharmacien clinicien USCA pour toute co-prescription à haut risque"
+- `Layout.tsx` footer : mini-bandeau 1 ligne non-sticky ajouté avec ⚠️ Aide à la décision · pas un substitut au jugement clinicien · validation pharmacien USCA recommandée. Le bouton "Disclaimer complet" (ouvre modal readonly) est conservé en dessous.
+- Choix V1 (mini-bandeau non-sticky) plutôt que V3 (sticky) pour ne pas voler d'écran sur Galaxy Tab S7 FE en portrait.
 
 ---
 
@@ -342,10 +339,10 @@ Cible : permettre la saisie d'un génotype patient (anonyme, localStorage volati
 | **P1** | F.6 — Doc reprise | 30 min | Hygiène | — |
 | **P2** | B (par batchs) — Ingestion v1.1 | 4-8 sessions | Couverture clinique réelle | Pour scénarios E |
 | **P2** | D.1 — Mode Ordonnance | 2-4h | Vrai workflow clinique | — |
-| **P2** | C.3 — Liens depuis Toolbox | 1h | Intégration USCA | — |
+| ~~P1~~ | ~~C.3 — Liens depuis Toolbox~~ | — | ❌ Abandonné 2026-05-09 | — |
+| ~~P3~~ | ~~C.4 — Optim tablette~~ | — | ❌ Abandonné 2026-05-09 | — |
 | **P3** | E.1 — Scénarios précâblés | 2-3h | Spécificité USCA | Dépend B |
 | **P3** | D.2 — Suggestions alternatives | 4-6h | Différenciation | Dépend B (besoin masse critique molécules même classe) |
-| **P3** | C.4 — Optim tablette | 1-2h | UX Galaxy Tab S7 FE | — |
 | **P4** | D.3 — Calculateurs combinés | 2-3h | Avancé | — |
 | **P4** | D.4 — Bookmarks/récents | 1-2h | Friction usage répété | — |
 | **P4** | E.2 — PGx actionnable | 2-3h | Public limité | — |

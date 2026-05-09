@@ -1,7 +1,7 @@
 // Disclaimer clinique imposé par CLAUDE.md — visible page d'accueil + pied de fiche + écran first-use.
 
 export const DISCLAIMER_TEXT =
-  "MétaboScope est un outil d'aide à la décision. Il ne se substitue pas au jugement clinique du prescripteur. Les recommandations pharmacogénétiques nécessitent confirmation par le laboratoire de pharmacogénomique. Les données sur les NPS sont par nature évolutives. Validation pharmacien clinicien recommandée pour toute co-prescription à haut risque."
+  "MétaboScope est un outil d'aide à la décision. Il ne se substitue pas au jugement clinique du prescripteur, ni à la validation du pharmacien clinicien USCA pour toute co-prescription à haut risque. Les recommandations pharmacogénétiques nécessitent confirmation par le laboratoire de pharmacogénomique. Les données sur les NPS sont par nature évolutives."
 
 export function Disclaimer({ compact = false }: { compact?: boolean }) {
   return (
