@@ -109,3 +109,79 @@
     @apply focus-visible:ring-offset-slate-50;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   Print rules — Rapport Mode Ordonnance (chantier D.1, 2026-05-11)
+   ════════════════════════════════════════════════════════════════
+   Stratégie : quand .rapport-print-root est dans le DOM (modal rapport ouverte),
+   on cache TOUT le reste et on rend uniquement la page A4 (rapport-paper).
+   Force palette light pour économiser l'encre et garantir la lisibilité photocopiée.
+   @page déclare A4 portrait + marges 12mm/14mm (sinon Chrome auto-scale et casse le rendu).
+*/
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm;
+  }
+
+  /* Cacher tout sauf le rapport et ses descendants ────────────── */
+  body > *:not(.rapport-print-root) {
+    display: none !important;
+  }
+  /* Mais on cache la toolbar (boutons Imprimer/Fermer) du rapport */
+  .rapport-print-toolbar {
+    display: none !important;
+  }
+
+  /* Le wrapper du rapport devient le document complet ──────────── */
+  .rapport-print-root {
+    position: static !important;
+    inset: auto !important;
+    background: white !important;
+    overflow: visible !important;
+    display: block !important;
+    z-index: auto !important;
+  }
+  .rapport-paper {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    width: auto !important;
+    max-width: none !important;
+    background: white !important;
+  }
+
+  /* Anti-titre-orphelin : titre ne doit jamais finir seul en bas de page */
+  .rapport-paper section h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .rapport-paper section h2 + * {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+  /* Pas de coupure au milieu d'une card / couple / matrix */
+  .rapport-paper .grid,
+  .rapport-paper table,
+  .rapport-paper .rapport-couple {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  /* Veuves / orphelines pour les paragraphes de texte */
+  .rapport-paper p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Force palette light (même si l'app est en theme-dark) ──────── */
+  html.theme-dark .rapport-paper,
+  html.theme-dark .rapport-paper * {
+    color: #1E293B !important;
+    background-color: transparent !important;
+    border-color: #E2E8F0 !important;
+  }
+  html.theme-dark .rapport-paper {
+    background-color: white !important;
+  }
+}
+

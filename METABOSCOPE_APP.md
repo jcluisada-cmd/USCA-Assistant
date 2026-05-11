@@ -197,7 +197,19 @@ Décision JC 2026-05-09 : retiré du TODO. La refonte 2 onglets v4.29-v4.32 a d�
 
 **Charge** : 4-8 sessions selon le scope. **Différenciation vs UpToDate/Lexicomp**.
 
-### D.1. Mode "Ordonnance"
+### D.1. Mode "Ordonnance" ✅ LIVRÉ v4.35 (2026-05-11)
+
+- Bouton `📋 Ordonnance` sur `/interactions` (à droite barre de recherche).
+- Modal saisie 2-phases : (1) textarea libre (1 DCI/ligne, dose ignorée via regex `mg|µg|g|ui|ml|cp`), (2) review par ligne avec checkboxes (top match + 4 alternatives) et badge confidence `probable` (vert, pré-coché) / `possible` (amber) / `incertain` / `non reconnue` (rouge).
+- Charger panier remplace le contenu courant + bascule auto en mode analyse.
+- Bouton `🖨️ Rapport imprimable A4` en mode analyse → overlay plein écran avec composant `RapportPrint`.
+- Rapport rendu : composition · alertes critiques (Mécanisme + Conduite à tenir, badge `Red`/`Amber` au lieu du décompte numérique opaque type "3 pts") · vigilance · matrix triangulaire annotée (PD red/amber, PK, PGx couleur-codés) · détail couples avec tags + commentaire · disclaimer USCA.
+- `@media print` dans `index.css` : `@page A4 portrait` + marges 12mm/14mm, force palette light depuis theme-dark (économie encre + lisibilité photocopie), anti-titre-orphelin (`break-after: avoid` sur h2 + `break-before: avoid` sur sibling), `break-inside: avoid` sur cards/matrix/couples.
+- Sync thème : light/dark à l'écran (héritage de `theme-light`/`theme-dark` global), force light à l'impression.
+- Mockup HTML conservé dans `metaboscope/docs/mockups/rapport-ordonnance-mockups.html` comme spec visuelle de référence pour D.2/D.3.
+- Fichiers livrés : `src/utils/parseOrdonnance.ts`, `src/components/ordonnance/OrdonnanceModal.tsx`, `src/components/ordonnance/RapportPrint.tsx`, modifs `src/pages/InteractionPage.tsx` + `src/index.css`.
+
+#### D.1 — spec d'origine (conservée pour traçabilité)
 
 **Use case** : interne USCA qui reçoit une ordonnance papier, veut un screening rapide.
 
@@ -338,7 +350,7 @@ Cible : permettre la saisie d'un génotype patient (anonyme, localStorage volati
 | **P1** | C.2 — HomePage refonte | 1h | Désamorce "Sprint 4 livré" | — |
 | **P1** | F.6 — Doc reprise | 30 min | Hygiène | — |
 | **P2** | B (par batchs) — Ingestion v1.1 | 4-8 sessions | Couverture clinique réelle | Pour scénarios E |
-| **P2** | D.1 — Mode Ordonnance | 2-4h | Vrai workflow clinique | — |
+| ~~P2~~ | ~~D.1 — Mode Ordonnance~~ | — | ✅ Livré v4.35 (2026-05-11) | — |
 | ~~P1~~ | ~~C.3 — Liens depuis Toolbox~~ | — | ❌ Abandonné 2026-05-09 | — |
 | ~~P3~~ | ~~C.4 — Optim tablette~~ | — | ❌ Abandonné 2026-05-09 | — |
 | **P3** | E.1 — Scénarios précâblés | 2-3h | Spécificité USCA | Dépend B |

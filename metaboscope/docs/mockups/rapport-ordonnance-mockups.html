@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="fr" class="theme-light">
+<head>
+<meta charset="utf-8">
+<title>MetaboScope · Mockup Rapport Ordonnance v2 (D.1)</title>
+<style>
+  /* ════════════════════════════════════════════════════════════════
+     Palettes — light / dark
+     ════════════════════════════════════════════════════════════════ */
+  html.theme-light {
+    --bg-app: #F1F5F9;
+    --bg-paper: #FFFFFF;
+    --bg-soft: #F8FAFC;
+    --bg-soft-2: #F1F5F9;
+    --border: #E2E8F0;
+    --border-strong: #CBD5E1;
+    --text: #1E293B;
+    --text-muted: #475569;
+    --text-faint: #64748B;
+    --text-extra-faint: #94A3B8;
+    --indigo: #4F46E5;
+    --indigo-dark: #3730A3;
+    --indigo-soft: #EEF2FF;
+    --red-bg: #FEF2F2;
+    --red-border: #FECACA;
+    --red-strong: #DC2626;
+    --red-text: #B91C1C;
+    --red-text-strong: #991B1B;
+    --amber-bg: #FFFBEB;
+    --amber-border: #FDE68A;
+    --amber-strong: #D97706;
+    --amber-text: #B45309;
+    --amber-text-strong: #92400E;
+    --pk-bg: #DBEAFE;
+    --pk-text: #1E40AF;
+    --pgx-bg: #F3E8FF;
+    --pgx-text: #6B21A8;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  html.theme-dark {
+    --bg-app: #0F172A;
+    --bg-paper: #1E293B;
+    --bg-soft: #0F172A;
+    --bg-soft-2: #1E293B;
+    --border: #334155;
+    --border-strong: #475569;
+    --text: #F1F5F9;
+    --text-muted: #CBD5E1;
+    --text-faint: #94A3B8;
+    --text-extra-faint: #64748B;
+    --indigo: #818CF8;
+    --indigo-dark: #A5B4FC;
+    --indigo-soft: #1E1B4B;
+    --red-bg: #450A0A;
+    --red-border: #7F1D1D;
+    --red-strong: #F87171;
+    --red-text: #FCA5A5;
+    --red-text-strong: #FECACA;
+    --amber-bg: #451A03;
+    --amber-border: #78350F;
+    --amber-strong: #FBBF24;
+    --amber-text: #FCD34D;
+    --amber-text-strong: #FDE68A;
+    --pk-bg: #1E3A8A;
+    --pk-text: #93C5FD;
+    --pgx-bg: #581C87;
+    --pgx-text: #D8B4FE;
+    --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-app);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     App shell — sidebar + main (off-print)
+     ════════════════════════════════════════════════════════════════ */
+  .app {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+  .sidebar {
+    background: #0F172A;
+    color: white;
+    padding: 24px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar h1 { font-size: 16px; margin: 0 0 4px; color: #fff; }
+  .sidebar .subtitle { font-size: 12px; color: #94A3B8; margin-bottom: 24px; }
+  .sidebar .scenario {
+    background: #1E293B;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 12px;
+  }
+  .sidebar .scenario strong { color: #E2E8F0; display: block; margin-bottom: 6px; }
+  .sidebar .scenario ul { margin: 0; padding-left: 16px; color: #CBD5E1; }
+  .sidebar .scenario li { margin-bottom: 2px; }
+
+  .theme-toggle {
+    background: #1E293B;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+  .theme-toggle .lbl {
+    font-size: 11px;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .theme-toggle .group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .theme-toggle button {
+    background: #0F172A;
+    border: 1px solid #334155;
+    color: #CBD5E1;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .theme-toggle button.active {
+    background: #4F46E5;
+    color: white;
+    border-color: #4F46E5;
+  }
+
+  .print-btn {
+    width: 100%;
+    background: #059669;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .print-btn:hover { background: #047857; }
+
+  .notes {
+    margin-top: 20px;
+    padding: 12px;
+    background: #1E293B;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #94A3B8;
+    line-height: 1.5;
+  }
+  .notes code {
+    background: #0F172A;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 10px;
+  }
+
+  .main {
+    padding: 24px;
+    overflow-x: auto;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     Page A4 simulée
+     ════════════════════════════════════════════════════════════════ */
+  .a4 {
+    background: var(--bg-paper);
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 24px;
+    padding: 18mm 16mm;
+    box-shadow: var(--shadow);
+    color: var(--text);
+    font-size: 11pt;
+    line-height: 1.4;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     Header rapport
+     ════════════════════════════════════════════════════════════════ */
+  .rpt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--indigo);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+  }
+  .rpt-header .brand {
+    font-size: 9pt;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rpt-header h1 {
+    font-size: 16pt;
+    margin: 4px 0 0;
+    color: var(--indigo);
+  }
+  .rpt-header .meta {
+    text-align: right;
+    font-size: 9pt;
+    color: var(--text-muted);
+  }
+  .rpt-header .meta strong { color: var(--text); }
+
+  /* ════════════════════════════════════════════════════════════════
+     Section titles
+     ════════════════════════════════════════════════════════════════ */
+  .section {
+    margin-top: 16px;
+  }
+  .section:first-of-type { margin-top: 0; }
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 8px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .section-title.red { color: var(--red-text); border-color: var(--red-border); }
+  .section-title.amber { color: var(--amber-text); border-color: var(--amber-border); }
+  .section-title .count {
+    font-size: 9pt;
+    font-weight: 500;
+    color: var(--text-faint);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .section-title.red .count { color: var(--red-text); }
+  .section-title.amber .count { color: var(--amber-text); }
+
+  /* ════════════════════════════════════════════════════════════════
+     1. Composition de l'ordonnance
+     ════════════════════════════════════════════════════════════════ */
+  .panier {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 10pt;
+  }
+  .panier .meta-line {
+    font-size: 9pt;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+  .panier .chip {
+    display: inline-block;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 3px 11px;
+    margin: 2px 4px 2px 0;
+    font-size: 10pt;
+    color: var(--text);
+  }
+  .panier .chip .class {
+    color: var(--text-faint);
+    font-size: 8.5pt;
+    margin-left: 4px;
+  }
+  .panier .chip.unknown {
+    border-color: var(--amber-strong);
+    background: var(--amber-bg);
+    color: var(--amber-text-strong);
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     Alert cards (style B — détaillé)
+     ════════════════════════════════════════════════════════════════ */
+  .alert {
+    border-radius: 6px;
+    padding: 11px 13px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .alert.red {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-left: 4px solid var(--red-strong);
+  }
+  .alert.amber {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-left: 4px solid var(--amber-strong);
+  }
+  .alert .icon {
+    font-size: 16pt;
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .alert h3 {
+    margin: 0 0 5px;
+    font-size: 10.5pt;
+    color: var(--text);
+  }
+  .alert .line {
+    font-size: 9.5pt;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .alert .line strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .alert.red .line.cat strong { color: var(--red-text-strong); }
+  .alert.amber .line.cat strong { color: var(--amber-text-strong); }
+
+  .alert .contribs {
+    font-size: 9pt;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .alert .contribs .mol {
+    display: inline-block;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    font-size: 9pt;
+    color: var(--text);
+  }
+  .alert.red .contribs .mol { border-color: var(--red-border); }
+  .alert.amber .contribs .mol { border-color: var(--amber-border); }
+
+  /* Badge sévérité (remplace l'ancien "3 pts") */
+  .alert .sev-badge {
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    height: fit-content;
+  }
+  .alert.red .sev-badge {
+    background: var(--red-strong);
+    color: white;
+  }
+  .alert.amber .sev-badge {
+    background: var(--amber-strong);
+    color: white;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     4. Matrix interactions
+     ════════════════════════════════════════════════════════════════ */
+  table.matrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin-top: 4px;
+  }
+  table.matrix th, table.matrix td {
+    border: 1px solid var(--border);
+    padding: 5px 7px;
+    text-align: left;
+    vertical-align: top;
+    color: var(--text);
+  }
+  table.matrix th {
+    background: var(--bg-soft);
+    font-weight: 600;
+  }
+  table.matrix thead th {
+    text-align: center;
+  }
+  table.matrix .pk { color: var(--pk-text); font-weight: 600; }
+  table.matrix .pd-red { color: var(--red-text); font-weight: 600; }
+  table.matrix .pd-amber { color: var(--amber-text); font-weight: 600; }
+  table.matrix .pgx { color: var(--pgx-text); font-weight: 600; }
+  table.matrix .empty { color: var(--text-extra-faint); text-align: center; }
+  table.matrix .diag {
+    background: var(--bg-soft-2);
+    color: var(--text-extra-faint);
+    text-align: center;
+  }
+  table.matrix .blank { background: var(--bg-soft); }
+  table.matrix small {
+    display: block;
+    color: var(--text-faint);
+    font-weight: 400;
+    font-size: 8pt;
+    margin-top: 2px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     5. Détail couple par couple
+     ════════════════════════════════════════════════════════════════ */
+  .couple {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 11px;
+    margin-bottom: 6px;
+    font-size: 9.5pt;
+    background: var(--bg-paper);
+  }
+  .couple .head {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+  .couple .head .vs {
+    color: var(--text-extra-faint);
+    margin: 0 6px;
+    font-weight: 400;
+  }
+  .couple .tag {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 1px 8px;
+    font-size: 8pt;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  .tag-red { background: var(--red-bg); color: var(--red-text-strong); border: 1px solid var(--red-border); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber-text-strong); border: 1px solid var(--amber-border); }
+  .tag-pk { background: var(--pk-bg); color: var(--pk-text); }
+  .tag-pgx { background: var(--pgx-bg); color: var(--pgx-text); }
+  .tag-none { background: var(--bg-soft-2); color: var(--text-faint); }
+  .couple .comment {
+    margin-top: 4px;
+    font-size: 9pt;
+    color: var(--text-muted);
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     Footer disclaimer
+     ════════════════════════════════════════════════════════════════ */
+  .disclaimer-foot {
+    margin-top: 16px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-size: 8pt;
+    color: var(--text-faint);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     Print rules — force light, hide sidebar, tight margins
+     ════════════════════════════════════════════════════════════════ */
+  @media print {
+    /* Déclaration explicite de la page imprimée — sinon Chrome applique son auto-scale par défaut */
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm;
+    }
+
+    /* Force light palette to save ink + maximize legibility on paper */
+    html, html.theme-dark {
+      --bg-app: #FFFFFF;
+      --bg-paper: #FFFFFF;
+      --bg-soft: #F8FAFC;
+      --bg-soft-2: #F1F5F9;
+      --border: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --text: #1E293B;
+      --text-muted: #475569;
+      --text-faint: #64748B;
+      --text-extra-faint: #94A3B8;
+      --indigo: #4F46E5;
+      --indigo-dark: #3730A3;
+      --indigo-soft: #EEF2FF;
+      --red-bg: #FEF2F2;
+      --red-border: #FECACA;
+      --red-strong: #DC2626;
+      --red-text: #B91C1C;
+      --red-text-strong: #991B1B;
+      --amber-bg: #FFFBEB;
+      --amber-border: #FDE68A;
+      --amber-strong: #D97706;
+      --amber-text: #B45309;
+      --amber-text-strong: #92400E;
+      --pk-bg: #DBEAFE;
+      --pk-text: #1E40AF;
+      --pgx-bg: #F3E8FF;
+      --pgx-text: #6B21A8;
+    }
+
+    body { background: white !important; }
+    .sidebar { display: none !important; }
+    .app { display: block; }
+    .main { padding: 0; }
+
+    /* On laisse @page gérer marges + taille — pas de padding additionnel ni width forcée */
+    .a4 {
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: auto !important;
+      min-height: auto !important;
+    }
+
+    /* Pas de coupure au milieu d'une alerte / d'un couple / de la matrix */
+    .alert, .couple, table.matrix, .panier {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* === Anti-titre-orphelin === */
+    /* Le titre seul n'a pas le droit d'être suivi d'un saut de page */
+    .section-title {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    /* + le tout premier enfant qui suit un titre ne peut pas être précédé d'un saut */
+    .section-title + * {
+      break-before: avoid;
+      page-break-before: avoid;
+    }
+    /* Petites sections compactes : on les garde entières si possible */
+    .section:has(table.matrix) {
+      break-inside: avoid-page;
+    }
+
+    /* Lignes orphelines / veuves dans les blocs de texte */
+    body { orphans: 3; widows: 3; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ─────── Sidebar (off-print) ─────── -->
+  <aside class="sidebar">
+    <h1>Mockup Rapport D.1</h1>
+    <div class="subtitle">MetaboScope · Mode Ordonnance · v2</div>
+
+    <div class="scenario">
+      <strong>Scénario figé</strong>
+      <ul>
+        <li>escitalopram 10mg</li>
+        <li>tramadol 50mg</li>
+        <li>oxazépam 10mg</li>
+        <li>amlodipine 5mg ⚠ non reconnu</li>
+      </ul>
+    </div>
+
+    <div class="theme-toggle">
+      <div class="lbl">Thème (override manuel)</div>
+      <div class="group">
+        <button id="btn-light" onclick="setTheme('light', true)">☀️ Light</button>
+        <button id="btn-dark" onclick="setTheme('dark', true)">🌙 Dark</button>
+      </div>
+      <div id="theme-source" style="font-size:10px;color:#94A3B8;margin-top:8px;line-height:1.4;"></div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimer (Ctrl+P)</button>
+
+    <div class="notes">
+      Mix validé : section 1 panier · 2 critiques (style B) · 3 vigilance · 4 matrix (style A) · 5 couples.<br><br>
+      <strong>QT</strong> : décompte numérique remplacé par badge <code>RED</code> + rationale verbal.<br><br>
+      <strong>Sync thème</strong> au boot (priorité décroissante) :<br>
+      1. URL param <code>?theme=light|dark</code><br>
+      2. <code>localStorage.usca_theme</code> (hérite de l'app)<br>
+      3. <code>postMessage</code> live (si embedded)<br>
+      4. défaut = dark (pattern MetaboScope)<br><br>
+      <strong>Impression</strong> : force light auto via <code>@media print</code>.
+    </div>
+  </aside>
+
+  <!-- ─────── Rapport A4 ─────── -->
+  <main class="main">
+    <div class="a4">
+
+      <!-- ═══ Header ═══ -->
+      <div class="rpt-header">
+        <div>
+          <div class="brand">USCA Connect · MetaboScope · Mode Ordonnance</div>
+          <h1>Rapport d'analyse de co-prescription</h1>
+        </div>
+        <div class="meta">
+          <div><strong>Lundi 11 mai 2026</strong></div>
+          <div style="margin-top:3px;">Service USCA</div>
+          <div>Pitié-Salpêtrière · AP-HP</div>
+        </div>
+      </div>
+
+      <!-- ═══ 1. Composition ═══ -->
+      <div class="section">
+        <div class="section-title">
+          <span>1. Composition de l'ordonnance</span>
+          <span class="count">4 lignes · 3 reconnues</span>
+        </div>
+        <div class="panier">
+          <div class="meta-line">Base MetaboScope v1.0 — 147 molécules. Lignes non reconnues exclues de l'analyse.</div>
+          <span class="chip">escitalopram 10mg<span class="class">· ISRS</span></span>
+          <span class="chip">tramadol 50mg<span class="class">· opioïde atypique</span></span>
+          <span class="chip">oxazépam 10mg<span class="class">· BZD</span></span>
+          <span class="chip unknown">amlodipine 5mg · non reconnu</span>
+        </div>
+      </div>
+
+      <!-- ═══ 2. Alertes critiques ═══ -->
+      <div class="section">
+        <div class="section-title red">
+          <span>2. Alertes critiques</span>
+          <span class="count">2 détectées</span>
+        </div>
+
+        <div class="alert red">
+          <div class="icon">🫁</div>
+          <div>
+            <h3>Dépression respiratoire — paire BZD + opioïde</h3>
+            <div class="line"><strong>Mécanisme :</strong> dépression additive du SNC sur les centres respiratoires médullaires. FDA boxed warning 2016, étendu 2019 aux gabapentinoïdes. Première cause d'overdose dans le périmètre USCA.</div>
+            <div class="line cat"><strong>Conduite à tenir :</strong> reconsidérer la double prescription. Si maintien indispensable — dose minimale efficace de BZD, surveillance respiratoire renforcée la nuit, information patient/entourage sur la naloxone, accès facilité au kit nalsox.</div>
+            <div class="contribs"><span class="mol">oxazépam — BZD</span><span class="mol">tramadol — opioïde μ-agoniste</span></div>
+          </div>
+          <div class="sev-badge">Red</div>
+        </div>
+
+        <div class="alert red">
+          <div class="icon">❤</div>
+          <div>
+            <h3>Allongement QTc — risque de torsades de pointes</h3>
+            <div class="line"><strong>Mécanisme :</strong> escitalopram est classé <strong>QT-KR</strong> par CredibleMeds (Known Risk — preuve directe de torsades documentée). Risque red dès la présence d'une seule molécule KR, sans nécessiter de cumul.</div>
+            <div class="line cat"><strong>Conduite à tenir :</strong> ECG de contrôle à J1, J7, puis mensuel. Corriger toute hypokaliémie/hypomagnésémie avant initiation. Éviter associations supplémentaires QT-KR (méthadone, halopéridol, érythromycine, fluconazole) ou QT-PR (amiodarone, fluvoxamine).</div>
+            <div class="contribs"><span class="mol">escitalopram — QT-KR (CredibleMeds)</span></div>
+          </div>
+          <div class="sev-badge">Red</div>
+        </div>
+      </div>
+
+      <!-- ═══ 3. Vigilance ═══ -->
+      <div class="section">
+        <div class="section-title amber">
+          <span>3. Vigilance requise</span>
+          <span class="count">3 détectées</span>
+        </div>
+
+        <div class="alert amber">
+          <div class="icon">🧠</div>
+          <div>
+            <h3>Risque sérotoninergique — ISRS + opioïde sérotoninergique</h3>
+            <div class="line">Tramadol agit comme SNRI-like par inhibition de la recapture de sérotonine. Paire avec un ISRS = surveillance clinique du syndrome sérotoninergique (clonus, hyperréflexie, hyperthermie, agitation). Triade non constituée (pas d'IMAO ni linézolide associé).</div>
+            <div class="contribs"><span class="mol">escitalopram</span><span class="mol">tramadol</span></div>
+          </div>
+          <div class="sev-badge">Amber</div>
+        </div>
+
+        <div class="alert amber">
+          <div class="icon">⚡</div>
+          <div>
+            <h3>Abaissement du seuil épileptogène — tramadol</h3>
+            <div class="line">Effet dose-dépendant connu. Contre-indication relative chez patient avec ATCD convulsions, sevrage alcool/BZD aigu, ou traumatisme crânien récent. Vigilance accrue en association avec un ISRS (potentialisation décrite).</div>
+            <div class="contribs"><span class="mol">tramadol</span></div>
+          </div>
+          <div class="sev-badge">Amber</div>
+        </div>
+
+        <div class="alert amber">
+          <div class="icon">🧬</div>
+          <div>
+            <h3>Pharmacogénétique — Tramadol via CYP2D6 (CPIC niveau A)</h3>
+            <div class="line">Tramadol est bioactivé en M1 (O-desméthyltramadol, μ-agoniste fort) par le CYP2D6. Métaboliseur lent (PM) — moindre analgésie + accumulation parent. Métaboliseur ultrarapide (UM) — toxicité opioïde rapide (apnée, sédation profonde) à dose standard.</div>
+            <div class="line cat"><strong>Recommandation CPIC :</strong> envisager génotypage CYP2D6 en cas de réponse atypique (échec analgésique malgré bonne observance, ou toxicité opioïde inattendue à dose standard).</div>
+          </div>
+          <div class="sev-badge">CPIC A</div>
+        </div>
+      </div>
+
+      <!-- ═══ 4. Matrix interactions ═══ -->
+      <div class="section">
+        <div class="section-title">
+          <span>4. Matrix interactions</span>
+          <span class="count">3 molécules analysées</span>
+        </div>
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th class="blank"></th>
+              <th>escitalopram</th>
+              <th>tramadol</th>
+              <th>oxazépam</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>escitalopram</th>
+              <td class="diag">—</td>
+              <td>
+                <span class="pd-amber">PD sérotonine</span><br>
+                <span class="pk">PK CYP2D6 ↓</span><br>
+                <span class="pgx">PGx CPIC A</span>
+                <small>Escitalopram inhibe faiblement CYP2D6 → moindre conversion tramadol → M1</small>
+              </td>
+              <td><span class="empty">∅</span></td>
+            </tr>
+            <tr>
+              <th>tramadol</th>
+              <td class="blank"></td>
+              <td class="diag">—</td>
+              <td>
+                <span class="pd-red">PD respiratoire</span>
+                <small>Paire BZD + opioïde — FDA boxed warning</small>
+              </td>
+            </tr>
+            <tr>
+              <th>oxazépam</th>
+              <td class="blank"></td>
+              <td class="blank"></td>
+              <td class="diag">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ═══ 5. Détails couple par couple ═══ -->
+      <div class="section">
+        <div class="section-title">
+          <span>5. Détails couple par couple</span>
+          <span class="count">3 couples actifs</span>
+        </div>
+
+        <div class="couple">
+          <div class="head">escitalopram <span class="vs">×</span> tramadol</div>
+          <span class="tag tag-amber">PD séro</span>
+          <span class="tag tag-pk">PK CYP2D6 (escitalopram inhibiteur faible)</span>
+          <span class="tag tag-pgx">PGx CPIC A (CYP2D6)</span>
+          <div class="comment">Escitalopram diminue la conversion tramadol → M1, atténuant l'effet analgésique attendu. Combiné au risque sérotoninergique, surveillance clinique double indiquée.</div>
+        </div>
+
+        <div class="couple">
+          <div class="head">tramadol <span class="vs">×</span> oxazépam</div>
+          <span class="tag tag-red">PD respi (paire FDA)</span>
+          <div class="comment">Aucune interaction PK significative (oxazépam métabolisé par UGT — pas de CYP). Le risque est exclusivement pharmacodynamique mais critique : c'est la paire la plus létale du périmètre USCA, première cause d'overdose.</div>
+        </div>
+
+        <div class="couple">
+          <div class="head">escitalopram <span class="vs">×</span> oxazépam</div>
+          <span class="tag tag-none">aucune interaction significative</span>
+          <div class="comment">Pas de partage de voie métabolique majeure. Pas d'effet PD cumulé documenté.</div>
+        </div>
+      </div>
+
+      <!-- ═══ Footer disclaimer ═══ -->
+      <div class="disclaimer-foot">
+        ⚠️ Aide à la décision — ne se substitue pas au jugement clinique du prescripteur. Validation pharmacien clinicien USCA recommandée pour toute co-prescription à haut risque. Aucune donnée patient n'est stockée par MetaboScope. Référentiel : MetaboScope v1.0 (147 molécules · multi-sources HUG 2020 + CBIP 2026 · CredibleMeds · FDA Drug Interaction Table · CPIC Guidelines).
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Sync thème — aligné sur le pattern MetaboScope réel (main.tsx) :
+  //   1) URL param ?theme=light|dark au boot (sync initial depuis l'hôte USCA)
+  //   2) localStorage.usca_theme en fallback (clé utilisée par toute l'app USCA)
+  //   3) postMessage({ type: 'usca-theme', dark: bool }) live (pour iframe sync à chaud)
+  //   4) défaut = dark (palette navy historique de MetaboScope)
+  // Override manuel via les boutons sidebar = écrit aussi dans localStorage (persiste cross-refresh).
+
+  function setTheme(name, persistAndAnnounce) {
+    document.documentElement.classList.remove('theme-light', 'theme-dark');
+    document.documentElement.classList.add('theme-' + name);
+    document.getElementById('btn-light').classList.toggle('active', name === 'light');
+    document.getElementById('btn-dark').classList.toggle('active', name === 'dark');
+    if (persistAndAnnounce) {
+      try { localStorage.setItem('usca_theme', name); } catch (e) {}
+    }
+  }
+
+  function detectInitialTheme() {
+    const urlTheme = new URLSearchParams(window.location.search).get('theme');
+    if (urlTheme === 'light' || urlTheme === 'dark') {
+      return { theme: urlTheme, source: 'URL param ?theme=' + urlTheme };
+    }
+    try {
+      const stored = localStorage.getItem('usca_theme');
+      if (stored === 'light' || stored === 'dark') {
+        return { theme: stored, source: 'localStorage.usca_theme (app USCA)' };
+      }
+    } catch (e) {}
+    return { theme: 'dark', source: 'défaut MetaboScope (dark)' };
+  }
+
+  // Boot
+  const init = detectInitialTheme();
+  setTheme(init.theme, false);
+  document.getElementById('theme-source').textContent = '↳ Source : ' + init.source;
+
+  // Live sync via postMessage (cas iframe — pour cohérence avec l'app réelle)
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'usca-theme' && typeof e.data.dark === 'boolean') {
+      setTheme(e.data.dark ? 'dark' : 'light', false);
+      document.getElementById('theme-source').textContent = '↳ Source : postMessage (live)';
+    }
+  });
+
+  // Sync multi-onglet : si JC toggle le thème dans l'app USCA ouverte en parallèle,
+  // le mockup réagit instantanément sans refresh.
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'usca_theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+      setTheme(e.newValue, false);
+      document.getElementById('theme-source').textContent = '↳ Source : autre onglet USCA';
+    }
+  });
+</script>
+</body>
+</html>

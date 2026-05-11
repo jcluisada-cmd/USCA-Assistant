@@ -20,6 +20,8 @@ import { getMoleculeBucket, getBucketShort, CLASS_BUCKETS, type ClassBucket } fr
 import { IntensityBars } from '../components/ui/IntensityBars';
 import { ModalDrawer } from '../components/ui/ModalDrawer';
 import { VoieDetailModal } from '../components/VoieDetailModal';
+import { OrdonnanceModal } from '../components/ordonnance/OrdonnanceModal';
+import { RapportPrint } from '../components/ordonnance/RapportPrint';
 import { pdAlertLabel } from '../utils/labels';
 
 type AlertKind = 'qt' | 'sero' | 'resp' | 'acb' | 'sep';
@@ -37,6 +39,9 @@ export function InteractionPage() {
 
   // Workflow 2 phases : sélection (badges classes dépliables) → analyse
   const [analyzeMode, setAnalyzeMode] = useState(false);
+  // Mode Ordonnance (D.1) — modal saisie + rapport imprimable
+  const [ordonnanceOpen, setOrdonnanceOpen] = useState(false);
+  const [rapportOpen, setRapportOpen] = useState(false);
   const [expandedBuckets, setExpandedBuckets] = useState<Set<ClassBucket>>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_EXPANDED_BUCKETS);
@@ -156,30 +161,42 @@ export function InteractionPage() {
   // ─── Render ──────────────────────────────────────────────
   return (
     <div className="space-y-3 pb-12">
-      {/* Recherche pour ajouter */}
-      <div className="relative">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setSearchOpen(true); }}
-          onFocus={() => setSearchOpen(true)}
-          onBlur={() => { blurTimer.current = setTimeout(() => setSearchOpen(false), 150); }}
-          placeholder="🔎 Ajouter une molécule (DCI, nom commercial, NPS)…"
-          className="w-full rounded-full border border-navy-700 bg-navy-800 px-4 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus-ring"
-        />
-        {searchOpen && searchResults.length > 0 && (
-          <ul className="absolute left-0 right-0 top-full z-20 mt-1 max-h-72 overflow-y-auto rounded-md border border-navy-700 bg-navy-800 shadow-lg">
-            {searchResults.map(m => (
-              <li key={m.id}>
-                <button type="button" onMouseDown={() => addFromSearch(m.id)}
-                        className="block w-full px-3 py-2 text-left text-sm hover:bg-navy-700 focus-ring">
-                  <span className="font-medium text-gray-100">{m.nom_dci}</span>
-                  <span className="ml-2 text-xs text-gray-400">{m.classe}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+      {/* Barre recherche + bouton ordonnance */}
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setSearchOpen(true); }}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => { blurTimer.current = setTimeout(() => setSearchOpen(false), 150); }}
+            placeholder="🔎 Ajouter une molécule (DCI, nom commercial, NPS)…"
+            className="w-full rounded-full border border-navy-700 bg-navy-800 px-4 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus-ring"
+          />
+          {searchOpen && searchResults.length > 0 && (
+            <ul className="absolute left-0 right-0 top-full z-20 mt-1 max-h-72 overflow-y-auto rounded-md border border-navy-700 bg-navy-800 shadow-lg">
+              {searchResults.map(m => (
+                <li key={m.id}>
+                  <button type="button" onMouseDown={() => addFromSearch(m.id)}
+                          className="block w-full px-3 py-2 text-left text-sm hover:bg-navy-700 focus-ring">
+                    <span className="font-medium text-gray-100">{m.nom_dci}</span>
+                    <span className="ml-2 text-xs text-gray-400">{m.classe}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        {/* Bouton Mode Ordonnance (D.1) */}
+        <button
+          type="button"
+          onClick={() => setOrdonnanceOpen(true)}
+          aria-label="Mode Ordonnance — coller une liste de molécules"
+          title="Coller une ordonnance — analyse rapide"
+          className="shrink-0 rounded-full border border-navy-700 bg-navy-800 px-3 py-2 text-sm text-gray-200 hover:bg-navy-700 focus-ring"
+        >
+          📋 <span className="hidden sm:inline">Ordonnance</span>
+        </button>
       </div>
 
       {/* ════ MODE SÉLECTION : badges classes dépliables ════ */}
@@ -352,9 +369,13 @@ export function InteractionPage() {
                              onClickVoie={(voieId) => setOpenVoie(voieId)} />
           ))}
 
-          {/* Bouton vider */}
+          {/* Boutons bas mode analyse : Rapport + Vider */}
           {molecules.length > 0 && (
-            <div className="pt-2 text-center">
+            <div className="flex items-center justify-center gap-2 pt-2">
+              <button type="button" onClick={() => setRapportOpen(true)}
+                      className="rounded-md border border-indigo-500/40 bg-indigo-500/10 px-3 py-1.5 text-xs font-bold text-indigo-200 hover:bg-indigo-500/20 focus-ring">
+                🖨️ Rapport imprimable A4
+              </button>
               <button type="button" onClick={() => cart.clear()}
                       className="rounded-md border border-navy-700 bg-navy-800 px-3 py-1.5 text-xs text-gray-400 hover:text-gray-200 focus-ring">
                 Vider le panier
@@ -381,6 +402,20 @@ export function InteractionPage() {
           onOpenMolecule={openMoleculeModal}
         />
       )}
+
+      {/* Mode Ordonnance (D.1) — modal saisie textarea + parser fuzzy */}
+      <OrdonnanceModal
+        open={ordonnanceOpen}
+        onClose={() => setOrdonnanceOpen(false)}
+        onLoaded={() => setAnalyzeMode(true)}
+      />
+
+      {/* Rapport imprimable A4 — overlay plein écran avec @media print */}
+      <RapportPrint
+        open={rapportOpen}
+        molecules={molecules}
+        onClose={() => setRapportOpen(false)}
+      />
     </div>
   );
 }
