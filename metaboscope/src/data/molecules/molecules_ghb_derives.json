@@ -4,14 +4,27 @@
     "session": 9,
     "date_generation": "2026-04-22",
     "nombre_molecules": 4,
-    "classes_couvertes": ["Drogue récréative endogène", "Précurseur GHB", "Médicament narcolepsie/sevrage alcool"],
+    "classes_couvertes": [
+      "Drogue récréative endogène",
+      "Précurseur GHB",
+      "Médicament narcolepsie/sevrage alcool"
+    ],
     "note_methodologique": "Session 9 MétaboScope. Verrous critiques : (1) PK SATURABLE non-linéaire — dose ×2 → concentration plasmatique ×3,7 (Gemini DR 4 / FDA Xyrem) ; (2) GHB partage les voies ADH/ALDH avec ÉTHANOL → saturation cinétique commune = synergie respiratoire fatale documentée ; (3) GBL = prodrogue convertie par lactonase plasmatique (paraoxonase 1, PON1) — polymorphismes PON1 modulent vitesse conversion ; (4) 1,4-BD = prodrogue convertie via ADH+ALDH plus lentement que GBL → pic décalé, compétition éthanol prolonge toxicité ; (5) sevrage GHB = urgence neurologique analogue sevrage alcoolique/BZD (BZD haute dose première ligne, baclofène en relais, parfois propofol/dexmédétomidine en réa) ; (6) GHB = vecteur soumission chimique (chemsex) — fenêtre détection biologique courte (sang <8h, urines <12h) ; (7) Oxybate Na pharmaceutique (Xyrem/Xywav) charge sodée importante à intégrer en HTA/IC."
   },
   "molecules": [
     {
       "id": "ghb_ghb",
       "nom_dci": "GHB (γ-hydroxybutyrate)",
-      "synonymes": ["GHB", "gamma-hydroxybutyrate", "acide gamma-hydroxybutyrique", "γ-OH", "liquid ecstasy", "Géhèbe", "G", "soap"],
+      "synonymes": [
+        "GHB",
+        "gamma-hydroxybutyrate",
+        "acide gamma-hydroxybutyrique",
+        "γ-OH",
+        "liquid ecstasy",
+        "Géhèbe",
+        "G",
+        "soap"
+      ],
       "classe": "Drogue récréative endogène (composé endogène cérébral à très basse concentration ; psychoactif à dose exogène)",
       "statut_fr": "Stupéfiants (depuis arrêté 1999 en France ; décret modifiant chaque inscription d'analogues)",
       "phase1_cyp": [],
@@ -127,17 +140,42 @@
           "source": "ANSM:soumission-chimique-2023"
         }
       ],
-      "alertes_pd": ["resp", "coma", "amnésie-antérograde", "soumission-chimique", "dépendance-documented", "syndrome-sevrage-grave-analogie-alcool-BZD", "fenêtre-thérapeutique-étroite"],
+      "alertes_pd": [
+        "resp",
+        "coma",
+        "amnésie-antérograde",
+        "soumission-chimique",
+        "dépendance-documented",
+        "syndrome-sevrage-grave-analogie-alcool-BZD",
+        "fenêtre-thérapeutique-étroite"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMC2766839", "EMCDDA:GHB-2024", "Rapport HUG 2020 extension", "ANSM:soumission-chimique-2023"],
+      "sources_principales": [
+        "PMC2766839",
+        "EMCDDA:GHB-2024",
+        "Rapport HUG 2020 extension",
+        "ANSM:soumission-chimique-2023"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "ghb_gbl",
       "nom_dci": "GBL (γ-butyrolactone)",
-      "synonymes": ["GBL", "gamma-butyrolactone", "1,4-butyrolactone", "butyrolactone", "BLO"],
+      "synonymes": [
+        "GBL",
+        "gamma-butyrolactone",
+        "1,4-butyrolactone",
+        "butyrolactone",
+        "BLO"
+      ],
       "classe": "Précurseur du GHB (prodrogue rapide)",
       "statut_fr": "Substance précurseur réglementée (vente professionnelle restreinte ; assimilé aux stupéfiants pour usage récréatif)",
       "phase1_cyp": [],
@@ -205,17 +243,42 @@
           "source": "ANSM:soumission-chimique-2023"
         }
       ],
-      "alertes_pd": ["resp", "coma", "amnésie-antérograde", "soumission-chimique", "dépendance-documented", "syndrome-sevrage-grave", "absorption-rapide-pic-imprévisible"],
+      "alertes_pd": [
+        "resp",
+        "coma",
+        "amnésie-antérograde",
+        "soumission-chimique",
+        "dépendance-documented",
+        "syndrome-sevrage-grave",
+        "absorption-rapide-pic-imprévisible"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["Plan_de_recherche_MetaboScope", "EMCDDA:GHB-2024", "métaboscope GPT 3"],
+      "sources_principales": [
+        "Plan_de_recherche_MetaboScope",
+        "EMCDDA:GHB-2024",
+        "métaboscope GPT 3"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "ghb_butanediol",
       "nom_dci": "1,4-butanediol (1,4-BD)",
-      "synonymes": ["1,4-BD", "butanediol", "BDO", "BD", "tetramethylene glycol"],
+      "synonymes": [
+        "1,4-BD",
+        "butanediol",
+        "BDO",
+        "BD",
+        "tetramethylene glycol"
+      ],
       "classe": "Précurseur du GHB (prodrogue lente — métabolisme hépatique)",
       "statut_fr": "Précurseur réglementé (vente industrielle ; usage récréatif assimilé stupéfiant)",
       "phase1_cyp": [],
@@ -282,17 +345,43 @@
           "source": "EMCDDA:GHB-2024"
         }
       ],
-      "alertes_pd": ["resp", "coma", "narcose-prolongée-1,4-BD-parent", "néphrotoxicité-rapportée", "amnésie-antérograde", "dépendance-documented", "syndrome-sevrage-grave"],
+      "alertes_pd": [
+        "resp",
+        "coma",
+        "narcose-prolongée-1,4-BD-parent",
+        "néphrotoxicité-rapportée",
+        "amnésie-antérograde",
+        "dépendance-documented",
+        "syndrome-sevrage-grave"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["métaboscope GPT 3", "EMCDDA:GHB-2024", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "métaboscope GPT 3",
+        "EMCDDA:GHB-2024",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "ghb_oxybate",
       "nom_dci": "Oxybate de sodium (Xyrem) / oxybate mixte (Xywav)",
-      "synonymes": ["oxybate Na", "sodium oxybate", "Xyrem", "Xywav (oxybates calcium/magnésium/potassium/sodium)", "GHB pharmaceutique", "JZP-110-related"],
+      "synonymes": [
+        "oxybate Na",
+        "sodium oxybate",
+        "Xyrem",
+        "Xywav (oxybates calcium/magnésium/potassium/sodium)",
+        "GHB pharmaceutique",
+        "JZP-110-related"
+      ],
       "classe": "Médicament narcolepsie (cataplexie + somnolence diurne) ± sevrage alcoolique (selon pays — non remboursé France hors narcolepsie)",
       "statut_fr": "Stupéfiants (rétrocession hospitalière exclusive — Xyrem AMM narcolepsie avec cataplexie ≥7 ans ; Xywav pas commercialisé France)",
       "phase1_cyp": [],
@@ -381,12 +470,32 @@
           "source": "FDA:label-Xyrem"
         }
       ],
-      "alertes_pd": ["resp", "CI-alcool-absolue", "CI-dépresseurs-SNC", "charge-sodée-Xyrem", "mésusage-documented", "REMS-strict", "sevrage-possible-arrêt-brutal"],
+      "alertes_pd": [
+        "resp",
+        "CI-alcool-absolue",
+        "CI-dépresseurs-SNC",
+        "charge-sodée-Xyrem",
+        "mésusage-documented",
+        "REMS-strict",
+        "sevrage-possible-arrêt-brutal"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-Xyrem-boxed-warning", "FDA:label-Xyrem-clinical-pharmacology", "FDA:label-Xywav", "ANSM:RCP-Xyrem"],
+      "sources_principales": [
+        "FDA:label-Xyrem-boxed-warning",
+        "FDA:label-Xyrem-clinical-pharmacology",
+        "FDA:label-Xywav",
+        "ANSM:RCP-Xyrem"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "nps_autres"
     }
   ]
 }

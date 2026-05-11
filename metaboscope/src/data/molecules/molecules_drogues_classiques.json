@@ -4,14 +4,24 @@
     "session": 7,
     "date_generation": "2026-04-22",
     "nombre_molecules": 14,
-    "classes_couvertes": ["Drogue licite", "Substance illicite", "Métabolite actif majeur", "Promédicament fumé"],
+    "classes_couvertes": [
+      "Drogue licite",
+      "Substance illicite",
+      "Métabolite actif majeur",
+      "Promédicament fumé"
+    ],
     "note_methodologique": "Session 7 CRITIQUE USCA. Différenciateur majeur vs HUG 2020. Verrous strictement appliqués : (1) ALCOOL = 3 entités distinctes (aigu inhibe CYP2E1, chronique l'induit + CYP1A2 modérée, sevrage = seuil-ep + delirium tremens) ; (2) COCAÏNE = 3 entités (seule CES1/CES2/BChE / cocaéthylène par transestérification CES1 avec éthanol / crack-AEME pyrolytique + agonisme muscarinique M1/M2) ; (3) MDMA avec MBI CYP2D6 mécanisme-dépendant irréversible — fenêtre récupération 10 jours documentée par sonde dextrométhorphane (PMID:18794647) ; (4) HÉROÏNE + 6-MAM séparés (cascade BChE plasmatique → 6-MAM rapide → morphine via CES1/CES2) ; (5) NICOTINE séparée du TABAC FUMÉ — induction CYP1A2 par HAP combustion, PAS la nicotine seule (substituts nicotiniques ne déinduisent pas)."
   },
   "molecules": [
     {
       "id": "aut_alcool_aigu",
       "nom_dci": "Alcool — phase aiguë",
-      "synonymes": ["éthanol", "ethanol", "alcool éthylique", "consommation aiguë"],
+      "synonymes": [
+        "éthanol",
+        "ethanol",
+        "alcool éthylique",
+        "consommation aiguë"
+      ],
       "classe": "Drogue licite (phase aiguë — consommation ponctuelle ou ivresse)",
       "statut_fr": "Réglementé (vente >18 ans ; ivresse publique manifeste sanctionnée)",
       "phase1_cyp": [
@@ -135,17 +145,35 @@
           "source": "Rapport HUG 2020 extension"
         }
       ],
-      "alertes_pd": ["resp", "sédation", "ataxie", "amnésie", "réaction-antabuse-si-ALDH2-ou-disulfirame", "fœtotoxicité-grossesse"],
+      "alertes_pd": [
+        "resp",
+        "sédation",
+        "ataxie",
+        "amnésie",
+        "réaction-antabuse-si-ALDH2-ou-disulfirame",
+        "fœtotoxicité-grossesse"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["StatPearls:Ethanol-Toxicity", "Rapport HUG 2020 extension", "PMID:11933066"],
+      "sources_principales": [
+        "StatPearls:Ethanol-Toxicity",
+        "Rapport HUG 2020 extension",
+        "PMID:11933066"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs"]
+      "champ_manquants": [
+        "transporteurs"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "aut_alcool_chronique",
       "nom_dci": "Alcool — phase chronique",
-      "synonymes": ["éthanol chronique", "alcoolisme chronique", "TUS alcool"],
+      "synonymes": [
+        "éthanol chronique",
+        "alcoolisme chronique",
+        "TUS alcool"
+      ],
       "classe": "Drogue licite (consommation chronique régulière — TUSAL)",
       "statut_fr": "Réglementé",
       "phase1_cyp": [
@@ -251,17 +279,40 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["hepatotox", "cirrhose-encephalopathie", "myocardiopathie-OH", "carences-B1-B6-B9-B12", "neuropathie-OH", "pancréatite", "cancers-ORL-œsophage-foie", "fœtotoxicité-grossesse"],
+      "alertes_pd": [
+        "hepatotox",
+        "cirrhose-encephalopathie",
+        "myocardiopathie-OH",
+        "carences-B1-B6-B9-B12",
+        "neuropathie-OH",
+        "pancréatite",
+        "cancers-ORL-œsophage-foie",
+        "fœtotoxicité-grossesse"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Rapport HUG 2020 extension", "Gemini DR 1", "Mise_à_jour_référentiel", "StatPearls:Alcohol-Use-Disorder"],
+      "sources_principales": [
+        "Rapport HUG 2020 extension",
+        "Gemini DR 1",
+        "Mise_à_jour_référentiel",
+        "StatPearls:Alcohol-Use-Disorder"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "aut_alcool_sevrage",
       "nom_dci": "Alcool — sevrage",
-      "synonymes": ["sevrage alcoolique", "delirium tremens", "alcohol withdrawal syndrome", "AWS"],
+      "synonymes": [
+        "sevrage alcoolique",
+        "delirium tremens",
+        "alcohol withdrawal syndrome",
+        "AWS"
+      ],
       "classe": "Syndrome de sevrage (état clinique distinct nécessitant prise en charge spécifique)",
       "statut_fr": "Urgence médicale (CIWA-Ar ≥10 = sevrage ; ≥20 = sévère/risque DT)",
       "phase1_cyp": [
@@ -327,17 +378,41 @@
           "source": "ANSM:RCP-acamprosate"
         }
       ],
-      "alertes_pd": ["seuil-ep", "delirium-tremens", "Wernicke-Korsakoff-prevention-B1", "hyperadrénergique", "déshydratation", "dyskaliémie"],
+      "alertes_pd": [
+        "seuil-ep",
+        "delirium-tremens",
+        "Wernicke-Korsakoff-prevention-B1",
+        "hyperadrénergique",
+        "déshydratation",
+        "dyskaliémie"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["StatPearls:Alcohol-Withdrawal-Syndrome", "Rapport HUG 2020 extension", "Gemini DR 1"],
+      "sources_principales": [
+        "StatPearls:Alcohol-Withdrawal-Syndrome",
+        "Rapport HUG 2020 extension",
+        "Gemini DR 1"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "pst_cocaine_seule",
       "nom_dci": "Cocaïne (forme poudre/IV — seule, sans alcool)",
-      "synonymes": ["cocaïne chlorhydrate", "benzoylméthylécgonine", "coke", "blow"],
+      "synonymes": [
+        "cocaïne chlorhydrate",
+        "benzoylméthylécgonine",
+        "coke",
+        "blow"
+      ],
       "classe": "Psychostimulant illicite (entité 1/3 — seule)",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -476,17 +551,43 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["QT-CR", "HTA", "tachycardie", "ischémie-myocardique", "AVC", "hyperthermie", "hépatotox-massive", "rhabdomyolyse", "seuil-ep", "perforation-septum-nasal", "dépendance-documented"],
+      "alertes_pd": [
+        "QT-CR",
+        "HTA",
+        "tachycardie",
+        "ischémie-myocardique",
+        "AVC",
+        "hyperthermie",
+        "hépatotox-massive",
+        "rhabdomyolyse",
+        "seuil-ep",
+        "perforation-septum-nasal",
+        "dépendance-documented"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["StatPearls:Cocaine", "PMID:11933066", "Mise_à_jour_référentiel", "PMID:28087982"],
+      "sources_principales": [
+        "StatPearls:Cocaine",
+        "PMID:11933066",
+        "Mise_à_jour_référentiel",
+        "PMID:28087982"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase2", "inducteur"]
+      "champ_manquants": [
+        "phase2",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "pst_cocaethylene",
       "nom_dci": "Cocaéthylène (cocaïne + alcool)",
-      "synonymes": ["cocaethylene", "cocaïne+éthanol", "ethylcocaïne", "ethyl benzoylecgonine"],
+      "synonymes": [
+        "cocaethylene",
+        "cocaïne+éthanol",
+        "ethylcocaïne",
+        "ethyl benzoylecgonine"
+      ],
       "classe": "Psychostimulant illicite (entité 2/3 — métabolite généré in vivo par interaction cocaïne+alcool)",
       "statut_fr": "Non classé en propre (entité de co-consommation cocaïne+alcool)",
       "phase1_cyp": [],
@@ -561,17 +662,42 @@
           "source": "StatPearls:Cocaine"
         }
       ],
-      "alertes_pd": ["QT-CR", "myocardite", "infarctus", "arythmie-fatale", "mort-subite-x18-25-vs-cocaïne", "AVC-hémorragique", "hépatotox", "hyperthermie"],
+      "alertes_pd": [
+        "QT-CR",
+        "myocardite",
+        "infarctus",
+        "arythmie-fatale",
+        "mort-subite-x18-25-vs-cocaïne",
+        "AVC-hémorragique",
+        "hépatotox",
+        "hyperthermie"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMID:11933066", "Rapport HUG 2020 extension", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "PMID:11933066",
+        "Rapport HUG 2020 extension",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "pst_crack_aeme",
       "nom_dci": "Crack — AEME (anhydroecgonine méthyl ester)",
-      "synonymes": ["crack", "cocaïne base libre", "freebase", "AEME", "méthylécgonidine"],
+      "synonymes": [
+        "crack",
+        "cocaïne base libre",
+        "freebase",
+        "AEME",
+        "méthylécgonidine"
+      ],
       "classe": "Psychostimulant illicite (entité 3/3 — cocaïne fumée + métabolite pyrolytique)",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [],
@@ -637,17 +763,46 @@
           "source": "Plan_de_recherche_MetaboScope (zone grise)"
         }
       ],
-      "alertes_pd": ["bronchospasme-crack-lung", "QT-CR", "HTA", "tachycardie", "ischémie-myocardique-élevée-vs-cocaïne-IV", "hyperthermie", "rhabdomyolyse", "seuil-ep", "dépendance-documented-rapide", "perturbation-mélatonine-circadienne"],
+      "alertes_pd": [
+        "bronchospasme-crack-lung",
+        "QT-CR",
+        "HTA",
+        "tachycardie",
+        "ischémie-myocardique-élevée-vs-cocaïne-IV",
+        "hyperthermie",
+        "rhabdomyolyse",
+        "seuil-ep",
+        "dépendance-documented-rapide",
+        "perturbation-mélatonine-circadienne"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["Plan_de_recherche_MetaboScope", "StatPearls:Cocaine", "PMID:11933066"],
+      "sources_principales": [
+        "Plan_de_recherche_MetaboScope",
+        "StatPearls:Cocaine",
+        "PMID:11933066"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "opi_heroine",
       "nom_dci": "Héroïne (diacétylmorphine)",
-      "synonymes": ["héroïne", "diacétylmorphine", "diamorphine", "héro", "smack", "brown sugar"],
+      "synonymes": [
+        "héroïne",
+        "diacétylmorphine",
+        "diamorphine",
+        "héro",
+        "smack",
+        "brown sugar"
+      ],
       "classe": "Opioïde illicite (promédicament rapide)",
       "statut_fr": "Stupéfiants (interdiction totale en France ; diamorphine pharmaceutique disponible UK pour TSO/douleurs sévères)",
       "phase1_cyp": [],
@@ -738,17 +893,41 @@
           "source": "EMCDDA:NPS-opioides-2024"
         }
       ],
-      "alertes_pd": ["resp", "miose", "sédation", "constipation", "dépendance-mu-opioide", "syndrome-sevrage-aigu", "infections-IV-VIH-VHC", "abcès-injections"],
+      "alertes_pd": [
+        "resp",
+        "miose",
+        "sédation",
+        "constipation",
+        "dépendance-mu-opioide",
+        "syndrome-sevrage-aigu",
+        "infections-IV-VIH-VHC",
+        "abcès-injections"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Mise_à_jour_référentiel", "FDA:boxed-warning-opioids-BZD-2016", "EMCDDA:NPS-opioides-2024"],
+      "sources_principales": [
+        "Mise_à_jour_référentiel",
+        "FDA:boxed-warning-opioids-BZD-2016",
+        "EMCDDA:NPS-opioides-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "opi_6_mam",
       "nom_dci": "6-MAM (6-monoacétylmorphine)",
-      "synonymes": ["6-monoacétylmorphine", "6-MAM", "MAM", "monoacétylmorphine"],
+      "synonymes": [
+        "6-monoacétylmorphine",
+        "6-MAM",
+        "MAM",
+        "monoacétylmorphine"
+      ],
       "classe": "Métabolite actif principal de l'héroïne (entité distincte — biomarqueur forensique exclusif)",
       "statut_fr": "Non classé en propre (formé in vivo après prise d'héroïne)",
       "phase1_cyp": [],
@@ -815,17 +994,35 @@
           "source": "voir fiche opi_heroine"
         }
       ],
-      "alertes_pd": ["resp", "rush-IV-rapide", "dépendance-mu-opioide"],
+      "alertes_pd": [
+        "resp",
+        "rush-IV-rapide",
+        "dépendance-mu-opioide"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Mise_à_jour_référentiel"],
+      "sources_principales": [
+        "Mise_à_jour_référentiel"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "ent_mdma",
       "nom_dci": "MDMA (3,4-méthylènedioxyméthamphétamine)",
-      "synonymes": ["MDMA", "ecstasy", "XTC", "molly", "Mandy", "Adam"],
+      "synonymes": [
+        "MDMA",
+        "ecstasy",
+        "XTC",
+        "molly",
+        "Mandy",
+        "Adam"
+      ],
       "classe": "Entactogène / phénéthylamine (libérateur 5-HT/DA/NA)",
       "statut_fr": "Stupéfiants (essais thérapeutiques PTSD MAPS/MDMA-AT en cours mondialement)",
       "phase1_cyp": [
@@ -969,17 +1166,43 @@
           "source": "StatPearls:MDMA"
         }
       ],
-      "alertes_pd": ["sero", "hyperthermie-maligne", "rhabdomyolyse", "IRA", "hyponatrémie-SIADH", "QT-CR", "HTA", "hépatotox", "phénocopie-CYP2D6-10j", "neurotoxicité-5HT-chronique"],
+      "alertes_pd": [
+        "sero",
+        "hyperthermie-maligne",
+        "rhabdomyolyse",
+        "IRA",
+        "hyponatrémie-SIADH",
+        "QT-CR",
+        "HTA",
+        "hépatotox",
+        "phénocopie-CYP2D6-10j",
+        "neurotoxicité-5HT-chronique"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMID:18794647", "Rapport HUG 2020 extension", "PMID:22144942", "StatPearls:MDMA"],
+      "sources_principales": [
+        "PMID:18794647",
+        "Rapport HUG 2020 extension",
+        "PMID:22144942",
+        "StatPearls:MDMA"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inducteur"]
+      "champ_manquants": [
+        "inducteur"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "can_thc",
       "nom_dci": "Δ9-THC (delta-9-tétrahydrocannabinol)",
-      "synonymes": ["THC", "Δ9-THC", "delta-9-THC", "tetrahydrocannabinol", "dronabinol (forme pharmaceutique)", "Marinol"],
+      "synonymes": [
+        "THC",
+        "Δ9-THC",
+        "delta-9-THC",
+        "tetrahydrocannabinol",
+        "dronabinol (forme pharmaceutique)",
+        "Marinol"
+      ],
       "classe": "Cannabinoïde phytocannabinoïde (psychoactif principal du cannabis)",
       "statut_fr": "Stupéfiants (cannabis classé ; dronabinol/Marinol disponible en ATU spécifique pour douleurs/spasticité)",
       "phase1_cyp": [
@@ -1093,17 +1316,35 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["psychose-vulnérable", "tachycardie", "hyperémèse-cannabique", "trouble-cognitif-développement-cerveau-adolescent", "dépendance-modérée", "syndrome-amotivationnel", "fœtotoxicité-grossesse"],
+      "alertes_pd": [
+        "psychose-vulnérable",
+        "tachycardie",
+        "hyperémèse-cannabique",
+        "trouble-cognitif-développement-cerveau-adolescent",
+        "dépendance-modérée",
+        "syndrome-amotivationnel",
+        "fœtotoxicité-grossesse"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMID:17141642", "FDA:label-epidiolex", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "PMID:17141642",
+        "FDA:label-epidiolex",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": []
+      "champ_manquants": [],
+      "bucket": "drogues"
     },
     {
       "id": "can_cbd",
       "nom_dci": "Cannabidiol (CBD)",
-      "synonymes": ["CBD", "cannabidiol", "Epidiolex", "Epidyolex"],
+      "synonymes": [
+        "CBD",
+        "cannabidiol",
+        "Epidiolex",
+        "Epidyolex"
+      ],
       "classe": "Cannabinoïde phytocannabinoïde (non psychoactif au sens classique)",
       "statut_fr": "Médicament (Epidyolex AMM épilepsies réfractaires Dravet/Lennox-Gastaut/sclérose tubéreuse de Bourneville) ; produits « bien-être » non réglementés (huiles, fleurs CBD <0.3% THC autorisées)",
       "phase1_cyp": [
@@ -1264,17 +1505,30 @@
           "source": "FDA:label-epidiolex"
         }
       ],
-      "alertes_pd": ["hepatotox-additif-valproate", "sédation-additive", "diarrhée"],
+      "alertes_pd": [
+        "hepatotox-additif-valproate",
+        "sédation-additive",
+        "diarrhée"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-epidiolex", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "FDA:label-epidiolex",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["pharmacogenetique"]
+      "champ_manquants": [
+        "pharmacogenetique"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "can_cbn",
       "nom_dci": "Cannabinol (CBN)",
-      "synonymes": ["CBN", "cannabinol"],
+      "synonymes": [
+        "CBN",
+        "cannabinol"
+      ],
       "classe": "Cannabinoïde phytocannabinoïde (produit de dégradation oxydative du THC)",
       "statut_fr": "Stupéfiant (CBN exclu de la liste des stupéfiants depuis l'arrêté du 30/12/2021 — CBNA inscrit en juin 2024)",
       "phase1_cyp": [
@@ -1323,17 +1577,37 @@
           "source": "Littérature PK"
         }
       ],
-      "alertes_pd": ["sédation", "tachycardie"],
+      "alertes_pd": [
+        "sédation",
+        "tachycardie"
+      ],
       "niveau_preuve_global": "IVT",
-      "sources_principales": ["Littérature PK", "ANSM:arrêté-30-12-2021"],
+      "sources_principales": [
+        "Littérature PK",
+        "ANSM:arrêté-30-12-2021"
+      ],
       "zone_grise": true,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "drogues"
     },
     {
       "id": "aut_nicotine_pure",
       "nom_dci": "Nicotine (substituts nicotiniques — TSN)",
-      "synonymes": ["nicotine", "Nicorette", "Nicopatch", "Niquitin", "Nicopass", "Nicotinell", "TSN"],
+      "synonymes": [
+        "nicotine",
+        "Nicorette",
+        "Nicopatch",
+        "Niquitin",
+        "Nicopass",
+        "Nicotinell",
+        "TSN"
+      ],
       "classe": "Aide au sevrage tabagique (substituts nicotiniques) — entité distincte du tabac fumé",
       "statut_fr": "Non classé (substituts nicotiniques OTC pharmacie, remboursables sur prescription)",
       "phase1_cyp": [
@@ -1417,17 +1691,39 @@
           "source": "métaboscope GPT 1 sur 4"
         }
       ],
-      "alertes_pd": ["HTA", "tachycardie", "vasoconstriction", "dépendance-documented", "fœtotoxicité-grossesse"],
+      "alertes_pd": [
+        "HTA",
+        "tachycardie",
+        "vasoconstriction",
+        "dépendance-documented",
+        "fœtotoxicité-grossesse"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Mise_à_jour_référentiel", "Gemini DR 2", "ANSM:RCP-nicotine"],
+      "sources_principales": [
+        "Mise_à_jour_référentiel",
+        "Gemini DR 2",
+        "ANSM:RCP-nicotine"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "sevrage_tabac"
     },
     {
       "id": "aut_tabac_fume",
       "nom_dci": "Tabac fumé (cigarette, cigare, pipe, narguilé)",
-      "synonymes": ["tabagisme", "smoking", "cigarette", "tabac à fumer", "HAP", "hydrocarbures aromatiques polycycliques"],
+      "synonymes": [
+        "tabagisme",
+        "smoking",
+        "cigarette",
+        "tabac à fumer",
+        "HAP",
+        "hydrocarbures aromatiques polycycliques"
+      ],
       "classe": "Drogue licite — fumée de combustion (entité distincte des TSN)",
       "statut_fr": "Réglementé (>18 ans, lieux publics interdits, fiscalité spécifique)",
       "phase1_cyp": [],
@@ -1516,12 +1812,31 @@
           "source": "ANSM:RCP-CO-œstroprogestatifs"
         }
       ],
-      "alertes_pd": ["cancer-poumon-VADS-vessie", "BPCO", "athérosclérose", "thrombose-veineuse-artérielle", "fœtotoxicité-grossesse", "dépendance-documented", "induction-CYP1A2-réversible-arrêt"],
+      "alertes_pd": [
+        "cancer-poumon-VADS-vessie",
+        "BPCO",
+        "athérosclérose",
+        "thrombose-veineuse-artérielle",
+        "fœtotoxicité-grossesse",
+        "dépendance-documented",
+        "induction-CYP1A2-réversible-arrêt"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Mise_à_jour_référentiel", "PMID:8809871", "ANSM:thesaurus-2024"],
+      "sources_principales": [
+        "Mise_à_jour_référentiel",
+        "PMID:8809871",
+        "ANSM:thesaurus-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur"
+      ],
+      "bucket": "drogues"
     }
   ]
 }

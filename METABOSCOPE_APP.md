@@ -385,7 +385,44 @@ Cible : permettre la saisie d'un génotype patient (anonyme, localStorage volati
 
 **Charge** : 2-3 sessions selon ampleur. **Bénéfice clinique** : module Recherche enfin utilisable sans dictionnaire mental.
 
-### G.1. Audit complet des 147 molécules
+### G.1. Audit complet des 147 molécules ✅ LIVRÉ v4.36 (2026-05-11)
+
+**Audit réalisé** : 40 anomalies détectées par script Node (extraction `{fichier, nom_dci, classe}` + comparaison contre bucket attendu).
+
+**Stratégie livrée** :
+- Champ `bucket?: ClassBucket` ajouté au schéma `Molecule` (`types/molecule.ts`). Optionnel, override le regex fallback.
+- `ClassBucket` déplacé de `utils/classes.ts` vers `types/molecule.ts` pour éviter le cycle d'import.
+- 2 nouveaux buckets : `anticraving` et `sevrage_tabac`.
+- `getMoleculeBucket(m)` honore `m.bucket` en priorité 1, cache mémoire en P2, regex en P3.
+- Regex `drogues` enrichi : `entactogène|phénéthylamine|tryptamine|Iboga|psilocyb|drogue\s+(classique|licite|récréative)`.
+- 33 molécules patchées explicitement via script Node :
+  - 4 anti-craving (Acamprosate, Baclofène, Disulfirame, Nalméfène) — sortent de `opioides_tso.json`
+  - 3 sevrage tabac (Varénicline, Nicotine sevrage, Nicotine TSN)
+  - 13 drogues classiques (Alcool×3, Cocaïne×3, Héroïne, 6-MAM, MDMA, THC, CBD, CBN, Tabac fumé)
+  - 3 dérivés GHB (GHB, GBL, 1,4-BD) + 1 nps_autres (Oxybate Xyrem)
+  - Ibogaïne (sort de `opioid` via regex piège "sevrage opioïdes" dans la classe)
+  - 4 TDAH (Atomoxétine, Guanfacine, Modafinil, Bupropion) → `stim`
+  - Xylazine → `nps_autres` (sort de `opioid` via regex piège)
+  - Tianeptine NPS, Mitragynine, NAC → `nps_autres`
+
+**Distribution finale 147 molécules par bucket** :
+
+| Bucket | Count |
+|---|---|
+| antidep | 14 |
+| antipsy | 18 |
+| bzd | 19 |
+| thymo | 13 |
+| opioid | 18 |
+| stim | 8 |
+| drogues | 32 |
+| **anticraving** | **4** (nouveau) |
+| **sevrage_tabac** | **3** (nouveau) |
+| nps_autres | 18 |
+
+**Non patché (encore via regex)** : Hydroxyzine (bzd via `anxiolyti`), Kava (bzd via `anxiolyti`), 11 hallucinogènes (drogues via regex enrichi), 4 NPS cannabinoïdes (drogues via `cannabi`), 6 NPS opioïdes (opioid via `opio[iï]de`), 5 NPS BZD (bzd via `benzodiaz`), 8 cathinones (nps_autres catch-all — non patchées, à reconsidérer si pertinence clinique). 1P-LSD / AL-LAD restent en `nps_autres` (regex psychédélique non ajouté).
+
+#### G.1 — historique de la spec (conservée pour traçabilité)
 
 - Re-grouper par taxonomie clinique cohérente :
   - **Médicaments addictologiques** (TSO, anti-craving acamprosate/naltrexone/disulfirame/baclofène, sevrage)

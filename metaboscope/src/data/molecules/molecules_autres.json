@@ -2,7 +2,14 @@
   {
     "id": "aut_n2o",
     "nom_dci": "Protoxyde d'azote",
-    "synonymes": ["N2O", "Laughing Gas", "Gaz hilarant", "Nos", "cartouches crème fouettée", "proto"],
+    "synonymes": [
+      "N2O",
+      "Laughing Gas",
+      "Gaz hilarant",
+      "Nos",
+      "cartouches crème fouettée",
+      "proto"
+    ],
     "classe": "Gaz anesthésique / NPS (usage détourné)",
     "statut_fr": "Non classé stupéfiant. Usage médical autorisé (MEOPA). Détournement cartouches : ANSM alerte 2024. Interdiction vente aux mineurs depuis 2021 (loi Bouillaud).",
     "phase1_cyp": [],
@@ -71,7 +78,11 @@
         "source": "StatPearls:NBK532922"
       }
     ],
-    "alertes_pd": ["resp", "myelopathie-B12", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "myelopathie-B12",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "IVH-O",
     "sources_principales": [
       "StatPearls:NBK532922",
@@ -87,11 +98,16 @@
       "transporteurs (non applicable)"
     ]
   },
-
   {
     "id": "aut_phenibut",
     "nom_dci": "Phénibut",
-    "synonymes": ["phenibut", "β-phényl-GABA", "Noofen", "Fenibut", "Citrocard"],
+    "synonymes": [
+      "phenibut",
+      "β-phényl-GABA",
+      "Noofen",
+      "Fenibut",
+      "Citrocard"
+    ],
     "classe": "NPS — agoniste GABA-B / nootropique (usage détourné)",
     "statut_fr": "Non commercialisé en France. Non classé stupéfiant (2026). Vente libre en ligne (poudres, gélules). Sous surveillance ANSM. Médicament prescrit en Russie/pays baltes.",
     "phase1_cyp": [],
@@ -142,7 +158,12 @@
         "source": "EMCDDA:drug-profile-phenibut"
       }
     ],
-    "alertes_pd": ["resp", "seuil-ep-sevrage", "dependance-documented", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "seuil-ep-sevrage",
+      "dependance-documented",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "CAS",
     "sources_principales": [
       "EMCDDA:drug-profile-phenibut"
@@ -157,11 +178,17 @@
       "statut réglementaire France mise à jour"
     ]
   },
-
   {
     "id": "aut_kava",
     "nom_dci": "Kava",
-    "synonymes": ["kava", "kava-kava", "Piper methysticum", "kavalactones", "kavaïne", "méthysticine"],
+    "synonymes": [
+      "kava",
+      "kava-kava",
+      "Piper methysticum",
+      "kavalactones",
+      "kavaïne",
+      "méthysticine"
+    ],
     "classe": "Phytothérapeutique — anxiolytique à base de plante (retiré France)",
     "statut_fr": "Suspension de commercialisation (arrêté ANSM 2003 — hépatotoxicité). Non classé stupéfiant. Importation personnelle non contrôlée.",
     "phase1_cyp": [
@@ -287,7 +314,10 @@
         "source": "ANSM:suspension-kava-2003"
       }
     ],
-    "alertes_pd": ["hepatotox", "resp"],
+    "alertes_pd": [
+      "hepatotox",
+      "resp"
+    ],
     "niveau_preuve_global": "CAS",
     "sources_principales": [
       "ANSM:suspension-kava-2003"
@@ -302,11 +332,16 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "aut_poppers",
     "nom_dci": "Nitrites d'alkyle",
-    "synonymes": ["poppers", "nitrite d'isobutyle", "nitrite d'amyle", "nitrite de pentyle", "alkyl nitrites"],
+    "synonymes": [
+      "poppers",
+      "nitrite d'isobutyle",
+      "nitrite d'amyle",
+      "nitrite de pentyle",
+      "alkyl nitrites"
+    ],
     "classe": "Vasodilatateur (usage détourné — chemsex/récréatif)",
     "statut_fr": "Vente légale en France (boutiques spécialisées, sex-shops) depuis 2013 (retour juridique). Interdiction vente aux mineurs. Usage médical: nitrite d'amyle (antidote cyanure) — autorisation restreinte.",
     "phase1_cyp": [],
@@ -383,7 +418,9 @@
         "source": "ANSM:alerte-poppers-PDE5"
       }
     ],
-    "alertes_pd": ["CI-sildenafil"],
+    "alertes_pd": [
+      "CI-sildenafil"
+    ],
     "niveau_preuve_global": "IVH-C",
     "sources_principales": [
       "ANSM:alerte-poppers-PDE5"
@@ -397,11 +434,16 @@
       "rétinopathie (maculopathie poppers documentée cas cliniques — mécanisme phototoxicité NO)"
     ]
   },
-
   {
     "id": "aut_nac",
     "nom_dci": "N-acétylcystéine",
-    "synonymes": ["NAC", "N-acetylcysteine", "Mucomyst", "Fluimucil", "acétylcystéine"],
+    "synonymes": [
+      "NAC",
+      "N-acetylcysteine",
+      "Mucomyst",
+      "Fluimucil",
+      "acétylcystéine"
+    ],
     "classe": "Antidote / mucolytique / anti-craving (off-label)",
     "statut_fr": "Liste II (formes orales) ; IV non classé. Antidote paracétamol : usage hospitalier courant.",
     "phase1_cyp": [],
@@ -481,13 +523,19 @@
       "données PK IV vs PO complètes",
       "pharmacogenetique NAT2 (pertinence diacétylcystéine)",
       "données USCA anti-craving alcool (off-label)"
-    ]
+    ],
+    "bucket": "nps_autres"
   },
-
   {
     "id": "aut_mitragynine",
     "nom_dci": "Mitragynine",
-    "synonymes": ["mitragynine", "kratom", "Mitragyna speciosa", "krat", "thang"],
+    "synonymes": [
+      "mitragynine",
+      "kratom",
+      "Mitragyna speciosa",
+      "krat",
+      "thang"
+    ],
     "classe": "Alcaloïde végétal — agoniste μ-opioïde partiel (faible affinité) + modulateur monoaminergique",
     "statut_fr": "Non classé stupéfiant en France (2026 — en cours d'évaluation ANSM). Classé aux USA (FDA Schedule I proposé 2023). Vente en ligne légale France sous forme « kratom ».",
     "phase1_cyp": [
@@ -608,7 +656,11 @@
         "source": "EMCDDA:drug-profile-kratom"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "IVT",
     "sources_principales": [
       "PMC:3807987",
@@ -623,6 +675,7 @@
       "QT risque (CredibleMeds non classé — zone grise)",
       "statut réglementaire France mise à jour ANSM",
       "transporteurs"
-    ]
+    ],
+    "bucket": "nps_autres"
   }
 ]

@@ -15,6 +15,21 @@ export type NiveauPreuve =
 
 export type Rang = 'majeur' | 'mineur' | 'trace'
 
+// Bucket de classement thérapeutique pour l'UI (filtres Atlas, Mode Ordonnance, Interactions).
+// Cf. utils/classes.ts pour le mapping classe → bucket (regex fallback) et les labels.
+// Chantier G (2026-05-11) — un champ `bucket` explicite sur Molecule prend le pas sur le regex.
+export type ClassBucket =
+  | 'antidep'
+  | 'antipsy'
+  | 'bzd'
+  | 'thymo'
+  | 'opioid'
+  | 'stim'
+  | 'drogues'
+  | 'anticraving'
+  | 'sevrage_tabac'
+  | 'nps_autres'
+
 export type Puissance = 'fort' | 'modéré' | 'faible'
 
 export interface CYPEntry {
@@ -155,6 +170,8 @@ export interface Molecule {
   zone_grise: boolean
   derniere_maj: string
   champ_manquants: string[]
+  /** Override explicite du bucket UI (chantier G, 2026-05-11). Si absent, fallback regex sur `classe`. */
+  bucket?: ClassBucket
 }
 
 // Normalise une source `string | string[]` en tableau pour itération uniforme côté UI.

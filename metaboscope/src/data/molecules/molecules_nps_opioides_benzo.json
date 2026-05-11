@@ -2,7 +2,11 @@
   {
     "id": "nps_opi_isotonitazene",
     "nom_dci": "Isotonitazène",
-    "synonymes": ["ISO", "isotonitazene", "2-(4-isopropoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "synonymes": [
+      "ISO",
+      "isotonitazene",
+      "2-(4-isopropoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"
+    ],
     "classe": "NPS opioïde — benzimidazole",
     "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020 — liste NPS benzimidazoles-opioïdes)",
     "phase1_cyp": [
@@ -94,7 +98,11 @@
         "source": "ResearchGate:postmortem-isotonitazene-France"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "ResearchGate:postmortem-isotonitazene-France",
@@ -113,11 +121,13 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_metonitazene",
     "nom_dci": "Métonitazène",
-    "synonymes": ["metonitazene", "2-(4-méthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "synonymes": [
+      "metonitazene",
+      "2-(4-méthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"
+    ],
     "classe": "NPS opioïde — benzimidazole",
     "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
     "phase1_cyp": [
@@ -193,7 +203,11 @@
         "source": "EMCDDA:NPS-opioides-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "DOI:10.1080/15563650.2025.2504133",
@@ -209,11 +223,13 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_protonitazepyne",
     "nom_dci": "Protonitazépyne",
-    "synonymes": ["protonitazepyne", "N-pyrrolidinyl protonitazene analogue"],
+    "synonymes": [
+      "protonitazepyne",
+      "N-pyrrolidinyl protonitazene analogue"
+    ],
     "classe": "NPS opioïde — benzimidazole",
     "statut_fr": "Stupéfiants (classement générique benzimidazoles-opioïdes ANSM 2020)",
     "phase1_cyp": [
@@ -282,7 +298,11 @@
         "source": "EMCDDA:NPS-opioides-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "IVT",
     "sources_principales": [
       "PMC:12886327",
@@ -299,11 +319,13 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_etonitazene",
     "nom_dci": "Étonitazène",
-    "synonymes": ["etonitazene", "2-(4-éthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "synonymes": [
+      "etonitazene",
+      "2-(4-éthoxybenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"
+    ],
     "classe": "NPS opioïde — benzimidazole",
     "statut_fr": "Stupéfiants (classement ONU 1973 repris droit français + ANSM)",
     "phase1_cyp": [
@@ -371,7 +393,10 @@
         "source": "EMCDDA:NPS-opioides-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide"
+    ],
     "niveau_preuve_global": "IVT",
     "sources_principales": [
       "DOI:10.1080/15563650.2025.2504133",
@@ -387,11 +412,13 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_flunitazene",
     "nom_dci": "Flunitazène",
-    "synonymes": ["flunitazene", "2-(4-fluorobenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"],
+    "synonymes": [
+      "flunitazene",
+      "2-(4-fluorobenzyl)-5-nitro-1-(2-diéthylaminoéthyl)benzimidazole"
+    ],
     "classe": "NPS opioïde — benzimidazole",
     "statut_fr": "Stupéfiants (classement générique benzimidazoles-opioïdes ANSM 2020)",
     "phase1_cyp": [
@@ -434,7 +461,10 @@
         "source": "DOI:10.1080/15563650.2025.2504133"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide"
+    ],
     "niveau_preuve_global": "IVT",
     "sources_principales": [
       "DOI:10.1080/15563650.2025.2504133",
@@ -451,11 +481,13 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_brorphine",
     "nom_dci": "Brorphine",
-    "synonymes": ["brorphine", "1-(4-bromobenzyl)-4-(2-phényléthyl)pipéridin-4-amine"],
+    "synonymes": [
+      "brorphine",
+      "1-(4-bromobenzyl)-4-(2-phényléthyl)pipéridin-4-amine"
+    ],
     "classe": "NPS opioïde — phénylpipéridinyl (non-benzimidazole)",
     "statut_fr": "Stupéfiants (arrêté ANSM 2021)",
     "phase1_cyp": [
@@ -514,7 +546,11 @@
         "source": "EMCDDA:NPS-opioides-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "EMCDDA:NPS-opioides-2024"
@@ -530,11 +566,15 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_opi_xylazine",
     "nom_dci": "Xylazine",
-    "synonymes": ["xylazine", "Tranq", "tranq-dope (mélange fentanyl+xylazine)", "Rompun (vétérinaire)"],
+    "synonymes": [
+      "xylazine",
+      "Tranq",
+      "tranq-dope (mélange fentanyl+xylazine)",
+      "Rompun (vétérinaire)"
+    ],
     "classe": "NPS non-opioïde — agoniste α2-adrénergique (détournement médicament vétérinaire)",
     "statut_fr": "Médicament vétérinaire (Rompun® — non autorisé usage humain). Non classé stupéfiant en France (2026). Usage humain illicite émergent.",
     "phase1_cyp": [
@@ -626,7 +666,9 @@
         "source": "CDC:MMWR:mm7226a4"
       }
     ],
-    "alertes_pd": ["resp"],
+    "alertes_pd": [
+      "resp"
+    ],
     "niveau_preuve_global": "CAS",
     "sources_principales": [
       "CDC:MMWR:mm7226a4",
@@ -641,13 +683,17 @@
       "PK complète humaine",
       "statut réglementaire France évolutif",
       "pharmacogenetique"
-    ]
+    ],
+    "bucket": "nps_autres"
   },
-
   {
     "id": "nps_bzd_flualprazolam",
     "nom_dci": "Flualprazolam",
-    "synonymes": ["flualprazolam", "2-fluoroalprazolam", "flualp"],
+    "synonymes": [
+      "flualprazolam",
+      "2-fluoroalprazolam",
+      "flualp"
+    ],
     "classe": "NPS benzodiazépine (triazolobenzodiazépine fluorée)",
     "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
     "phase1_cyp": [
@@ -715,7 +761,12 @@
         "source": "EMCDDA:NPS-benzo-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "alertes_pd": [
+      "resp",
+      "dependance-documented",
+      "mesusage-documented",
+      "seuil-ep-sevrage"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "EMCDDA:NPS-benzo-2024",
@@ -731,11 +782,13 @@
       "UGT isoformes"
     ]
   },
-
   {
     "id": "nps_bzd_clonazolam",
     "nom_dci": "Clonazolam",
-    "synonymes": ["clonazolam", "clonitrazolam"],
+    "synonymes": [
+      "clonazolam",
+      "clonitrazolam"
+    ],
     "classe": "NPS benzodiazépine (triazolobenzodiazépine)",
     "statut_fr": "Non classé stupéfiant en France (2026 — sous surveillance ANSM). Classé dans plusieurs pays UE. Zone grise réglementaire.",
     "phase1_cyp": [
@@ -812,7 +865,12 @@
         "source": "EMCDDA:NPS-benzo-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "alertes_pd": [
+      "resp",
+      "dependance-documented",
+      "mesusage-documented",
+      "seuil-ep-sevrage"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "EMCDDA:NPS-benzo-2024"
@@ -826,11 +884,15 @@
       "pharmacogenetique"
     ]
   },
-
   {
     "id": "nps_bzd_etizolam",
     "nom_dci": "Étizolam",
-    "synonymes": ["etizolam", "Etilaam", "Etizest", "Depas"],
+    "synonymes": [
+      "etizolam",
+      "Etilaam",
+      "Etizest",
+      "Depas"
+    ],
     "classe": "NPS thiénodiazépine (non benzodiazépine stricto sensu — cycle thiophène vs benzène)",
     "statut_fr": "Stupéfiants (arrêté ANSM 12 février 2020)",
     "phase1_cyp": [
@@ -906,7 +968,12 @@
         "source": "EMCDDA:NPS-benzo-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "alertes_pd": [
+      "resp",
+      "dependance-documented",
+      "mesusage-documented",
+      "seuil-ep-sevrage"
+    ],
     "niveau_preuve_global": "IVH-C",
     "sources_principales": [
       "EMCDDA:NPS-benzo-2024",
@@ -921,11 +988,14 @@
       "pharmacogenetique CYP2C19 possible (analogie BZD)"
     ]
   },
-
   {
     "id": "nps_bzd_bromazolam",
     "nom_dci": "Bromazolam",
-    "synonymes": ["bromazolam", "XLI-268", "benzo-dope"],
+    "synonymes": [
+      "bromazolam",
+      "XLI-268",
+      "benzo-dope"
+    ],
     "classe": "NPS benzodiazépine (triazolobenzodiazépine bromée — analogue alprazolam)",
     "statut_fr": "Non classé stupéfiant en France (2026 — en cours d'évaluation ANSM). Classé dans certains pays UE. Zone grise réglementaire.",
     "phase1_cyp": [
@@ -1001,7 +1071,12 @@
         "source": "EMCDDA:NPS-benzo-2024"
       }
     ],
-    "alertes_pd": ["resp", "dependance-documented", "mesusage-documented", "seuil-ep-sevrage"],
+    "alertes_pd": [
+      "resp",
+      "dependance-documented",
+      "mesusage-documented",
+      "seuil-ep-sevrage"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "PMID:41732118",
@@ -1018,11 +1093,13 @@
       "pharmacogenetique"
     ]
   },
-
   {
     "id": "nps_bzd_flubromazolam",
     "nom_dci": "Flubromazolam",
-    "synonymes": ["flubromazolam", "JYI-73"],
+    "synonymes": [
+      "flubromazolam",
+      "JYI-73"
+    ],
     "classe": "NPS benzodiazépine (triazolobenzodiazépine fluorée-bromée)",
     "statut_fr": "Non classé stupéfiant en France (2026). Zone grise réglementaire. Faible présence marché EU.",
     "phase1_cyp": [
@@ -1056,7 +1133,11 @@
         "source": "EMCDDA:NPS-benzo-2024"
       }
     ],
-    "alertes_pd": ["resp", "mesusage-documented", "seuil-ep-sevrage"],
+    "alertes_pd": [
+      "resp",
+      "mesusage-documented",
+      "seuil-ep-sevrage"
+    ],
     "niveau_preuve_global": "AN",
     "sources_principales": [
       "EMCDDA:NPS-benzo-2024"

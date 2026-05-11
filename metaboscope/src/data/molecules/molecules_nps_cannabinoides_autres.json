@@ -2,7 +2,11 @@
   {
     "id": "nps_cb_hhc",
     "nom_dci": "Hexahydrocannabinol",
-    "synonymes": ["HHC", "9α-HHC", "9β-HHC"],
+    "synonymes": [
+      "HHC",
+      "9α-HHC",
+      "9β-HHC"
+    ],
     "classe": "NPS cannabinoïde semi-synthétique (hydrogénation du THC)",
     "statut_fr": "Stupéfiants (classement ANSM arrêté du 13 juin 2024 — vague France 2023-2024)",
     "phase1_cyp": [
@@ -77,7 +81,9 @@
         "source": "EMCDDA:NPS-cannabinoides-2024"
       }
     ],
-    "alertes_pd": ["mesusage-documented"],
+    "alertes_pd": [
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "AN",
     "sources_principales": [
       "EMCDDA:NPS-cannabinoides-2024",
@@ -94,11 +100,14 @@
       "différenciation 9α-HHC vs 9β-HHC (stéréoisomères — affinités CB1 différentes)"
     ]
   },
-
   {
     "id": "nps_cb_thcp",
     "nom_dci": "Tétrahydrocannabiphorol",
-    "synonymes": ["THC-P", "THCP", "(-)-trans-Δ9-tétrahydrocannabiphorol"],
+    "synonymes": [
+      "THC-P",
+      "THCP",
+      "(-)-trans-Δ9-tétrahydrocannabiphorol"
+    ],
     "classe": "NPS phytocannabinolde à longue chaîne alkyle",
     "statut_fr": "Stupéfiants (classement comme analogue THC — Article 695-1 CSP + arrêté ANSM 2021)",
     "phase1_cyp": [
@@ -165,7 +174,10 @@
         "source": "EMCDDA:NPS-cannabinoides-2024"
       }
     ],
-    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "alertes_pd": [
+      "mesusage-documented",
+      "psychose-cannabinoïde"
+    ],
     "niveau_preuve_global": "AN",
     "sources_principales": [
       "EMCDDA:NPS-cannabinoides-2024"
@@ -180,11 +192,14 @@
       "données forensiques humaines"
     ]
   },
-
   {
     "id": "nps_cb_mdmb4enpinaca",
     "nom_dci": "MDMB-4en-PINACA",
-    "synonymes": ["MDMB-4en-PINACA", "ADB-4en-PINACA MDMB analogue", "Spice 4e génération"],
+    "synonymes": [
+      "MDMB-4en-PINACA",
+      "ADB-4en-PINACA MDMB analogue",
+      "Spice 4e génération"
+    ],
     "classe": "NPS cannabinoïde synthétique agoniste CB1/CB2 complet (indazole-carboxamide)",
     "statut_fr": "Stupéfiants (arrêté ANSM NPS cannabinoïdes — classification générique)",
     "phase1_cyp": [
@@ -268,7 +283,10 @@
         "source": "EMCDDA:NPS-cannabinoides-2024"
       }
     ],
-    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "alertes_pd": [
+      "mesusage-documented",
+      "psychose-cannabinoïde"
+    ],
     "niveau_preuve_global": "IVA",
     "sources_principales": [
       "PMC:10898835",
@@ -283,11 +301,14 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_cb_adbbutinaca",
     "nom_dci": "ADB-BUTINACA",
-    "synonymes": ["ADB-BUTINACA", "ADB-4en-PINACA", "ADBB analogue"],
+    "synonymes": [
+      "ADB-BUTINACA",
+      "ADB-4en-PINACA",
+      "ADBB analogue"
+    ],
     "classe": "NPS cannabinoïde synthétique agoniste CB1/CB2 complet (indazole-carboxamide)",
     "statut_fr": "Stupéfiants (arrêté ANSM NPS cannabinoïdes — classification générique)",
     "phase1_cyp": [
@@ -363,7 +384,10 @@
         "source": "EMCDDA:NPS-cannabinoides-2024"
       }
     ],
-    "alertes_pd": ["mesusage-documented", "psychose-cannabinoïde"],
+    "alertes_pd": [
+      "mesusage-documented",
+      "psychose-cannabinoïde"
+    ],
     "niveau_preuve_global": "IVA",
     "sources_principales": [
       "PMC:10898835",
@@ -378,11 +402,14 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_lsd_1plsd",
     "nom_dci": "1P-LSD",
-    "synonymes": ["1P-LSD", "1-propionyl-lysergique diéthylamide", "1-propionyl-LSD"],
+    "synonymes": [
+      "1P-LSD",
+      "1-propionyl-lysergique diéthylamide",
+      "1-propionyl-LSD"
+    ],
     "classe": "NPS psychédélique (promédicament du LSD — acylation position N1)",
     "statut_fr": "Stupéfiants (analogie structurelle LSD — classement ANSM 2021 + liste générique psychédéliques)",
     "phase1_cyp": [
@@ -465,7 +492,11 @@
         "source": "EMCDDA:NPS-psychedelics-2024"
       }
     ],
-    "alertes_pd": ["sero", "mesusage-documented", "seuil-ep"],
+    "alertes_pd": [
+      "sero",
+      "mesusage-documented",
+      "seuil-ep"
+    ],
     "niveau_preuve_global": "IVA",
     "sources_principales": [
       "EMCDDA:NPS-psychedelics-2024"
@@ -479,11 +510,14 @@
       "transporteurs"
     ]
   },
-
   {
     "id": "nps_lsd_allad",
     "nom_dci": "AL-LAD",
-    "synonymes": ["AL-LAD", "6-allyl-6-nor-lysergique diéthylamide", "AllylAD"],
+    "synonymes": [
+      "AL-LAD",
+      "6-allyl-6-nor-lysergique diéthylamide",
+      "AllylAD"
+    ],
     "classe": "NPS psychédélique (analogue LSD — N-allyl substitution — NON promédicament)",
     "statut_fr": "Stupéfiants (classement analogue LSD — ANSM)",
     "phase1_cyp": [
@@ -532,7 +566,11 @@
         "source": "EMCDDA:NPS-psychedelics-2024"
       }
     ],
-    "alertes_pd": ["sero", "mesusage-documented", "seuil-ep"],
+    "alertes_pd": [
+      "sero",
+      "mesusage-documented",
+      "seuil-ep"
+    ],
     "niveau_preuve_global": "AN",
     "sources_principales": [
       "EMCDDA:NPS-psychedelics-2024"
@@ -547,11 +585,15 @@
       "données forensiques"
     ]
   },
-
   {
     "id": "nps_phenth_4fa",
     "nom_dci": "4-Fluoroamphétamine",
-    "synonymes": ["4-FA", "4-FMP", "para-fluoroamphétamine", "Flash (usage festif)"],
+    "synonymes": [
+      "4-FA",
+      "4-FMP",
+      "para-fluoroamphétamine",
+      "Flash (usage festif)"
+    ],
     "classe": "NPS phénéthylamine — amphétamine fluorée",
     "statut_fr": "Stupéfiants (arrêté ANSM 2017 — classement phénéthylamines de synthèse)",
     "phase1_cyp": [
@@ -651,7 +693,12 @@
         "source": "EMCDDA:NPS-phenyethylamines-2024"
       }
     ],
-    "alertes_pd": ["sero", "HTA", "mesusage-documented", "CI-IMAO"],
+    "alertes_pd": [
+      "sero",
+      "HTA",
+      "mesusage-documented",
+      "CI-IMAO"
+    ],
     "niveau_preuve_global": "FOR",
     "sources_principales": [
       "EMCDDA:NPS-phenyethylamines-2024"
@@ -665,11 +712,15 @@
       "données cliniques controlées"
     ]
   },
-
   {
     "id": "nps_tianeptine_mesusage",
     "nom_dci": "Tianeptine (mésusage — entrée NPS distincte)",
-    "synonymes": ["ZaZa Red", "Tianna", "Neptune's Fix", "tianeptine sulfate (vente ligne)"],
+    "synonymes": [
+      "ZaZa Red",
+      "Tianna",
+      "Neptune's Fix",
+      "tianeptine sulfate (vente ligne)"
+    ],
     "classe": "NPS opioïde atypique — mésusage d'antidépresseur (entrée distincte de atd_tianeptine)",
     "statut_fr": "Non classé stupéfiant en France (2026 — Stablon® retiré ; vente en ligne hors AMM). Classé Schedule I dans plusieurs États USA (FDA safety communication 2018+2022). Zone grise réglementaire France.",
     "phase1_cyp": [
@@ -751,7 +802,11 @@
         "source": "FDA:safety-communication-tianeptine-2022"
       }
     ],
-    "alertes_pd": ["resp", "dependance-mu-opioide", "mesusage-documented"],
+    "alertes_pd": [
+      "resp",
+      "dependance-mu-opioide",
+      "mesusage-documented"
+    ],
     "niveau_preuve_global": "CAS",
     "sources_principales": [
       "FDA:safety-communication-tianeptine-2022",
@@ -764,6 +819,7 @@
       "données PK mésusage (doses supérieures thérapeutiques)",
       "pharmacogenetique β-oxydation",
       "transporteurs"
-    ]
+    ],
+    "bucket": "nps_autres"
   }
 ]

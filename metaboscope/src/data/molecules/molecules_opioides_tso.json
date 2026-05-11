@@ -36,7 +36,12 @@
     {
       "id": "ant_opi_naltrexone",
       "nom_dci": "Naltrexone",
-      "synonymes": ["Revia", "Vivitrol", "Nalorex", "Adepend"],
+      "synonymes": [
+        "Revia",
+        "Vivitrol",
+        "Nalorex",
+        "Adepend"
+      ],
       "classe": "Antagoniste opioïde",
       "statut_fr": "Liste I",
       "phase1_cyp": [
@@ -129,17 +134,30 @@
           "source": "FDA:021897s003lbl"
         }
       ],
-      "alertes_pd": ["hepatotox"],
+      "alertes_pd": [
+        "hepatotox"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:021897s003lbl", "PMID:3490825", "StatPearls:naltrexone"],
+      "sources_principales": [
+        "FDA:021897s003lbl",
+        "PMID:3490825",
+        "StatPearls:naltrexone"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "ant_opi_nalmefene",
       "nom_dci": "Nalméfène",
-      "synonymes": ["Selincro", "Revex"],
+      "synonymes": [
+        "Selincro",
+        "Revex"
+      ],
       "classe": "Antagoniste opioïde",
       "statut_fr": "Liste I",
       "phase1_cyp": [
@@ -190,15 +208,27 @@
       ],
       "alertes_pd": [],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["EMA:Selincro-EPAR"],
+      "sources_principales": [
+        "EMA:Selincro-EPAR"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "anticraving"
     },
     {
       "id": "ant_opi_naloxone",
       "nom_dci": "Naloxone",
-      "synonymes": ["Narcan", "Nyxoid", "Prenoxad"],
+      "synonymes": [
+        "Narcan",
+        "Nyxoid",
+        "Prenoxad"
+      ],
       "classe": "Antagoniste opioïde",
       "statut_fr": "Liste I",
       "phase1_cyp": [],
@@ -250,15 +280,26 @@
       ],
       "alertes_pd": [],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-naloxone"],
+      "sources_principales": [
+        "FDA:label-naloxone"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "opi_tso_methadone",
       "nom_dci": "Méthadone",
-      "synonymes": ["Méthadone chlorhydrate"],
+      "synonymes": [
+        "Méthadone chlorhydrate"
+      ],
       "classe": "TSO",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -397,17 +438,34 @@
           "source": "Gemini DR 1"
         }
       ],
-      "alertes_pd": ["QT-KR", "sero-modere", "resp"],
+      "alertes_pd": [
+        "QT-KR",
+        "sero-modere",
+        "resp"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-methadone", "CredibleMeds:KR-list-2022", "CPIC:opioids-CYP2D6-2021"],
+      "sources_principales": [
+        "FDA:label-methadone",
+        "CredibleMeds:KR-list-2022",
+        "CPIC:opioids-CYP2D6-2021"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "opi_tso_buprenorphine",
       "nom_dci": "Buprénorphine",
-      "synonymes": ["Subutex", "Suboxone (assoc. naloxone)", "Temgesic", "Buvidal (LAI)", "Sixmo (implant)"],
+      "synonymes": [
+        "Subutex",
+        "Suboxone (assoc. naloxone)",
+        "Temgesic",
+        "Buvidal (LAI)",
+        "Sixmo (implant)"
+      ],
       "classe": "TSO",
       "statut_fr": "Liste I",
       "phase1_cyp": [
@@ -510,17 +568,31 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["QT-PR", "resp", "sero-faible"],
+      "alertes_pd": [
+        "QT-PR",
+        "resp",
+        "sero-faible"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-buprenorphine", "CredibleMeds:PR-list-2022"],
+      "sources_principales": [
+        "FDA:label-buprenorphine",
+        "CredibleMeds:PR-list-2022"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inducteur"]
+      "champ_manquants": [
+        "inducteur"
+      ]
     },
     {
       "id": "opi_tramadol",
       "nom_dci": "Tramadol",
-      "synonymes": ["Topalgic", "Contramal", "Ixprim (assoc paracétamol)", "Zaldiar"],
+      "synonymes": [
+        "Topalgic",
+        "Contramal",
+        "Ixprim (assoc paracétamol)",
+        "Zaldiar"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Liste I",
       "phase1_cyp": [
@@ -610,17 +682,34 @@
           "source": "CPIC:tramadol-CYP2D6-2021"
         }
       ],
-      "alertes_pd": ["QT-PR", "sero", "resp", "seuil-ep"],
+      "alertes_pd": [
+        "QT-PR",
+        "sero",
+        "resp",
+        "seuil-ep"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["CPIC:tramadol-CYP2D6-2021", "CredibleMeds:PR-list-2022", "ANSM:thesaurus-2024"],
+      "sources_principales": [
+        "CPIC:tramadol-CYP2D6-2021",
+        "CredibleMeds:PR-list-2022",
+        "ANSM:thesaurus-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "opi_codeine",
       "nom_dci": "Codéine",
-      "synonymes": ["Dafalgan codéiné", "Codoliprane", "Codenfan", "Néo-codion"],
+      "synonymes": [
+        "Dafalgan codéiné",
+        "Codoliprane",
+        "Codenfan",
+        "Néo-codion"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Liste II",
       "phase1_cyp": [
@@ -710,17 +799,32 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "alertes_pd": [
+        "resp",
+        "sero-faible",
+        "ACB-1"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["CPIC:codeine-CYP2D6-2021", "ANSM:thesaurus-2024", "FDA:boxed-warning-codeine-2017"],
+      "sources_principales": [
+        "CPIC:codeine-CYP2D6-2021",
+        "ANSM:thesaurus-2024",
+        "FDA:boxed-warning-codeine-2017"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "opi_tapentadol",
       "nom_dci": "Tapentadol",
-      "synonymes": ["Palexia", "Nucynta", "Yantil"],
+      "synonymes": [
+        "Palexia",
+        "Nucynta",
+        "Yantil"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Liste I",
       "phase1_cyp": [
@@ -783,17 +887,36 @@
           "source": "GPT P3"
         }
       ],
-      "alertes_pd": ["QT-PR", "sero", "resp", "seuil-ep"],
+      "alertes_pd": [
+        "QT-PR",
+        "sero",
+        "resp",
+        "seuil-ep"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["FDA:label-tapentadol", "CredibleMeds:PR-list-2022"],
+      "sources_principales": [
+        "FDA:label-tapentadol",
+        "CredibleMeds:PR-list-2022"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "opi_morphine",
       "nom_dci": "Morphine",
-      "synonymes": ["Skenan LP", "Moscontin LP", "Actiskenan", "Sevredol", "Oramorph"],
+      "synonymes": [
+        "Skenan LP",
+        "Moscontin LP",
+        "Actiskenan",
+        "Sevredol",
+        "Oramorph"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [],
@@ -853,17 +976,33 @@
           "source": "ANSM:RCP-morphine"
         }
       ],
-      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "alertes_pd": [
+        "resp",
+        "sero-faible",
+        "ACB-1"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["ANSM:RCP-morphine", "StatPearls:morphine"],
+      "sources_principales": [
+        "ANSM:RCP-morphine",
+        "StatPearls:morphine"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "opi_oxycodone",
       "nom_dci": "Oxycodone",
-      "synonymes": ["Oxycontin LP", "Oxynormoro", "Oxynorm"],
+      "synonymes": [
+        "Oxycontin LP",
+        "Oxynormoro",
+        "Oxynorm"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -929,17 +1068,31 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["resp", "sero-faible", "ACB-1"],
+      "alertes_pd": [
+        "resp",
+        "sero-faible",
+        "ACB-1"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-oxycodone", "ANSM:thesaurus-2024"],
+      "sources_principales": [
+        "FDA:label-oxycodone",
+        "ANSM:thesaurus-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "opi_hydromorphone",
       "nom_dci": "Hydromorphone",
-      "synonymes": ["Sophidone LP", "Dilaudid"],
+      "synonymes": [
+        "Sophidone LP",
+        "Dilaudid"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [],
@@ -980,17 +1133,37 @@
           "source": "ANSM:RCP-hydromorphone"
         }
       ],
-      "alertes_pd": ["resp", "ACB-1"],
+      "alertes_pd": [
+        "resp",
+        "ACB-1"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["FDA:label-hydromorphone", "ANSM:RCP-hydromorphone"],
+      "sources_principales": [
+        "FDA:label-hydromorphone",
+        "ANSM:RCP-hydromorphone"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "opi_fentanyl",
       "nom_dci": "Fentanyl",
-      "synonymes": ["Durogesic (patch)", "Actiq", "Effentora", "Instanyl", "Abstral", "Matrifen", "Breakyl"],
+      "synonymes": [
+        "Durogesic (patch)",
+        "Actiq",
+        "Effentora",
+        "Instanyl",
+        "Abstral",
+        "Matrifen",
+        "Breakyl"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -1068,17 +1241,34 @@
           "source": "FDA:boxed-warning-opioids-BZD-2016"
         }
       ],
-      "alertes_pd": ["resp", "sero-modere", "ACB-1"],
+      "alertes_pd": [
+        "resp",
+        "sero-modere",
+        "ACB-1"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-fentanyl", "ANSM:thesaurus-2024", "FDA:boxed-warning-opioids-BZD-2016"],
+      "sources_principales": [
+        "FDA:label-fentanyl",
+        "ANSM:thesaurus-2024",
+        "FDA:boxed-warning-opioids-BZD-2016"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "opi_pethidine",
       "nom_dci": "Péthidine",
-      "synonymes": ["Meperidine", "Dolantin", "Demerol"],
+      "synonymes": [
+        "Meperidine",
+        "Dolantin",
+        "Demerol"
+      ],
       "classe": "Opioïde",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -1127,17 +1317,35 @@
           "source": "FDA:label-meperidine"
         }
       ],
-      "alertes_pd": ["sero", "resp", "seuil-ep", "CI-IMAO"],
+      "alertes_pd": [
+        "sero",
+        "resp",
+        "seuil-ep",
+        "CI-IMAO"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-meperidine", "ANSM:thesaurus-2024"],
+      "sources_principales": [
+        "FDA:label-meperidine",
+        "ANSM:thesaurus-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "anc_acamprosate",
       "nom_dci": "Acamprosate",
-      "synonymes": ["Aotal", "Campral"],
+      "synonymes": [
+        "Aotal",
+        "Campral"
+      ],
       "classe": "Anti-craving alcool",
       "statut_fr": "Liste I",
       "phase1_cyp": [],
@@ -1163,17 +1371,34 @@
           "source": "ANSM:RCP-acamprosate"
         }
       ],
-      "alertes_pd": ["nephrotox"],
+      "alertes_pd": [
+        "nephrotox"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["ANSM:RCP-acamprosate", "PMID:PMC2853976"],
+      "sources_principales": [
+        "ANSM:RCP-acamprosate",
+        "PMID:PMC2853976"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "anticraving"
     },
     {
       "id": "anc_baclofene",
       "nom_dci": "Baclofène",
-      "synonymes": ["Lioresal", "Baclocur"],
+      "synonymes": [
+        "Lioresal",
+        "Baclocur"
+      ],
       "classe": "Anti-craving alcool",
       "statut_fr": "Liste I",
       "phase1_cyp": [],
@@ -1207,17 +1432,37 @@
           "source": "Rapport d'Expertise HUG 2020 extension"
         }
       ],
-      "alertes_pd": ["QT-CR", "resp", "seuil-ep-sevrage"],
+      "alertes_pd": [
+        "QT-CR",
+        "resp",
+        "seuil-ep-sevrage"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["ANSM:RCP-baclofene", "CredibleMeds:CR-list-2022", "HUG:carte_cytochromes_2020"],
+      "sources_principales": [
+        "ANSM:RCP-baclofene",
+        "CredibleMeds:CR-list-2022",
+        "HUG:carte_cytochromes_2020"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ],
+      "bucket": "anticraving"
     },
     {
       "id": "anc_disulfirame",
       "nom_dci": "Disulfirame",
-      "synonymes": ["Esperal", "Antabuse"],
+      "synonymes": [
+        "Esperal",
+        "Antabuse"
+      ],
       "classe": "Anti-craving alcool",
       "statut_fr": "Liste I",
       "phase1_cyp": [],
@@ -1331,17 +1576,32 @@
           "source": "ANSM:thesaurus-2024"
         }
       ],
-      "alertes_pd": ["hepatotox", "CI-alcool"],
+      "alertes_pd": [
+        "hepatotox",
+        "CI-alcool"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-disulfiram", "ANSM:thesaurus-2024"],
+      "sources_principales": [
+        "FDA:label-disulfiram",
+        "ANSM:thesaurus-2024"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inducteur"
+      ],
+      "bucket": "anticraving"
     },
     {
       "id": "sev_varenicline",
       "nom_dci": "Varénicline",
-      "synonymes": ["Champix", "Chantix"],
+      "synonymes": [
+        "Champix",
+        "Chantix"
+      ],
       "classe": "Aide au sevrage tabagique",
       "statut_fr": "Liste I",
       "phase1_cyp": [],
@@ -1394,15 +1654,31 @@
       ],
       "alertes_pd": [],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-varenicline", "StatPearls:varenicline"],
+      "sources_principales": [
+        "FDA:label-varenicline",
+        "StatPearls:varenicline"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase1_non_cyp", "phase2", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase1_non_cyp",
+        "phase2",
+        "inhibiteur",
+        "inducteur"
+      ],
+      "bucket": "sevrage_tabac"
     },
     {
       "id": "sev_nicotine",
       "nom_dci": "Nicotine",
-      "synonymes": ["Nicorette (gomme, patch, inhaleur)", "Nicopatch", "Niquitin", "Nicopass", "Nicotinell"],
+      "synonymes": [
+        "Nicorette (gomme, patch, inhaleur)",
+        "Nicopatch",
+        "Niquitin",
+        "Nicopass",
+        "Nicotinell"
+      ],
       "classe": "Aide au sevrage tabagique",
       "statut_fr": "Non classé (substituts nicotiniques OTC) ; Stupéfiants (tabac via règlementation spécifique)",
       "phase1_cyp": [
@@ -1477,12 +1753,21 @@
           "source": "GPT P1"
         }
       ],
-      "alertes_pd": ["CV-HTA"],
+      "alertes_pd": [
+        "CV-HTA"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["ANSM:RCP-nicotine"],
+      "sources_principales": [
+        "ANSM:RCP-nicotine"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inhibiteur"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "transporteurs",
+        "inhibiteur"
+      ],
+      "bucket": "sevrage_tabac"
     }
   ]
 }

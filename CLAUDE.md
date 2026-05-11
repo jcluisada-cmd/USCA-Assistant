@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.35 (2026-05-11) — MetaboScope D.1 Mode Ordonnance livré. Bouton `📋 Ordonnance` sur `/interactions` → modal textarea avec parser fuzzy (`parseOrdonnance.ts`) + review checkboxes par ligne. Bouton `🖨️ Rapport imprimable A4` → overlay plein écran (`RapportPrint.tsx`) avec composition · alertes critiques (Mécanisme + Conduite à tenir, badge Red/Amber) · vigilance · matrix triangulaire · détail couples · disclaimer. Règles `@media print` dans `index.css` (force light, anti-titre-orphelin). Mockup spec dans `metaboscope/docs/mockups/`.
+> **Version courante** : v4.36 (2026-05-11) — MetaboScope G.1 Refonte classification 147 molécules. Champ `bucket?: ClassBucket` explicite sur `Molecule` (override) + fallback regex `classes.ts`. 2 nouveaux buckets : `anticraving` (4 mol) et `sevrage_tabac` (3 mol). 33 molécules patchées (anti-craving alcool, sevrage tabac, drogues classiques, TDAH non-stim, Xylazine, Ibogaïne…). Distribution finale propre : antidep 14 · antipsy 18 · bzd 19 · thymo 13 · opioid 18 · stim 8 · drogues 32 · anticraving 4 · sevrage_tabac 3 · nps_autres 18.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.35` |
+| **Service Worker** | `usca-v4.36` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |

@@ -4,14 +4,26 @@
     "session": 8,
     "date_generation": "2026-04-22",
     "nombre_molecules": 11,
-    "classes_couvertes": ["Dissociatif (anesthésique NMDA)", "Hallucinogène sérotoninergique (5-HT2A)", "Tryptamine endogène/synthétique", "Phénéthylamine 2C", "Iboga-alcaloïde anti-addiction"],
+    "classes_couvertes": [
+      "Dissociatif (anesthésique NMDA)",
+      "Hallucinogène sérotoninergique (5-HT2A)",
+      "Tryptamine endogène/synthétique",
+      "Phénéthylamine 2C",
+      "Iboga-alcaloïde anti-addiction"
+    ],
     "note_methodologique": "Session 8 MétaboScope. Verrous critiques : (1) KÉTAMINE = CYP2B6 majeur + CYP3A4 + CYP2C9 mineurs → norkétamine ACTIVE (1/3-1/5 puissance) + hydroxynorkétamine (impliquée dans effet antidépresseur rapide via voie non-NMDA). Isomère R inhibe l'élimination de l'isomère S dans le racémique. (2) ESKÉTAMINE (Spravato) = isomère S, absorption biphasique intranasale, mêmes voies CYP2B6/3A4 → noreskétamine. Surveillance TA 40 min. (3) DMT = MAO-A majeure (oralement inactif) — l'AYAHUASCA contourne via β-carbolines (harmine, harmaline) inhibitrices MAO-A. (4) MESCALINE = 53% excrétée INCHANGÉE — élimination rénale dominante, durée d'action 8-12h disproportionnée. (5) IBOGAÏNE = CYP2D6 majeur → noribogaïne active (κ-opioïde + antagoniste NMDA + ISR, t1/2 28-49h). QT-KR CredibleMeds, allongement QTc moyen +67.9 ms — risque TdP. (6) 5-MeO-DMT = MAO-A + CYP2D6 → bufoténine (active). (7) PSILOCYBINE séparée de PSILOCINE : promédicament déphosphorylé par phosphatases tissulaires en psilocine active ; psilocine via UGT1A10/1A9 + MAO-A + CYP2D6/3A4. (8) 2C-B = MAO-A/B majeurs + CYP2D6 mineur. (9) PCP = CYP3A4 majeur + CYP2B6 mineur (INVERSE de kétamine)."
   },
   "molecules": [
     {
       "id": "dis_ketamine",
       "nom_dci": "Kétamine (racémique R/S)",
-      "synonymes": ["Kétamine", "Ketalar", "Special K", "K", "Vetalar (vétérinaire)"],
+      "synonymes": [
+        "Kétamine",
+        "Ketalar",
+        "Special K",
+        "K",
+        "Vetalar (vétérinaire)"
+      ],
       "classe": "Dissociatif (antagoniste NMDA non-compétitif)",
       "statut_fr": "Stupéfiants (depuis 2017 — assimilé stupéfiant ; usage hospitalier anesthésie + douleur réfractaire + dépression résistante off-label)",
       "phase1_cyp": [
@@ -139,17 +151,40 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["sédation", "HTA", "tachycardie", "hyperthermie", "psychose-réactivation", "cystite-kétamine-irréversible", "hépatite-cholestatique-mésusage", "dépendance-documented", "dépression-respiratoire-doses-élevées", "syndrome-K-hole"],
+      "alertes_pd": [
+        "sédation",
+        "HTA",
+        "tachycardie",
+        "hyperthermie",
+        "psychose-réactivation",
+        "cystite-kétamine-irréversible",
+        "hépatite-cholestatique-mésusage",
+        "dépendance-documented",
+        "dépression-respiratoire-doses-élevées",
+        "syndrome-K-hole"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMID:12065445", "PMC6197107", "FDA:label-ketamine", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "PMID:12065445",
+        "PMC6197107",
+        "FDA:label-ketamine",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "inducteur"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "inducteur"
+      ]
     },
     {
       "id": "dis_esketamine",
       "nom_dci": "Eskétamine (Spravato)",
-      "synonymes": ["S-kétamine", "Spravato", "(S)-(+)-kétamine"],
+      "synonymes": [
+        "S-kétamine",
+        "Spravato",
+        "(S)-(+)-kétamine"
+      ],
       "classe": "Dissociatif (antagoniste NMDA — isomère S, plus puissant que R)",
       "statut_fr": "Stupéfiants (AMM France 2020 — dépression résistante en association à un ISRS/IRSNa, administration intranasale en milieu spécialisé sous surveillance 2h)",
       "phase1_cyp": [
@@ -254,17 +289,38 @@
           "source": "FDA:Spravato-REMS"
         }
       ],
-      "alertes_pd": ["HTA-pic-40min", "sédation", "dissociation-transitoire", "vertiges", "nausées", "détournement-potentiel", "psychose-réactivation"],
+      "alertes_pd": [
+        "HTA-pic-40min",
+        "sédation",
+        "dissociation-transitoire",
+        "vertiges",
+        "nausées",
+        "détournement-potentiel",
+        "psychose-réactivation"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["FDA:label-spravato", "ANSM:RCP-spravato", "PMC12615959"],
+      "sources_principales": [
+        "FDA:label-spravato",
+        "ANSM:RCP-spravato",
+        "PMC12615959"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "dis_pcp",
       "nom_dci": "PCP (phencyclidine)",
-      "synonymes": ["PCP", "phencyclidine", "angel dust", "Sernyl"],
+      "synonymes": [
+        "PCP",
+        "phencyclidine",
+        "angel dust",
+        "Sernyl"
+      ],
       "classe": "Dissociatif (antagoniste NMDA — analogue structurel kétamine, durée d'action prolongée)",
       "statut_fr": "Stupéfiants (résurgence en Europe 2022-2025, parfois confusion avec kétamine au marché illicite)",
       "phase1_cyp": [
@@ -329,17 +385,41 @@
           "source": "StatPearls:Phencyclidine"
         }
       ],
-      "alertes_pd": ["psychose-aiguë-violence", "agitation-extrême", "rhabdomyolyse", "hyperthermie", "HTA", "sédation-paradoxale", "convulsions", "dépendance-documented", "flashbacks-prolongés"],
+      "alertes_pd": [
+        "psychose-aiguë-violence",
+        "agitation-extrême",
+        "rhabdomyolyse",
+        "hyperthermie",
+        "HTA",
+        "sédation-paradoxale",
+        "convulsions",
+        "dépendance-documented",
+        "flashbacks-prolongés"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["StatPearls:Phencyclidine", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "StatPearls:Phencyclidine",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "hal_lsd",
       "nom_dci": "LSD (acide lysergique diéthylamide)",
-      "synonymes": ["LSD", "LSD-25", "acid", "lysergide", "lysergic acid diethylamide"],
+      "synonymes": [
+        "LSD",
+        "LSD-25",
+        "acid",
+        "lysergide",
+        "lysergic acid diethylamide"
+      ],
       "classe": "Hallucinogène sérotoninergique (agoniste partiel 5-HT2A)",
       "statut_fr": "Stupéfiants (essais thérapeutiques en cours TUS alcool, anxiété fin de vie)",
       "phase1_cyp": [
@@ -437,17 +517,37 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["psychose-vulnérable", "HPPD-flashbacks", "tachycardie", "HTA", "mydriase", "convulsions-avec-lithium", "anxiété-bad-trip"],
+      "alertes_pd": [
+        "psychose-vulnérable",
+        "HPPD-flashbacks",
+        "tachycardie",
+        "HTA",
+        "mydriase",
+        "convulsions-avec-lithium",
+        "anxiété-bad-trip"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["métaboscope GPT 2", "Plan_de_recherche_MetaboScope", "PMC10851641"],
+      "sources_principales": [
+        "métaboscope GPT 2",
+        "Plan_de_recherche_MetaboScope",
+        "PMC10851641"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "hal_psilocybine",
       "nom_dci": "Psilocybine",
-      "synonymes": ["psilocybine", "4-PO-DMT", "champignons magiques (truffes Psilocybe)", "magic mushrooms"],
+      "synonymes": [
+        "psilocybine",
+        "4-PO-DMT",
+        "champignons magiques (truffes Psilocybe)",
+        "magic mushrooms"
+      ],
       "classe": "Hallucinogène sérotoninergique — promédicament (ester phosphorique de la psilocine)",
       "statut_fr": "Stupéfiants (essais thérapeutiques dépression résistante, anxiété fin de vie, addiction — Compass Pathways, MAPS, Johns Hopkins, Sublimet en France)",
       "phase1_cyp": [],
@@ -482,17 +582,33 @@
           "source": "voir hal_psilocine"
         }
       ],
-      "alertes_pd": ["voir-psilocine"],
+      "alertes_pd": [
+        "voir-psilocine"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Rapport HUG 2020 extension", "PMID:34698507"],
+      "sources_principales": [
+        "Rapport HUG 2020 extension",
+        "PMID:34698507"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "hal_psilocine",
       "nom_dci": "Psilocine",
-      "synonymes": ["psilocine", "4-OH-DMT", "métabolite actif de la psilocybine"],
+      "synonymes": [
+        "psilocine",
+        "4-OH-DMT",
+        "métabolite actif de la psilocybine"
+      ],
       "classe": "Hallucinogène sérotoninergique (agoniste 5-HT2A) — métabolite actif de la psilocybine",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -590,17 +706,38 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["psychose-vulnérable", "HPPD", "anxiété-bad-trip", "tachycardie", "HTA", "mydriase", "convulsions-avec-lithium"],
+      "alertes_pd": [
+        "psychose-vulnérable",
+        "HPPD",
+        "anxiété-bad-trip",
+        "tachycardie",
+        "HTA",
+        "mydriase",
+        "convulsions-avec-lithium"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Rapport HUG 2020 extension", "PMC10851641", "métaboscope GPT 2"],
+      "sources_principales": [
+        "Rapport HUG 2020 extension",
+        "PMC10851641",
+        "métaboscope GPT 2"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "hal_dmt",
       "nom_dci": "DMT (N,N-diméthyltryptamine)",
-      "synonymes": ["DMT", "N,N-DMT", "Dimitri", "ayahuasca (préparation orale avec β-carbolines)"],
+      "synonymes": [
+        "DMT",
+        "N,N-DMT",
+        "Dimitri",
+        "ayahuasca (préparation orale avec β-carbolines)"
+      ],
       "classe": "Hallucinogène sérotoninergique tryptamine (agoniste 5-HT2A)",
       "statut_fr": "Stupéfiants ; ayahuasca classée stupéfiant en France depuis 2005",
       "phase1_cyp": [
@@ -674,17 +811,40 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["psychose-vulnérable", "HTA", "tachycardie", "vomissements-ayahuasca-purga", "convulsions-avec-lithium", "CI-IMAO", "CI-ISRS-en-ayahuasca"],
+      "alertes_pd": [
+        "psychose-vulnérable",
+        "HTA",
+        "tachycardie",
+        "vomissements-ayahuasca-purga",
+        "convulsions-avec-lithium",
+        "CI-IMAO",
+        "CI-ISRS-en-ayahuasca"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMC13024736", "Plan_de_recherche_MetaboScope", "Rapport HUG 2020 extension"],
+      "sources_principales": [
+        "PMC13024736",
+        "Plan_de_recherche_MetaboScope",
+        "Rapport HUG 2020 extension"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "hal_5_meo_dmt",
       "nom_dci": "5-MeO-DMT (5-méthoxy-N,N-diméthyltryptamine)",
-      "synonymes": ["5-MeO-DMT", "5-methoxy-DMT", "Bufo alvarius (crapaud du Sonora)", "toad venom"],
+      "synonymes": [
+        "5-MeO-DMT",
+        "5-methoxy-DMT",
+        "Bufo alvarius (crapaud du Sonora)",
+        "toad venom"
+      ],
       "classe": "Hallucinogène sérotoninergique tryptamine (agoniste 5-HT1A > 5-HT2A — profil distinct du DMT)",
       "statut_fr": "Stupéfiants",
       "phase1_cyp": [
@@ -752,17 +912,38 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["sero", "psychose-vulnérable", "HTA-soutenue", "tachycardie", "convulsions-IMAO", "CI-IMAO"],
+      "alertes_pd": [
+        "sero",
+        "psychose-vulnérable",
+        "HTA-soutenue",
+        "tachycardie",
+        "convulsions-IMAO",
+        "CI-IMAO"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMID:20942780", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "PMID:20942780",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase2", "transporteurs", "inhibiteur", "inducteur"]
+      "champ_manquants": [
+        "phase2",
+        "transporteurs",
+        "inhibiteur",
+        "inducteur"
+      ]
     },
     {
       "id": "hal_2cb",
       "nom_dci": "2C-B (4-bromo-2,5-diméthoxyphénéthylamine)",
-      "synonymes": ["2C-B", "Nexus", "Venus", "Bromo-mescaline", "phénéthylamine Shulgin"],
+      "synonymes": [
+        "2C-B",
+        "Nexus",
+        "Venus",
+        "Bromo-mescaline",
+        "phénéthylamine Shulgin"
+      ],
       "classe": "Phénéthylamine 2C (agoniste partiel 5-HT2A — entactogène/hallucinogène hybride)",
       "statut_fr": "Stupéfiants ; très répandu en chemsex/festivals Europe 2024-2025",
       "phase1_cyp": [
@@ -843,17 +1024,38 @@
           "source": "Plan_de_recherche_MetaboScope"
         }
       ],
-      "alertes_pd": ["sero", "tachycardie", "HTA", "hyperthermie", "psychose-vulnérable", "CI-IMAO", "anxiété-bad-trip"],
+      "alertes_pd": [
+        "sero",
+        "tachycardie",
+        "HTA",
+        "hyperthermie",
+        "psychose-vulnérable",
+        "CI-IMAO",
+        "anxiété-bad-trip"
+      ],
       "niveau_preuve_global": "IVH-O",
-      "sources_principales": ["Rapport MetaboScope Substances", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "Rapport MetaboScope Substances",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["transporteurs", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "transporteurs",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "hal_mescaline",
       "nom_dci": "Mescaline (3,4,5-triméthoxyphénéthylamine)",
-      "synonymes": ["mescaline", "TMPEA", "Peyotl (Lophophora williamsii)", "San Pedro (Echinopsis pachanoi)"],
+      "synonymes": [
+        "mescaline",
+        "TMPEA",
+        "Peyotl (Lophophora williamsii)",
+        "San Pedro (Echinopsis pachanoi)"
+      ],
       "classe": "Phénéthylamine hallucinogène (agoniste 5-HT2A) — prototype historique",
       "statut_fr": "Stupéfiants (cactus Peyotl/San Pedro classés également)",
       "phase1_cyp": [],
@@ -925,17 +1127,39 @@
           "source": "Plan_de_recherche_MetaboScope (zone grise)"
         }
       ],
-      "alertes_pd": ["sero", "tachycardie", "HTA", "mydriase", "psychose-vulnérable", "CI-IMAO", "accumulation-IRC"],
+      "alertes_pd": [
+        "sero",
+        "tachycardie",
+        "HTA",
+        "mydriase",
+        "psychose-vulnérable",
+        "CI-IMAO",
+        "accumulation-IRC"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["PMC12479620", "PMID:40658345", "Plan_de_recherche_MetaboScope"],
+      "sources_principales": [
+        "PMC12479620",
+        "PMID:40658345",
+        "Plan_de_recherche_MetaboScope"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_cyp", "phase2", "inhibiteur", "inducteur", "pharmacogenetique"]
+      "champ_manquants": [
+        "phase1_cyp",
+        "phase2",
+        "inhibiteur",
+        "inducteur",
+        "pharmacogenetique"
+      ]
     },
     {
       "id": "hal_ibogaine",
       "nom_dci": "Ibogaïne",
-      "synonymes": ["ibogaïne", "Tabernanthe iboga (racine)", "12-méthoxyibogamine"],
+      "synonymes": [
+        "ibogaïne",
+        "Tabernanthe iboga (racine)",
+        "12-méthoxyibogamine"
+      ],
       "classe": "Iboga-alcaloïde — anti-addiction (utilisé hors-AMM pour sevrage opioïdes/cocaïne ; usage rituel Bwiti)",
       "statut_fr": "Stupéfiants (depuis 2007)",
       "phase1_cyp": [
@@ -1049,12 +1273,32 @@
           "source": "CredibleMeds:KR-list-2022"
         }
       ],
-      "alertes_pd": ["QT-KR", "torsades-de-pointes", "mort-subite-cardiaque", "ataxie", "tremor", "nausées-vomissements", "psychose-vulnérable", "hépatotoxicité-rare", "sero", "CI-méthadone-non-sevrée"],
+      "alertes_pd": [
+        "QT-KR",
+        "torsades-de-pointes",
+        "mort-subite-cardiaque",
+        "ataxie",
+        "tremor",
+        "nausées-vomissements",
+        "psychose-vulnérable",
+        "hépatotoxicité-rare",
+        "sero",
+        "CI-méthadone-non-sevrée"
+      ],
       "niveau_preuve_global": "IVH-C",
-      "sources_principales": ["Rapport MetaboScope Substances", "CredibleMeds:KR-list-2022", "métaboscope GPT 3"],
+      "sources_principales": [
+        "Rapport MetaboScope Substances",
+        "CredibleMeds:KR-list-2022",
+        "métaboscope GPT 3"
+      ],
       "zone_grise": false,
       "derniere_maj": "2026-04",
-      "champ_manquants": ["phase1_non_cyp", "transporteurs", "inducteur"]
+      "champ_manquants": [
+        "phase1_non_cyp",
+        "transporteurs",
+        "inducteur"
+      ],
+      "bucket": "drogues"
     }
   ]
 }
