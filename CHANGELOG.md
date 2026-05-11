@@ -3,6 +3,9 @@
 > Une ligne par version. Pour le détail d'une version : voir `CLAUDE_ARCHIVE.md` §B.
 > Pour la version courante en détail : voir l'en-tête de `CLAUDE.md`.
 
+## v4.34 — 2026-05-11
+**Fix bug timezone permission patient** : la concaténation string `dateDebut + 'T' + heureDebut + ':00'` envoyée à Postgres `TIMESTAMPTZ` était interprétée comme UTC (pas de suffixe TZ), provoquant un décalage +2h en CEST (mai-oct) — une demande "17h-19h" apparaissait "19h-21h" côté admin. Fix : sérialisation via `new Date(...).toISOString()` comme le code admin. Bug latent depuis le commit initial (c9e8fd4), masqué en hiver (UTC+1 → décalage 1h subtil). Blocage dur retour > 20h remplacé par avertissement amber non-bloquant ("⚠️ Heure de retour tardive — la demande sera transmise au médecin"), input `max="20:00"` HTML5 retiré.
+
 ## v4.33 — 2026-05-09
 **Permissions** : motifs de refus structurés côté médecin (3 codes pré-définis multi-sélectionnables — "Demande trop tardive", "Le retour ne peut pas être après 20h", "Objectif de permission à rediscuter" — + commentaire libre) avec dropdown in-card sur le bouton Refuser, push patient au refus avec récap motifs, affichage des motifs sous le badge "Refusée" côté patient (migration v37 : `permissions.motifs_refus_codes text[]` + `motif_refus_libre text`). Formulaire patient : bandeau info "Permissions autorisées entre 10h et 20h", input retour `max="20:00"` HTML5, fix bug logique validation (`parseInt('20:30'.split(':')[0])===20` laissait passer 20h01-20h59, maintenant comparaison en minutes), valeur par défaut départ passée à 10h00. **MetaboScope C.5** : disclaimer pied de page enrichi (mention pharmacien clinicien USCA ajoutée à `DISCLAIMER_TEXT`) + mini-bandeau 1 ligne non-sticky dans le footer Layout (au-dessus du bouton "Disclaimer complet"). C.3 (liens fiches Toolbox) et C.4 (optim tablette) abandonnés — voir `METABOSCOPE_APP.md` §3.
 

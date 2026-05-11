@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.33 (2026-05-09) — Motifs de refus permission médecin (3 codes + libre, push patient avec récap, affichage sous badge) + bloquage dur retour > 20h patient (fix bug parseInt) + bandeau info 10h-20h. MetaboScope C.5 disclaimer pied de page enrichi (mention pharmacien USCA). C.3/C.4 abandonnés.
+> **Version courante** : v4.34 (2026-05-11) — Fix bug timezone permission patient : la sérialisation `dateDebut + 'T' + heure + ':00'` (sans suffixe TZ) était interprétée UTC par Postgres `TIMESTAMPTZ` → décalage +2h en CEST. Fix : `.toISOString()` sur Date locales (aligné avec le pattern admin). Bug latent depuis c9e8fd4, masqué en hiver. Blocage dur 20h retiré → remplacé par avertissement amber non-bloquant ; input `max="20:00"` retiré.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.33` |
+| **Service Worker** | `usca-v4.34` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |

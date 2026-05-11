@@ -588,13 +588,14 @@
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">Heure de retour</label>
-            <input type="time" id="perm-p-heure-retour" value="18:00" max="20:00" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+            <input type="time" id="perm-p-heure-retour" value="18:00" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
           </div>
         </div>
 
         <button id="btn-send-perm" class="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-xl text-sm transition-colors active:scale-[0.98] disabled:opacity-50" disabled>
           Envoyer la demande
         </button>
+        <p id="perm-p-warning" class="text-xs text-amber-600 text-center mt-2 hidden"></p>
         <p id="perm-p-error" class="text-xs text-red-500 text-center mt-2 hidden"></p>
         <p id="perm-p-success" class="text-xs text-emerald-600 text-center mt-2 hidden"></p>
       </div>
@@ -1120,7 +1121,9 @@ function validatePermForm() {
   var heureRetour = document.getElementById('perm-p-heure-retour').value;
   var btn = document.getElementById('btn-send-perm');
   var errEl = document.getElementById('perm-p-error');
+  var warnEl = document.getElementById('perm-p-warning');
   errEl.classList.add('hidden');
+  warnEl.classList.add('hidden');
 
   if (!dateDebut || !dateRetour) { btn.disabled = true; return; }
 
@@ -1133,12 +1136,6 @@ function validatePermForm() {
   if (diffH <= 0) { btn.disabled = true; errEl.textContent = 'La date de retour doit \u00eatre apr\u00e8s le d\u00e9part'; errEl.classList.remove('hidden'); return; }
   if (diffH > 48) { btn.disabled = true; errEl.textContent = 'Dur\u00e9e trop longue'; errEl.classList.remove('hidden'); return; }
 
-  // Bloquage dur du retour > 20h00 (cohérent avec input max="20:00" + bandeau info).
-  // On compare en minutes pour ne pas laisser passer 20h01-20h59.
-  var hRParts = (heureRetour || '18:00').split(':');
-  var retourMin = parseInt(hRParts[0], 10) * 60 + parseInt(hRParts[1] || '0', 10);
-  if (retourMin > 20 * 60) { btn.disabled = true; errEl.textContent = 'Heure de retour trop tardive (maximum 20h00)'; errEl.classList.remove('hidden'); return; }
-
   // Semaine : retour même jour
   var jourDebut = debut.getDay();
   if (jourDebut >= 1 && jourDebut <= 5 && dateRetour !== dateDebut) {
@@ -1146,6 +1143,14 @@ function validatePermForm() {
     errEl.textContent = 'En semaine, le retour doit \u00eatre le m\u00eame jour';
     errEl.classList.remove('hidden');
     return;
+  }
+
+  // Avertissement non-bloquant : retour entre 20h00 et 23h59 (au-delà de la plage habituelle 10h-20h).
+  var hRParts = (heureRetour || '18:00').split(':');
+  var retourMin = parseInt(hRParts[0], 10) * 60 + parseInt(hRParts[1] || '0', 10);
+  if (retourMin >= 20 * 60) {
+    warnEl.textContent = '⚠️ Heure de retour tardive (après 20h) — la demande sera transmise au médecin.';
+    warnEl.classList.remove('hidden');
   }
 
   btn.disabled = false;
@@ -1167,10 +1172,15 @@ document.getElementById('btn-send-perm').addEventListener('click', async functio
   this.textContent = 'Envoi...';
 
   try {
+    // Important : on construit des Date locales puis on sérialise via .toISOString().
+    // Sans cette conversion, Postgres TIMESTAMPTZ interprète la string sans TZ comme UTC
+    // → décalage de +2h en CEST (mai-oct). Le code admin utilise déjà ce pattern.
+    var debutISO = new Date(dateDebut + 'T' + heureDebut + ':00').toISOString();
+    var retourISO = new Date(dateRetour + 'T' + heureRetour + ':00').toISOString();
     await db.createPermission({
       patient_id: currentPatient.id,
-      date_debut: dateDebut + 'T' + heureDebut + ':00',
-      date_retour: dateRetour + 'T' + heureRetour + ':00',
+      date_debut: debutISO,
+      date_retour: retourISO,
       statut: 'en_attente'
     });
     successEl.textContent = 'Demande envoy\u00e9e ! En attente de validation.';
