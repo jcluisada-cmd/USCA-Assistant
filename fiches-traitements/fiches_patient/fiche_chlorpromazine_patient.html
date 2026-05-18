@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Patient — Largactil (Chlorpromazine)</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A;--navy-light:#2A3F6B;--teal:#2A9D8F;--teal-pale:#E8F6F4;--amber:#E9A84C;--amber-light:#F5C882;--amber-pale:#FEF5E7;--white:#FFF;--gray-50:#F8FAFB;--gray-100:#EEF1F4;--gray-200:#D9DFE6;--gray-600:#5A6678;--red-soft:#E07A5F;--red-pale:#FDF0EC;--slate:#5C6B8A;--slate-pale:#ECF0F5}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--navy);line-height:1.6;-webkit-font-smoothing:antialiased}.page{max-width:820px;margin:0 auto;background:var(--white);min-height:100vh}
+  .header{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:2.5rem 2.5rem 2rem;position:relative;overflow:hidden}.header::after{content:'';position:absolute;bottom:-30px;right:-30px;width:160px;height:160px;background:var(--slate);opacity:.15;border-radius:50%}.header-badge{display:inline-block;background:var(--teal);color:var(--white);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .8rem;border-radius:20px;margin-bottom:.8rem}.header h1{font-family:'DM Serif Display',serif;font-size:2.4rem;font-weight:400;line-height:1.15;margin-bottom:.3rem}.header h1 span{color:var(--amber-light)}.header .subtitle{font-size:1.05rem;opacity:.85}
+  .content{padding:2rem 2.5rem 2.5rem}.intro-box{background:var(--slate-pale);border-left:4px solid var(--slate);border-radius:0 12px 12px 0;padding:1.3rem 1.5rem;margin-bottom:2rem;font-size:1.02rem}.intro-box strong{color:var(--slate)}
+  .section{margin-bottom:2rem}.section-title{display:flex;align-items:center;gap:.6rem;font-size:1.15rem;font-weight:700;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid var(--gray-100)}.section-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}.icon-teal{background:var(--teal-pale)}.icon-amber{background:var(--amber-pale)}.icon-slate{background:var(--slate-pale)}
+  /* MECHANISM */
+  .mechanism-visual{display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,var(--slate-pale),#DFE4ED);border-radius:14px;padding:1.5rem;margin-bottom:1rem}.mechanism-step{flex:1;text-align:center;padding:.8rem .5rem}.mechanism-step .emoji{font-size:2rem;margin-bottom:.4rem}.mechanism-step .label{font-size:.82rem;font-weight:600;line-height:1.35}.mechanism-step .sublabel{font-size:.74rem;color:var(--gray-600);margin-top:.15rem}.mechanism-arrow{font-size:1.4rem;color:var(--slate);flex-shrink:0}.mechanism-caption{font-size:.92rem;color:var(--gray-600);line-height:1.55}
+  /* CONTEXT BOX */
+  .context-box{background:linear-gradient(135deg,var(--teal-pale),#E6F5EE);border:2px solid var(--teal);border-radius:14px;padding:1.3rem 1.5rem;display:flex;gap:1rem;align-items:center}.ctx-icon{font-size:2.5rem;flex-shrink:0}.ctx-text{font-size:.95rem;line-height:1.55}.ctx-text strong{color:var(--teal)}
+  /* INDICATIONS */
+  .indic-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.indic-card{padding:1rem;border-radius:12px;border:2px solid var(--gray-200);text-align:center}.indic-card.active{border-color:var(--slate);background:var(--slate-pale)}.indic-icon{font-size:1.6rem;margin-bottom:.3rem}.indic-label{font-weight:700;font-size:.88rem;line-height:1.3;margin-bottom:.2rem}.indic-desc{font-size:.76rem;color:var(--gray-600);line-height:1.4}
+  /* FORMS */
+  .forms-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}.form-card{padding:.9rem .7rem;border-radius:12px;border:1.5px solid var(--gray-200);text-align:center}.form-card.highlight{border-color:var(--amber);background:var(--amber-pale)}.form-icon{font-size:1.5rem;margin-bottom:.2rem}.form-name{font-weight:700;font-size:.82rem;margin-bottom:.15rem;line-height:1.2}.form-desc{font-size:.7rem;color:var(--gray-600);line-height:1.3}
+  /* DOSAGE */
+  .dosage-card{background:var(--white);border:2px solid var(--amber);border-radius:14px;padding:1.4rem 1.5rem}
+  .dosage-row{display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:.8rem}
+  .dosage-phase{flex:1;padding:.8rem 1rem;background:var(--gray-50);border-radius:10px}
+  .phase-label{font-weight:700;font-size:.9rem;margin-bottom:.3rem;display:flex;align-items:center;gap:.4rem}
+  .phase-dot{width:10px;height:10px;border-radius:50%}.dot-calm{background:var(--amber)}.dot-maint{background:var(--teal)}
+  .phase-text{font-size:.85rem;color:var(--gray-600);line-height:1.5}.phase-text strong{color:var(--navy)}
+  .dosage-note{font-size:.82rem;background:var(--slate-pale);padding:.5rem .8rem;border-radius:8px}
+  /* COMPARE */
+  .compare-box{background:var(--amber-pale);border:2px solid var(--amber);border-radius:14px;padding:1.1rem 1.3rem;display:flex;gap:1rem;align-items:center;margin-top:.8rem}
+  .compare-icon{font-size:2rem;flex-shrink:0}.compare-text{font-size:.88rem;color:var(--gray-600);line-height:1.5}.compare-text strong{color:var(--navy)}
+  /* EFFECTS */
+  .effects-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.effect-item{display:flex;align-items:center;gap:.5rem;padding:.6rem .8rem;background:var(--gray-50);border-radius:10px;font-size:.88rem}.effect-item .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0}.effect-item .dot.main{background:var(--red-soft)}
+  .effects-note{margin-top:.7rem;font-size:.85rem;color:var(--gray-600);line-height:1.55;padding:.7rem 1rem;background:var(--teal-pale);border-radius:10px}
+  /* INFO CARDS */
+  .info-cards{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.info-card{padding:1rem 1.1rem;border-radius:12px;font-size:.88rem;line-height:1.5}.info-card.green{background:var(--teal-pale);border:1px solid #C2E4DF}.info-card.orange{background:var(--amber-pale);border:1px solid #F5DFB8}.info-card .card-icon{font-size:1.3rem;margin-bottom:.4rem}.info-card .card-title{font-weight:700;font-size:.85rem;margin-bottom:.25rem}.info-card .card-text{color:var(--gray-600);font-size:.82rem}
+  .alert-box{background:var(--red-pale);border-left:4px solid var(--red-soft);border-radius:0 12px 12px 0;padding:1.1rem 1.3rem;margin-top:.5rem}.alert-box .alert-title{font-weight:700;color:var(--red-soft);font-size:.92rem;margin-bottom:.3rem}.alert-box p{font-size:.85rem;line-height:1.5}
+  .footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}.footer-left{font-size:.78rem;color:var(--gray-600);line-height:1.5}.footer-left strong{color:var(--navy)}.footer-badge{background:var(--navy);color:var(--white);font-size:.7rem;font-weight:600;padding:.4rem .9rem;border-radius:20px}
+  @media(max-width:600px){.header{padding:1.8rem 1.5rem 1.5rem}.header h1{font-size:1.8rem}.content{padding:1.5rem}.mechanism-visual{flex-direction:column;gap:.3rem;padding:1rem}.mechanism-arrow{transform:rotate(90deg)}.context-box,.compare-box{flex-direction:column;text-align:center}.indic-grid,.forms-row,.dosage-row,.effects-grid,.info-cards{grid-template-columns:1fr}.footer{padding:1.2rem 1.5rem;flex-direction:column;text-align:center}}
+  @media print{body{background:white}.page{max-width:none;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header"><div class="header-badge">Fiche médicament — Patient</div><h1>Largactil® <span>(Chlorpromazine)</span></h1><div class="subtitle">Le « grand calmant » — pour les situations de crise</div></div>
+  <div class="content">
+
+    <div class="intro-box">Le <strong>Largactil</strong> (chlorpromazine) est le tout premier neuroleptique de l'histoire de la psychiatrie, découvert en France en 1952. Il est utilisé pour calmer rapidement une <strong>agitation sévère</strong>, des <strong>hallucinations</strong> ou des <strong>symptômes psychotiques</strong>. En addictologie, il intervient principalement dans les situations de <strong>crise aiguë</strong> — quand l'agitation ou les symptômes psychiatriques nécessitent un traitement puissant et rapide.</div>
+
+    <!-- MECHANISM -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-slate">🧠</div>Comment ça marche ?</div>
+      <div class="mechanism-visual">
+        <div class="mechanism-step"><div class="emoji">🌀</div><div class="label">Agitation, hallucinations, délire</div><div class="sublabel">Excès de dopamine dans certaines zones</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">💊</div><div class="label">Le Largactil bloque la dopamine</div><div class="sublabel">+ histamine, acétylcholine, adrénaline</div></div>
+        <div class="mechanism-arrow">→</div>
+        <div class="mechanism-step"><div class="emoji">😴</div><div class="label">Sédation puissante et rapide</div><div class="sublabel">Le calme revient en 30-60 min</div></div>
+      </div>
+      <p class="mechanism-caption">La chlorpromazine bloque de nombreux récepteurs cérébraux, notamment la <strong>dopamine D2</strong> (ce qui calme les idées délirantes et les hallucinations), l'<strong>histamine H1</strong> (effet sédatif puissant) et les récepteurs <strong>alpha-adrénergiques</strong> (baisse de la tension, relaxation). C'est ce blocage « large spectre » qui en fait un calmant aussi puissant — mais aussi qui explique ses nombreux effets secondaires.</p>
+    </div>
+
+    <!-- CONTEXT -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E6F5EE">🏥</div>Quand est-il utilisé à l'USCA ?</div>
+      <div class="context-box"><div class="ctx-icon">🚨</div><div class="ctx-text">Le Largactil est réservé aux <strong>situations aiguës</strong> pendant l'hospitalisation. Il n'est pas un traitement au long cours. Votre médecin peut vous le prescrire temporairement en cas d'<strong>agitation sévère</strong>, de <strong>symptômes psychotiques aigus</strong> (hallucinations, idées délirantes liées aux substances ou au sevrage), ou quand les autres traitements calmants ne suffisent pas. Il sera <strong>arrêté ou remplacé</strong> dès que la situation se stabilise.</div></div>
+    </div>
+
+    <!-- INDICATIONS -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E4E8F0">🎯</div>Dans quelles situations ?</div>
+      <div class="indic-grid">
+        <div class="indic-card active"><div class="indic-icon">😤</div><div class="indic-label">Agitation sévère</div><div class="indic-desc">Agitation psychomotrice intense, non contrôlée par les autres traitements (Tercian, Atarax).</div></div>
+        <div class="indic-card active"><div class="indic-icon">🌀</div><div class="indic-label">Symptômes psychotiques aigus</div><div class="indic-desc">Hallucinations visuelles ou auditives, idées délirantes liées au sevrage d'alcool (delirium tremens) ou aux substances.</div></div>
+        <div class="indic-card"><div class="indic-icon">🤢</div><div class="indic-label">Nausées réfractaires</div><div class="indic-desc">Antiémétique puissant quand les autres traitements ne marchent pas (vomissements de sevrage sévères).</div></div>
+        <div class="indic-card"><div class="indic-icon">🌡️</div><div class="indic-label">Hoquet incoercible</div><div class="indic-desc">Indication historique — le Largactil reste efficace contre le hoquet sévère et prolongé.</div></div>
+      </div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">💊</div>Formes disponibles et posologie</div>
+      <div class="forms-row">
+        <div class="form-card highlight"><div class="form-icon">💧</div><div class="form-name">Gouttes buvables</div><div class="form-desc">Solution à 4% (1 goutte = 1 mg). Ajustement fin de la dose. La forme la plus utilisée au quotidien.</div></div>
+        <div class="form-card"><div class="form-icon">💊</div><div class="form-name">Comprimés</div><div class="form-desc">25 mg ou 100 mg. Pour les doses stabilisées ou les prises régulières.</div></div>
+        <div class="form-card"><div class="form-icon">💉</div><div class="form-name">Injectable (IM)</div><div class="form-desc">25 mg/5 ml. Réservé aux urgences (agitation sévère). Effet en 15-30 min. Uniquement à l'hôpital.</div></div>
+      </div>
+      <div class="dosage-card" style="margin-top:.8rem">
+        <div class="dosage-row">
+          <div class="dosage-phase">
+            <div class="phase-label"><span class="phase-dot dot-calm"></span> Agitation / crise</div>
+            <div class="phase-text"><strong>25 à 50 mg</strong> en IM ou per os, renouvelable. Dose maximale : <strong>150 mg/jour</strong> en situation aiguë. L'effet sédatif est rapide et puissant.</div>
+          </div>
+          <div class="dosage-phase">
+            <div class="phase-label"><span class="phase-dot dot-maint"></span> Anxiolyse / antiémétique</div>
+            <div class="phase-text"><strong>25 à 75 mg/jour</strong> en gouttes, répartis en 2-3 prises. Doses plus faibles pour l'effet anxiolytique ou antiémétique.</div>
+          </div>
+        </div>
+        <div class="dosage-note">ℹ️ &nbsp;Les gouttes (1 goutte = 1 mg) permettent un ajustement très fin. Le Largactil est souvent donné en <strong>« si besoin »</strong> pour les pics d'agitation, pas en traitement continu.</div>
+      </div>
+    </div>
+
+    <!-- COMPARE vs TERCIAN -->
+    <div class="section"><div class="section-title"><div class="section-icon" style="background:#E4E8F0">🔄</div>Largactil vs Tercian : quelle différence ?</div>
+      <div class="compare-box"><div class="compare-icon">⚖️</div><div class="compare-text">Le <strong>Tercian</strong> (cyamémazine) est le neuroleptique anxiolytique de première ligne dans l'unité — il est plus doux, mieux toléré, utilisé au quotidien pour l'anxiété et l'insomnie. Le <strong>Largactil</strong> est réservé aux situations où il faut <strong>plus de puissance</strong> : agitation sévère, symptômes psychotiques, urgences. Il est plus sédatif, plus puissant, mais aussi plus riche en effets secondaires. C'est le « plan B musclé » quand le Tercian ne suffit pas.</div></div>
+    </div>
+
+    <!-- SIDE EFFECTS -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-amber">📋</div>Effets indésirables possibles</div>
+      <p style="font-size:.88rem;color:var(--gray-600);margin-bottom:.7rem">Le Largactil a un profil d'effets secondaires plus marqué que les neuroleptiques de nouvelle génération :</p>
+      <div class="effects-grid">
+        <div class="effect-item"><span class="dot main"></span> <strong>Sédation importante</strong></div>
+        <div class="effect-item"><span class="dot main"></span> <strong>Hypotension orthostatique</strong> (chute de tension en se levant)</div>
+        <div class="effect-item"><span class="dot"></span> Bouche sèche</div>
+        <div class="effect-item"><span class="dot"></span> Constipation</div>
+        <div class="effect-item"><span class="dot"></span> Vision floue</div>
+        <div class="effect-item"><span class="dot"></span> Raideurs musculaires / tremblements</div>
+        <div class="effect-item"><span class="dot"></span> Photosensibilisation (peau sensible au soleil)</div>
+        <div class="effect-item"><span class="dot"></span> Prise de poids</div>
+      </div>
+      <div class="effects-note">💡 &nbsp;L'<strong>hypotension orthostatique</strong> est l'effet le plus gênant au quotidien : vertige et risque de chute en se levant trop vite. <strong>Passez toujours par la position assise</strong> avant de vous mettre debout. Levez-vous doucement, surtout la nuit. Prévenez l'équipe si vous avez des vertiges importants.</div>
+    </div>
+
+    <!-- GOOD TO KNOW -->
+    <div class="section"><div class="section-title"><div class="section-icon icon-teal">💡</div>Bon à savoir</div>
+      <div class="info-cards">
+        <div class="info-card green"><div class="card-icon">⏳</div><div class="card-title">Usage temporaire</div><div class="card-text">À l'USCA, le Largactil est utilisé uniquement le temps de la crise. Dès que votre état se stabilise, votre médecin passera à des traitements mieux tolérés (Tercian, aripiprazole, etc.).</div></div>
+        <div class="info-card green"><div class="card-icon">🛡️</div><div class="card-title">Pas de dépendance</div><div class="card-text">Comme tous les neuroleptiques, le Largactil ne crée aucune dépendance ni tolérance. Vous ne risquez pas de devenir « accro » à ce médicament.</div></div>
+        <div class="info-card orange"><div class="card-icon">☀️</div><div class="card-title">Attention au soleil</div><div class="card-text">Le Largactil rend la peau très sensible aux UV (photosensibilisation). Protégez-vous (crème solaire indice élevé, chapeau, vêtements couvrants) même par temps nuageux.</div></div>
+        <div class="info-card orange"><div class="card-icon">🧍</div><div class="card-title">Levez-vous très doucement</div><div class="card-text">L'hypotension orthostatique est fréquente et peut provoquer des chutes. Position assise d'abord, puis debout lentement. Appelez l'infirmier(e) si besoin, surtout la nuit.</div></div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div class="section"><div class="alert-box"><div class="alert-title">⚠️ &nbsp;Prévenez l'équipe immédiatement si…</div><p>Vous ressentez une <strong>raideur musculaire importante avec fièvre</strong> (risque rare de syndrome malin des neuroleptiques — urgence), des <strong>mouvements involontaires</strong> du visage ou du corps (dystonie, dyskinésie), des <strong>vertiges sévères ou une chute</strong>, des <strong>difficultés à uriner</strong>, ou un <strong>jaunissement de la peau ou des yeux</strong>. N'hésitez jamais — la sonnette est là pour ça.</p></div></div>
+  </div>
+  <div class="footer"><div class="footer-left"><strong>USCA — Unité de Soins Complexes en Addictologie</strong><br>Hôpital Pitié-Salpêtrière · AP-HP · Paris<br>Contact : addicto.psl@aphp.fr</div><div class="footer-badge">Document d'information patient</div></div>
+</div>
+</body>
+</html>

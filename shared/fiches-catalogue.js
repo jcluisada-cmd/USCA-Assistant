@@ -34,6 +34,7 @@ window.FICHES_CATALOGUE = [
   { slug: 'vortioxetine', nom: 'Vortioxetine (Brintellix)', categorie: 'Antidépresseurs' },
   // ── Antipsychotiques ──
   { slug: 'aripiprazole', nom: 'Aripiprazole (Abilify)', categorie: 'Antipsychotiques' },
+  { slug: 'chlorpromazine', nom: 'Chlorpromazine (Largactil)', categorie: 'Antipsychotiques' },
   { slug: 'quetiapine', nom: 'Quétiapine (Xeroquel)', categorie: 'Antipsychotiques' },
   // ── Thymorégulateurs ──
   { slug: 'lamotrigine', nom: 'Lamotrigine (Lamictal)', categorie: 'Thymorégulateurs' },

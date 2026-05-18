@@ -32,6 +32,7 @@
       "Bash(GIT_EDITOR=\":\" git rebase *)",
       "Bash(GIT_SEQUENCE_EDITOR=true GIT_EDITOR=true git rebase *)",
       "Skill(remember)",
+      "Skill(remember:remember)",
       "Bash(awk '{print $5, $9}')",
       "Bash(gh repo *)",
       "Bash(gh api *)",
