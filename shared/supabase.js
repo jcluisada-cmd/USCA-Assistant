@@ -380,6 +380,17 @@ window.db = {
     return data;
   },
 
+  // Messages envoyés par les patients (cree_par IS NULL), pour badge non-lu sur cartes dashboard.
+  // Le filtre "non-lu" est calculé côté client via localStorage (par soignant).
+  async getMessagesPatientsRecents() {
+    const { data, error } = await sb.from('contenus_partages')
+      .select('patient_id, created_at')
+      .is('cree_par', null)
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data || [];
+  },
+
   async createContenu(contenu) {
     const { data, error } = await sb.from('contenus_partages').insert(contenu).select().single();
     if (error) throw error;

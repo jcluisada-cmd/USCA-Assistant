@@ -51,7 +51,30 @@
       "Bash(pip show *)",
       "Bash(pipx --version)",
       "Bash(bash ~/.claude/skills/wiki-brain/hooks/session-end.sh)",
-      "Bash(echo \"EXIT=$?\")"
+      "Bash(echo \"EXIT=$?\")",
+      "PowerShell(Get-ChildItem *)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:json.schemastore.org)",
+      "WebFetch(domain:www.schemastore.org)",
+      "Bash(claude --version)",
+      "Bash(grep -i -E \"skill.{0,3}budget|skill.?token\")",
+      "Bash(grep -aoE 'skill[A-Za-z]{2,30}' /c/Users/jclui/.local/bin/claude)",
+      "PowerShell(Get-Content *)",
+      "mcp__plugin_supabase_supabase__deploy_edge_function",
+      "Bash(python -c \"import fitz; print\\('PyMuPDF', fitz.__doc__.split\\(\\)[0] if fitz.__doc__ else 'OK'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python *)",
+      "Bash(echo \"exit=$?\")",
+      "PowerShell($h1 = \\(Get-FileHash \"C:\\\\Users\\\\jclui\\\\Documents\\\\MetaboScope\\\\src\\\\data\\\\warnings.md\"\\).Hash; $h2 = \\(Get-FileHash \"C:\\\\Users\\\\jclui\\\\Documents\\\\USCA-Connect\\\\metaboscope\\\\src\\\\data\\\\warnings.md\"\\).Hash; if \\($h1 -eq $h2\\) { \"warnings.md identique\" } else { \"warnings.md DIFFERENT\" })",
+      "PowerShell(New-Item *)",
+      "PowerShell(Test-Path *)",
+      "Bash(findstr /C:\"Network error or out of scope\")",
+      "Bash(findstr /B \"??\")",
+      "Bash(findstr /C:\"metaboscope\")",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(bash *)",
+      "Bash(npm --prefix metaboscope run build)"
     ]
   }
 }

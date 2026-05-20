@@ -1107,6 +1107,7 @@ function showLoginError(msg) {
 let loadedPatients = [];
 let loadedAlertes = [];
 let loadedPermissions = [];
+let loadedMessagesPatients = []; // messages envoyés par patients (cree_par null), pour badge non-lu carte dashboard
 let currentProfile = null;
 let _adminCredentials = null; // Pour re-login après signUp
 
@@ -1147,11 +1148,13 @@ async function loadDashboardStats() {
     var results = await Promise.all([
       db.getPatients(),
       db.getAlertesNonTraitees(),
-      db.getAllPermissionsEnAttente()
+      db.getAllPermissionsEnAttente(),
+      db.getMessagesPatientsRecents()
     ]);
     loadedPatients = results[0];
     loadedAlertes = results[1];
     loadedPermissions = results[2];
+    loadedMessagesPatients = results[3];
     document.getElementById('stat-patients').textContent = loadedPatients.length;
     renderPatients();
     renderSorties();
@@ -1751,6 +1754,18 @@ function renderPatients() {
       permIcon.title = patientPerms.length + ' permission(s) en attente';
       permIcon.appendChild(createEl('span', 'text-cyan-600 text-xs font-bold', patientPerms.length));
       icons.appendChild(permIcon);
+    }
+
+    // Ic\u00f4ne messages (violet) si messages patient non lus par CE soignant
+    var lastSeenMsg = getLastMsgSeen(p.id);
+    var unreadMsgs = loadedMessagesPatients.filter(function(m) {
+      return m.patient_id === p.id && m.created_at > lastSeenMsg;
+    });
+    if (unreadMsgs.length > 0) {
+      var msgIconCard = createEl('div', 'w-7 h-7 bg-purple-100 rounded-full flex items-center justify-center');
+      msgIconCard.title = unreadMsgs.length + ' message(s) non lu(s)';
+      msgIconCard.appendChild(createEl('span', 'text-purple-700 text-xs font-bold', unreadMsgs.length > 9 ? '9+' : unreadMsgs.length));
+      icons.appendChild(msgIconCard);
     }
 
     icons.appendChild(createEl('span', 'text-slate-300 text-lg', '\u203a'));

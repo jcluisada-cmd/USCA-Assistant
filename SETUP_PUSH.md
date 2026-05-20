@@ -4,7 +4,9 @@
 
 ---
 
-## ✅ État actuel du setup (à jour au 2026-04-24)
+## ✅ État actuel du setup (à jour au 2026-05-13)
+
+> ⚠️ **À lire avant tout chantier push** : §Incident 2026-05-13 en bas du document. Le toggle "Verify JWT" de `send-push` doit IMPÉRATIVEMENT rester désactivé sinon tous les rappels cron rebondissent en 401.
 
 ### Migrations Supabase (SQL Editor)
 
@@ -17,15 +19,17 @@
 | v27 | pg_cron + pg_net, job `usca-push-reminders` toutes les minutes | ✅ |
 | v28 | Colonne `sexe` sur `patients` (label Patient/Patiente/Patient·e) | ✅ |
 | v29 | Push V2 soignants : `push_subscriptions.patient_id` nullable + `profile_id` (CHECK XOR), tables `push_last_message_staff` et `push_reminders_sent_groupe` | ✅ |
-| v30 | Push V2 pause vacances : `profiles.push_pause_until DATE` | ⏳ **À exécuter** |
+| v30 | Push V2 pause vacances : `profiles.push_pause_until DATE` | ✅ (vérifié 2026-05-13 : colonne lue sans erreur par send-push) |
 | v31 | Fix RLS push_subscriptions : SELECT ouverte (débloque activation patient + notif message patient→médecin) | ✅ |
 | v32 | P5 Personnalisation modules : table `role_modules_hidden` (absence=visible) + RLS (SELECT auth, INSERT/UPDATE/DELETE admin) | ✅ |
+
+> Migrations v33-v37 livrées entretemps — voir `DB_SCHEMA.md` §Historique pour le détail (substances_patient, push_preferences, permissions_delete_auth, push_reminders patient atelier, motifs refus permission).
 
 ### Edge Functions Supabase
 
 | Function | État | JWT verify |
 |---|---|---|
-| `send-push` | ⏳ **À redéployer** (V2.03 : silence soignant + pause vacances) | ❌ Désactivé (appelée par cron-reminders avec service_role ; JWT verify legacy rejette les appels serveur-à-serveur même avec service key. Sécurité côté obscurité des VAPID keys + identifiants non guessables.) |
+| `send-push` | ✅ Déployée (V3 personnalisable push_preferences + pause vacances + silence 8h30-18h Europe/Paris) | ❌ **DOIT rester désactivé** (régression observée 2026-05-13, voir §Incident) — appelée par cron-reminders avec service_role ; JWT verify legacy rejette les appels serveur-à-serveur. Sécurité côté obscurité des VAPID keys + identifiants non guessables |
 | `cron-reminders` | ✅ Déployée V2 (3 scans : patients + events perso + groupes A/B) | ❌ Désactivé (protégée par CRON_SECRET via header) |
 
 ### Secrets Edge Functions
@@ -58,9 +62,10 @@
 
 - [x] Redéployer `send-push` (2026-04-24)
 - [x] Redéployer `cron-reminders` (2026-04-24)
-- [ ] Exécuter migration v30 (pause vacances)
+- [x] Exécuter migration v30 (pause vacances)
 - [x] Exécuter migration v31 (fix RLS SELECT — débloque activation patient + trigger message patient→médecin) (2026-04-24)
-- [ ] Lancer les tests ci-dessous (voir section "Test end-to-end notifs Push V2")
+- [x] Vérification post-incident 2026-05-13 : toggle JWT verify `send-push` remis à OFF (cron-reminders à nouveau capable d'appeler send-push, plus de 401 en `net._http_response`)
+- [ ] Test réel notifs Android — prévu vendredi 2026-05-15 (event perso T-10 + message patient en plage 8h30-18h)
 
 ---
 
@@ -195,3 +200,41 @@ Chaque soignant peut suspendre temporairement ses notifs push via **Modal Param�
 
 Côté BDD : `profiles.push_pause_until DATE NULL` (migration v30).
 Côté Edge Function : `send-push` fetch les profiles ciblés, filtre ceux en pause, renvoie `{ reason: 'all_on_vacation' }` si tout le monde est absent.
+
+---
+
+## 🚨 Incident 2026-05-13 — JWT verify silencieusement réactivé sur `send-push`
+
+### Symptôme
+- Aucune notification push depuis le 2026-05-07 (rappels rdv perso, messages patients, demandes de permission)
+- `push_last_message_staff` figée au 2026-05-07 12:20 (dernière ligne : "⏰ Consultation suivi MPH")
+- `cron-reminders` retourne `{"patients":0,"perso":0,"groupes":0,"failed":0}` à chaque tour (le cron tourne pourtant chaque minute, status 200)
+
+### Cause racine
+Le toggle **"Verify JWT with legacy secret"** sur `send-push` avait été réactivé (cause inconnue : peut-être un re-deploy via dashboard, peut-être un changement de défaut Supabase). Conséquence :
+- `cron-reminders` appelle `send-push` en interne avec `Bearer ${SUPABASE_SERVICE_ROLE_KEY}` (cf. `supabase/functions/cron-reminders/index.ts:164`)
+- Le JWT verify legacy de Supabase rejette les JWT signés avec `service_role` (paradoxal mais documenté), seul l'`anon` JWT est accepté
+- Résultat : **HTTP 401 systématique** sur tous les appels du cron, `execution_id: null` (la fonction n'est même pas exécutée)
+- Diagnostic visible dans Dashboard → Edge Functions → `send-push` → Logs : paires de POST 401 toutes les minutes
+- Confirmation par `SELECT id, created, status_code FROM net._http_response ORDER BY created DESC` : succession de status_code 401
+
+### Fix
+1 toggle dashboard, pas de modif code :
+- Dashboard → Edge Functions → `send-push` → Details
+- Désactiver "Verify JWT with legacy secret"
+- Save (prise d'effet immédiate, pas besoin de redéployer)
+
+### Validation
+```sql
+-- Doit ne renvoyer QUE des status_code: 200
+SELECT id, created, status_code, LEFT(content, 80) AS body
+FROM net._http_response
+WHERE created > NOW() - INTERVAL '5 minutes'
+ORDER BY created DESC LIMIT 10;
+```
+Validé en SQL 2026-05-13. Tests réels Android prévus vendredi 2026-05-15 (event perso à T-10 + message patient en plage 8h30-18h).
+
+### Prévention future
+- **Ne jamais** réactiver Verify JWT sur `send-push` tant que `cron-reminders` l'appelle avec service_role. Si on veut réactiver, il faut d'abord changer le pattern (ex: passer un `X-Cron-Secret` partagé et le vérifier côté send-push, comme c'est déjà fait pour `cron-reminders`)
+- Tout re-deploy via dashboard de `send-push` (notamment via le Web Editor) peut réinitialiser ce toggle — préférer le redéploiement via copier-coller code identique en gardant un œil sur le toggle après save
+- Surveillance : si `push_last_message_staff` n'a pas de nouvelle ligne pendant 24-48h alors qu'il y a de l'activité sur l'app, vérifier `net._http_response` en SQL pour repérer un éventuel retour des 401

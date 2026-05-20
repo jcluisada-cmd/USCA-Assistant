@@ -3,3 +3,5 @@
 # Captures d'écran Windows (à la racine) — ne pas committer
 /Capture*.png
 /Capture*.jpg
+
+.superpowers/
