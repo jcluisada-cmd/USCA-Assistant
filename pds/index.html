@@ -179,7 +179,7 @@
 
   async function loadPatients() {
     var r = await sb.from('patients')
-      .select('id, numero_chambre, sexe, ddn, date_admission, date_sortie_prevue, sortie_info, postcure_statut')
+      .select('id, numero_chambre, sexe, date_naissance, date_admission, date_sortie_prevue, sortie_info, postcure_statut')
       .order('numero_chambre', { ascending: true });
     if (r.error) { console.error(r.error); return []; }
     return r.data || [];
@@ -261,7 +261,7 @@
     meta.className = 'flex-1 text-xs ' + (state === 'away' ? 'text-sky-800 dark:text-sky-200' : 'text-slate-600 dark:text-slate-400');
     var j = jourHospit(patient.date_admission);
     var sx = patient.sexe || '—';
-    var ag = calcAge(patient.ddn);
+    var ag = calcAge(patient.date_naissance);
     var strong = document.createElement('strong');
     strong.className = state === 'away' ? 'text-sky-900 dark:text-sky-100' : 'text-slate-900 dark:text-slate-100';
     strong.textContent = j;
