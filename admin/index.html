@@ -5654,19 +5654,31 @@ async function mdRenderCushmanCard(patientId) {
   var scores = await cushman.getScores(patientId, 7);
   var last = scores[0] || null;
 
-  var card = createEl('div', 'bg-white rounded-xl border p-3 ' + (
+  var card = document.createElement('details');
+  card.className = 'bg-white rounded-xl border p-3 ' + (
     last && last.score_total >= 7 ? 'border-red-300' : 'border-slate-200'
-  ));
-  var head = createEl('div', 'flex items-center justify-between mb-2');
-  head.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Cushman'));
+  );
+  var summary = document.createElement('summary');
+  summary.className = 'flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden';
+  var sumLeft = createEl('div', 'flex items-center gap-2');
+  sumLeft.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Cushman'));
+  if (last) {
+    var colSum = cushman.colorFor(last.score_total);
+    var colSumClass = colSum === 'red' ? 'text-red-600' : colSum === 'amber' ? 'text-amber-600' : 'text-emerald-600';
+    sumLeft.appendChild(createEl('span', 'text-sm font-bold ' + colSumClass, String(last.score_total)));
+  }
+  summary.appendChild(sumLeft);
+  var sumRight = createEl('div', 'flex items-center gap-2');
   if (last) {
     var when = createEl('span', 'text-[10px] text-slate-400', new Date(last.saisi_le).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' }));
-    head.appendChild(when);
+    sumRight.appendChild(when);
   }
-  card.appendChild(head);
+  sumRight.appendChild(createEl('span', 'text-slate-400 text-xs transition-transform', '▸'));
+  summary.appendChild(sumRight);
+  card.appendChild(summary);
 
   if (!last) {
-    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center', 'Aucun score Cushman'));
+    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center mt-2', 'Aucun score Cushman'));
     container.appendChild(card);
     return;
   }
@@ -5674,7 +5686,7 @@ async function mdRenderCushmanCard(patientId) {
   var col = cushman.colorFor(last.score_total);
   var colorClass = col === 'red' ? 'text-red-600' : col === 'amber' ? 'text-amber-600' : 'text-emerald-600';
 
-  var body = createEl('div', 'flex items-center gap-3');
+  var body = createEl('div', 'flex items-center gap-3 mt-2');
   var big = createEl('div', 'text-4xl font-extrabold ' + colorClass, String(last.score_total));
   body.appendChild(big);
 
@@ -5718,15 +5730,20 @@ async function mdRenderTransmissionsCard(patientId) {
     .limit(5);
   var trans = (r && r.data) || [];
 
-  var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-3');
-  var head = createEl('div', 'flex items-center justify-between mb-2');
-  head.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Transmissions'));
+  var card = document.createElement('details');
+  card.className = 'bg-white rounded-xl border border-slate-200 p-3';
+  var summary = document.createElement('summary');
+  summary.className = 'flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden';
+  var sumLeft = createEl('div', 'flex items-center gap-2');
+  sumLeft.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Transmissions'));
   var count = createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700', String(trans.length));
-  head.appendChild(count);
-  card.appendChild(head);
+  sumLeft.appendChild(count);
+  summary.appendChild(sumLeft);
+  summary.appendChild(createEl('span', 'text-slate-400 text-xs', '▸'));
+  card.appendChild(summary);
 
   if (trans.length === 0) {
-    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center', 'Aucune transmission'));
+    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center mt-2', 'Aucune transmission'));
   } else {
     trans.forEach(function(t) {
       var row = createEl('div', 'flex gap-2 py-1.5 border-b border-slate-100 last:border-b-0');

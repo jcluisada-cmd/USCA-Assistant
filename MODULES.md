@@ -42,7 +42,7 @@ Sous-app pour l'équipe IDE du Poste de Soins infirmier (24/7, 1 IDE en poste, e
   - Urgent : fond rouge pâle, bordure rouge, chambre pill rouge (Cushman dernier ≥7 ET rappel échu)
   - En permission : fond bleu pâle, bordure pointillée discrète, chambre **inversée** (bord bleu, fond blanc, texte bleu), bouton Appeler caché, remplacé par pill « 🚶 Retour 18h » (ou « Retour 25/05 à 18h » si pas même jour)
 - Badges notifications (n'affiche que ce qui existe) : 🚶 Demande (amber) / 🚶 En permission (sky) / 📋 Cushman à refaire (red) / 💬 N (pink)
-- Sections secondaires : 10 dernières transmissions globales, 8 dernières conversations patient (dédupliquées)
+- ~~Sections secondaires Transmissions/Messages globaux~~ → **supprimées en v4.41** (JC : pas validé, infos déjà accessibles via détail patient)
 
 **Vue détail patient** (tap sur carte) :
 - Topbar bleu : ← Retour, Ch. X, J[N], bouton « 🔔 Appeler patient »
@@ -50,9 +50,9 @@ Sous-app pour l'équipe IDE du Poste de Soins infirmier (24/7, 1 IDE en poste, e
 - Colonne gauche :
   - Identité : Chambre (+ bouton ✏️ Changer), Entrée + jour hospit, Sortie prévue, Type sortie tag coloré (RAD bleu / Post-cure vert / Autre gris)
   - Cushman : gros chiffre coloré (vert ≤3 / ambre 4-6 / rouge ≥7), timestamp, callout « → ≥7 : Donner BZD SB » si applicable, tableau 7 derniers (lignes ≥7 surlignées), bouton « + Nouveau Cushman »
-- Colonne droite, 3 onglets :
-  - Messages : conversation bulles (patient gauche slate / soignant droite indigo), formulaire envoi
+- Colonne droite, 3 onglets (**Transmissions par défaut** depuis v4.41) :
   - Transmissions : fil chronologique avec tags Médical (violet) / Paramédical (vert), formulaire publier (PdS écrit en paramédical, médecin en médical, RLS force le type selon rôle)
+  - Messages : conversation bulles (patient gauche slate / soignant droite indigo), formulaire envoi, identifiant auteur soignant affiché (`email.split('@')[0]`, ex: `jc.luisada`)
   - Permissions : lecture seule (PdS ne valide pas), badges statut (en_attente jaune / validee vert / refusee rouge), motif si renseigné, motif_refus_libre si refusée
 - Modal Changer chambre : input prefilé, UPDATE simple sans déconnexion patient (session découplée via UUID `patient.id`)
 
@@ -64,7 +64,7 @@ Sous-app pour l'équipe IDE du Poste de Soins infirmier (24/7, 1 IDE en poste, e
 
 **Intégration côté médecin** (`/admin/`) :
 - Rôle `pds` ajouté aux labels (« Poste de Soins ») et couleurs (`bg-emerald-100 text-emerald-800`) dans la gestion des comptes
-- Fiche patient enrichie : encart Cushman (gros chiffre + sparkline 7j + ligne action si ≥7), mini-stream 5 dernières transmissions + bouton « + Ajouter transmission » (forcé en `medical` via RLS), bouton « ✏️ Changer chambre »
+- Fiche patient enrichie : encart Cushman (gros chiffre + sparkline 7j + ligne action si ≥7), mini-stream 5 dernières transmissions + bouton « + Ajouter transmission » (forcé en `medical` via RLS), bouton « ✏️ Changer chambre ». **Depuis v4.41** : Cushman et Transmissions wrappés en `<details>` (accordion repliés par défaut, summary montre score Cushman coloré + compte transmissions pour vue d'ensemble sans cliquer).
 
 **Intégration côté patient** (`/patient/`) :
 - `checkChambreSync()` au load + `visibilitychange` : compare `localStorage.patient_session.chambre` ↔ valeur fraîche BDD

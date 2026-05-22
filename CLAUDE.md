@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.39 (2026-05-22) — Dashboard PdS (Poste de Soins infirmier USCA). Sous-app `/pds/` avec compte partagé `usca.pds@aphp.fr` / `usca_pds` (rôle `pds`). Home : cartes patient anonymisées (chambre + J + sexe + âge), 3 états (normal / urgent Cushman≥7 / en permission bleu inversé), bandeau stats 4 compteurs, boutons « 🔔 Appeler médecins USCA » (topbar) et « 🔔 Appeler » par carte (push patient). Vue détail patient : 2 colonnes (Identité + Cushman / onglets Messages, Transmissions, Permissions), modal Changer chambre (UPDATE simple sans déconnexion). Migration v38 : tables `cushman_scores` (items JSONB 7 niveaux + rappel_intervalle_h) et `transmissions` (médical/paramédical, RLS par rôle). Module `shared/cushman.js` avec saisie interactive (callout « Donner BZD SB » si ≥7, rappel 4h modifiable). Côté médecin (`/admin/`) : encart Cushman + sparkline 7j + mini-stream transmissions + bouton Changer chambre. Côté patient (`/patient/`) : bandeau in-app au changement de chambre. Service Worker : `usca-v4.38` → `usca-v4.39`.
+> **Version courante** : v4.41 (2026-05-22) — Dashboard PdS livré + corrections post-incident CF. Home PdS : uniquement cartes patient (sections globales Transmissions/Messages supprimées). Vue détail patient : onglet **Transmissions** par défaut (puis Messages, Permissions). Messages affichent l'identifiant auteur (`email.split('@')[0]`, ex: `jc.luisada`) côté patient, admin et PdS — migration v39 RLS profiles_select_all. Admin médecin : encart Cushman + carte Transmissions désormais en **accordion replié par défaut** (`<details>`). Fix : query patients PdS utilisait colonne `ddn` inexistante → corrigé en `date_naissance`. Incident CF du 22/05 (blobs corrompus après deploys échoués pendant incident plateforme) résolu par cache-bust (commit `5dc6f9e`) — voir mémoire `feedback_cf_pages_blob_corruption`. Service Worker : `usca-v4.41`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.39` |
+| **Service Worker** | `usca-v4.41` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
