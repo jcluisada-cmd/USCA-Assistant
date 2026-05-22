@@ -22,7 +22,71 @@
 Routing par rôle :
 - `role='externe'` → `/extern/`
 - `role='etudiant_ide'` → `/etudiant/`
+- `role='pds'` → `/pds/` (v4.39, compte partagé `usca.pds@aphp.fr` / `usca_pds`)
 - autres rôles soignants → `/admin/`
+
+---
+
+## §X. Dashboard Poste de Soins (`/pds/index.html`, v4.39)
+
+Sous-app pour l'équipe IDE du Poste de Soins infirmier (24/7, 1 IDE en poste, en charge de tous les patients hospitalisés).
+
+**Auth** : compte unique partagé `usca.pds@aphp.fr` / `usca_pds` (login : `usca.pds`), rôle `pds`. Pas de signature nominale du Cushman (timestamp = seule traçabilité).
+
+**Home** :
+- Topbar indigo : titre + horloge + bouton « 🔔 Appeler médecins USCA » (push à tous les médecins via `send-push`) + toggle dark/light + logout
+- Bandeau stats 4 compteurs colorés : Cushman à refaire (rouge si > 0) / Demande permission / Absents (bleu) / Messages (rouge si > 0)
+- Grille de cartes patient triées par chambre croissante, anonymisées : pill chambre + J + sexe + âge + bouton « 🔔 Appeler » compact (push patient + log `evenements` type `convocation_pds`)
+- 3 états visuels :
+  - Normal : fond blanc, bordure slate, chambre pill indigo plein
+  - Urgent : fond rouge pâle, bordure rouge, chambre pill rouge (Cushman dernier ≥7 ET rappel échu)
+  - En permission : fond bleu pâle, bordure pointillée discrète, chambre **inversée** (bord bleu, fond blanc, texte bleu), bouton Appeler caché, remplacé par pill « 🚶 Retour 18h » (ou « Retour 25/05 à 18h » si pas même jour)
+- Badges notifications (n'affiche que ce qui existe) : 🚶 Demande (amber) / 🚶 En permission (sky) / 📋 Cushman à refaire (red) / 💬 N (pink)
+- Sections secondaires : 10 dernières transmissions globales, 8 dernières conversations patient (dédupliquées)
+
+**Vue détail patient** (tap sur carte) :
+- Topbar bleu : ← Retour, Ch. X, J[N], bouton « 🔔 Appeler patient »
+- Layout 2 colonnes tablette / empilé mobile
+- Colonne gauche :
+  - Identité : Chambre (+ bouton ✏️ Changer), Entrée + jour hospit, Sortie prévue, Type sortie tag coloré (RAD bleu / Post-cure vert / Autre gris)
+  - Cushman : gros chiffre coloré (vert ≤3 / ambre 4-6 / rouge ≥7), timestamp, callout « → ≥7 : Donner BZD SB » si applicable, tableau 7 derniers (lignes ≥7 surlignées), bouton « + Nouveau Cushman »
+- Colonne droite, 3 onglets :
+  - Messages : conversation bulles (patient gauche slate / soignant droite indigo), formulaire envoi
+  - Transmissions : fil chronologique avec tags Médical (violet) / Paramédical (vert), formulaire publier (PdS écrit en paramédical, médecin en médical, RLS force le type selon rôle)
+  - Permissions : lecture seule (PdS ne valide pas), badges statut (en_attente jaune / validee vert / refusee rouge), motif si renseigné, motif_refus_libre si refusée
+- Modal Changer chambre : input prefilé, UPDATE simple sans déconnexion patient (session découplée via UUID `patient.id`)
+
+**Module partagé** `shared/cushman.js` (utilisé par /pds/ et /admin/) :
+- `ITEMS` : 7 items × 4 niveaux (FC, PA, FR, Tremblements, Sueurs, Agitation, Sensoriels). Référentiel identique à Toolbox V1 (`staff/toolbox.html:336-342`)
+- `saveScore`, `getScores`, `isOverdue`, `colorFor`, `openModal`
+- Modal interactive : 7 items en boutons radio, score recalculé live, callout « → Donner BZD SB » si ≥7, case rappel cochée par défaut avec intervalle modifiable (4h, stocké dans `cushman_scores.rappel_intervalle_h`)
+- Calcul « Cushman à refaire » client-side : `lastScore.score_total >= 7 && (now - saisi_le) > rappel_intervalle_h * 1h`
+
+**Intégration côté médecin** (`/admin/`) :
+- Rôle `pds` ajouté aux labels (« Poste de Soins ») et couleurs (`bg-emerald-100 text-emerald-800`) dans la gestion des comptes
+- Fiche patient enrichie : encart Cushman (gros chiffre + sparkline 7j + ligne action si ≥7), mini-stream 5 dernières transmissions + bouton « + Ajouter transmission » (forcé en `medical` via RLS), bouton « ✏️ Changer chambre »
+
+**Intégration côté patient** (`/patient/`) :
+- `checkChambreSync()` au load + `visibilitychange` : compare `localStorage.patient_session.chambre` ↔ valeur fraîche BDD
+- Si différent : bandeau jaune fixed top fermable « ℹ️ Votre nouvelle chambre est X, c'est aussi l'identifiant à utiliser si vous devez vous reconnecter à l'application. » + maj localStorage au clic ✕
+
+**Décisions explicitement rejetées** (anti-régression) :
+- Pas de score COWS dans ce chantier
+- Pas de logique conditionnelle Cushman selon substance (sur toutes les cartes, jugement clinique PdS)
+- Pas de push notifications PdS (rappels visuels suffisent)
+- Pas de notion « médecin référent »
+- Pas de tag « Observation libre » (seulement Médical + Paramédical)
+- Pas de bouton « Appeler médecins » par patient (un seul bouton global en topbar)
+- Pas de log d'administration de BZD dans l'app
+- Pas de push patient sur changement chambre (bandeau in-app à la place)
+- Pas de log auto transmission sur changement chambre (silencieux)
+- Pas de nom/prénom patient sur le dashboard PdS (anonymisation totale)
+- Pas de substance affichée
+- Pas de lien « Voir dossier post-cure » dans Identité
+- Pas d'ateliers ni Toolbox dans le scope PdS
+- Pas de validation des permissions par le PdS (reste médecin)
+
+Spec design : `docs/superpowers/specs/2026-05-21-role-pds-dashboard-design.md`. Plan d'implémentation : `docs/superpowers/plans/2026-05-22-role-pds-dashboard.md`.
 
 ---
 
