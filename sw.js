@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.39';
+const CACHE_NAME = 'usca-v4.39'; // bisect: cache-bust blob hash test
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
