@@ -2985,6 +2985,12 @@ async function renderPatientMessages(patientId) {
       } else {
         head.appendChild(createEl('span', 'text-xs', typeIcons[c.type] || '📝'));
         head.appendChild(createEl('span', 'text-[10px] font-bold text-slate-600', c.titre));
+        // Identifiant auteur (prefix avant @) si disponible
+        var authorEmail = c.profiles && c.profiles.email;
+        if (authorEmail) {
+          var authorId = authorEmail.split('@')[0];
+          head.appendChild(createEl('span', 'text-[10px] text-slate-500 ml-auto', authorId));
+        }
       }
       bubble.appendChild(head);
 

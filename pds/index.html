@@ -68,15 +68,9 @@
     <!-- VUE HOME -->
     <div id="home-view">
       <h2 class="text-lg font-bold mb-2.5">Patients hospitalisés</h2>
-      <div id="patients-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+      <div id="patients-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mb-8">
         <p class="col-span-full text-center text-slate-400 py-8">Chargement…</p>
       </div>
-
-      <h3 class="text-base font-bold mt-6 mb-2">Transmissions récentes</h3>
-      <div id="transmissions-globales" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-2"></div>
-
-      <h3 class="text-base font-bold mt-5 mb-2">Messages patients récents</h3>
-      <div id="messages-globaux" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-2 mb-8"></div>
     </div>
 
     <!-- VUE DÉTAIL PATIENT -->
@@ -173,8 +167,6 @@
 
   async function refreshAll() {
     await renderHome();
-    renderTransmissionsGlobales();
-    renderMessagesGlobaux();
   }
 
   async function loadPatients() {
@@ -368,119 +360,6 @@
       grid.appendChild(renderPatientCardDOM(p, states[i]));
     });
     renderStats(states);
-  }
-
-  // ────────── Transmissions globales ──────────
-  async function renderTransmissionsGlobales() {
-    var box = document.getElementById('transmissions-globales');
-    var r = await sb.from('transmissions')
-      .select('id, patient_id, type, contenu, cree_le, patients(numero_chambre)')
-      .order('cree_le', { ascending: false })
-      .limit(10);
-    var trans = r.data || [];
-    box.replaceChildren();
-    if (trans.length === 0) {
-      var p = document.createElement('p');
-      p.className = 'text-center text-slate-400 text-xs py-4';
-      p.textContent = 'Aucune transmission récente';
-      box.appendChild(p);
-      return;
-    }
-    trans.forEach(function(t) {
-      var row = document.createElement('div');
-      row.className = 'border-b border-slate-200 dark:border-slate-700 py-1.5 px-2 last:border-b-0 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50';
-      row.addEventListener('click', function() { ouvrirDetailPatient(t.patient_id); });
-
-      var head = document.createElement('div');
-      head.className = 'flex items-center gap-1.5 text-[10px] mb-0.5';
-
-      var chBadge = document.createElement('span');
-      chBadge.className = 'bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded';
-      chBadge.textContent = 'Ch.' + ((t.patients && t.patients.numero_chambre) || '?');
-      head.appendChild(chBadge);
-
-      var typeBadge = document.createElement('span');
-      typeBadge.className = 'font-bold uppercase px-1.5 py-0 rounded ' + (
-        t.type === 'medical'
-          ? 'bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-200'
-          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200'
-      );
-      typeBadge.textContent = t.type === 'medical' ? 'Méd' : 'Para';
-      head.appendChild(typeBadge);
-
-      var ts = document.createElement('span');
-      ts.className = 'text-slate-500 dark:text-slate-400';
-      ts.textContent = new Date(t.cree_le).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' });
-      head.appendChild(ts);
-
-      var content = document.createElement('div');
-      content.className = 'text-sm';
-      var ct = String(t.contenu || '');
-      content.textContent = ct.length > 120 ? ct.slice(0, 120) + '…' : ct;
-
-      row.appendChild(head);
-      row.appendChild(content);
-      box.appendChild(row);
-    });
-  }
-
-  // ────────── Messages globaux ──────────
-  async function renderMessagesGlobaux() {
-    var box = document.getElementById('messages-globaux');
-    var since = new Date(Date.now() - 7*24*3600*1000).toISOString();
-    var r = await sb.from('contenus_partages')
-      .select('id, patient_id, contenu, created_at, cree_par, patients(numero_chambre)')
-      .gt('created_at', since)
-      .order('created_at', { ascending: false });
-    var rows = r.data || [];
-    // dedup par patient (garde le plus récent)
-    var seen = {};
-    var lastByPatient = [];
-    rows.forEach(function(m) {
-      if (!m.patient_id || seen[m.patient_id]) return;
-      seen[m.patient_id] = true;
-      lastByPatient.push(m);
-    });
-    box.replaceChildren();
-    if (lastByPatient.length === 0) {
-      var p = document.createElement('p');
-      p.className = 'text-center text-slate-400 text-xs py-4';
-      p.textContent = 'Aucun message récent';
-      box.appendChild(p);
-      return;
-    }
-    lastByPatient.slice(0, 8).forEach(function(m) {
-      var row = document.createElement('div');
-      row.className = 'border-b border-slate-200 dark:border-slate-700 py-1.5 px-2 last:border-b-0 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50';
-      row.addEventListener('click', function() { ouvrirDetailPatient(m.patient_id); });
-
-      var head = document.createElement('div');
-      head.className = 'flex items-center gap-1.5 text-[10px] mb-0.5';
-
-      var chBadge = document.createElement('span');
-      chBadge.className = 'bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded';
-      chBadge.textContent = 'Ch.' + ((m.patients && m.patients.numero_chambre) || '?');
-      head.appendChild(chBadge);
-
-      var who = document.createElement('span');
-      who.className = 'text-slate-600 dark:text-slate-300 font-semibold';
-      who.textContent = m.cree_par === null ? '👤 Patient' : '🩺 Soignant';
-      head.appendChild(who);
-
-      var ts = document.createElement('span');
-      ts.className = 'text-slate-500 dark:text-slate-400';
-      ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' });
-      head.appendChild(ts);
-
-      var content = document.createElement('div');
-      content.className = 'text-sm';
-      var ct = String(m.contenu || '');
-      content.textContent = ct.length > 120 ? ct.slice(0, 120) + '…' : ct;
-
-      row.appendChild(head);
-      row.appendChild(content);
-      box.appendChild(row);
-    });
   }
 
   // ────────── Convocations ──────────
@@ -840,7 +719,7 @@
 
   async function renderTabMessages(patient, container) {
     var r = await sb.from('contenus_partages')
-      .select('*').eq('patient_id', patient.id)
+      .select('*, profiles!cree_par(email)').eq('patient_id', patient.id)
       .order('created_at', { ascending: true });
     var msgs = r.data || [];
 
@@ -862,8 +741,14 @@
         );
         var ts = document.createElement('div');
         ts.className = 'text-[10px] text-slate-500 dark:text-slate-400 mb-1';
-        ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' })
-                       + (isPatient ? ' · Patient' : ' · Soignant');
+        var who;
+        if (isPatient) {
+          who = ' · Patient';
+        } else {
+          var email = m.profiles && m.profiles.email;
+          who = email ? (' · ' + email.split('@')[0]) : ' · Soignant';
+        }
+        ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' }) + who;
         var txt = document.createElement('div');
         txt.className = 'text-sm';
         txt.textContent = String(m.contenu || '');

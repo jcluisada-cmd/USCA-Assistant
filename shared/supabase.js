@@ -375,7 +375,8 @@ window.db = {
   // ════════════════ CONTENUS PARTAGÉS ════════════════
 
   async getContenus(patientId) {
-    const { data, error } = await sb.from('contenus_partages').select('*').eq('patient_id', patientId).order('created_at', { ascending: false });
+    // JOIN profiles via cree_par pour récupérer l'email de l'auteur (affichage prefix sans @aphp.fr)
+    const { data, error } = await sb.from('contenus_partages').select('*, profiles!cree_par(email)').eq('patient_id', patientId).order('created_at', { ascending: false });
     if (error) throw error;
     return data;
   },
