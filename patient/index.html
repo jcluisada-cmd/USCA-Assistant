@@ -3235,8 +3235,65 @@ function renderPostcureCard(patient) {
     } else if (action === 'export-html') {
       setTimeout(function() { document.getElementById('btn-export-html').click(); }, 1500);
     }
+    // Vérifier au load + à chaque retour de focus que la chambre n'a pas changé
+    checkChambreSync();
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) checkChambreSync();
+    });
   }
 })();
+
+// ══════════════ SYNC CHAMBRE (changement par staff) ══════════════
+
+async function checkChambreSync() {
+  var session = auth.getPatientSession();
+  if (!session) return;
+  try {
+    var r = await sb.from('patients').select('numero_chambre').eq('id', session.id).single();
+    if (r.error || !r.data) return;
+    var dbChambre = r.data.numero_chambre;
+    if (dbChambre && dbChambre !== session.chambre) {
+      showChambreBandeau(dbChambre, session);
+    }
+  } catch(e) { /* silent */ }
+}
+
+function showChambreBandeau(nouvelleChambre, session) {
+  // Évite le doublon
+  if (document.getElementById('chambre-bandeau')) return;
+
+  var b = document.createElement('div');
+  b.id = 'chambre-bandeau';
+  b.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#FEF3C7;border-bottom:1px solid #FCD34D;color:#92400E;padding:12px 16px;z-index:9998;display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.4;box-shadow:0 2px 4px rgba(0,0,0,0.05)';
+
+  var icon = document.createElement('span');
+  icon.style.cssText = 'font-size:18px;flex-shrink:0';
+  icon.textContent = 'ℹ️';
+  b.appendChild(icon);
+
+  var msg = document.createElement('div');
+  msg.style.cssText = 'flex:1';
+  var strong = document.createElement('strong');
+  strong.textContent = nouvelleChambre;
+  msg.appendChild(document.createTextNode('Votre nouvelle chambre est '));
+  msg.appendChild(strong);
+  msg.appendChild(document.createTextNode(', c\'est aussi l\'identifiant à utiliser si vous devez vous reconnecter à l\'application.'));
+  b.appendChild(msg);
+
+  var close = document.createElement('button');
+  close.style.cssText = 'background:none;border:none;color:#92400E;font-size:20px;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0';
+  close.textContent = '✕';
+  close.setAttribute('aria-label', 'Fermer');
+  close.addEventListener('click', function() {
+    b.remove();
+    // Mettre à jour le localStorage
+    session.chambre = nouvelleChambre;
+    localStorage.setItem('patient_session', JSON.stringify(session));
+  });
+  b.appendChild(close);
+
+  document.body.appendChild(b);
+}
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(function(){});
