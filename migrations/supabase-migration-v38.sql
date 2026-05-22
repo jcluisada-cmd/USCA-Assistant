@@ -11,9 +11,27 @@
 -- Plan : docs/superpowers/plans/2026-05-22-role-pds-dashboard.md
 --
 -- À exécuter dans Supabase → SQL Editor → New query.
--- Note : le rôle 'pds' ne nécessite aucune migration car
--- profiles.role est de type TEXT (accepte n'importe quelle valeur).
 -- ══════════════════════════════════════════════════════════
+
+-- ============================================================
+-- 0. CHECK constraint profiles.role — ajout de 'pds'
+-- ============================================================
+-- profiles.role est TEXT mais avec un CHECK enumérant les rôles
+-- autorisés (medecin, ide, psychologue, pharmacien, secretaire,
+-- externe, etudiant_ide). On étend pour accepter 'pds'.
+
+ALTER TABLE public.profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
+ALTER TABLE public.profiles ADD CONSTRAINT profiles_role_check
+  CHECK (role = ANY (ARRAY[
+    'medecin'::text,
+    'ide'::text,
+    'psychologue'::text,
+    'pharmacien'::text,
+    'secretaire'::text,
+    'externe'::text,
+    'etudiant_ide'::text,
+    'pds'::text
+  ]));
 
 -- ============================================================
 -- 1. cushman_scores

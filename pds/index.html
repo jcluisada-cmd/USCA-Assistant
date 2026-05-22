@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="USCA PdS">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="../manifest.json">
+<link rel="apple-touch-icon" href="../icon-512.png">
+<title>USCA Connect — Poste de Soins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">@custom-variant dark (&:where(.dark, .dark *));</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  /* Dark mode tweaks */
+  html.dark .text-indigo-600 { color: #a5b4fc !important; }
+  html.dark .bg-indigo-50 { background-color: rgba(79,70,229,0.15) !important; }
+  html.dark .border-indigo-200 { border-color: rgba(79,70,229,0.3) !important; }
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="bg-indigo-600 text-white shadow-md flex-shrink-0" style="padding-top:env(safe-area-inset-top)">
+    <div class="flex items-center gap-2 max-w-6xl mx-auto px-4 py-2.5">
+      <span class="text-xl">🏥</span>
+      <div class="min-w-0">
+        <p class="text-indigo-200 text-[10px] font-medium leading-tight">Poste de Soins</p>
+        <h1 class="text-base font-extrabold tracking-tight leading-tight">USCA Pitié-Salpêtrière</h1>
+      </div>
+      <span id="hdr-clock" class="hidden sm:inline text-indigo-200 text-xs ml-2">--:--</span>
+      <div class="ml-auto flex items-center gap-1.5">
+        <button id="btn-appel-medecins" class="bg-white text-indigo-600 font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition flex items-center gap-1">
+          <span>🔔</span><span class="hidden sm:inline">Appeler médecins USCA</span><span class="sm:hidden">Médecins</span>
+        </button>
+        <button id="btn-theme" title="Mode sombre" class="bg-white/20 hover:bg-white/30 w-8 h-8 rounded-lg flex items-center justify-center transition">🌙</button>
+        <button id="btn-logout" title="Déconnexion" class="bg-white/20 hover:bg-white/30 w-8 h-8 rounded-lg flex items-center justify-center transition">⎋</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════ BANDEAU STATS ═══════════════ -->
+  <div id="stats-bar" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex-shrink-0">
+    <div class="max-w-6xl mx-auto px-3 py-2 flex flex-wrap gap-1.5 text-xs">
+      <span id="stat-cushman" class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">0 Cushman à refaire</span>
+      <span id="stat-perm" class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">0 Demande permission</span>
+      <span id="stat-absents" class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">0 Absents</span>
+      <span id="stat-messages" class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">0 Messages</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MAIN ═══════════════ -->
+  <main class="flex-1 max-w-6xl mx-auto w-full px-3 py-4">
+
+    <!-- VUE HOME -->
+    <div id="home-view">
+      <h2 class="text-lg font-bold mb-2.5">Patients hospitalisés</h2>
+      <div id="patients-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+        <p class="col-span-full text-center text-slate-400 py-8">Chargement…</p>
+      </div>
+
+      <h3 class="text-base font-bold mt-6 mb-2">Transmissions récentes</h3>
+      <div id="transmissions-globales" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-2"></div>
+
+      <h3 class="text-base font-bold mt-5 mb-2">Messages patients récents</h3>
+      <div id="messages-globaux" class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-2 mb-8"></div>
+    </div>
+
+    <!-- VUE DÉTAIL PATIENT -->
+    <div id="detail-view" class="hidden"></div>
+
+  </main>
+
+  <!-- ═══════════════ SCRIPTS ═══════════════ -->
+  <script src="../shared/supabase.js"></script>
+  <script src="../shared/auth.js"></script>
+  <script src="../shared/theme.js"></script>
+  <script src="../shared/cushman.js"></script>
+
+  <script>
+  // ────────── Helpers ──────────
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  function jourHospit(dateAdmission) {
+    if (!dateAdmission) return '—';
+    var d0 = new Date(dateAdmission); d0.setHours(0,0,0,0);
+    var dN = new Date(); dN.setHours(0,0,0,0);
+    var days = Math.floor((dN - d0) / (24*3600*1000)) + 1;
+    return 'J' + Math.max(days, 1);
+  }
+
+  function calcAge(ddn) {
+    if (!ddn) return '—';
+    var diff = Date.now() - new Date(ddn).getTime();
+    return Math.floor(diff / (365.25 * 24 * 3600 * 1000));
+  }
+
+  function formatReturn(info) {
+    if (!info || !info.dateRetour) return 'Retour ?';
+    var d = new Date(info.dateRetour + 'T00:00:00');
+    var today = new Date(); today.setHours(0,0,0,0);
+    var hh = (info.heureRetour || '').slice(0,5).replace(':', 'h');
+    if (d.getTime() === today.getTime()) return 'Retour ' + (hh || '?');
+    var dm = d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+    return 'Retour ' + dm + (hh ? ' à ' + hh : '');
+  }
+
+  function showToast(msg, type) {
+    var t = document.createElement('div');
+    var bg = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800';
+    t.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 ' + bg + ' text-white px-4 py-2 rounded-lg text-sm shadow-lg z-50';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 3500);
+  }
+
+  // ────────── Auth gate ──────────
+  (async function() {
+    var session = await auth.getStaffSession();
+    if (!session || session.role !== 'pds') {
+      window.location.href = '../';
+      return;
+    }
+    initApp(session);
+  })();
+
+  function initApp(session) {
+    document.getElementById('btn-logout').addEventListener('click', async function() {
+      await auth.logoutStaff();
+      window.location.href = '../';
+    });
+
+    document.getElementById('btn-theme').addEventListener('click', function() {
+      if (window.theme && typeof window.theme.toggle === 'function') window.theme.toggle();
+      else document.documentElement.classList.toggle('dark');
+    });
+
+    document.getElementById('btn-appel-medecins').addEventListener('click', appelerMedecins);
+
+    updateClock();
+    setInterval(updateClock, 30 * 1000);
+
+    refreshAll();
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden) refreshAll();
+    });
+  }
+
+  function updateClock() {
+    var clk = document.getElementById('hdr-clock');
+    if (clk) clk.textContent = '· ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ────────── Chargement + render ──────────
+  var allPatientsCache = [];
+
+  async function refreshAll() {
+    await renderHome();
+    renderTransmissionsGlobales();
+    renderMessagesGlobaux();
+  }
+
+  async function loadPatients() {
+    var r = await sb.from('patients')
+      .select('id, numero_chambre, sexe, ddn, date_admission, date_sortie_prevue, sortie_info, postcure_statut')
+      .order('numero_chambre', { ascending: true });
+    if (r.error) { console.error(r.error); return []; }
+    return r.data || [];
+  }
+
+  async function buildStatesFor(patient) {
+    // Dernier Cushman
+    var scores = await cushman.getScores(patient.id, 1);
+    var lastCushman = scores[0] || null;
+
+    // Permissions
+    var pr = await sb.from('permissions').select('*').eq('patient_id', patient.id);
+    var perms = pr.data || [];
+    var now = new Date();
+    var isAway = false, returnInfo = null, permState = null;
+    perms.forEach(function(p) {
+      if (p.statut === 'en_attente') permState = permState || 'demande';
+      if (p.statut === 'validee') {
+        try {
+          var start = new Date(p.date_debut + 'T' + (p.heure_debut || '00:00') + ':00');
+          var end   = new Date((p.date_retour || p.date_debut) + 'T' + (p.heure_retour || '23:59') + ':00');
+          if (now >= start && now <= end) {
+            isAway = true;
+            returnInfo = { dateRetour: p.date_retour || p.date_debut, heureRetour: p.heure_retour };
+            permState = 'active';
+          }
+        } catch(e) { /* date invalide → skip */ }
+      }
+    });
+
+    // Messages non lus (MVP : messages patient des dernières 24h)
+    var since = new Date(Date.now() - 24*3600*1000).toISOString();
+    var mr = await sb.from('contenus_partages')
+      .select('*', { count: 'exact', head: true })
+      .eq('patient_id', patient.id)
+      .is('cree_par', null)
+      .gt('created_at', since);
+    var msgUnread = mr.count || 0;
+
+    return {
+      lastCushman: lastCushman,
+      isAway: isAway,
+      returnInfo: returnInfo,
+      notifs: {
+        permission: permState,
+        cushmanDue: cushman.isOverdue(lastCushman),
+        messages: msgUnread
+      }
+    };
+  }
+
+  function renderPatientCardDOM(patient, st) {
+    var state = st.isAway ? 'away' : (st.notifs.cushmanDue ? 'urgent' : 'normal');
+
+    var card = document.createElement('div');
+    card.className = 'rounded-lg p-2.5 cursor-pointer transition ' + (
+      state === 'urgent' ? 'bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700' :
+      state === 'away'   ? 'bg-sky-50 dark:bg-sky-900/30 border border-dashed border-sky-200 dark:border-sky-700' :
+                           'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-indigo-300'
+    );
+    card.addEventListener('click', function() { ouvrirDetailPatient(patient.id); });
+
+    // Ligne 1 : chambre + meta + bouton/heure retour
+    var row = document.createElement('div');
+    row.className = 'flex items-center gap-2';
+
+    var pill = document.createElement('span');
+    pill.textContent = patient.numero_chambre || '?';
+    if (state === 'urgent') {
+      pill.className = 'px-2 py-0.5 rounded font-bold text-white bg-red-600 text-sm';
+    } else if (state === 'away') {
+      pill.className = 'px-2 py-0.5 rounded font-bold bg-white text-sky-600 border-2 border-sky-500 text-sm';
+    } else {
+      pill.className = 'px-2 py-0.5 rounded font-bold text-white bg-indigo-600 text-sm';
+    }
+    row.appendChild(pill);
+
+    var meta = document.createElement('div');
+    meta.className = 'flex-1 text-xs ' + (state === 'away' ? 'text-sky-800 dark:text-sky-200' : 'text-slate-600 dark:text-slate-400');
+    var j = jourHospit(patient.date_admission);
+    var sx = patient.sexe || '—';
+    var ag = calcAge(patient.ddn);
+    var strong = document.createElement('strong');
+    strong.className = state === 'away' ? 'text-sky-900 dark:text-sky-100' : 'text-slate-900 dark:text-slate-100';
+    strong.textContent = j;
+    meta.appendChild(strong);
+    meta.appendChild(document.createTextNode(' · ' + sx + ' · ' + ag + ' ans'));
+    row.appendChild(meta);
+
+    if (state === 'away') {
+      var rt = document.createElement('span');
+      rt.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-sky-200 dark:border-sky-700 text-sky-700 dark:text-sky-200 text-[11px] font-semibold whitespace-nowrap';
+      rt.textContent = '🚶 ' + formatReturn(st.returnInfo);
+      row.appendChild(rt);
+    } else {
+      var btn = document.createElement('button');
+      btn.className = 'px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-700 text-indigo-700 dark:text-indigo-200 text-[11px] font-semibold whitespace-nowrap';
+      btn.textContent = '🔔 Appeler';
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        appelerPatient(patient.id);
+      });
+      row.appendChild(btn);
+    }
+    card.appendChild(row);
+
+    // Ligne 2 : notifs (only if any)
+    var notifs = [];
+    if (st.notifs.permission === 'demande') {
+      notifs.push({ txt: '🚶 Demande', cls: 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-700' });
+    } else if (st.notifs.permission === 'active' && !st.isAway) {
+      notifs.push({ txt: '🚶 En permission', cls: 'bg-sky-100 dark:bg-sky-900/40 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-700' });
+    }
+    if (st.notifs.cushmanDue) {
+      notifs.push({ txt: '📋 Cushman à refaire', cls: 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-700' });
+    }
+    if (st.notifs.messages > 0) {
+      notifs.push({ txt: '💬 ' + st.notifs.messages, cls: 'bg-pink-100 dark:bg-pink-900/40 text-pink-800 dark:text-pink-200 border border-pink-200 dark:border-pink-700' });
+    }
+    if (state === 'away' && st.notifs.messages > 0) {
+      // toujours afficher messages même en permission (couvert ci-dessus)
+    }
+    if (notifs.length > 0) {
+      var nrow = document.createElement('div');
+      nrow.className = 'flex flex-wrap gap-1 mt-1.5';
+      notifs.forEach(function(n) {
+        var pill2 = document.createElement('span');
+        pill2.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold ' + n.cls;
+        pill2.textContent = n.txt;
+        nrow.appendChild(pill2);
+      });
+      card.appendChild(nrow);
+    }
+
+    return card;
+  }
+
+  function renderStats(allStates) {
+    var st = {
+      cushmanARefaire: allStates.filter(function(s){ return s.notifs.cushmanDue; }).length,
+      demandesPerm:    allStates.filter(function(s){ return s.notifs.permission === 'demande'; }).length,
+      absents:         allStates.filter(function(s){ return s.isAway; }).length,
+      messages:        allStates.reduce(function(sum, s){ return sum + (s.notifs.messages || 0); }, 0)
+    };
+    var c = document.getElementById('stat-cushman');
+    var p = document.getElementById('stat-perm');
+    var a = document.getElementById('stat-absents');
+    var m = document.getElementById('stat-messages');
+    c.textContent = st.cushmanARefaire + ' Cushman à refaire';
+    p.textContent = st.demandesPerm + ' Demande' + (st.demandesPerm > 1 ? 's' : '') + ' permission';
+    a.textContent = st.absents + ' Absent' + (st.absents > 1 ? 's' : '');
+    m.textContent = st.messages + ' Message' + (st.messages > 1 ? 's' : '');
+
+    setStatClass(c, st.cushmanARefaire > 0, 'red');
+    setStatClass(p, st.demandesPerm > 0, 'amber');
+    setStatClass(a, st.absents > 0, 'sky');
+    setStatClass(m, st.messages > 0, 'red');
+  }
+
+  function setStatClass(el, active, color) {
+    var defaultCls = 'px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600';
+    if (!active) { el.className = defaultCls; return; }
+    var map = {
+      red:   'px-2.5 py-1 rounded-md bg-red-100 dark:bg-red-900/40 border border-red-300 dark:border-red-700 text-red-800 dark:text-red-200 font-semibold',
+      amber: 'px-2.5 py-1 rounded-md bg-amber-100 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200 font-semibold',
+      sky:   'px-2.5 py-1 rounded-md bg-sky-100 dark:bg-sky-900/40 border border-sky-300 dark:border-sky-700 text-sky-800 dark:text-sky-200 font-semibold'
+    };
+    el.className = map[color] || defaultCls;
+  }
+
+  async function renderHome() {
+    var patients = await loadPatients();
+    allPatientsCache = patients;
+    var grid = document.getElementById('patients-grid');
+    grid.replaceChildren();
+    if (patients.length === 0) {
+      var empty = document.createElement('p');
+      empty.className = 'col-span-full text-center text-slate-400 py-8 text-sm';
+      empty.textContent = 'Aucun patient hospitalisé.';
+      grid.appendChild(empty);
+      renderStats([]);
+      return;
+    }
+    var states = await Promise.all(patients.map(function(p){ return buildStatesFor(p); }));
+    patients.forEach(function(p, i) {
+      grid.appendChild(renderPatientCardDOM(p, states[i]));
+    });
+    renderStats(states);
+  }
+
+  // ────────── Transmissions globales ──────────
+  async function renderTransmissionsGlobales() {
+    var box = document.getElementById('transmissions-globales');
+    var r = await sb.from('transmissions')
+      .select('id, patient_id, type, contenu, cree_le, patients(numero_chambre)')
+      .order('cree_le', { ascending: false })
+      .limit(10);
+    var trans = r.data || [];
+    box.replaceChildren();
+    if (trans.length === 0) {
+      var p = document.createElement('p');
+      p.className = 'text-center text-slate-400 text-xs py-4';
+      p.textContent = 'Aucune transmission récente';
+      box.appendChild(p);
+      return;
+    }
+    trans.forEach(function(t) {
+      var row = document.createElement('div');
+      row.className = 'border-b border-slate-200 dark:border-slate-700 py-1.5 px-2 last:border-b-0 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50';
+      row.addEventListener('click', function() { ouvrirDetailPatient(t.patient_id); });
+
+      var head = document.createElement('div');
+      head.className = 'flex items-center gap-1.5 text-[10px] mb-0.5';
+
+      var chBadge = document.createElement('span');
+      chBadge.className = 'bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded';
+      chBadge.textContent = 'Ch.' + ((t.patients && t.patients.numero_chambre) || '?');
+      head.appendChild(chBadge);
+
+      var typeBadge = document.createElement('span');
+      typeBadge.className = 'font-bold uppercase px-1.5 py-0 rounded ' + (
+        t.type === 'medical'
+          ? 'bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-200'
+          : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200'
+      );
+      typeBadge.textContent = t.type === 'medical' ? 'Méd' : 'Para';
+      head.appendChild(typeBadge);
+
+      var ts = document.createElement('span');
+      ts.className = 'text-slate-500 dark:text-slate-400';
+      ts.textContent = new Date(t.cree_le).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' });
+      head.appendChild(ts);
+
+      var content = document.createElement('div');
+      content.className = 'text-sm';
+      var ct = String(t.contenu || '');
+      content.textContent = ct.length > 120 ? ct.slice(0, 120) + '…' : ct;
+
+      row.appendChild(head);
+      row.appendChild(content);
+      box.appendChild(row);
+    });
+  }
+
+  // ────────── Messages globaux ──────────
+  async function renderMessagesGlobaux() {
+    var box = document.getElementById('messages-globaux');
+    var since = new Date(Date.now() - 7*24*3600*1000).toISOString();
+    var r = await sb.from('contenus_partages')
+      .select('id, patient_id, contenu, created_at, cree_par, patients(numero_chambre)')
+      .gt('created_at', since)
+      .order('created_at', { ascending: false });
+    var rows = r.data || [];
+    // dedup par patient (garde le plus récent)
+    var seen = {};
+    var lastByPatient = [];
+    rows.forEach(function(m) {
+      if (!m.patient_id || seen[m.patient_id]) return;
+      seen[m.patient_id] = true;
+      lastByPatient.push(m);
+    });
+    box.replaceChildren();
+    if (lastByPatient.length === 0) {
+      var p = document.createElement('p');
+      p.className = 'text-center text-slate-400 text-xs py-4';
+      p.textContent = 'Aucun message récent';
+      box.appendChild(p);
+      return;
+    }
+    lastByPatient.slice(0, 8).forEach(function(m) {
+      var row = document.createElement('div');
+      row.className = 'border-b border-slate-200 dark:border-slate-700 py-1.5 px-2 last:border-b-0 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50';
+      row.addEventListener('click', function() { ouvrirDetailPatient(m.patient_id); });
+
+      var head = document.createElement('div');
+      head.className = 'flex items-center gap-1.5 text-[10px] mb-0.5';
+
+      var chBadge = document.createElement('span');
+      chBadge.className = 'bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded';
+      chBadge.textContent = 'Ch.' + ((m.patients && m.patients.numero_chambre) || '?');
+      head.appendChild(chBadge);
+
+      var who = document.createElement('span');
+      who.className = 'text-slate-600 dark:text-slate-300 font-semibold';
+      who.textContent = m.cree_par === null ? '👤 Patient' : '🩺 Soignant';
+      head.appendChild(who);
+
+      var ts = document.createElement('span');
+      ts.className = 'text-slate-500 dark:text-slate-400';
+      ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' });
+      head.appendChild(ts);
+
+      var content = document.createElement('div');
+      content.className = 'text-sm';
+      var ct = String(m.contenu || '');
+      content.textContent = ct.length > 120 ? ct.slice(0, 120) + '…' : ct;
+
+      row.appendChild(head);
+      row.appendChild(content);
+      box.appendChild(row);
+    });
+  }
+
+  // ────────── Convocations ──────────
+  async function appelerMedecins() {
+    var r = await sb.from('profiles').select('id').eq('role', 'medecin');
+    var medecins = r.data || [];
+    if (medecins.length === 0) {
+      showToast('Aucun médecin trouvé', 'error');
+      return;
+    }
+    try {
+      var profileIds = medecins.map(function(m){ return m.id; });
+      var res = await sb.functions.invoke('send-push', {
+        body: {
+          target_profile_ids: profileIds,
+          title: 'Poste de Soins USCA',
+          body: 'Le poste de soins vous demande',
+          url: '/admin/'
+        }
+      });
+      if (res.error) throw res.error;
+      showToast('Notification envoyée à ' + medecins.length + ' médecin(s)', 'success');
+    } catch(e) {
+      showToast('Erreur push : ' + (e.message || e), 'error');
+    }
+  }
+
+  async function appelerPatient(patientId) {
+    try {
+      var sr = await sb.from('push_subscriptions').select('id').eq('patient_id', patientId).limit(1);
+      if (!sr.data || sr.data.length === 0) {
+        showToast('Patient sans notifications activées', 'error');
+        return;
+      }
+      var res = await sb.functions.invoke('send-push', {
+        body: {
+          target_patient_id: patientId,
+          title: 'USCA',
+          body: 'Merci de vous présenter au poste de soins',
+          url: '/patient/'
+        }
+      });
+      if (res.error) throw res.error;
+      var session = await auth.getStaffSession();
+      await sb.from('evenements').insert({
+        patient_id: patientId,
+        type: 'convocation_pds',
+        profile_id: session.id,
+        contenu: 'Convocation patient au poste de soins'
+      });
+      showToast('Patient convoqué', 'success');
+    } catch(e) {
+      showToast('Erreur : ' + (e.message || e), 'error');
+    }
+  }
+
+  // ────────── Vue détail patient ──────────
+  function ouvrirDetailPatient(patientId) {
+    // Stub : à implémenter dans l'itération suivante
+    showToast('Vue détail à venir (patient ' + (patientId || '').slice(0,8) + '…)', 'info');
+  }
+
+  </script>
+</body>
+</html>
