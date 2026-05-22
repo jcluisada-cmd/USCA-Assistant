@@ -251,6 +251,7 @@ formStaff.addEventListener('submit', async function() {
     var dest = 'admin/';
     if (profile.role === 'etudiant_ide') dest = 'etudiant/';
     else if (profile.role === 'externe') dest = 'extern/';
+    else if (profile.role === 'pds') dest = 'pds/';
     window.location.href = dest;
   } catch(err) {
     showError(err.message);
@@ -279,6 +280,7 @@ function showError(msg) {
     var dest = 'admin/';
     if (staffSession.role === 'etudiant_ide') dest = 'etudiant/';
     else if (staffSession.role === 'externe') dest = 'extern/';
+    else if (staffSession.role === 'pds') dest = 'pds/';
     window.location.href = dest;
     return;
   }
