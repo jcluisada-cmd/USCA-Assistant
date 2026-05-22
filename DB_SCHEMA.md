@@ -34,10 +34,26 @@
 ### `evenements` — Événements
 `patient_id` nullable (individuels + équipe). Types : `entretien`, `consultation`, `familial`, `rdv_externe`, `reunion`, `staff`, `labo`, `supervision`.
 
-### `permissions_sortie` — Demandes de permission
+### `permissions` — Demandes de permission
 - `statut` (en_attente / validee / refusee)
 - `date_debut`, `heure_debut`, `date_retour`, `heure_retour`, `motif`
 - `validee_par`, `validee_at`
+- `motifs_refus_codes` TEXT[] + `motif_refus_libre` TEXT (v37)
+
+### `cushman_scores` — Scores Cushman (sevrage alcoolique, CIWA-Ar FR) — v38
+- `patient_id` UUID FK CASCADE, `saisi_le` TIMESTAMPTZ
+- `items` JSONB (7 items × 4 niveaux : fc/pa/fr/tremblements/sueurs/agitation/sensoriels, valeurs 0..3)
+- `score_total` INT (0..21, CHECK), `commentaire` TEXT
+- `rappel_intervalle_h` INT NULL — si rempli, rappel échu à `saisi_le + h*1h`
+- RLS : SELECT authenticated, INSERT pds/ide/medecin
+- Index : `(patient_id, saisi_le DESC)`
+
+### `transmissions` — Transmissions médicales / paramédicales (PdS ↔ médecin) — v38
+- `patient_id` UUID FK CASCADE, `auteur_id` UUID FK profiles
+- `type` TEXT CHECK in ('medical','paramedical')
+- `contenu` TEXT (length > 0), `cree_le` TIMESTAMPTZ
+- RLS : SELECT authenticated, INSERT para par pds/ide, INSERT med par medecin
+- Index : `(patient_id, cree_le DESC)`
 
 ### `contenus_partages` — Messages bidirectionnels patient ↔ équipe
 - Notes, liens, consignes
@@ -207,6 +223,8 @@ Anti-doublon messages staff.
 | v34 | 2026-04-25 | `profiles.push_preferences JSONB` (V3 personnalisable) |
 | v35 | 2026-04-26 | Policy `permissions_delete_auth` (DELETE permissions débloqué) |
 | v36 | 2026-04-27 | `push_reminders_sent_groupe.patient_id` nullable + CHECK XOR + 2 UNIQUE partiels (push patient atelier) |
+| v37 | 2026-05-09 | `permissions.motifs_refus_codes` TEXT[] + `motif_refus_libre` TEXT (motifs structurés de refus médecin) |
+| v38 | 2026-05-22 | Dashboard PdS — tables `cushman_scores` (sevrage alcool, items JSONB 7 niveaux + rappel) et `transmissions` (médical/paramédical, RLS par rôle) |
 
 ---
 
