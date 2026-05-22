@@ -1,3 +1,4 @@
+// CF Pages blob cache-bust 2026-05-22
 /**
  * USCA Connect — Module Cushman (saisie + calcul + sauvegarde)
  * Dépend de : shared/supabase.js (window.sb)
