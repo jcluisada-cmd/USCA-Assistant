@@ -380,6 +380,12 @@
           </div>
           <div id="detail-patient-info" class="bg-white rounded-xl border border-slate-200 p-4 mb-4"></div>
 
+          <!-- Encart Cushman (v4.39) -->
+          <div id="md-cushman-card" class="mb-3"></div>
+
+          <!-- Mini-stream Transmissions (v4.39) -->
+          <div id="md-transmissions-card" class="mb-3"></div>
+
           <!-- Accordion : Journal craving -->
           <button id="acc-craving" data-module="patient_craving" class="w-full bg-white rounded-xl border border-slate-200 p-3.5 flex items-center justify-between mb-2 hover:bg-slate-50 transition-colors">
             <div class="flex items-center gap-2.5">
@@ -1038,6 +1044,7 @@
 <script src="../shared/postcure-structures.js"></script>
 <script src="../shared/livret-ifsi-contenu.js"></script>
 <script src="../shared/qcm-engine.js"></script>
+<script src="../shared/cushman.js"></script>
 
 <script>
 // ── Helpers DOM sûrs ──
@@ -2310,6 +2317,14 @@ async function showPatientDetail(patient) {
     infoDiv.appendChild(row);
   });
 
+  // Bouton Changer chambre (ajout v4.39)
+  var changeRoomRow = createEl('div', 'flex items-center justify-between py-1.5');
+  changeRoomRow.appendChild(createEl('span', 'text-xs text-slate-500', 'Modifier chambre'));
+  var btnChangeRoom = createEl('button', 'text-[10px] px-2 py-0.5 bg-amber-500 hover:bg-amber-600 text-white rounded font-bold', '\u270f\ufe0f Changer');
+  btnChangeRoom.addEventListener('click', function() { mdOuvrirModalChangerChambre(patient); });
+  changeRoomRow.appendChild(btnChangeRoom);
+  infoDiv.appendChild(changeRoomRow);
+
   // S\u00e9lecteur sexe (\u00e9ditable inline)
   var sexeRow = createEl('div', 'flex items-center justify-between py-1.5');
   sexeRow.appendChild(createEl('span', 'text-xs text-slate-500', 'Sexe'));
@@ -2399,6 +2414,10 @@ async function showPatientDetail(patient) {
 
   // Charger les messages (conversation bidirectionnelle)
   renderPatientMessages(patient.id);
+
+  // Charger Cushman + Transmissions (v4.39, intégration PdS)
+  if (typeof mdRenderCushmanCard === 'function') mdRenderCushmanCard(patient.id);
+  if (typeof mdRenderTransmissionsCard === 'function') mdRenderTransmissionsCard(patient.id);
 
   // Réinitialiser la compose inline
   var inlineInput = document.getElementById('msg-inline-texte');
@@ -5616,6 +5635,217 @@ function showEleveAdminMenu(item) {
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('../sw.js', {scope: '/'}).catch(()=>{});
+}
+
+// ════════════════ v4.39 — Intégration PdS (Cushman + Transmissions) ════════════════
+
+async function mdRenderCushmanCard(patientId) {
+  var container = document.getElementById('md-cushman-card');
+  if (!container) return;
+  container.replaceChildren();
+  if (!window.cushman) return;
+
+  var scores = await cushman.getScores(patientId, 7);
+  var last = scores[0] || null;
+
+  var card = createEl('div', 'bg-white rounded-xl border p-3 ' + (
+    last && last.score_total >= 7 ? 'border-red-300' : 'border-slate-200'
+  ));
+  var head = createEl('div', 'flex items-center justify-between mb-2');
+  head.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Cushman'));
+  if (last) {
+    var when = createEl('span', 'text-[10px] text-slate-400', new Date(last.saisi_le).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' }));
+    head.appendChild(when);
+  }
+  card.appendChild(head);
+
+  if (!last) {
+    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center', 'Aucun score Cushman'));
+    container.appendChild(card);
+    return;
+  }
+
+  var col = cushman.colorFor(last.score_total);
+  var colorClass = col === 'red' ? 'text-red-600' : col === 'amber' ? 'text-amber-600' : 'text-emerald-600';
+
+  var body = createEl('div', 'flex items-center gap-3');
+  var big = createEl('div', 'text-4xl font-extrabold ' + colorClass, String(last.score_total));
+  body.appendChild(big);
+
+  // Mini sparkline (7 derniers, ordre chrono)
+  var sparkWrap = createEl('div', 'flex-1');
+  var spark = createEl('div', 'flex items-end gap-0.5 h-10');
+  scores.slice().reverse().forEach(function(s) {
+    var h = Math.max(8, Math.round((s.score_total / 21) * 100));
+    var c = cushman.colorFor(s.score_total);
+    var bar = createEl('div', 'w-2 rounded-t');
+    bar.style.height = h + '%';
+    bar.style.background = c === 'red' ? '#dc2626' : c === 'amber' ? '#d97706' : '#059669';
+    spark.appendChild(bar);
+  });
+  sparkWrap.appendChild(spark);
+  var axis = createEl('div', 'flex justify-between text-[9px] text-slate-400 mt-0.5');
+  axis.appendChild(createEl('span', '', '-7j'));
+  axis.appendChild(createEl('span', '', 'auj'));
+  sparkWrap.appendChild(axis);
+  body.appendChild(sparkWrap);
+
+  card.appendChild(body);
+
+  if (last.score_total >= 7) {
+    var callout = createEl('div', 'mt-2 text-sm font-bold text-red-700', '→ ≥ 7 : Donner BZD SB');
+    card.appendChild(callout);
+  }
+
+  container.appendChild(card);
+}
+
+async function mdRenderTransmissionsCard(patientId) {
+  var container = document.getElementById('md-transmissions-card');
+  if (!container) return;
+  container.replaceChildren();
+
+  var r = await sb.from('transmissions')
+    .select('*, auteur:profiles(nom, role)')
+    .eq('patient_id', patientId)
+    .order('cree_le', { ascending: false })
+    .limit(5);
+  var trans = (r && r.data) || [];
+
+  var card = createEl('div', 'bg-white rounded-xl border border-slate-200 p-3');
+  var head = createEl('div', 'flex items-center justify-between mb-2');
+  head.appendChild(createEl('h4', 'text-xs font-bold text-slate-700 uppercase tracking-wider', '📋 Transmissions'));
+  var count = createEl('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700', String(trans.length));
+  head.appendChild(count);
+  card.appendChild(head);
+
+  if (trans.length === 0) {
+    card.appendChild(createEl('p', 'text-xs text-slate-400 py-2 text-center', 'Aucune transmission'));
+  } else {
+    trans.forEach(function(t) {
+      var row = createEl('div', 'flex gap-2 py-1.5 border-b border-slate-100 last:border-b-0');
+      var tag = createEl('span', 'font-bold uppercase px-1.5 py-0 rounded text-[9px] flex-shrink-0 h-4 leading-4 ' + (
+        t.type === 'medical' ? 'bg-violet-100 text-violet-800' : 'bg-emerald-100 text-emerald-800'
+      ), t.type === 'medical' ? 'Méd' : 'Para');
+      var content = createEl('span', 'flex-1 text-xs text-slate-700', String(t.contenu || '').slice(0, 100) + (String(t.contenu || '').length > 100 ? '…' : ''));
+      var when = createEl('span', 'text-[10px] text-slate-400 flex-shrink-0', new Date(t.cree_le).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit' }));
+      row.appendChild(tag);
+      row.appendChild(content);
+      row.appendChild(when);
+      card.appendChild(row);
+    });
+  }
+
+  var btnAdd = createEl('button', 'w-full mt-2 text-xs bg-indigo-50 text-indigo-700 border border-dashed border-indigo-200 py-1.5 rounded hover:bg-indigo-100', '+ Ajouter une transmission');
+  btnAdd.addEventListener('click', function() { mdOuvrirModalTransmission(patientId); });
+  card.appendChild(btnAdd);
+
+  container.appendChild(card);
+}
+
+function mdOuvrirModalTransmission(patientId) {
+  var overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4';
+  var modal = document.createElement('div');
+  modal.className = 'bg-white rounded-xl max-w-sm w-full p-5';
+  modal.appendChild(createEl('h3', 'text-lg font-bold mb-2', 'Nouvelle transmission médicale'));
+  modal.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Cette transmission sera visible par les autres médecins et par le Poste de Soins (PdS).'));
+
+  var ta = document.createElement('textarea');
+  ta.rows = 3;
+  ta.placeholder = 'Contenu de la transmission...';
+  ta.className = 'w-full p-2 border border-slate-200 rounded text-sm';
+  modal.appendChild(ta);
+
+  var btns = createEl('div', 'flex gap-2 justify-end mt-3');
+  var btnCancel = createEl('button', 'px-4 py-2 bg-slate-200 text-slate-700 rounded', 'Annuler');
+  btnCancel.addEventListener('click', function() { overlay.remove(); });
+  var btnSave = createEl('button', 'px-4 py-2 bg-indigo-600 text-white rounded font-semibold', 'Publier');
+  btnSave.addEventListener('click', async function() {
+    var contenu = ta.value.trim();
+    if (!contenu) return;
+    btnSave.disabled = true;
+    btnSave.textContent = '…';
+    try {
+      var profile = await auth.getStaffSession();
+      var res = await sb.from('transmissions').insert({
+        patient_id: patientId,
+        auteur_id: profile.id,
+        type: 'medical',
+        contenu: contenu
+      });
+      if (res.error) throw res.error;
+      overlay.remove();
+      mdRenderTransmissionsCard(patientId);
+    } catch(e) {
+      btnSave.disabled = false;
+      btnSave.textContent = 'Publier';
+      alert('Erreur : ' + (e.message || e));
+    }
+  });
+  btns.appendChild(btnCancel);
+  btns.appendChild(btnSave);
+  modal.appendChild(btns);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  ta.focus();
+}
+
+function mdOuvrirModalChangerChambre(patient) {
+  var overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4';
+  var modal = document.createElement('div');
+  modal.className = 'bg-white rounded-xl max-w-sm w-full p-5';
+
+  modal.appendChild(createEl('h3', 'text-lg font-bold mb-1', 'Changer la chambre'));
+  modal.appendChild(createEl('p', 'text-xs text-slate-500 mb-3', 'Le patient ne sera pas déconnecté. Sa session reste valide. Il verra sa nouvelle chambre via un bandeau in-app au prochain refresh.'));
+
+  modal.appendChild(createEl('label', 'block text-[10px] uppercase text-slate-500 font-semibold tracking-wider mb-1', 'Nouvelle chambre'));
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.value = patient.numero_chambre || '';
+  input.className = 'w-full p-2 border border-slate-200 rounded text-sm mb-3';
+  modal.appendChild(input);
+
+  var btns = createEl('div', 'flex gap-2 justify-end');
+  var btnCancel = createEl('button', 'px-4 py-2 bg-slate-200 text-slate-700 rounded', 'Annuler');
+  btnCancel.addEventListener('click', function() { overlay.remove(); });
+  var btnConfirm = createEl('button', 'px-4 py-2 bg-indigo-600 text-white rounded font-semibold', 'Confirmer');
+  btnConfirm.addEventListener('click', async function() {
+    var newRoom = input.value.trim();
+    if (!newRoom || newRoom === patient.numero_chambre) {
+      overlay.remove();
+      return;
+    }
+    btnConfirm.disabled = true;
+    btnConfirm.textContent = '…';
+    try {
+      var res = await sb.from('patients').update({ numero_chambre: newRoom }).eq('id', patient.id);
+      if (res.error) throw res.error;
+      overlay.remove();
+      var oldRoom = patient.numero_chambre;
+      patient.numero_chambre = newRoom;
+      // Mettre à jour cache
+      var idx = loadedPatients.findIndex(function(x) { return x.id === patient.id; });
+      if (idx !== -1) loadedPatients[idx].numero_chambre = newRoom;
+      alert('Chambre changée : ' + oldRoom + ' → ' + newRoom);
+      // Rafraîchir la vue détail
+      showPatientDetail(patient);
+    } catch(e) {
+      btnConfirm.disabled = false;
+      btnConfirm.textContent = 'Confirmer';
+      alert('Erreur : ' + (e.message || e));
+    }
+  });
+  btns.appendChild(btnCancel);
+  btns.appendChild(btnConfirm);
+  modal.appendChild(btns);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  input.focus();
+  input.select();
 }
 </script>
 <script src="../shared/theme.js"></script>

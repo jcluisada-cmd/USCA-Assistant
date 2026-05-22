@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.36 (2026-05-11) — MetaboScope G.1 Refonte classification 147 molécules. Champ `bucket?: ClassBucket` explicite sur `Molecule` (override) + fallback regex `classes.ts`. 2 nouveaux buckets : `anticraving` (4 mol) et `sevrage_tabac` (3 mol). 33 molécules patchées (anti-craving alcool, sevrage tabac, drogues classiques, TDAH non-stim, Xylazine, Ibogaïne…). Distribution finale propre : antidep 14 · antipsy 18 · bzd 19 · thymo 13 · opioid 18 · stim 8 · drogues 32 · anticraving 4 · sevrage_tabac 3 · nps_autres 18.
+> **Version courante** : v4.39 (2026-05-22) — Dashboard PdS (Poste de Soins infirmier USCA). Sous-app `/pds/` avec compte partagé `usca.pds@aphp.fr` / `usca_pds` (rôle `pds`). Home : cartes patient anonymisées (chambre + J + sexe + âge), 3 états (normal / urgent Cushman≥7 / en permission bleu inversé), bandeau stats 4 compteurs, boutons « 🔔 Appeler médecins USCA » (topbar) et « 🔔 Appeler » par carte (push patient). Vue détail patient : 2 colonnes (Identité + Cushman / onglets Messages, Transmissions, Permissions), modal Changer chambre (UPDATE simple sans déconnexion). Migration v38 : tables `cushman_scores` (items JSONB 7 niveaux + rappel_intervalle_h) et `transmissions` (médical/paramédical, RLS par rôle). Module `shared/cushman.js` avec saisie interactive (callout « Donner BZD SB » si ≥7, rappel 4h modifiable). Côté médecin (`/admin/`) : encart Cushman + sparkline 7j + mini-stream transmissions + bouton Changer chambre. Côté patient (`/patient/`) : bandeau in-app au changement de chambre. Service Worker : `usca-v4.38` → `usca-v4.39`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,10 +45,11 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.36` |
+| **Service Worker** | `usca-v4.39` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
+| **Compte PdS partagé** | `usca.pds@aphp.fr` / `usca_pds` (login : `usca.pds`, rôle `pds`) |
 | **Admin UUID JC** | `d3ad2d4b-d3d8-41f8-a494-b7bf55b79e87` (jc.luisada@gmail.com, role=medecin, is_admin=true) |
 
 ### Charte graphique V2
@@ -85,6 +86,7 @@ USCA-Connect/
 ├── admin/index.html            ← Dashboard soignant (Patients, Toolbox, Planning, Mon élève)
 ├── etudiant/index.html         ← SPA livret IFSI
 ├── extern/index.html           ← Dashboard externe (3 onglets)
+├── pds/index.html              ← Dashboard Poste de Soins infirmier (v4.39)
 ├── staff/toolbox.html          ← V1 Toolbox React (iframe dans admin)
 ├── data/                       ← Base QCM EDN (lazy-loaded)
 ├── postcure/                   ← Module post-cure (volets séparés)
@@ -115,7 +117,7 @@ USCA-Connect/
 - Admin : champ `is_admin` boolean séparé du rôle métier
 - Mode dev : triple-tap sur le logo
 - Auto-redirect si session existante
-- Rôles métier : `medecin`, `ide`, `psychologue`, `pharmacien`, `secretaire`, `externe`, `etudiant_ide`
+- Rôles métier : `medecin`, `ide`, `psychologue`, `pharmacien`, `secretaire`, `externe`, `etudiant_ide`, `pds` (Poste de Soins infirmier — compte partagé)
 
 > Pour le détail (device tokens, WebView iOS, suppression compte, structure session) : voir `MODULES.md` §9.
 
