@@ -57,8 +57,10 @@
 
 ### `contenus_partages` — Messages bidirectionnels patient ↔ équipe
 - Notes, liens, consignes
+- `modifie_le` TIMESTAMPTZ (v40) : non nul = message édité → affichage « (modifié) »
 - **Convention** : `cree_par IS NULL` = envoyé par le patient, sinon = soignant
 - Migration v21 : policy INSERT ouverte anon (`WITH CHECK (true)`)
+- Migration v40 : `contenus_update_own` (UPDATE) + `contenus_delete_own` (DELETE) — prédicat `(auth.uid() = cree_par) OR (auth.uid() IS NULL AND cree_par IS NULL)` : chacun ne modifie/supprime que ses propres messages (soignant via uid, patient anon via `cree_par IS NULL`). Remplace l'ancienne `contenus_delete_auth` (trop large)
 
 ### `fiches_traitements_patient` — Fiches traitements prescrites
 Checklist par patient.
@@ -225,6 +227,8 @@ Anti-doublon messages staff.
 | v36 | 2026-04-27 | `push_reminders_sent_groupe.patient_id` nullable + CHECK XOR + 2 UNIQUE partiels (push patient atelier) |
 | v37 | 2026-05-09 | `permissions.motifs_refus_codes` TEXT[] + `motif_refus_libre` TEXT (motifs structurés de refus médecin) |
 | v38 | 2026-05-22 | Dashboard PdS — tables `cushman_scores` (sevrage alcool, items JSONB 7 niveaux + rappel) et `transmissions` (médical/paramédical, RLS par rôle) |
+| v39 | 2026-05-22 | `profiles_select_all` (SELECT `true`) — patient anon lit emails auteurs via JOIN (affichage auteur messages) |
+| v40 | 2026-05-29 | `contenus_partages.modifie_le` + policy `contenus_update_own` + DELETE resserré `contenus_delete_own` (chacun modifie/supprime ses propres messages) |
 
 ---
 
@@ -235,8 +239,8 @@ Anti-doublon messages staff.
 - Soignants `authenticated` : tous les patients
 
 ### Données patient (écriture)
-- Patient anon : INSERT autorisé sur `alertes`, `strategies`, `participations`, `permissions_sortie`, `contenus_partages` (v21 ouverte)
-- Soignants `authenticated` : INSERT/UPDATE/DELETE selon le contexte
+- Patient anon : INSERT autorisé sur `alertes`, `strategies`, `participations`, `permissions_sortie`, `contenus_partages` (v21 ouverte). UPDATE/DELETE sur ses propres messages `contenus_partages` (v40, `cree_par IS NULL`)
+- Soignants `authenticated` : INSERT/UPDATE/DELETE selon le contexte. Sur `contenus_partages`, UPDATE/DELETE limités à `auth.uid() = cree_par` (v40)
 
 ### Admin
 - `is_admin=true` : bypass UI (P5), accès Cloudflare Function suppression compte (`SUPABASE_SERVICE_ROLE_KEY`)

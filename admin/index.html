@@ -2934,6 +2934,56 @@ function markPatientMsgsSeen(patientId) {
   localStorage.setItem('usca_admin_msg_seen_' + patientId, new Date().toISOString());
 }
 
+// ── Crayon "Modifier / Supprimer" sur ses propres messages soignant (menu inline, fond clair) ──
+function buildMsgPencilStaff(bubble, contentEl, c, reload) {
+  var pencil = createEl('button', 'text-xs leading-none text-slate-400 hover:text-slate-600', '✏️');
+  pencil.type = 'button';
+  pencil.setAttribute('aria-label', 'Modifier ou supprimer le message');
+  var menu = null;
+  function closeMenu() { if (menu) { menu.remove(); menu = null; } }
+  pencil.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (menu) { closeMenu(); return; }
+    menu = createEl('div', 'mt-1.5 flex flex-col gap-1 rounded-lg bg-white border border-slate-200 p-1 shadow-sm');
+    var bEdit = createEl('button', 'text-left px-2 py-1 text-xs rounded text-slate-700 hover:bg-slate-100', 'Modifier le message');
+    bEdit.type = 'button';
+    bEdit.addEventListener('click', function(ev) { ev.stopPropagation(); closeMenu(); startEdit(); });
+    var bDel = createEl('button', 'text-left px-2 py-1 text-xs rounded font-semibold text-red-600 hover:bg-red-50', 'Supprimer le message');
+    bDel.type = 'button';
+    bDel.addEventListener('click', async function(ev) {
+      ev.stopPropagation(); closeMenu();
+      if (!confirm('Supprimer ce message ? Cette action est définitive.')) return;
+      try { await db.deleteContenu(c.id); await reload(); }
+      catch(err) { alert('Erreur : ' + (err.message || err)); }
+    });
+    menu.appendChild(bEdit); menu.appendChild(bDel);
+    bubble.appendChild(menu);
+  });
+  function startEdit() {
+    contentEl.classList.add('hidden');
+    var box = createEl('div', 'mt-1');
+    var ta = createEl('textarea', 'w-full text-xs text-slate-800 rounded-lg border border-slate-300 p-2 resize-none');
+    ta.rows = 3; ta.value = c.contenu;
+    var actions = createEl('div', 'flex gap-2 mt-1 justify-end');
+    var cancel = createEl('button', 'px-3 py-1 text-xs font-semibold rounded-lg bg-slate-200 text-slate-700', 'Annuler');
+    cancel.type = 'button';
+    cancel.addEventListener('click', function() { reload(); });
+    var save = createEl('button', 'px-3 py-1 text-xs font-semibold rounded-lg bg-indigo-600 text-white', 'Valider');
+    save.type = 'button';
+    save.addEventListener('click', async function() {
+      var val = ta.value.trim(); if (!val) return;
+      save.disabled = true;
+      try { await db.updateContenu(c.id, val); await reload(); }
+      catch(err) { alert('Erreur : ' + (err.message || err)); save.disabled = false; }
+    });
+    actions.appendChild(cancel); actions.appendChild(save);
+    box.appendChild(ta); box.appendChild(actions);
+    bubble.appendChild(box);
+    ta.focus();
+  }
+  return pencil;
+}
+
 // ── Rendu messages (conversation bidirectionnelle patient ↔ équipe) ──
 async function renderPatientMessages(patientId) {
   var list = document.getElementById('detail-messages-list');
@@ -2995,24 +3045,30 @@ async function renderPatientMessages(patientId) {
       bubble.appendChild(head);
 
       // Contenu
+      var contentEl;
       if (c.type === 'lien') {
-        var link = createEl('a', 'text-xs text-indigo-600 underline break-all', c.contenu);
-        link.href = c.contenu.startsWith('http') ? c.contenu : 'https://' + c.contenu;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        bubble.appendChild(link);
+        contentEl = createEl('a', 'text-xs text-indigo-600 underline break-all', c.contenu);
+        contentEl.href = c.contenu.startsWith('http') ? c.contenu : 'https://' + c.contenu;
+        contentEl.target = '_blank';
+        contentEl.rel = 'noopener';
       } else {
-        bubble.appendChild(createEl('p', 'text-xs leading-relaxed whitespace-pre-wrap', c.contenu));
+        contentEl = createEl('p', 'text-xs leading-relaxed whitespace-pre-wrap', c.contenu);
       }
+      bubble.appendChild(contentEl);
 
-      // Horodatage
+      // Horodatage (+ "(modifié)" si édité) et crayon sur ses propres messages
       var date = new Date(c.created_at);
       var today = new Date();
       var sameDay = date.toDateString() === today.toDateString();
       var stamp = sameDay
         ? date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})
         : date.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'}) + ' ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
-      bubble.appendChild(createEl('div', 'text-[9px] text-slate-400 mt-0.5 ' + (isPatient ? '' : 'text-right'), stamp));
+      if (c.modifie_le) stamp += ' (modifié)';
+      var isOwnStaff = !isPatient && currentProfile && c.cree_par === currentProfile.id;
+      var footer = createEl('div', 'flex items-center gap-2 mt-0.5 ' + (isPatient ? '' : 'justify-end'));
+      if (isOwnStaff) footer.appendChild(buildMsgPencilStaff(bubble, contentEl, c, function() { return renderPatientMessages(patientId); }));
+      footer.appendChild(createEl('div', 'text-[9px] text-slate-400', stamp));
+      bubble.appendChild(footer);
 
       row.appendChild(bubble);
       list.appendChild(row);

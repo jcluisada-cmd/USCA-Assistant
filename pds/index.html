@@ -717,11 +717,82 @@
     if (name === 'permissions')   return renderTabPermissions(patient, tc);
   }
 
+  // Crayon "Modifier / Supprimer" sur ses propres messages soignant (PdS, dark-aware)
+  function buildPdsMsgPencil(bubble, txtEl, m, reload) {
+    var pencil = document.createElement('button');
+    pencil.type = 'button';
+    pencil.className = 'text-xs leading-none text-slate-400 hover:text-slate-600 dark:hover:text-slate-200';
+    pencil.textContent = '✏️';
+    pencil.setAttribute('aria-label', 'Modifier ou supprimer le message');
+    var menu = null;
+    function closeMenu() { if (menu) { menu.remove(); menu = null; } }
+    pencil.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (menu) { closeMenu(); return; }
+      menu = document.createElement('div');
+      menu.className = 'mt-1.5 flex flex-col gap-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 p-1 shadow-sm';
+      var bEdit = document.createElement('button');
+      bEdit.type = 'button';
+      bEdit.className = 'text-left px-2 py-1 text-xs rounded text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700';
+      bEdit.textContent = 'Modifier le message';
+      bEdit.addEventListener('click', function(ev) { ev.stopPropagation(); closeMenu(); startEdit(); });
+      var bDel = document.createElement('button');
+      bDel.type = 'button';
+      bDel.className = 'text-left px-2 py-1 text-xs rounded font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30';
+      bDel.textContent = 'Supprimer le message';
+      bDel.addEventListener('click', async function(ev) {
+        ev.stopPropagation(); closeMenu();
+        if (!confirm('Supprimer ce message ? Cette action est définitive.')) return;
+        try {
+          var res = await sb.from('contenus_partages').delete().eq('id', m.id);
+          if (res.error) throw res.error;
+          reload();
+        } catch(err) { showToast('Erreur : ' + (err.message || err), 'error'); }
+      });
+      menu.appendChild(bEdit); menu.appendChild(bDel);
+      bubble.appendChild(menu);
+    });
+    function startEdit() {
+      txtEl.classList.add('hidden');
+      var box = document.createElement('div');
+      box.className = 'mt-1';
+      var ta = document.createElement('textarea');
+      ta.className = 'w-full text-sm text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-700 rounded-lg border border-slate-300 dark:border-slate-600 p-2 resize-none';
+      ta.rows = 3; ta.value = String(m.contenu || '');
+      var actions = document.createElement('div');
+      actions.className = 'flex gap-2 mt-1 justify-end';
+      var cancel = document.createElement('button');
+      cancel.type = 'button';
+      cancel.className = 'px-3 py-1 text-xs font-semibold rounded-lg bg-slate-200 dark:bg-slate-600 text-slate-700 dark:text-slate-100';
+      cancel.textContent = 'Annuler';
+      cancel.addEventListener('click', function() { reload(); });
+      var save = document.createElement('button');
+      save.type = 'button';
+      save.className = 'px-3 py-1 text-xs font-semibold rounded-lg bg-indigo-600 text-white';
+      save.textContent = 'Valider';
+      save.addEventListener('click', async function() {
+        var val = ta.value.trim(); if (!val) return;
+        save.disabled = true;
+        try {
+          var res = await sb.from('contenus_partages').update({ contenu: val, modifie_le: new Date().toISOString() }).eq('id', m.id);
+          if (res.error) throw res.error;
+          reload();
+        } catch(err) { showToast('Erreur : ' + (err.message || err), 'error'); save.disabled = false; }
+      });
+      actions.appendChild(cancel); actions.appendChild(save);
+      box.appendChild(ta); box.appendChild(actions);
+      bubble.appendChild(box);
+      ta.focus();
+    }
+    return pencil;
+  }
+
   async function renderTabMessages(patient, container) {
     var r = await sb.from('contenus_partages')
       .select('*, profiles!cree_par(email)').eq('patient_id', patient.id)
       .order('created_at', { ascending: true });
     var msgs = r.data || [];
+    var session = await auth.getStaffSession();
 
     var list = document.createElement('div');
     list.className = 'space-y-2 max-h-96 overflow-y-auto p-1';
@@ -748,12 +819,19 @@
           var email = m.profiles && m.profiles.email;
           who = email ? (' · ' + email.split('@')[0]) : ' · Soignant';
         }
-        ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' }) + who;
+        ts.textContent = new Date(m.created_at).toLocaleString('fr-FR', { hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit' }) + who + (m.modifie_le ? ' (modifié)' : '');
         var txt = document.createElement('div');
         txt.className = 'text-sm';
         txt.textContent = String(m.contenu || '');
         bubble.appendChild(ts);
         bubble.appendChild(txt);
+        // Crayon uniquement sur ses propres messages soignant (compte PdS partagé)
+        if (!isPatient && session && m.cree_par === session.id) {
+          var foot = document.createElement('div');
+          foot.className = 'flex justify-end mt-1';
+          foot.appendChild(buildPdsMsgPencil(bubble, txt, m, function() { container.replaceChildren(); return renderTabMessages(patient, container); }));
+          bubble.appendChild(foot);
+        }
         wrap.appendChild(bubble);
         list.appendChild(wrap);
       });

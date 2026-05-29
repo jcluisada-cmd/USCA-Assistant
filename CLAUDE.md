@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.41 (2026-05-22) — Dashboard PdS livré + corrections post-incident CF. Home PdS : uniquement cartes patient (sections globales Transmissions/Messages supprimées). Vue détail patient : onglet **Transmissions** par défaut (puis Messages, Permissions). Messages affichent l'identifiant auteur (`email.split('@')[0]`, ex: `jc.luisada`) côté patient, admin et PdS — migration v39 RLS profiles_select_all. Admin médecin : encart Cushman + carte Transmissions désormais en **accordion replié par défaut** (`<details>`). Fix : query patients PdS utilisait colonne `ddn` inexistante → corrigé en `date_naissance`. Incident CF du 22/05 (blobs corrompus après deploys échoués pendant incident plateforme) résolu par cache-bust (commit `5dc6f9e`) — voir mémoire `feedback_cf_pages_blob_corruption`. Service Worker : `usca-v4.41`.
+> **Version courante** : v4.42 (2026-05-29) — **Modifier / supprimer ses propres messages** dans la conversation patient ↔ soignants. Icône crayon ✏️ sur ses propres bulles → menu « Modifier le message » / « Supprimer le message » (rouge + confirmation), sur les 3 interfaces (patient, admin, PdS). Édition inline en `textarea`, indicateur « (modifié) ». Migration v40 : colonne `contenus_partages.modifie_le`, policy `contenus_update_own`, DELETE resserré (`contenus_delete_own`, prédicat `auth.uid()=cree_par OR (auth.uid() IS NULL AND cree_par IS NULL)`). Helper `db.updateContenu` ajouté. Risque RLS patient anon maintenu (non aggravé, cf. INSERT ouvert v21). Service Worker : `usca-v4.42`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.41` |
+| **Service Worker** | `usca-v4.42` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |

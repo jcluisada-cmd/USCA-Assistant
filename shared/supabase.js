@@ -398,6 +398,13 @@ window.db = {
     return data;
   },
 
+  async updateContenu(id, contenu) {
+    const { error } = await sb.from('contenus_partages')
+      .update({ contenu: contenu, modifie_le: new Date().toISOString() })
+      .eq('id', id);
+    if (error) throw error;
+  },
+
   async deleteContenu(id) {
     const { error } = await sb.from('contenus_partages').delete().eq('id', id);
     if (error) throw error;
