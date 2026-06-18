@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#102a43">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="USCA">
+<title>USCA Toolbox — Pitié-Salpêtrière</title>
+<script>
+  // alias parent's Supabase client into iframe scope (same-origin)
+  try { window.sb = window.parent && window.parent.sb; } catch (_) {}
+</script>
+<script src="/shared/modules-config.js"></script>
+<script src="/shared/module-visibility.js"></script>
+<script>
+(function() {
+  try {
+    const profile = window.parent && window.parent.currentProfile;
+    if (profile && window.moduleVisibility) {
+      window.moduleVisibility.apply(profile);
+    }
+  } catch (e) { console.warn('[toolbox] moduleVisibility init failed:', e); }
+})();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
+<script>
+// Mode embarqué : masquer la navigation V1 quand chargé dans l'iframe staff
+if (new URLSearchParams(window.location.search).has('embedded')) {
+  const style = document.createElement('style');
+  style.textContent = '.bottom-nav, .top-bar { display: none !important; } .content { padding-top: 8px; padding-bottom: 16px; } .fiche-iframe { height: calc(100vh - 56px) !important; }';
+  document.head.appendChild(style);
+}
+// Dark mode : l'iframe lit le localStorage partagé (même domaine)
+(function() {
+  function applyToolboxDark(dark) {
+    if (dark) { document.documentElement.classList.add('dark'); }
+    else { document.documentElement.classList.remove('dark'); }
+  }
+  if (localStorage.getItem('usca_theme') === 'dark') applyToolboxDark(true);
+  function saveViewThenReload() {
+    try {
+      if (window.__uscaToolboxState) {
+        sessionStorage.setItem('usca-tb-view', JSON.stringify(window.__uscaToolboxState()));
+      }
+    } catch(e) {}
+    window.location.reload();
+  }
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'usca-theme') saveViewThenReload();
+  });
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'usca_theme') saveViewThenReload();
+  });
+})();
+// Register Service Worker (chemin absolu : index.html est sous /staff/toolbox-app/dist/)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', {scope: '/'}).catch(()=>{});
+}
+</script>
+</body>
+</html>

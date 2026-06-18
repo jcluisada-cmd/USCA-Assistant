@@ -1,0 +1,8 @@
+node_modules/
+*.tsbuildinfo
+.vite/
+.cache/
+
+# IMPORTANT : dist/ est volontairement NON ignoré.
+# Le build statique est committé pour que Cloudflare Pages (déploiement
+# git-based) serve la Toolbox sans étape de build. Aligné sur metaboscope/.

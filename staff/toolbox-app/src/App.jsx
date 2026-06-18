@@ -1,0 +1,1651 @@
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
+
+/* ══════════════════════ SVG ICONS ══════════════════════ */
+const I = {
+  home: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>,
+  pill: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>,
+  calendar: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>,
+  calc: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>,
+  menu: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>,
+  brain: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M12 5v13"/></svg>,
+  alert: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>,
+  building: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>,
+  steth: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>,
+  scale: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
+  chevR: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>,
+  chevD: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>,
+  chevL: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>,
+  check: (c,s=12) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>,
+  checkCircle: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>,
+  alertCircle: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>,
+  activity: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>,
+  reset: (c,s=14) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>,
+  search: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
+  heart: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>,
+  star: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  thermo: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>,
+  zap: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>,
+  shield: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>,
+  trend: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
+  download: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>,
+  msgSquare: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  send: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>,
+  copy: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>,
+  plus: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>,
+  clipboard: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>,
+  grip: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="5" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="19" r="1"/></svg>,
+  trash: (c,s=16) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>,
+  book: (c,s=20) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>,
+};
+
+/* ══════════════════════ COLORS ══════════════════════ */
+const C = {
+  n: { 50:"#f0f4f8",100:"#d9e2ec",200:"#bcccdc",300:"#9fb3c8",400:"#7b8faa",500:"#627d98",600:"#486581",700:"#334e68",800:"#243b53",900:"#102a43" },
+  t: { 50:"#effcf6",100:"#c6f7e2",200:"#8eedc7",300:"#65d6ad",400:"#3ebd93",500:"#27ab83",600:"#199473",700:"#147d64",800:"#0c6b58",900:"#014d40" },
+  a: { 50:"#fffbea",100:"#fff3c4",200:"#fce588",300:"#fadb5f",400:"#f7c948",500:"#f0b429",600:"#de911d",700:"#cb6e17",800:"#b44d12",900:"#8d2b0b" },
+  r: { 100:"#fee2e2",500:"#ef4444",600:"#dc2626",700:"#b91c1c" },
+  bg:"#f8fafc", bdr:"#e2e8f0"
+};
+
+/* ══════════ DARK MODE : swap palette si actif ══════════ */
+if (localStorage.getItem('usca_theme') === 'dark') {
+  // Navy : les tons clairs deviennent sombres, les sombres deviennent clairs
+  C.n[50]="#0f172a"; C.n[100]="#1e293b"; C.n[200]="#334155"; C.n[300]="#475569";
+  C.n[400]="#64748b"; C.n[500]="#94a3b8"; C.n[600]="#cbd5e1"; C.n[700]="#e2e8f0";
+  C.n[800]="#f1f5f9"; C.n[900]="#f8fafc";
+  // Teal : garder les tons moyens lisibles, assombrir les fonds
+  C.t[50]="rgba(16,185,129,0.1)"; C.t[100]="rgba(16,185,129,0.15)"; C.t[200]="#6ee7b7";
+  // Amber : assombrir les fonds
+  C.a[50]="rgba(245,158,11,0.1)"; C.a[100]="rgba(245,158,11,0.15)"; C.a[200]="#fcd34d";
+  // Red : assombrir les fonds
+  C.r[100]="rgba(239,68,68,0.15)";
+  // Backgrounds et bordures
+  C.bg="#0f172a"; C.bdr="#334155";
+}
+
+/* ══════════════════════ CLINICAL DATA ══════════════════════ */
+const SUBSTANCES = {
+  alcool: {
+    name:"Alcool", icon:"🍷", color:C.a[600],
+    critereHosp:"CIWA-Ar ≥ 8 ou PAWSS ≥ 4, comorbidité sévère ou échec ambulatoire",
+    sevrageJ1J4:{ title:"BZD symptom-triggered + Thiamine IV + Correction électrolytique", details:[
+      {label:"Diazépam (Valium)",desc:"10-20 mg PO toutes les 1-2h selon Cushman, max 100 mg/j. Si hépatopathie → Oxazépam (Séresta) 25-50 mg"},
+      {label:"Thiamine (Vitamine B1)",desc:"500 mg IV/j pendant 3-5 jours (prévention Gayet-Wernicke)"},
+      {label:"Hydratation",desc:"Sérum physiologique + correction K+, Mg²⁺, phosphore"},
+      {label:"Surveillance",desc:"Score Cushman ou CIWA-Ar toutes les 4-6h"}
+    ]},
+    decisionJ8:"Choisir naltrexone ou acamprosate ; envisager baclofène si hépatopathie avancée ou échec des antagonistes opioïdes",
+    traitements:[
+      {mol:"Naltrexone",marque:"Revia",poso:"50 mg/j",debut:"J5",ind:"Objectif abstinence, fonction hépatique normale",amm:"AMM",ci:"Hépatite aiguë, IH sévère, traitement opioïde en cours",np:"A"},
+      {mol:"Acamprosate",marque:"Aotal",poso:"666 mg ×3/j (>60kg)",debut:"J5",ind:"Objectif abstinence, modulation glutamatergique",amm:"AMM",ci:"IR sévère (ClCr <30)",np:"A"},
+      {mol:"Nalméfène",marque:"Selincro",poso:"18 mg à la demande, 1-2h avant exposition",debut:"Post-sevrage",ind:"Objectif réduction (pas abstinence)",amm:"AMM",ci:"Traitement opioïde en cours",np:"A"},
+      {mol:"Baclofène",marque:"Baclofène",poso:"15-20 mg/j → +10 mg/3-4j → 30-80 mg/j",debut:"J5-J8",ind:"Hépatopathie avancée, échec NTX/acamprosate",amm:"Hors AMM",ci:"Épilepsie non contrôlée, IR sévère",np:"B"},
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-50 mg/j → 200-300 mg/j",debut:"J8+",ind:"Craving persistant, insomnie, anxiété résiduelle",amm:"Hors AMM",ci:"Lithiase rénale, glaucome angle fermé",np:"B"},
+      {mol:"Disulfirame",marque:"Espéral",poso:"500 mg/j → 250 mg/j",debut:"Après sevrage complet",ind:"Patient très motivé, supervision possible",amm:"AMM",ci:"Hépatopathie sévère, cardiopathie, neuropathie",np:"B"}
+    ],
+    redFlags:["CIWA-Ar ≥ 25","Delirium tremens","Convulsions","Hépatopathie décompensée"],
+    nonPharma:[
+      {type:"Acupuncture NADA",timing:"J1-J3 ++",ind:"Craving, anxiété, insomnie de sevrage"},
+      {type:"Hypnose",timing:"J4-J8",ind:"Automatismes, triggers, gestion émotionnelle"},
+      {type:"Thérapie VR",timing:"J7-J12",ind:"Cue-exposure (environnements festifs/domestiques)"},
+      {type:"tDCS",timing:"J5-J9",ind:"Si craving VAS ≥7/10 persistant malgré tt de fond + TCC"}
+    ]
+  },
+  opioides: {
+    name:"Opioïdes",icon:"💉",color:C.n[700],
+    critereHosp:"COWS ≥ 8 ; grossesse ou comorbidité grave",
+    sevrageJ1J4:{title:"Induction buprénorphine ou méthadone + contrôle symptômes autonomes",details:[
+      {label:"Buprénorphine (Subutex)",desc:"4-8 mg J1 (fractionnée). Attendre COWS ≥ 8 avant induction. ↑ jusqu'à 16 mg/j"},
+      {label:"Méthadone",desc:"10-30 mg J1 ; +10 mg/5j → 60-120 mg/j. Si déjà sous TSO ou refusant BHD"},
+      {label:"Clonidine",desc:"0,1-0,3 mg /6-8h si hyperactivité sympathique ou CI agonistes"},
+      {label:"Symptomatique",desc:"Lopéramide (diarrhées), ibuprofène (myalgies), métopimazine (nausées)"}
+    ]},
+    decisionJ8:"Ajuster la dose TSO ; évaluer éligibilité naltrexone si sevrage complet ≥ 7j",
+    traitements:[
+      {mol:"Buprénorphine",marque:"Subutex / génériques",poso:"2-16 mg/j SL",debut:"J1",ind:"TSO 1ère intention",amm:"AMM",ci:"IR sévère, association agonistes opioïdes purs",np:"A"},
+      {mol:"Méthadone",marque:"Méthadone AP-HP",poso:"60-120 mg/j",debut:"J1",ind:"Forte dépendance, échec BHD, déjà sous TSO",amm:"AMM",ci:"IR sévère (relative), allongement QT",np:"A"},
+      {mol:"Naltrexone",marque:"Revia",poso:"50 mg/j",debut:"Après ≥7j abstinence",ind:"Motivation abstinence totale",amm:"AMM",ci:"⚠️ Patient sous opioïdes (sevrage précipité !)",np:"B"}
+    ],
+    redFlags:["Sevrage précipité","Dépression respiratoire","COWS > 24","Association dépresseurs (BZD/OH)"],
+    nonPharma:[
+      {type:"Acupuncture NADA",timing:"J1-J5",ind:"Douleurs de sevrage, insomnie, syndrome neurovégétatif"},
+      {type:"Hypnose",timing:"J4-J10",ind:"Hypnoanalgésie, gestion du craving"},
+      {type:"Thérapie VR",timing:"J8-J12",ind:"Relaxation, prévention rechute"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant ou échec psychothérapies"}
+    ]
+  },
+  stimulants: {
+    name:"Cocaïne / Crack",icon:"⚡",color:C.r[600],
+    critereHosp:"Intoxication aiguë, complication CV, psychose ou grossesse",
+    sevrageJ1J4:{title:"Sédation BZD + surveillance ECG + refroidissement + halopéridol si psychose",details:[
+      {label:"Diazépam",desc:"5-10 mg IV/PO si agitation, titrer jusqu'à 20 mg"},
+      {label:"Halopéridol",desc:"2-5 mg IM/IV si hallucinations / psychose"},
+      {label:"Monitorage",desc:"ECG systématique, surveillance cardiaque continue"},
+      {label:"Crack : complications respi",desc:"Auscultation, SpO2, radio thorax si dyspnée/hémoptysie"}
+    ]},
+    decisionJ8:"Contingency management + community reinforcement ; envisager topiramate ou disulfiram",
+    traitements:[
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-50 mg/j → progressif",debut:"J5-J8",ind:"Craving persistant",amm:"Hors AMM",ci:"Lithiase rénale, glaucome",np:"C"},
+      {mol:"Disulfirame",marque:"Espéral",poso:"250 mg/j",debut:"Post-sevrage",ind:"Anti-craving cocaïne (inhib. DBH)",amm:"Hors AMM",ci:"IH sévère, cardiopathie",np:"C"},
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200-2400 mg/j",debut:"J1",ind:"Modulation glutamatergique",amm:"Hors AMM",ci:"Allergie (rare)",np:"C"},
+      {mol:"Bupropion",marque:"Zyban",poso:"150 mg bid",debut:"J5",ind:"Craving + sevrage tabagique",amm:"Hors AMM",ci:"Épilepsie, TCA",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Complications CV (SCA, AVC)","Hyperthermie","Grossesse"],
+    nonPharma:[
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Cue-exposure + skills training (++ pertinent sans pharmaco spécifique)"},
+      {type:"Hypnose",timing:"J4-J10",ind:"Craving, impulsivité, automatismes"},
+      {type:"Acupuncture",timing:"J3-J8",ind:"Craving, anxiété, insomnie"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant ou échec psychothérapeutique"}
+    ]
+  },
+  cannabis: {
+    name:"Cannabis",icon:"🌿",color:C.t[600],
+    critereHosp:"Usage quotidien lourd + comorbidité psy grave ou cannabinoïdes de synthèse",
+    sevrageJ1J4:{title:"Soutien psychologique + environnement calme + symptomatique",details:[
+      {label:"Hydroxyzine (Atarax)",desc:"25-50 mg au coucher si insomnie"},
+      {label:"Oxazépam (Séresta)",desc:"10-30 mg/j si anxiété marquée (5-7j max)"},
+      {label:"Cannabinoïdes synthétiques",desc:"BZD si agitation + antipsychotiques atypiques si hallucinations + surv. cardiaque/hépatique"}
+    ]},
+    decisionJ8:"Structurer programme psychothérapie ; envisager NAC ou gabapentine",
+    traitements:[
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J5-J8",ind:"Craving persistant",amm:"Hors AMM",ci:"Allergie",np:"B"},
+      {mol:"Gabapentine",marque:"Neurontin",poso:"300 mg tid",debut:"J5-J8",ind:"Craving + insomnie + anxiété",amm:"Hors AMM",ci:"IR (ajuster poso)",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Hallucinations","Hyperemesis cannabinoïde","Cannabinoïdes de synthèse"],
+    nonPharma:[
+      {type:"Hypnose",timing:"J4-J10",ind:"Irritabilité, sommeil, gestion émotionnelle"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Insomnie, anxiété"},
+      {type:"Thérapie VR",timing:"J6-J12",ind:"Relaxation immersive, gestion stress"},
+      {type:"tDCS",timing:"J5-J9",ind:"Patients résistants aux psychothérapies"}
+    ]
+  },
+  bzd: {
+    name:"Benzodiazépines",icon:"💊",color:C.n[500],
+    critereHosp:"Consommation > 40 mg diazépam-eq/j ou usage prolongé > 3 mois",
+    sevrageJ1J4:{title:"Conversion BZD longue demi-vie + taper hyperbolique + surv. CIWA-B",details:[
+      {label:"Conversion au diazépam",desc:"Calculer dose équivalente. Ex: alprazolam 1 mg ≈ diazépam 10 mg"},
+      {label:"Dose < 50 mg DZP-eq, < 6 mois",desc:"Taper hyperbolique : -10% tous les 3-7 jours"},
+      {label:"Dose > 50 mg ou > 6 mois",desc:"Taper lent : -5%/semaine + carbamazépine ou gabapentine"},
+      {label:"Si hépatopathie",desc:"Préférer oxazépam ou lorazépam (métabolisme non hépatique)"}
+    ]},
+    decisionJ8:"Définir rythme de réduction et adjuvants (carbamazépine/gabapentine)",
+    traitements:[
+      {mol:"Carbamazépine",marque:"Tégrétol",poso:"200-600 mg/j",debut:"J1-J4",ind:"Adjuvant si dose élevée, prévention convulsions",amm:"Hors AMM",ci:"Bloc AV, porphyrie",np:"B"},
+      {mol:"Gabapentine",marque:"Neurontin",poso:"900-1800 mg/j",debut:"J1-J4",ind:"Insomnie, anxiété de sevrage",amm:"Hors AMM",ci:"IR sévère",np:"C"},
+      {mol:"Flumazénil",marque:"Anexate",poso:"Perfusion lente sous surveillance",debut:"J5+",ind:"Innovation : désensibilisation supervisée",amm:"Hors AMM",ci:"Épilepsie, dépendance BZD non stabilisée",np:"C"}
+    ],
+    redFlags:["Convulsions","Delirium","Polydépendance OH/opioïdes","Dose > 50 mg DZP-eq"],
+    nonPharma:[
+      {type:"Acupuncture",timing:"J1-J8",ind:"Anxiété de sevrage, insomnie (++ indiqué)"},
+      {type:"Hypnose",timing:"J4-J12",ind:"Gestion anxiété, autohypnose post-sortie (++ indiqué)"},
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Relaxation immersive en complément du taper"},
+      {type:"tDCS/rTMS",timing:"J5+",ind:"Anxiété résiduelle ou insomnie"}
+    ]
+  },
+  nps: {
+    name:"NPS / Cathinones",icon:"🧪",color:C.a[700],
+    critereHosp:"Complications médicales, comorbidité psy, chemsex avec risque infectieux",
+    sevrageJ1J4:{title:"PEC syndromique (stimulant → protocole stimulants ; sédatif → sédatifs)",details:[
+      {label:"Profil stimulant (3-MMC, cathinones)",desc:"BZD sédatives + ECG + surveillance + refroidissement si hyperthermie"},
+      {label:"Chemsex / slam",desc:"Dépistage VIH, VHC, VHB systématique. TPE si rapport à risque < 48h"},
+      {label:"Bilan infectieux",desc:"Liaison hépatologie si sérologies +. Bilan IST complet"},
+      {label:"Évaluation psy",desc:"Thymie à distance (J7+) : épisode dépressif post-stimulants fréquent"}
+    ]},
+    decisionJ8:"Programme psychothérapie intensive + réinsertion ; topiramate/disulfiram si craving",
+    traitements:[
+      {mol:"Topiramate",marque:"Epitomax",poso:"25-300 mg/j progressif",debut:"J8+",ind:"Craving persistant",amm:"Hors AMM",ci:"Lithiase rénale",np:"C"},
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J1",ind:"Modulation glutamatergique",amm:"Hors AMM",ci:"Allergie",np:"C"}
+    ],
+    redFlags:["Psychose aiguë","Hyperthermie sévère","Complication CV","Sérologies VIH/VHC+","Risque suicidaire (post-crash)"],
+    nonPharma:[
+      {type:"Thérapie VR",timing:"J5-J12",ind:"Scénarios chemsex/festifs, compétences de refus"},
+      {type:"Hypnose",timing:"J5-J10",ind:"Gestion impulsivité, triggers"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Anxiété, insomnie post-crash"},
+      {type:"tDCS",timing:"J5-J9",ind:"Craving persistant"}
+    ]
+  },
+  ketamine: {
+    name:"Kétamine",icon:"🔮",color:C.t[800],
+    critereHosp:"Complications somatiques (cystite, hépatotoxicité), usage compulsif quotidien",
+    sevrageJ1J4:{title:"Approche symptomatique — pas de protocole standardisé",details:[
+      {label:"Symptomatique",desc:"BZD si anxiété, antalgiques, antiémétiques"},
+      {label:"Bilan somatique",desc:"ECBU + écho vésicale (cystite kétaminique), bilan hépatique/rénal"},
+      {label:"Avis urologique",desc:"Systématique si plaintes urinaires (pollakiurie, hématurie)"},
+      {label:"Paradoxe thérapeutique",desc:"Kétamine/eskétamine = traitement (dépression résistante) ≠ substance addictive"}
+    ]},
+    decisionJ8:"Évaluation psy complète, PEC comorbidités, orientation psychothérapique",
+    traitements:[
+      {mol:"N-acétylcystéine",marque:"Mucomyst",poso:"1200 mg bid",debut:"J1",ind:"Protection hépatique + anti-craving",amm:"Hors AMM",ci:"Allergie",np:"D"}
+    ],
+    redFlags:["Cystite kétaminique sévère","Hépatotoxicité","État dissociatif prolongé","Complications rénales"],
+    nonPharma:[
+      {type:"Hypnose",timing:"J4-J10",ind:"Craving, états dissociatifs"},
+      {type:"Acupuncture",timing:"J2-J8",ind:"Douleurs pelviennes, anxiété"},
+      {type:"Thérapie VR",timing:"J6-J12",ind:"Relaxation, prévention rechute"},
+      {type:"tDCS",timing:"Au cas par cas",ind:"Données très limitées"}
+    ]
+  }
+};
+
+const SCORES = {
+  cushman:{name:"Score de Cushman",sub:"Sevrage alcoolique",
+    items:[
+      {n:"Fréquence cardiaque",o:["< 80","80-100","101-120","> 120"],s:[0,1,2,3]},
+      {n:"PA systolique",o:["< 135","135-160","161-200","> 200"],s:[0,1,2,3]},
+      {n:"Fréquence respiratoire",o:["< 16","16-25","26-35","> 35"],s:[0,1,2,3]},
+      {n:"Tremblements",o:["Absents","Mains en extension","Membres sup.","Généralisés"],s:[0,1,2,3]},
+      {n:"Sueurs",o:["Absentes","Paumes","Paumes + front","Généralisées"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Absente","Discrète","Généralisée","Incoercible"],s:[0,1,2,3]},
+      {n:"Troubles sensoriels",o:["Absents","Gêne lumière/bruit","Hallucinations critiquées","Hallucinations non critiquées"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=3?{l:"Léger",c:C.t[500],a:"Surveillance simple, pas de BZD systématique"}:s<=7?{l:"Modéré",c:C.a[500],a:"Diazépam 10 mg PO, réévaluer à 1h. Thiamine IV 500 mg/j"}:s<=12?{l:"Sévère",c:C.a[700],a:"Diazépam 10-20 mg PO/IV toutes les 1-2h. Monitoring continu. Lit monitoré"}:{l:"Très sévère",c:C.r[600],a:"⚠️ Risque DT/convulsions. Diazépam IV titré. Phénobarbital si échec. Transfert réa"}
+  },
+  cows:{name:"Score COWS",sub:"Sevrage opioïdes",
+    items:[
+      {n:"FC au repos",o:["≤ 80","81-100","101-120","> 120"],s:[0,1,2,4]},
+      {n:"Sueurs",o:["Absentes","Légères","Front perlé","Ruisselantes"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Aucune","Remuant","Se lève souvent","Marche permanent"],s:[0,1,3,5]},
+      {n:"Mydriase",o:["Normale","Possible","Modérée","Maximale"],s:[0,1,2,5]},
+      {n:"Douleurs ostéo-articulaires",o:["Absentes","Légères","Frictions","Ne tient pas en place"],s:[0,1,2,4]},
+      {n:"Rhinorrhée / larmoiement",o:["Absent","Nez bouché","Nez coule","Ruissellement"],s:[0,1,2,4]},
+      {n:"Troubles digestifs",o:["Absents","Crampes","Nausées/vomiss.","Diarrhées"],s:[0,1,2,3]},
+      {n:"Tremblements",o:["Absents","Légers mains","Bras étendus","Généralisés"],s:[0,1,2,4]},
+      {n:"Bâillements",o:["Absents","1-2","3-4","Multiples"],s:[0,1,2,4]},
+      {n:"Anxiété",o:["Aucune","Légère","Marquée","Sévère"],s:[0,1,2,4]},
+      {n:"Chair de poule",o:["Peau lisse","Palpable","Visible","Majeure"],s:[0,3,5,5]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Pas de sevrage significatif. Réévaluer à 1-2h"}:s<=12?{l:"Léger",c:C.a[400],a:"Sevrage léger. Induction buprénorphine possible si ≥ 8"}:s<=24?{l:"Modéré",c:C.a[600],a:"Induction buprénorphine 4-8 mg + symptomatique"}:s<=36?{l:"Sévère",c:C.r[500],a:"⚠️ BHD 8 mg + symptomatique intensif. Surveillance rapprochée"}:{l:"Très sévère",c:C.r[700],a:"⚠️ COWS > 36 : stabilité hémodynamique. BHD 8-16 mg. Lit monitoré"}
+  },
+  audit:{name:"AUDIT",sub:"Alcool (10 items)",
+    items:[
+      {n:"Fréquence de consommation",o:["Jamais","≤ 1×/mois","2-4×/mois","2-3×/sem","≥ 4×/sem"],s:[0,1,2,3,4]},
+      {n:"Verres/jour de consommation",o:["1-2","3-4","5-6","7-9","≥ 10"],s:[0,1,2,3,4]},
+      {n:"≥ 6 verres en 1 occasion",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Incapacité de s'arrêter",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Activités manquées",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Besoin d'OH le matin",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Culpabilité",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Trous de mémoire",o:["Jamais","< 1×/mois","1×/mois","1×/sem","Quotidien"],s:[0,1,2,3,4]},
+      {n:"Blessure liée OH",o:["Non","Oui, pas 12 derniers mois","Oui, 12 derniers mois"],s:[0,2,4]},
+      {n:"Entourage préoccupé",o:["Non","Oui, pas 12 derniers mois","Oui, 12 derniers mois"],s:[0,2,4]}
+    ],
+    interp:(s)=>s<=7?{l:"Usage simple",c:C.t[500],a:"Consommation faible risque. Conseil bref"}:s<=15?{l:"Usage à risque",c:C.a[500],a:"Usage nocif probable. Intervention brève. Rééval 3 mois"}:s<=19?{l:"Usage nocif",c:C.a[700],a:"Consultation spécialisée recommandée (CSAPA/addictologue)"}:{l:"Dépendance probable",c:C.r[600],a:"Orientation PEC spécialisée. Évaluer sevrage"}
+  },
+  phq9:{name:"PHQ-9",sub:"Dépression",
+    items:[
+      {n:"Peu d'intérêt / plaisir",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Triste, déprimé",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficultés de sommeil",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Fatigue",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Appétit modifié",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Mauvaise opinion de soi",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficultés concentration",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Ralentissement / agitation",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Idées suicidaires",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Pas de dépression significative"}:s<=9?{l:"Léger",c:C.a[400],a:"Dépression légère. Psychothérapie de soutien"}:s<=14?{l:"Modéré",c:C.a[600],a:"Envisager antidépresseur (sertraline 50 mg ou vortioxétine 10 mg)"}:s<=19?{l:"Mod. sévère",c:C.a[700],a:"AD recommandé + psychothérapie"}:{l:"Sévère",c:C.r[600],a:"⚠️ AD + psychothérapie. Évaluer risque suicidaire (item 9)"}
+  },
+  gad7:{name:"GAD-7",sub:"Anxiété",
+    items:[
+      {n:"Nervosité, anxiété",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Incapacité contrôler inquiétude",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Inquiétude excessive",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Difficulté à se détendre",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Agitation",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Irritabilité",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]},
+      {n:"Peur catastrophe",o:["Jamais","Plusieurs j","½ des j","Quasi quotidien"],s:[0,1,2,3]}
+    ],
+    interp:(s)=>s<=4?{l:"Minimal",c:C.t[500],a:"Anxiété non significative"}:s<=9?{l:"Léger",c:C.a[400],a:"Psychothérapie, hygiène de vie"}:s<=14?{l:"Modéré",c:C.a[600],a:"Psychothérapie + envisager tt (sertraline, venlafaxine)"}:{l:"Sévère",c:C.r[600],a:"Tt pharmacologique recommandé + TCC"}
+  }
+};
+
+const INTERACTIONS = [
+  {d1:"Méthadone",d2:"Benzodiazépines",sev:"grave",desc:"Risque dépression respiratoire. Si inévitable : doses min, surv. SpO2, fractionnement"},
+  {d1:"Méthadone",d2:"Sertraline",sev:"mod",desc:"ISRS peut ↑ taux méthadone (CYP2D6). Surv. ECG (QT additif)"},
+  {d1:"Méthadone",d2:"Venlafaxine",sev:"mod",desc:"Risque QT additif. ECG de contrôle"},
+  {d1:"Méthadone",d2:"Cyamémazine",sev:"mod",desc:"QT additif. ECG systématique. Doses faibles"},
+  {d1:"Méthadone",d2:"Chlorpromazine",sev:"mod",desc:"QT additif. ECG systématique"},
+  {d1:"Buprénorphine",d2:"Benzodiazépines",sev:"grave",desc:"Risque dépression respiratoire (moindre que MTD). Éviter, sinon doses min"},
+  {d1:"Baclofène",d2:"Alcool résiduel",sev:"grave",desc:"Risque sédation majeure, coma. Attendre sevrage stabilisé"},
+  {d1:"Baclofène",d2:"Benzodiazépines",sev:"mod",desc:"Sommation effets sédatifs et myorelaxants"},
+  {d1:"Naltrexone",d2:"Opioïdes",sev:"grave",desc:"⚠️ CI ABSOLUE. Sevrage précipité. Attendre ≥ 7j abstinence"},
+  {d1:"Nalméfène",d2:"Opioïdes",sev:"grave",desc:"⚠️ CI. Même mécanisme (antagoniste opioïde)"},
+  {d1:"Disulfirame",d2:"Alcool",sev:"grave",desc:"Effet antabuse : flush, nausées, tachycardie. Effet recherché mais dangereux si non contrôlé"},
+  {d1:"Disulfirame",d2:"Méthadone",sev:"mod",desc:"Disulfirame peut ↑ taux MTD (inhib. CYP). Surv. clinique"},
+  {d1:"Méthylphénidate",d2:"IMAO",sev:"grave",desc:"⚠️ CI ABSOLUE. Crise hypertensive. Washout 14j"},
+  {d1:"Méthylphénidate",d2:"Cocaïne",sev:"grave",desc:"Effets sympathomimétiques additifs. Risque CV majeur"},
+  {d1:"Topiramate",d2:"Méthadone",sev:"mod",desc:"Topiramate peut ↓ taux MTD (induction CYP3A4). Ajuster poso"},
+  {d1:"Sertraline",d2:"Tramadol",sev:"grave",desc:"Risque syndrome sérotoninergique. Éviter"},
+  {d1:"Vortioxétine",d2:"Tramadol",sev:"mod",desc:"Risque sérotoninergique. Éviter ou surv. étroite"},
+  {d1:"Méthadone",d2:"Méthylphénidate",sev:"mod",desc:"Pas d'interaction PK directe mais surv. CV (FC, TA, ECG)"}
+];
+
+const BZD_EQ = [
+  {nom:"Diazépam (Valium)",eq:10,t:"20-100h"},
+  {nom:"Oxazépam (Séresta)",eq:30,t:"4-15h"},
+  {nom:"Alprazolam (Xanax)",eq:0.5,t:"6-12h"},
+  {nom:"Lorazépam (Témesta)",eq:1,t:"10-20h"},
+  {nom:"Bromazépam (Lexomil)",eq:6,t:"20h"},
+  {nom:"Clonazépam (Rivotril)",eq:0.25,t:"18-50h"},
+  {nom:"Clorazépate (Tranxène)",eq:15,t:"30-150h"},
+  {nom:"Prazépam (Lysanxia)",eq:10,t:"30-150h"},
+  {nom:"Zopiclone (Imovane)",eq:7.5,t:"5h"},
+  {nom:"Zolpidem (Stilnox)",eq:10,t:"2-3h"}
+];
+
+/* Équivalences antipsychotiques — référence 100 mg chlorpromazine (CPZ-eq).
+   Sources : Woods 2003, Gardner 2010 (DDD), Atkins 1997, Leucht 2016.
+   cls = classe thérapeutique (G1 = 1ère génération / G2 = 2e génération).
+   eq = dose en mg équivalant à 100 mg CPZ. */
+const CPZ_EQ = [
+  {nom:"Chlorpromazine (Largactil)",cls:"G1",eq:100},
+  {nom:"Halopéridol (Haldol)",cls:"G1",eq:2},
+  {nom:"Lévomépromazine (Nozinan)",cls:"G1",eq:100},
+  {nom:"Cyamémazine (Tercian)",cls:"G1",eq:100},
+  {nom:"Loxapine (Loxapac)",cls:"G1",eq:10},
+  {nom:"Zuclopenthixol (Clopixol)",cls:"G1",eq:20},
+  {nom:"Flupentixol (Fluanxol)",cls:"G1",eq:2},
+  {nom:"Rispéridone (Risperdal)",cls:"G2",eq:2},
+  {nom:"Palipéridone (Xeplion)",cls:"G2",eq:1.5},
+  {nom:"Olanzapine (Zyprexa)",cls:"G2",eq:5},
+  {nom:"Quétiapine (Xeroquel)",cls:"G2",eq:150},
+  {nom:"Aripiprazole (Abilify)",cls:"G2",eq:7.5},
+  {nom:"Clozapine (Leponex)",cls:"G2",eq:50},
+  {nom:"Amisulpride (Solian)",cls:"G2",eq:100}
+];
+
+const ELSA = [
+  {title:"Sevrage OH aux urgences",motif:"Patient en sevrage alcoolique aux urgences",conduite:["Évaluer : Cushman ou CIWA-Ar","Cushman < 4 : surveillance, hydratation, thiamine PO","Cushman 4-7 : Diazépam 10 mg PO, rééval 1h, thiamine IV","Cushman ≥ 8 : Diazépam 10-20 mg IV, lit monitoré, thiamine IV 500 mg","DT ou convulsions : protocole urgence, avis réa","Systématique : glycémie, iono, Mg²⁺, BH, NFS","Orientation ELSA si hospit > 24h"]},
+  {title:"Patient sous TSO en chirurgie",motif:"Maintien TSO en péri-opératoire",conduite:["NE JAMAIS ARRÊTER LE TSO","Maintenir même posologie pendant hospitalisation","Si BHD : arrêt 8-12h avant chirurgie si morphiniques prévus","Si MTD : maintenir, fractionner, ajuster antalgiques (doses + élevées)","Associer antalgiques non opioïdes systématiquement","Contacter prescripteur TSO","Avis ELSA systématique"]},
+  {title:"Consommation découverte",motif:"Usage repéré en hospitalisation pour autre motif",conduite:["Repérage : AUDIT-C (OH), CAST (cannabis), DAST-10 (drogues)","Si + : intervention brève motivationnelle (5-10 min)","Évaluer substance, quantité, fréquence, ancienneté","Évaluer risque de sevrage si arrêt brutal","Proposer lien ELSA","Si refus : trace ORBIS + coordonnées CSAPA","Remise dépliant ELSA"]},
+  {title:"Gestion douleur + addiction",motif:"Patient douloureux avec ATCD/TUS actif",conduite:["La douleur DOIT être traitée y compris chez patients addicts","Privilégier non opioïdes (paracétamol, AINS, néfopam, ALR)","Si opioïdes nécessaires : doses titrées, fractionnées, durée min","Si sous TSO : cf. fiche TSO en chirurgie","Éviter tramadol/codéine si patient sous BHD","Évaluer craving et risque rechute","Avis ELSA pour co-gestion"]},
+  {title:"Liaison hépatologie",motif:"Patient hépato avec TUS",conduite:["Stéatopathie / hépatite OH : objectif arrêt, éval. addictologique","VHC chez UDIV : dépistage, AAD, RdRD","Pré-greffe : abstinence documentée (6 mois, discutée)","Pharmaco : acamprosate ou baclofène (éviter NTX si IH, éviter disulfiram)","Discussion conjointe hépato-addicto","Lien HAS 2024 : parcours hépatite C"]}
+];
+
+/* ══════════════════════ COMPONENTS ══════════════════════ */
+
+function Badge({children, color=C.t[500]}) {
+  return <span className="badge" style={{background:color+"20",color}}>{children}</span>;
+}
+
+function BackBtn({onClick}) {
+  return <button onClick={onClick} style={{display:"flex",alignItems:"center",gap:4,border:"none",background:"none",cursor:"pointer",color:C.t[600],fontWeight:600,fontSize:13,marginBottom:14,padding:0}}>
+    {I.chevL(C.t[600])} Retour
+  </button>;
+}
+
+function SectionHead({icon,title,sub}) {
+  return <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+    {icon && <div style={{width:40,height:40,borderRadius:12,background:"#243b53",display:"flex",alignItems:"center",justifyContent:"center"}}>{icon}</div>}
+    <div><div style={{fontSize:17,fontWeight:800,color:C.n[900]}}>{title}</div>{sub&&<div style={{fontSize:12,color:C.n[400]}}>{sub}</div>}</div>
+  </div>;
+}
+
+/* ─── SCORE CALCULATOR ─── */
+function ScoreCalc({scoreKey, onBack}) {
+  const sc = SCORES[scoreKey];
+  const [ans, setAns] = useState(Array(sc.items.length).fill(-1));
+  const total = ans.reduce((s,a,i) => s + (a>=0 ? sc.items[i].s[a] : 0), 0);
+  const done = ans.every(a=>a>=0);
+  const res = done ? sc.interp(total) : null;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.calc(C.t[300])} title={sc.name} sub={sc.sub}/>
+    {sc.items.map((it,i) => <div key={i} className="card" style={{padding:12,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>{i+1}. {it.n}</div>
+      <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+        {it.o.map((opt,j)=><button key={j} className="btn-pill" onClick={()=>{const n=[...ans];n[i]=j;setAns(n);}}
+          style={ans[i]===j?{borderColor:C.t[500],background:C.t[50],color:C.t[700]}:{}}>
+          {opt} <span style={{opacity:.4,marginLeft:4}}>({it.s[j]})</span>
+        </button>)}
+      </div>
+    </div>)}
+    <div className="card" style={{padding:16,marginTop:12,borderWidth:2,borderColor:res?.c||C.bdr,position:"sticky",bottom:70}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div><div style={{fontSize:12,color:C.n[400]}}>Score total</div>
+        <div style={{fontSize:32,fontWeight:900,color:res?.c||C.n[800]}}>{total}</div></div>
+        {res && <Badge color={res.c}>{res.l}</Badge>}
+      </div>
+      {res && <div style={{fontSize:12,marginTop:8,padding:8,borderRadius:8,background:res.c+"10",color:C.n[800]}}>{res.a}</div>}
+      {!done && <div style={{fontSize:11,marginTop:6,color:C.n[400]}}>Répondez à toutes les questions</div>}
+      {done && <button onClick={()=>setAns(Array(sc.items.length).fill(-1))} style={{display:"flex",alignItems:"center",gap:4,border:"none",background:"none",cursor:"pointer",color:C.t[600],fontSize:12,marginTop:8,padding:0,fontWeight:600}}>
+        {I.reset(C.t[600])} Réinitialiser
+      </button>}
+    </div>
+  </div>;
+}
+
+/* ─── BZD CALCULATOR ─── */
+function BZDCalc({onBack}) {
+  const [sel, setSel] = useState(null);
+  const [dose, setDose] = useState("");
+  const dzp = sel!==null && dose ? (parseFloat(dose)/BZD_EQ[sel].eq)*10 : null;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.scale(C.t[300])} title="Convertisseur BZD" sub="Équivalences diazépam"/>
+    <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>BZD du patient :</div>
+      {BZD_EQ.map((b,i)=><button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:C.bg,marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
+        <span style={{fontWeight:600,color:C.n[800]}}>{b.nom}</span>
+        <span style={{fontSize:11,color:C.n[400]}}>t½ {b.t}</span>
+      </button>)}
+    </div>
+    {sel!==null && <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>Dose journalière (mg) :</div>
+      <input type="number" value={dose} onChange={e=>setDose(e.target.value)} placeholder="Ex: 30"
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],background:C.bg,outline:"none"}}/>
+    </div>}
+    {dzp>0 && <div className="card" style={{padding:16,borderWidth:2,borderColor:dzp>40?C.r[500]:C.t[500]}}>
+      <div style={{fontSize:12,color:C.n[500]}}>Équivalent diazépam</div>
+      <div style={{fontSize:40,fontWeight:900,color:dzp>40?C.r[600]:C.t[600]}}>{dzp.toFixed(1)} mg/j</div>
+      {dzp>40 && <Badge color={C.r[600]}>Critère hospitalisation USCA (&gt;40 mg DZP-eq)</Badge>}
+      <div style={{marginTop:10,padding:10,borderRadius:8,background:C.n[50]}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[700]}}>Stratégie de sevrage :</div>
+        <div style={{fontSize:11,color:C.n[600],marginTop:2}}>{dzp<50?"Taper hyperbolique : -10% tous les 3-7 jours":"Taper lent : -5%/semaine + carbamazépine ou gabapentine"}</div>
+      </div>
+    </div>}
+  </div>;
+}
+
+/* ─── CONVERTISSEUR CHLORPROMAZINE (équivalences antipsychotiques) ─── */
+function CPZCalc({onBack}) {
+  const [sel, setSel] = useState(null);
+  const [dose, setDose] = useState("");
+  const cpz = sel!==null && dose ? (parseFloat(dose)/CPZ_EQ[sel].eq)*100 : null;
+
+  const GROUPS = [
+    {key:"G1", label:"Neuroleptiques classiques (1ʳᵉ génération)"},
+    {key:"G2", label:"Antipsychotiques atypiques (2ᵉ génération)"}
+  ];
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.scale(C.t[300])} title="Convertisseur CPZ" sub="Équivalences chlorpromazine (100 mg CPZ)"/>
+    <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Antipsychotique du patient :</div>
+      {GROUPS.map(g => <div key={g.key} style={{marginBottom:10}}>
+        <div style={{fontSize:10,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:4,textTransform:"uppercase"}}>{g.label}</div>
+        {CPZ_EQ.map((b,i) => b.cls === g.key && <button key={i} onClick={()=>setSel(i)} style={{width:"100%",textAlign:"left",padding:"8px 12px",borderRadius:10,border:`2px solid ${sel===i?C.t[500]:C.bdr}`,background:sel===i?C.t[50]:C.bg,marginBottom:4,cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:13}}>
+          <span style={{fontWeight:600,color:C.n[800]}}>{b.nom}</span>
+          <span style={{fontSize:11,color:C.n[400]}}>{b.eq} mg ≈ 100 CPZ</span>
+        </button>)}
+      </div>)}
+    </div>
+    {sel!==null && <div className="card" style={{padding:12,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:8}}>Dose journalière (mg) :</div>
+      <input type="number" value={dose} onChange={e=>setDose(e.target.value)} placeholder="Ex: 10"
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[300]}`,borderRadius:10,fontSize:18,fontWeight:800,textAlign:"center",color:C.n[900],background:C.bg,outline:"none"}}/>
+    </div>}
+    {cpz>0 && <div className="card" style={{padding:16,borderWidth:2,borderColor:cpz>1000?C.r[500]:C.t[500]}}>
+      <div style={{fontSize:12,color:C.n[500]}}>Équivalent chlorpromazine</div>
+      <div style={{fontSize:40,fontWeight:900,color:cpz>1000?C.r[600]:C.t[600]}}>{cpz.toFixed(0)} mg/j</div>
+      {cpz>1000 && <Badge color={C.r[600]}>Haute dose (&gt;1000 mg CPZ-eq) — risque EI majorés</Badge>}
+      <div style={{marginTop:10,padding:10,borderRadius:8,background:C.n[50]}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[700]}}>Points de vigilance :</div>
+        <div style={{fontSize:11,color:C.n[600],marginTop:2}}>
+          {cpz<300 && "Dose basse / introduction. Surveillance standard."}
+          {cpz>=300 && cpz<=600 && "Dose thérapeutique usuelle. Surveillance ECG (QT), métabolique (glycémie, BMI), SEP."}
+          {cpz>600 && cpz<=1000 && "Dose haute. ECG + iono avant toute majoration. Réévaluer la monothérapie."}
+          {cpz>1000 && "Très haute dose. Privilégier rotation ou clozapine plutôt qu'escalade. Risque CV ↑↑."}
+        </div>
+      </div>
+      <div style={{marginTop:8,padding:10,borderRadius:8,background:C.a[50],border:`1px solid ${C.a[200]}`}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.a[700]}}>⚠ En addictologie :</div>
+        <div style={{fontSize:11,color:C.n[700],marginTop:2}}>Association OH / BZD / opioïdes = dépression respiratoire, hypotension orthostatique, chutes. Clozapine CI si sevrage OH sévère.</div>
+      </div>
+    </div>}
+    <div style={{fontSize:10,color:C.n[400],textAlign:"center",marginTop:12,padding:"0 8px",lineHeight:1.4}}>
+      Équivalences approximatives (Woods 2003, Gardner 2010, Leucht 2016). À moduler selon indication, voie, tolérance individuelle.
+    </div>
+  </div>;
+}
+
+/* ─── TRAITEMENTS — Fiches Patient (HTML) + Fiches Expert (PDF) ─── */
+const FICHES_PATIENT_CATS = [
+  {cat:"Sevrage / Maintien",fiches:[{s:"aotal",n:"Acamprosate (Aotal)"},{s:"baclofene",n:"Baclofène"},{s:"nalmefene",n:"Nalméfène (Selincro)"},{s:"naltrexone",n:"Naltrexone (Revia)"},{s:"topiramate",n:"Topiramate (Epitomax)"},{s:"nac",n:"N-Acétylcystéine (NAC)"}]},
+  {cat:"TSO",fiches:[{s:"buprenorphine",n:"Buprénorphine (Subutex)"},{s:"methadone",n:"Méthadone"},{s:"naloxone",n:"Naloxone (kit d'urgence)"}]},
+  {cat:"Anxiolytiques",fiches:[{s:"alprazolam",n:"Alprazolam (Xanax)"},{s:"bromazepam",n:"Bromazépam (Lexomil)"},{s:"valium",n:"Diazépam (Valium)"},{s:"seresta",n:"Oxazépam (Séresta)"},{s:"prazepam",n:"Prazépam (Lysanxia)"},{s:"propranolol",n:"Propranolol (Avlocardyl)"}]},
+  {cat:"Hypnotiques / Sédatifs",fiches:[{s:"agomelatine",n:"Agomélatine (Valdoxan)"},{s:"theralene",n:"Alimémazine (Théralène)"},{s:"tercian",n:"Cyamémazine (Tercian)"},{s:"quviviq",n:"Daridorexant (Quviviq)"},{s:"atarax",n:"Hydroxyzine (Atarax)"},{s:"zopiclone",n:"Zopiclone (Imovane)"}]},
+  {cat:"Antidépresseurs",fiches:[{s:"sertraline",n:"Sertraline (Zoloft)"},{s:"venlafaxine",n:"Venlafaxine (Effexor)"},{s:"vortioxetine",n:"Vortioxetine (Brintellix)"}]},
+  {cat:"Antipsychotiques",fiches:[{s:"aripiprazole",n:"Aripiprazole (Abilify)"},{s:"chlorpromazine",n:"Chlorpromazine (Largactil)"},{s:"quetiapine",n:"Quétiapine (Xeroquel)"}]},
+  {cat:"Thymorégulateurs",fiches:[{s:"lamotrigine",n:"Lamotrigine (Lamictal)"},{s:"lithium",n:"Lithium (Téralithe)"}]},
+  {cat:"Stimulants",fiches:[{s:"methylphenidate",n:"Méthylphénidate (Ritaline)"}]}
+];
+
+// Fiches substances poussées au patient — HTML servies depuis ../fiches-substances/fiche_<slug>_patient.html
+const FICHES_SUBSTANCES_CATS = [
+  {cat:"Dépresseurs du SNC",fiches:[{s:"alcool",n:"Alcool"},{s:"ghb",n:"GHB / GBL"}]},
+  {cat:"Stimulants",fiches:[{s:"3mmc",n:"3-MMC / Cathinones"},{s:"cocaine",n:"Cocaïne"},{s:"crack",n:"Crack"},{s:"mdma",n:"MDMA / Ecstasy"},{s:"methamphetamine",n:"Méthamphétamine"}]},
+  {cat:"Opioïdes",fiches:[{s:"heroine",n:"Héroïne"},{s:"opioides_prescription",n:"Opioïdes de prescription"}]},
+  {cat:"Psychodysleptiques",fiches:[{s:"cannabis",n:"Cannabis"},{s:"ketamine",n:"Kétamine"},{s:"lsd",n:"LSD"},{s:"psilocybine",n:"Psilocybine"}]},
+  {cat:"Mésusage médicamenteux",fiches:[{s:"bzd_mesusage",n:"Benzodiazépines (mésusage)"},{s:"protoxyde",n:"Protoxyde d'azote (N₂O)"}]},
+  {cat:"Tabac",fiches:[{s:"tabac",n:"Tabac / Nicotine"}]}
+];
+
+// Les PDFs expert sont servis depuis ../fiches-traitements/fiches_expert/fiche_<slug>.pdf
+const FICHES_EXPERT_CATS = [
+  {cat:"Neuroleptiques classiques (1ʳᵉ génération)", fiches:[
+    {s:"chlorpromazine", n:"Chlorpromazine (Largactil)"},
+    {s:"haloperidol",    n:"Halopéridol (Haldol)"}
+  ]},
+  {cat:"Antipsychotiques atypiques (2ᵉ génération)", fiches:[
+    {s:"amisulpride",   n:"Amisulpride (Solian)"},
+    {s:"aripiprazole",  n:"Aripiprazole (Abilify)"},
+    {s:"clozapine",     n:"Clozapine (Leponex)"},
+    {s:"olanzapine",    n:"Olanzapine (Zyprexa)"},
+    {s:"quetiapine",    n:"Quétiapine (Xeroquel)"},
+    {s:"risperidone",   n:"Rispéridone (Risperdal)"}
+  ]}
+];
+
+function TraitementsView({onBack, onPickPatient}) {
+  // Tous les accordions repliés par défaut (Fiches Patient / Substances / Expert)
+  const [open, setOpen] = useState(null);
+  // Classes médicamenteuses : repliées par défaut, plusieurs ouvertes possibles
+  const [openCats, setOpenCats] = useState({});
+  const toggleCat = (cat) => setOpenCats(prev => ({...prev, [cat]: !prev[cat]}));
+
+  const renderPatientSection = () =>
+    FICHES_PATIENT_CATS.map(group => {
+      const isOpen = !!openCats[group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat(group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient(f)}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>💊</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>)}
+        </div>}
+      </div>;
+    });
+
+  const renderExpertSection = () =>
+    FICHES_EXPERT_CATS.map(group => {
+      const isOpen = !!openCats["expert_"+group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat("expert_"+group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <a key={f.s} href={"../fiches-traitements/fiches_expert/fiche_"+f.s+".pdf"} target="_blank" rel="noopener noreferrer"
+            className="card card-tap"
+            style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between",textDecoration:"none"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>📄</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            <span style={{fontSize:9,fontWeight:800,color:C.n[400],letterSpacing:"0.5px"}}>PDF ↗</span>
+          </a>)}
+        </div>}
+      </div>;
+    });
+
+  const renderSubstancesSection = () =>
+    FICHES_SUBSTANCES_CATS.map(group => {
+      const isOpen = !!openCats["subst_"+group.cat];
+      return <div key={group.cat} style={{marginBottom:6,borderRadius:8,border:`1px solid ${C.bdr}`,overflow:"hidden"}}>
+        <button onClick={()=>toggleCat("subst_"+group.cat)}
+          style={{width:"100%",padding:"10px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",background:C.bg,border:"none",cursor:"pointer"}}>
+          <span style={{fontSize:11,fontWeight:800,color:C.n[600],letterSpacing:"0.5px",textTransform:"uppercase"}}>
+            {group.cat} <span style={{color:C.n[400],fontWeight:600,letterSpacing:0,textTransform:"none"}}>({group.fiches.length})</span>
+          </span>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"8px 10px 4px",borderTop:`1px solid ${C.bdr}`,background:"#fff"}}>
+          {group.fiches.map(f => <div key={f.s} className="card card-tap" style={{padding:11,marginBottom:5,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onPickPatient({...f, kind:"substance"})}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:18}}>📖</span>
+              <span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.n}</span>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>)}
+        </div>}
+      </div>;
+    });
+
+  const ACC = [
+    {key:"patient", icon:"💊", title:"Fiches Traitements Patient", sub:"Fiches d'information à remettre au patient (HTML)"},
+    {key:"substances", icon:"📖", title:"Fiches Substances", sub:"Fiches d'information sur les substances (HTML)"},
+    {key:"expert",  icon:"🎓", title:"Fiches Traitements Expert",  sub:"Synthèses cliniques (PDF, ouverture nouvel onglet)"}
+  ];
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.heart(C.a[300])} title="Fiches Traitements et Substances" sub="Fiches patient · fiches substances · fiches expert"/>
+    {ACC.map(a => {
+      const isOpen = open === a.key;
+      return <div key={a.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+        <button className="section-btn" onClick={()=>setOpen(isOpen?null:a.key)}>
+          <div style={{textAlign:"left",display:"flex",alignItems:"center",gap:10}}>
+            <span style={{fontSize:20}}>{a.icon}</span>
+            <div>
+              <div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{a.title}</div>
+              <div style={{fontSize:11,color:C.n[400]}}>{a.sub}</div>
+            </div>
+          </div>
+          {isOpen ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {isOpen && <div style={{padding:"10px 12px",borderTop:`1px solid ${C.bdr}`}}>
+          {a.key === "patient" ? renderPatientSection() : a.key === "substances" ? renderSubstancesSection() : renderExpertSection()}
+        </div>}
+      </div>;
+    })}
+  </div>;
+}
+
+/* ─── SUBSTANCE DETAIL ─── */
+function SubDetail({sKey, onBack}) {
+  const s = SUBSTANCES[sKey];
+  const [open, setOpen] = useState("sevrage");
+  const Sec = ({id,title,icon,children}) => <div className="card" style={{marginBottom:10,overflow:"hidden"}}>
+    <button className="section-btn" onClick={()=>setOpen(open===id?null:id)} style={{background:open===id?C.n[50]:C.bg}}>
+      <div style={{display:"flex",alignItems:"center",gap:8}}>{icon}<span style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{title}</span></div>
+      {open===id?I.chevD(C.n[400]):I.chevR(C.n[400])}
+    </button>
+    {open===id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>{children}</div>}
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:16}}>
+      <span style={{fontSize:36}}>{s.icon}</span>
+      <div>
+        <div style={{fontSize:20,fontWeight:900,color:C.n[900]}}>{s.name}</div>
+        <div style={{fontSize:11,padding:"3px 8px",borderRadius:99,background:C.r[100],color:C.r[700],display:"inline-block",marginTop:4}}>Hospit si : {s.critereHosp}</div>
+      </div>
+    </div>
+
+    <Sec id="sevrage" title="Sevrage J1-J4" icon={I.thermo(s.color)}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[700],marginBottom:8}}>{s.sevrageJ1J4.title}</div>
+      {s.sevrageJ1J4.details.map((d,i)=><div key={i} style={{padding:8,borderRadius:8,background:C.n[50],marginBottom:6}}>
+        <div style={{fontSize:11,fontWeight:800,color:s.color}}>{d.label}</div>
+        <div style={{fontSize:11,color:C.n[600]}}>{d.desc}</div>
+      </div>)}
+    </Sec>
+
+    <Sec id="decision" title="Décision J8 (Staff)" icon={I.star(s.color)}>
+      <div style={{padding:10,borderRadius:8,background:C.a[50],border:`1px solid ${C.a[200]}`,fontSize:13,color:C.n[800]}}>{s.decisionJ8}</div>
+    </Sec>
+
+    <Sec id="tt" title="Traitements de fond" icon={I.pill(s.color)}>
+      {s.traitements.map((t,i)=><div key={i} style={{padding:10,borderRadius:10,border:`1px solid ${C.bdr}`,marginBottom:8}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
+          <div><span style={{fontSize:13,fontWeight:800,color:C.n[900]}}>{t.mol}</span><span style={{fontSize:11,color:C.n[400],marginLeft:6}}>({t.marque})</span></div>
+          <Badge color={t.amm==="AMM"?C.t[600]:C.a[600]}>{t.amm}</Badge>
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,marginTop:4}}>
+          <div style={{fontSize:11}}><b style={{color:C.n[600]}}>Poso : </b><span style={{color:C.n[800]}}>{t.poso}</span></div>
+          <div style={{fontSize:11}}><b style={{color:C.n[600]}}>Début : </b><span style={{color:C.n[800]}}>{t.debut}</span></div>
+        </div>
+        <div style={{fontSize:11,marginTop:3}}><b style={{color:C.n[600]}}>Ind : </b>{t.ind}</div>
+        <div style={{fontSize:11,marginTop:2}}><b style={{color:C.r[500]}}>CI : </b><span style={{color:C.n[600]}}>{t.ci}</span></div>
+        <div style={{marginTop:4}}><Badge color={t.np==="A"?C.t[600]:t.np==="B"?C.a[500]:C.n[400]}>Preuve : {t.np}</Badge></div>
+      </div>)}
+    </Sec>
+
+    <Sec id="np" title="Approches non pharmaco" icon={I.heart(s.color)}>
+      {s.nonPharma.map((np,i)=><div key={i} style={{padding:8,borderRadius:8,background:np.type.includes("tDCS")?C.a[50]:C.t[50],marginBottom:6}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+          <span style={{fontSize:11,fontWeight:800,color:np.type.includes("tDCS")?C.a[700]:C.t[700]}}>{np.type.includes("tDCS")?"⚡ ":""}{np.type}</span>
+          <Badge color={C.t[600]}>{np.timing}</Badge>
+        </div>
+        <div style={{fontSize:11,color:C.n[600]}}>{np.ind}</div>
+      </div>)}
+    </Sec>
+
+    <Sec id="rf" title="Red flags" icon={I.alert(C.r[500])}>
+      {s.redFlags.map((rf,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:8,borderRadius:8,background:C.r[100],marginBottom:4}}>
+        {I.alertCircle(C.r[600])}
+        <span style={{fontSize:12,fontWeight:600,color:C.r[700]}}>{rf}</span>
+      </div>)}
+    </Sec>
+  </div>;
+}
+
+/* ─── INTERACTIONS ─── */
+function InterCheck({onBack}) {
+  const allD = [...new Set(INTERACTIONS.flatMap(i=>[i.d1,i.d2]))].sort();
+  const [sel, setSel] = useState([]);
+  const [q, setQ] = useState("");
+  const toggle = d => setSel(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);
+  const found = INTERACTIONS.filter(i=>(sel.includes(i.d1)&&sel.includes(i.d2))||(sel.includes(i.d2)&&sel.includes(i.d1)));
+  const filt = q ? allD.filter(d=>d.toLowerCase().includes(q.toLowerCase())) : allD;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.alert(C.t[300])} title="Interactions (MetaboScope)" sub="Sélectionnez les traitements"/>
+    <div style={{position:"relative",marginBottom:10}}>
+      <div style={{position:"absolute",left:10,top:"50%",transform:"translateY(-50%)"}}>{I.search(C.n[400])}</div>
+      <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Rechercher..." style={{width:"100%",paddingLeft:34,paddingRight:12,paddingTop:10,paddingBottom:10,border:`1px solid ${C.bdr}`,borderRadius:10,fontSize:13,outline:"none",background:C.bg,color:C.n[900]}}/>
+    </div>
+    <div className="card" style={{padding:10,marginBottom:14}}>
+      <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+        {filt.map(d=><button key={d} className={`btn-pill ${sel.includes(d)?'active':''}`} onClick={()=>toggle(d)}>
+          {sel.includes(d)&&<span style={{marginRight:3}}>✓</span>}{d}
+        </button>)}
+      </div>
+    </div>
+    {sel.length>=2 && <div>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[700],marginBottom:8}}>{found.length} interaction(s)</div>
+      {found.length===0 && <div className="card" style={{padding:14,borderColor:C.t[400]}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>{I.checkCircle(C.t[500])}<span style={{fontSize:13,color:C.t[700]}}>Pas d'interaction critique identifiée</span></div>
+      </div>}
+      {found.map((inter,i)=><div key={i} className="card" style={{padding:12,marginBottom:8,borderLeftWidth:4,borderLeftColor:inter.sev==="grave"?C.r[500]:C.a[500]}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+          <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{inter.d1} + {inter.d2}</span>
+          <Badge color={inter.sev==="grave"?C.r[600]:C.a[600]}>{inter.sev==="grave"?"⚠️ GRAVE":"Modérée"}</Badge>
+        </div>
+        <div style={{fontSize:12,color:C.n[600]}}>{inter.desc}</div>
+      </div>)}
+    </div>}
+  </div>;
+}
+
+/* ─── ELSA HUB ─── */
+function ELSAHub({onNav, onBack}) {
+  const items = [
+    {l:"Liaisons en cours",desc:"Liste des patients à voir",i:I.clipboard,v:"liaisons",c:C.a[600]},
+    {l:"Admission & Orientation",desc:"Critères USCA & filières",i:I.building,v:"admission",c:C.n[700]},
+    {l:"Fiches réflexes",desc:"5 situations cliniques courantes",i:I.steth,v:"elsa_fiches",c:C.t[600]}
+  ];
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.steth(C.t[300])} title="ELSA" sub="Liaison Addictologie"/>
+    {items.map(item=><div key={item.v} className="card card-tap" style={{padding:14,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onNav(item.v)}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:40,height:40,borderRadius:12,background:item.c+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{item.i(item.c,22)}</div>
+        <div><div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400]}}>{item.desc}</div></div>
+      </div>
+      {I.chevR(C.n[300])}
+    </div>)}
+    <div className="card" style={{padding:14,background:C.n[50],marginTop:8}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:6}}>Scores repérage rapide ELSA</div>
+      {[["AUDIT-C","alcool","≥ 4 (H) / ≥ 3 (F) → usage à risque"],["CAST","cannabis","≥ 2 → interv. brève. ≥ 3 → addictologie"],["DAST-10","drogues","≥ 3 → usage problématique. ≥ 6 → dépendance"],["Fagerström","tabac","≥ 7 → dépendance forte"]].map(([n,s,d],i)=>
+        <div key={i} style={{fontSize:12,color:C.n[600],marginBottom:3}}><b>{n}</b> ({s}) : {d}</div>)}
+    </div>
+  </div>;
+}
+
+/* ─── ELSA FICHES RÉFLEXES ─── */
+function ELSAFichesView({onBack}) {
+  const [op, setOp] = useState(null);
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.steth(C.t[300])} title="Fiches réflexes ELSA" sub="Situations cliniques courantes"/>
+    {ELSA.map((f,i)=><div key={i} className="card" style={{marginBottom:8,overflow:"hidden"}}>
+      <button className="section-btn" onClick={()=>setOp(op===i?null:i)}>
+        <div style={{textAlign:"left"}}><div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{f.title}</div><div style={{fontSize:11,color:C.n[400]}}>{f.motif}</div></div>
+        {op===i?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {op===i && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>
+        {f.conduite.map((c,j)=><div key={j} style={{display:"flex",alignItems:"flex-start",gap:8,marginBottom:6}}>
+          <span style={{width:22,height:22,borderRadius:99,background:C.t[100],color:C.t[700],fontSize:11,fontWeight:800,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{j+1}</span>
+          <span style={{fontSize:12,color:C.n[700]}}>{c}</span>
+        </div>)}
+      </div>}
+    </div>)}
+  </div>;
+}
+
+/* ─── LIAISONS ELSA (ToDo localStorage) ─── */
+const DEFAULT_SERVICES = ["Urgences (Circuit court)","Hépatologie","Cardiologie","Maladies infectieuses (MIT)","Neurologie"];
+const ORIENTATIONS = ["Réévaluation","Pré-admission","CSAPA","Addictologue","Hospitalisation"];
+
+function WaitlistForm({item, onAdded}) {
+  const [age, setAge] = useState("");
+  const [ddn, setDdn] = useState("");
+  const [dateEntree, setDateEntree] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const onDdnChange = (val) => {
+    setDdn(val);
+    if (val) {
+      const birth = new Date(val);
+      const today = new Date();
+      let a = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) a--;
+      setAge(String(a));
+    }
+  };
+
+  const submit = async () => {
+    const ageNum = parseInt(age);
+    if (!ageNum || ageNum < 1) { setError("Âge requis"); return; }
+    setError(""); setSending(true);
+    try {
+      // Accès au Supabase du parent (dashboard admin)
+      let parentDb = null;
+      try { parentDb = window.parent && window.parent.db; } catch(x) {}
+      if (!parentDb || !parentDb.addListeAttente) {
+        // Fallback : charger le client Supabase directement
+        const sbUrl = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
+        const sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5ZHhmb3F4Z3ZibWtuemp6ZWNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMTgyNTEsImV4cCI6MjA5MTY5NDI1MX0.8Q8-wJUiOLHdf3vtMAvXMQ4JaylTGE-lm5viPWeVfZU';
+        if (window.parent && window.parent.supabase) {
+          const sb = window.parent.supabase.createClient(sbUrl, sbKey);
+          const { error: insertErr } = await sb.from('liste_attente').insert({
+            age: ageNum, date_entree_prevue: dateEntree || null,
+            addressage: item.service || 'Non précisé', commentaire: item.details || ''
+          });
+          if (insertErr) throw insertErr;
+        } else {
+          setError("Ouvrir la Toolbox depuis le dashboard soignant"); setSending(false); return;
+        }
+      } else {
+        await parentDb.addListeAttente({ age: ageNum, date_entree_prevue: dateEntree || null, addressage: item.service || 'Non précisé', commentaire: item.details || '' });
+      }
+      // Rafraîchir la liste dans le dashboard parent
+      try { if (window.parent.loadListeAttente) window.parent.loadListeAttente(); } catch(x) {}
+      onAdded();
+    } catch(e) {
+      console.error('Erreur ajout liste attente:', e);
+      setError(typeof e === 'object' ? (e.message || JSON.stringify(e)) : String(e));
+    }
+    setSending(false);
+  };
+
+  return <div style={{marginBottom:12,padding:12,borderRadius:10,background:C.a[50],border:`1px solid ${C.a[200]}`}}>
+    <div style={{fontSize:11,fontWeight:800,color:C.a[700],marginBottom:8}}>AJOUTER EN LISTE D'ATTENTE</div>
+
+    {/* Âge */}
+    <div style={{marginBottom:8}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.n[600],marginBottom:3}}>Âge du patient *</div>
+      <input type="number" min="18" max="100" placeholder="65" value={age} onChange={e=>setAge(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.a[200]}`,borderRadius:8,fontSize:13,fontWeight:700,background:C.bg,color:C.n[900]}}/>
+    </div>
+
+    {/* DDN optionnelle — calcule l'âge */}
+    <div style={{marginBottom:8}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.n[400],marginBottom:3}}>ou Date de naissance (calcule l'âge)</div>
+      <input type="date" value={ddn} onChange={e=>onDdnChange(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`1px dashed ${C.n[300]}`,borderRadius:8,fontSize:12,background:C.n[50],color:C.n[700]}}/>
+    </div>
+
+    <div style={{height:1,background:C.a[200],margin:"10px 0"}}/>
+
+    {/* Date d'entrée prévue */}
+    <div style={{marginBottom:10}}>
+      <div style={{fontSize:10,fontWeight:700,color:C.t[700],marginBottom:3}}>📅 Date d'entrée prévue</div>
+      <input type="date" value={dateEntree} onChange={e=>setDateEntree(e.target.value)}
+        style={{width:"100%",padding:"8px 10px",border:`2px solid ${C.t[400]}`,borderRadius:8,fontSize:13,fontWeight:600,background:C.t[50],color:C.t[800]}}/>
+    </div>
+
+    {error && <div style={{fontSize:11,color:C.r[500],marginBottom:6,fontWeight:600}}>{error}</div>}
+
+    <button onClick={submit} disabled={sending}
+      style={{width:"100%",padding:"10px",borderRadius:10,border:"none",background:C.a[600],color:"#fff",fontWeight:800,fontSize:12,cursor:"pointer",opacity:sending?.6:1}}>
+      {sending ? "Ajout en cours..." : "Ajouter à la liste d'attente"}
+    </button>
+  </div>;
+}
+
+function LiaisonsView({onBack}) {
+  const loadData = () => { try { return JSON.parse(localStorage.getItem('elsa_liaisons')) || []; } catch { return []; } };
+  const loadServices = () => { try { const s = JSON.parse(localStorage.getItem('elsa_services_custom')); return s || []; } catch { return []; } };
+  const [items, setItems] = useState(loadData);
+  const [customServices, setCustomServices] = useState(loadServices);
+  const [showForm, setShowForm] = useState(false);
+  const [newService, setNewService] = useState("");
+  const [newAutreService, setNewAutreService] = useState("");
+  const [newDetails, setNewDetails] = useState("");
+  const [openId, setOpenId] = useState(null);
+  const [dragIdx, setDragIdx] = useState(null);
+
+  const allServices = [...DEFAULT_SERVICES, ...customServices, "Autre"];
+
+  const save = (data) => { setItems(data); localStorage.setItem('elsa_liaisons', JSON.stringify(data)); };
+  const saveCustomServices = (s) => { setCustomServices(s); localStorage.setItem('elsa_services_custom', JSON.stringify(s)); };
+
+  const addItem = () => {
+    let svc = newService;
+    if (svc === "Autre" && newAutreService.trim()) {
+      svc = newAutreService.trim();
+      if (!DEFAULT_SERVICES.includes(svc) && !customServices.includes(svc)) {
+        const ns = [...customServices, svc];
+        saveCustomServices(ns);
+      }
+    }
+    if (!svc || svc === "Autre") return;
+    const item = { id: Date.now(), service: svc, details: newDetails.trim(), checklist: { indication: null, motivation: null, orientation: [] }, created: new Date().toISOString() };
+    save([...items, item]);
+    setNewService(""); setNewAutreService(""); setNewDetails(""); setShowForm(false);
+  };
+
+  const removeItem = (id) => save(items.filter(i=>i.id!==id));
+
+  const updateChecklist = (id, field, value) => {
+    save(items.map(i => i.id===id ? {...i, checklist:{...i.checklist, [field]:value}} : i));
+  };
+
+  const toggleOrientation = (id, val) => {
+    const item = items.find(i=>i.id===id);
+    const curr = item.checklist.orientation || [];
+    const next = curr.includes(val) ? curr.filter(v=>v!==val) : [...curr, val];
+    updateChecklist(id, "orientation", next);
+  };
+
+  const onDragStart = (idx) => setDragIdx(idx);
+  const onDragOver = (e, idx) => { e.preventDefault(); };
+  const onDrop = (idx) => {
+    if (dragIdx === null || dragIdx === idx) return;
+    const copy = [...items];
+    const [moved] = copy.splice(dragIdx, 1);
+    copy.splice(idx, 0, moved);
+    save(copy);
+    setDragIdx(null);
+  };
+
+  const ChoiceBtns = ({options, value, onChange}) => <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+    {options.map(o=><button key={o} className={`btn-pill ${value===o?'active':''}`} onClick={()=>onChange(o)} style={{fontSize:11}}>{value===o&&"✓ "}{o}</button>)}
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.clipboard(C.t[300])} title="Liaisons en cours" sub="Patients à voir"/>
+
+    {items.length === 0 && !showForm && <div className="card" style={{padding:20,textAlign:"center"}}>
+      <div style={{fontSize:13,color:C.n[400],marginBottom:12}}>Aucune liaison en cours</div>
+    </div>}
+
+    {items.map((item, idx) => <div key={item.id} className="card" style={{marginBottom:8,overflow:"hidden",borderLeftWidth:3,borderLeftColor:C.t[500]}}
+      draggable onDragStart={()=>onDragStart(idx)} onDragOver={(e)=>onDragOver(e,idx)} onDrop={()=>onDrop(idx)}>
+      <button className="section-btn" onClick={()=>setOpenId(openId===item.id?null:item.id)}>
+        <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+          <span style={{cursor:"grab",touchAction:"none"}}>{I.grip(C.n[300])}</span>
+          <div style={{textAlign:"left",flex:1}}>
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              <span style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Patient {idx+1}</span>
+              <Badge color={C.t[600]}>{item.service}</Badge>
+            </div>
+            {item.details && <div style={{fontSize:11,color:C.n[400],marginTop:2}}>{item.details}</div>}
+          </div>
+        </div>
+        {openId===item.id?I.chevD(C.n[400]):I.chevR(C.n[400])}
+      </button>
+      {openId===item.id && <div style={{padding:12,borderTop:`1px solid ${C.bdr}`}}>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>1. INDICATION D'HOSPITALISATION</div>
+          <ChoiceBtns options={["Oui","Non"]} value={item.checklist.indication} onChange={(v)=>updateChecklist(item.id,"indication",v)}/>
+        </div>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>2. MOTIVATION</div>
+          <ChoiceBtns options={["Oui","À travailler","Non"]} value={item.checklist.motivation} onChange={(v)=>updateChecklist(item.id,"motivation",v)}/>
+        </div>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6}}>3. ORIENTATION</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+            {ORIENTATIONS.map(o=><button key={o} className={`btn-pill ${(item.checklist.orientation||[]).includes(o)?'active':''}`} onClick={()=>toggleOrientation(item.id,o)} style={{fontSize:11}}>{(item.checklist.orientation||[]).includes(o)&&"✓ "}{o}</button>)}
+          </div>
+        </div>
+        {/* Ajouter en liste d'attente */}
+        {item.checklist.indication === "Oui" && !item._addedToWaitlist && <WaitlistForm item={item} onAdded={()=>{
+          save(items.map(i=>i.id===item.id?{...i,_addedToWaitlist:true}:i));
+        }}/>}
+        {item._addedToWaitlist && <div style={{padding:8,borderRadius:8,background:C.t[50],marginBottom:12}}>
+          <span style={{fontSize:11,fontWeight:700,color:C.t[700]}}>✓ Ajouté à la liste d'attente</span>
+        </div>}
+
+        <button onClick={()=>removeItem(item.id)} style={{display:"flex",alignItems:"center",gap:6,border:"none",background:"none",cursor:"pointer",color:C.r[500],fontSize:12,fontWeight:600,padding:0,marginTop:4}}>
+          {I.trash(C.r[500])} Retirer de la liste
+        </button>
+      </div>}
+    </div>)}
+
+    {showForm ? <div className="card" style={{padding:14,marginTop:8}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:10}}>Nouvelle liaison</div>
+      <div style={{marginBottom:10}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Service</div>
+        <select value={newService} onChange={e=>setNewService(e.target.value)} style={{width:"100%",padding:"10px 12px",border:`2px solid ${C.bdr}`,borderRadius:10,fontSize:13,fontFamily:"inherit",outline:"none",background:C.bg,color:C.n[900]}}>
+          <option value="">— Choisir un service —</option>
+          {allServices.map(s=><option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+      {newService === "Autre" && <div style={{marginBottom:10}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Nom du service</div>
+        <input value={newAutreService} onChange={e=>setNewAutreService(e.target.value)} placeholder="Saisir le service..." className="fb-input"/>
+      </div>}
+      <div style={{marginBottom:12}}>
+        <div style={{fontSize:11,fontWeight:700,color:C.n[600],marginBottom:4}}>Détails (optionnel)</div>
+        <textarea value={newDetails} onChange={e=>setNewDetails(e.target.value)} placeholder="Motif, chambre, commentaire..." className="fb-textarea" style={{minHeight:60}}/>
+      </div>
+      <div style={{display:"flex",gap:8}}>
+        <button onClick={addItem} className="fb-submit" style={{flex:1}}>Ajouter</button>
+        <button onClick={()=>{setShowForm(false);setNewService("");setNewAutreService("");setNewDetails("");}} style={{flex:0,padding:"12px 16px",border:`2px solid ${C.bdr}`,borderRadius:12,background:C.bg,cursor:"pointer",fontWeight:700,fontSize:13,color:C.n[600]}}>Annuler</button>
+      </div>
+    </div> : <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:14,borderRadius:14,border:`2px dashed ${C.t[400]}`,background:C.t[50],color:C.t[700],fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:8}}>
+      {I.plus(C.t[600])} Ajouter une liaison
+    </button>}
+  </div>;
+}
+
+/* ─── PROTOCOLES USCA HUB ─── */
+function ProtocolesHub({onNav, onBack}) {
+  const items = [
+    {l:"Substances",desc:"7 protocoles par substance",i:I.pill,v:"substances",c:C.t[600]},
+    {l:"Ressources",desc:"Articles, fiches, recos",i:I.book,v:"ressources",c:C.t[500]}
+  ];
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA" sub="Prescriptions & prises en charge"/>
+    {items.map(item=><div key={item.v} className="card card-tap" style={{padding:14,marginBottom:10,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>onNav(item.v)}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        <div style={{width:40,height:40,borderRadius:12,background:item.c+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{item.i(item.c,22)}</div>
+        <div><div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400]}}>{item.desc}</div></div>
+      </div>
+      {I.chevR(C.n[300])}
+    </div>)}
+  </div>;
+}
+
+/* ─── RESSOURCES (articles, fiches, recos) ─── */
+const RESSOURCE_TAGS = {
+  "OH":         {label:"OH",         color:"#EF4444"},
+  "BZD":        {label:"BZD",        color:"#A855F7"},
+  "Opioïdes":   {label:"Opioïdes",   color:"#F97316"},
+  "TDAH":       {label:"TDAH",       color:"#4F46E5"},
+  "TSPT":       {label:"TSPT",       color:"#3B82F6"},
+  "Humeur":     {label:"Humeur",     color:"#10B981"},
+  "Cannabis":   {label:"Cannabis",   color:"#65A30D"},
+  "Stimulants": {label:"Stimulants", color:"#EC4899"},
+  "Polyconso":  {label:"Polyconso",  color:"#64748B"},
+  "Général":    {label:"Général",    color:"#94A3B8"}
+};
+
+// Les ressources sont chargées dynamiquement depuis ressources_doc/index.json.
+// Pour ajouter une ressource : déposer le fichier dans ressources_doc/{fiches|articles|recos|algos}/
+// puis compléter le manifest index.json. Aucun changement à ce composant n'est nécessaire.
+
+function RessourcesView({onBack}) {
+  const GROUPS = [
+    {key:"fiche",   label:"Fiches pratiques",  icon:"📑", sub:"Aides-mémoire imprimables"},
+    {key:"article", label:"Résumés d'articles", icon:"🧪", sub:"Evidence-based, veille scientifique"},
+    {key:"reco",    label:"Recommandations",   icon:"📘", sub:"HAS, SFA, NICE"},
+    {key:"algo",    label:"Algos / arbres décisionnels", icon:"🧩", sub:"Arbres cliquables"}
+  ];
+  const [op, setOp] = useState(null);
+  const [ressources, setRessources] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // SW : ce manifest est en stratégie network-first sans écriture cache (sw.js NO_CACHE_WRITE).
+    fetch("../ressources_doc/index.json")
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => setRessources(Array.isArray(data.ressources) ? data.ressources : []))
+      .catch(e => setError(e.message || "Chargement impossible"));
+  }, []);
+
+  const byType = (t) => (ressources || [])
+    .filter(r => r.type === t)
+    .sort((a,b) => (b.date||"").localeCompare(a.date||""));
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.book(C.t[300])} title="Ressources" sub="Articles, fiches, recommandations"/>
+
+    {error && <div className="card" style={{padding:12,marginBottom:10,borderColor:C.r[500],background:C.r[100]}}>
+      <div style={{fontSize:12,color:C.r[700],fontWeight:700}}>Chargement impossible</div>
+      <div style={{fontSize:11,color:C.r[600],marginTop:2}}>{error}</div>
+    </div>}
+
+    {ressources === null && !error && <div className="card" style={{padding:20,textAlign:"center",marginBottom:10}}>
+      <div style={{fontSize:12,color:C.n[400]}}>Chargement…</div>
+    </div>}
+
+    {ressources !== null && GROUPS.map(g => {
+      const list = byType(g.key);
+      const open = op === g.key;
+      return <div key={g.key} className="card" style={{marginBottom:10,overflow:"hidden"}}>
+        <button className="section-btn" onClick={()=>setOp(open?null:g.key)}>
+          <div style={{textAlign:"left",display:"flex",alignItems:"center",gap:10}}>
+            <span style={{fontSize:20}}>{g.icon}</span>
+            <div>
+              <div style={{fontSize:13,fontWeight:700,color:C.n[800]}}>{g.label}</div>
+              <div style={{fontSize:11,color:C.n[400]}}>{list.length>0 ? `${list.length} ressource${list.length>1?"s":""}` : "Bientôt…"}</div>
+            </div>
+          </div>
+          {open ? I.chevD(C.n[400]) : I.chevR(C.n[400])}
+        </button>
+        {open && <div style={{padding:10,borderTop:`1px solid ${C.bdr}`}}>
+          {list.length === 0 ? (
+            <div style={{fontSize:12,color:C.n[400],fontStyle:"italic",padding:"10px 4px"}}>
+              Aucune ressource pour le moment. {g.sub}.
+            </div>
+          ) : list.map((r,i) => {
+            const tag = RESSOURCE_TAGS[r.tag] || RESSOURCE_TAGS["Général"];
+            const href = r.fichier.startsWith("http") ? r.fichier : "../ressources_doc/" + r.fichier;
+            return <a key={i} href={href} target="_blank" rel="noopener noreferrer"
+              className="card card-tap"
+              style={{display:"flex",alignItems:"center",gap:10,padding:10,marginBottom:i===list.length-1?0:6,textDecoration:"none",borderColor:C.bdr}}>
+              <span style={{fontSize:18,flexShrink:0}}>{g.icon}</span>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:C.n[800],lineHeight:1.3}}>{r.titre}</div>
+                <div style={{fontSize:11,color:C.n[400],marginTop:2}}>{r.meta}</div>
+              </div>
+              <span style={{
+                fontSize:10,fontWeight:800,color:"#fff",background:tag.color,
+                padding:"3px 8px",borderRadius:99,flexShrink:0,letterSpacing:"0.2px"
+              }}>{tag.label}</span>
+            </a>;
+          })}
+        </div>}
+      </div>;
+    })}
+
+    {ressources !== null && <div style={{fontSize:11,color:C.n[400],textAlign:"center",marginTop:16,padding:"0 8px"}}>
+      Les ressources s'ouvrent dans un nouvel onglet. Rotation paysage gérée par le navigateur.
+    </div>}
+  </div>;
+}
+
+/* ─── ADMISSION ─── */
+function AdmView({onBack}) {
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.building(C.t[300])} title="Admission & Orientation"/>
+    <div className="card" style={{padding:14,marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:8}}>Critères admission USCA</div>
+      {["Sevrage nécessitant surveillance médicale","Échec sevrage ambulatoire","Comorbidités psy intégrées","Polyconsommations complexes","Introduction tt sous surveillance","Bilan addictologique (TDAH…)","Préparation orientation post-cure"].map((c,i)=>
+        <div key={i} style={{display:"flex",alignItems:"flex-start",gap:6,marginBottom:4}}>{I.checkCircle(C.t[500])}<span style={{fontSize:12,color:C.n[700]}}>{c}</span></div>)}
+    </div>
+    <div className="card" style={{padding:14}}>
+      <div style={{fontSize:13,fontWeight:800,color:C.n[800],marginBottom:10}}>Orientation post-sortie</div>
+      {[{t:"Ambulatoire",d:"CSAPA, CMP, addictologue ville, HDJ",c:"Autonome, soutien social, objectif clair"},
+        {t:"Post-cure (SSR addictologie)",d:"Épinettes, Montevideo, G. Raby, CALME, Concorde, Abbaye",c:"Rechute précoce, vulnérabilité sociale → app pré-admission"},
+        {t:"SSR polyvalent",d:"SSR non spécialisé",c:"Comorbidité somatique + suivi addicto"},
+        {t:"HDJ addictologie",d:"Hôpital de jour",c:"Suivi intensif ambulatoire, TCC, prévention rechute"},
+        {t:"Réhospitalisation USCA",d:"Nouveau séjour programmé",c:"Rechute installée, réajustement thérapeutique"}
+      ].map((o,i)=><div key={i} style={{padding:10,borderRadius:10,border:`1px solid ${C.bdr}`,marginBottom:8}}>
+        <div style={{fontSize:13,fontWeight:800,color:C.t[700]}}>{o.t}</div>
+        <div style={{fontSize:11,color:C.n[500]}}>{o.d}</div>
+        <div style={{fontSize:11,color:C.n[700],marginTop:3}}><b>Critères :</b> {o.c}</div>
+      </div>)}
+    </div>
+  </div>;
+}
+
+/* ─── FEEDBACK ─── */
+function FeedbackView({onBack}) {
+  const MODULES = ["Protocoles USCA","ELSA / Liaisons","Traitements","Scores","Interactions","Convertisseur BZD","Convertisseur CPZ","Ressources","Général / Autre"];
+  const TYPES = [{id:"bug",label:"🐛 Bug / Erreur",desc:"Quelque chose ne marche pas"},{id:"content",label:"📝 Correction contenu",desc:"Posologie, protocole, CI inexacte"},{id:"feature",label:"💡 Suggestion",desc:"Nouvelle fonctionnalité ou amélioration"},{id:"ux",label:"🎨 Ergonomie",desc:"Navigation, lisibilité, design"}];
+  const PRIORITIES = ["Faible","Normale","Haute","Urgente"];
+
+  const [type, setType] = useState(null);
+  const [mod, setMod] = useState(null);
+  const [prio, setPrio] = useState(1);
+  const [desc, setDesc] = useState("");
+  const [from, setFrom] = useState("");
+  const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const buildFeedback = () => {
+    const lines = [
+      "═══ USCA FEEDBACK ═══",
+      `Date: ${new Date().toLocaleDateString('fr-FR')} ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`,
+      `Type: ${TYPES.find(t=>t.id===type)?.label || "—"}`,
+      `Module: ${mod || "—"}`,
+      `Priorité: ${PRIORITIES[prio]}`,
+      `De: ${from || "Anonyme"}`,
+      "───────────────────",
+      desc,
+      "═══════════════════"
+    ];
+    return lines.join("\n");
+  };
+
+  const feedbackText = buildFeedback();
+
+  const handleEmail = () => {
+    const subject = encodeURIComponent(`Feedback USCA Toolbox — ${TYPES.find(t=>t.id===type)?.label||""} — ${mod||"Général"}`);
+    const body = encodeURIComponent(feedbackText);
+    window.location.href = `mailto:jc.luisada@gmail.com?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(feedbackText).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);}).catch(()=>{
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = feedbackText;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      setCopied(true);setTimeout(()=>setCopied(false),2000);
+    });
+  };
+
+  if (sent) return <div className="fade-in">
+    <BackBtn onClick={()=>{setSent(false);onBack();}}/>
+    <div className="fb-sent">
+      <div style={{fontSize:48,marginBottom:12}}>✅</div>
+      <div style={{fontSize:18,fontWeight:800,color:C.n[900],marginBottom:8}}>Merci pour votre retour !</div>
+      <div style={{fontSize:13,color:C.n[500],marginBottom:20}}>Votre feedback sera traité pour améliorer l'application.</div>
+      <button onClick={()=>{setSent(false);setType(null);setMod(null);setDesc("");setFrom("");}} style={{padding:"10px 20px",border:`2px solid ${C.t[500]}`,borderRadius:10,background:"transparent",color:C.t[600],fontWeight:700,fontSize:13,cursor:"pointer"}}>Envoyer un autre feedback</button>
+    </div>
+  </div>;
+
+  return <div className="fade-in">
+    <BackBtn onClick={onBack}/>
+    <SectionHead icon={I.msgSquare(C.t[300])} title="Feedback" sub="Aidez-nous à améliorer l'app"/>
+
+    {/* Type */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Type de retour</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+        {TYPES.map(t=><button key={t.id} className={`fb-tag ${type===t.id?'sel':''}`} onClick={()=>setType(t.id)} style={{textAlign:"left",padding:10}}>
+          <div style={{fontSize:13,fontWeight:700}}>{t.label}</div>
+          <div style={{fontSize:10,color:C.n[500],marginTop:2}}>{t.desc}</div>
+        </button>)}
+      </div>
+    </div>
+
+    {/* Module */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Module concerné</div>
+      <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+        {MODULES.map(m=><button key={m} className={`fb-tag ${mod===m?'sel':''}`} onClick={()=>setMod(m)}>{m}</button>)}
+      </div>
+    </div>
+
+    {/* Priority */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Priorité</div>
+      <div style={{display:"flex",gap:5}}>
+        {PRIORITIES.map((p,i)=><button key={p} className={`fb-tag ${prio===i?'sel':''}`} onClick={()=>setPrio(i)}
+          style={prio===i&&i===3?{borderColor:C.r[500],background:C.r[100],color:C.r[700]}:{}}>
+          {i===3?"🔴 ":""}{p}
+        </button>)}
+      </div>
+    </div>
+
+    {/* Description */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Description</div>
+      <textarea className="fb-textarea" value={desc} onChange={e=>setDesc(e.target.value)}
+        placeholder="Décrivez le bug, l'erreur de contenu, ou votre suggestion...&#10;&#10;Si correction de contenu : précisez la molécule, la posologie actuelle et la correction proposée."/>
+    </div>
+
+    {/* From */}
+    <div className="card" style={{padding:14,marginBottom:10}}>
+      <div style={{fontSize:13,fontWeight:700,color:C.n[800],marginBottom:10}}>Votre nom <span style={{fontWeight:400,color:C.n[400]}}>(optionnel)</span></div>
+      <input className="fb-input" value={from} onChange={e=>setFrom(e.target.value)} placeholder="Dr. Dupont, Interne X..."/>
+    </div>
+
+    {/* Preview */}
+    {(type && desc.length > 5) && <div className="card" style={{padding:14,marginBottom:10,background:C.n[50]}}>
+      <div style={{fontSize:11,fontWeight:700,color:C.n[500],marginBottom:6}}>APERÇU DU FEEDBACK</div>
+      <pre style={{fontSize:11,color:C.n[700],whiteSpace:"pre-wrap",fontFamily:"inherit",lineHeight:1.5}}>{feedbackText}</pre>
+    </div>}
+
+    {/* Actions */}
+    <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
+      <button className="fb-submit" onClick={handleEmail}
+        disabled={!type||!desc.trim()}
+        style={{opacity:(!type||!desc.trim())?0.4:1,cursor:(!type||!desc.trim())?"not-allowed":"pointer"}}>
+        {I.send("#fff")} &nbsp;Envoyer par email
+      </button>
+      {(type && desc.length > 5) && <button onClick={handleCopy}
+        style={{width:"100%",padding:12,border:`2px solid ${C.t[500]}`,borderRadius:12,background:"transparent",color:C.t[600],fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"inherit",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+        {copied ? <span>✅ Copié !</span> : <span>{I.copy(C.t[600])} Copier le texte (pour WhatsApp, Slack…)</span>}
+      </button>}
+    </div>
+
+    {/* Help */}
+    <div className="card" style={{padding:12,background:C.a[50]}}>
+      <div style={{fontSize:11,fontWeight:700,color:C.a[700],marginBottom:4}}>💡 Comment est traité votre feedback</div>
+      <div style={{fontSize:11,color:C.n[600]}}>
+        Votre retour est envoyé par email structuré. Il sera directement utilisé pour mettre à jour l'application (correction de contenu, ajout de fonctionnalité, correction de bug). Les mises à jour sont déployées en quelques minutes.
+      </div>
+    </div>
+  </div>;
+}
+
+/* ══════════════════════ MAIN APP ══════════════════════ */
+function App() {
+  // Restauration éventuelle de la vue après un reload provoqué par un toggle dark mode
+  // (les couleurs JS C.* sont figées au chargement, on doit recharger l'iframe ; on
+  // sauvegarde la vue courante dans sessionStorage juste avant pour la restaurer ici).
+  const restored = (() => {
+    try {
+      const raw = sessionStorage.getItem('usca-tb-view');
+      if (!raw) return null;
+      sessionStorage.removeItem('usca-tb-view');
+      return JSON.parse(raw);
+    } catch(e) { return null; }
+  })();
+  const [view, setView] = useState(restored?.view || "home");
+  const [selSub, setSelSub] = useState(restored?.selSub ?? null);
+  const [selScore, setSelScore] = useState(restored?.selScore ?? null);
+  const [selFiche, setSelFiche] = useState(restored?.selFiche ?? null);
+  const [selEegFiche, setSelEegFiche] = useState(restored?.selEegFiche ?? null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => { e.preventDefault(); setInstallPrompt(e); };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  // Expose la vue courante pour que le handler dark-mode (hors React) puisse la sauvegarder
+  // dans sessionStorage avant reload.
+  useEffect(() => {
+    window.__uscaToolboxState = () => ({ view, selSub, selScore, selFiche });
+    return () => { delete window.__uscaToolboxState; };
+  }, [view, selSub, selScore, selFiche]);
+
+  const nav = (v) => { setView(v); setSelSub(null); setSelScore(null); setSelEegFiche(null); setMenuOpen(false); window.scrollTo(0,0); };
+
+  const navItems = [
+    {id:"home",label:"Accueil",icon:I.home},
+    {id:"substances",label:"Protocoles",icon:I.pill},
+    {id:"elsa_hub",label:"ELSA",icon:I.steth},
+    {id:"scores",label:"Scores",icon:I.calc},
+    {id:"more",label:"Plus",icon:I.menu}
+  ];
+
+  const moreItems = [
+    {id:"fiches_traitements",label:"Traitements",icon:I.heart},
+    {id:"interactions",label:"MetaboScope (Interactions)",icon:I.alert},
+    {id:"bzdcalc",label:"Convertisseur BZD",icon:I.scale},
+    {id:"cpzcalc",label:"Convertisseur CPZ",icon:I.scale},
+    {id:"feedback",label:"💬 Feedback",icon:I.msgSquare}
+  ];
+
+  const renderContent = () => {
+    if (selSub) return <SubDetail sKey={selSub} onBack={()=>setSelSub(null)}/>;
+    if (selScore) return <ScoreCalc scoreKey={selScore} onBack={()=>setSelScore(null)}/>;
+    switch(view) {
+      case "home": return <div className="fade-in">
+        <div style={{marginBottom:20}}>
+          <h1 style={{fontSize:26,fontWeight:900,color:C.n[900],letterSpacing:"-0.5px"}}>USCA Toolbox</h1>
+          <p style={{fontSize:13,color:C.n[400],marginTop:2}}>Pitié-Salpêtrière — Addictologie</p>
+        </div>
+
+        {installPrompt && <div className="install-banner">
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div><div style={{fontSize:12,fontWeight:700,opacity:.7}}>📱 INSTALLER L'APP</div><div style={{fontSize:13,marginTop:4}}>Ajouter à l'écran d'accueil pour un accès hors-ligne</div></div>
+            <button onClick={()=>{installPrompt.prompt();setInstallPrompt(null);}} style={{padding:"8px 16px",borderRadius:10,border:"none",background:C.t[500],color:"#fff",fontWeight:700,fontSize:12,cursor:"pointer"}}>Installer</button>
+          </div>
+        </div>}
+
+        {/* 4 grandes cartes mises en valeur */}
+        {/* Carte "Livret IFSI" retirée 2026-04-19 — accès suffisant via dashboard admin (carte "Mon élève") */}
+        {[{l:"Protocoles USCA",desc:"Protocoles cliniques par substance",i:I.pill,v:"substances",dm:"toolbox_protocoles",c:C.t[600],bg:`linear-gradient(135deg, ${C.t[50]}, ${C.bg})`},
+          {l:"Ressources USCA",desc:"Articles, fiches, recos, algos",i:I.book,v:"ressources",dm:"toolbox_ressources",c:C.n[700],bg:`linear-gradient(135deg, ${C.n[50]}, ${C.bg})`},
+          {l:"Fiches Traitements et Substances",desc:"Fiches patient, fiches expert, fiches substances",i:I.heart,v:"fiches_traitements",dm:"toolbox_traitements",c:C.a[700],bg:`linear-gradient(135deg, ${C.a[50]}, ${C.bg})`},
+          {l:"MetaboScope",desc:"Atlas voies métaboliques + analyse interactions",i:I.alert,v:"interactions",dm:"toolbox_interactions",c:C.r[500],bg:`linear-gradient(135deg, ${C.r[100]}, ${C.bg})`},
+          {l:"Dossier post-cure",desc:"Volet médical, envoi patient",i:I.clipboard,v:"postcure_medecin",dm:"toolbox_postcure",c:C.t[800],bg:`linear-gradient(135deg, ${C.t[100]}, ${C.bg})`}
+        ].map(item=>
+          <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:16,marginBottom:10,display:"flex",alignItems:"center",gap:14,background:item.bg}} onClick={()=>{
+            if(item.v==='postcure_medecin'){window.open('../postcure/medecin.html','_blank');return;}
+            if(item.v==='livret_ifsi_preview'){window.open('../etudiant/?preview=demo','_blank');return;}
+            nav(item.v);
+          }}>
+            <div style={{width:48,height:48,borderRadius:14,background:item.c+"20",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.i(item.c,26)}</div>
+            <div style={{flex:1}}><div style={{fontSize:15,fontWeight:900,color:C.n[900]}}>{item.l}</div><div style={{fontSize:11,color:C.n[400],marginTop:2}}>{item.desc}</div></div>
+            {I.chevR(C.n[300])}
+          </div>)}
+
+        {/* Petites cartes — outils cliniques (2 — MetaboScope est passée en grande carte v4.32) */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
+          {[{l:"Scores",i:I.calc,v:"scores",dm:"toolbox_scores",c:C.n[600]},
+            {l:"EEG / ECT",i:I.activity,v:"eeg_ect",dm:"toolbox_eeg_ect",c:C.t[700]}].map(item=>
+            <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:12,textAlign:"center"}} onClick={()=>nav(item.v)}>
+              {item.i(item.c, 22)}
+              <div style={{fontSize:12,fontWeight:800,color:C.n[800],marginTop:6}}>{item.l}</div>
+            </div>)}
+        </div>
+
+        {/* Petites cartes — équipe & retour (2) */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:20}}>
+          {[{l:"ELSA",desc:"Liaison addictologie",i:I.steth,v:"elsa_hub",dm:"toolbox_elsa",c:C.t[400]},
+            {l:"Feedback",desc:"Bug, suggestion",i:I.msgSquare,v:"feedback",dm:"toolbox_feedback",c:C.n[500]}].map(item=>
+            <div key={item.v} data-module={item.dm} className="card card-tap" style={{padding:12,display:"flex",alignItems:"center",gap:10}} onClick={()=>nav(item.v)}>
+              <div style={{width:32,height:32,borderRadius:10,background:item.c+"15",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.i(item.c,18)}</div>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:12,fontWeight:800,color:C.n[800]}}>{item.l}</div>
+                <div style={{fontSize:10,color:C.n[400],whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{item.desc}</div>
+              </div>
+            </div>)}
+        </div>
+      </div>;
+
+      case "protocoles_hub": return <ProtocolesHub onNav={nav} onBack={()=>nav("home")}/>;
+
+      case "substances": return <div className="fade-in">
+        <BackBtn onClick={()=>nav("home")}/>
+        <SectionHead icon={I.pill(C.t[300])} title="Protocoles USCA" sub="Protocoles par substance"/>
+        {Object.entries(SUBSTANCES).map(([k,s])=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelSub(k)}>
+          <div style={{display:"flex",alignItems:"center",gap:12}}>
+            <span style={{fontSize:28}}>{s.icon}</span>
+            <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{s.name}</div><div style={{fontSize:11,color:C.n[400]}}>{s.traitements.length} tt de fond</div></div>
+          </div>
+          {I.chevR(C.n[300])}
+        </div>)}
+      </div>;
+
+
+      case "ressources": return <RessourcesView onBack={()=>nav("home")}/>;
+
+      case "scores": return <div className="fade-in">
+        <BackBtn onClick={()=>nav("home")}/>
+        <SectionHead icon={I.calc(C.t[300])} title="Scores & Calculateurs"/>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>SEVRAGE</div>
+        {["cushman","cows"].map(k=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore(k)}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{SCORES[k].name}</div><div style={{fontSize:11,color:C.n[400]}}>{SCORES[k].sub}</div></div>
+          {I.chevR(C.n[300])}
+        </div>)}
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>REPÉRAGE</div>
+        <div className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore("audit")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>AUDIT</div><div style={{fontSize:11,color:C.n[400]}}>Alcool (10 items)</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>PSYCHIATRIE</div>
+        {["phq9","gad7"].map(k=><div key={k} className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>setSelScore(k)}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>{SCORES[k].name}</div><div style={{fontSize:11,color:C.n[400]}}>{SCORES[k].sub}</div></div>
+          {I.chevR(C.n[300])}
+        </div>)}
+        <div style={{fontSize:11,fontWeight:800,color:C.n[500],marginBottom:6,marginTop:12}}>OUTILS</div>
+        <div className="card card-tap" style={{padding:12,marginBottom:8,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("bzdcalc")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Convertisseur BZD</div><div style={{fontSize:11,color:C.n[400]}}>Équivalences diazépam + stratégie taper</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+        <div className="card card-tap" style={{padding:12,display:"flex",justifyContent:"space-between",alignItems:"center"}} onClick={()=>nav("cpzcalc")}>
+          <div><div style={{fontSize:13,fontWeight:800,color:C.n[800]}}>Convertisseur CPZ</div><div style={{fontSize:11,color:C.n[400]}}>Équivalences chlorpromazine (antipsychotiques)</div></div>
+          {I.chevR(C.n[300])}
+        </div>
+      </div>;
+
+      case "interactions": {
+        // Iframe MetaboScope — pattern aligné sur eeg_ect (v4.17).
+        // Sync dark/light mode (v4.26) :
+        //   - param URL ?theme= initial (lu au boot par metaboscope/src/main.tsx)
+        //   - postMessage live via shared/theme.js déjà en place (notifie toutes les iframes au toggle)
+        const themeParam = (localStorage.getItem('usca_theme') === 'dark') ? '?theme=dark' : '?theme=light';
+        const metaboscopePath = `../metaboscope/dist/index.html${themeParam}`;
+        return <div className="fade-in">
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+            <button onClick={()=>nav("home")} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>
+            <span style={{fontSize:14,fontWeight:800,color:C.n[800],flex:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>Interactions · MetaboScope</span>
+            <button onClick={()=>window.open(metaboscopePath,'_blank')} title="Ouvrir dans un nouvel onglet" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.t[50],border:`1px solid ${C.t[300]}`,cursor:"pointer",flexShrink:0,fontSize:14,fontWeight:700,color:C.t[700]}}>↗</button>
+          </div>
+          <iframe className="fiche-iframe" src={metaboscopePath} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title="MetaboScope"/>
+        </div>;
+      }
+      case "eeg_ect":
+        if (selEegFiche) {
+          const themeParam = (localStorage.getItem('usca_theme') === 'dark') ? '?theme=dark' : '?theme=light';
+          const fichePath = `../eeg_ect/fiche_${selEegFiche.slug}.html${themeParam}`;
+          return <div className="fade-in">
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <button onClick={()=>setSelEegFiche(null)} title="Retour" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer",flexShrink:0}}>{I.chevL(C.n[600])}</button>
+              <span style={{fontSize:14,fontWeight:800,color:C.n[800],flex:1,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{selEegFiche.nom}</span>
+              <button onClick={()=>window.open(fichePath,'_blank')} title="Ouvrir dans un nouvel onglet" style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.t[50],border:`1px solid ${C.t[300]}`,cursor:"pointer",flexShrink:0,fontSize:14,fontWeight:700,color:C.t[700]}}>↗</button>
+            </div>
+            <iframe className="fiche-iframe" src={fichePath} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selEegFiche.nom}/>
+          </div>;
+        }
+        return <div className="fade-in">
+          <BackBtn onClick={()=>nav("home")}/>
+          <SectionHead icon={I.activity(C.t[300])} title="EEG / ECT" sub="Pratique ECT + handbook EEG"/>
+
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>Pratique ECT</div>
+          <div className="card card-tap" style={{padding:14,marginBottom:14,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"ect",nom:"Fiche pratique ECT"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.clipboard(C.t[600],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Fiche pratique ECT</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière — protocole, prise en charge, post-séance</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+
+          <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,textTransform:"uppercase"}}>Fiches EEG (handbook)</div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"technical",nom:"Comprendre un EEG en 10 min"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.t[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[700],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Comprendre un EEG en 10 min</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Aspects techniques — bandes, montages, filtres, artefacts</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"normal_eeg",nom:"EEG normal"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.heart(C.t[600],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>EEG normal</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Activité de fond, variantes, frontières du normal</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"sommeil",nom:"Sommeil et variants bénins"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.n[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.steth(C.n[600],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Sommeil et variants bénins</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Stades N1/N2/N3/REM · vertex sharp · POST · sawtooth</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"artefacts",nom:"Artefacts EEG"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.a[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.a[700],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Artefacts EEG</div>
+                <div style={{fontSize:11,color:C.n[400]}}>EMG · ECG · oculaires · sueur · 50 Hz — méthode systématique</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"epileptiforme",nom:"Activité épileptiforme"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.r[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.r[600],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Activité épileptiforme</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Pointes · sharp waves · pointes-ondes 3 Hz · polypointe-onde</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"status_epilepticus",nom:"Status epilepticus"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.r[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.thermo(C.r[700],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Status epilepticus</div>
+                <div style={{fontSize:11,color:C.n[400]}}>État de mal · convulsif et NCSE · urgence absolue</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+          <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"icu_eeg",nom:"EEG en réanimation"})}>
+            <div style={{display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:40,height:40,borderRadius:12,background:C.n[800]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.n[800],22)}</div>
+              <div>
+                <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>EEG en réanimation</div>
+                <div style={{fontSize:11,color:C.n[400]}}>Encéphalopathies · LPDs · GPDs · burst-suppression · triphasiques</div>
+              </div>
+            </div>
+            {I.chevR(C.n[300])}
+          </div>
+        </div>;
+      case "elsa_hub": return <ELSAHub onNav={nav} onBack={()=>nav("home")}/>;
+      case "elsa_fiches": return <ELSAFichesView onBack={()=>nav("elsa_hub")}/>;
+      case "admission": return <AdmView onBack={()=>nav("elsa_hub")}/>;
+      case "liaisons": return <LiaisonsView onBack={()=>nav("elsa_hub")}/>;
+      case "fiches_traitements": return selFiche ? <div className="fade-in">
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+          <button onClick={()=>setSelFiche(null)} style={{display:"flex",alignItems:"center",justifyContent:"center",width:32,height:32,borderRadius:8,background:C.n[100],border:"none",cursor:"pointer"}}>{I.chevL(C.n[600])}</button>
+          <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>{selFiche.n}</span>
+        </div>
+        <iframe className="fiche-iframe" src={selFiche.kind === "substance" ? ("../fiches-substances/fiche_"+selFiche.s+"_patient.html") : ("../fiches-traitements/fiches_patient/fiche_"+selFiche.s+"_patient.html")} style={{width:"100%",border:"none",height:"calc(100vh - 180px)",borderRadius:12}} title={selFiche.n}/>
+      </div> : <TraitementsView onBack={()=>nav("home")} onPickPatient={setSelFiche}/>;
+      case "bzdcalc": return <BZDCalc onBack={()=>nav("scores")}/>;
+      case "cpzcalc": return <CPZCalc onBack={()=>nav("scores")}/>;
+      case "feedback": return <FeedbackView onBack={()=>nav("home")}/>;
+    }
+  };
+
+  return <div>
+    {/* Top bar */}
+    <div className="top-bar">
+      <div style={{display:"flex",alignItems:"center",gap:8}}>
+        <div style={{width:30,height:30,borderRadius:8,background:"#243b53",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[300])}</div>
+        <span style={{fontSize:14,fontWeight:800,color:C.n[800]}}>USCA</span>
+      </div>
+      <span style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière</span>
+    </div>
+
+    {/* Content */}
+    <div className="content">{renderContent()}</div>
+
+    {/* More menu */}
+    {menuOpen && <div className="more-overlay" onClick={()=>setMenuOpen(false)}>
+      <div className="more-menu" onClick={e=>e.stopPropagation()}>
+        {moreItems.map(item=><button key={item.id} className="more-item" onClick={()=>nav(item.id)}>
+          {item.icon(C.t[600],18)}<span>{item.label}</span>
+        </button>)}
+      </div>
+    </div>}
+
+    {/* Bottom nav */}
+    <div className="bottom-nav">
+      <div className="bottom-nav-inner">
+        {navItems.map(item=>{
+          const elsaViews = ["elsa_hub","elsa_fiches","admission","liaisons"];
+          const act = item.id==="more"?menuOpen:
+            item.id==="substances"?(view==="substances"||!!selSub):
+            item.id==="elsa_hub"?elsaViews.includes(view):
+            (item.id===view);
+          return <button key={item.id} className="nav-btn" onClick={()=>item.id==="more"?setMenuOpen(!menuOpen):nav(item.id)} style={{color:act?C.t[600]:C.n[400]}}>
+            {item.icon(act?C.t[600]:C.n[400])}
+            <span>{item.label}</span>
+          </button>;
+        })}
+      </div>
+    </div>
+  </div>;
+}
+
+export default App
