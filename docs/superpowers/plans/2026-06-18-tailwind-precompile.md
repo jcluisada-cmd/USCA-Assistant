@@ -109,27 +109,34 @@ Remplacer `<VERSION_EXACTE>` par la valeur de Task 0 Step 3 :
 
 - [ ] **Step 3 : Créer `tailwind.input.css` racine**
 
+Syntaxe v4 vérifiée sur la doc officielle : `source(none)` désactive l'auto-détection
+(sinon Tailwind scannerait tout le projet, dont les bundles minifiés de `metaboscope/`
+et `staff/toolbox-app/` → bloat + faux positifs), puis on enregistre les sources
+explicitement (les `@source` répertoire suivent les heuristiques Tailwind : .html/.js,
+node_modules ignoré).
+
 ```css
-@import "tailwindcss";
+@import "tailwindcss" source(none);
 
 /* Dark mode piloté par la classe .dark (déplacé depuis les <style> inline des pages) */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Sources scannées — limitées aux pages racine + JS partagé + volets post-cure.
-   Exclut volontairement metaboscope/ et staff/toolbox-app/ (sous-apps Vite) et node_modules. */
+/* Sources explicites (auto-détection désactivée). metaboscope/ et staff/toolbox-app/
+   (sous-apps Vite à styling propre) sont donc volontairement exclus. */
 @source "./index.html";
-@source "./patient/**/*.{html,js}";
-@source "./admin/**/*.{html,js}";
-@source "./extern/**/*.{html,js}";
-@source "./etudiant/**/*.{html,js}";
-@source "./pds/**/*.{html,js}";
-@source "./shared/**/*.js";
-@source "./postcure/**/*.{html,js}";
-@source "./module_post-cure/**/*.{html,js}";
+@source "./patient";
+@source "./admin";
+@source "./extern";
+@source "./etudiant";
+@source "./pds";
+@source "./shared";
+@source "./postcure";
+@source "./module_post-cure";
 
-/* Safelist (vide par défaut). N'ajouter que si la vérif visuelle révèle une classe
-   manquante assemblée en JS. Ex. :
-   @source inline("bg-red-500 bg-emerald-500 text-amber-600"); */
+/* Safelist : VIDE. Pré-audit (Task 0) : les classes assemblées en JS sont des classes
+   CSS custom (active/done/has-file/show/sig-tab…) ou 'hidden' (utility core Tailwind,
+   toujours présente). N'ajouter @source inline("…") que si une vérif visuelle révèle
+   un manque. */
 ```
 
 - [ ] **Step 4 : Installer la dépendance**
