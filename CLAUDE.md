@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.42 (2026-05-29) — **Modifier / supprimer ses propres messages** dans la conversation patient ↔ soignants. Icône crayon ✏️ sur ses propres bulles → menu « Modifier le message » / « Supprimer le message » (rouge + confirmation), sur les 3 interfaces (patient, admin, PdS). Édition inline en `textarea`, indicateur « (modifié) ». Migration v40 : colonne `contenus_partages.modifie_le`, policy `contenus_update_own`, DELETE resserré (`contenus_delete_own`, prédicat `auth.uid()=cree_par OR (auth.uid() IS NULL AND cree_par IS NULL)`). Helper `db.updateContenu` ajouté. Risque RLS patient anon maintenu (non aggravé, cf. INSERT ouvert v21). Service Worker : `usca-v4.42`.
+> **Version courante** : v4.44 (2026-06-18) — **Toolbox V1 migrée vers Vite** (fin du Babel in-browser). Sous-app isolée `staff/toolbox-app/` (calquée sur `metaboscope/`), port 1:1 du composant React en JS, React/ReactDOM bundlés (fin dépendance CDN unpkg), `dist/` commité servi en iframe. Bundle 240 Ko (gzip 70 Ko) vs ~3 Mo de Babel transpilés au runtime → ouverture quasi instantanée, écran blanc CDN devenu structurellement impossible. Seuls `admin/index.html` (URL iframe) + `sw.js` (pré-cache) touchés hors du nouveau dossier ; ancien `staff/toolbox.html` conservé jusqu'à validation visuelle prod. Précédé du fix urgent **v4.43** (épinglage `@babel/standalone@7.29.7` après que Babel 8, sorti les 16-17/06, ait cassé la transpilation → écran blanc). Étape 1 du chantier de modernisation (suite : Tailwind pré-compilé, Workbox). Service Worker : `usca-v4.44`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.42` |
+| **Service Worker** | `usca-v4.44` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
