@@ -1,0 +1,12 @@
+{
+  "name": "usca-connect-build",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Toolchain dev-only : pré-compilation Tailwind pour les pages racine USCA Connect",
+  "scripts": {
+    "build:css": "tailwindcss -i ./tailwind.input.css -o ./shared/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.1"
+  }
+}

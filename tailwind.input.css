@@ -1,0 +1,18 @@
+@import "tailwindcss" source(none);
+
+/* Dark mode piloté par la classe .dark (déplacé depuis les <style> inline des pages) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Sources explicites (auto-détection désactivée via source(none)).
+   metaboscope/ et staff/toolbox-app/ (sous-apps Vite à styling propre) sont exclus. */
+@source "./index.html";
+@source "./patient";
+@source "./admin";
+@source "./extern";
+@source "./etudiant";
+@source "./pds";
+@source "./shared";
+@source "./postcure";
+@source "./module_post-cure";
+
+/* Safelist VIDE (pré-audit : classes JS = custom CSS ou 'hidden' core). */

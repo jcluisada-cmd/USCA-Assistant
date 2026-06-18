@@ -1,4 +1,4 @@
-const CACHE_NAME = 'usca-v4.45';
+const CACHE_NAME = 'usca-v4.46';
 
 // ── Configuration Push (partagé avec patient/index.html) ──
 const SUPABASE_URL_BASE = 'https://pydxfoqxgvbmknzjzecn.supabase.co';
@@ -60,6 +60,7 @@ const LOCAL_ASSETS = [
   './shared/ressource-doc.css',
   './shared/ressource-doc.js',
   './shared/theme.css',
+  './shared/tailwind.css',
   './shared/theme.js',
   './shared/craving-agenda.js',
   './shared/planning-groupes.js',

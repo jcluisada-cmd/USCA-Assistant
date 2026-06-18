@@ -1,3 +1,4 @@
+/node_modules/
 .claude/worktrees/
 
 # Captures d'écran Windows (à la racine) — ne pas committer
