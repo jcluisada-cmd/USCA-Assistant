@@ -1069,7 +1069,7 @@ function switchAdminTab(tabId) {
   if (btn) { btn.classList.add('text-indigo-600'); btn.classList.remove('text-slate-400'); }
   // Lazy load toolbox iframe
   if (tabId === 'toolbox' && !toolboxLoaded) {
-    document.getElementById('admin-toolbox-iframe').src = '../staff/toolbox.html?embedded=true';
+    document.getElementById('admin-toolbox-iframe').src = '../staff/toolbox-app/dist/index.html?embedded=true';
     toolboxLoaded = true;
   }
   // Load groupes tab
