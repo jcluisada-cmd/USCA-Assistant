@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.45 (2026-06-18) — **Toolbox : dark mode sans rechargement** (couleurs en variables CSS `:root`/`html.dark`, `C.x[y]`→`var(--c-x-y)`, toggle = bascule de la classe `.dark`, helper `alpha15()` color-mix pour les fonds translucides ; aucune couleur changée). Suite directe de **v4.44 — Toolbox V1 migrée vers Vite** (fin du Babel in-browser) : sous-app isolée `staff/toolbox-app/` calquée sur `metaboscope/`, port 1:1 du composant en JS, React/ReactDOM bundlés (fin dépendance CDN unpkg), `dist/` commité servi en iframe, bundle 240 Ko vs ~3 Mo de Babel → ouverture quasi instantanée et écran blanc CDN impossible. Précédé du fix **v4.43** (épinglage `@babel/standalone@7.29.7` après l'écran blanc Babel 8 des 16-17/06). Ancien `staff/toolbox.html` conservé (rollback). Étapes 1-2 du chantier de modernisation incrémentale (suite : Tailwind pré-compilé, Workbox). Service Worker : `usca-v4.45`.
+> **Version courante** : v4.49 (2026-06-18) — **Tailwind pré-compilé** (étape 3 du chantier de modernisation incrémentale). Le CDN runtime `@tailwindcss/browser@4`, qui recompilait le CSS dans le navigateur à **chaque** chargement, est retiré des **6 pages racine** (`index`, `patient`, `admin`, `extern`, `etudiant`, `pds`) et remplacé par une feuille statique unique `shared/tailwind.css`. Pré-génération : toolchain dev-only racine (`package.json` + `@tailwindcss/cli@4.3.1` **épinglé**, `npm run build:css`), input `tailwind.input.css` (`@import "tailwindcss" source(none)` + `@source` explicites des 6 pages/shared/postcure + `@custom-variant dark` déplacé hors des `<style>` inline). Sur chaque page : `<script CDN>`+`<style inline>` → `<link rel="stylesheet" href="…/shared/tailwind.css">`. CSS ~62 Ko minifié pré-caché par le SW → **fin de la recompilation in-browser**. Sous-apps Vite (`metaboscope/`, `staff/toolbox-app/`) non concernées. Migration page par page (pilote `etudiant`, puis lots), CDN conservé jusqu'à validation. Précédé de **v4.45/v4.44** (Toolbox : dark sans reload + migration Vite). Reste du chantier : **Workbox** (étape 4). Service Worker : `usca-v4.49`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.45` |
+| **Service Worker** | `usca-v4.49` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
@@ -63,12 +63,12 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 > La Toolbox V1 intégrée en iframe conserve sa palette navy/teal existante.
 
 ### Stack technique
-- HTML5 + Tailwind CSS via CDN (`@tailwindcss/browser@4`) — mobile-first
+- HTML5 + Tailwind CSS v4 **pré-compilé** (`shared/tailwind.css`, généré via `@tailwindcss/cli`, `npm run build:css`) — mobile-first. CDN runtime retiré des pages racine (v4.49).
 - Supabase SDK via CDN UMD (`@supabase/supabase-js@2`) — attaché à `window.supabase`
 - jsPDF via CDN — génération PDF côté client
 - React 18 + Babel in-browser (Toolbox V1 uniquement, dans l'iframe)
 - PWA installable (manifest.json + service worker)
-- **Pas de bundler, pas de npm, pas de build** — sauf exception `metaboscope/` (sous-app React/Vite/TS, voir `METABOSCOPE_INTEGRATION.md`)
+- **Pas de bundler pour les pages** (HTML + CDN Supabase SDK / jsPDF) — mais une **toolchain npm dev-only à la racine** pré-compile le CSS Tailwind (`npm run build:css` → `shared/tailwind.css`, à committer). Sous-apps Vite : `metaboscope/`, `staff/toolbox-app/` (voir `METABOSCOPE_INTEGRATION.md`)
 
 ### Installation PWA sur téléphone
 - **Android** : Chrome → menu (⋮) → "Ajouter à l'écran d'accueil"
@@ -213,7 +213,7 @@ Protocoles USCA · Ressources USCA · Fiches Traitements et Substances · Dossie
 ### Général
 - **Langue** : français partout (UI, commentaires, données)
 - **Mobile-first** : tout doit être utilisable sur smartphone
-- **Pas de bundler** : HTML + CDN (Tailwind, Supabase SDK, jsPDF). Exception : `metaboscope/` (sous-app Vite/TS isolée en iframe).
+- **Pas de bundler pour les pages** : HTML + CDN (Supabase SDK, jsPDF). Tailwind est **pré-compilé** (`shared/tailwind.css` via `@tailwindcss/cli`, toolchain dev-only racine). ⚠️ **Après ajout/retrait d'une classe Tailwind sur une page racine → relancer `npm run build:css` et committer `shared/tailwind.css`** (le scan statique ne voit pas les classes ajoutées après coup). Exceptions sous-apps Vite : `metaboscope/`, `staff/toolbox-app/`.
 - **Pas de données patient nominatives** côté client
 - Client Git : GitHub Desktop
 
@@ -240,7 +240,7 @@ Protocoles USCA · Ressources USCA · Fiches Traitements et Substances · Dossie
 | iframe V1 sur iOS Safari (scroll, hauteur) | `-webkit-overflow-scrolling: touch`, hauteur explicite, `?embedded=true` |
 | Reconnexion Realtime (téléphone verrouillé) | Auto-reconnexion Supabase + refresh sur `visibilitychange` |
 | Auth patient faible (chambre+DDN) | Rate-limiting client (3 tentatives → 5 min), données limitées, réseau hospitalier |
-| Pas de bundler = gros CDN | ~315 KB gzippé, cachés par SW après 1er chargement |
+| CDN tiers (Supabase, jsPDF, fonts) | Cachés par SW après 1er chargement ; Tailwind désormais pré-compilé en local (v4.49), plus servi par CDN |
 
 ### Contenu clinique — sources de vérité (par priorité)
 1. **Référentiel USCA 2.2** et addendum (documents internes)
