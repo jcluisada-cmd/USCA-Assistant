@@ -106,14 +106,17 @@ supprime.
 @source "./pds/**/*.{html,js}";
 @source "./shared/**/*.js";
 @source "./postcure/**/*.{html,js}";
+@source "./module_post-cure/**/*.{html,js}";
 
 /* Safelist : classes assemblées uniquement en JS que le scanner ne capte pas.
    À renseigner pendant l'exécution après inventaire des ~15 usages dynamiques,
    uniquement si la validation visuelle révèle un manque.
    Ex. : @source inline("bg-red-500 bg-emerald-500 ..."); */
 ```
-> Note : `postcure/` est inclus dans le scan car certaines pages racine intègrent ses
-> volets ; coût nul si non utilisé. À confirmer pendant l'exécution.
+> Note : les volets post-cure (`postcure/{patient,medecin}.html` et
+> `module_post-cure/index.html`) sont inclus dans le scan (décision JC 2026-06-18).
+> `module_post-cure/index.html` concentre 2 des usages de classes dynamiques repérés.
+> Coût nul si certaines classes ne sont pas utilisées par les pages racine.
 
 **Sortie** : `shared/tailwind.css` (minifiée, commitée). C'est le **seul** fichier
 servi aux pages.
