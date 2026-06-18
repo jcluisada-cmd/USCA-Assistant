@@ -1,4 +1,21 @@
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,400&display=swap');
+  /* Palette couleurs (ex-objet C JS) — light par défaut, dark via html.dark.
+     Permet le toggle dark mode sans reload (v4.45). html.dark n'override que les
+     tons qui changent ; le reste hérite de :root (= comportement du swap original). */
+  :root {
+    --c-n-50:#f0f4f8; --c-n-100:#d9e2ec; --c-n-200:#bcccdc; --c-n-300:#9fb3c8; --c-n-400:#7b8faa; --c-n-500:#627d98; --c-n-600:#486581; --c-n-700:#334e68; --c-n-800:#243b53; --c-n-900:#102a43;
+    --c-t-50:#effcf6; --c-t-100:#c6f7e2; --c-t-200:#8eedc7; --c-t-300:#65d6ad; --c-t-400:#3ebd93; --c-t-500:#27ab83; --c-t-600:#199473; --c-t-700:#147d64; --c-t-800:#0c6b58; --c-t-900:#014d40;
+    --c-a-50:#fffbea; --c-a-100:#fff3c4; --c-a-200:#fce588; --c-a-300:#fadb5f; --c-a-400:#f7c948; --c-a-500:#f0b429; --c-a-600:#de911d; --c-a-700:#cb6e17; --c-a-800:#b44d12; --c-a-900:#8d2b0b;
+    --c-r-100:#fee2e2; --c-r-500:#ef4444; --c-r-600:#dc2626; --c-r-700:#b91c1c;
+    --c-bg:#f8fafc; --c-bdr:#e2e8f0;
+  }
+  html.dark {
+    --c-n-50:#0f172a; --c-n-100:#1e293b; --c-n-200:#334155; --c-n-300:#475569; --c-n-400:#64748b; --c-n-500:#94a3b8; --c-n-600:#cbd5e1; --c-n-700:#e2e8f0; --c-n-800:#f1f5f9; --c-n-900:#f8fafc;
+    --c-t-50:rgba(16,185,129,0.1); --c-t-100:rgba(16,185,129,0.15); --c-t-200:#6ee7b7;
+    --c-a-50:rgba(245,158,11,0.1); --c-a-100:rgba(245,158,11,0.15); --c-a-200:#fcd34d;
+    --c-r-100:rgba(239,68,68,0.15);
+    --c-bg:#0f172a; --c-bdr:#334155;
+  }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body { font-family: 'DM Sans', system-ui, -apple-system, sans-serif; background: #f8fafc; color: #102a43; overflow-x: hidden; -webkit-font-smoothing: antialiased; }

@@ -43,19 +43,17 @@ if (new URLSearchParams(window.location.search).has('embedded')) {
     else { document.documentElement.classList.remove('dark'); }
   }
   if (localStorage.getItem('usca_theme') === 'dark') applyToolboxDark(true);
-  function saveViewThenReload() {
-    try {
-      if (window.__uscaToolboxState) {
-        sessionStorage.setItem('usca-tb-view', JSON.stringify(window.__uscaToolboxState()));
-      }
-    } catch(e) {}
-    window.location.reload();
+  // Toggle dark depuis le parent (postMessage) ou un autre onglet (storage).
+  // v4.45 : plus de reload — les couleurs sont en variables CSS ; basculer la classe
+  // .dark suffit (applyToolboxDark) → le navigateur recalcule tout instantanément.
+  function syncTheme() {
+    applyToolboxDark(localStorage.getItem('usca_theme') === 'dark');
   }
   window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'usca-theme') saveViewThenReload();
+    if (e.data && e.data.type === 'usca-theme') syncTheme();
   });
   window.addEventListener('storage', function(e) {
-    if (e.key === 'usca_theme') saveViewThenReload();
+    if (e.key === 'usca_theme') syncTheme();
   });
 })();
 // Register Service Worker (chemin absolu : index.html est sous /staff/toolbox-app/dist/)

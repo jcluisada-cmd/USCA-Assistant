@@ -39,29 +39,19 @@ const I = {
 };
 
 /* ══════════════════════ COLORS ══════════════════════ */
+/* Couleurs en variables CSS (définies dans styles.css : :root = light, html.dark = dark).
+   Le toggle dark bascule juste la classe .dark sur <html> → le navigateur recalcule
+   toutes les couleurs instantanément, SANS reload ni re-render React (v4.45). */
 const C = {
-  n: { 50:"#f0f4f8",100:"#d9e2ec",200:"#bcccdc",300:"#9fb3c8",400:"#7b8faa",500:"#627d98",600:"#486581",700:"#334e68",800:"#243b53",900:"#102a43" },
-  t: { 50:"#effcf6",100:"#c6f7e2",200:"#8eedc7",300:"#65d6ad",400:"#3ebd93",500:"#27ab83",600:"#199473",700:"#147d64",800:"#0c6b58",900:"#014d40" },
-  a: { 50:"#fffbea",100:"#fff3c4",200:"#fce588",300:"#fadb5f",400:"#f7c948",500:"#f0b429",600:"#de911d",700:"#cb6e17",800:"#b44d12",900:"#8d2b0b" },
-  r: { 100:"#fee2e2",500:"#ef4444",600:"#dc2626",700:"#b91c1c" },
-  bg:"#f8fafc", bdr:"#e2e8f0"
+  n: { 50:"var(--c-n-50)",100:"var(--c-n-100)",200:"var(--c-n-200)",300:"var(--c-n-300)",400:"var(--c-n-400)",500:"var(--c-n-500)",600:"var(--c-n-600)",700:"var(--c-n-700)",800:"var(--c-n-800)",900:"var(--c-n-900)" },
+  t: { 50:"var(--c-t-50)",100:"var(--c-t-100)",200:"var(--c-t-200)",300:"var(--c-t-300)",400:"var(--c-t-400)",500:"var(--c-t-500)",600:"var(--c-t-600)",700:"var(--c-t-700)",800:"var(--c-t-800)",900:"var(--c-t-900)" },
+  a: { 50:"var(--c-a-50)",100:"var(--c-a-100)",200:"var(--c-a-200)",300:"var(--c-a-300)",400:"var(--c-a-400)",500:"var(--c-a-500)",600:"var(--c-a-600)",700:"var(--c-a-700)",800:"var(--c-a-800)",900:"var(--c-a-900)" },
+  r: { 100:"var(--c-r-100)",500:"var(--c-r-500)",600:"var(--c-r-600)",700:"var(--c-r-700)" },
+  bg:"var(--c-bg)", bdr:"var(--c-bdr)"
 };
 
-/* ══════════ DARK MODE : swap palette si actif ══════════ */
-if (localStorage.getItem('usca_theme') === 'dark') {
-  // Navy : les tons clairs deviennent sombres, les sombres deviennent clairs
-  C.n[50]="#0f172a"; C.n[100]="#1e293b"; C.n[200]="#334155"; C.n[300]="#475569";
-  C.n[400]="#64748b"; C.n[500]="#94a3b8"; C.n[600]="#cbd5e1"; C.n[700]="#e2e8f0";
-  C.n[800]="#f1f5f9"; C.n[900]="#f8fafc";
-  // Teal : garder les tons moyens lisibles, assombrir les fonds
-  C.t[50]="rgba(16,185,129,0.1)"; C.t[100]="rgba(16,185,129,0.15)"; C.t[200]="#6ee7b7";
-  // Amber : assombrir les fonds
-  C.a[50]="rgba(245,158,11,0.1)"; C.a[100]="rgba(245,158,11,0.15)"; C.a[200]="#fcd34d";
-  // Red : assombrir les fonds
-  C.r[100]="rgba(239,68,68,0.15)";
-  // Backgrounds et bordures
-  C.bg="#0f172a"; C.bdr="#334155";
-}
+// Fond translucide ~8% (remplace l'ancien suffixe alpha hex "15", incompatible avec var()).
+const alpha15 = (col) => `color-mix(in srgb, ${col} 8%, transparent)`;
 
 /* ══════════════════════ CLINICAL DATA ══════════════════════ */
 const SUBSTANCES = {
@@ -1509,7 +1499,7 @@ function App() {
           <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,marginTop:4,textTransform:"uppercase"}}>Pratique ECT</div>
           <div className="card card-tap" style={{padding:14,marginBottom:14,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"ect",nom:"Fiche pratique ECT"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.clipboard(C.t[600],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.t[600]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.clipboard(C.t[600],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Fiche pratique ECT</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Pitié-Salpêtrière — protocole, prise en charge, post-séance</div>
@@ -1521,7 +1511,7 @@ function App() {
           <div style={{fontSize:11,fontWeight:800,color:C.n[500],letterSpacing:"0.5px",marginBottom:6,textTransform:"uppercase"}}>Fiches EEG (handbook)</div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"technical",nom:"Comprendre un EEG en 10 min"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.t[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[700],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.t[700]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.t[700],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Comprendre un EEG en 10 min</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Aspects techniques — bandes, montages, filtres, artefacts</div>
@@ -1531,7 +1521,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"normal_eeg",nom:"EEG normal"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.t[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.heart(C.t[600],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.t[600]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.heart(C.t[600],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>EEG normal</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Activité de fond, variantes, frontières du normal</div>
@@ -1541,7 +1531,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"sommeil",nom:"Sommeil et variants bénins"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.n[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.steth(C.n[600],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.n[600]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.steth(C.n[600],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Sommeil et variants bénins</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Stades N1/N2/N3/REM · vertex sharp · POST · sawtooth</div>
@@ -1551,7 +1541,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"artefacts",nom:"Artefacts EEG"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.a[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.a[700],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.a[700]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.a[700],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Artefacts EEG</div>
                 <div style={{fontSize:11,color:C.n[400]}}>EMG · ECG · oculaires · sueur · 50 Hz — méthode systématique</div>
@@ -1561,7 +1551,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"epileptiforme",nom:"Activité épileptiforme"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.r[600]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.r[600],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.r[600]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.alert(C.r[600],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Activité épileptiforme</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Pointes · sharp waves · pointes-ondes 3 Hz · polypointe-onde</div>
@@ -1571,7 +1561,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"status_epilepticus",nom:"Status epilepticus"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.r[700]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.thermo(C.r[700],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.r[700]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.thermo(C.r[700],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>Status epilepticus</div>
                 <div style={{fontSize:11,color:C.n[400]}}>État de mal · convulsif et NCSE · urgence absolue</div>
@@ -1581,7 +1571,7 @@ function App() {
           </div>
           <div className="card card-tap" style={{padding:14,marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}} onClick={()=>setSelEegFiche({slug:"icu_eeg",nom:"EEG en réanimation"})}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
-              <div style={{width:40,height:40,borderRadius:12,background:C.n[800]+"15",display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.n[800],22)}</div>
+              <div style={{width:40,height:40,borderRadius:12,background:alpha15(C.n[800]),display:"flex",alignItems:"center",justifyContent:"center"}}>{I.activity(C.n[800],22)}</div>
               <div>
                 <div style={{fontSize:14,fontWeight:800,color:C.n[800]}}>EEG en réanimation</div>
                 <div style={{fontSize:11,color:C.n[400]}}>Encéphalopathies · LPDs · GPDs · burst-suppression · triphasiques</div>

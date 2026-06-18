@@ -1,6 +1,6 @@
 # USCA Connect — Référence projet
 
-> **Version courante** : v4.44 (2026-06-18) — **Toolbox V1 migrée vers Vite** (fin du Babel in-browser). Sous-app isolée `staff/toolbox-app/` (calquée sur `metaboscope/`), port 1:1 du composant React en JS, React/ReactDOM bundlés (fin dépendance CDN unpkg), `dist/` commité servi en iframe. Bundle 240 Ko (gzip 70 Ko) vs ~3 Mo de Babel transpilés au runtime → ouverture quasi instantanée, écran blanc CDN devenu structurellement impossible. Seuls `admin/index.html` (URL iframe) + `sw.js` (pré-cache) touchés hors du nouveau dossier ; ancien `staff/toolbox.html` conservé jusqu'à validation visuelle prod. Précédé du fix urgent **v4.43** (épinglage `@babel/standalone@7.29.7` après que Babel 8, sorti les 16-17/06, ait cassé la transpilation → écran blanc). Étape 1 du chantier de modernisation (suite : Tailwind pré-compilé, Workbox). Service Worker : `usca-v4.44`.
+> **Version courante** : v4.45 (2026-06-18) — **Toolbox : dark mode sans rechargement** (couleurs en variables CSS `:root`/`html.dark`, `C.x[y]`→`var(--c-x-y)`, toggle = bascule de la classe `.dark`, helper `alpha15()` color-mix pour les fonds translucides ; aucune couleur changée). Suite directe de **v4.44 — Toolbox V1 migrée vers Vite** (fin du Babel in-browser) : sous-app isolée `staff/toolbox-app/` calquée sur `metaboscope/`, port 1:1 du composant en JS, React/ReactDOM bundlés (fin dépendance CDN unpkg), `dist/` commité servi en iframe, bundle 240 Ko vs ~3 Mo de Babel → ouverture quasi instantanée et écran blanc CDN impossible. Précédé du fix **v4.43** (épinglage `@babel/standalone@7.29.7` après l'écran blanc Babel 8 des 16-17/06). Ancien `staff/toolbox.html` conservé (rollback). Étapes 1-2 du chantier de modernisation incrémentale (suite : Tailwind pré-compilé, Workbox). Service Worker : `usca-v4.45`.
 > Pour le détail de cette release et des précédentes : voir `CHANGELOG.md` (1 ligne par version) et `CLAUDE_ARCHIVE.md` §B (sessions détaillées).
 
 ---
@@ -45,7 +45,7 @@ Développeur principal : **Dr JC Luisada**, psychiatre addictologue à l'USCA.
 | **URL production** | https://usca-connect.pages.dev |
 | **Hébergement** | Cloudflare Pages (auto-deploy sur `git push main`) |
 | **BDD & Auth** | Supabase — pydxfoqxgvbmknzjzecn.supabase.co |
-| **Service Worker** | `usca-v4.44` |
+| **Service Worker** | `usca-v4.45` |
 | **Client Git** | GitHub Desktop |
 | **Chemin local** | `C:\Users\jclui\Documents\USCA-Connect\` |
 | **Mot de passe staff commun** | `usca_c15` |
